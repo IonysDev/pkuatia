@@ -1,0 +1,19 @@
+{
+    "name": "abiliomp/pkuatia",
+    "description": "Implementacion en PHP de la interfaz con el sistema EKuatia de faturacion electronica de Paraguay",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Abiliomp\\Pkuatia\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Abilio Mancuello Petters",
+            "email": "abiliomp@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
