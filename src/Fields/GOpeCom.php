@@ -4,6 +4,11 @@ namespace Abiliomp\Pkuatia\Fields;
 
 use DOMElement;
 
+/**
+ * Campos inherentes a la operación comercial (D010)
+ * Nodo padre gDatGralOpe (D001): Campos Generales del Documento Electrónico DE
+ */
+
 class GOpeCom {
     
     public int $iTipTra; // Tipo de transacción

@@ -5,7 +5,8 @@ namespace Abiliomp\Pkuatia\Fields;
 use DOMElement;
 
 /**
- * Grupo de campos que describen la actividad económica del emisor
+ * Campos que describen la actividad económica del emisor (D130)
+ * Nodo Padre gEmis (D100): Campos que identifican al emisor del Documento Electrónico DE
  */
 
 class GActEco {

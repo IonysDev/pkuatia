@@ -5,7 +5,8 @@ namespace Abiliomp\Pkuatia\Fields;
 use DOMElement;
 
 /**
- * Grupo de campos que identifican al responsable de la generación del DE
+ * Campos que identifican al responsable de la generación del DE (D140)
+ * Nodo Padre gEmis (D100): Campos que identifican al emisor del Documento Electrónico DE
  */
 
 class GRespDE {
