@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Fields;
+namespace Abiliomp\Pkuatia\Fields\C;
 
 use DateTime;
 use DOMElement;

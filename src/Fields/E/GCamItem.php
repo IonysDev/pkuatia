@@ -1,0 +1,591 @@
+<?php
+
+namespace Abiliomp\Pkuatia\Fields\E;
+
+use DOMElement;
+
+/**
+ *ID:E700 
+ *Campos que describen los ítems de la operación
+ *PADRE:E001
+ */
+class GCamItem
+{
+  public string $dCodInt; //E701 Código interno
+  public int $dParAranc; //E702 Partida arancelaria
+  public int $dNCM; //E703 Nomenclatura común del Mercosur (NCM)
+  public string $dDncpG; //E704 Código DNCP – Nivel General
+  public string $dDncpE; //E705 Código DNCP – Nivel Especifico
+  public int $dGtin; //E706 Código GTIN por producto
+  public int $dGtinPq; //E707 Código GTIN por paquete
+  public string $dDesProSer; //E708  Descripción del producto  y/o servicio
+  public int $cUniMed; //E709 Unidad de medida 
+  public int $dCantProSer; //E711  Cantidad del producto y/o servicio 
+  public string $cPaisOrig; //E712  Código del país de origen del producto 
+  public string $dInfItem; //E714 Información de interés  del emisor con respecto al item;
+  public int $cRelMerc; //E715 Código de datos de relevancia de las  mercaderías
+  public int $dCanQuiMer; //E717 Cantidad de quiebra o  merma
+  public int $dPorQuiMer; //E718 Porcentaje de quiebra o merma
+  public int $dCDCAnticipo; //E719 CDC del anticipo
+  public GValorItem $gValorItem;
+  public GCamIVA $gCamIVa;
+  public GRasMerc $gRasMerc;
+  public GVehNuevo $gVehNuevo;
+
+  ////Setters
+  /**
+   * Set the value of dCodInt
+   *
+   * @param string $dCodInt
+   *
+   * @return self
+   */
+  public function setDCodInt(string $dCodInt): self
+  {
+    $this->dCodInt = $dCodInt;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dParAranc
+   *
+   * @param int $dParAranc
+   *
+   * @return self
+   */
+  public function setDParAranc(int $dParAranc): self
+  {
+    $this->dParAranc = $dParAranc;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dNCM
+   *
+   * @param int $dNCM
+   *
+   * @return self
+   */
+  public function setDNCM(int $dNCM): self
+  {
+    $this->dNCM = $dNCM;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dDncpG
+   *
+   * @param string $dDncpG
+   *
+   * @return self
+   */
+  public function setDDncpG(string $dDncpG): self
+  {
+    $this->dDncpG = $dDncpG;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dDncpE
+   *
+   * @param string $dDncpE
+   *
+   * @return self
+   */
+  public function setDDncpE(string $dDncpE): self
+  {
+    $this->dDncpE = $dDncpE;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dGtin
+   *
+   * @param int $dGtin
+   *
+   * @return self
+   */
+  public function setDGtin(int $dGtin): self
+  {
+    $this->dGtin = $dGtin;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dGtinPq
+   *
+   * @param int $dGtinPq
+   *
+   * @return self
+   */
+  public function setDGtinPq(int $dGtinPq): self
+  {
+    $this->dGtinPq = $dGtinPq;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dDesProSer
+   *
+   * @param string $dDesProSer
+   *
+   * @return self
+   */
+  public function setDDesProSer(string $dDesProSer): self
+  {
+    $this->dDesProSer = $dDesProSer;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of cUniMed
+   *
+   * @param int $cUniMed
+   *
+   * @return self
+   */
+  public function setCUniMed(int $cUniMed): self
+  {
+    $this->cUniMed = $cUniMed;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dCantProSer
+   *
+   * @param int $dCantProSer
+   *
+   * @return self
+   */
+  public function setDCantProSer(int $dCantProSer): self
+  {
+    $this->dCantProSer = $dCantProSer;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of cPaisOrig
+   *
+   * @param string $cPaisOrig
+   *
+   * @return self
+   */
+  public function setCPaisOrig(string $cPaisOrig): self
+  {
+    $this->cPaisOrig = $cPaisOrig;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dInfItem
+   *
+   * @param string $dInfItem
+   *
+   * @return self
+   */
+  public function setDInfItem(string $dInfItem): self
+  {
+    $this->dInfItem = $dInfItem;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of cRelMerc
+   *
+   * @param int $cRelMerc
+   *
+   * @return self
+   */
+  public function setCRelMerc(int $cRelMerc): self
+  {
+    $this->cRelMerc = $cRelMerc;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dCanQuiMer
+   *
+   * @param int $dCanQuiMer
+   *
+   * @return self
+   */
+  public function setDCanQuiMer(int $dCanQuiMer): self
+  {
+    $this->dCanQuiMer = $dCanQuiMer;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dPorQuiMer
+   *
+   * @param int $dPorQuiMer
+   *
+   * @return self
+   */
+  public function setDPorQuiMer(int $dPorQuiMer): self
+  {
+    $this->dPorQuiMer = $dPorQuiMer;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of dCDCAnticipo
+   *
+   * @param int $dCDCAnticipo
+   *
+   * @return self
+   */
+  public function setDCDCAnticipo(int $dCDCAnticipo): self
+  {
+    $this->dCDCAnticipo = $dCDCAnticipo;
+
+    return $this;
+  }
+
+  ///Getter
+
+
+  /**
+   * Get the value of dCodInt
+   *
+   * @return string
+   */
+  public function getDCodInt(): string
+  {
+    return $this->dCodInt;
+  }
+
+  /**
+   * Get the value of dParAranc
+   *
+   * @return int
+   */
+  public function getDParAranc(): int
+  {
+    return $this->dParAranc;
+  }
+
+  /**
+   * Get the value of dNCM
+   *
+   * @return int
+   */
+  public function getDNCM(): int
+  {
+    return $this->dNCM;
+  }
+
+  /**
+   * Get the value of dDncpG
+   *
+   * @return string
+   */
+  public function getDDncpG(): string
+  {
+    return $this->dDncpG;
+  }
+
+  /**
+   * Get the value of dDncpE
+   *
+   * @return string
+   */
+  public function getDDncpE(): string
+  {
+    return $this->dDncpE;
+  }
+
+  /**
+   * Get the value of dGtin
+   *
+   * @return int
+   */
+  public function getDGtin(): int
+  {
+    return $this->dGtin;
+  }
+
+  /**
+   * Get the value of dGtinPq
+   *
+   * @return int
+   */
+  public function getDGtinPq(): int
+  {
+    return $this->dGtinPq;
+  }
+
+  /**
+   * Get the value of dDesProSer
+   *
+   * @return string
+   */
+  public function getDDesProSer(): string
+  {
+    return $this->dDesProSer;
+  }
+
+  /**
+   * Get the value of cUniMed
+   *
+   * @return int
+   */
+  public function getCUniMed(): int
+  {
+    return $this->cUniMed;
+  }
+
+  /**
+   * 710  Descripción de la unidad de medida 
+   *
+   * @return string
+   */
+  public function getDDesUniMed(): string
+  {
+    return "Unidad de medida de Mordor";
+  }
+
+  /**
+   * Get the value of dCantProSer
+   *
+   * @return int
+   */
+  public function getDCantProSer(): int
+  {
+    return $this->dCantProSer;
+  }
+
+  /**
+   * Get the value of cPaisOrig
+   *
+   * @return string
+   */
+  public function getCPaisOrig(): string
+  {
+    return $this->cPaisOrig;
+  }
+
+  /**
+   * E713 Descripción del país de origen del producto 
+   *
+   * @return string
+   */
+  public function getDDesPaisOrig(): string
+  {
+    return "Mordor"; //ver luego
+  }
+
+
+  /**
+   * Get the value of dInfItem
+   *
+   * @return string
+   */
+  public function getDInfItem(): string
+  {
+    return $this->dInfItem;
+  }
+
+  /**
+   * Get the value of cRelMerc
+   *
+   * @return int
+   */
+  public function getCRelMerc(): int
+  {
+    return $this->cRelMerc;
+  }
+
+  /**
+   * E716 Descripción del código de datos de relevancia de las mercaderías
+   *
+   * @return string
+   */
+  public function getDDesRelMerc(): string
+  {
+    switch ($this->cRelMerc) {
+      case 1:
+        return "Tolerancia de quiebra";
+        break;
+      case 2:
+        return "Tolerancia de merma";
+        break;
+
+      default:
+        return null;
+        break;
+    }
+  }
+
+
+
+  /**
+   * Get the value of dCanQuiMer
+   *
+   * @return int
+   */
+  public function getDCanQuiMer(): int
+  {
+    return $this->dCanQuiMer;
+  }
+
+  /**
+   * Get the value of dPorQuiMer
+   *
+   * @return int
+   */
+  public function getDPorQuiMer(): int
+  {
+    return $this->dPorQuiMer;
+  }
+
+  /**
+   * Get the value of dCDCAnticipo
+   *
+   * @return int
+   */
+  public function getDCDCAnticipo(): int
+  {
+    return $this->dCDCAnticipo;
+  }
+
+  ///XML Element
+
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
+  public function toDOMElement(): DOMElement
+  {
+    $res = new DOMElement("gCamItem");
+
+    $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
+    $res->appendChild(new DOMElement('dParAranc', $this->getDParAranc()));
+    $res->appendChild(new DOMElement('dNCM', $this->getDNCM()));
+    $res->appendChild(new DOMElement('dDncpG', str_pad($this->dDncpG, 8, '0', STR_PAD_RIGHT)));
+
+    if (isset($this->dDncpG)) {
+      $res->appendChild(new DOMElement('dDncpE', $this->getDDncpE()));
+    }
+
+    $res->appendChild(new DOMElement('dGtin', $this->getDGtin()));
+    $res->appendChild(new DOMElement('dGtinPq', $this->getDGtinPq()));
+    $res->appendChild(new DOMElement('dDesProSer', $this->getDDesProSer()));
+    $res->appendChild(new DOMElement('cUniMed', $this->getCUniMed()));
+    $res->appendChild(new DOMElement('dDesUniMed', $this->getDDesUniMed()));
+    $res->appendChild(new DOMElement('dCantProSer', $this->getDCantProSer()));
+    $res->appendChild(new DOMElement('cPaisOrig', $this->getCPaisOrig()));
+    $res->appendChild(new DOMElement('dDesPaisOrig', $this->getDDesPaisOrig()));
+    $res->appendChild(new DOMElement('dInfItem', $this->getDInfItem()));
+    $res->appendChild(new DOMElement('cRelMerc', $this->cRelMerc));
+    $res->appendChild(new DOMElement('dDesRelMerc', $this->getDDesRelMerc()));
+    $res->appendChild(new DOMElement('dCanQuiMer', $this->getDCanQuiMer()));
+    $res->appendChild(new DOMElement('dPorQuiMer', $this->getDPorQuiMer()));
+    $res->appendChild(new DOMElement('dCDCAnticipo', $this->getDCDCAnticipo()));
+
+    return $res;
+  }
+
+  /**
+   * Get the value of gValorItem
+   *
+   * @return GValorItem
+   */
+  public function getGValorItem(): GValorItem
+  {
+    return $this->gValorItem;
+  }
+
+  /**
+   * Set the value of gValorItem
+   *
+   * @param GValorItem $gValorItem
+   *
+   * @return self
+   */
+  public function setGValorItem(GValorItem $gValorItem): self
+  {
+    $this->gValorItem = $gValorItem;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gCamIVa
+   *
+   * @return GCamIVA
+   */
+  public function getGCamIVa(): GCamIVA
+  {
+    return $this->gCamIVa;
+  }
+
+  /**
+   * Set the value of gCamIVa
+   *
+   * @param GCamIVA $gCamIVa
+   *
+   * @return self
+   */
+  public function setGCamIVa(GCamIVA $gCamIVa): self
+  {
+    $this->gCamIVa = $gCamIVa;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gRasMerc
+   *
+   * @return GRasMerc
+   */
+  public function getGRasMerc(): GRasMerc
+  {
+    return $this->gRasMerc;
+  }
+
+  /**
+   * Set the value of gRasMerc
+   *
+   * @param GRasMerc $gRasMerc
+   *
+   * @return self
+   */
+  public function setGRasMerc(GRasMerc $gRasMerc): self
+  {
+    $this->gRasMerc = $gRasMerc;
+
+    return $this;
+  }
+}
