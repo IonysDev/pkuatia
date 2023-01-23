@@ -452,8 +452,8 @@ class GCamDEAsoc
 
     if ($this->iTipDocAso == 2) {
       $res->appendChild(new DOMElement('dNTimDI', $this->getDNTimDI()));
-      $res->appendChild(new DOMElement('dEstDocAso', str_pad($this->dEstDocAso, 1, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('dPExpDocAso', str_pad($this->dPExpDocAso, 1, '0', STR_PAD_LEFT)));
+      $res->appendChild(new DOMElement('dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
+      $res->appendChild(new DOMElement('dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(new DOMElement('dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
       $res->appendChild(new DOMElement('iTipoDocAso', $this->getITipDocAso()));
       $res->appendChild(new DOMElement('dDTipoDocAso', $this->getDDTipoDocAso()));
