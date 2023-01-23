@@ -138,7 +138,7 @@ class DE
   {
     $res = new DOMElement('DE');
 
-    $res->appendChild(new DOMElement('Id', $this->getID()));
+    $res->setAttribute('Id',$this->getID());
     $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
     $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));

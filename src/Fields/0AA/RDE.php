@@ -18,6 +18,12 @@ class RDE
   public Signature $signature;
   public GCamFuFD $gCamFuFD;
 
+  ///Versión actual
+  public function __construct() 
+  {
+      $this->dVerFor = 150;
+  }
+
   ///SETTERS
 
   /**
@@ -58,7 +64,7 @@ class RDE
     $res = new DOMElement('rDe');
 
     $res->appendChild(new DOMElement('dVerFor',$this->getDVerFor()));
-
+    
     return $res;
   }
 
