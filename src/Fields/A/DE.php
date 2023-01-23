@@ -6,6 +6,9 @@ use Abiliomp\Pkuatia\Fields\B\GOpeDE;
 use Abiliomp\Pkuatia\Fields\C\GTimb;
 use Abiliomp\Pkuatia\Fields\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Fields\E\GDtipDE;
+use Abiliomp\Pkuatia\Fields\F\GTotSub;
+use Abiliomp\Pkuatia\Fields\G\GCamGen;
+use Abiliomp\Pkuatia\Fields\H\GCamDEAsoc;
 use DateTime;
 use DOMElement;
 
@@ -22,6 +25,9 @@ class DE
   public GTimb $gTimb;
   public GDatGralOpe $dDatGralOpe;
   public GDtipDE $gDtipDe;
+  public GTotSub $gTotSub;
+  public GCamGen $gCamGen;
+  public GCamDEAsoc $gCamDEAsoc;
 
   ///Setters
   /**
@@ -232,6 +238,78 @@ class DE
   public function setGDtipDe(GDtipDE $gDtipDe): self
   {
     $this->gDtipDe = $gDtipDe;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gCamDEAsoc
+   *
+   * @return GCamDEAsoc
+   */
+  public function getGCamDEAsoc(): GCamDEAsoc
+  {
+    return $this->gCamDEAsoc;
+  }
+
+  /**
+   * Set the value of gCamDEAsoc
+   *
+   * @param GCamDEAsoc $gCamDEAsoc
+   *
+   * @return self
+   */
+  public function setGCamDEAsoc(GCamDEAsoc $gCamDEAsoc): self
+  {
+    $this->gCamDEAsoc = $gCamDEAsoc;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gCamGen
+   *
+   * @return GCamGen
+   */
+  public function getGCamGen(): GCamGen
+  {
+    return $this->gCamGen;
+  }
+
+  /**
+   * Set the value of gCamGen
+   *
+   * @param GCamGen $gCamGen
+   *
+   * @return self
+   */
+  public function setGCamGen(GCamGen $gCamGen): self
+  {
+    $this->gCamGen = $gCamGen;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gTotSub
+   *
+   * @return GTotSub
+   */
+  public function getGTotSub(): GTotSub
+  {
+    return $this->gTotSub;
+  }
+
+  /**
+   * Set the value of gTotSub
+   *
+   * @param GTotSub $gTotSub
+   *
+   * @return self
+   */
+  public function setGTotSub(GTotSub $gTotSub): self
+  {
+    $this->gTotSub = $gTotSub;
 
     return $this;
   }

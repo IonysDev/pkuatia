@@ -3,6 +3,8 @@
 namespace Abiliomp\Pkuatia\Fields\AA;
 
 use Abiliomp\Pkuatia\Fields\A\DE;
+use Abiliomp\Pkuatia\Fields\I\Signature;
+use Abiliomp\Pkuatia\Fields\J\GCamFuFD;
 use DOMElement;
 
 /** ID: AA001
@@ -13,6 +15,8 @@ class RDE
 {
   public int $dVerFor; //AA002 Versión del formato
   public DE $dE;
+  public Signature $signature;
+  public GCamFuFD $gCamFuFD;
 
   ///SETTERS
 
@@ -80,6 +84,30 @@ class RDE
   public function setDE(DE $dE): self
   {
     $this->dE = $dE;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gCamFuFD
+   *
+   * @return GCamFuFD
+   */
+  public function getGCamFuFD(): GCamFuFD
+  {
+    return $this->gCamFuFD;
+  }
+
+  /**
+   * Set the value of gCamFuFD
+   *
+   * @param GCamFuFD $gCamFuFD
+   *
+   * @return self
+   */
+  public function setGCamFuFD(GCamFuFD $gCamFuFD): self
+  {
+    $this->gCamFuFD = $gCamFuFD;
 
     return $this;
   }

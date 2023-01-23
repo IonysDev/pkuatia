@@ -23,6 +23,8 @@ class GTransp
   public string $cPaisDest; ///E911 Código del país de destino
   public GCamSal $gCamSal;
   public GCamEnt $gCamEnt;
+  public GVehTras $gVehTras;
+  public GCamTrans $gCamTrans;
   ///SETTERS
 
   /**
@@ -404,6 +406,54 @@ class GTransp
   public function setGCamSal(GCamSal $gCamSal): self
   {
     $this->gCamSal = $gCamSal;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gVehTras
+   *
+   * @return GVehTras
+   */
+  public function getGVehTras(): GVehTras
+  {
+    return $this->gVehTras;
+  }
+
+  /**
+   * Set the value of gVehTras
+   *
+   * @param GVehTras $gVehTras
+   *
+   * @return self
+   */
+  public function setGVehTras(GVehTras $gVehTras): self
+  {
+    $this->gVehTras = $gVehTras;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gCamTrans
+   *
+   * @return GCamTrans
+   */
+  public function getGCamTrans(): GCamTrans
+  {
+    return $this->gCamTrans;
+  }
+
+  /**
+   * Set the value of gCamTrans
+   *
+   * @param GCamTrans $gCamTrans
+   *
+   * @return self
+   */
+  public function setGCamTrans(GCamTrans $gCamTrans): self
+  {
+    $this->gCamTrans = $gCamTrans;
 
     return $this;
   }
