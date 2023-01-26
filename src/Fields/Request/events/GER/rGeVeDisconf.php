@@ -12,7 +12,10 @@ class rGeVeDisconf
   public string $Id;// GDI002 CDC del DTE
   public string $mOtEve;///GDI004 Motivo del Evento
 
+   //====================================================//
   //SETTERS
+   //====================================================//
+
 
   /**
    * Set the value of Id
@@ -43,7 +46,10 @@ class rGeVeDisconf
     return $this;
   }
 
+   //====================================================//
   ///GETTERS
+   //====================================================//
+
   
 
   /**
@@ -66,7 +72,10 @@ class rGeVeDisconf
     return $this->mOtEve;
   }
 
+   //====================================================//
   ///XML Element
+   //====================================================//
+
   
   /**
    * toDOMElement

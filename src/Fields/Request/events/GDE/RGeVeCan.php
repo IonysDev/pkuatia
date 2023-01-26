@@ -12,7 +12,10 @@ class RGeVeCan
   public string $Id; ///GEC002 Identificador del DTE
   public string $mOtEve; ///GEC003 Motivo del Evento
 
+   //====================================================//
   ////SETTERS
+   //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -42,7 +45,10 @@ class RGeVeCan
     return $this;
   }
 
+   //====================================================//
   ///GETTERS
+   //====================================================//
+
 
 
   /**
@@ -65,8 +71,11 @@ class RGeVeCan
     return $this->mOtEve;
   }
 
+   //====================================================//
+  ///XML Element 
+   //====================================================//
 
-  ///XML Element  
+   
   /**
    * toDOMElement
    *

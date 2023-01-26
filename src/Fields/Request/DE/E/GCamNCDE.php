@@ -13,7 +13,9 @@ class GCamNCDE
 {
   public int $iMotEmi; //ID:E401  Motivo de emisión PADRE:E400
 
+  //====================================================//
   ///Setters
+  //====================================================//
 
   /**
    * Set the value of iMotEmi
@@ -29,8 +31,9 @@ class GCamNCDE
     return $this;
   }
 
-
+  //====================================================//
   ///Getters
+  //====================================================//
 
   /**
    * Get the value of iMotEmi
@@ -80,8 +83,10 @@ class GCamNCDE
     }
   }
 
+  //====================================================//
   ///XML Element
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -89,12 +94,11 @@ class GCamNCDE
    */
   public  function toDOMElement(): DOMElement
   {
-      $res = new DOMElement('gCamNCDE');
+    $res = new DOMElement('gCamNCDE');
 
-      $res->appendChild(new DOMElement('iMotEmi',$this->getIMotEmi()));
-      $res->appendChild(new DOMElement('dDesMotEmi', $this->getDDesMotEmi()));
+    $res->appendChild(new DOMElement('iMotEmi', $this->getIMotEmi()));
+    $res->appendChild(new DOMElement('dDesMotEmi', $this->getDDesMotEmi()));
 
-      return $res;
+    return $res;
   }
 }
-?> 

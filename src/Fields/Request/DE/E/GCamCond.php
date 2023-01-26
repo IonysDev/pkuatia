@@ -14,7 +14,9 @@ class GCamCond
   public GPaConEIni $gPaConEIni;
   public GPagCred $gPagCred;
 
+  //====================================================//
   ///Setters
+  //====================================================//
 
   /**
    * Set the value of iCondOpe
@@ -30,7 +32,10 @@ class GCamCond
     return $this;
   }
 
+  //====================================================//
   ///Getters
+  //====================================================//
+
   /**
    * Get the value of iCondOpe
    *
@@ -63,14 +68,16 @@ class GCamCond
     }
   }
 
-
+  //====================================================//
   ///XML Element  
+  //====================================================//
+
   /**
    * toDOMElement
    *
    * @return DOMElement
    */
-  public function toDOMElement() : DOMElement
+  public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('gCamCond');
 
@@ -79,5 +86,56 @@ class GCamCond
 
     return $res;
   }
+
+  //====================================================//
+  ///Others
+  //====================================================//
+
+  /**
+   * Get the value of gPaConEIni
+   *
+   * @return GPaConEIni
+   */
+  public function getGPaConEIni(): GPaConEIni
+  {
+    return $this->gPaConEIni;
+  }
+
+  /**
+   * Set the value of gPaConEIni
+   *
+   * @param GPaConEIni $gPaConEIni
+   *
+   * @return self
+   */
+  public function setGPaConEIni(GPaConEIni $gPaConEIni): self
+  {
+    $this->gPaConEIni = $gPaConEIni;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gPagCred
+   *
+   * @return GPagCred
+   */
+  public function getGPagCred(): GPagCred
+  {
+    return $this->gPagCred;
+  }
+
+  /**
+   * Set the value of gPagCred
+   *
+   * @param GPagCred $gPagCred
+   *
+   * @return self
+   */
+  public function setGPagCred(GPagCred $gPagCred): self
+  {
+    $this->gPagCred = $gPagCred;
+
+    return $this;
+  }
 }
-?> 

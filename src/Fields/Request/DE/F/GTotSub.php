@@ -35,7 +35,10 @@ class GTotSub
   public int $dTBasGraIVA; //F020 Total de la base gravada de IVA
   public int $dTotalGs; /// F023 Total general de la operación en Guaraníes
 
+   //====================================================//
   ///SETTERS
+   //====================================================//
+
   /**
    * Set the value of dSubExe
    *
@@ -395,7 +398,9 @@ class GTotSub
     return $this;
   }
 
+   //====================================================//
   ///GETTERS
+   //====================================================//
 
 
   /**
@@ -648,7 +653,10 @@ class GTotSub
     return $this->dTotalGs;
   }
 
+   //====================================================//
   ///XML Element  
+   //====================================================//
+   
   /**
    * toDOMElement
    *

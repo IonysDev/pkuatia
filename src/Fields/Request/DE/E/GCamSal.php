@@ -20,8 +20,9 @@ class GCamSal
   public int $cCiuSal; //E929 Código de la ciudad del local de salida
   public string $dTelSal; /// E931 Teléfono de contacto del local de salida
 
+  //====================================================//
   ///SETTERS
-
+  //====================================================//
   /**
    * Set the value of dDirLocSal
    *
@@ -141,9 +142,9 @@ class GCamSal
     return $this;
   }
 
-
+  //====================================================//
   ///GETTERS
-
+  //====================================================//
 
   /**
    * Get the value of dDirLocSal
@@ -257,7 +258,10 @@ class GCamSal
     return $this->dTelSal;
   }
 
+  //====================================================//
   ///XML Element  
+  //====================================================//
+  
   /**
    * toDOMElement
    *

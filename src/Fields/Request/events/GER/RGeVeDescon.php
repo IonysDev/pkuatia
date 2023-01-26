@@ -21,7 +21,10 @@ class RGeVeDescon
   public string $dNumID; ///GED010 Número de documento de identidad
   public string $mOtEve; //GED011 Motivo del Evento
 
+  //====================================================//
   ///SETTERS
+  //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -171,7 +174,9 @@ class RGeVeDescon
     return $this;
   }
 
+  //====================================================//
   ///GETTERS
+  //====================================================//
 
 
   /**
@@ -274,7 +279,10 @@ class RGeVeDescon
     return $this->mOtEve;
   }
 
+  //====================================================//
   ///XML Element  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -288,14 +296,12 @@ class RGeVeDescon
     $res->appendChild(new DOMElement('dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('iTipRec', $this->getITipRec()));
     $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
-    if($this->iTipRec == 1)
-    {
+    if ($this->iTipRec == 1) {
       $res->appendChild(new DOMElement('dRucRec', $this->getDRucRec()));
       $res->appendChild(new DOMElement('dDVRec', $this->getDDVRec()));
     }
 
-    if($this->iTipRec == 2)
-    {
+    if ($this->iTipRec == 2) {
       $res->appendChild(new DOMElement('dTipIDRec', $this->getITipRec()));
       $res->appendChild(new DOMElement('dNumID', $this->getDNumID()));
     }

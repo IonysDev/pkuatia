@@ -7,6 +7,8 @@ use Abiliomp\Pkuatia\Fields\I\Signature;
 use Abiliomp\Pkuatia\Fields\J\GCamFuFD;
 use DOMElement;
 
+
+
 /** ID: AA001
  * Campos que identifican el formato electrónico XML (AA001-AA009)
  * PADRE: RAIZ
@@ -18,13 +20,23 @@ class RDE
   public Signature $signature;
   public GCamFuFD $gCamFuFD;
 
-  ///Versión actual
-  public function __construct() 
+  //====================================================//
+  //Constructor
+  //====================================================//  
+  
+  /**
+   * __construct
+   *
+   * @return void
+   */
+  public function __construct()
   {
-      $this->dVerFor = 150;
+    $this->dVerFor = 150;
   }
 
+  //====================================================//
   ///SETTERS
+  //====================================================//
 
   /**
    * Set the value of dVerFor
@@ -40,7 +52,9 @@ class RDE
     return $this;
   }
 
+  //====================================================//
   ///Getters
+  //====================================================//
 
   /**
    * Get the value of dVerFor
@@ -52,8 +66,10 @@ class RDE
     return $this->dVerFor;
   }
 
+  //====================================================//
   ///XML Element
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -63,13 +79,15 @@ class RDE
   {
     $res = new DOMElement('rDe');
 
-    $res->appendChild(new DOMElement('dVerFor',$this->getDVerFor()));
-    
+    $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
+
     return $res;
   }
 
-
+  //====================================================//
   ///Others
+  //====================================================//
+
   /**
    * Get the value of dE
    *

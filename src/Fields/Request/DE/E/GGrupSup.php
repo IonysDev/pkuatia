@@ -10,14 +10,16 @@ use DOMElement;
  */
 class GGrupSup
 {
-  public string $dNomCaj;///E811 Nombre del cajero
-  public int $dEfectivo;/// E812 Efectivo
-  public int $dVuelto;//E813 Vuelto
-  public int $dDonac;///E814 Monto de la donación
-  public string $dDesDonac;///E815 Descripción de la donación
+  public string $dNomCaj; ///E811 Nombre del cajero
+  public int $dEfectivo; /// E812 Efectivo
+  public int $dVuelto; //E813 Vuelto
+  public int $dDonac; ///E814 Monto de la donación
+  public string $dDesDonac; ///E815 Descripción de la donación
 
-
+  //====================================================//
   ////Setters
+  //====================================================//
+
   /**
    * Set the value of dNomCaj
    *
@@ -92,9 +94,9 @@ class GGrupSup
     return $this;
   }
 
-
+  //====================================================//
   //Getters
-  
+  //====================================================//
 
   /**
    * Get the value of dNomCaj
@@ -146,8 +148,10 @@ class GGrupSup
     return $this->dDesDonac;
   }
 
+   //====================================================//
   ///XML Element
-  
+   //====================================================//
+
   /**
    * toDOMElement
    *
@@ -157,13 +161,12 @@ class GGrupSup
   {
     $res = new DOMElement('gGrupSup');
 
-    $res->appendChild(new DOMElement('dNomCaj',$this->getDNomCaj()));
+    $res->appendChild(new DOMElement('dNomCaj', $this->getDNomCaj()));
     $res->appendChild(new DOMElement('dEfectivo', $this->getDEfectivo()));
     $res->appendChild(new DOMElement('dVuelto', $this->getDVuelto()));
     $res->appendChild(new DOMElement('dDonac', $this->getDDonac()));
-    $res->appendChild(new DOMElement('dDesDonac',$this->getDDesDonac()));
+    $res->appendChild(new DOMElement('dDesDonac', $this->getDDesDonac()));
 
     return $res;
-
   }
 }

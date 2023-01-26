@@ -26,7 +26,10 @@ class GCamTrans
    public string $dDVAg; ///E996 Dígito verificador del  RUC del agente
    public string $dDirAge; /// E997 Dirección del agente
 
+   //====================================================//
    ////SETTERS
+   //====================================================//
+
    /**
     * Set the value of iNatTrans
     *
@@ -250,8 +253,9 @@ class GCamTrans
       return $this;
    }
 
+   //====================================================//
    ///GETTERS
-
+   //====================================================//
 
    /**
     * Get the value of iNatTrans
@@ -442,7 +446,10 @@ class GCamTrans
       return $this->dDirAge;
    }
 
+   //====================================================//
    //XML Element  
+   //====================================================//
+   
    /**
     * toDOMElement
     *

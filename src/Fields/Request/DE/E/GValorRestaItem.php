@@ -17,7 +17,10 @@ class GValorRestaItem
   public int $dTotOpeItem; /// EA008 Valor total de la operación por ítem 
   public int $dTotOpeGs; ///EA009 Valor total de la operación por ítem en guaraníes
 
+  //====================================================//
   ///Setters
+  //====================================================//
+
   /**
    * Set the value of dDescItem
    *
@@ -122,8 +125,9 @@ class GValorRestaItem
     return $this;
   }
 
-
+  //====================================================//
   ///Getters
+  //====================================================//
 
 
   /**
@@ -196,7 +200,9 @@ class GValorRestaItem
     return $this->dTotOpeGs;
   }
 
+  //====================================================//
   ///XML Element
+  //====================================================//
 
   /**
    * toDOMElement
@@ -215,7 +221,7 @@ class GValorRestaItem
     $res->appendChild(new DOMElement('dAntPreUniIt', $this->getDAntPreUniIt()));
     $res->appendChild(new DOMElement('dAntGloPreUniIt', $this->getDAntGloPreUniIt()));
     $res->appendChild(new DOMElement('dTotOpeItem', $this->getDTotOpeItem())); ///Leer en el documento es largo Mordor;
-    $res->appendChild(new DOMElement('dTotOpeGs', $this->getdTotOpeGs()));///leer
+    $res->appendChild(new DOMElement('dTotOpeGs', $this->getdTotOpeGs())); ///leer
 
     return $res;
   }

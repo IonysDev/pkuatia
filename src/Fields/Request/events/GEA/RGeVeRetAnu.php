@@ -19,7 +19,10 @@ class RGeVeRetAnu
   public DateTime $dFeEmiRet; //GERA008 Fecha de emisión de la retención
   public DateTime $dFecAnRet; ///GERA009 Fecha de anulación  de la retención 
 
+  //====================================================//
   //SETTERS
+  //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -138,7 +141,9 @@ class RGeVeRetAnu
     return $this;
   }
 
+  //====================================================//
   ///GETTERS
+  //====================================================//
 
 
   /**
@@ -221,7 +226,10 @@ class RGeVeRetAnu
     return $this->dFecAnRet;
   }
 
-  ///XML Element  
+  //====================================================//
+  ///XML Element 
+  //====================================================//
+
   /**
    * toDOMElement
    *

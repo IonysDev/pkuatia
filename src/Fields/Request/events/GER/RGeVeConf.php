@@ -14,8 +14,10 @@ class RGeVeConf
   public int $iTipConf;//GCO003 Tipo de Conformidad 
   public DateTime $dFecRecep;//// GCO004 Fecha Estimada de Recepción
 
-
+   //====================================================//
   ///SETTERS
+   //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -60,7 +62,10 @@ class RGeVeConf
     return $this;
   }
 
+   //====================================================//
   ///GETTERS
+   //====================================================//
+
   
 
   /**
@@ -93,8 +98,10 @@ class RGeVeConf
     return $this->dFecRecep;
   }
 
-
+   //====================================================//
   ///XML Element  
+   //====================================================//
+
   /**
    * toDOMElement
    *

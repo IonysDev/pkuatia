@@ -12,7 +12,10 @@ class GCamFuFD
   public string $dCarQR; ///Caracteres correspondientes al código QR
   public string $dInfAdic; ///Información adicional de interés para el emisor
 
+  //====================================================//
   //SETTER
+  //====================================================//
+
   /**
    * Set the value of dCarQR
    *
@@ -42,7 +45,9 @@ class GCamFuFD
     return $this;
   }
 
+  //====================================================//
   ///GETTER
+  //====================================================//
 
 
   /**
@@ -65,8 +70,10 @@ class GCamFuFD
     return $this->dInfAdic;
   }
 
-
+  //====================================================//
   ///XML ELEMENT  
+  //====================================================//
+
   /**
    * toDOMElement
    *

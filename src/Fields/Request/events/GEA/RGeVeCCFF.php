@@ -10,11 +10,14 @@ use DOMElement;
  */
 class RGeVeCCFF
 {
-  public string $Id;// GECF002 CDC del DE/DTE
-  public string $dNumTraCCFF;///GECF003 Número de  transferencia de  créditos fiscales
-  public DateTime $dFeAceTraCCFF;//GECF004 Fecha de aceptación del crédito fiscal
+  public string $Id; // GECF002 CDC del DE/DTE
+  public string $dNumTraCCFF; ///GECF003 Número de  transferencia de  créditos fiscales
+  public DateTime $dFeAceTraCCFF; //GECF004 Fecha de aceptación del crédito fiscal
 
+  //====================================================//
   //SETTERS
+  //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -59,8 +62,9 @@ class RGeVeCCFF
     return $this;
   }
 
+  //====================================================//
   ///GETTERS
-  
+  //====================================================//
 
   /**
    * Get the value of Id
@@ -92,7 +96,10 @@ class RGeVeCCFF
     return $this->dFeAceTraCCFF;
   }
 
+  //====================================================//
   ///XML ELEMENT  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -107,4 +114,3 @@ class RGeVeCCFF
     return $res;
   }
 }
-

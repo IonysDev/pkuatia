@@ -15,7 +15,9 @@ class GCamNRE
   public int $dKmR; ///E505 Kilómetros estimados de recorrido E500 
   public DateTime $dFecEm; //ID:E506 Fecha futura de emisión de la factura PADRE:E500
 
+   //====================================================//
   ///Setters
+   //====================================================//
 
   /**
    * Set the value of iMotEmiNR
@@ -76,9 +78,9 @@ class GCamNRE
     return $this;
   }
 
-
+ //====================================================//
   ///Getters
-
+ //====================================================//
 
   /**
    * Get the value of iMotEmiNR
@@ -210,9 +212,15 @@ class GCamNRE
     return $this->dFecEm;
   }
 
-
+ //====================================================//
   ///XML Element
-
+   //====================================================//
+  
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement("gCamNRE");
@@ -227,4 +235,3 @@ class GCamNRE
     return $res;
   }
 }
-?> 

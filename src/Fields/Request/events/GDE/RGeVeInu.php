@@ -17,7 +17,10 @@ class RGeVeInu
   public int $iTiDE; ///GEI007 Tipo de Documento Electrónico
   public string $mOtEve; ///GEI008 Motivo del Evento
 
+   //====================================================//
   ///SETTERS
+   //====================================================//
+
   /**
    * Set the value of dNumTim
    *

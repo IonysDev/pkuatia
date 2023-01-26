@@ -16,8 +16,10 @@ class GCamFE
   public DateTime $dFecEmNR; //Fecha en el formato: AAAA-MM-DD Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda. RG 41/14 ID:E013 PADRE:E010
   public GCompPub $gComPub;
 
+  //====================================================//
   ////Setters
-  
+  //====================================================//
+
   /**
    * Set the value of iIndPres
    *
@@ -62,7 +64,9 @@ class GCamFE
     return $this;
   }
 
+  //====================================================//
   ////Getters
+  //====================================================//
 
   /**
    * Get the value of iIndPres
@@ -122,8 +126,9 @@ class GCamFE
     }
   }
 
-
+  //====================================================//
   ///XML Element
+  //====================================================//
 
   /**
    * XML Element
@@ -139,4 +144,3 @@ class GCamFE
     return $res;
   }
 }
-?> 

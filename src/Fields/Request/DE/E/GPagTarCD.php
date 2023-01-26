@@ -20,7 +20,9 @@ class GPagTarCD
   public string $dNomTit; //dNomTit Nombre del titular de la tarjeta 
   public int $dNumTarj; //E629 dNumTarj Número de la tarjeta;
 
+  //====================================================//
   ///Setters
+  //====================================================//
 
   /**
    * Set the value of iDenTarj
@@ -141,8 +143,9 @@ class GPagTarCD
     return $this;
   }
 
+  //====================================================//
   ///Getters
-
+  //====================================================//
 
   /**
    * Get the value of iDenTarj
@@ -261,9 +264,10 @@ class GPagTarCD
     return $this->dNumTarj;
   }
 
-
+  //====================================================//
   //XML Element
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -286,4 +290,3 @@ class GPagTarCD
     return $res;
   }
 }
-?> 

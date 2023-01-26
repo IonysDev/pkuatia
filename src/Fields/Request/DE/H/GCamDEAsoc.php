@@ -24,7 +24,10 @@ class GCamDEAsoc
   public int $dNumCons; //H016 Número de constancia 
   public string $dNumControl; ///H017 Número de control de la constancia 
 
+   //====================================================//
   ///SETTERS
+   //====================================================//
+
   /**
    * Set the value of iTipDocAso
    *
@@ -219,8 +222,9 @@ class GCamDEAsoc
     return $this;
   }
 
+   //====================================================//
   ///GETTERS
-
+ //====================================================//
 
   /**
    * Get the value of iTipDocAso
@@ -434,7 +438,9 @@ class GCamDEAsoc
     return $this->dNumControl;
   }
 
+   //====================================================//
   ///XML Element
+   //====================================================//
 
   /**
    * toDOMElement

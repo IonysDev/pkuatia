@@ -18,8 +18,10 @@ class RGeVeRetAce
   public string $dCodConRet; /// GER007 Identificador de la retención
   public DateTime $dFeEmiRet; ///GER008  Fecha de emisión de  la retención
 
-
+   //====================================================//
   ///SETTERS
+   //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -124,7 +126,10 @@ class RGeVeRetAce
     return $this;
   }
 
+   //====================================================//
   ///GETTERS
+   //====================================================//
+
   
 
   /**
@@ -197,7 +202,10 @@ class RGeVeRetAce
     return $this->dFeEmiRet;
   }
 
+   //====================================================//
   ///XML Element  
+   //====================================================//
+
   /**
    * toDOMElement
    *

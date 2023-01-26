@@ -15,10 +15,13 @@ class GGrupEner
   public int $dActiv; ///E793 Código de actividad
   public string $dCateg; ///E794 Código de categoría
   public int $dLecAnt; ///E795 Lectura anterior
-  public int $dLecAct;///E796 Lectura actual
-  public int $dConKwh;/// 797 dConKwh Consumo
+  public int $dLecAct; ///E796 Lectura actual
+  public int $dConKwh; /// 797 dConKwh Consumo
+
+  //====================================================//
   ///SETTETS
-  
+  //====================================================//
+
   /**
    * Set the value of dNroMed
    *
@@ -93,7 +96,7 @@ class GGrupEner
     return $this;
   }
 
-    /**
+  /**
    * Set the value of dConKwh
    *
    * @param int $dConKwh
@@ -107,11 +110,10 @@ class GGrupEner
     return $this;
   }
 
+
+  //====================================================//
   ///Getter
-
-
-
-
+  //====================================================//
 
   /**
    * Get the value of dNroMed
@@ -173,9 +175,10 @@ class GGrupEner
     return $this->dLecAct - $this->dLecAct;
   }
 
-
+ //====================================================//
   ///XML Element
-  
+   //====================================================//
+
   /**
    * toDomElement
    *

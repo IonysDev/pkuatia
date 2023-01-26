@@ -29,7 +29,10 @@ class DE
   public GCamGen $gCamGen;
   public GCamDEAsoc $gCamDEAsoc;
 
+  //====================================================//
   ///Setters
+  //====================================================//
+
   /**
    * Set the value of iD
    *
@@ -89,8 +92,9 @@ class DE
     return $this;
   }
 
+  //====================================================//
   ///Getters
-
+  //====================================================//
 
   /**
    * Get the value of iD
@@ -132,13 +136,15 @@ class DE
     return $this->dSisFact;
   }
 
+  //====================================================//
   ///XML Element
+  //====================================================//
 
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('DE');
 
-    $res->setAttribute('Id',$this->getID());
+    $res->setAttribute('Id', $this->getID());
     $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
     $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
@@ -146,6 +152,10 @@ class DE
     return $res;
   }
 
+  //====================================================//
+  //Others
+  //====================================================//
+  
   /**
    * Get the value of gOpeDe
    *

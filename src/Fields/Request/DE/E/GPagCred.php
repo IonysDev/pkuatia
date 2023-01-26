@@ -15,9 +15,9 @@ class GPagCred
   public int $dMonEnt; //E645  Monto de la entrega inicial
   public GCuotas $gCuotas;
 
+  //====================================================//
   //Setters
-
-
+  //====================================================//
 
   /**
    * Set the value of iCondCred
@@ -78,8 +78,9 @@ class GPagCred
     return $this;
   }
 
+  //====================================================//
   //Getters
-
+  //====================================================//
 
   /**
    * Get the value of iCondCred
@@ -142,8 +143,9 @@ class GPagCred
     return $this->dMonEnt;
   }
 
-
+  //====================================================//
   ///XML Element
+  //====================================================//
 
   /**
    * toDOMElement
@@ -166,8 +168,33 @@ class GPagCred
     $res->appendChild(new DOMElement('dMonEnt', $this->getDMonEnt()));
 
     return $res;
+  }
 
+  //====================================================//
+  //Cuotas
+  //====================================================//
+
+  /**
+   * Get the value of gCuotas
+   *
+   * @return GCuotas
+   */
+  public function getGCuotas(): GCuotas
+  {
+    return $this->gCuotas;
+  }
+
+  /**
+   * Set the value of gCuotas
+   *
+   * @param GCuotas $gCuotas
+   *
+   * @return self
+   */
+  public function setGCuotas(GCuotas $gCuotas): self
+  {
+    $this->gCuotas = $gCuotas;
+
+    return $this;
   }
 }
-
-?>

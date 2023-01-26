@@ -25,7 +25,9 @@ class GCamAE
   public int $cDisProv; //ID:E319 cDisProv Código del distrito donde se realiza la transacción
   public int $cCiuProv; //ID:E321 cCiuProv Código de la ciudad  donde se realiza la transacción
 
+   //====================================================//
   ///Setters
+   //====================================================//
 
   /**
    * Set the value of iNatVen
@@ -220,8 +222,9 @@ class GCamAE
     return $this;
   }
 
-
+ //====================================================//
   ///Getters
+   //====================================================//
 
   /**
    * Get the value of iNatVen
@@ -459,9 +462,15 @@ class GCamAE
     return "Mordor";
   }
 
-
+ //====================================================//
   ///XML Element
-
+ //====================================================//
+   
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement("gCamAE");
@@ -498,4 +507,3 @@ class GCamAE
     return $res;
   }
 }
-?> 

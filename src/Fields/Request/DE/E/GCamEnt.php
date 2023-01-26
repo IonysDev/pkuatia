@@ -20,8 +20,9 @@ class GCamEnt
   public int $cCiuEnt; //E949 Código de la ciudad del local de Entrega
   public string $dTelEnt; /// E951 Teléfono de contacto del local de Entrega
 
-
+  //====================================================//
   ///Setters
+  //====================================================//
 
   /**
    * Set the value of dDirLocEnt
@@ -142,9 +143,9 @@ class GCamEnt
     return $this;
   }
 
-
+  //====================================================//
   ///GETTERS
-
+  //====================================================//
 
   /**
    * Get the value of dDirLocEnt
@@ -258,7 +259,10 @@ class GCamEnt
     return $this->dTelEnt;
   }
 
+  //====================================================//
   ///XML Element  
+  //====================================================//
+
   /**
    * toDOMElement
    *

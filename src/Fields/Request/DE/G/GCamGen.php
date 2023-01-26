@@ -13,9 +13,10 @@ class GCamGen
   public string $dOrdVta; ///G003 Número de orden de venta 
   public string $dAsiento; ///G004 Número de asiento contable
   public GCamCarg $gCamCarg;
+
+  //====================================================//
   ///SETTER
-
-
+  //====================================================//
 
   /**
    * Set the value of dOrdCompra
@@ -61,8 +62,9 @@ class GCamGen
     return $this;
   }
 
-
+  //====================================================//
   ///GETTERS
+  //====================================================//
 
 
   /**
@@ -95,7 +97,9 @@ class GCamGen
     return $this->dAsiento;
   }
 
+  //====================================================//
   ///XML Element
+  //====================================================//
 
   /**
    * toDOMElement
@@ -110,6 +114,10 @@ class GCamGen
     $res->appendChild(new DOMElement('dAsiento', $this->getDAsiento()));
     return $res;
   }
+
+  //====================================================//
+  ///Others
+  //====================================================//
 
   /**
    * Get the value of gCamCarg

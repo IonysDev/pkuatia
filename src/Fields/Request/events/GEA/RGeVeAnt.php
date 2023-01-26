@@ -9,9 +9,12 @@ use DOMElement;
  */
 class rGeVeAnt
 {
-  public string $Id;//GEA002 CDC del DTE asociado
+  public string $Id; //GEA002 CDC del DTE asociado
 
+  //====================================================//
   //SETTERS
+  //====================================================//
+
 
   /**
    * Set the value of Id
@@ -27,8 +30,10 @@ class rGeVeAnt
     return $this;
   }
 
-
+  //====================================================//
   ///GETTERS
+  //====================================================//
+
   /**
    * Get the value of Id
    *
@@ -39,8 +44,15 @@ class rGeVeAnt
     return $this->Id;
   }
 
-
+   //====================================================//
   ///XML ELEMENT
+   //====================================================//
+  
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('rGeVeAnt');

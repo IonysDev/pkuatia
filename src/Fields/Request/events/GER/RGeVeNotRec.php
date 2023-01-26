@@ -21,7 +21,10 @@ class RGeVeNotRec
   public string $dNumID; ///GEN010 Número de documento de identidad 
   public int $dTotalGs; //GEN011 Total general de la operación en Guaraníes
 
+  //====================================================//
   ///SETTERS
+  //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -170,8 +173,9 @@ class RGeVeNotRec
     return $this;
   }
 
+  //====================================================//
   ///GETTERS
-
+  //====================================================//
 
   /**
    * Get the value of Id
@@ -273,9 +277,10 @@ class RGeVeNotRec
     return $this->dTotalGs;
   }
 
-
-
+  //====================================================//
   ////XML ELEMENT  
+  //====================================================//
+
   /**
    * toDOMElement
    *

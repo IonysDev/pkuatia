@@ -16,7 +16,9 @@ class GCuotas
   public int $dMonCuota; //E651 Monto de cada cuota
   public DateTime $dVencCuo; //E652  Fecha de vencimiento de cada cuota;
 
+  //====================================================//
   ///Setters
+  //====================================================//
 
 
   /**
@@ -63,7 +65,9 @@ class GCuotas
     return $this;
   }
 
+  //====================================================//
   ///Getters
+  //====================================================//
 
   /**
    * Get the value of cMoneCuo
@@ -105,8 +109,10 @@ class GCuotas
     return $this->dVencCuo;
   }
 
+  //====================================================//
   ///XML Element
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -119,7 +125,7 @@ class GCuotas
     $res->appendChild(new DOMElement('cMoneCuo', $this->getCMoneCuo()));
     $res->appendChild(new DOMElement('dDMoneCuo', $this->getDDMoneCuo()));
     $res->appendChild(new DOMElement('dMonCuota', $this->getDMonCuota()));
-    $res->appendChild(new DOMElement('dVencCuo',$this->getDVencCuo()->format("Y-m-d")));
+    $res->appendChild(new DOMElement('dVencCuo', $this->getDVencCuo()->format("Y-m-d")));
 
     return $res;
   }

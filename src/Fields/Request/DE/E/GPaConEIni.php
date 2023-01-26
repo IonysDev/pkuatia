@@ -16,7 +16,10 @@ class GPaConEIni
   public GPagTarCD $gPagTarCD;
   public GPagCheq $gPagCheq;
 
+
+  //====================================================//
   //Setters
+  //====================================================//
 
   /**
    * Set the value of iTiPago
@@ -31,8 +34,6 @@ class GPaConEIni
 
     return $this;
   }
-
-
 
   /**
    * Set the value of dMonTiPag
@@ -78,8 +79,9 @@ class GPaConEIni
     return $this;
   }
 
+  //====================================================//
   ///Getters
-
+  //====================================================//
 
   /**
    * Get the value of iTiPago
@@ -172,7 +174,7 @@ class GPaConEIni
     }
   }
 
-  
+
   /**
    * Get the value of dMonTiPag
    *
@@ -190,9 +192,9 @@ class GPaConEIni
    */
   public function getCMoneTiPag(): string
   {
-    return $this->cMoneTiPag;///VER EL TEMA DE LAS MONEDAS
+    return $this->cMoneTiPag; ///VER EL TEMA DE LAS MONEDAS
   }
-  
+
   /**
    *  E610 Descripción de la moneda por tipo de pago
    *
@@ -200,7 +202,7 @@ class GPaConEIni
    */
   public function getDDMoneTiPag(): string
   {
-    return "Moneda de Mordor";///ver el tema de la tabla
+    return "Moneda de Mordor"; ///ver el tema de la tabla
   }
 
 
@@ -214,8 +216,10 @@ class GPaConEIni
     return $this->dTiCamTiPag;
   }
 
+  //====================================================//
   ///XML Element
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -230,12 +234,10 @@ class GPaConEIni
     $res->appendChild(new DOMElement('dMonTiPag', $this->getDMonTiPag()));
     $res->appendChild(new DOMElement('cMoneTiPag', $this->getCMoneTiPag()));
     $res->appendChild(new DOMElement('dDMoneTiPag', $this->getDMonTiPag()));
-    if($this->cMoneTiPag != 'PYG')
-    {
+    if ($this->cMoneTiPag != 'PYG') {
       $res->appendChild(new DOMElement('dTiCamTiPag', $this->getDTiCamTiPag()));
     }
 
     return $res;
   }
 }
-?> 

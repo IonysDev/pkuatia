@@ -11,11 +11,13 @@ class GCamIVA
 {
   public int $iAfecIVA; /// E731  Forma de afectación tributaria del IVA
   public int $dPropIVA; ///E733 Proporción gravada de IVA
-  public int $dTasaIVA;//E734  Tasa del IVA
-  public int $dBasGravIVA;//E735 Base gravada del IVA por ítem 
-  public int $dLiqIVAItem;//E736  Liquidación del IVA por ítem
+  public int $dTasaIVA; //E734  Tasa del IVA
+  public int $dBasGravIVA; //E735 Base gravada del IVA por ítem 
+  public int $dLiqIVAItem; //E736  Liquidación del IVA por ítem
 
+  //====================================================//
   //Setters
+  //====================================================//
 
   /**
    * Set the value of iAfecIVA
@@ -91,8 +93,9 @@ class GCamIVA
     return $this;
   }
 
+  //====================================================//
   //Getter
-
+  //====================================================//
 
   /**
    * Get the value of iAfecIVA
@@ -171,8 +174,10 @@ class GCamIVA
     return $this->dLiqIVAItem;
   }
 
+   //====================================================//
   ///XML Element
-  
+   //====================================================//
+
   /**
    * toDOMElement
    *
@@ -182,12 +187,12 @@ class GCamIVA
   {
     $res = new DOMElement('gCamIVA');
 
-    $res->appendChild(new DOMElement('iAfecIVA',$this->getIAfecIVA()));
-    $res->appendChild(new DOMElement('dDesAfecIVA',$this->getDDesAfecIVA()));
+    $res->appendChild(new DOMElement('iAfecIVA', $this->getIAfecIVA()));
+    $res->appendChild(new DOMElement('dDesAfecIVA', $this->getDDesAfecIVA()));
     $res->appendChild(new DOMElement('dPropIVA', $this->getDPropIVA()));
     $res->appendChild(new DOMElement('dTasaIVA', $this->getDTasaIVA()));
     $res->appendChild(new DOMElement('dBasGravIVA', $this->getDBasGravIVA()));
-    $res->appendChild(new DOMElement('dLiqIVAItem',$this->getDLiqIVAItem()));
+    $res->appendChild(new DOMElement('dLiqIVAItem', $this->getDLiqIVAItem()));
 
     return $res;
   }

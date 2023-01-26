@@ -18,7 +18,10 @@ class rGeDevCCFFCue
   public DateTime $dFeEmiInf; //GEDF007 Fecha de emisión del informe
   public DateTime $dFeEmiRes; //GEDF008 Fecha de emisión de la resolución
 
+  //====================================================//
   ///SETTERS
+  //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -123,8 +126,10 @@ class rGeDevCCFFCue
     return $this;
   }
 
+  //====================================================//
   //GETTERS
-  
+  //====================================================//
+
 
   /**
    * Get the value of Id
@@ -196,8 +201,10 @@ class rGeDevCCFFCue
     return $this->dFeEmiRes;
   }
 
+  //====================================================//
   ///XML ELEMENT
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *

@@ -19,7 +19,10 @@ class GCompPub
   public int $dSecCont; //Secuencia - emitido por la DNCP ID:E024 PADRE:E020
   public DateTime $dFeCodCont; //Fecha de emisión del código de contratación por la DNCP ID:E025 PADRE:E020
 
+  //====================================================//
   ///Setters
+  //====================================================//
+
   /**
    * Set the value of dModCont
    *
@@ -95,8 +98,9 @@ class GCompPub
   }
 
 
-
+  //====================================================//
   ///Getters
+  //====================================================//
 
   /**
    * Get the value of dModCont
@@ -138,8 +142,9 @@ class GCompPub
     return $this->dFeCodCont;
   }
 
+  //====================================================//
   ///XML Element
-
+  //====================================================//
   /**
    * toDOMElement
    *
@@ -156,4 +161,3 @@ class GCompPub
     return $res;
   }
 }
-?> 

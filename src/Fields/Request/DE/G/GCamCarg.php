@@ -15,7 +15,10 @@ class GCamCarg
   public int $dTotPesMerc; //G056 Total peso de la mercadería
   public int $iCarCarga; //G057 Características de la  Carga 
 
+   //====================================================//
   ///SETTER
+   //====================================================//
+
   /**
    * Set the value of cUniMedTotVol
    *
@@ -90,7 +93,9 @@ class GCamCarg
     return $this;
   }
 
+   //====================================================//
   //GETTER
+   //====================================================//
 
 
   /**
@@ -191,7 +196,9 @@ class GCamCarg
     }
   }
 
+   //====================================================//
   ///XML Element
+   //====================================================//
   
   /**
    * toDOMElement

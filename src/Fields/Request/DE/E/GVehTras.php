@@ -18,7 +18,9 @@ class GVehTras
     public string $dNroMatVeh; // E965 Número de matrícula del vehículo
     public string $dNroVuelo; //E966 Número de vuelo
 
+    //====================================================//
     ///Setters
+    //====================================================//
 
     /**
      * Set the value of dTiVehTras
@@ -108,7 +110,9 @@ class GVehTras
         return $this;
     }
 
+    //====================================================//
     ///GETTERS
+    //====================================================//
 
 
     /**
@@ -181,7 +185,10 @@ class GVehTras
         return $this->dNroVuelo;
     }
 
+    //====================================================//
     //XML Element  
+    //====================================================//
+
     /**
      * toDOMElement
      *

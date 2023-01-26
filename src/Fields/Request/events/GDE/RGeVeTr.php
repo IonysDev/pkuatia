@@ -33,7 +33,10 @@ class RGeVeTr
   public string $dNroIDVeh; ///GET029 Número de identificación del vehículo
   public string $dNroMatVeh; //GET030 Número de matrícula  del vehículo
 
+  //====================================================//
   ///SETTERS
+  //====================================================//
+
   /**
    * Set the value of Id
    *
@@ -361,7 +364,9 @@ class RGeVeTr
     return $this;
   }
 
+  //====================================================//
   ///GETTERS
+  //====================================================//
 
 
   /**
@@ -690,7 +695,10 @@ class RGeVeTr
     return $this->dNroMatVeh;
   }
 
+   //====================================================//
   ///XML ELEMENT  
+   //====================================================//
+
   /**
    * toDOMElement
    *

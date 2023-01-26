@@ -25,7 +25,10 @@ class GTransp
   public GCamEnt $gCamEnt;
   public GVehTras $gVehTras;
   public GCamTrans $gCamTrans;
+
+   //====================================================//
   ///SETTERS
+ //====================================================//
 
   /**
    * Set the value of iTipTrans
@@ -161,8 +164,9 @@ class GTransp
     return $this;
   }
 
-
+ //====================================================//
   ///Getters
+   //====================================================//
 
 
   /**
@@ -357,8 +361,9 @@ class GTransp
     return "Mordor"; ///test
   }
 
-
+ //====================================================//
   ///xml Element
+   //====================================================//
 
   /**
    * toDOMElement
@@ -385,6 +390,10 @@ class GTransp
     $res->appendChild(new DOMElement('dDesPaisDest', $this->getDDesPaisDest()));
     return $res;
   }
+
+   //====================================================//
+   //Others
+    //====================================================//
 
   /**
    * Get the value of gCamSal

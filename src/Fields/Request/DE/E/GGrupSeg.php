@@ -11,10 +11,12 @@ use DOMException;
  */
 class GGrupSeg
 {
-  public string $dCodEmpSeg;//E801 Código de la empresa de seguros en la Superintendencia de Seguros
+  public string $dCodEmpSeg; //E801 Código de la empresa de seguros en la Superintendencia de Seguros
   public GGrupPolSeg $gGrupoPolSeg;
 
+  //====================================================//
   ///Setter
+  //====================================================//
 
   /**
    * Set the value of dCodEmpSeg
@@ -30,7 +32,9 @@ class GGrupSeg
     return $this;
   }
 
+  //====================================================//
   ///Getter
+  //====================================================//
 
   /**
    * Get the value of dCodEmpSeg
@@ -42,12 +46,47 @@ class GGrupSeg
     return $this->dCodEmpSeg;
   }
 
+  //====================================================//
+  ///XML Element  
+  //====================================================//
 
-  ///XML Element
-  public function toDomElement():DOMElement
+  /**
+   * toDomElement
+   *
+   * @return DOMElement
+   */
+  public function toDomElement(): DOMElement
   {
     $res = new DOMElement('gGrupSeg');
     $res->appendChild(new DOMElement('dCodEmpSeg', $this->getDCodEmpSeg()));
     return $res;
+  }
+
+  //====================================================//
+  //Others
+  //====================================================//
+
+  /**
+   * Get the value of gGrupoPolSeg
+   *
+   * @return GGrupPolSeg
+   */
+  public function getGGrupoPolSeg(): GGrupPolSeg
+  {
+    return $this->gGrupoPolSeg;
+  }
+
+  /**
+   * Set the value of gGrupoPolSeg
+   *
+   * @param GGrupPolSeg $gGrupoPolSeg
+   *
+   * @return self
+   */
+  public function setGGrupoPolSeg(GGrupPolSeg $gGrupoPolSeg): self
+  {
+    $this->gGrupoPolSeg = $gGrupoPolSeg;
+
+    return $this;
   }
 }

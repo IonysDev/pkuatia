@@ -11,16 +11,18 @@ use DOMElement;
  */
 class GGrupPolSeg
 {
-  public string $dPoliza;/// EA791 Código de la póliza
-  public string $dUnidVig;//EA792 Descripción de la unidad de tiempo de vigencia
-  public int $dVigencia;///EA793 Vigencia de la póliza
-  public string $dNumPoliza;/// EA794 Número de la póliza
-  public DateTime $dFecIniVig;///EA795 Fecha de inicio de vigencia
-  public DateTime $dFecFinVig;//EA796 Fecha de fin de vigencia
-  public string $dCodInt;///EA797 Código interno del ítem
+  public string $dPoliza; /// EA791 Código de la póliza
+  public string $dUnidVig; //EA792 Descripción de la unidad de tiempo de vigencia
+  public int $dVigencia; ///EA793 Vigencia de la póliza
+  public string $dNumPoliza; /// EA794 Número de la póliza
+  public DateTime $dFecIniVig; ///EA795 Fecha de inicio de vigencia
+  public DateTime $dFecFinVig; //EA796 Fecha de fin de vigencia
+  public string $dCodInt; ///EA797 Código interno del ítem
 
+  //====================================================//
   //SETTERS
-  
+  //====================================================//
+
   /**
    * Set the value of dPoliza
    *
@@ -126,8 +128,10 @@ class GGrupPolSeg
   }
 
 
+  //====================================================//
   ///Getters
-  
+  //====================================================//
+
 
   /**
    * Get the value of dPoliza
@@ -200,8 +204,10 @@ class GGrupPolSeg
   }
 
 
-  ///MXL Element
-  
+  //====================================================//
+  ///XML Element
+  //====================================================//
+
   /**
    * toDomElement
    *
@@ -211,11 +217,11 @@ class GGrupPolSeg
   {
     $res = new DOMElement('gGrupPolSeg');
     $res->appendChild(new DOMElement('dPoliza', $this->getDPoliza()));
-    $res->appendChild(new DOMElement('dUnidVig',$this->getDUnidVig()));
-    $res->appendChild(new DOMElement('dVigencia',$this->getDVigencia()));
+    $res->appendChild(new DOMElement('dUnidVig', $this->getDUnidVig()));
+    $res->appendChild(new DOMElement('dVigencia', $this->getDVigencia()));
     $res->appendChild(new DOMElement('dNumPoliza', $this->getDNumPoliza()));
-    $res->appendChild(new DOMElement('dFecIniVig',$this->getDFecIniVig()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('dFecFinVig',$this->getDFecFinVig()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(new DOMElement('dFecIniVig', $this->getDFecIniVig()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(new DOMElement('dFecFinVig', $this->getDFecFinVig()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
 
     return $res;

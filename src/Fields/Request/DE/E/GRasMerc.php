@@ -21,7 +21,9 @@ class GRasMerc
   public string $dNumReg; //E759 Número de registro del  producto otorgado por  el SENAVE
   public string $dNumRegEntCom; //E760  Número de registro de  entidad comercial otorgado por el SENAVE
 
+  //====================================================//
   ///SETTERS
+  //====================================================//
 
   /**
    * Set the value of dNumLote
@@ -172,7 +174,10 @@ class GRasMerc
     return $this;
   }
 
+  //====================================================//
   ///GETTERS
+  //====================================================//
+
   /**
    * Get the value of dNumLote
    *
@@ -273,8 +278,10 @@ class GRasMerc
     return $this->dNumRegEntCom;
   }
 
+  //====================================================//
   //XML Element
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -284,16 +291,16 @@ class GRasMerc
   {
     $res = new DOMElement('gRasMerc');
 
-    $res->appendChild(new DOMElement('dNumLote',$this->getDNumLote()));
-    $res->appendChild(new DOMElement('dVencMerc',$this->getDVencMerc()->format('Y-m-d')));
-    $res->appendChild(new DOMElement('dNSerie',$this->getDNSerie()));
-    $res->appendChild(new DOMElement('dNumPedi',$this->getDNumPedi()));
-    $res->appendChild(new DOMElement('dNumSegui',$this->getDNumSegui()));
-    $res->appendChild(new DOMElement('dNomImp',$this->getDNomImp()));
-    $res->appendChild(new DOMElement('dDirImp',$this->getDDirImp()));
+    $res->appendChild(new DOMElement('dNumLote', $this->getDNumLote()));
+    $res->appendChild(new DOMElement('dVencMerc', $this->getDVencMerc()->format('Y-m-d')));
+    $res->appendChild(new DOMElement('dNSerie', $this->getDNSerie()));
+    $res->appendChild(new DOMElement('dNumPedi', $this->getDNumPedi()));
+    $res->appendChild(new DOMElement('dNumSegui', $this->getDNumSegui()));
+    $res->appendChild(new DOMElement('dNomImp', $this->getDNomImp()));
+    $res->appendChild(new DOMElement('dDirImp', $this->getDDirImp()));
     $res->appendChild(new DOMElement('dNumFir', $this->getDNumFir()));
     $res->appendChild(new DOMElement('dNumReg', $this->getDNumReg()));
-    $res->appendChild(new DOMElement('dNumRegEntCom',$this->getDNumRegEntCom()));
+    $res->appendChild(new DOMElement('dNumRegEntCom', $this->getDNumRegEntCom()));
     return $res;
   }
 }

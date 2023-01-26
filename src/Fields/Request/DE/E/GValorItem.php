@@ -16,7 +16,9 @@ class GValorItem
   public int $dTotBruOpeItem;///E727 Total bruto de la operación por ítem
   public GValorRestaItem $gValorRestaItem;
 
+   //====================================================//
   ///Setters
+   //====================================================//
 
   /**
    * Set the value of dPUniProSer
@@ -62,7 +64,9 @@ class GValorItem
     return $this;
   }
 
+   //====================================================//
   //Getters
+   //====================================================//
   
 
   /**
@@ -95,7 +99,15 @@ class GValorItem
     return $this->dTotBruOpeItem;
   }
 
+   //====================================================//
   ///XML Element
+   //====================================================//
+     
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('gValorItem');
@@ -107,6 +119,10 @@ class GValorItem
     return $res;
     
   }
+
+   //====================================================//
+   ///Others
+    //====================================================//
 
   /**
    * Get the value of gValorRestaItem

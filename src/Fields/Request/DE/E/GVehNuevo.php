@@ -24,7 +24,9 @@ class GVehNuevo
   public int $dCapac; ///E785 Capacidad máxima de pasajeros 
   public string $dCilin; ///E786  Cilindradas del motor
 
+  //====================================================//
   ///Setters
+  //====================================================//
 
   /**
    * Set the value of iTipOpVN
@@ -235,8 +237,9 @@ class GVehNuevo
     return $this;
   }
 
+  //====================================================//
   ///Getter
-
+  //====================================================//
 
   /**
    * Get the value of iTipOpVN
@@ -440,7 +443,10 @@ class GVehNuevo
     return $this->dCilin;
   }
 
+  //====================================================//
   ///XML Element  
+  //====================================================//
+
   /**
    * toDOMElement
    *
