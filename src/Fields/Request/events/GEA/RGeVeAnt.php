@@ -7,7 +7,7 @@ use DOMElement;
 /**
  * ID:GEA001 Raíz Gestión de Eventos anticipo PADRE:GDE007
  */
-class rGeVeAnt
+class RGeVeAnt
 {
   public string $Id; //GEA002 CDC del DTE asociado
 

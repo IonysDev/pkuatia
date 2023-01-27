@@ -5,19 +5,21 @@ namespace Abiliomp\Pkuatia\Fields\Request\events\GDE;
 use DOMElement;
 
 /**
- * ID:GEC001 Raíz Gestión de Eventos Cancelación PADRE:GDE007
+ * Nodo: GEC001 - rGeVeCan - Campos generales del DE
+ * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class RGeVeCan
+class TrGeVeCan
 {
-  public string $Id; ///GEC002 Identificador del DTE
-  public string $mOtEve; ///GEC003 Motivo del Evento
 
-   //====================================================//
-  ////SETTERS
-   //====================================================//
+  public string $Id; // GEC002 - Identificador del DTE
+  public string $mOtEve; // GEC003 - Motivo del Evento
+
+  //====================================================//
+  // Setters
+  //====================================================//
 
   /**
-   * Set the value of Id
+   * Establece el valor Id - Identificador del DTE
    *
    * @param string $Id
    *
@@ -26,13 +28,12 @@ class RGeVeCan
   public function setId(string $Id): self
   {
     $this->Id = $Id;
-
     return $this;
   }
 
 
   /**
-   * Set the value of mOtEve
+   * Establece el valor mOtEve - Motivo del Evento
    *
    * @param string $mOtEve
    *
@@ -41,18 +42,15 @@ class RGeVeCan
   public function setMOtEve(string $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
-
     return $this;
   }
 
-   //====================================================//
-  ///GETTERS
-   //====================================================//
-
-
+  //====================================================//
+  // Getters
+  //====================================================//
 
   /**
-   * Get the value of Id
+   * Obtiene el valor Id - Identificador del DTE
    *
    * @return string
    */
@@ -62,7 +60,7 @@ class RGeVeCan
   }
 
   /**
-   * Get the value of mOtEve
+   * Obtiene el valor mOtEve - Motivo del Evento
    *
    * @return string
    */
@@ -71,10 +69,9 @@ class RGeVeCan
     return $this->mOtEve;
   }
 
-   //====================================================//
-  ///XML Element 
-   //====================================================//
-
+  //====================================================//
+  // Conversiones XML
+  //====================================================//
    
   /**
    * toDOMElement
@@ -86,7 +83,7 @@ class RGeVeCan
     $res = new DOMElement('rGeVeCan');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
-
     return $res;
   }
+
 }

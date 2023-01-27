@@ -5,24 +5,25 @@ namespace Abiliomp\Pkuatia\Fields\Request\events\GDE;
 use DOMElement;
 
 /**
- * ID:GEI001 Raiz Gestión de Eventos Inutilización PADRE:GDE007
+ * Nodo: GEI001 - rGeVeInu - Campos generales del DE
+ * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class RGeVeInu
+class TrGeVeInu
 {
-  public int $dNumTim; ///GEI002 Número del Timbrado
-  public string $dEst; ///GEI003 Establecimiento
-  public string $dPunExp; ///GEI004 Punto de expedición
-  public string $dNumIn; ///GEI005 Número Inicio del rango del documento
-  public string $dNumFin; ///GEI006 Número Final del rango del documento
-  public int $iTiDE; ///GEI007 Tipo de Documento Electrónico
-  public string $mOtEve; ///GEI008 Motivo del Evento
+  public int    $dNumTim; // GEI002 - Número del Timbrado
+  public string $dEst;    // GEI003 - Establecimiento
+  public string $dPunExp; // GEI004 - Punto de expedición
+  public string $dNumIn;  // GEI005 - Número Inicio del rango del documento
+  public string $dNumFin; // GEI006 - Número Final del rango del documento
+  public int    $iTiDE;   // GEI007 - Tipo de Documento Electrónico
+  public string $mOtEve;  // GEI008 - Motivo del Evento
 
-   //====================================================//
-  ///SETTERS
-   //====================================================//
+  //====================================================//
+  // Setters
+  //====================================================//
 
   /**
-   * Set the value of dNumTim
+   * Establece el valor de dNumTim - Número del Timbrado
    *
    * @param int $dNumTim
    *
@@ -31,13 +32,11 @@ class RGeVeInu
   public function setDNumTim(int $dNumTim): self
   {
     $this->dNumTim = $dNumTim;
-
     return $this;
   }
 
-
   /**
-   * Set the value of dEst
+   * Establece el valor de dEst - Establecimiento
    *
    * @param string $dEst
    *
@@ -46,13 +45,11 @@ class RGeVeInu
   public function setDEst(string $dEst): self
   {
     $this->dEst = $dEst;
-
     return $this;
   }
 
-
   /**
-   * Set the value of dPunExp
+   * Establece el valor de dPunExp - Punto de expedición
    *
    * @param string $dPunExp
    *
@@ -61,13 +58,11 @@ class RGeVeInu
   public function setDPunExp(string $dPunExp): self
   {
     $this->dPunExp = $dPunExp;
-
     return $this;
   }
 
-
   /**
-   * Set the value of dNumIn
+   * Establece el valor de dNumIn - Número Inicio del rango del documento
    *
    * @param string $dNumIn
    *
@@ -76,13 +71,11 @@ class RGeVeInu
   public function setDNumIn(string $dNumIn): self
   {
     $this->dNumIn = $dNumIn;
-
     return $this;
   }
 
-
   /**
-   * Set the value of dNumFin
+   * Establece el valor de dNumFin - Número Final del rango del documento
    *
    * @param string $dNumFin
    *
@@ -91,13 +84,11 @@ class RGeVeInu
   public function setDNumFin(string $dNumFin): self
   {
     $this->dNumFin = $dNumFin;
-
     return $this;
   }
 
-
   /**
-   * Set the value of iTiDE
+   * Establece el valor de iTiDE - Tipo de Documento Electrónico
    *
    * @param int $iTiDE
    *
@@ -106,13 +97,11 @@ class RGeVeInu
   public function setITiDE(int $iTiDE): self
   {
     $this->iTiDE = $iTiDE;
-
     return $this;
   }
 
-
   /**
-   * Set the value of mOtEve
+   * Establece el valor de mOtEve - Motivo del Evento
    *
    * @param string $mOtEve
    *
@@ -121,14 +110,16 @@ class RGeVeInu
   public function setMOtEve(string $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
-
     return $this;
   }
 
-  ///GETTERS
+
+  //====================================================//
+  // Getters
+  //====================================================//
 
   /**
-   * Get the value of dNumTim
+   * Obtiene el valor de dNumTim - Número del Timbrado
    *
    * @return int
    */
@@ -138,7 +129,7 @@ class RGeVeInu
   }
 
   /**
-   * Get the value of dEst
+   * Obtiene el valor de dEst - Establecimiento
    *
    * @return string
    */
@@ -148,7 +139,7 @@ class RGeVeInu
   }
 
   /**
-   * Get the value of dPunExp
+   * Obtiene el valor de dPunExp - Punto de expedición
    *
    * @return string
    */
@@ -158,7 +149,7 @@ class RGeVeInu
   }
 
   /**
-   * Get the value of dNumIn
+   * Obtiene el valor de dNumIn - Número Inicio del rango del documento
    *
    * @return string
    */
@@ -168,7 +159,7 @@ class RGeVeInu
   }
 
   /**
-   * Get the value of dNumFin
+   * Obtiene el valor de dNumFin - Número Final del rango del documento
    *
    * @return string
    */
@@ -178,7 +169,7 @@ class RGeVeInu
   }
 
   /**
-   * Get the value of iTiDE
+   * Obtiene el valor de iTiDE - Tipo de Documento Electrónico
    *
    * @return int
    */
@@ -188,7 +179,7 @@ class RGeVeInu
   }
 
   /**
-   * Get the value of mOtEve
+   * Obtiene el valor de mOtEve - Motivo del Evento
    *
    * @return string
    */
@@ -197,7 +188,11 @@ class RGeVeInu
     return $this->mOtEve;
   }
 
-  ///XML Element  
+  
+  //====================================================//
+  // Conversiones XML
+  //====================================================//
+
   /**
    * toDOMElement
    *

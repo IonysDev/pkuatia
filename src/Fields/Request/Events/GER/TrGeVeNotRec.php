@@ -6,27 +6,28 @@ use DateTime;
 use DOMElement;
 
 /**
- * ID:GEN001 Raíz Gestión de Eventos Notificación – Recepción DE o DTE PADRE:GDE007
+ * Nodo: GEN001 - rGeVeNotRec - Raíz Gestión de Eventos Notificación: Recepción DE o DTE
+ * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class RGeVeNotRec
+class TrGeVeNotRec
 {
-  public string $Id; ///GEN002 Identificador del DE/DTE
-  public DateTime $dFecEmi; ///GEN003 Fecha de emisión del DE/DTE
-  public DateTime $dFecRecep; //EN004 Fecha Recepción DE 
-  public int $iTipRec; //GEN005 Tipo de Receptor
-  public string $dNomRec; //GEN006 Nombre o Razón Social del Receptor del DE/DTE
-  public string $dRucRec; //GEN007 Ruc del Receptor 
-  public int $dDVRec; ///GEN008 Dígito verificador del RUC del contribuyente receptor
-  public int $dTipIDRec; //GEN009 Tipo de documento de identidad del receptor
-  public string $dNumID; ///GEN010 Número de documento de identidad 
-  public int $dTotalGs; //GEN011 Total general de la operación en Guaraníes
+  public string   $Id;        // GEN002 - Identificador del DE/DTE
+  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE
+  public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 
+  public int      $iTipRec;   // GEN005 - Tipo de Receptor
+  public string   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE
+  public string   $dRucRec;   // GEN007 - RUC del Receptor 
+  public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor
+  public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor
+  public string   $dNumID;    // GEN010 - Número de documento de identidad 
+  public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes
 
   //====================================================//
-  ///SETTERS
+  // Setters
   //====================================================//
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param string $Id
    *
@@ -35,13 +36,12 @@ class RGeVeNotRec
   public function setId(string $Id): self
   {
     $this->Id = $Id;
-
     return $this;
   }
 
 
   /**
-   * Set the value of dFecEmi
+   * Establece el valor de dFecEmi
    *
    * @param DateTime $dFecEmi
    *
@@ -56,7 +56,7 @@ class RGeVeNotRec
 
 
   /**
-   * Set the value of dFecRecep
+   * Establece el valor de dFecRecep
    *
    * @param DateTime $dFecRecep
    *
@@ -71,7 +71,7 @@ class RGeVeNotRec
 
 
   /**
-   * Set the value of iTipRec
+   * Establece el valor de iTipRec
    *
    * @param int $iTipRec
    *
@@ -86,7 +86,7 @@ class RGeVeNotRec
 
 
   /**
-   * Set the value of dNomRec
+   * Establece el valor de dNomRec
    *
    * @param string $dNomRec
    *
@@ -101,7 +101,7 @@ class RGeVeNotRec
 
 
   /**
-   * Set the value of dRucRec
+   * Establece el valor de dRucRec
    *
    * @param string $dRucRec
    *
@@ -116,7 +116,7 @@ class RGeVeNotRec
 
 
   /**
-   * Set the value of dDVRec
+   * Establece el valor de dDVRec
    *
    * @param int $dDVRec
    *
@@ -131,7 +131,7 @@ class RGeVeNotRec
 
 
   /**
-   * Set the value of dTipIDRec
+   * Establece el valor de dTipIDRec
    *
    * @param int $dTipIDRec
    *
@@ -146,7 +146,7 @@ class RGeVeNotRec
 
 
   /**
-   * Set the value of dNumID
+   * Establece el valor de dNumID
    *
    * @param string $dNumID
    *
@@ -160,7 +160,7 @@ class RGeVeNotRec
   }
 
   /**
-   * Set the value of dTotalGs
+   * Establece el valor de dTotalGs
    *
    * @param int $dTotalGs
    *
