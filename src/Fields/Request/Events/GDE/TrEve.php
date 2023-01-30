@@ -119,4 +119,25 @@ class TrEve
     {
         return $this->gGroupTiEvt;
     }
+    
+
+    //====================================================//
+    // Conversiones XML
+    //====================================================//
+
+    /**
+     * Función que genera el elemento DOM XML
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(): DOMElement
+    {
+        $res = new DOMElement('rEve');
+        $res->setAttribute('Id', $this->Id);
+        $res->appendChild(new DOMElement('dFecFirma', $this->dFecFirma->format('Y-m-d\TH:i:s')));
+        $res->appendChild(new DOMElement('dVerFor', $this->dVerFor));
+        $res->appendChild(new DOMElement('gGroupTiEvt', $this->gGroupTiEvt->toDOMElement()));
+        return $res;
+    }
+
 }

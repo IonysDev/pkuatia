@@ -2,17 +2,17 @@
 
 namespace Abiliomp\Pkuatia\Fields\Request\Events\GDE;
 
-use Abiliomp\Pkuatia\Fields\Request\Eevents\GEA\TrGeDevCCFFCue;
-use Abiliomp\Pkuatia\Fields\Request\events\GEA\TrGeDevCCFFDev;
-use Abiliomp\Pkuatia\Fields\Request\events\GEA\TrGeVeAnt;
-use Abiliomp\Pkuatia\Fields\Request\events\GEA\TrGeVeCCFF;
-use Abiliomp\Pkuatia\Fields\Request\events\GEA\TrGeVeRem;
-use Abiliomp\Pkuatia\Fields\Request\events\GEA\TrGeVeRetAce;
-use Abiliomp\Pkuatia\Fields\Request\events\GEA\TrGeVeRetAnu;
-use Abiliomp\Pkuatia\Fields\Request\events\GER\TrGeVeConf;
-use Abiliomp\Pkuatia\Fields\Request\events\GER\TrGeVeDescon;
-use Abiliomp\Pkuatia\Fields\Request\events\GER\TrGeVeDisconf;
-use Abiliomp\Pkuatia\Fields\Request\events\GER\TrGeVeNotRec;
+use Abiliomp\Pkuatia\Fields\Request\Events\GEA\TrGeDevCCFFCue;
+use Abiliomp\Pkuatia\Fields\Request\Events\GEA\TrGeDevCCFFDev;
+use Abiliomp\Pkuatia\Fields\Request\Events\GEA\TrGeVeAnt;
+use Abiliomp\Pkuatia\Fields\Request\Events\GEA\TrGeVeCCFF;
+use Abiliomp\Pkuatia\Fields\Request\Events\GEA\TrGeVeRem;
+use Abiliomp\Pkuatia\Fields\Request\Events\GEA\TrGeVeRetAce;
+use Abiliomp\Pkuatia\Fields\Request\Events\GEA\TrGeVeRetAnu;
+use Abiliomp\Pkuatia\Fields\Request\Events\GER\TrGeVeConf;
+use Abiliomp\Pkuatia\Fields\Request\Events\GER\TrGeVeDescon;
+use Abiliomp\Pkuatia\Fields\Request\Events\GER\TrGeVeDisconf;
+use Abiliomp\Pkuatia\Fields\Request\Events\GER\TrGeVeNotRec;
 use DOMElement;
 
 /**
@@ -22,24 +22,30 @@ use DOMElement;
 
 class TgGroupTiEvt
 {
-  public TrGeVeCan $rGeVeCan;
-  public TrGeVeInu $rGeVeInu;
-  public TrGeVeNotRec $rGeVeNotRec;
-  public TrGeVeConf $rGeVeConf;
-  public TrGeVeDisconf $rGeVeDisconf;
-  public TrGeVeDescon $rGeVeDescon;
-  public TrGeVeTr $rGeVeTr;
 
-  ///Automáticos
-  public TrGeVeRetAce $rGeVeRetAce;
-  public TrGeVeRetAnu $rGeVeRetAnu;
-  public TrGeVeCCFF $rGeVeCCFF;
+  // Eventos de Emisor
+  public TrGeVeCan  $rGeVeCan; // GEC001 - Raíz Gestión de Eventos Cancelación 
+  public TrGeVeInu  $rGeVeInu; // GEI001 - Raiz Gestión de Eventos Inutilización
+  public TrGeVeTr   $rGeVeTr;  // GET001 - Raíz Gestión de Eventos por actualización de datos del transporte
+
+  // Eventos de Receptor
+  public TrGeVeNotRec   $rGeVeNotRec;
+  public TrGeVeConf     $rGeVeConf;
+  public TrGeVeDisconf  $rGeVeDisconf;
+  public TrGeVeDescon   $rGeVeDescon;  
+
+  // Eventos Automáticos
+  public TrGeVeRetAce   $rGeVeRetAce;
+  public TrGeVeRetAnu   $rGeVeRetAnu;
+  public TrGeVeCCFF     $rGeVeCCFF;
   public TrGeDevCCFFCue $rGeDevCCFFCue;
   public TrGeDevCCFFDev $rGeDevCCFFDev;
-  public TrGeVeAnt $rGeVeAnt;
-  public TrGeVeRem $rGeVeRem;
+  public TrGeVeAnt      $rGeVeAnt;
+  public TrGeVeRem      $rGeVeRem;
 
-  ///SETTERS
+  //====================================================//
+  // Setters
+  //====================================================//
   
   /**
    * Set the value of rGeVeCan
@@ -156,7 +162,6 @@ class TgGroupTiEvt
   public function setRGeVeRetAce(TrGeVeRetAce $rGeVeRetAce): self
   {
     $this->rGeVeRetAce = $rGeVeRetAce;
-
     return $this;
   }
 
@@ -171,7 +176,6 @@ class TgGroupTiEvt
   public function setRGeVeRetAnu(TrGeVeRetAnu $rGeVeRetAnu): self
   {
     $this->rGeVeRetAnu = $rGeVeRetAnu;
-
     return $this;
   }
 
@@ -186,7 +190,6 @@ class TgGroupTiEvt
   public function setRGeVeCCFF(TrGeVeCCFF $rGeVeCCFF): self
   {
     $this->rGeVeCCFF = $rGeVeCCFF;
-
     return $this;
   }
 
@@ -201,7 +204,6 @@ class TgGroupTiEvt
   public function setRGeDevCCFFCue(TrGeDevCCFFCue $rGeDevCCFFCue): self
   {
     $this->rGeDevCCFFCue = $rGeDevCCFFCue;
-
     return $this;
   }
 
@@ -216,7 +218,6 @@ class TgGroupTiEvt
   public function setRGeDevCCFFDev(TrGeDevCCFFDev $rGeDevCCFFDev): self
   {
     $this->rGeDevCCFFDev = $rGeDevCCFFDev;
-
     return $this;
   }
 
@@ -231,7 +232,6 @@ class TgGroupTiEvt
   public function setRGeVeAnt(TrGeVeAnt $rGeVeAnt): self
   {
     $this->rGeVeAnt = $rGeVeAnt;
-
     return $this;
   }
 
@@ -246,12 +246,13 @@ class TgGroupTiEvt
   public function setRGeVeRem(TrGeVeRem $rGeVeRem): self
   {
     $this->rGeVeRem = $rGeVeRem;
-
     return $this;
   }
 
-  ///GETTERS
-  
+
+  //====================================================//
+  // Getters
+  //====================================================//  
 
   /**
    * Get the value of rGeVeCan
@@ -382,4 +383,29 @@ class TgGroupTiEvt
   {
     return $this->rGeVeRem;
   }
+
+
+  //====================================================//
+  ///XML ELEMENT
+  //====================================================//
+
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
+  public function toDOMElement(): DOMElement
+  {
+    $res = new DOMElement('gGroupTiEvt');
+    if(isset($this->rGeVeCan)) {
+      $res->appendChild($this->rGeVeCan->toDOMElement());
+    }
+    else if(isset($this->rGeVeInu)) {
+      $res->appendChild($this->rGeVeInu->toDOMElement());
+    }
+    // Continuara...
+    return $res;
+  }
+
+
 }
