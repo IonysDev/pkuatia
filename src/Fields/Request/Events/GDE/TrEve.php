@@ -136,7 +136,7 @@ class TrEve
         $res->setAttribute('Id', $this->Id);
         $res->appendChild(new DOMElement('dFecFirma', $this->dFecFirma->format('Y-m-d\TH:i:s')));
         $res->appendChild(new DOMElement('dVerFor', $this->dVerFor));
-        $res->appendChild(new DOMElement('gGroupTiEvt', $this->gGroupTiEvt->toDOMElement()));
+        $res->appendChild($this->gGroupTiEvt->toDOMElement());
         return $res;
     }
 

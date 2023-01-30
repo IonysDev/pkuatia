@@ -50,9 +50,8 @@ class TgGroupGesEve
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeCan');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
+    $res = new DOMElement('TgGroupGesEve');
+    $res->appendChild($this->rGesEve->toDOMElement());
     return $res;
   }
 }

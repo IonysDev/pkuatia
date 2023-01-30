@@ -29,24 +29,24 @@ class TgGroupTiEvt
   public TrGeVeTr   $rGeVeTr;  // GET001 - Raíz Gestión de Eventos por actualización de datos del transporte
 
   // Eventos de Receptor
-  public TrGeVeNotRec   $rGeVeNotRec;
-  public TrGeVeConf     $rGeVeConf;
-  public TrGeVeDisconf  $rGeVeDisconf;
-  public TrGeVeDescon   $rGeVeDescon;  
+  public TrGeVeNotRec   $rGeVeNotRec;  // GEN001 - Raíz Gestión de Eventos Notificación – Recepción DE o DTE
+  public TrGeVeConf     $rGeVeConf;    // GCO001 - Raiz Gestión de Eventos Conformidad
+  public TrGeVeDisconf  $rGeVeDisconf; // GDI001 - Raiz Gestión de Eventos Disconformidad 
+  public TrGeVeDescon   $rGeVeDescon;  // GED001 - Raiz Gestión de Eventos Desconocimiento
 
   // Eventos Automáticos
-  public TrGeVeRetAce   $rGeVeRetAce;
-  public TrGeVeRetAnu   $rGeVeRetAnu;
-  public TrGeVeCCFF     $rGeVeCCFF;
-  public TrGeDevCCFFCue $rGeDevCCFFCue;
-  public TrGeDevCCFFDev $rGeDevCCFFDev;
-  public TrGeVeAnt      $rGeVeAnt;
-  public TrGeVeRem      $rGeVeRem;
+  public TrGeVeRetAce   $rGeVeRetAce;  // GER001  - Raíz Gestión de Eventos de retención
+  public TrGeVeRetAnu   $rGeVeRetAnu;  // GERA001 - Gestión de Eventos de retención anulación
+  public TrGeVeCCFF     $rGeVeCCFF;    // GECF001 - Raíz Gestión de Eventos de créditos  fiscales
+  public TrGeDevCCFFCue $rGeDevCCFFCue; // GEDF001 - Raíz Gestión de Eventos de devolución de créditos fiscales - Cuestionado
+  public TrGeDevCCFFDev $rGeDevCCFFDev; // GEDD001 - Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto
+  public TrGeVeAnt      $rGeVeAnt;     // GEA001  - Raíz Gestión de Eventos anticipo
+  public TrGeVeRem      $rGeVeRem;     // GERE001 - Raíz Gestión de Eventos remisión 
 
   //====================================================//
   // Setters
   //====================================================//
-  
+
   /**
    * Set the value of rGeVeCan
    *
@@ -397,15 +397,43 @@ class TgGroupTiEvt
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('gGroupTiEvt');
-    if(isset($this->rGeVeCan)) {
+    // Eventos de Emisor
+    if (isset($this->rGeVeCan)) {
       $res->appendChild($this->rGeVeCan->toDOMElement());
-    }
-    else if(isset($this->rGeVeInu)) {
+    } else if (isset($this->rGeVeInu)) {
       $res->appendChild($this->rGeVeInu->toDOMElement());
+    } else if (isset($this->rGeVeTr)) {
+      $res->appendChild($this->rGeVeTr->toDOMElement());
     }
-    // Continuara...
+
+    // Eventos de Receptor
+    if (isset($this->rGeVeNotRec)) {
+      $res->appendChild($this->rGeVeNotRec->toDOMElement());
+    } else if (isset($this->rGeVeConf)) {
+      $res->appendChild($this->rGeVeConf->toDOMElement());
+    } else if (isset($this->rGeVeDisconf)) {
+      $res->appendChild($this->rGeVeDisconf->toDOMElement());
+    } else if (isset($this->rGeVeDescon)) {
+      $res->appendChild($this->rGeVeDescon->toDOMElement());
+    }
+
+    // Eventos Automáticos
+    if (isset($this->rGeVeRetAce)) {
+      $res->appendChild($this->rGeVeRetAce->toDOMElement());
+    } else if (isset($this->rGeVeRetAnu)) {
+      $res->appendChild($this->rGeVeRetAnu->toDOMElement());
+    } else if (isset($this->rGeVeCCFF)) {
+      $res->appendChild($this->rGeVeCCFF->toDOMElement());
+    } else if (isset($this->rGeDevCCFFCue)) {
+      $res->appendChild($this->rGeDevCCFFCue->toDOMElement());
+    } else if (isset($this->rGeDevCCFFDev)) {
+      $res->appendChild($this->rGeDevCCFFDev->toDOMElement());
+    } else if (isset($this->rGeVeAnt)){
+      $res->appendChild($this->rGeVeAnt->toDOMElement());
+    } else if (isset($this->rGeVeRem)){
+      $res->appendChild($this->rGeVeRem->toDOMElement());
+    }
+
     return $res;
   }
-
-
 }

@@ -39,7 +39,7 @@ class TrGesEve
     public function toDOMElement(): DOMElement
     {
         $res = new DOMElement('TrGesEve');
-        $res->appendChild(new DOMElement('rEve', $this->toDOMElement()));
+        $res->appendChild($this->rEve->toDOMElement());
         return $res;
     }
 }
