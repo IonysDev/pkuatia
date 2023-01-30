@@ -11,7 +11,7 @@ use DOMElement;
 class TgGroupGesEve
 {
   public TrGesEve $rGesEve; // GDE001 - Raíz de Gestión de Eventos
-
+  public TrEve $rEve;       // GDE002 - Grupos de campos generales del evento
 
   //====================================================//
   // Setters
@@ -28,6 +28,20 @@ class TgGroupGesEve
     return $this;
   }
 
+  /**
+   * Set the value of rEve
+   *
+   * @param TrEve $rEve
+   *
+   * @return self
+   */
+  public function setREve(TrEve $rEve): self
+  {
+    $this->rEve = $rEve;
+
+    return $this;
+  }
+
 
   //====================================================//
   // Getters
@@ -39,10 +53,21 @@ class TgGroupGesEve
   }
 
 
+  /**
+   * Get the value of rEve
+   *
+   * @return TrEve
+   */
+  public function getREve(): TrEve
+  {
+    return $this->rEve;
+  }
+
+
   //====================================================//
   // XML Element 
   //====================================================//
-   
+
   /**
    * toDOMElement
    *
@@ -52,6 +77,7 @@ class TgGroupGesEve
   {
     $res = new DOMElement('TgGroupGesEve');
     $res->appendChild($this->rGesEve->toDOMElement());
+    $res->appendChild($this->rEve->toDOMElement());
     return $res;
   }
 }
