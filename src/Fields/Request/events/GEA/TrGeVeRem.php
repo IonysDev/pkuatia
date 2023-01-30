@@ -7,7 +7,7 @@ use DOMElement;
 /**
  *  ID:GERE001  Raíz Gestión de Eventos remisión PADRE:GDE007
  */
-class RGeVeRem
+class TrGeVeRem
 {
   public string $Id;///GERE002 CDC del DTE asociado
 

@@ -6,21 +6,22 @@ use DateTime;
 use DOMElement;
 
 /**
- *  ID:GER001 rGeVeRetAce Raíz Gestión de Eventos de retención PADRE:GDE007
+ *  ID:GERA001 Raíz Gestión de Eventos de retención anulación PADRE:GDE007
  */
-class RGeVeRetAce
+class TrGeVeRetAnu
 {
-  public string $Id; ///GER002 CDC del DE/DTE
-  public int $dNumTimRet; /// GER003 Número de timbrado del documento de retención
-  public string $dEstRet; //GER004 Establecimiento
-  public string $dPunExpRet; ///GER005 Punto de expedición
-  public string $dNumDocRet; ///GER006  Número del documento
-  public string $dCodConRet; /// GER007 Identificador de la retención
-  public DateTime $dFeEmiRet; ///GER008  Fecha de emisión de  la retención
+  public string $Id; /// GERA002CDC del DE/DTE
+  public int $dNumTimRet; ///GERA003 Número de timbrado del documento de retención
+  public string $dEstRet; ///GERA004 Establecimiento del documento de retención
+  public string $dPunExpRet; //// GERA005 Punto de expedición  del documento de  retención
+  public string $dNumDocRet; /// GERA006 Número del documento de la retención
+  public string $dCodConRet; ///GERA007 Identificador de la retención 
+  public DateTime $dFeEmiRet; //GERA008 Fecha de emisión de la retención
+  public DateTime $dFecAnRet; ///GERA009 Fecha de anulación  de la retención 
 
-   //====================================================//
-  ///SETTERS
-   //====================================================//
+  //====================================================//
+  //SETTERS
+  //====================================================//
 
   /**
    * Set the value of Id
@@ -96,7 +97,6 @@ class RGeVeRetAce
     return $this;
   }
 
-
   /**
    * Set the value of dCodConRet
    *
@@ -126,11 +126,25 @@ class RGeVeRetAce
     return $this;
   }
 
-   //====================================================//
-  ///GETTERS
-   //====================================================//
 
-  
+  /**
+   * Set the value of dFecAnRet
+   *
+   * @param DateTime $dFecAnRet
+   *
+   * @return self
+   */
+  public function setDFecAnRet(DateTime $dFecAnRet): self
+  {
+    $this->dFecAnRet = $dFecAnRet;
+
+    return $this;
+  }
+
+  //====================================================//
+  ///GETTERS
+  //====================================================//
+
 
   /**
    * Get the value of Id
@@ -202,9 +216,19 @@ class RGeVeRetAce
     return $this->dFeEmiRet;
   }
 
-   //====================================================//
-  ///XML Element  
-   //====================================================//
+  /**
+   * Get the value of dFecAnRet
+   *
+   * @return DateTime
+   */
+  public function getDFecAnRet(): DateTime
+  {
+    return $this->dFecAnRet;
+  }
+
+  //====================================================//
+  ///XML Element 
+  //====================================================//
 
   /**
    * toDOMElement
@@ -213,7 +237,7 @@ class RGeVeRetAce
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeRetAce');
+    $res = new DOMElement('rGeVeRetAnu');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(new DOMElement('dEstRet', $this->getDEstRet()));
@@ -221,6 +245,8 @@ class RGeVeRetAce
     $res->appendChild(new DOMElement('dNumDocRet', $this->getDNumDocRet()));
     $res->appendChild(new DOMElement('dCodConRet', $this->getDCodConRet()));
     $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d')));
+    $res->appendChild(new DOMElement('dFecAnRet', $this->getDFecAnRet()->format('Y-m-d')));
+
     return $res;
   }
 }

@@ -8,7 +8,7 @@ use DOMElement;
 /**
  * ID:GECF001 Raíz Gestión de Eventos de créditos fiscales PADRE:GDE007
  */
-class RGeVeCCFF
+class TrGeVeCCFF
 {
   public string $Id; // GECF002 CDC del DE/DTE
   public string $dNumTraCCFF; ///GECF003 Número de  transferencia de  créditos fiscales

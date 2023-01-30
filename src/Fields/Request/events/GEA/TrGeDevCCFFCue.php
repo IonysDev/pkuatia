@@ -8,7 +8,7 @@ use DOMElement;
 /**
  * ID:GEDF001 rGeDevCCFFCue Raíz Gestión de Eventos de devolución de créditos fiscales - Cuestionado PADRE:GDE007
  */
-class RGeDevCCFFCue
+class TrGeDevCCFFCue
 {
   public string $Id; //GEDF002 CDC del DE/DTE
   public string $dNumDevSol; //GEDF003 Número DIR

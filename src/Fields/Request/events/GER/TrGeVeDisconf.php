@@ -7,7 +7,7 @@ use DOMElement;
 /**
  *  ID:GDI001 Raiz Gestión de Eventos Disconformidad PADRE:GDE007
  */
-class RGeVeDisconf
+class TrGeVeDisconf
 {
   public string $Id;// GDI002 CDC del DTE
   public string $mOtEve;///GDI004 Motivo del Evento

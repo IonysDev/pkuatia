@@ -8,7 +8,7 @@ use DOMElement;
 /**
  * ID:GED001 Raiz Gestión de Eventos Desconocimiento PADREGDE007
  */
-class RGeVeDescon
+class TrGeVeDescon
 {
   public string $Id; //GED002 CDC del DE/DTE
   public DateTime $dFecEmi; //GED003 Fecha de emisión del DE/DTE

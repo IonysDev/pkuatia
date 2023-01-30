@@ -16,5 +16,107 @@ class TrEve
     public int          $dVerFor;     // GDE005 - Versión del formato
     public TgGroupTiEvt $gGroupTiEvt; // GEI004 - Punto de expedición
 
+    ///Setters
 
+    /**
+     * Set the value of Id
+     *
+     * @param int $Id
+     *
+     * @return self
+     */
+    public function setId(int $Id): self
+    {
+        $this->Id = $Id;
+
+        return $this;
+    }
+
+
+    /**
+     * Set the value of dFecFirma
+     *
+     * @param DateTime $dFecFirma
+     *
+     * @return self
+     */
+    public function setDFecFirma(DateTime $dFecFirma): self
+    {
+        $this->dFecFirma = $dFecFirma;
+
+        return $this;
+    }
+
+
+    /**
+     * Set the value of dVerFor
+     *
+     * @param int $dVerFor
+     *
+     * @return self
+     */
+    public function setDVerFor(int $dVerFor): self
+    {
+        $this->dVerFor = $dVerFor;
+
+        return $this;
+    }
+
+
+    /**
+     * Set the value of gGroupTiEvt
+     *
+     * @param TgGroupTiEvt $gGroupTiEvt
+     *
+     * @return self
+     */
+    public function setGGroupTiEvt(TgGroupTiEvt $gGroupTiEvt): self
+    {
+        $this->gGroupTiEvt = $gGroupTiEvt;
+
+        return $this;
+    }
+
+    //GETTERS
+    
+
+    /**
+     * Get the value of Id
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->Id;
+    }
+
+    /**
+     * Get the value of dFecFirma
+     *
+     * @return DateTime
+     */
+    public function getDFecFirma(): DateTime
+    {
+        return $this->dFecFirma;
+    }
+
+    /**
+     * Get the value of dVerFor
+     *
+     * @return int
+     */
+    public function getDVerFor(): int
+    {
+        return $this->dVerFor;
+    }
+
+    /**
+     * Get the value of gGroupTiEvt
+     *
+     * @return TgGroupTiEvt
+     */
+    public function getGGroupTiEvt(): TgGroupTiEvt
+    {
+        return $this->gGroupTiEvt;
+    }
 }

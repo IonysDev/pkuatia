@@ -8,7 +8,7 @@ use DOMElement;
 /**
  * ID:GEDD001 Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto PADRE:GDE007
  */
-class RGeDevCCFFDev
+class TrGeDevCCFFDev
 {
   public string $Id; // GEDD002 CDC del DE/DTE
   public string $dNumDevSol; // GEDD003 Número DIR
