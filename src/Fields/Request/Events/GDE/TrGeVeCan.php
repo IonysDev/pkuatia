@@ -80,7 +80,7 @@ class TrGeVeCan
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeCan');
+    $res = new DOMElement('trGeVeCan');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
     return $res;

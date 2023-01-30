@@ -107,7 +107,7 @@ class TrGeVeCCFF
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeCCFF');
+    $res = new DOMElement('trGeVeCCFF');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTraCCFF', $this->getDNumTraCCFF()));
     $res->appendChild(new DOMElement('dFeAceTraCCFF', $this->getDFeAceTraCCFF()->format('Y-m-d')));

@@ -284,7 +284,7 @@ class TrGeVeNotRec
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeNotRec');
+    $res = new DOMElement('trGeVeNotRec');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));

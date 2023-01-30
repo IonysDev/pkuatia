@@ -75,7 +75,7 @@ class TgGroupGesEve
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('TgGroupGesEve');
+    $res = new DOMElement('tgGroupGesEve');
     $res->appendChild($this->rGesEve->toDOMElement());
     $res->appendChild($this->rEve->toDOMElement());
     return $res;

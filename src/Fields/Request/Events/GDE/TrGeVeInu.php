@@ -200,7 +200,7 @@ class TrGeVeInu
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeInu');
+    $res = new DOMElement('trGeVeInu');
     $res->appendChild(new DOMElement('dNumTim', $this->getDNumTim()));
     $res->appendChild(new DOMElement('dEst', str_pad($this->dEst, 3, '0', STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('dPunExp', str_pad($this->dPunExp, 3, '0', STR_PAD_LEFT)));
@@ -208,6 +208,7 @@ class TrGeVeInu
     $res->appendChild(new DOMElement('dNumFin', str_pad($this->dNumFin,7,'0',STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('iTiDE', $this->getITiDE()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
+    //Falta dSerieNum
     return $res;
   }
 }

@@ -132,7 +132,7 @@ class TrEve
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('rEve');
+        $res = new DOMElement('trEve');
         $res->setAttribute('Id', $this->Id);
         $res->appendChild(new DOMElement('dFecFirma', $this->dFecFirma->format('Y-m-d\TH:i:s')));
         $res->appendChild(new DOMElement('dVerFor', $this->dVerFor));

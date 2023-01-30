@@ -105,7 +105,7 @@ class TrGeVeConf
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeConf');
+    $res = new DOMElement('trGeVeConf');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('iTipConf', $this->getITipConf()));
     if($this->iTipConf == 2)

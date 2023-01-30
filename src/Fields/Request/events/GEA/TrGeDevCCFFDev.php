@@ -214,7 +214,7 @@ class TrGeDevCCFFDev
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement(' rGeDevCCFFDev');
+    $res = new DOMElement('trGeDevCCFFDev');
 
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumDevSol', $this->getDNumDevSol()));

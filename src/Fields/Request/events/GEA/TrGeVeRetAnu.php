@@ -237,7 +237,7 @@ class TrGeVeRetAnu
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeRetAnu');
+    $res = new DOMElement('trGeVeRetAnu');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(new DOMElement('dEstRet', $this->getDEstRet()));

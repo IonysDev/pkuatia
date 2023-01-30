@@ -84,7 +84,7 @@ class TrGeVeDisconf
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeDisconf');
+    $res = new DOMElement('trGeVeDisconf');
 
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));

@@ -708,7 +708,7 @@ class TrGeVeTr
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeTr');
+    $res = new DOMElement('trGeVeTr');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dMotEv', $this->getDMotEv()));
 

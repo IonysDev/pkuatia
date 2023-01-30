@@ -290,7 +290,7 @@ class TrGeVeDescon
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeVeDescon');
+    $res = new DOMElement('trGeVeDescon');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
