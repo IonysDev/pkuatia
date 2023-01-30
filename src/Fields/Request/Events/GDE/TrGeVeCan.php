@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Fields\Request\events\GDE;
+namespace Abiliomp\Pkuatia\Fields\Request\Events\GDE;
 
 use DOMElement;
 
@@ -11,7 +11,7 @@ use DOMElement;
 class TrGeVeCan
 {
 
-  public string $Id; // GEC002 - Identificador del DTE
+  public string $Id;     // GEC002 - Identificador del DTE
   public string $mOtEve; // GEC003 - Motivo del Evento
 
   //====================================================//

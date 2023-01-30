@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Fields\Request\events\GEA;
+namespace Abiliomp\Pkuatia\Fields\Request\Eevents\GEA;
 
 use DateTime;
 use DOMElement;

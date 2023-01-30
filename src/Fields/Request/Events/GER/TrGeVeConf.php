@@ -6,20 +6,22 @@ use DateTime;
 use DOMElement;
 
 /**
- * ID:GCO001 rGeVeConf Raiz Gestión de Eventos Conformidad PADRE:GDE007
+ * Nodo: GCO001 - rGeVeConf - Raiz Gestión de Eventos Conformidad
+ * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class RGeVeConf
+class TrGeVeConf
 {
-  public string $Id;///GCO002 CDC del DTE 
-  public int $iTipConf;//GCO003 Tipo de Conformidad 
-  public DateTime $dFecRecep;//// GCO004 Fecha Estimada de Recepción
+  public string   $Id;        // GCO002 CDC del DTE 
+  public int      $iTipConf;  // GCO003 Tipo de Conformidad: 1 - Total | 2 - Parcial
+  public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción
 
-   //====================================================//
-  ///SETTERS
-   //====================================================//
+
+  //====================================================//
+  // Setters
+  //====================================================//
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id - CDC del DTE 
    *
    * @param string $Id
    *
@@ -28,13 +30,11 @@ class RGeVeConf
   public function setId(string $Id): self
   {
     $this->Id = $Id;
-
     return $this;
   }
 
-
   /**
-   * Set the value of iTipConf
+   * Establece el valor de iTipConf - Tipo de Conformidad
    *
    * @param int $iTipConf
    *
@@ -43,13 +43,11 @@ class RGeVeConf
   public function setITipConf(int $iTipConf): self
   {
     $this->iTipConf = $iTipConf;
-
     return $this;
   }
 
-
   /**
-   * Set the value of dFecRecep
+   * Establece el valor de dFecRecep - Fecha Estimada de Recepción
    *
    * @param DateTime $dFecRecep
    *
@@ -58,18 +56,16 @@ class RGeVeConf
   public function setDFecRecep(DateTime $dFecRecep): self
   {
     $this->dFecRecep = $dFecRecep;
-
     return $this;
   }
 
-   //====================================================//
-  ///GETTERS
-   //====================================================//
 
-  
+  //====================================================//
+  // Getters
+  //====================================================//  
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id - CDC del DTE 
    *
    * @return string
    */
@@ -79,7 +75,7 @@ class RGeVeConf
   }
 
   /**
-   * Get the value of iTipConf
+   * Obtiene el valor de iTipConf - Tipo de Conformidad
    *
    * @return int
    */
@@ -89,7 +85,7 @@ class RGeVeConf
   }
 
   /**
-   * Get the value of dFecRecep
+   * Obtiene el valor de dFecRecep - Fecha Estimada de Recepción
    *
    * @return DateTime
    */
@@ -98,9 +94,9 @@ class RGeVeConf
     return $this->dFecRecep;
   }
 
-   //====================================================//
-  ///XML Element  
-   //====================================================//
+  //====================================================//
+  // Conversiones XML  
+  //====================================================//
 
   /**
    * toDOMElement
@@ -112,7 +108,6 @@ class RGeVeConf
     $res = new DOMElement('rGeVeConf');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('iTipConf', $this->getITipConf()));
-
     if($this->iTipConf == 2)
     {
       $res->appendChild(new DOMElement('dFecRecep', $this->dFecRecep->format('Y-m-d')));

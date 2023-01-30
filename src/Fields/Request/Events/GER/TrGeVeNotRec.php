@@ -11,6 +11,7 @@ use DOMElement;
  */
 class TrGeVeNotRec
 {
+  
   public string   $Id;        // GEN002 - Identificador del DE/DTE
   public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE
   public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 
@@ -22,12 +23,13 @@ class TrGeVeNotRec
   public string   $dNumID;    // GEN010 - Número de documento de identidad 
   public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes
 
+
   //====================================================//
   // Setters
   //====================================================//
 
   /**
-   * Establece el valor de Id
+   * Establece el valor de Id - Identificador del DE/DTE
    *
    * @param string $Id
    *
@@ -39,9 +41,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de dFecEmi
+   * Establece el valor de dFecEmi - Fecha de emisión del DE/DTE
    *
    * @param DateTime $dFecEmi
    *
@@ -54,9 +55,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de dFecRecep
+   * Establece el valor de dFecRecep - Fecha Recepción DE 
    *
    * @param DateTime $dFecRecep
    *
@@ -69,9 +69,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de iTipRec
+   * Establece el valor de iTipRec - Tipo de Receptor
    *
    * @param int $iTipRec
    *
@@ -84,9 +83,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de dNomRec
+   * Establece el valor de dNomRec - Nombre o Razón Social del Receptor del DE/DTE
    *
    * @param string $dNomRec
    *
@@ -99,9 +97,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de dRucRec
+   * Establece el valor de dRucRec - RUC del Receptor 
    *
    * @param string $dRucRec
    *
@@ -114,9 +111,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de dDVRec
+   * Establece el valor de dDVRec - Dígito verificador del RUC del contribuyente receptor
    *
    * @param int $dDVRec
    *
@@ -129,9 +125,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de dTipIDRec
+   * Establece el valor de dTipIDRec - Tipo de documento de identidad del receptor
    *
    * @param int $dTipIDRec
    *
@@ -144,9 +139,8 @@ class TrGeVeNotRec
     return $this;
   }
 
-
   /**
-   * Establece el valor de dNumID
+   * Establece el valor de dNumID - Número de documento de identidad 
    *
    * @param string $dNumID
    *
@@ -160,7 +154,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Establece el valor de dTotalGs
+   * Establece el valor de dTotalGs - Total general de la operación en Guaraníes
    *
    * @param int $dTotalGs
    *
@@ -173,12 +167,13 @@ class TrGeVeNotRec
     return $this;
   }
 
+
   //====================================================//
-  ///GETTERS
+  // Getters
   //====================================================//
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id - Identificador del DE/DTE
    *
    * @return string
    */
@@ -188,7 +183,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dFecEmi
+   * Obtiene el valor de dFecEmi - Fecha de emisión del DE/DTE
    *
    * @return DateTime
    */
@@ -198,7 +193,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dFecRecep
+   * Obtiene el valor de dFecRecep - Fecha Recepción DE 
    *
    * @return DateTime
    */
@@ -208,7 +203,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of iTipRec
+   * Obtiene el valor de iTipRec - Tipo de Receptor
    *
    * @return int
    */
@@ -218,7 +213,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dNomRec
+   * Obtiene el valor de dNomRec - Nombre o Razón Social del Receptor del DE/DTE
    *
    * @return string
    */
@@ -228,7 +223,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dRucRec
+   * Obtiene el valor de dRucRec - RUC del Receptor
    *
    * @return string
    */
@@ -238,7 +233,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dDVRec
+   * Obtiene el valor de dDVRec - Dígito verificador del RUC del contribuyente receptor
    *
    * @return int
    */
@@ -248,7 +243,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dTipIDRec
+   * Obtiene el valor de dTipIDRec - Tipo de documento de identidad del receptor
    *
    * @return int
    */
@@ -258,7 +253,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dNumID
+   * Obtiene el valor de dNumID - Número de documento de identidad
    *
    * @return string
    */
@@ -268,7 +263,7 @@ class TrGeVeNotRec
   }
 
   /**
-   * Get the value of dTotalGs
+   * Obtiene el valor de dTotalGs - Total general de la operación en Guaraníes
    *
    * @return int
    */
@@ -277,8 +272,9 @@ class TrGeVeNotRec
     return $this->dTotalGs;
   }
 
+
   //====================================================//
-  ////XML ELEMENT  
+  // Conversiones XML  
   //====================================================//
 
   /**

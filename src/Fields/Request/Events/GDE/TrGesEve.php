@@ -1,16 +1,16 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Fields\Request\events\GDE;
+namespace Abiliomp\Pkuatia\Fields\Request\Events\GDE;
 
 use DOMElement;
 
 /**
- * ID: GDE001 Raíz de Gestión de Eventos - Nodo padre: GDE000 gGroupGesEve
+ * Nodo: GDE001 - rGesEve - Raíz de Gestión de Eventos
+ * Padre: GDE000 - gGroupGesEve - Raiz del Grupo de Eventos
  */
-class TgGroupGesEve
+class TrGesEve
 {
-    public TrEve $rEve; // GDE002 Grupos de campos generales del evento
-    public TgGroupTiEvt $gGroupTiEvt; // GDE007 Grupo de campos del tipo de evento
+    public TrEve $rEve; // GDE002 - Grupos de campos generales del evento
 
     //====================================================//
     // Getters

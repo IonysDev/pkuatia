@@ -1,40 +1,42 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Fields\Request\events\GDE;
+namespace Abiliomp\Pkuatia\Fields\Request\Events\GDE;
 
 use DOMElement;
 
 /**
- * ID:GET001 Raíz Gestión de Eventos por actualización de datos del transporte PADRE:GDE007
+ * Nodo: GET001 - rGeVeTr - Grupos de Campos Generales del Evento 
+ * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class RGeVeTr
+class TrGeVeTr
 {
-  public string $Id; //GET002 CDC del DTE 
-  public int $dMotEv; //GET003 Motivo del evento
-  public int $cDepEnt; //GET004 Código del departamento del local de la entrega
-  public int $cDisEnt; /// GET006 Código del distrito del  local de la entrega  
-  public int $cCiuEnt; ///GET008 Código de la ciudad del local de la entrega
-  public string $dDirEnt; // GET010 Dirección del local de la entrega
-  public int $dNumCas; //GET011 Número de casa del local de la entrega
-  public string $dCompDir1; ///GET012 Complemento de dirección del local de  la entrega
-  public string $dNomChof; ///GET013 Nombre y apellido del chofer
-  public string $dNumIDChof; ///GET014 Número de documento  de identidad del chofer
-  public int $iNatTrans; ///GET015 Naturaleza del transportista
-  public string $dRucTrans; ///GET016 RUC del transportista
-  public int $dDVTrans; /// GET017 Dígito verificador del RUC del transportista
-  public string $dNomTrans; ///GET018 Nombre o razón social del transportista
-  public int $iTipIDTrans; ///GET019 Tipo de documento de  identidad del  transportista
-  public string $dNumIDTrans; ///GET021 Número de documento de identidad del transportista
-  public int $iTipTrans; //GET022 Tipo de transporte
-  public int $iModTrans; //GET024 Modalidad del transporte
-  public string $dTiVehTras; ///GET026 Tipo de vehículo
-  public string $dMarVeh; //GET027 Marca del vehículo GET001
-  public int $dTipIdenVeh; ///GET028 Tipo de identificación del vehículo
-  public string $dNroIDVeh; ///GET029 Número de identificación del vehículo
-  public string $dNroMatVeh; //GET030 Número de matrícula  del vehículo
+  public string $Id;          // GET002 - CDC del DTE 
+  public int    $dMotEv;      // GET003 - Motivo del evento
+  public int    $cDepEnt;     // GET004 - Código del departamento del local de la entrega
+  public int    $cDisEnt;     // GET006 - Código del distrito del  local de la entrega  
+  public int    $cCiuEnt;     // GET008 - Código de la ciudad del local de la entrega
+  public string $dDirEnt;     // GET010 - Dirección del local de la entrega
+  public int    $dNumCas;     // GET011 - Número de casa del local de la entrega
+  public string $dCompDir1;   // GET012 - Complemento de dirección del local de  la entrega
+  public string $dNomChof;    // GET013 - Nombre y apellido del chofer
+  public string $dNumIDChof;  // GET014 - Número de documento  de identidad del chofer
+  public int    $iNatTrans;   // GET015 - Naturaleza del transportista
+  public string $dRucTrans;   // GET016 - RUC del transportista
+  public int    $dDVTrans;    // GET017 - Dígito verificador del RUC del transportista
+  public string $dNomTrans;   // GET018 - Nombre o razón social del transportista
+  public int    $iTipIDTrans; // GET019 - Tipo de documento de  identidad del  transportista
+  public string $dNumIDTrans; // GET021 - Número de documento de identidad del transportista
+  public int    $iTipTrans;   // GET022 - Tipo de transporte
+  public int    $iModTrans;   // GET024 - Modalidad del transporte
+  public string $dTiVehTras;  // GET026 - Tipo de vehículo
+  public string $dMarVeh;     // GET027 - Marca del vehículo GET001
+  public int    $dTipIdenVeh; // GET028 - Tipo de identificación del vehículo
+  public string $dNroIDVeh;   // GET029 - Número de identificación del vehículo
+  public string $dNroMatVeh;  // GET030 - Número de matrícula  del vehículo
+
 
   //====================================================//
-  ///SETTERS
+  // Setters
   //====================================================//
 
   /**
@@ -364,10 +366,10 @@ class RGeVeTr
     return $this;
   }
 
-  //====================================================//
-  ///GETTERS
-  //====================================================//
 
+  //====================================================//
+  // Getters
+  //====================================================//
 
   /**
    * Get the value of Id
@@ -695,9 +697,9 @@ class RGeVeTr
     return $this->dNroMatVeh;
   }
 
-   //====================================================//
-  ///XML ELEMENT  
-   //====================================================//
+  //====================================================//
+  // Conversiones XML
+  //====================================================//
 
   /**
    * toDOMElement
