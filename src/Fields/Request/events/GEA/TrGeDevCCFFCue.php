@@ -212,7 +212,7 @@ class TrGeDevCCFFCue
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('rGeDevCCFFCue');
+    $res = new DOMElement('trGeDevCCFFCue');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumDevSol', $this->getDNumDevSol()));
     $res->appendChild(new DOMElement('dNumDevInf', $this->getDNumDevInf()));
