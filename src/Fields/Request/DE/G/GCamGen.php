@@ -139,7 +139,6 @@ class GCamGen
   public function setGCamCarg(GCamCarg $gCamCarg): self
   {
     $this->gCamCarg = $gCamCarg;
-
     return $this;
   }
 }

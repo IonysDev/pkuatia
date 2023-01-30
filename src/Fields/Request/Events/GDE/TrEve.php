@@ -14,7 +14,7 @@ class TrEve
     public int          $Id;          // GDE003 - Identificador del evento - ATRIBUTO DEL CAMPO
     public DateTime     $dFecFirma;   // GDE004 - Fecha y Hora del firmado
     public int          $dVerFor;     // GDE005 - Versión del formato
-    public TgGroupTiEvt $gGroupTiEvt; // GEI004 - Punto de expedición
+    public TgGroupTiEvt $gGroupTiEvt; // GDE007 - Grupo de campos del tipo de evento
 
     ///Setters
 

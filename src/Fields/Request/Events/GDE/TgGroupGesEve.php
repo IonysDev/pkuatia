@@ -5,11 +5,13 @@ namespace Abiliomp\Pkuatia\Fields\Request\Events\GDE;
 use DOMElement;
 
 /**
- * ID:GEC000 Raíz del grupo deeventos - Nodo padre: GSch03
+ * Nodo: GEC000 - gGroupGesEve - Raíz del grupo deeventos 
+ * Padre: GSch03 - dEvReg - Evento a ser registrado
  */
 class TgGroupGesEve
 {
-  public TrGesEve $rGesEve; // GDE001 Raíz de Gestión de Eventos
+  public TrGesEve $rGesEve; // GDE001 - Raíz de Gestión de Eventos
+
 
   //====================================================//
   // Setters
@@ -26,15 +28,16 @@ class TgGroupGesEve
     return $this;
   }
 
-   //====================================================//
-   // Getters
-   //====================================================//
 
+  //====================================================//
+  // Getters
+  //====================================================//
 
   public function getRGesEve(): TrGesEve
   {
     return $this->rGesEve;
   }
+
 
   //====================================================//
   // XML Element 
