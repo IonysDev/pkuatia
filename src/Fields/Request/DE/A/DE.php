@@ -152,10 +152,34 @@ class DE
     return $res;
   }
 
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return DE
+   */
+  public function fromDOMElement(DOMElement $xml): DE
+  {
+    if (strcmp($xml->tagName, 'DE') == 0 && $xml->childElementCount == 11) {
+      $res = new DE();
+
+      $res->setID($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setDDVId($xml->getElementsByTagName('dDVId')->item(0)->nodeValue);
+      $res->setDFecFirma($xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue);
+      $res->getDSisFact($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
+
   //====================================================//
   //Others
   //====================================================//
-  
+
   /**
    * Get the value of gOpeDe
    *

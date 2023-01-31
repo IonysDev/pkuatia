@@ -94,9 +94,12 @@ class RDE
   {
     if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 1) {
 
-      ///FALTA MUCHISIMO ACÁ
       $res = new RDE();
+
       $res->setDVerFor($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue);
+
+      $aux = new GCamFuFD;
+      $aux->fromDOMElement($xml->getElementsByTagName('gCamFuFD')->item(0)->nodeValue);
 
       return $res;
     } else {
