@@ -80,9 +80,9 @@ class TgResProc
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('tgResProc');
-    if( isset($this->dCodRes)){
+    if (isset($this->dCodRes)) {
       $res->appendChild(new DOMElement('dCodRes', $this->dCodRes));
-    }else if( isset($this->dMsgRes)){
+    } else if (isset($this->dMsgRes)) {
       $res->appendChild(new DOMElement('dMsgRes', $this->dMsgRes));
     }
 

@@ -5,14 +5,17 @@ namespace Abiliomp\Pkuatia\Fields\Response;
 use DateTime;
 use DOMElement;
 
+/**
+ * ID:PP01 rProtDe Raíz
+ */
 class TxProtDe
 {
-  public string $id;
-  public DateTime $dFecProc;
-  public string $dDigVal;
-  public String $dEstRes;
-  public String $dProtAut;
-  public TgResProc $gResProc;
+  public string $id;          // PP02 - CDC del DE Procesado
+  public DateTime $dFecProc;  // PP03 - Fecha y hora del procesamiento 
+  public string $dDigVal;     // PP04 - DigestValue del DE procesado
+  public String $dEstRes;     // PP050 - Estado del resultado
+  public String $dProtAut;    // PP051 - Número de Transacción
+  public TgResProc $gResProc; // PP05 - Grupo Resultado de Procesamiento 
 
   //====================================================//
   ///SETTERS
@@ -175,7 +178,7 @@ class TxProtDe
   //====================================================//
   ///XML ELEMENT
   //====================================================//
-  
+
   /**
    * toDOMElement
    *
@@ -184,6 +187,12 @@ class TxProtDe
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('txProtDe');
+
+    $res->appendChild(new DOMElement('dFecProc', $this->dFecProc->format('Y-m-d H:i:s')));
+    $res->appendChild(new DOMElement('dDigVal', $this->dDigVal));
+    $res->appendChild(new DOMElement('dEstRes', $this->dEstRes));
+    $res->appendChild(new DOMElement('dProtAut', $this->dProtAut));
+    $res->appendChild($this->gResProc->toDOMElement());
     return $res;
   }
 }
