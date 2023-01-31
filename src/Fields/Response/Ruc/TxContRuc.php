@@ -113,7 +113,7 @@ class TxContRuc
   }
 
   /**
-   * getDDesEstCons
+   * ContRUC05 - Descripción Código del Estado del RUC Consultado
    *
    * @return string
    */
