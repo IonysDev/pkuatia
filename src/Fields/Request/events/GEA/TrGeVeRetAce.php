@@ -18,9 +18,9 @@ class TrGeVeRetAce
   public string $dCodConRet; /// GER007 Identificador de la retención
   public DateTime $dFeEmiRet; ///GER008  Fecha de emisión de  la retención
 
-   //====================================================//
+  //====================================================//
   ///SETTERS
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of Id
@@ -126,11 +126,11 @@ class TrGeVeRetAce
     return $this;
   }
 
-   //====================================================//
+  //====================================================//
   ///GETTERS
-   //====================================================//
+  //====================================================//
 
-  
+
 
   /**
    * Get the value of Id
@@ -202,9 +202,9 @@ class TrGeVeRetAce
     return $this->dFeEmiRet;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element  
-   //====================================================//
+  //====================================================//
 
   /**
    * toDOMElement
@@ -222,5 +222,30 @@ class TrGeVeRetAce
     $res->appendChild(new DOMElement('dCodConRet', $this->getDCodConRet()));
     $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d')));
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeRetAce
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeRetAce
+  {
+    if (strcmp($xml->tagName, "trGeVeRetAce") == 0 && $xml->childElementCount == 7) {
+      $res = new TrGeVeRetAce();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setDNumTimRet($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue);
+      $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
+      $res->setDPunExpRet($xml->getElementsByTagName('dPunExpRet')->item(0)->nodeValue);
+      $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
+      $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
+      $res->setDFeEmiRet($xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

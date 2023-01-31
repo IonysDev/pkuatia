@@ -18,9 +18,9 @@ class TrGeDevCCFFDev
   public DateTime $dFeEmiInf; // GEDD007 Fecha de emisión del informe
   public DateTime $dFeEmiRes; // GEDD008  Fecha de emisión de la resolución
 
-   //====================================================//
+  //====================================================//
   ///SETTERS
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of Id
@@ -126,11 +126,11 @@ class TrGeDevCCFFDev
     return $this;
   }
 
-   //====================================================//
+  //====================================================//
   ///GETTERS
-   //====================================================//
+  //====================================================//
 
-  
+
 
   /**
    * Get the value of Id
@@ -202,11 +202,11 @@ class TrGeDevCCFFDev
     return $this->dFeEmiRes;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
+  //====================================================//
 
-  
+
   /**
    * toDOMElement
    *
@@ -225,5 +225,30 @@ class TrGeDevCCFFDev
     $res->appendChild(new DOMElement('dFeEmiRes', $this->getDFeEmiRes()->format('Y-m-d')));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeRetAce
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeDevCCFFDev
+  {
+    if (strcmp($xml->tagName, "trGeDevCCFFDev") == 0 && $xml->childElementCount == 7) {
+      $res = new TrGeDevCCFFDev();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setDNumDevSol($xml->getElementsByTagName('dNumDevSol')->item(0)->nodeValue);
+      $res->setDNumDevInf($xml->getElementsByTagName('dNumDevInf')->item(0)->nodeValue);
+      $res->setDNumDevRes($xml->getElementsByTagName('dNumDevRes')->item(0)->nodeValue);
+      $res->setDFeEmiSol($xml->getElementsByTagName('dFeEmiSol')->item(0)->nodeValue);
+      $res->setDFeEmiInf($xml->getElementsByTagName('dFeEmiInf')->item(0)->nodeValue);
+      $res->setDFeEmiRes($xml->getElementsByTagName('dFeEmiRes')->item(0)->nodeValue);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

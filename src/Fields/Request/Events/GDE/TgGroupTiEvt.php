@@ -428,12 +428,89 @@ class TgGroupTiEvt
       $res->appendChild($this->rGeDevCCFFCue->toDOMElement());
     } else if (isset($this->rGeDevCCFFDev)) {
       $res->appendChild($this->rGeDevCCFFDev->toDOMElement());
-    } else if (isset($this->rGeVeAnt)){
+    } else if (isset($this->rGeVeAnt)) {
       $res->appendChild($this->rGeVeAnt->toDOMElement());
-    } else if (isset($this->rGeVeRem)){
+    } else if (isset($this->rGeVeRem)) {
       $res->appendChild($this->rGeVeRem->toDOMElement());
     }
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TgGroupTiEvt
+   */
+  public static function fromDOMElement(DOMElement $xml): TgGroupTiEvt
+  {
+    if (strcmp($xml->tagName, 'gGroupTiEvt') == 0 && $xml->childElementCount == 3) {
+      $res = new TgGroupTiEvt();
+
+      $aux = new TrGeVeCan();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeCan')->item(0)->nodeValue);
+      $res->setRGeVeCan($aux);
+
+      $aux = new TrGeVeInu();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeInu')->item(0)->nodeValue);
+      $res->setRGeVeInu($aux);
+
+      $aux = new TrGeVeTr();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeTr')->item(0)->nodeValue);
+      $res->setRGeVeTr($aux);
+
+      //===================================================================================//
+      $aux = new TrGeVeNotRec();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeNotRec')->item(0)->nodeValue);
+      $res->setRGeVeNotRec($aux);
+
+      $aux = new TrGeVeConf();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeConf')->item(0)->nodeValue);
+      $res->setRGeVeConf($aux);
+
+      $aux = new TrGeVeDisconf();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeDisconf')->item(0)->nodeValue);
+      $res->setRGeVeDisconf($aux);
+
+      $aux = new TrGeVeDescon();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeDescon')->item(0)->nodeValue);
+      $res->setRGeVeDescon($aux);
+
+      //===============================================================================//
+
+      $aux = new TrGeVeRetAce();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRetAce')->item(0)->nodeValue);
+      $res->setRGeVeRetAce($aux);
+
+      $aux = new TrGeVeRetAnu();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRetAnu')->item(0)->nodeValue);
+      $res->setRGeVeRetAnu($aux);
+
+      $aux = new TrGeVeCCFF();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeCCFF')->item(0)->nodeValue);
+      $res->setRGeVeCCFF($aux);
+
+      $aux = new TrGeDevCCFFCue();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeDevCCFFCue')->item(0)->nodeValue);
+      $res->setRGeDevCCFFCue($aux);
+
+      $aux = new TrGeDevCCFFDev();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeDevCCFFDev')->item(0)->nodeValue);
+      $res->setRGeDevCCFFDev($aux);
+
+      $aux = new TrGeVeAnt();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeAnt')->item(0)->nodeValue);
+      $res->setRGeVeAnt($aux);
+
+      $aux = new TrGeVeRem();
+      $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRem')->item(0)->nodeValue);
+      $res->setRGeVeRem($aux);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

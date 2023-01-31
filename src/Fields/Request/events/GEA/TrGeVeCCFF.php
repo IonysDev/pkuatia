@@ -113,4 +113,26 @@ class TrGeVeCCFF
     $res->appendChild(new DOMElement('dFeAceTraCCFF', $this->getDFeAceTraCCFF()->format('Y-m-d')));
     return $res;
   }
+
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeRetAce
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeCCFF
+  {
+    if (strcmp($xml->tagName, "trGeVeCCFF") == 0 && $xml->childElementCount == 3) {
+      $res = new TrGeVeCCFF();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setDNumTraCCFF($xml->getElementsByTagName('dNumTraCCFF')->item(0)->nodeValue);
+      $res->setDFeAceTraCCFF($xml->getElementsByTagName('dFeAceTraCCFF')->item(0)->nodeValue);
+    
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

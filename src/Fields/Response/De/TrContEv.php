@@ -82,17 +82,36 @@ class TrContEv
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('TrContEv');
+        $res = new DOMElement('rContEv');
         $res->appendChild($this->xEvento->toDOMElement());
         $res->appendChild($this->rResEnviEventoDe->toDOMElement());
         return $res;
     }
 
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return TrContEv
+     */
     public static function fromDOMElement(DOMElement $xml): TrContEv
     {
-        $res = new TrContEv();
-        // To Do!
-        
-        return $res;
+        if (strcmp($xml->tagName, 'rContEv') == 0 && $xml->childElementCount == 2) {
+            $res = new TrContEv();
+
+            $aux = new TrGesEve;
+            $aux->fromDOMElement($xml->getElementsByTagName('xEvento')->item(0)->nodeValue);
+            $res->setXEvento($aux);
+
+            $aux = new TgResProcEVe;
+            $aux->fromDOMElement($xml->getElementsByTagName('rResEnviEventoDe')->item(0)->nodeValue);
+            $res->setRResEnviEventoDe($aux);
+
+            return $res;
+
+        } else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+        }
     }
 }

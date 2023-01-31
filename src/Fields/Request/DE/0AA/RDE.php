@@ -23,7 +23,7 @@ class RDE
   //====================================================//
   //Constructor
   //====================================================//  
-  
+
   /**
    * __construct
    *
@@ -82,6 +82,27 @@ class RDE
     $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return RDE
+   */
+  public function fromDOMElement(DOMElement $xml): RDE
+  {
+    if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 1) {
+
+      ///FALTA MUCHISIMO ACÁ
+      $res = new RDE();
+      $res->setDVerFor($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 
   //====================================================//

@@ -188,7 +188,7 @@ class TrGeVeInu
     return $this->mOtEve;
   }
 
-  
+
   //====================================================//
   // Conversiones XML
   //====================================================//
@@ -205,10 +205,35 @@ class TrGeVeInu
     $res->appendChild(new DOMElement('dEst', str_pad($this->dEst, 3, '0', STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('dPunExp', str_pad($this->dPunExp, 3, '0', STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('dNumIn', str_pad($this->dNumIn, 7, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dNumFin', str_pad($this->dNumFin,7,'0',STR_PAD_LEFT)));
+    $res->appendChild(new DOMElement('dNumFin', str_pad($this->dNumFin, 7, '0', STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('iTiDE', $this->getITiDE()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
     //Falta dSerieNum
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeInu
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeInu
+  {
+    if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 8) {
+      $res = new TrGeVeInu();
+      $res->setDNumTim($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue);
+      $res->setDEst($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
+      $res->setDPunExp($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
+      $res->setDNumIn($xml->getElementsByTagName('dNumIn')->item(0)->nodeValue);
+      $res->setDNumFin($xml->getElementsByTagName('dNumFin')->item(0)->nodeValue);
+      $res->setITiDE($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue);
+      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

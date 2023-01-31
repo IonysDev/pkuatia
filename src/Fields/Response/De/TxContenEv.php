@@ -43,7 +43,7 @@ class TxContenEv
   //====================================================//
   ///XML ELEMENT
   //====================================================//  
-  
+
   /**
    * toDOMElement
    *
@@ -56,5 +56,27 @@ class TxContenEv
     $res->appendChild($this->rContEv->toDOMElement());
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TxContenEv
+   */
+  public static function fromDOMElement(DOMElement $xml): TxContenEv
+  {
+    if (strcmp($xml->tagName, 'contentEv') == 0 && $xml->childElementCount == 1) {
+      $res = new TxContenEv();
+
+      $aux = new TrContEv;
+      $aux->fromDOMElement($xml->getElementsByTagName('rContEv')->item(0)->nodeValue);
+      $res->setRContEv($aux);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

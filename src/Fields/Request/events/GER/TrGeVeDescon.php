@@ -309,4 +309,31 @@ class TrGeVeDescon
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeConf
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeDescon
+  {
+    if (strcmp($xml->tagName, 'trGeVeDescon') == 0 && $xml->childElementCount == 10) {
+      $res = new TrGeVeDescon();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setDFecEmi($xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue);
+      $res->setDFecRecep($xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue);
+      $res->setITipRec($xml->getElementsByTagName('iTipRec')->item(0)->nodeValue);
+      $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
+      $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
+      $res->setDDVRec($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue);
+      $res->setDTipIDRec($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue);
+      $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
+      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

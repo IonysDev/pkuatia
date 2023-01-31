@@ -2,7 +2,6 @@
 
 namespace Abiliomp\Pkuatia\Fields\Response\Ruc;
 
-use DOMAttr;
 use DOMElement;
 
 /**
@@ -13,6 +12,7 @@ class TxContRuc
   public string $dRUCCons;      // ContRUC02 - RUC Consultado
   public string $dRazCons;      // ContRUC03 - Razón social del RUC Consultado
   public string $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado
+  public string $dDesEstCons;   //ContRUC05 - Descripción Código del Estado del RUC Consultado
   public string $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico
 
   //====================================================//
@@ -59,6 +59,20 @@ class TxContRuc
   public function setDCodEstCons(string $dCodEstCons): self
   {
     $this->dCodEstCons = $dCodEstCons;
+
+    return $this;
+  }
+
+  /**
+   * Set the value of dDesEstCons
+   *
+   * @param string $dDesEstCons
+   *
+   * @return self
+   */
+  public function setDDesEstCons(string $dDesEstCons): self
+  {
+    $this->dDesEstCons = $dDesEstCons;
 
     return $this;
   }
@@ -168,12 +182,34 @@ class TxContRuc
   {
     $res = new DOMElement('TxContRic');
 
-    $res->appendChild(new DOMElement('dRUCCons',$this->dRUCCons));
+    $res->appendChild(new DOMElement('dRUCCons', $this->dRUCCons));
     $res->appendChild(new DOMElement('dRazCons', $this->dRazCons));
     $res->appendChild(new DOMElement('dCodEstCons', $this->dCodEstCons));
     $res->appendChild(new DOMElement('dDesEstCons', $this->getDDesEstCons()));
     $res->appendChild(new DOMElement('dRUCFactElec', $this->dRUCFactElec));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TxContRuc
+   */
+  public static function fromDOMElement(DOMElement $xml): TxContRuc
+  {
+    if (strcmp($xml->tagName, 'rContRUC ') == 0 && $xml->childElementCount == 5) {
+      $res = new TxContRuc();
+      $res->setDRUCCons($xml->getElementsByTagName('rContRUC ')->item(0)->nodeValue);
+      $res->setDRazCons($xml->getElementsByTagName('dRazCons ')->item(0)->nodeValue);
+      $res->setDCodEstCons($xml->getElementsByTagName('dCodEstCons ')->item(0)->nodeValue);
+      $res->setDDesEstCons($xml->getElementsByTagName('dDesEstCons ')->item(0)->nodeValue);
+      $res->setDRUCFactElec($xml->getElementsByTagName('dRUCFactElec ')->item(0)->nodeValue);
+      return $res;
+    }else{
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

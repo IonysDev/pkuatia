@@ -86,4 +86,23 @@ class GCamFuFD
     $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamFuFD
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamFuFD
+  {
+    if (strcmp($xml->tagName, 'gCamFuFD') == 0 && $xml->childElementCount == 2) {
+      $res = new GCamFuFD();
+      $res->setDCarQR($xml->getElementsByTagName('dCarQR')->item(0)->nodeValue);
+      $res->setDInfAdic($xml->getElementsByTagName('dInfAdic')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

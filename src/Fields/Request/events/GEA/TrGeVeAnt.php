@@ -44,10 +44,10 @@ class TrGeVeAnt
     return $this->Id;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML ELEMENT
-   //====================================================//
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -59,5 +59,25 @@ class TrGeVeAnt
     $res->appendChild(new DOMElement('Id', $this->getId()));
 
     return $res;
+  }
+
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeRetAce
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeAnt
+  {
+    if (strcmp($xml->tagName, "rGeVeAnt") == 0 && $xml->childElementCount == 7) {
+      $res = new TrGeVeAnt();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

@@ -89,17 +89,22 @@ class TgResProc
     return $res;
   }
 
-    public static function fromDOMElement(DOMElement $xml): TgResProc
-    {
-        if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 2) {
-            $res = new TgResProc();
-            $res->setDCodRes($xml->getElementsByTagName('dCodRes')->item(0)->nodeValue);
-            $res->setDMsgRes($xml->getElementsByTagName('dMsgRes')->item(0)->nodeValue);
-            return $res;
-        }
-        else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TgResProc
+   */
+  public static function fromDOMElement(DOMElement $xml): TgResProc
+  {
+    if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 2) {
+      $res = new TgResProc();
+      $res->setDCodRes($xml->getElementsByTagName('dCodRes')->item(0)->nodeValue);
+      $res->setDMsgRes($xml->getElementsByTagName('dMsgRes')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
     }
+  }
 }

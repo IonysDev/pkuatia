@@ -9,12 +9,12 @@ use DOMElement;
  */
 class TrGeVeDisconf
 {
-  public string $Id;// GDI002 CDC del DTE
-  public string $mOtEve;///GDI004 Motivo del Evento
+  public string $Id; // GDI002 CDC del DTE
+  public string $mOtEve; ///GDI004 Motivo del Evento
 
-   //====================================================//
+  //====================================================//
   //SETTERS
-   //====================================================//
+  //====================================================//
 
 
   /**
@@ -46,11 +46,11 @@ class TrGeVeDisconf
     return $this;
   }
 
-   //====================================================//
+  //====================================================//
   ///GETTERS
-   //====================================================//
+  //====================================================//
 
-  
+
 
   /**
    * Get the value of Id
@@ -72,11 +72,11 @@ class TrGeVeDisconf
     return $this->mOtEve;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
+  //====================================================//
 
-  
+
   /**
    * toDOMElement
    *
@@ -90,5 +90,24 @@ class TrGeVeDisconf
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return DOMElement
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeDisconf
+  {
+    if (strcmp($xml->tagName, 'trGeVeDisconf') == 0 && $xml->childElementCount == 2) {
+      $res = new TrGeVeDisconf();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

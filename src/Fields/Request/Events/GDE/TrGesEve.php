@@ -38,8 +38,36 @@ class TrGesEve
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('TrGesEve');
+        $res = new DOMElement('trGesEve');
         $res->appendChild($this->rEve->toDOMElement());
         return $res;
+    }
+
+
+
+    //====================================================//
+    ///XML ELEMENT
+    //====================================================//  
+    
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return TrGesEve
+     */
+    public static function fromDOMElement(DOMElement $xml): TrGesEve
+    {
+        if (strcmp($xml->tagName, 'trGesEve') == 0 && $xml->childElementCount == 1) {
+            $res = new TrGesEve();
+
+            $aux = new TrEve();
+            $aux->fromDOMElement($xml->getElementsByTagName('rEve')->item(0)->nodeValue);
+            $res->setEve($aux);
+
+            return $res;
+        } else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+        }
     }
 }

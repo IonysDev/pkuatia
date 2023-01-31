@@ -249,4 +249,30 @@ class TrGeVeRetAnu
 
     return $res;
   }
+
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeRetAce
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeRetAnu
+  {
+    if (strcmp($xml->tagName, "TrGeVeRetAnu") == 0 && $xml->childElementCount == 8) {
+      $res = new TrGeVeRetAnu();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setDNumTimRet($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue);
+      $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
+      $res->setDPunExpRet($xml->getElementsByTagName('dPunExpRet')->item(0)->nodeValue);
+      $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
+      $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
+      $res->setDFeEmiRet($xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue);
+      $res->setDFecAnRet($xml->getElementsByTagName('dFecAnRet')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

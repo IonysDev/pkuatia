@@ -143,4 +143,28 @@ class TgResProcEVe
     $res->appendChild($this->gResProc->toDOMElement());
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TgResProcEVe
+   */
+  public static function fromDOMElement(DOMElement $xml): TgResProcEVe
+  {
+    if (strcmp($xml->tagName, 'gResProcEVe') == 0 && $xml->childElementCount == 4) {
+      $res = new TgResProcEVe();
+      $res->setDEstRes($xml->getElementsByTagName('dEstRes')->item(0)->nodeValue);
+      $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
+      $res->setId($xml->getElementsByTagName('id')->item(0)->nodeValue);
+
+      $aux = new TgResProc();
+      $aux->fromDOMElement($xml->getElementsByTagName('gResProc')->item(0)->nodeValue);
+      $res->setGResProc($aux);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

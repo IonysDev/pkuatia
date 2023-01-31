@@ -85,5 +85,27 @@ class TrGeVeCan
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
     return $res;
   }
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeCan
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeCan
+  {
+    if(strcmp($xml->tagName, 'trGeVeCan') == 0 && $xml->childElementCount == 2)
+    {
+      $res = new TrGeVeCan();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+      return $res;
+    }
+    else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
+  }
 
 }

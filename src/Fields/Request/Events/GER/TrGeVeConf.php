@@ -108,10 +108,29 @@ class TrGeVeConf
     $res = new DOMElement('trGeVeConf');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('iTipConf', $this->getITipConf()));
-    if($this->iTipConf == 2)
-    {
+    if ($this->iTipConf == 2) {
       $res->appendChild(new DOMElement('dFecRecep', $this->dFecRecep->format('Y-m-d')));
     }
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeConf
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeConf
+  {
+    if (strcmp($xml->tagName, 'trGeVeConf') == 0 && $xml->childElementCount == 3) {
+      $res = new TrGeVeConf();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setITipConf($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue);
+      $res->setDFecRecep($xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Fields\Response\De;
 
+use Abiliomp\Pkuatia\Fields\A\DE;
 use Abiliomp\Pkuatia\Fields\AA\RDE;
 use DOMElement;
 
@@ -66,7 +67,7 @@ class TxContenDE
   //====================================================//
   //GETTERS
   //====================================================//
-  
+
 
   /**
    * Get the value of rDe
@@ -98,7 +99,7 @@ class TxContenDE
     return $this->xContEv;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML ELEMENT
   //====================================================//     
   /**
@@ -110,9 +111,37 @@ class TxContenDE
   {
     $res = new DOMElement('TxContenDe');
     $res->appendChild($this->rDe->toDOMElement());
-    $res->appendChild(new DOMElement('dProtAut',$this->dProtAut));
+    $res->appendChild(new DOMElement('dProtAut', $this->dProtAut));
     $res->appendChild($this->xContEv->toDOMElement());
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TxContenDE
+   */
+  public static function fromDOMElement(DOMElement $xml): TxContenDE
+  {
+    if (strcmp($xml->tagName, 'contenDE') == 0 && $xml->childElementCount == 3) {
+      $res = new TxContenDE();
+
+      $aux = new RDE();
+      $aux->fromDOMElement($xml->getElementsByTagName('rDe')->item(0)->nodeValue);
+      $res->setRDe($aux);
+
+      $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
+
+      $aux = new TxContenEv();
+      $aux->fromDOMElement($xml->getElementsByTagName('contentEv')->item(0)->nodeValue);
+      $res->setXContEv($aux);
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

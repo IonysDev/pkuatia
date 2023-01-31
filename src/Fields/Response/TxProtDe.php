@@ -195,4 +195,29 @@ class TxProtDe
     $res->appendChild($this->gResProc->toDOMElement());
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TxProtDe
+   */
+  public static function fromDOMElement(DOMElement $xml): TxProtDe
+  {
+    if (strcmp($xml->tagName, 'rProtDe') == 0 && $xml->childElementCount == 6) {
+      $res = new TxProtDe();
+      $res->setDFecProc($xml->getElementsByTagName('dFecProc')->item(0)->nodeValue);
+      $res->setDDigVal($xml->getElementsByTagName('dDigVal')->item(0)->nodeValue);
+      $res->setDEstRes($xml->getElementsByTagName('dEstRes')->item(0)->nodeValue);
+      $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
+
+      $aux = new TgResProc();
+      $aux->fromDOMElement($xml->getElementsByTagName('gResProc')->item(0)->nodeValue);
+      $res->setGResProc($aux);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

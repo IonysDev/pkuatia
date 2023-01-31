@@ -139,5 +139,29 @@ class TrEve
         $res->appendChild($this->gGroupTiEvt->toDOMElement());
         return $res;
     }
+    
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return TrEve
+     */
+    public static function fromDOMElement(DOMElement $xml): TrEve
+    {
+        if (strcmp($xml->tagName, 'rEve') == 0 && $xml->childElementCount == 4) {
+            $res = new TrEve();
+            $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+            $res->setDFecFirma(new DateTime($xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
+            $res->setDVerFor($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue);
+
+            $aux = new TgGroupTiEvt();
+            $aux->fromDOMElement($xml->getElementsByTagName('gGroupTiEvt')->item(0)->nodeValue);
+            $res->setGGroupTiEvt($aux);
+            return $res;
+          } else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+          }
+    }
 
 }

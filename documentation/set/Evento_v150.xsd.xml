@@ -419,7 +419,7 @@
         <xs:sequence>
         	<xs:element name="dFecFirma" type="fecHhmmss"/>
             <xs:element name="dVerFor" type="tVerFor"/>
-            <xs:element name="gGroupTiEvt" type="tgGroupEvt"/>
+            <xs:element name="" type="tgGroupEvt"/>
         </xs:sequence>
         <!--ID pasa a ser atributo del rEve-->
         <xs:attribute name="Id" type="tdIdEve" use="required"/>

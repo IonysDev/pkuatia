@@ -11,7 +11,7 @@ use DOMElement;
  */
 class TrGeVeNotRec
 {
-  
+
   public string   $Id;        // GEN002 - Identificador del DE/DTE
   public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE
   public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 
@@ -292,7 +292,6 @@ class TrGeVeNotRec
     $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
     if ($this->iTipRec == 1) {
       $res->appendChild(new DOMElement('dRucRec', $this->getDRucRec()));
-      $res->appendChild(new DOMElement('dRucRec', $this->getDRucRec()));
     }
 
     if ($this->iTipRec == 2) {
@@ -301,6 +300,32 @@ class TrGeVeNotRec
     }
 
     $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
+    return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TrGeVeNotRec
+   */
+  public static function fromDOMElement(DOMElement $xml): TrGeVeNotRec
+  {
+    if (strcmp($xml->tagName, "trGeVeNotRec") == 0 && $xml->childElementCount == 8) {
+      $res = new TrGeVeNotRec();
+      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+      $res->setDFecEmi($xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue);
+      $res->setDFecRecep($xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue);
+      $res->setITipRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
+      $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
+      $res->setDTipIDRec($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue);
+      $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
+      $res->setDTotalGs($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+
     return $res;
   }
 }
