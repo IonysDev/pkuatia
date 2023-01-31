@@ -9,7 +9,7 @@ use DOMElement;
  */
 class TgResProc
 {
-  public int $dCodRes;   // PP052 - Código del resultado de procesamiento 
+  public string $dCodRes;   // PP052 - Código del resultado de procesamiento 
   public string $dMsgRes; // PP053 - Mensaje del resultado de procesamiento
 
   //====================================================//
@@ -79,7 +79,7 @@ class TgResProc
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('tgResProc');
+    $res = new DOMElement('gResProc');
     if (isset($this->dCodRes)) {
       $res->appendChild(new DOMElement('dCodRes', $this->dCodRes));
     } else if (isset($this->dMsgRes)) {
@@ -88,4 +88,18 @@ class TgResProc
 
     return $res;
   }
+
+    public static function fromDOMElement(DOMElement $xml): TgResProc
+    {
+        if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 2) {
+            $res = new TgResProc();
+            $res->setDCodRes($xml->getElementsByTagName('dCodRes')->item(0)->nodeValue);
+            $res->setDMsgRes($xml->getElementsByTagName('dMsgRes')->item(0)->nodeValue);
+            return $res;
+        }
+        else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+        }
+    }
 }
