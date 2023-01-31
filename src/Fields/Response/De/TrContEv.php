@@ -87,4 +87,11 @@ class TrContEv
         $res->appendChild($this->rResEnviEventoDe->toDOMElement());
         return $res;
     }
+
+    public static function fromDOMElement(DOMElement $xml): TrContEv
+    {
+        $res = new TrContEv();
+        // To Do!
+        return $res;
+    }
 }
