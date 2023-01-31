@@ -7,87 +7,84 @@ use Abiliomp\Pkuatia\Fields\Response\Event\TgResProcEVe;
 use DOMElement;
 
 /**
- * ContEv01 Raíz
+ * Nodo: ContEv01 - Elemento Raíz de Contenedor de Evento
  */
 class TrContEv
 {
-  public TrGesEve $xEvento; //ContEv02 - XML del Evento
-  public TgResProcEVe $rResEnviEventoDe; //ContEv03 - Respuesta del WS Recepción Evento 
-
-  //====================================================//
-  ///SETTERS
-  //====================================================//
-
-  /**
-   * Set the value of xEvento
-   *
-   * @param TrGesEve $xEvento
-   *
-   * @return self
-   */
-  public function setXEvento(TrGesEve $xEvento): self
-  {
-    $this->xEvento = $xEvento;
-
-    return $this;
-  }
+    public TrGesEve $xEvento;              //ContEv02 - XML del Evento
+    public TgResProcEVe $rResEnviEventoDe; //ContEv03 - Respuesta del WS Recepción Evento 
 
 
-  /**
-   * Set the value of rResEnviEventoDe
-   *
-   * @param TgResProcEVe $rResEnviEventoDe
-   *
-   * @return self
-   */
-  public function setRResEnviEventoDe(TgResProcEVe $rResEnviEventoDe): self
-  {
-    $this->rResEnviEventoDe = $rResEnviEventoDe;
+    //====================================================//
+    // Setters
+    //====================================================//
 
-    return $this;
-  }
+    /**
+     * Establece el valor de xEvento
+     *
+     * @param TrGesEve $xEvento
+     *
+     * @return self
+     */
+    public function setXEvento(TrGesEve $xEvento): self
+    {
+        $this->xEvento = $xEvento;
+        return $this;
+    }
 
-  //====================================================//
-  //GETTERS
-  //====================================================//
-
-
-  /**
-   * Get the value of xEvento
-   *
-   * @return TrGesEve
-   */
-  public function getXEvento(): TrGesEve
-  {
-    return $this->xEvento;
-  }
-
-  /**
-   * Get the value of rResEnviEventoDe
-   *
-   * @return TgResProcEVe
-   */
-  public function getRResEnviEventoDe(): TgResProcEVe
-  {
-    return $this->rResEnviEventoDe;
-  }
+    /**
+     * Establece el valor de rResEnviEventoDe
+     *
+     * @param TgResProcEVe $rResEnviEventoDe
+     *
+     * @return self
+     */
+    public function setRResEnviEventoDe(TgResProcEVe $rResEnviEventoDe): self
+    {
+        $this->rResEnviEventoDe = $rResEnviEventoDe;
+        return $this;
+    }
 
 
-  //====================================================//
-  ///XML ELEMENT
-  //====================================================//   
-  
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(): DOMElement
-  {
-    $res = new DOMElement('TrContEv');
+    //====================================================//
+    // Getters
+    //====================================================//
 
-    $res->appendChild($this->xEvento->toDOMElement());
-    $res->appendChild($this->rResEnviEventoDe->toDOMElement());
-    return $res;
-  }
+    /**
+     * Obtiene el valor de xEvento
+     *
+     * @return TrGesEve
+     */
+    public function getXEvento(): TrGesEve
+    {
+        return $this->xEvento;
+    }
+
+    /**
+     * Obtiene el valor de rResEnviEventoDe
+     *
+     * @return TgResProcEVe
+     */
+    public function getRResEnviEventoDe(): TgResProcEVe
+    {
+        return $this->rResEnviEventoDe;
+    }
+
+
+    //====================================================//
+    // Conversiones XML
+    //====================================================// 
+
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(): DOMElement
+    {
+        $res = new DOMElement('TrContEv');
+        $res->appendChild($this->xEvento->toDOMElement());
+        $res->appendChild($this->rResEnviEventoDe->toDOMElement());
+        return $res;
+    }
 }
