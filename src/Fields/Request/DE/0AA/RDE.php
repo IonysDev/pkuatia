@@ -15,10 +15,10 @@ use DOMElement;
  */
 class RDE
 {
-  public int $dVerFor; //AA002 Versión del formato
-  public DE $dE;
-  public Signature $signature;
-  public GCamFuFD $gCamFuFD;
+  public int $dVerFor;         // AA002 Versión del formato
+  public DE $dE;               // Campos firmados del  DE
+  public Signature $signature; // Firma Digital del DTE
+  public GCamFuFD $gCamFuFD;   // Campos fuera de la firma digital 
 
   //====================================================//
   //Constructor
@@ -90,17 +90,14 @@ class RDE
    * @param  mixed $xml
    * @return RDE
    */
-  public function fromDOMElement(DOMElement $xml): RDE
+  public static function fromDOMElement(DOMElement $xml): RDE
   {
-    if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 1) {
-
+    if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 4) {
       $res = new RDE();
-
-      $res->setDVerFor($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue);
-
-      $aux = new GCamFuFD;
-      $aux->fromDOMElement($xml->getElementsByTagName('gCamFuFD')->item(0)->nodeValue);
-
+      $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
+      $res->setDE($res->dE->fromDOMElement($xml->getElementsByTagName('DE')->item(0)->nodeValue));
+      //Signature
+      $res->setGCamFuFD($res->gCamFuFD->fromDOMElement($xml->getElementsByTagName('gCamFuFD')->item(0)->nodeValue));
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");

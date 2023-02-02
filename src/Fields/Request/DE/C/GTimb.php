@@ -5,15 +5,20 @@ namespace Abiliomp\Pkuatia\Fields\C;
 use DateTime;
 use DOMElement;
 
-class GTimb {
-    
-    public int $iTiDE; // Tipo de documento electrónico
-    public int $dNumTim; // Número del timbrado
-    public string $dEst; // Establecimiento
-    public string $dPunExp; // Punto de expedición
-    public string $dNumDoc; // Número del documento
-    public string $dSerieNum; // Serie del número de timbrado
-    public DateTime $dFeIniT; // Fecha inicio de vigencia del timbrado
+/**
+ * ID:C001 Datos del timbrado PADRE:A001
+ */
+class GTimb
+{
+
+    public int $iTiDE;        // C002 - Tipo de documento electrónico
+    public string $dDesTiDE;  // C003 - Descripción del tipo de documento electrónico
+    public int $dNumTim;      // C004 - Número del timbrado
+    public string $dEst;      // C005 - Establecimiento
+    public string $dPunExp;   // C006 - Punto de expedición
+    public string $dNumDoc;   // C007 - Número del documento
+    public string $dSerieNum; // C010 - Serie del número de timbrado
+    public DateTime $dFeIniT; // C008 - Fecha inicio de vigencia del timbrado
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -54,6 +59,20 @@ class GTimb {
         $this->dFeIniT = $dFeIniT;
     }
 
+    /**
+     * Set the value of dDesTiDE
+     *
+     * @param string $dDesTiDE
+     *
+     * @return self
+     */
+    public function setDDesTiDE(string $dDesTiDE): self
+    {
+        $this->dDesTiDE = $dDesTiDE;
+
+        return $this;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
@@ -70,7 +89,7 @@ class GTimb {
      */
     public function getDDesTiDE(): string
     {
-        switch($this->iTiDE) {
+        switch ($this->iTiDE) {
             case 1:
                 return 'Factura electrónica';
                 break;
@@ -134,6 +153,11 @@ class GTimb {
     // XML Element
     ///////////////////////////////////////////////////////////////////////
 
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
     public function toDOMElement(): DOMElement
     {
         $res = new DOMElement('gTimb');
@@ -148,6 +172,28 @@ class GTimb {
         return $res;
     }
 
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return GTimb
+     */
+    public static function fromDOMElement(DOMElement $xml): GTimb
+    {
+        if (strcmp($xml->tagName, 'gTimb') == 0 && $xml->childElementCount == 8) {
+            $res = new GTimb();
+            $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
+            $res->setITiDE($xml->getElementsByTagName('dDesTiDE')->item(0)->nodeValue);
+            $res->setITiDE(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
+            $res->setITiDE($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
+            $res->setITiDE($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
+            $res->setITiDE($xml->getElementsByTagName('dNumDoc')->item(0)->nodeValue);
+            $res->setITiDE($xml->getElementsByTagName('dSerieNum')->item(0)->nodeValue);
+            $res->setITiDE(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeIniT')->item(0)->nodeValue));
+            return $res;
+        } else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+        }
+    }
 }
-
-?> 

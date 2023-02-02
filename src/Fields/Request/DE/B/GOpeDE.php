@@ -4,18 +4,22 @@ namespace Abiliomp\Pkuatia\Fields\B;
 
 use DOMElement;
 
-class GOpeDE {
-    
-    public int $iTipEmi; // Tipo de emision: 1 = Normal | 2 = Contingencia
-    public int $dCodSeg; // Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
-    public string $dInfoEmi; // Información de interés del emisor respecto al DE
-    public string $dInfoFisc; // Información de interés del fisco respecto al DE
+/**
+ * ID:B001 Campos inherentes a la operación de DE PADRE:A001
+ */
+class GOpeDE
+{
+    public int $iTipEmi;       // B002 - Tipo de emision: 1 = Normal | 2 = Contingencia
+    public int $dCodSeg;       // B004 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
+    public string $dInfoEmi;   // B005 - Información de interés del emisor respecto al DE
+    public string $dInfoFisc;  // B006 - Información de interés del fisco respecto al DE
 
     ///////////////////////////////////////////////////////////////////////
     // Constructors
     ///////////////////////////////////////////////////////////////////////
 
-    function __construct() {
+    function __construct()
+    {
         $this->dCodSeg = random_int(0, 999999999);
     }
 
@@ -38,6 +42,20 @@ class GOpeDE {
         $this->dInfoEmi = $dInfoEmi;
     }
 
+    /**
+     * Set the value of dInfoFisc
+     *
+     * @param string $dInfoFisc
+     *
+     * @return self
+     */
+    public function setDInfoFisc(string $dInfoFisc): self
+    {
+        $this->dInfoFisc = $dInfoFisc;
+
+        return $this;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
@@ -49,7 +67,7 @@ class GOpeDE {
 
     public function getDDesTipEmi(): string
     {
-        switch($this->iTipEmi) {
+        switch ($this->iTipEmi) {
             case 1:
                 return 'Normal';
                 break;
@@ -71,6 +89,15 @@ class GOpeDE {
         return $this->dInfoEmi;
     }
 
+    /**
+     * Get the value of dInfoFisc
+     *
+     * @return string
+     */
+    public function getDInfoFisc(): string
+    {
+        return $this->dInfoFisc;
+    }
     ///////////////////////////////////////////////////////////////////////
     // XML Element
     ///////////////////////////////////////////////////////////////////////
@@ -86,6 +113,25 @@ class GOpeDE {
         return $res;
     }
 
-}
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return GOpeDE
+     */
+    public static function fromDOMElement(DOMElement $xml): GOpeDE
+    {
+        if (strcmp($xml->tagName, 'gOpeDE') == 0 && $xml->childElementCount == 5) {
+            $res = new GOpeDE();
+            $res->setITipEmi(intval($xml->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
+            $res->setDCodSeg(intval($xml->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
+            $res->setDInfoEmi($xml->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
+            $res->getDInfoFisc($xml->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
 
-?> 
+            return $res;
+        } else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+        }
+    }
+}

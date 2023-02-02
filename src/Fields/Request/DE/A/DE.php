@@ -17,13 +17,13 @@ use DOMElement;
  */
 class DE
 {
-  public string $iD; //A002 Identificador del DE
-  public int $dDVId; //A003 dígito verificador del dentificador del DE 
-  public DateTime $dFecFirma; //A004 Fecha de la firma
-  public int $dSisFact; //A005 dSisFact Sistema de facturación
-  public GOpeDE $gOpeDe;
-  public GTimb $gTimb;
-  public GDatGralOpe $dDatGralOpe;
+  public string $iD;               // A002 - Identificador del DE
+  public int $dDVId;               // A003 - dígito verificador del dentificador del DE 
+  public DateTime $dFecFirma;      // A004 - Fecha de la firma
+  public int $dSisFact;            // A005 - Sistema de facturación
+  public GOpeDE $gOpeDe;           // Campos inherentes a la operación de DE
+  public GTimb $gTimb;             // Datos del timbrado 
+  public GDatGralOpe $dDatGralOpe; // Campos generales del DE
   public GDtipDE $gDtipDe;
   public GTotSub $gTotSub;
   public GCamGen $gCamGen;
@@ -140,6 +140,11 @@ class DE
   ///XML Element
   //====================================================//
 
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('DE');
@@ -148,7 +153,6 @@ class DE
     $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
     $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
-
     return $res;
   }
 
@@ -159,16 +163,17 @@ class DE
    * @param  mixed $xml
    * @return DE
    */
-  public function fromDOMElement(DOMElement $xml): DE
+  public static function fromDOMElement(DOMElement $xml): DE
   {
     if (strcmp($xml->tagName, 'DE') == 0 && $xml->childElementCount == 11) {
       $res = new DE();
-
       $res->setID($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDDVId($xml->getElementsByTagName('dDVId')->item(0)->nodeValue);
-      $res->setDFecFirma($xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue);
-      $res->getDSisFact($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue);
-
+      $res->setDDVId(intval($xml->getElementsByTagName('dDVId')->item(0)->nodeValue));
+      $res->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
+      $res->getDSisFact(intval($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue));
+      ///Children
+      $res->setGOpeDe($res->gOpeDe->fromDOMElement($xml->getElementsByTagName('gOpeDE')->item(0)->nodeValue));
+      $res->setGTimb($res->gTimb->fromDOMElement($xml->getElementsByTagName('gTimb')->item(0)->nodeValue));
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");
