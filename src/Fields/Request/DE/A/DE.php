@@ -158,6 +158,9 @@ class DE
     $res->appendChild($this->gTimb->toDOMElement());
     $res->appendChild($this->dDatGralOpe->toDOMElement());
     $res->appendChild($this->gDtipDe->toDOMElement());
+    $res->appendChild($this->gTotSub->toDOMElement());
+    $res->appendChild($this->gCamGen->toDOMElement());
+    $res->appendChild($this->gCamDEAsoc->toDOMElement());
 
     return $res;
   }
@@ -180,6 +183,11 @@ class DE
       ///Children
       $res->setGOpeDe($res->gOpeDe->fromDOMElement($xml->getElementsByTagName('gOpeDE')->item(0)->nodeValue));
       $res->setGTimb($res->gTimb->fromDOMElement($xml->getElementsByTagName('gTimb')->item(0)->nodeValue));
+      $res->setDDatGralOpe($res->dDatGralOpe->fromDOMElement($xml->getElementsByTagName('dDatGralOpe')->item(0)->nodeValue));
+      $res->setGDtipDe($res->gDtipDe->fromDOMElement($xml->getElementsByTagName('gDtipDe')->item(0)->nodeValue));
+      $res->setGTotSub($res->gTotSub->fromDOMElement($xml->getElementsByTagName('dTotSub')->item(0)->nodeValue));
+      $res->setGCamGen($res->gCamGen->fromDOMElement($xml->getElementsByTagName('gCamGen')->item(0)->nodeValue));
+      $res->setGCamDEAsoc($res->gCamDEAsoc->fromDOMElement($xml->getElementsByTagName('gCamDEAsoc')->item(0)->nodeValue));
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");

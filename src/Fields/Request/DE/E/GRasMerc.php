@@ -303,4 +303,31 @@ class GRasMerc
     $res->appendChild(new DOMElement('dNumRegEntCom', $this->getDNumRegEntCom()));
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GRasMerc
+   */
+  public static function fromDOMElement(DOMElement $xml): GRasMerc
+  {
+    if (strcmp($xml->tagName, 'gRasMerc') === 0 && $xml->childElementCount == 10) {
+      $res = new GRasMerc();
+      $res->setDNumLote($xml->getElementsByTagName('dNumLote')->item(0)->nodeValue);
+      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dVencMerc')->item(0)->nodeValue));
+      $res->setDNSerie($xml->getElementsByTagName('dNSerie')->item(0)->nodeValue);
+      $res->setDNumPedi($xml->getElementsByTagName('dNumPedi')->item(0)->nodeValue);
+      $res->setDNumSegui($xml->getElementsByTagName('dNumSegui')->item(0)->nodeValue);
+      $res->setDNomImp($xml->getElementsByTagName('dNomImp')->item(0)->nodeValue);
+      $res->setDDirImp($xml->getElementsByTagName('dDirImp')->item(0)->nodeValue);
+      $res->setDNumFir($xml->getElementsByTagName('dNumFir')->item(0)->nodeValue);
+      $res->setDNumReg($xml->getElementsByTagName('dNumReg')->item(0)->nodeValue);
+      $res->setDNumRegEntCom($xml->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

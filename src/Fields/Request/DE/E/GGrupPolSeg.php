@@ -226,4 +226,28 @@ class GGrupPolSeg
 
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GGrupPolSeg
+   */
+  public static function fromDOMElement(DOMElement $xml): GGrupPolSeg
+  {
+    if (strcmp($xml->tagName, 'gGrupPolSeg') === 0 && $xml->childElementCount == 7) {
+      $res = new GGrupPolSeg();
+      $res->setDPoliza($xml->getElementsByTagName('dDPoliza')->item(0)->nodeValue);
+      $res->setDUnidVig($xml->getElementsByTagName('dUnidVig')->item(0)->nodeValue);
+      $res->setDVigencia(intval($xml->getElementsByTagName('dVigencia')->item(0)->nodeValue));
+      $res->setDNumPoliza($xml->getElementsByTagName('dNumPoliza')->item(0)->nodeValue);
+      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dfecIniVig')->item(0)->nodeValue));
+      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFinVig')->item(0)->nodeValue));
+      $res->setDCodInt($xml->getElementsByTagName('gGrupoPolSeg')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

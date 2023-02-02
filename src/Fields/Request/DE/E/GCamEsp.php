@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Fields\E;
 
+use DOMElement;
+
 /**
  *ID:E790 
  *Campos complementarios comerciales de uso específico
@@ -87,5 +89,50 @@ class GCamEsp
     $this->gGrupSup = $gGrupSup;
 
     return $this;
+  }
+
+  //XML Element  
+  /**
+   * toDomElement
+   *
+   * @return DOMElement
+   */
+  public function toDomElement(): DOMElement
+  {
+    $res = new DOMElement('gCamEsp');
+    if (isset($this->gGrupoEner)) {
+      $res->appendChild($this->gGrupoEner->toDomElement());
+    }
+
+    if (isset($this->getGGrupSup())) {
+      $res->appendChild($this->gGrupSup->toDomElement());
+    }
+
+    if (isset($this->getGGrupoSeg())) {
+      $res->appendChild($this->gGrupSup->toDomElement());
+    }
+
+    return $res;
+  }
+
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamEsp
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamEsp
+  {
+    if (strcmp($xml->tagName, 'gCamEsp') == 0 && $xml->childElementCount >= 1) {
+      $res = new GCamEsp();
+      $res->setGGrupoEner($res->gGrupoEner->fromDOMElement($xml->getElementsByTagName('gGrupoEner')->item(0)->nodeValue));
+      $res->setGGrupSup($res->gGrupSup->fromDOMElement($xml->getElementsByTagName('gGrupoSup')->item(0)->nodeValue));
+      $res->setGGrupoSeg($res->gGrupoSeg->fromDOMElement($xml->getElementsByTagName('gGrupoSeg')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

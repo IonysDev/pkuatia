@@ -84,7 +84,28 @@ class GCamCond
     $res->appendChild(new DOMElement('iCondOpe', $this->getICondOpe()));
     $res->appendChild(new DOMElement('dDCondOpe', $this->getDDCondOpe()));
 
+    ///Children
+    $res->appendChild($this->getGPaConEIni()->toDOMElement());
+    $res->appendChild($this->gPagCred->toDOMElement());
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCAMCond
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamCond
+  {
+    if (strcmp($xml->tagName, 'gCamCond') == 0 && $xml->childElementCount == 3) {
+      $res = new GCamCond();
+      $res->setICondOpe(intval($xml->getElementsByTagName('iCondOpe')->item(0)->nodeValue));
+      ///children
+      $res->setGPaConEIni($res->gPaConEIni->fromDOMElement($xml->getElementsByTagName('gPaConEIni')->item(0)->nodeValue));
+      $res->setGPagCred($res->gPagCred->fromDOMElement($xml->getElementsByTagName('gPagCred')->item(0)->nodeValue));
+      return $res;
+    }
   }
 
   //====================================================//

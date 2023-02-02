@@ -15,9 +15,9 @@ class GCamCarg
   public int $dTotPesMerc; //G056 Total peso de la mercadería
   public int $iCarCarga; //G057 Características de la  Carga 
 
-   //====================================================//
+  //====================================================//
   ///SETTER
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of cUniMedTotVol
@@ -93,9 +93,9 @@ class GCamCarg
     return $this;
   }
 
-   //====================================================//
+  //====================================================//
   //GETTER
-   //====================================================//
+  //====================================================//
 
 
   /**
@@ -196,10 +196,10 @@ class GCamCarg
     }
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -219,5 +219,21 @@ class GCamCarg
     $res->appendChild(new DOMElement('dDesCarCarga', $this->getDDesCarCarga()));
 
     return $res;
+  }
+
+  public static function fromDOMElement(DOMElement $xml): GCamCarg
+  {
+    if (strcmp($xml->tagName, 'gCamcarg' == 0) && $xml->childElementCount == 5) {
+      $res = new GCamCarg();
+      $res->setCUniMedTotVol(intval($xml->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));
+      $res->setDTotVolMerc(intval($xml->getElementsByTagName('dTotVolMerc')->item(0)->nodeValue));
+      $res->setCUniMedTotPes(intval($xml->getElementsByTagName('cUniMedTotPes')->item(0)->nodeValue));
+      $res->setDTotPesMerc(intval($xml->getElementsByTagName('dTotPesMerc')->item(0)->nodeValue));
+      $res->setICarCarga(intval($xml->getElementsByTagName('iCarCarga')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

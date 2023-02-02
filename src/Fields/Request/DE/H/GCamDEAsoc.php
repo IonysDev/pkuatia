@@ -24,9 +24,9 @@ class GCamDEAsoc
   public int $dNumCons; //H016 Número de constancia 
   public string $dNumControl; ///H017 Número de control de la constancia 
 
-   //====================================================//
+  //====================================================//
   ///SETTERS
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of iTipDocAso
@@ -222,9 +222,9 @@ class GCamDEAsoc
     return $this;
   }
 
-   //====================================================//
+  //====================================================//
   ///GETTERS
- //====================================================//
+  //====================================================//
 
   /**
    * Get the value of iTipDocAso
@@ -438,9 +438,9 @@ class GCamDEAsoc
     return $this->dNumControl;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
+  //====================================================//
 
   /**
    * toDOMElement
@@ -483,5 +483,37 @@ class GCamDEAsoc
     }
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamDEAsoc
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamDEAsoc
+  {
+    if (strcmp($xml->tagName, 'gCamDEAsoc') == 0 && $xml->childElementCount >= 4) {
+      $res = new GCamDEAsoc();
+      $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
+      $res->setDCdCDERef($xml->getElementsByTagName('dCdCDERef')->item(0)->nodeValue);
+      $res->setDNTimDI(intval($xml->getElementsByTagName('dNTimDI')->item(0)->nodeValue));
+      $res->setDEstDocAso($xml->getElementsByTagName('dStDocAso')->item(0)->nodeValue);
+      $res->setDPExpDocAso($xml->getElementsByTagName('dPExpDocAso')->item(0)->nodeValue);
+      $res->setDNumDocAso($xml->getElementsByTagName('dNumDocAso')->item(0)->nodeValue);
+      $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
+      $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEmDi')->item(0)->nodeValue));
+      $res->setDNumComRet($xml->getElementsByTagName('dNumComRet')->item(0)->nodeValue);
+      $res->setDNumResCF($xml->getElementsByTagName('dNumResCF')->item(0)->nodeValue);
+      $res->setITipCons(intval($xml->getElementsByTagName('iTipCons')->item(0)->nodeValue));
+      $res->setDNumCons(intval($xml->getElementsByTagName('dNumCons')->item(0)->nodeValue));
+      $res->setDNumControl($xml->getElementsByTagName('dNumControl')->item(0)->nodeValue);
+
+      return $res;
+
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

@@ -696,4 +696,63 @@ class GTotSub
     $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));//////leer la logica del pdf de Mordor
     return $res;
   }
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GTotSub
+   */
+  public static function fromDOMElement(DOMElement $xml):GTotSub
+  {
+    if(strcmp($xml->tagName, 'gTotSub') == 0 && $xml->childElementCount == 25)
+    {
+      $res = new GTotSub();
+      $res->setDSubExe(intval($xml->getElementsByTagName('dSubExe')->item(0)->nodeValue));
+      $res->setDSubExo(intval($xml->getElementsByTagName('dSubEx')->item(0)->nodeValue));
+      $res->setDSub5(intval($xml->getElementsByTagName('dSub5')->item(0)->nodeValue));
+      $res->setDSub10(intval($xml->getElementsByTagName('dSub10')->item(0)->nodeValue));
+      $res->setDTotOpe(intval($xml->getElementsByTagName('dTotOpe')->item(0)->nodeValue));
+      $res->setDTotDesc(intval($xml->getElementsByTagName('dTotDesc')->item(0)->nodeValue));
+      $res->setDTotDescGlotem(intval($xml->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue));
+      $res->setDTotAntItem(intval($xml->getElementsByTagName('dTotAntItem')->item(0)->nodeValue));
+      $res->setDTotAnt(intval($xml->getElementsByTagName('dTotAnt')->item(0)->nodeValue));
+      $res->setDPorcDescTotal(intval($xml->getElementsByTagName('dPorcDescTotal')->item(0)->nodeValue));
+      $res->setDPorcDescTotal(intval($xml->getElementsByTagName('dPorcDesc')->item(0)->nodeValue));
+      $res->setDDescTotal(intval($xml->getElementsByTagName('dDesc')->item(0)->nodeValue));
+      $res->setDAnticipo(intval($xml->getElementsByTagName('dAnticipo')->item(0)->nodeValue));
+      $res->setDRedon(intval($xml->getElementsByTagName('dRedon')->item(0)->nodeValue));
+      $res->setDComi(intval($xml->getElementsByTagName('dComi')->item(0)->nodeValue));
+      $res->setDTotGralOpe(intval($xml->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue));
+      $res->setDIVA5(intval($xml->getElementsByTagName('dIVA5')->item(0)->nodeValue));
+      $res->setDIVA10(intval($xml->getElementsByTagName('dIVA10')->item(0)->nodeValue));
+      $res->setDLiqTotIVA5(intval($xml->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue));
+      $res->setDLiqTotIVA10(intval($xml->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue));
+      $res->setDIVAComi(intval($xml->getElementsByTagName('dIVAComi')->item(0)->nodeValue));
+      $res->setDTotIVA(intval($xml->getElementsByTagName('dTotIVA')->item(0)->nodeValue));
+      $res->setDBaseGrav5(intval($xml->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue));
+      $res->setDBaseGrav10(intval($xml->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue));
+      $res->setDTbasGraIVA(intval($xml->getElementsByTagName('dTBaseGraIVA')->item(0)->nodeValue));
+      $res->setDTotalGs(intval($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue));
+      return $res;
+    }else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
+
+
+  /**
+   * Set the value of dBaseGrav10
+   *
+   * @param int $dBaseGrav10
+   *
+   * @return self
+   */
+  public function setDBaseGrav10(int $dBaseGrav10): self
+  {
+    $this->dBaseGrav10 = $dBaseGrav10;
+
+    return $this;
+  }
 }

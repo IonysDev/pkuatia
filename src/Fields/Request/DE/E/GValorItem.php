@@ -11,14 +11,14 @@ use DOMElement;
  */
 class GValorItem
 {
-  public int $dPUniProSer;///E721 Precio unitario del producto y/o servicio (incluidos impuestos)
-  public int $dTiCamIt;///E725 Tipo de cambio por ítem
-  public int $dTotBruOpeItem;///E727 Total bruto de la operación por ítem
+  public int $dPUniProSer; ///E721 Precio unitario del producto y/o servicio (incluidos impuestos)
+  public int $dTiCamIt; ///E725 Tipo de cambio por ítem
+  public int $dTotBruOpeItem; ///E727 Total bruto de la operación por ítem
   public GValorRestaItem $gValorRestaItem;
 
-   //====================================================//
+  //====================================================//
   ///Setters
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of dPUniProSer
@@ -64,10 +64,10 @@ class GValorItem
     return $this;
   }
 
-   //====================================================//
+  //====================================================//
   //Getters
-   //====================================================//
-  
+  //====================================================//
+
 
   /**
    * Get the value of dPUniProSer
@@ -99,10 +99,10 @@ class GValorItem
     return $this->dTotBruOpeItem;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
-     
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -116,13 +116,36 @@ class GValorItem
     $res->appendChild(new DOMElement('dTiCamIt', $this->getDTiCamIt()));
     $res->appendChild(new DOMElement('dTotBruOpeItem', $this->getDTotBruOpeItem())); ////Corresponde a la multiplicación del precio por ítem (E721) y la cantidad por ítem (E711)
 
+    ///Children
+    $res->appendChild($this->gValorRestaItem->toDOMElement());
     return $res;
-    
+  }
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GValorItem
+   */
+  public static function fromDOMElement(DOMElement $xml): GValorItem
+  {
+    if (strcmp($xml->tagName, 'gValorItem') == 0 && $xml->childElementCount == 4) {
+      $res = new GValorItem();
+      $res->setDPUniProSer(intval($xml->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
+      $res->setDTiCamIt(intval($xml->getElementsByTagName('dTiCamIt')->item(0)->nodeValue));
+      $res->setDTotBruOpeItem(intval($xml->getElementsByTagName('dTotBruOpeItem')->item(0)->nodeValue));
+      ///children
+      $res->setGValorRestaItem($res->gValorRestaItem->fromDOMElement($xml->getElementsByTagName('gValorRestaItem')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 
-   //====================================================//
-   ///Others
-    //====================================================//
+  //====================================================//
+  ///Others
+  //====================================================//
 
   /**
    * Get the value of gValorRestaItem

@@ -175,9 +175,9 @@ class GGrupEner
     return $this->dLecAct - $this->dLecAct;
   }
 
- //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
+  //====================================================//
 
   /**
    * toDomElement
@@ -196,5 +196,28 @@ class GGrupEner
     $res->appendChild(new DOMElement('dConKwh', $this->getDConKwh()));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GGrupEner
+   */
+  public static function fromDOMElement(DOMElement $xml): GGrupEner
+  {
+    if (strcmp($xml->tagName, 'gGrupEner') == 0 && $xml->childElementCount == 6) {
+      $res = new GGrupEner();
+      $res->setDNroMed($xml->getElementsByTagName('dNroMed')->item(0)->nodeValue);
+      $res->setDActiv(intval($xml->getElementsByTagName('dActiv')->item(0)->nodeValue));
+      $res->setDCateg($xml->getElementsByTagName('dCateg')->item(0)->item(0)->nodeValue);
+      $res->setDLecAnt(intval($xml->getElementsByTagName('dLecAnt')->item(0)->nodeValue));
+      $res->setDLecAct(intval($xml->getElementsByTagName('dLecAct')->item(0)->nodeValue));
+      $res->setDConKwh(intval($xml->getElementsByTagName('dConKwh')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

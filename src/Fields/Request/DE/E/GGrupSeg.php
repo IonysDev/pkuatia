@@ -59,7 +59,29 @@ class GGrupSeg
   {
     $res = new DOMElement('gGrupSeg');
     $res->appendChild(new DOMElement('dCodEmpSeg', $this->getDCodEmpSeg()));
+    //children
+    $res->appendChild($this->gGrupoPolSeg->toDomElement());
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GGrupSeg
+   */
+  public static function fromDOMElement(DOMElement $xml): GGrupSeg
+  {
+    if (strcmp($xml->tagName, 'GGrupSeg' == 0) && $xml->childElementCount == 2) {
+      $res = new GGrupSeg();
+      $res->setDCodEmpSeg($xml->getElementsByTagName('dCodEmpSeg')->item(0)->nodeValue);
+      ///children
+      $res->setGGrupoPolSeg($res->gGrupoPolSeg->fromDOMElement($xml->getElementsByTagName('GGrupoPolSeg')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 
   //====================================================//

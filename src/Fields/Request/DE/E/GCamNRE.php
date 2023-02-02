@@ -15,9 +15,9 @@ class GCamNRE
   public int $dKmR; ///E505 Kilómetros estimados de recorrido E500 
   public DateTime $dFecEm; //ID:E506 Fecha futura de emisión de la factura PADRE:E500
 
-   //====================================================//
+  //====================================================//
   ///Setters
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of iMotEmiNR
@@ -78,9 +78,9 @@ class GCamNRE
     return $this;
   }
 
- //====================================================//
+  //====================================================//
   ///Getters
- //====================================================//
+  //====================================================//
 
   /**
    * Get the value of iMotEmiNR
@@ -161,7 +161,7 @@ class GCamNRE
   {
     return $this->iRespEmiNR;
   }
-  
+
   /**
    * E504 Descripción del responsable de la emisión de la Nota de Remisión Electrónica  
    *
@@ -212,10 +212,10 @@ class GCamNRE
     return $this->dFecEm;
   }
 
- //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
-  
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -227,11 +227,33 @@ class GCamNRE
 
     $res->appendChild(new DOMElement('iMotEmiNR', $this->getIMotEmiNR()));
     $res->appendChild(new DOMElement('dDesMotEmiNR', $this->getDDesMotEmiNR()));
-    $res->appendChild(new DOMElement('iRespEmiNR',$this->getIRespEmiNR()));
+    $res->appendChild(new DOMElement('iRespEmiNR', $this->getIRespEmiNR()));
     $res->appendChild(new DOMElement('dDesRespEmiNR', $this->getDDesRespEmiNR()));
     $res->appendChild(new DOMElement('dKmR', $this->getDKmR()));
     $res->appendChild(new DOMElement('dFecEm', $this->getDFecEm()->format('Y-m-d')));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xmml
+   * @return GCamNRE
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamNRE
+  {
+    if (strcmp($xml->tagName, "gCamNRE") == 0 && $xml->childElementCount == 6) {
+      $res = new GCamNRE();
+
+      $res->setIMotEmiNR(intval($xml->getElementsByTagName('iMotEmiNR')->item(0)->nodeValue));
+      $res->setIRespEmiNR(intval($xml->getElementsByTagName('iRespEmiNR')->item(0)->nodeValue));
+      $res->setdkmR(intval($xml->getElementsByTagName('dkmR')->item(0)->nodeValue));
+      $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEm')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

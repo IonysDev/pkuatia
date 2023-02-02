@@ -129,4 +129,24 @@ class GCuotas
 
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCuotas
+   */
+  public static function fromDOMElement(DOMElement $xml): GCuotas
+  {
+    if (strcmp($xml->tagName, 'gCuotas') == 0 && $xml->childElementCount == 4) {
+      $res = new GCuotas();
+      $res->setCMoneCuo($xml->getChildElementByName('cMoneCuo')->item(0)->nodeValue);
+      $res->setDMonCuota($xml->getChildElementByName('dDMoneCuo')->item(0)->nodeValue);
+      $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $xml->getChildElementByName('dVencCuo')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

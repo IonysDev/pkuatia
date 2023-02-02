@@ -174,9 +174,9 @@ class GCamIVA
     return $this->dLiqIVAItem;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element
-   //====================================================//
+  //====================================================//
 
   /**
    * toDOMElement
@@ -195,5 +195,27 @@ class GCamIVA
     $res->appendChild(new DOMElement('dLiqIVAItem', $this->getDLiqIVAItem()));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamIVA
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamIVA
+  {
+    if (strcmp($xml->tagName, 'gCamIVA') == 0 && $xml->childElementCount == 6) {
+      $res = new GCamIVA();
+      $res->setIAfecIVA(intval($xml->getElementsByTagName('iAfecIVA')->item(0)->nodeValue));
+      $res->setDPropIVA(intval($xml->getElementsByTagName('dPropIVA')->item(0)->nodeValue));
+      $res->setDTasaIVA(intval($xml->getElementsByTagName('dTasaIVA')->item(0)->nodeValue));
+      $res->setDBasGravIVA(intval($xml->getElementsByTagName('dBasGravIVA')->item(0)->nodeValue));
+      $res->setDLiqIVAItem(intval($xml->getElementsByTagName('dLiqIVAItem')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

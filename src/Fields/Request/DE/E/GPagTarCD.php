@@ -289,4 +289,29 @@ class GPagTarCD
 
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GPagTarCD
+   */
+  public static function fromDOMElement(DOMElement $xml): GPagTarCD
+  {
+    if (strcmp($xml->tagName, 'gPagTarCD') == 0 && $xml->childElementCount == 9) {
+      $res = new GPagTarCD();
+      $res->setIDenTarj(intval($xml->getElementsByTagName('iDenTarj')->item(0)->nodeValue));
+      $res->setDRSProTar($xml->getElementsByTagName('dRSProTar')->item(0)->nodeValue);
+      $res->setDRUCProTar($xml->getElementsByTagName('dRUCProTar')->item(0)->nodeValue);
+      $res->setDDVProTar($xml->getElementsByTagName('dDDVProTar')->item(0)->nodeValue);
+      $res->setIForProPa(intval($xml->getElementsByTagName('iForProPa')->item(0)->nodeValue));
+      $res->setDCodAuOpe(intval($xml->getElementsByTagName('dCodAuOpe')->item(0)->nodeValue));
+      $res->setDNomTit($xml->getElementsByTagName('dNomTit')->item(0)->nodeValue);
+      $res->setDNumTarj(intval($xml->getElementsByTagName('dNumTarj')->item(0)->nodeValue));
+
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Elemement: $xml->tagName");
+    }
+  }
 }

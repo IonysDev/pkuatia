@@ -91,4 +91,23 @@ class GPagCheq
 
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GPagCheq
+   */
+  public static function fromDOMElement(DOMElement $xml): GPagCheq
+  {
+    if (strcmp($xml->tagName, 'gPagCheq') == 0 && $xml->childElementCount == 2) {
+      $res = new GPagCheq();
+      $res->setDNumCheq($xml->getElementsByTagName('dNumCheq')->item(0)->nodeValue);
+      $res->setDBcoEmi($xml->getElementsByTagName('dBcoEmi')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

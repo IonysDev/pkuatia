@@ -237,7 +237,86 @@ class GPaConEIni
     if ($this->cMoneTiPag != 'PYG') {
       $res->appendChild(new DOMElement('dTiCamTiPag', $this->getDTiCamTiPag()));
     }
+    ///children
+    $res->appendChild($this->gPagTarCD->toDOMElement());
+    $res->appendChild($this->gPagCheq->toDOMElement());
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GPaConEIni
+   */
+  public function fromDOMElement(DOMElement $xml): GPaConEIni
+  {
+    if (strcmp($xml->tagName, 'gPaConEIni') == 0 && $xml->childElementCount >= 5) {
+      $res = new GPaConEIni();
+      $res->setITiPago(intval($xml->getElementsByTagName('iTiPago')->item(0)->nodeValue));
+      $res->setDMonTiPag(intval($xml->getElementsByTagName('dMonTiPag')->item(0)->nodeValue));
+      $res->setCMoneTiPag($xml->getElementsByTag('cmoneTiPag')->item(0)->nodeValue);
+      $res->setDTiCamTiPag($xml->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue);
+
+      //Children
+      $res->setGPagTarCD($res->gPagTarCD->fromDOMElement($xml->getElementsByTagName('gPagTarCD')->item(0)->nodeValue));
+      $res->setGPagCheq($res->gPagCheq->fromDOMElement($xml->getElementsByTagName('gPagCheq')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
+
+
+  ////
+
+  /**
+   * Get the value of gPagTarCD
+   *
+   * @return GPagTarCD
+   */
+  public function getGPagTarCD(): GPagTarCD
+  {
+    return $this->gPagTarCD;
+  }
+
+  /**
+   * Set the value of gPagTarCD
+   *
+   * @param GPagTarCD $gPagTarCD
+   *
+   * @return self
+   */
+  public function setGPagTarCD(GPagTarCD $gPagTarCD): self
+  {
+    $this->gPagTarCD = $gPagTarCD;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gPagCheq
+   *
+   * @return GPagCheq
+   */
+  public function getGPagCheq(): GPagCheq
+  {
+    return $this->gPagCheq;
+  }
+
+  /**
+   * Set the value of gPagCheq
+   *
+   * @param GPagCheq $gPagCheq
+   *
+   * @return self
+   */
+  public function setGPagCheq(GPagCheq $gPagCheq): self
+  {
+    $this->gPagCheq = $gPagCheq;
+
+    return $this;
   }
 }

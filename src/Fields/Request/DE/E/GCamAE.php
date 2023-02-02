@@ -25,9 +25,9 @@ class GCamAE
   public int $cDisProv; //ID:E319 cDisProv Código del distrito donde se realiza la transacción
   public int $cCiuProv; //ID:E321 cCiuProv Código de la ciudad  donde se realiza la transacción
 
-   //====================================================//
+  //====================================================//
   ///Setters
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of iNatVen
@@ -222,9 +222,9 @@ class GCamAE
     return $this;
   }
 
- //====================================================//
+  //====================================================//
   ///Getters
-   //====================================================//
+  //====================================================//
 
   /**
    * Get the value of iNatVen
@@ -462,10 +462,10 @@ class GCamAE
     return "Mordor";
   }
 
- //====================================================//
+  //====================================================//
   ///XML Element
- //====================================================//
-   
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -505,5 +505,52 @@ class GCamAE
     $res->appendChild(new DOMElement('dDesCiuProv', $this->getDDesCiuProv()));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamAE
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamAE
+  {
+    if (strcmp($xml->tagName, 'gcamAE') == 0 && $xml->childElementCount >= 14) {
+      $res = new GCamAE();
+      $res->setINatVen(intval($xml->getElementsByTagName('iNatVen')->item(0)->nodeValue));
+      $res->setITipIDVen(intval($xml->getElementsByTagName('iTipIDVen')->item(0)->nodeValue));
+      $res->setDNumIDVen($xml->getElementsByTagName('dNumIDVen')->item(0)->nodeValue);
+      $res->setDNomVen($xml->getElementsByTagName('dNomVen')->item(0)->nodeValue);
+      $res->setDDirVen($xml->getElementsByTagName('dDirVen')->item(0)->nodeValue);
+      $res->setDNumCasVen(intval($xml->getElementsByTagName('dNumCasVen')->item(0)->nodeValue));
+      $res->setCDepVen(intval($xml->getElementsByTagName('cDepVen')->item(0)->nodeValue));
+      $res->setCDisVen(intval($xml->getElementsByTagName('cDisVen')->item(0)->nodeValue));
+      $res->setCCiuVen(intval($xml->getElementsByTagName('cCiuVen')->item(0)->nodeValue));
+      $res->setDDirProv($xml->getElementsByTagName('dDirProv')->item(0)->nodeValue);
+      $res->setCDepProv(intval($xml->getElementsByTagName('cDepProv')->item(0)->nodeValue));
+      $res->setCDisProv(intval($xml->getElementsByTagName('cDisProv')->item(0)->nodeValue));
+      $res->setCCiuProv(intval($xml->getElementsByTagName('cCiuProv')->item(0)->nodeValue));
+
+      return $res;
+
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
+
+
+  /**
+   * Set the value of dDirProv
+   *
+   * @param string $dDirProv
+   *
+   * @return self
+   */
+  public function setDDirProv(string $dDirProv): self
+  {
+    $this->dDirProv = $dDirProv;
+
+    return $this;
   }
 }

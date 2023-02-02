@@ -112,7 +112,30 @@ class GCamGen
     $res->appendChild(new DOMElement('dOrdCompra', $this->getDOrdCompra()));
     $res->appendChild(new DOMElement('dOrdVta', $this->getDOrdVta()));
     $res->appendChild(new DOMElement('dAsiento', $this->getDAsiento()));
+    //Children
+    $res->appendChild($this->gCamCarg->toDOMElement());
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamGen
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamGen
+  {
+    if (strcmp($xml->tagName, 'gCamGen') == 0 && $xml->childElementCount == 4) {
+      $res = new GCamGen();
+      $res->setDOrdCompra($xml->getElementsByTagName('dOrdCompra')->item(0)->nodeValue);
+      $res->setDOrdVta($xml->getElementsByTagName('dOrdVta')->item(0)->nodeValue);
+      $res->setDAsiento($xml->getElementsByTagName('dAsiento')->item(0)->nodeValue);
+      $res->setGCamCarg($res->gCamCarg->fromDOMElement($xml->getElementsByTagName('gCamCarg')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 
   //====================================================//

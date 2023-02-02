@@ -166,8 +166,33 @@ class GPagCred
     }
 
     $res->appendChild(new DOMElement('dMonEnt', $this->getDMonEnt()));
+    ///children
+    $res->appendChild($this->gCuotas->toDOMElement());
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GPagCred
+   */
+  public static function fromDOMElement(DOMElement $xml): GPagCred
+  {
+    if (strcmp($xml->tagName, 'gPagCred') == 0 && $xml->childElementCount == 4) {
+      $res = new GPagCred();
+      $res->setICondCred(intval($xml->getElementsByTagName('iCondCred')->item(0)->nodeValue));
+      $res->setDPlazoCre($xml->getElementsByTagName('dPlazoCre')->item(0)->nodeValue);
+      $res->setDCuotas(intval($xml->getElementsByTagName('dCuotas')->item(0)->nodeValue));
+      $res->setDMonEnt(intval($xml->getElementsByTag('dMonEnt')->item(0)->nodeValue));
+      //children
+      $res->setGCuotas($res->gCuotas->fromDOMElement($xml->getElementsByTagName('gCuotas')));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 
   //====================================================//

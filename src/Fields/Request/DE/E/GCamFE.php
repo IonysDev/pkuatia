@@ -141,6 +141,29 @@ class GCamFE
     $res->appendChild(new DOMElement('iIndPres', $this->iIndPres));
     $res->appendChild(new DOMElement('dDesIndPres', $this->getDDesIndPres()));
     $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
+    //children
+    $res->appendChild($this->gComPub->toDOMElement());
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamFE
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamFE
+  {
+    if (strcmp($xml->tagName, 'gCamFE') == 0 && $xml->childElementCount == 3) {
+      $res = new GCamFE();
+      $res->setIIndPres(intval($xml->getElementsByTagName('iIndPres')->item(0)->nodeValue));
+      $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEmNR')->item(0)->nodeValue));
+      //Children
+      $res->setGComPub($res->gComPub->fromDOMElement($xml->getElementsByTagName('gComPub')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

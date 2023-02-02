@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Fields\E;
 
+use DOMElement;
+
 // Campos específicos por tipo de Documento Electrónico (E001-E009)
 //ID:E001
 //Padre:A001
@@ -185,5 +187,48 @@ class GDtipDE
     $this->gCamEsp = $gCamEsp;
 
     return $this;
+  }
+
+  ///XML ELement  
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
+  public function toDOMElement(): DOMElement
+  {
+    $res = new DOMElement('gDtipDE');
+    $res->appendChild($this->gCamFE->toDOMElement());
+    $res->appendChild($this->gCamAE->toDOMElement());
+    $res->appendChild($this->gCamNCDE->toDOMElement());
+    $res->appendChild($this->gCamNRE->toDOMElement());
+    $res->appendChild($this->gCamCond->toDOMElement());
+    $res->appendChild($this->gCamItem->toDOMElement());
+    $res->appendChild($this->gCamEsp->toDOMElement());
+    return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GDtipDE
+   */
+  public static function fromDOMElement(DOMElement $xml): GDtipDE
+  {
+    if (strcmp($xml->tagName, 'gDtipDE') == 0 && $xml->childElementCount == 7) {
+      $res = new GDtipDE();
+      $res->gCamFE = $res->gCamFE->fromDOMElement($xml->getElementsByTagName('gCamFe')->item(0)->nodeValue);
+      $res->gCamAE = $res->gCamAE->fromDOMElement($xml->getElementsByTagName('gCamAE')->item(0)->nodeValue);
+      $res->gCamNCDE = $res->gCamNCDE->fromDOMElement($xml->getElementsByTagName('gCamNCDE')->item(0)->nodeValue);
+      $res->gCamNRE = $res->gCamNRE->fromDOMElement($xml->getElementsByTagName('gCamNRE')->item(0)->nodeValue);
+      $res->gCamCond = $res->gCamCond->fromDOMElement($xml->getElementsByTagName('gCamCond')->item(0)->nodeValue);
+      $res->gCamItem = $res->gCamItem->fromDOMElement($xml->getElementsByTagName('gCamItem')->item(0)->nodeValue);
+      $res->gCamEsp = $res->gCamEsp->fromDOMElement($xml->getElementsByTagName('gCamEsp')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

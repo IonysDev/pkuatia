@@ -520,7 +520,51 @@ class GCamItem
     $res->appendChild(new DOMElement('dPorQuiMer', $this->getDPorQuiMer()));
     $res->appendChild(new DOMElement('dCDCAnticipo', $this->getDCDCAnticipo()));
 
+    //children
+    $res->appendChild($this->gValorItem->toDOMElement());
+    $res->appendChild($this->gCamIVa->toDOMElement());
+    $res->appendChild($this->gRasMerc->toDOMElement());
+    $res->appendChild($this->gVehNuevo->toDOMElement());
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamItem
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamItem
+  {
+    if (strcmp($xml->tagName, 'gCamItem') == 0 && $xml->childElementCount >= 20) {
+      $res = new GCamItem();
+      $res->setDCodInt($xml->childNodes->item(0)->nodeValue);
+      $res->setDParAranc(intval($xml->getElementsByTagName('dParAranc')->item(0)->nodeValue));
+      $res->setDNCM(intval($xml->getElementsByTagName('dNCM')->item(0)->nodeValue));
+      $res->setDDncpG($xml->getElementsByTagName('dDDncpG')->item(0)->nodeValue);
+      $res->setDDncpE($xml->getElementsByTagName('dDDncpE')->item(0)->nodeValue);
+      $res->setDGtin(intval($xml->getElementsByTagName('dGtin')->item(0)->nodeValue));
+      $res->setDGtinPq(intval($xml->getElementsByTagName('dGtinPq')->item(0)->nodeValue));
+      $res->setDDesProSer($xml->getElementsByTagName('dDesProSer')->item(0)->nodeValue);
+      $res->setCUniMed(intval($xml->getElementsByTagName('cUniMed')->item('0')->nodeValue));
+      $res->setDCantProSer(intval($xml->getElementsByTagName('dcantProSer')->item(0)->nodeValue));
+      $res->setCPaisOrig($xml->getElementsByTagName('cPaisOrig')->item(0)->nodeValue);
+      $res->setDInfItem($xml->getElementsByTagName('dInfItem')->item(0)->nodeValue);
+      $res->setCRelMerc(intval($xml->getElementsByTagName('dRelMerc')->item(0)->nodeValue));
+      $res->setDCanQuiMer(intval($xml->getElementsByTagName('dcantQuiMer')->item(0)->nodeValue));
+      $res->setDPorQuiMer(intval($xml->getElementsByTagName('dporQuiMer')->item(0)->nodeValue));
+      $res->setDCDCAnticipo($xml->getElementsByTagName('dCDCAnticipo')->item(0)->nodeValue);
+
+      //children
+      $res->setGValorItem($res->gValorItem->fromDOMElement($xml->getElementsByTagName('gValorItem')->item(0)->nodeValue));
+      $res->setGCamIVa($res->gCamIVa->fromDOMElement($xml->getElementsByTagName('gCamIVa')->item(0)->nodeValue));
+      $res->setGRasMerc($res->gRasMerc->fromDOMElement($xml->getElementsByTagName('gRasMerc')->item(0)->nodeValue));
+      $res->setGVehNuevo($res->gVehNuevo->fromDOMElement($xml->getElementsByTagName('gVehNuevo')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 
   //====================================================//
@@ -595,6 +639,30 @@ class GCamItem
   public function setGRasMerc(GRasMerc $gRasMerc): self
   {
     $this->gRasMerc = $gRasMerc;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gVehNuevo
+   *
+   * @return GVehNuevo
+   */
+  public function getGVehNuevo(): GVehNuevo
+  {
+    return $this->gVehNuevo;
+  }
+
+  /**
+   * Set the value of gVehNuevo
+   *
+   * @param GVehNuevo $gVehNuevo
+   *
+   * @return self
+   */
+  public function setGVehNuevo(GVehNuevo $gVehNuevo): self
+  {
+    $this->gVehNuevo = $gVehNuevo;
 
     return $this;
   }

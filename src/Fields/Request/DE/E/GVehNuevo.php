@@ -475,4 +475,35 @@ class GVehNuevo
 
     return $res;
   }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GVehNuevo
+   */
+  public static function fromDOMElement(DOMElement $xml): GVehNuevo
+  {
+    if (strcmp($xml->tagName, 'gVehNuevo') === 0 && $xml->childElementCount == 14) {
+      $res = new GVehNuevo();
+      $res->setITipOpVN(intval($xml->getElementsByTagName('iTipOpVN')->item(0)->nodeValue));
+      $res->setDChasis($xml->getElementsByTagName('dChasis')->item(0)->nodeValue);
+      $res->setDColor($xml->getElementsByTagName('dColor')->item(0)->nodeValue);
+      $res->setDPotencia(intval($xml->getElementsByTagName('dPotencia')->item(0)->nodeValue));
+      $res->setDCapMot(intval($xml->getElementsByTag('dCapMot')->item(0)->nodeValue));
+      $res->setDPNet(intval($xml->getElementsByTag('dPnet')->item(0)->nodeValue));
+      $res->setDPBruto(intval($xml->getElementsByTag('dPBruto')->item(0)->nodeValue));
+      $res->setITipCom(intval($xml->getElementsByTagName('iTipCom')->item(0)->nodeValue));
+      $res->setDNroMotor($xml->getElementsByTagName('dNroMotor')->item(0)->nodeValue);
+      $res->setDCapTracc(intval($xml->getElementsByTagName('dCapTracc')->item(0)->nodeValue));
+      $res->setDAnoFab(intval($xml->getElementsByTagName('dAnoFab')->item(0)->nodeValue));
+      $res->setCTipVeh($xml->getElementsByTagName('ctipVeh')->item(0)->nodeValue);
+      $res->setDCapac(intval($xml->getElementsByTagName('dCapac')->item(0)->nodeValue));
+      $res->setDCilin($xml->getElementsByTagName('dCilin')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

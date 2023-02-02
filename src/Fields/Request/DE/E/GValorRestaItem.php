@@ -225,4 +225,26 @@ class GValorRestaItem
 
     return $res;
   }
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GValorRestaItem
+   */
+  public static function fromDOMElement(DOMElement $xml): GValorRestaItem
+  {
+    if(strcmp($xml->tagName, 'gValorRestaItem') == 0 && $xml->childElementCount == 5)
+    {
+      $res = new GValorRestaItem();
+      $res->setDDescItem(intval($xml->getElementsByTagName('dDescItem')->item(0)->nodeValue));
+      $res->setDPorcDesIt(intval($xml->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
+      $res->setDDescGloItem(intval($xml->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
+      $res->setDAntPreUniIt(intval($xml->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
+      $res->setDAntGloPreUniIt(intval($xml->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
+      $res->setDTotOpeItem(intval($xml->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
+      $res->setDTotOpeGs(intval($xml->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
+      return $res;
+    }
+  }
 }
