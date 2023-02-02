@@ -9,8 +9,8 @@ use DOMElement;
  */
 class GCamFuFD
 {
-  public string $dCarQR; ///Caracteres correspondientes al código QR
-  public string $dInfAdic; ///Información adicional de interés para el emisor
+  public string $dCarQR;   // J002 - Caracteres correspondientes al código QR
+  public string $dInfAdic; // J003 - Información adicional de interés para el emisor
 
   //====================================================//
   //SETTER
@@ -83,7 +83,6 @@ class GCamFuFD
   {
     $res = new DOMElement('gCamFuFD');
     $res->appendChild(new DOMElement('dCarQR', $this->getDCarQR()));
-    $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
     return $res;
   }
 
@@ -95,10 +94,9 @@ class GCamFuFD
    */
   public static function fromDOMElement(DOMElement $xml): GCamFuFD
   {
-    if (strcmp($xml->tagName, 'gCamFuFD') == 0 && $xml->childElementCount == 2) {
+    if (strcmp($xml->tagName, 'gCamFuFD') == 0 && $xml->childElementCount == 1) {
       $res = new GCamFuFD();
       $res->setDCarQR($xml->getElementsByTagName('dCarQR')->item(0)->nodeValue);
-      $res->setDInfAdic($xml->getElementsByTagName('dInfAdic')->item(0)->nodeValue);
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");

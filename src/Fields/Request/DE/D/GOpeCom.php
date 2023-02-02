@@ -4,15 +4,17 @@ namespace Abiliomp\Pkuatia\Fields\D;
 
 use DOMElement;
 
+/**
+ * ID:D010  Campos inherentes a la operación comercial PADRE:D001 
+ */
 class GOpeCom {
     
-    public int $iTipTra; // Tipo de transacción
-    public int $iTImp; // Tipo de impuesto afectado
-    public string $cMoneOpe; // Moneda de la operación
-    public string $dDesMoneOpe; // Descripción de la moneda de la operación
-    public int $dCondTiCam; // Condición del tipo de cambio
-    public int $dTiCam; // Tipo de cambio de la operación
-    public int $iCondAnt; // Condición del Anticipo
+    public int $iTipTra;     // D011 - Tipo de transacción
+    public int $iTImp;       // D013 - Tipo de impuesto afectado
+    public string $cMoneOpe; // D015 - Moneda de la operación
+    public int $dCondTiCam;  // D017 - Condición del tipo de cambio
+    public int $dTiCam;      // D018 - Tipo de cambio de la operación
+    public int $iCondAnt;    // D019 - Condición del Anticipo
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -31,11 +33,6 @@ class GOpeCom {
     public function setCMoneOpe(string $cMoneOpe): void
     {
         $this->cMoneOpe = $cMoneOpe;
-    }
-
-    public function setDDesMoneOpe(string $dDesMoneOpe): void
-    {
-        $this->dDesMoneOpe = $dDesMoneOpe;
     }
 
     public function setDCondTiCam(int $dCondTiCam): void
@@ -151,10 +148,16 @@ class GOpeCom {
     {
         return $this->cMoneOpe;
     }
+    
+    /**
+     *  D016 Descripción de la moneda de la operación
 
+     *
+     * @return string
+     */
     public function getDDesMoneOpe(): string
     {
-        return $this->dDesMoneOpe;
+        return "Moneda de Mordor";
     }
 
     public function getDCondTiCam(): string
@@ -173,7 +176,7 @@ class GOpeCom {
     }
 
     /**
-     * Devuelve la descripción de la condición del anticipo
+     * D020 - Devuelve la descripción de la condición del anticipo
      * 
      * @return string
      */
@@ -194,7 +197,12 @@ class GOpeCom {
     ///////////////////////////////////////////////////////////////////////
     // XML Element
     ///////////////////////////////////////////////////////////////////////
-
+    
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
     public function toDOMElement(): DOMElement
     {
         $res = new DOMElement('gOpeCom');
@@ -224,6 +232,21 @@ class GOpeCom {
         }
         
         return $res;
+    }
+    
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return GOpeCom
+     */
+    public static function fromDOMElement(DOMElement $xml): GOpeCom
+    {
+        if(strcmp($xml->tagName,'gOpeCom') == 0 && $xml->childElementCount >=4)
+        {
+            $res = new GOpeCom();
+        }
+        
     }
 
 }
