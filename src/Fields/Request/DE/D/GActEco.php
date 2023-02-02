@@ -5,13 +5,13 @@ namespace Abiliomp\Pkuatia\Fields\D;
 use DOMElement;
 
 /**
- * Grupo de campos que describen la actividad económica del emisor
+ * ID:D130 Grupo de campos que describen la actividad económica del emisor PADRE:D100
  */
 
-class GActEco {
-    
-    public string $cActEco; // Código de la actividad económica del emisor 
-    public string $dDesActEco; // Descripción de la actividad económica del emisor
+class GActEco
+{
+
+    public string $cActEco; // D131 - Código de la actividad económica del emisor 
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -20,11 +20,6 @@ class GActEco {
     public function setCActEco(string $cActEco): void
     {
         $this->cActEco = $cActEco;
-    }
-
-    public function setDDesActEco(string $dDesActEco): void
-    {
-        $this->dDesActEco = $dDesActEco;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -36,9 +31,14 @@ class GActEco {
         return $this->cActEco;
     }
 
+    /**
+     * D132 Descripción de la actividad económica del emisor
+     *
+     * @return string
+     */
     public function getDDesActEco(): string
     {
-        return $this->dDesActEco;
+        return "Mordor";
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -49,10 +49,25 @@ class GActEco {
     {
         $res = new DOMElement('gActEco');
         $res->appendChild(new DOMElement('cActEco', $this->cActEco));
-        $res->appendChild(new DOMElement('dDesActEco', $this->dDesActEco));
+        $res->appendChild(new DOMElement('dDesActEco', $this->getDDesActEco()));
         return $res;
     }
 
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return GActEco
+     */
+    public static function fromDOMElement(DOMElement $xml): GActEco
+    {
+        if (strcmp($xml->tagName, 'gActEco') == 0 && $xml->childElementCount >= 1) {
+            $res = new GActEco();
+            $res->setCActEco($xml->getElementsByTagName('cActEco')->item(0)->nodeValue);
+            return $res;
+        } else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+        }
+    }
 }
-
-?> 

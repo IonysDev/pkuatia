@@ -13,10 +13,10 @@ use DOMElement;
 class GDatGralOpe
 {
 
-  public DateTime $dFeEmiDE; // Fecha y hora de emisión del DE (D002) AAAA-MM-DDThh:mm:ss
-  public GOpeCom $gOpeCom; // Campos inherentes a la operación comercial (D010)
-  public GEmis $gEmis; // Grupo de campos que identifican al emisor (D100)
-  public GDatRec $gDatRec; // Grupo de campos que identifican al receptor (D200)
+  public DateTime $dFeEmiDE; // D002 - Fecha y hora de emisión del DE (D002) AAAA-MM-DDThh:mm:ss
+  public GOpeCom $gOpeCom;   // Campos inherentes a la operación comercial (D010)
+  public GEmis $gEmis;       // Grupo de campos que identifican al emisor (D100)
+  public GDatRec $gDatRec;   // Grupo de campos que identifican al receptor (D200)
 
   //====================================================//
   ///Setters
@@ -130,7 +130,7 @@ class GDatGralOpe
   //====================================================//
   ///XML Element
   //====================================================//
-  
+
   /**
    * toDOMElement
    *
@@ -140,9 +140,13 @@ class GDatGralOpe
   {
     $res = new DOMElement('dDatGralOpe');
     $res->appendChild(new DOMElement('dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
+    ///children
+    $res->appendChild($this->gOpeCom->toDOMElement());
+    $res->appendChild($this->gEmis->toDOMElement());
+    $res->appendChild($this->gDatRec->toDOMElement());
     return $res;
   }
-  
+
   /**
    * fromDOMElement
    *
@@ -151,6 +155,17 @@ class GDatGralOpe
    */
   public static function fromDOMElement(DOMElement $xml): GDatGralOpe
   {
-    
+    if (strcmp($xml->tagName, 'dDatGralOpe') == 0 && $xml->childElementCount == 4) {
+      $res = new GDatGralOpe();
+      $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s',$xml->getElementsByTagName('dFeEmiDE')));
+      ///children
+      $res->setGOpeCom($res->gOpeCom->fromDOMElement($xml->getElementsByTagName('gOpeCom')->item(0)->nodeValue));
+      $res->setGEmis($res->gEmis->fromDOMElement($xml->getElementsByTagName('gEmis')->item(0)->nodeValue));
+      $res->setGDatRec($res->gDatRec->fromDOMElement($xml->getElementsByTagName('gDatRec')->item(0)->nodeValue));
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

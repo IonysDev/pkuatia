@@ -78,9 +78,11 @@ class RDE
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('rDe');
-
     $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
-
+    ///Children
+    $res->appendChild($this->dE->toDOMElement());
+    // $res->appendChild(new DOMElement('signature',$this->signature->toDOMElement()));
+    $res->appendChild($this->gCamFuFD->toDOMElement());
     return $res;
   }
 
@@ -95,6 +97,7 @@ class RDE
     if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 4) {
       $res = new RDE();
       $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
+      ///children
       $res->setDE($res->dE->fromDOMElement($xml->getElementsByTagName('DE')->item(0)->nodeValue));
       //Signature
       $res->setGCamFuFD($res->gCamFuFD->fromDOMElement($xml->getElementsByTagName('gCamFuFD')->item(0)->nodeValue));

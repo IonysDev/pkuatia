@@ -153,6 +153,12 @@ class DE
     $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
     $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
+    ///children
+    $res->appendChild($this->gOpeDe->toDOMElement());
+    $res->appendChild($this->gTimb->toDOMElement());
+    $res->appendChild($this->dDatGralOpe->toDOMElement());
+    $res->appendChild($this->gDtipDe->toDOMElement());
+
     return $res;
   }
 

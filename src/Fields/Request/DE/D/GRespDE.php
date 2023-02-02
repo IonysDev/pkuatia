@@ -5,15 +5,15 @@ namespace Abiliomp\Pkuatia\Fields\D;
 use DOMElement;
 
 /**
- * Grupo de campos que identifican al responsable de la generación del DE
+ * ID: D140 Grupo de campos que identifican al responsable de la generación del DE PADRE:D100 
  */
 
 class GRespDE {
     
-    public int $iTipIDRespDE; // Tipo de documento de identidad del responsable de la generación del DE
-    public string $dNumIDRespDE; // Número de documento de identidad del responsable de la generación del DE
-    public string $dNomRespDE; // Nombre o razón social del responsable de la generación del DE
-    public string $dCarRespDE; // Cargo del responsable de la generación del DE 
+    public int $iTipIDRespDE;    // D141 - Tipo de documento de identidad del responsable de la generación del DE
+    public string $dNumIDRespDE; // D143 - Número de documento de identidad del responsable de la generación del DE
+    public string $dNomRespDE;   // D144 - Nombre o razón social del responsable de la generación del DE
+    public string $dCarRespDE;   // D145 - Cargo del responsable de la generación del DE 
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -94,7 +94,12 @@ class GRespDE {
     ///////////////////////////////////////////////////////////////////////
     // XML Element
     ///////////////////////////////////////////////////////////////////////
-
+    
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
     public function toDOMElement(): DOMElement
     {
         $res = new DOMElement('gRespDE');
@@ -104,6 +109,30 @@ class GRespDE {
         $res->appendChild(new DOMElement('dNomRespDE', $this->dNomRespDE));
         $res->appendChild(new DOMElement('dCarRespDE', $this->dCarRespDE));
         return $res;
+    }
+    
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return GRespDE
+     */
+    public static function fromDOMElement(DOMElement $xml): GRespDE
+    {
+        if(strcmp($xml->tagName,'gRespDE') == 0 && $xml->childElementCount ==5)
+        {
+            $res = new GRespDE();
+            $res->setITipIDRespDE(intval($xml->getElementsByTagName('iTipIDRespDE')->item(0)->nodeValue));
+            $res->setDNumIDRespDE($xml->getElementsByTagName('dNumIDRespDE')->item(0)->nodeValue);
+            $res->setDNomRespDE($xml->getElementsByTagName('dNomRespDE')->item(0)->nodeValue);
+            $res->setDCarRespDE($xml->getElementsByTagName('dCarRespDE')->item(0)->nodeValue);
+
+            return $res;
+        }
+        else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+          }
     }
 
 }

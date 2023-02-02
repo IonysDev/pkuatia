@@ -9,8 +9,9 @@ use DOMElement;
  * Nodo Padre gDatGralOpe (D001)
  */
 
-class GEmis {
-    
+class GEmis
+{
+
     public string $dRucEm; // RUC del contribuyente emisor (D101)
     public int $dDVEmi; // Dígito verificador del RUC del contribuyente emisor (D102)
     public int $iTipCont; // Tipo de contribuyente (D103): 1 = Persona Física | 2 = Persona Jurídica
@@ -22,11 +23,8 @@ class GEmis {
     public string $dCompDir1; // Complemento de dirección 1 (D109)
     public string $dCompDir2; // Complemento de dirección 2 (D110)
     public int $cDepEmi; // Código del departamento de emisión (D111)
-    public string $dDesDepEmi; // Descripción del departamento de emisión (D112)  
     public int $cDisEmi; // Código de la distrito de emisión (D113)
-    public string $dDesDisEmi; // Descripción de la distrito de emisión (D114)
     public int $cCiuEmi; // Código de la ciudad de emisión (D115)
-    public string $dDesCiuEmi; // Descripción de la ciudad de emisión (D116)
     public string $dTelEmi; // Teléfono local de emisión de DE (D117)
     public string $dEmailE; // Correo electrónico del emisor (D118)
     public string $dDenSuc; // Denominación comercial de la sucursal (D119)
@@ -93,29 +91,15 @@ class GEmis {
         $this->cDepEmi = $cDepEmi;
     }
 
-    public function setDDesDepEmi(string $dDesDepEmi): void
-    {
-        $this->dDesDepEmi = $dDesDepEmi;
-    }
-
     public function setCDisEmi(int $cDisEmi): void
     {
         $this->cDisEmi = $cDisEmi;
     }
 
-    public function setDDesDisEmi(string $dDesDisEmi): void
-    {
-        $this->dDesDisEmi = $dDesDisEmi;
-    }
 
     public function setCCiuEmi(int $cCiuEmi): void
     {
         $this->cCiuEmi = $cCiuEmi;
-    }
-
-    public function setDDesCiuEmi(string $dDesCiuEmi): void
-    {
-        $this->dDesCiuEmi = $dDesCiuEmi;
     }
 
     public function setDTelEmi(string $dTelEmi): void
@@ -202,9 +186,14 @@ class GEmis {
         return $this->cDepEmi;
     }
 
+    /**
+     * D112 Descripción del departamento de emisión
+     *
+     * @return string
+     */
     public function getDDesDepEmi(): string
     {
-        return $this->dDesDepEmi;
+        return "Mordor";
     }
 
     public function getCDisEmi(): int
@@ -212,9 +201,14 @@ class GEmis {
         return $this->cDisEmi;
     }
 
+    /**
+     * D114 Descripción del distrito de emisión
+     *
+     * @return string
+     */
     public function getDDesDisEmi(): string
     {
-        return $this->dDesDisEmi;
+        return "Mordor";
     }
 
     public function getCCiuEmi(): int
@@ -222,9 +216,14 @@ class GEmis {
         return $this->cCiuEmi;
     }
 
+    /**
+     *  D116 dDesCiuEmi Descripción de la ciudad de emisión
+     *
+     * @return string
+     */
     public function getDDesCiuEmi(): string
     {
-        return $this->dDesCiuEmi;
+        return "Mordor";
     }
 
     public function getDTelEmi(): string
@@ -270,21 +269,71 @@ class GEmis {
         $res->appendChild(new DOMElement('dCompDir1', $this->dCompDir1));
         $res->appendChild(new DOMElement('dCompDir2', $this->dCompDir2));
         $res->appendChild(new DOMElement('cDepEmi', $this->cDepEmi));
-        $res->appendChild(new DOMElement('dDesDepEmi', $this->dDesDepEmi));
+        $res->appendChild(new DOMElement('dDesDepEmi', $this->getDDesDepEmi()));
         $res->appendChild(new DOMElement('cDisEmi', $this->cDisEmi));
-        $res->appendChild(new DOMElement('dDesDisEmi', $this->dDesDisEmi));
+        $res->appendChild(new DOMElement('dDesDisEmi', $this->getDDesDisEmi()));
         $res->appendChild(new DOMElement('cCiuEmi', $this->cCiuEmi));
-        $res->appendChild(new DOMElement('dDesCiuEmi', $this->dDesCiuEmi));
+        $res->appendChild(new DOMElement('dDesCiuEmi', $this->getDDesCiuEmi()));
         $res->appendChild(new DOMElement('dTelEmi', $this->dTelEmi));
         $res->appendChild(new DOMElement('dEmailE', $this->dEmailE));
         $res->appendChild(new DOMElement('dDenSuc', $this->dDenSuc));
+        ///Children
         $res->appendChild($this->gActEco->toDOMElement());
-        if(isset($this->gRespDE)){
+        if (isset($this->gRespDE)) {
             $res->appendChild($this->gRespDE->toDOMElement());
         }
         return $res;
     }
 
-}
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return GEmis
+     */
+    public static function fromDOMElement(DOMElement $xml): GEmis
+    {
+        if (strcmp($xml->tagName, 'gEmis') == 0 && $xml->childElementCount == 21) {
+            $res = new GEmis();
+            $res->setDRucEm($xml->getElementsByTagName('dRucEm')->item(0)->nodeValue);
+            $res->setDDVEmi(intval($xml->getElementsByTagName('dDVEmi')->item(0)->nodeValue));
+            $res->setITipCont(intval($xml->getElementsByTagName('iTipCont')->item(0)->nodeValue));
+            $res->setCTipReg(intval($xml->getElementsByTagName('cTipReg')->item(0)->nodeValue));
+            $res->setDNomEmi($xml->getElementsByTagName('dNomEmi')->item(0)->nodeValue);
+            $res->setDNomFanEmi($xml->getElementsByTagName('dNomFanEmi')->item(0)->nodeValue);
+            $res->setDDirEmi($xml->getElementsByTagName('dDirEmi')->item(0)->nodeValue);
+            $res->setDNumCas(intval($xml->getElementsByTagName('dNumCas')->item(0)->nodeValue));
+            $res->setDCompDir1($xml->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
+            $res->setDCompDir2($xml->getElementsByTagName('dCompDir2')->item(0)->nodeValue);
+            $res->setCDepEmi(intval($xml->getElementsByTagName('cDepEmi')->item(0)->nodeValue));
+            $res->setCDisEmi(intval($xml->getElementsByTagName('cDisEmi')->item(0)->nodeValue));
+            $res->setCCiuEmi(intval($xml->getElementsByTagName('cCiuEmi')->item(0)->nodeValue));
+            $res->setDTelEmi($xml->getElementsByTagName('dTelEmi')->item(0)->nodeValue);
+            $res->setDEmailE($xml->getElementsByTagName('dEmailE')->item(0)->nodeValue);
+            $res->setDDenSuc($xml->getElementsByTagName('dDenSuc')->item(0)->nodeValue);
+            /////children
+            $res->setGActEco($res->gActEco->fromDOMElement($xml->getElementsByTagName('gActEco')->item(0)->nodeValue));
+            $res->setGRespDE($res->gRespDE->fromDOMElement($xml->getElementsByTagName('gRespDE')->item(0)->nodeValue));
+            return $res;
+        } else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+        }
+    }
 
-?> 
+
+
+    /**
+     * Set the value of cDepEmi
+     *
+     * @param int $cDepEmi
+     *
+     * @return self
+     */
+    public function setCDepEmi(int $cDepEmi): self
+    {
+        $this->cDepEmi = $cDepEmi;
+
+        return $this;
+    }
+}
