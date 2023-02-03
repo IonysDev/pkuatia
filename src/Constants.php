@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia;
 
+
 /**
  * Clase que contiene los valores constantes utilizados en el paquete.
  */
@@ -30,4 +31,6 @@ class Constants
     const SIFEN_PATH_CONSULTA_LOTE = "/de/ws/consultas/consulta-lote.wsdl";
     const SIFEN_PATH_CONSULTA_RUC = "/de/ws/consultas/consulta-ruc.wsdl";
     const SIFEN_PATH_CONSULTA = "/de/ws/consultas/consulta.wsdl";
+
+    
 }

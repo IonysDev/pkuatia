@@ -2,7 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Helpers;
 
-use DOMElement;
+use Abiliomp\Pkuatia\Constants;
+
 
 /**
  * Enum con los tipos de certificados disponibles para la conexión segura y la firma digital.
@@ -28,8 +29,8 @@ enum TipoAmbiente
 class SignatureHelper
 {
   //Atributos
-  const SIFEN_AMBIENTE_KEY ="sifen.ambiente";
-  ///tema del ambiente
+  const SIFEN_AMBIENTE_KEY = "sifen.ambiente";
+  private TipoAmbiente $ambiente;
 
   const SIFEN_URL_BASE_KEY = "sifen.url_base";
   private string $urlBase;
@@ -37,5 +38,564 @@ class SignatureHelper
   private string $urlBaseLocal;
   private string $urlConsultaQr;
 
-  
+  private string $pathRecibe;
+  private string $pathRecibeLote;
+  private string $pathEvento;
+  private string $pathConsultaLote;
+  private string $pathConsultaRUC;
+  private string $pathConsulta;
+
+  const SIFEN_USAR_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
+  private bool $usarCertidicadoCliente;
+  private const SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.tipo";
+  private TipoCertificadoCliente $tipoCertificadoCliente;
+  private const SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.archivo";
+  private String $certificadoCliente;
+  const SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.contrasena";
+  private string $contrasenaCertificadoCliente;
+
+  const SIFEN_ID_CSC_KEY = "sifen.csc.id";
+  private string $idCSC;
+  const SIFEN_CSC_KEY = "sifen.csc";
+  private string $CSC;
+
+
+  private int $httpConnectTimeout;
+  private int $httpReadTimeout;
+  private string $userAgent;
+
+  //////////////////////////////////////////////////////////////////
+  ///Constructores
+  //////////////////////////////////////////////////////////////////
+  public function __construct()
+  {
+    $this->ambiente = TipoAmbiente::DEV;
+    $this->urlBaseLocal = Constants::SIFEN_URL_BASE_DEV;
+    $this->urlConsultaQr = Constants::SIFEN_URL_CONSULTA_QR_DEV;
+
+    $this->pathRecibe = Constants::SIFEN_PATH_RECIBE;
+    $this->pathRecibeLote = Constants::SIFEN_PATH_RECIBE_LOTE;
+    $this->pathEvento = Constants::SIFEN_PATH_EVENTO;
+    $this->pathConsultaLote = Constants::SIFEN_PATH_CONSULTA_LOTE;
+    $this->pathConsultaRUC = Constants::SIFEN_PATH_CONSULTA_RUC;
+    $this->pathConsulta = Constants::SIFEN_PATH_CONSULTA;
+    $this->usarCertidicadoCliente = true;
+
+    $this->idCSC = "002";
+    $this->CSC = "EFGH0000000000000000000000000000";
+
+    $this->httpConnectTimeout = 15 * 1000; //15 segundos
+    $this->httpReadTimeout = 45 * 100; //45 segundos
+
+    $this->userAgent = "No sé";
+  }
+
+  public function __construct2(
+    TipoAmbiente $tipoAmbiente,
+    TipoCertificadoCliente $tipoCertificadoCliente,
+    string $certificadoCliente,
+    string $contraseñaCliente
+  ) {
+    $this->__construct();
+    $this->setAmbiente($tipoAmbiente);
+
+    $this->setUsarCertidicadoCliente(true);
+    $this->setCertificadoCliente($certificadoCliente);
+    $this->setContrasenaCertificadoCliente($contraseñaCliente);
+    $this->setTipoCertificadoCliente($tipoCertificadoCliente);
+  }
+
+  public function __construct3(
+    TipoAmbiente $tipoAmbiente,
+    string $idCSC,
+    string $CSC,
+    TipoCertificadoCliente $tipoCertificadoCliente,
+    string $certificadoCliente,
+    string $contraseCertificadoCliente
+  ) {
+    $this->__construct2($tipoAmbiente, $tipoCertificadoCliente, $certificadoCliente, $contraseCertificadoCliente);
+    $this->setIdCSC($idCSC);
+    $this->setCSC($CSC);
+  }
+
+  //////////////////////////////////////////////////////////////////
+  ///SETTERS
+  //////////////////////////////////////////////////////////////////
+  /**
+   * Set the value of ambiente
+   *
+   * @param TipoAmbiente $ambiente
+   *
+   * @return self
+   */
+  public function setAmbiente(TipoAmbiente $ambiente): self
+  {
+    $this->ambiente = $ambiente;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of urlBase
+   *
+   * @param string $urlBase
+   *
+   * @return self
+   */
+  public function setUrlBase(string $urlBase): self
+  {
+    $this->urlBase = $urlBase;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of urlBaseLocal
+   *
+   * @param string $urlBaseLocal
+   *
+   * @return self
+   */
+  public function setUrlBaseLocal(string $urlBaseLocal): self
+  {
+    $this->urlBaseLocal = $urlBaseLocal;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of urlConsultaQr
+   *
+   * @param string $urlConsultaQr
+   *
+   * @return self
+   */
+  public function setUrlConsultaQr(string $urlConsultaQr): self
+  {
+    $this->urlConsultaQr = $urlConsultaQr;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of pathRecibe
+   *
+   * @param string $pathRecibe
+   *
+   * @return self
+   */
+  public function setPathRecibe(string $pathRecibe): self
+  {
+    $this->pathRecibe = $pathRecibe;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of pathRecibeLote
+   *
+   * @param string $pathRecibeLote
+   *
+   * @return self
+   */
+  public function setPathRecibeLote(string $pathRecibeLote): self
+  {
+    $this->pathRecibeLote = $pathRecibeLote;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of pathEvento
+   *
+   * @param string $pathEvento
+   *
+   * @return self
+   */
+  public function setPathEvento(string $pathEvento): self
+  {
+    $this->pathEvento = $pathEvento;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of pathConsultaLote
+   *
+   * @param string $pathConsultaLote
+   *
+   * @return self
+   */
+  public function setPathConsultaLote(string $pathConsultaLote): self
+  {
+    $this->pathConsultaLote = $pathConsultaLote;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of pathConsultaRUC
+   *
+   * @param string $pathConsultaRUC
+   *
+   * @return self
+   */
+  public function setPathConsultaRUC(string $pathConsultaRUC): self
+  {
+    $this->pathConsultaRUC = $pathConsultaRUC;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of pathConsulta
+   *
+   * @param string $pathConsulta
+   *
+   * @return self
+   */
+  public function setPathConsulta(string $pathConsulta): self
+  {
+    $this->pathConsulta = $pathConsulta;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of usarCertidicadoCliente
+   *
+   * @param bool $usarCertidicadoCliente
+   *
+   * @return self
+   */
+  public function setUsarCertidicadoCliente(bool $usarCertidicadoCliente): self
+  {
+    $this->usarCertidicadoCliente = $usarCertidicadoCliente;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of tipoCertificadoCliente
+   *
+   * @param TipoCertificadoCliente $tipoCertificadoCliente
+   *
+   * @return self
+   */
+  public function setTipoCertificadoCliente(TipoCertificadoCliente $tipoCertificadoCliente): self
+  {
+    $this->tipoCertificadoCliente = $tipoCertificadoCliente;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of contrasenaCertificadoCliente
+   *
+   * @param string $contrasenaCertificadoCliente
+   *
+   * @return self
+   */
+  public function setContrasenaCertificadoCliente(string $contrasenaCertificadoCliente): self
+  {
+    $this->contrasenaCertificadoCliente = $contrasenaCertificadoCliente;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of idCSC
+   *
+   * @param string $idCSC
+   *
+   * @return self
+   */
+  public function setIdCSC(string $idCSC): self
+  {
+    $this->idCSC = $idCSC;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of CSC
+   *
+   * @param string $CSC
+   *
+   * @return self
+   */
+  public function setCSC(string $CSC): self
+  {
+    $this->CSC = $CSC;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of httpConnectTimeout
+   *
+   * @param int $httpConnectTimeout
+   *
+   * @return self
+   */
+  public function setHttpConnectTimeout(int $httpConnectTimeout): self
+  {
+    $this->httpConnectTimeout = $httpConnectTimeout;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of httpReadTimeout
+   *
+   * @param int $httpReadTimeout
+   *
+   * @return self
+   */
+  public function setHttpReadTimeout(int $httpReadTimeout): self
+  {
+    $this->httpReadTimeout = $httpReadTimeout;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of userAgent
+   *
+   * @param string $userAgent
+   *
+   * @return self
+   */
+  public function setUserAgent(string $userAgent): self
+  {
+    $this->userAgent = $userAgent;
+
+    return $this;
+  }
+
+
+  /**
+   * Set the value of certificadoCliente
+   *
+   * @param String $certificadoCliente
+   *
+   * @return self
+   */
+  public function setCertificadoCliente(String $certificadoCliente): self
+  {
+    $this->certificadoCliente = $certificadoCliente;
+
+    return $this;
+  }
+
+  //////////////////////////////////////////////////////////////////
+  ///GETTERS
+  //////////////////////////////////////////////////////////////////
+
+  /**
+   * Get the value of ambiente
+   *
+   * @return TipoAmbiente
+   */
+  public function getAmbiente(): TipoAmbiente
+  {
+    return $this->ambiente;
+  }
+
+  /**
+   * Get the value of urlBase
+   *
+   * @return string
+   */
+  public function getUrlBase(): string
+  {
+    return $this->urlBase;
+  }
+
+  /**
+   * Get the value of urlBaseLocal
+   *
+   * @return string
+   */
+  public function getUrlBaseLocal(): string
+  {
+    return $this->urlBaseLocal;
+  }
+
+  /**
+   * Get the value of urlConsultaQr
+   *
+   * @return string
+   */
+  public function getUrlConsultaQr(): string
+  {
+    return $this->urlConsultaQr;
+  }
+
+  /**
+   * Get the value of pathRecibe
+   *
+   * @return string
+   */
+  public function getPathRecibe(): string
+  {
+    return $this->pathRecibe;
+  }
+
+  /**
+   * Get the value of pathRecibeLote
+   *
+   * @return string
+   */
+  public function getPathRecibeLote(): string
+  {
+    return $this->pathRecibeLote;
+  }
+
+  /**
+   * Get the value of pathEvento
+   *
+   * @return string
+   */
+  public function getPathEvento(): string
+  {
+    return $this->pathEvento;
+  }
+
+  /**
+   * Get the value of pathConsultaLote
+   *
+   * @return string
+   */
+  public function getPathConsultaLote(): string
+  {
+    return $this->pathConsultaLote;
+  }
+
+  /**
+   * Get the value of pathConsultaRUC
+   *
+   * @return string
+   */
+  public function getPathConsultaRUC(): string
+  {
+    return $this->pathConsultaRUC;
+  }
+
+  /**
+   * Get the value of pathConsulta
+   *
+   * @return string
+   */
+  public function getPathConsulta(): string
+  {
+    return $this->pathConsulta;
+  }
+
+  /**
+   * Get the value of usarCertidicadoCliente
+   *
+   * @return bool
+   */
+  public function getUsarCertidicadoCliente(): bool
+  {
+    return $this->usarCertidicadoCliente;
+  }
+
+  /**
+   * Get the value of tipoCertificadoCliente
+   *
+   * @return TipoCertificadoCliente
+   */
+  public function getTipoCertificadoCliente(): TipoCertificadoCliente
+  {
+    return $this->tipoCertificadoCliente;
+  }
+
+  /**
+   * Get the value of contrasenaCertificadoCliente
+   *
+   * @return string
+   */
+  public function getContrasenaCertificadoCliente(): string
+  {
+    return $this->contrasenaCertificadoCliente;
+  }
+
+  /**
+   * Get the value of idCSC
+   *
+   * @return string
+   */
+  public function getIdCSC(): string
+  {
+    return $this->idCSC;
+  }
+
+  /**
+   * Get the value of CSC
+   *
+   * @return string
+   */
+  public function getCSC(): string
+  {
+    return $this->CSC;
+  }
+
+  /**
+   * Get the value of httpConnectTimeout
+   *
+   * @return int
+   */
+  public function getHttpConnectTimeout(): int
+  {
+    return $this->httpConnectTimeout;
+  }
+
+  /**
+   * Get the value of httpReadTimeout
+   *
+   * @return int
+   */
+  public function getHttpReadTimeout(): int
+  {
+    return $this->httpReadTimeout;
+  }
+
+  /**
+   * Get the value of userAgent
+   *
+   * @return string
+   */
+  public function getUserAgent(): string
+  {
+    return $this->userAgent;
+  }
+
+  /**
+   * Get the value of certificadoCliente
+   *
+   * @return String
+   */
+  public function getCertificadoCliente(): String
+  {
+    return $this->certificadoCliente;
+  }
 }
