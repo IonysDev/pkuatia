@@ -10,7 +10,7 @@ use Abiliomp\Pkuatia\Constants;
 
 enum TipoCertificadoCliente
 {
-  case PFX;
+  case PFX;//Un archivo con la extensión PFX indica un certificado en el formato PKCS#12;
 }
 
 /**
@@ -142,8 +142,16 @@ class SignatureHelper
   //////////////////////////////////////////////////////////////////
   ///SIGNATURE
   //////////////////////////////////////////////////////////////////
-  public static function sign()
+  public static function sign(): SignatureHelper
   {
+    //hecho por la ia
+    $helper = new SignatureHelper();
+    $helper->setAmbiente(TipoAmbiente::DEV);
+    $helper->setCertificadoCliente(true);
+    $helper->setContrasenaCertificadoCliente(true);
+    return $helper;
+
+    
   }
 
   //////////////////////////////////////////////////////////////////
