@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit316c7e8e1193bc4fdb458fc4c57dac7c
 {
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Selective\\XmlDSig\\' => 18,
+        ),
         'A' => 
         array (
             'Abiliomp\\Pkuatia\\' => 17,
@@ -14,6 +18,10 @@ class ComposerStaticInit316c7e8e1193bc4fdb458fc4c57dac7c
     );
 
     public static $prefixDirsPsr4 = array (
+        'Selective\\XmlDSig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/selective/xmldsig/src',
+        ),
         'Abiliomp\\Pkuatia\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
