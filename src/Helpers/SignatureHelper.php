@@ -4,7 +4,6 @@ namespace Abiliomp\Pkuatia\Helpers;
 
 use Abiliomp\Pkuatia\Constants;
 
-
 /**
  * Enum con los tipos de certificados disponibles para la conexión segura y la firma digital.
  */
@@ -16,11 +15,12 @@ enum TipoCertificadoCliente
 
 /**
  * Enum con los tipos de ambientes disponibles en Sifen.
+ * 
  */
 enum TipoAmbiente
 {
-  case DEV;
-  case PROD;
+  case DEV;///DESAROLLO
+  case PROD;///PRODUCCION
 }
 
 /**
@@ -28,16 +28,32 @@ enum TipoAmbiente
  */
 class SignatureHelper
 {
-  //Atributos
+  //Constantes
   const SIFEN_AMBIENTE_KEY = "sifen.ambiente";
+  const SIFEN_URL_BASE_KEY = "sifen.url_base";
+  const SIFEN_USAR_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
+  const SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.tipo";
+  const SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.archivo";
+  const SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.contrasena";
+  const SIFEN_ID_CSC_KEY = "sifen.csc.id";
+  const SIFEN_CSC_KEY = "sifen.csc";
+
+  /* ambiente (TipoAmbiente): Tipo de ambiente a utilizar (desarrollo o producción).
+   * Dependiendo de esto se definen las urls a utilizar*/
   private TipoAmbiente $ambiente;
 
-  const SIFEN_URL_BASE_KEY = "sifen.url_base";
+  /*  $urlBase (string): URL a la que se hará la petición.
+   *  Hay una para cada tipo de ambiente. Se puede sobreescribir.
+  */
   private string $urlBase;
-
   private string $urlBaseLocal;
   private string $urlConsultaQr;
 
+  /* pathRecibe, pathRecibeLote, pathEvento, 
+  * pathConsultaLote, pathConsultaRUC, patchConsulta (String):
+  * path para las peticiones específicas. 
+  * Tienen valores por defecto (obtenidos del MT), pero pueden ser sobreescritas.
+  */
   private string $pathRecibe;
   private string $pathRecibeLote;
   private string $pathEvento;
@@ -45,20 +61,25 @@ class SignatureHelper
   private string $pathConsultaRUC;
   private string $pathConsulta;
 
-  const SIFEN_USAR_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
+  /* usarCertificadoCliente (bool): 
+   * Define si se utiliza o no el certificado proporcionado para la
+   * autenticación y firma de las peticiones.
+   * Se recomienda utilizar el valor por defecto (true), pero es posible sobreescribirlo en caso de estar
+   * realizando a otro nivel la autenticación por certificado (Ej.: Forward Proxy).</li>
+   */
   private bool $usarCertidicadoCliente;
-  private const SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.tipo";
+
+  /*tipoCertificadoCliente (TipoCertificadoCliente): Tipo de archivo del certificado. 
+  Solo PFX es soportado actualmente */
   private TipoCertificadoCliente $tipoCertificadoCliente;
-  private const SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.archivo";
+
+  /* certificadoCliente, contrasenaCertificadoCliente (String): Certificado a utilizar (ruta del archivo o
+  *  archivo codificado en Base64), junto a la contraseña. */
   private String $certificadoCliente;
-  const SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.contrasena";
   private string $contrasenaCertificadoCliente;
 
-  const SIFEN_ID_CSC_KEY = "sifen.csc.id";
   private string $idCSC;
-  const SIFEN_CSC_KEY = "sifen.csc";
   private string $CSC;
-
 
   private int $httpConnectTimeout;
   private int $httpReadTimeout;
@@ -116,6 +137,13 @@ class SignatureHelper
     $this->__construct2($tipoAmbiente, $tipoCertificadoCliente, $certificadoCliente, $contraseCertificadoCliente);
     $this->setIdCSC($idCSC);
     $this->setCSC($CSC);
+  }
+
+  //////////////////////////////////////////////////////////////////
+  ///SIGNATURE
+  //////////////////////////////////////////////////////////////////
+  public static function sign()
+  {
   }
 
   //////////////////////////////////////////////////////////////////
