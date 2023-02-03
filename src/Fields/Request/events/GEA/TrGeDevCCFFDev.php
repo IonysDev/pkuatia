@@ -241,9 +241,9 @@ class TrGeDevCCFFDev
       $res->setDNumDevSol($xml->getElementsByTagName('dNumDevSol')->item(0)->nodeValue);
       $res->setDNumDevInf($xml->getElementsByTagName('dNumDevInf')->item(0)->nodeValue);
       $res->setDNumDevRes($xml->getElementsByTagName('dNumDevRes')->item(0)->nodeValue);
-      $res->setDFeEmiSol($xml->getElementsByTagName('dFeEmiSol')->item(0)->nodeValue);
-      $res->setDFeEmiInf($xml->getElementsByTagName('dFeEmiInf')->item(0)->nodeValue);
-      $res->setDFeEmiRes($xml->getElementsByTagName('dFeEmiRes')->item(0)->nodeValue);
+      $res->setDFeEmiSol(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiSol')->item(0)->nodeValue));
+      $res->setDFeEmiInf(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiInf')->item(0)->nodeValue));
+      $res->setDFeEmiRes(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiRes')->item(0)->nodeValue));
 
       return $res;
     } else {

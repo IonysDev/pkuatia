@@ -132,7 +132,7 @@ class TrEve
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('trEve');
+        $res = new DOMElement('rEve');
         $res->setAttribute('Id', $this->Id);
         $res->appendChild(new DOMElement('dFecFirma', $this->dFecFirma->format('Y-m-d\TH:i:s')));
         $res->appendChild(new DOMElement('dVerFor', $this->dVerFor));
@@ -150,10 +150,11 @@ class TrEve
     {
         if (strcmp($xml->tagName, 'rEve') == 0 && $xml->childElementCount == 4) {
             $res = new TrEve();
-            $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-            $res->setDFecFirma(new DateTime($xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
-            $res->setDVerFor($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue);
+            $res->setId(intval($xml->getElementsByTagName('Id')->item(0)->nodeValue));
+            $res->setDFecFirma(DateTime::createFromFormat("Y-m-d\TH:i:s",$xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
+            $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
 
+            ///children
             $aux = new TgGroupTiEvt();
             $aux->fromDOMElement($xml->getElementsByTagName('gGroupTiEvt')->item(0)->nodeValue);
             $res->setGGroupTiEvt($aux);

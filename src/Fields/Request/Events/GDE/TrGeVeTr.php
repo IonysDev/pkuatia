@@ -13,11 +13,8 @@ class TrGeVeTr
   public string $Id;          // GET002 - CDC del DTE 
   public int    $dMotEv;      // GET003 - Motivo del evento
   public int    $cDepEnt;     // GET004 - Código del departamento del local de la entrega
-  public string $dDesDepEnt;  // GET005 - Descripción del  departamento del local  de la entrega
   public int    $cDisEnt;     // GET006 - Código del distrito del  local de la entrega  
-  public string $dDesDisEnt;  // GET007 - Descripción de distrito del local de la entrega
-  public int    $cCiuEnt;     // GET008 - Código de la ciudad del local de la entrega
-  public string $dDesCiuEnt;  // GET009 - Descripción de ciudad del local de la entrega  
+  public int    $cCiuEnt;     // GET008 - Código de la ciudad del local de la entrega 
   public string $dDirEnt;     // GET010 - Dirección del local de la entrega
   public int    $dNumCas;     // GET011 - Número de casa del local de la entrega
   public string $dCompDir1;   // GET012 - Complemento de dirección del local de  la entrega
@@ -28,12 +25,9 @@ class TrGeVeTr
   public int    $dDVTrans;    // GET017 - Dígito verificador del RUC del transportista
   public string $dNomTrans;   // GET018 - Nombre o razón social del transportista
   public int    $iTipIDTrans; // GET019 - Tipo de documento de  identidad del  transportista
-  public string $dDTipIDTrans; // GET020 - Descripción del tipo de  documento de  identidad del transportista
   public string $dNumIDTrans; // GET021 - Número de documento de identidad del transportista
   public int    $iTipTrans;   // GET022 - Tipo de transporte
-  public string $dDesTipTrans; // GET023 - Descripción del tipo de transporte
   public int    $iModTrans;   // GET024 - Modalidad del transporte
-  public string $dDesModTrans; // GET025 - Descripción de la  modalidad del  transporte
   public string $dTiVehTras;  // GET026 - Tipo de vehículo
   public string $dMarVeh;     // GET027 - Marca del vehículo 
   public int    $dTipIdenVeh; // GET028 - Tipo de identificación del vehículo
@@ -372,96 +366,7 @@ class TrGeVeTr
     return $this;
   }
 
-  /**
-   * Set the value of dDesDepEnt
-   *
-   * @param string $dDesDepEnt
-   *
-   * @return self
-   */
-  public function setDDesDepEnt(string $dDesDepEnt): self
-  {
-    $this->dDesDepEnt = $dDesDepEnt;
-
-    return $this;
-  }
-
-
-  /**
-   * Set the value of dDesDisEnt
-   *
-   * @param string $dDesDisEnt
-   *
-   * @return self
-   */
-  public function setDDesDisEnt(string $dDesDisEnt): self
-  {
-    $this->dDesDisEnt = $dDesDisEnt;
-
-    return $this;
-  }
-
-
-  /**
-   * Set the value of dDesCiuEnt
-   *
-   * @param string $dDesCiuEnt
-   *
-   * @return self
-   */
-  public function setDDesCiuEnt(string $dDesCiuEnt): self
-  {
-    $this->dDesCiuEnt = $dDesCiuEnt;
-
-    return $this;
-  }
-
-
-  /**
-   * Set the value of dDesTipTrans
-   *
-   * @param string $dDesTipTrans
-   *
-   * @return self
-   */
-  public function setDDesTipTrans(string $dDesTipTrans): self
-  {
-    $this->dDesTipTrans = $dDesTipTrans;
-
-    return $this;
-  }
-
-
-  /**
-   * Set the value of dDTipIDTrans
-   *
-   * @param string $dDTipIDTrans
-   *
-   * @return self
-   */
-  public function setDDTipIDTrans(string $dDTipIDTrans): self
-  {
-    $this->dDTipIDTrans = $dDTipIDTrans;
-
-    return $this;
-  }
-
-
-  /**
-   * Set the value of dDesModTrans
-   *
-   * @param string $dDesModTrans
-   *
-   * @return self
-   */
-  public function setDDesModTrans(string $dDesModTrans): self
-  {
-    $this->dDesModTrans = $dDesModTrans;
-
-    return $this;
-  }
-
-
+ 
   /**
    * Set the value of dTiVehTras
    *
@@ -896,35 +801,29 @@ class TrGeVeTr
    */
   public static function fromDOMElement(DOMElement $xml): TrGeVeTr
   {
-    if (strcmp($xml->tagName, 'trGeDeVTr') == 0 && $xml->childElementCount == 29) {
+    if (strcmp($xml->tagName, 'trGeDeVTr') == 0 && $xml->childElementCount == 23) {
       $res = new TrGeVeTr();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDMotEv($xml->getElementsByTagName('dMotEv')->item(0)->nodeValue);
-      $res->setCDepEnt($xml->getElementsByTagName('cDepEnt')->item(0)->nodeValue);
-      $res->setDDesDepEnt($xml->getElementsByTagName('dDesDepEnt')->item(0)->nodeValue);
-      $res->setCDisEnt($xml->getElementsByTagName('cDisEnt')->item(0)->nodeValue);
-      $res->setDDesDisEnt($xml->getElementsByTagName('dDesDisEnt')->item(0)->nodeValue);
-      $res->setCCiuEnt($xml->getElementsByTagName('cCiuEnt')->item(0)->nodeValue);
-      $res->setDDesCiuEnt($xml->getElementsByTagName('dDesCiuEnt')->item(0)->nodeValue);
+      $res->setDMotEv(intval($xml->getElementsByTagName('dMotEv')->item(0)->nodeValue));
+      $res->setCDepEnt(intval($xml->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
+      $res->setCDisEnt(intval($xml->getElementsByTagName('cDisEnt')->item(0)->nodeValue));
+      $res->setCCiuEnt(intval($xml->getElementsByTagName('cCiuEnt')->item(0)->nodeValue));
       $res->setDDirEnt($xml->getElementsByTagName('dDirEnt')->item(0)->nodeValue);
-      $res->setDNumCas($xml->getElementsByTagName('dNumCas')->item(0)->nodeValue);
+      $res->setDNumCas(intval($xml->getElementsByTagName('dNumCas')->item(0)->nodeValue));
       $res->setDCompDir1($xml->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
       $res->setDNomChof($xml->getElementsByTagName('dNomChof')->item(0)->nodeValue);
       $res->setDNumIDChof($xml->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
-      $res->setINatTrans($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue);
+      $res->setINatTrans(intval($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
       $res->setDRucTrans($xml->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
-      $res->setDDVTrans($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue);
+      $res->setDDVTrans(intval($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
       $res->setDNomTrans($xml->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
-      $res->setITipIDTrans($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue);
-      $res->setDDTipIDTrans($xml->getElementsByTagName('dDTipIDTrans')->item(0)->nodeValue);
+      $res->setITipIDTrans(intval($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
       $res->setDNumIDTrans($xml->getElementsByTagName('dNumIDTrans')->item(0)->nodeValue);
-      $res->setITipTrans($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue);
-      $res->setDDesTipTrans($xml->getElementsByTagName('dDesTipTrans')->item(0)->nodeValue);
-      $res->setIModTrans($xml->getElementsByTagName('iModTrans')->item(0)->nodeValue);
-      $res->setDDesModTrans($xml->getElementsByTagName('dDesModTrans')->item(0)->nodeValue);
+      $res->setITipTrans(intval($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
+      $res->setIModTrans(intval($xml->getElementsByTagName('iModTrans')->item(0)->nodeValue));
       $res->setDTiVehTras($xml->getElementsByTagName('dTiVehTras')->item(0)->nodeValue);
       $res->setDMarVeh($xml->getElementsByTagName('dMarVeh')->item(0)->nodeValue);
-      $res->setDTipIdenVeh($xml->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue);
+      $res->setDTipIdenVeh(intval($xml->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue));
       $res->setDNroIDVeh($xml->getElementsByTagName('dNroIDVeh')->item(0)->nodeValue);
       $res->setDNroMatVeh($xml->getElementsByTagName('dNroMatVeh')->item(0)->nodeValue);
 

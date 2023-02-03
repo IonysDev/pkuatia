@@ -125,8 +125,8 @@ class TrGeVeConf
     if (strcmp($xml->tagName, 'trGeVeConf') == 0 && $xml->childElementCount == 3) {
       $res = new TrGeVeConf();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setITipConf($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue);
-      $res->setDFecRecep($xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue);
+      $res->setITipConf(intval($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue));
+      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d' ,$xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");

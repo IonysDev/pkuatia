@@ -206,7 +206,7 @@ class TxProtDe
   {
     if (strcmp($xml->tagName, 'rProtDe') == 0 && $xml->childElementCount == 6) {
       $res = new TxProtDe();
-      $res->setDFecProc($xml->getElementsByTagName('dFecProc')->item(0)->nodeValue);
+      $res->setDFecProc(DateTime::createFromFormat('Y-m-d H:i:s', $xml->getElementsByTagName('dFecProc')->item(0)->nodeValue));
       $res->setDDigVal($xml->getElementsByTagName('dDigVal')->item(0)->nodeValue);
       $res->setDEstRes($xml->getElementsByTagName('dEstRes')->item(0)->nodeValue);
       $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);

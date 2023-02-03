@@ -22,7 +22,7 @@ class TgGroupGesEve
    *
    * @param DOMElement $rGesEve
    */
-  public function setRGesEve(string $rGesEve): self
+  public function setRGesEve(TrGesEve $rGesEve): self
   {
     $this->rGesEve = $rGesEve;
     return $this;
@@ -76,8 +76,32 @@ class TgGroupGesEve
   public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('tgGroupGesEve');
+    ///children
     $res->appendChild($this->rGesEve->toDOMElement());
     $res->appendChild($this->rEve->toDOMElement());
     return $res;
+  }
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TgGroupGesEve
+   */
+  public static function fromDOMElement(DOMElement $xml): TgGroupGesEve
+  {
+    if(strcmp($xml->tagName, 'tgGroupGesEve') == 0 && $xml->childElementCount  == 2)
+    { 
+      $res = new TgGroupGesEve();
+      //Children
+      $res->setRGesEve($res->rGesEve->fromDOMElement($xml->getElementsByTagName('rGesEve')->item(0)->nodeValue));
+      $res->setREve($res->rEve->fromDOMElement($xml->getElementsByTagName('rEve')->item(0)->nodeValue));
+
+      return $res;
+    }
+    else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

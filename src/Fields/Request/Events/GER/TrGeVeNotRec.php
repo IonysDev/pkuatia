@@ -292,6 +292,7 @@ class TrGeVeNotRec
     $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
     if ($this->iTipRec == 1) {
       $res->appendChild(new DOMElement('dRucRec', $this->getDRucRec()));
+      $res->appendChild(new DOMElement('dDVRec', $this->getDDVRec()));
     }
 
     if ($this->iTipRec == 2) {
@@ -311,14 +312,16 @@ class TrGeVeNotRec
    */
   public static function fromDOMElement(DOMElement $xml): TrGeVeNotRec
   {
-    if (strcmp($xml->tagName, "trGeVeNotRec") == 0 && $xml->childElementCount == 8) {
+    if (strcmp($xml->tagName, "trGeVeNotRec") == 0 && $xml->childElementCount >=6) {
       $res = new TrGeVeNotRec();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDFecEmi($xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue);
-      $res->setDFecRecep($xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue);
-      $res->setITipRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
+      $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue));
+      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
+      $res->setITipRec(intval($xml->getElementsByTagName('iTipRec')->item(0)->nodeValue));
+      $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
       $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
-      $res->setDTipIDRec($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue);
+      $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
+      $res->setDTipIDRec(intval($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue));
       $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
       $res->setDTotalGs($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
     } else {

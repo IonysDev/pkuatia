@@ -222,12 +222,12 @@ class TrGeVeInu
   {
     if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 8) {
       $res = new TrGeVeInu();
-      $res->setDNumTim($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue);
+      $res->setDNumTim(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
       $res->setDEst($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
       $res->setDPunExp($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
       $res->setDNumIn($xml->getElementsByTagName('dNumIn')->item(0)->nodeValue);
       $res->setDNumFin($xml->getElementsByTagName('dNumFin')->item(0)->nodeValue);
-      $res->setITiDE($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue);
+      $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
       $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
 
       return $res;

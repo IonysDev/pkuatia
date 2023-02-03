@@ -141,4 +141,28 @@ class TgResProcLote
     $res->appendChild($this->gResProc->toDOMElement());
     return $res;
   }
+  
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return TgResProcLote
+   */
+  public static function fromDOMElement(DOMElement $xml): TgResProcLote
+  {
+    if(strcmp($xml->tagName, 'tgResProcLote') == 0 && $xml->childElementCount == 4)
+    {
+      $res = new TgResProcLote();
+      $res->setId($xml->getElementsByTagName('id')->item(0)->nodeValue);
+      $res->setDEstRes($xml->getElementsByTagName('dEstRes')->item(0)->nodeValue);
+      $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
+      ///Children
+      $res->setGResProc($res->gResProc->fromDOMElement($xml->getElementsByTagName('tgResProc')->item(0)->nodeValue));
+      return $res;
+    }
+    else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
 }

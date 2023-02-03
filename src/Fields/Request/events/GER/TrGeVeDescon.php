@@ -321,13 +321,13 @@ class TrGeVeDescon
     if (strcmp($xml->tagName, 'trGeVeDescon') == 0 && $xml->childElementCount == 10) {
       $res = new TrGeVeDescon();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDFecEmi($xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue);
-      $res->setDFecRecep($xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue);
-      $res->setITipRec($xml->getElementsByTagName('iTipRec')->item(0)->nodeValue);
+      $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue));
+      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
+      $res->setITipRec(intval($xml->getElementsByTagName('iTipRec')->item(0)->nodeValue));
       $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
       $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
-      $res->setDDVRec($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue);
-      $res->setDTipIDRec($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue);
+      $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
+      $res->setDTipIDRec(intval($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue));
       $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
       $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
       return $res;

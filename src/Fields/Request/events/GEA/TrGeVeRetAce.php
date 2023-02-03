@@ -235,12 +235,12 @@ class TrGeVeRetAce
     if (strcmp($xml->tagName, "trGeVeRetAce") == 0 && $xml->childElementCount == 7) {
       $res = new TrGeVeRetAce();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDNumTimRet($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue);
+      $res->setDNumTimRet(intval($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue));
       $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
       $res->setDPunExpRet($xml->getElementsByTagName('dPunExpRet')->item(0)->nodeValue);
       $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
       $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
-      $res->setDFeEmiRet($xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue);
+      $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue));
 
       return $res;
     } else {

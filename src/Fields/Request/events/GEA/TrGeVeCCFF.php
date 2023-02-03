@@ -127,7 +127,7 @@ class TrGeVeCCFF
       $res = new TrGeVeCCFF();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDNumTraCCFF($xml->getElementsByTagName('dNumTraCCFF')->item(0)->nodeValue);
-      $res->setDFeAceTraCCFF($xml->getElementsByTagName('dFeAceTraCCFF')->item(0)->nodeValue);
+      $res->setDFeAceTraCCFF(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeAceTraCCFF')->item(0)->nodeValue));
     
       return $res;
     } else {
