@@ -3,6 +3,11 @@
 namespace Abiliomp\Pkuatia\Helpers;
 
 use Abiliomp\Pkuatia\Constants;
+use Selective\XmlDSig\PrivateKeyStore;
+use Selective\XmlDSig\Algorithm;
+use Selective\XmlDSig\CryptoSigner;
+use Selective\XmlDSig\XmlSigner;
+
 
 /**
  * Enum con los tipos de certificados disponibles para la conexión segura y la firma digital.
@@ -10,7 +15,7 @@ use Abiliomp\Pkuatia\Constants;
 
 enum TipoCertificadoCliente
 {
-  case PFX;//Un archivo con la extensión PFX indica un certificado en el formato PKCS#12;
+  case PFX; //Un archivo con la extensión PFX indica un certificado en el formato PKCS#12;
 }
 
 /**
@@ -19,8 +24,8 @@ enum TipoCertificadoCliente
  */
 enum TipoAmbiente
 {
-  case DEV;///DESAROLLO
-  case PROD;///PRODUCCION
+  case DEV; ///DESAROLLO
+  case PROD; ///PRODUCCION
 }
 
 /**
@@ -144,8 +149,49 @@ class SignatureHelper
   //////////////////////////////////////////////////////////////////
   public static function cargarProps()
   {
+    ///Load and add the private key to the PrivateKeyStore:
 
-    ///Ver como usar el paquete que no responde.
+    $privateKeyStore = new PrivateKeyStore();
+
+    // load a private key from a string
+    $privateKeyStore->loadFromPem('private key content', 'password');
+
+    // or load a private key from a PEM file
+    $privateKeyStore->loadFromPem(file_get_contents('filename.pem'), 'password');
+
+    // load pfx PKCS#12 certificate from a string
+    $privateKeyStore->loadFromPkcs12('pfx content', 'password');
+
+    // or load PKCS#12 certificate from a file
+    $privateKeyStore->loadFromPkcs12(file_get_contents('filename.p12'), 'password');
+
+    ///Define the digest method: sha1, sha224, sha256, sha384, sha512
+    $algorithm = new Algorithm(Algorithm::METHOD_SHA256);
+
+    //Create a CryptoSigner instance:
+    $cryptoSigner = new CryptoSigner($privateKeyStore, $algorithm);
+
+    //Signing:
+
+    // Create a XmlSigner and pass the crypto signer
+    $xmlSigner = new XmlSigner($cryptoSigner);
+
+    // Optional: Set reference URI
+    $xmlSigner->setReferenceUri('');
+
+    // Create a signed XML string
+    $signedXml = $xmlSigner->signXml('<?xml ...');
+
+    // or sign an XML file
+    $signedXml = $xmlSigner->signXml(file_get_contents($filename));
+
+    // or sign an DOMDocument
+    $xml = new DOMDocument();
+    $xml->preserveWhiteSpace = true;
+    $xml->formatOutput = false;
+    $xml->loadXML($data);
+
+    $signedXml = $xmlSigner->signDocument($xml);
   }
 
   //////////////////////////////////////////////////////////////////
