@@ -3,11 +3,6 @@
 namespace Abiliomp\Pkuatia\Helpers;
 
 use Abiliomp\Pkuatia\Constants;
-use Selective\XmlDSig\PrivateKeyStore;
-use Selective\XmlDSig\Algorithm;
-use Selective\XmlDSig\CryptoSigner;
-use Selective\XmlDSig\XmlSigner;
-
 
 /**
  * Enum con los tipos de certificados disponibles para la conexión segura y la firma digital.
@@ -144,55 +139,6 @@ class SignatureHelper
     $this->setCSC($CSC);
   }
 
-  //////////////////////////////////////////////////////////////////
-  ///SIGNATURE
-  //////////////////////////////////////////////////////////////////
-  public static function cargarProps()
-  {
-    ///Load and add the private key to the PrivateKeyStore:
-
-    $privateKeyStore = new PrivateKeyStore();
-
-    // load a private key from a string
-    $privateKeyStore->loadFromPem('private key content', 'password');
-
-    // or load a private key from a PEM file
-    $privateKeyStore->loadFromPem(file_get_contents('filename.pem'), 'password');
-
-    // load pfx PKCS#12 certificate from a string
-    $privateKeyStore->loadFromPkcs12('pfx content', 'password');
-
-    // or load PKCS#12 certificate from a file
-    $privateKeyStore->loadFromPkcs12(file_get_contents('filename.p12'), 'password');
-
-    ///Define the digest method: sha1, sha224, sha256, sha384, sha512
-    $algorithm = new Algorithm(Algorithm::METHOD_SHA256);
-
-    //Create a CryptoSigner instance:
-    $cryptoSigner = new CryptoSigner($privateKeyStore, $algorithm);
-
-    //Signing:
-
-    // Create a XmlSigner and pass the crypto signer
-    $xmlSigner = new XmlSigner($cryptoSigner);
-
-    // Optional: Set reference URI
-    $xmlSigner->setReferenceUri('');
-
-    // Create a signed XML string
-    $signedXml = $xmlSigner->signXml('<?xml ...');
-
-    // or sign an XML file
-    $signedXml = $xmlSigner->signXml(file_get_contents($filename));
-
-    // or sign an DOMDocument
-    $xml = new DOMDocument();
-    $xml->preserveWhiteSpace = true;
-    $xml->formatOutput = false;
-    $xml->loadXML($data);
-
-    $signedXml = $xmlSigner->signDocument($xml);
-  }
 
   //////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -673,5 +619,95 @@ class SignatureHelper
   public function getCertificadoCliente(): String
   {
     return $this->certificadoCliente;
+  }
+
+  //////////////////////////////////////////////////////////////////
+  ///SIGNATURE
+  //////////////////////////////////////////////////////////////////  
+  /**
+   * cargarConf, carga los datos desde una ruta y los pasa a al signatureHelper
+   *
+   * @param  mixed $ruta
+   * @return SignatureHelper
+   */
+  public static function cargarConf(string $ruta): SignatureHelper
+  {
+    $ruta = realpath($ruta);
+
+    if (!file_exists($ruta)) {
+      throw new \Exception("Ruta no existe:" . $ruta);
+    } else {
+      $archive = basename($ruta);
+      $ini_array = parse_ini_file($archive);
+
+      $signature = new SignatureHelper();
+      if (isset($ini_array[SignatureHelper::SIFEN_AMBIENTE_KEY])) {
+        $signature->setAmbiente($ini_array[SignatureHelper::SIFEN_AMBIENTE_KEY]);
+      }
+
+      if (isset($ini_array[SignatureHelper::SIFEN_URL_BASE_KEY])) {
+        $signature->setUrlBase($ini_array[SignatureHelper::SIFEN_URL_BASE_KEY]);
+      }
+
+      if (isset($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY])) {
+        $signature->setCertificadoCliente($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY]);
+      }
+
+      if (isset($ini_array[SignatureHelper::SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY])) {
+        $signature->setTipoCertificadoCliente($ini_array[SignatureHelper::SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY]);
+      }
+
+      if (isset($ini_array[SignatureHelper::SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY])) {
+        $signature->setCertificadoCliente($ini_array[SignatureHelper::SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY]);
+      }
+
+      if (isset($ini_array[SignatureHelper::SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY])) {
+
+        $signature->setContrasenaCertificadoCliente($ini_array[SignatureHelper::SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY]);
+      }
+
+      if (isset($ini_array[SignatureHelper::SIFEN_CSC_KEY]))
+        $signature->setCSC($ini_array[SignatureHelper::SIFEN_CSC_KEY]); {
+
+        if (isset($ini_array[SignatureHelper::SIFEN_ID_CSC_KEY])) {
+          $signature->setIdCSC($ini_array[SignatureHelper::SIFEN_ID_CSC_KEY]);
+        }
+        return $signature;
+      }
+    }
+  }
+
+  /**
+   * toString
+   *
+   * @return string
+   */
+  public function toString(): string
+  {
+    return "SifenConfig{" .
+      "ambiente=" . $this->ambiente .
+      ", urlBase='" . $this->urlBase . '\'' .
+      ", urlBaseLocal='" . $this->urlBaseLocal . '\'' .
+      ", urlConsultaQr='" . $this->urlConsultaQr . '\'' .
+      ", pathRecibe='" . $this->pathRecibe . '\'' .
+      ", pathRecibeLote='" . $this->pathRecibeLote . '\'' .
+      ", pathEvento='" . $this->pathEvento . '\'' .
+      ", pathConsultaLote='" . $this->pathConsultaLote . '\'' .
+      ", pathConsultaRUC='" . $this->pathConsultaRUC . '\'' .
+      ", pathConsulta='" . $this->pathConsulta . '\'' .
+      ", usarCertificadoCliente=" . $this->usarCertidicadoCliente .
+      ", tipoCertificadoCliente=" . $this->tipoCertificadoCliente .
+      ", certificadoCliente='" . $this->certificadoCliente . '\'' .
+      ", contrasenaCertificadoCliente='" . $this->contrasenaCertificadoCliente . '\'' .
+      ", idCSC='" . $this->idCSC . '\'' .
+      ", CSC='" . $this->CSC . '\'' .
+      ", httpConnectTimeout=" . $this->httpConnectTimeout .
+      ", httpReadTimeout=" . $this->httpReadTimeout .
+      ", userAgent='" . $this->userAgent . '\'' .
+      ", URL_BASE_DEV='" . Constants::SIFEN_URL_BASE_DEV . '\'' .
+      ", URL_BASE_PROD='" . Constants::SIFEN_URL_BASE_PROD . '\'' .
+      ", URL_CONSULTA_QR_DEV='" . Constants::SIFEN_URL_CONSULTA_QR_DEV . '\'' .
+      ", URL_CONSULTA_QR_PROD='" . Constants::SIFEN_URL_CONSULTA_QR_PROD . '\'' .
+      '}';
   }
 }
