@@ -142,16 +142,10 @@ class SignatureHelper
   //////////////////////////////////////////////////////////////////
   ///SIGNATURE
   //////////////////////////////////////////////////////////////////
-  public static function sign(): SignatureHelper
+  public static function cargarProps()
   {
-    //hecho por la ia
-    $helper = new SignatureHelper();
-    $helper->setAmbiente(TipoAmbiente::DEV);
-    $helper->setCertificadoCliente(true);
-    $helper->setContrasenaCertificadoCliente(true);
-    return $helper;
 
-    
+    ///Ver como usar el paquete que no responde.
   }
 
   //////////////////////////////////////////////////////////////////
