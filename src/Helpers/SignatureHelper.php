@@ -644,6 +644,8 @@ class SignatureHelper
       $signature = new SignatureHelper();
       if (isset($ini_array[SignatureHelper::SIFEN_AMBIENTE_KEY])) {
         $signature->setAmbiente($ini_array[SignatureHelper::SIFEN_AMBIENTE_KEY]);
+      } else {
+        throw new \Exception("El tipo de ambiente especificado no existe.");
       }
 
       if (isset($ini_array[SignatureHelper::SIFEN_URL_BASE_KEY])) {
@@ -657,6 +659,8 @@ class SignatureHelper
 
       if (isset($ini_array[SignatureHelper::SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY])) {
         $signature->setTipoCertificadoCliente($ini_array[SignatureHelper::SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY]);
+      } else {
+        throw new \Exception("El tipo de certificado especificado no existe.");
       }
 
       if (isset($ini_array[SignatureHelper::SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY])) {
