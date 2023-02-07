@@ -44,16 +44,16 @@ class SignatureHelper
 
   /*  $urlBase (string): URL a la que se hará la petición.
    *  Hay una para cada tipo de ambiente. Se puede sobreescribir.
-  */
+   */
   private string $urlBase;
   private string $urlBaseLocal;
   private string $urlConsultaQr;
 
   /* pathRecibe, pathRecibeLote, pathEvento, 
-  * pathConsultaLote, pathConsultaRUC, patchConsulta (String):
-  * path para las peticiones específicas. 
-  * Tienen valores por defecto (obtenidos del MT), pero pueden ser sobreescritas.
-  */
+   * pathConsultaLote, pathConsultaRUC, patchConsulta (String):
+   * path para las peticiones específicas. 
+   * Tienen valores por defecto (obtenidos del MT), pero pueden ser sobreescritas.
+   */
   private string $pathRecibe;
   private string $pathRecibeLote;
   private string $pathEvento;
@@ -74,8 +74,8 @@ class SignatureHelper
   private TipoCertificadoCliente $tipoCertificadoCliente;
 
   /* certificadoCliente, contrasenaCertificadoCliente (String): Certificado a utilizar (ruta del archivo o
-  *  archivo codificado en Base64), junto a la contraseña. */
-  private String $certificadoCliente;
+   *  archivo codificado en Base64), junto a la contraseña. */
+  private string $certificadoCliente;
   private string $contrasenaCertificadoCliente;
 
   private string $idCSC;
@@ -116,7 +116,8 @@ class SignatureHelper
     TipoCertificadoCliente $tipoCertificadoCliente,
     string $certificadoCliente,
     string $contraseñaCliente
-  ) {
+  )
+  {
     $this->__construct();
     $this->setAmbiente($tipoAmbiente);
 
@@ -133,7 +134,8 @@ class SignatureHelper
     TipoCertificadoCliente $tipoCertificadoCliente,
     string $certificadoCliente,
     string $contraseCertificadoCliente
-  ) {
+  )
+  {
     $this->__construct2($tipoAmbiente, $tipoCertificadoCliente, $certificadoCliente, $contraseCertificadoCliente);
     $this->setIdCSC($idCSC);
     $this->setCSC($CSC);
@@ -416,11 +418,11 @@ class SignatureHelper
   /**
    * Set the value of certificadoCliente
    *
-   * @param String $certificadoCliente
+   * @param string $certificadoCliente
    *
    * @return self
    */
-  public function setCertificadoCliente(String $certificadoCliente): self
+  public function setCertificadoCliente(string $certificadoCliente): self
   {
     $this->certificadoCliente = $certificadoCliente;
 
@@ -614,9 +616,9 @@ class SignatureHelper
   /**
    * Get the value of certificadoCliente
    *
-   * @return String
+   * @return string
    */
-  public function getCertificadoCliente(): String
+  public function getCertificadoCliente(): string
   {
     return $this->certificadoCliente;
   }
@@ -654,7 +656,7 @@ class SignatureHelper
 
       if (isset($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY])) {
 
-        $signature->setUsarCertidicadoCliente((bool)json_decode(strtolower($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY])));
+        $signature->setUsarCertidicadoCliente((bool) json_decode(strtolower($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY])));
       }
 
       if (isset($ini_array[SignatureHelper::SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY])) {

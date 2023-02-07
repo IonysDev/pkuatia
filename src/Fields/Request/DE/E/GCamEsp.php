@@ -104,11 +104,11 @@ class GCamEsp
       $res->appendChild($this->gGrupoEner->toDomElement());
     }
 
-    if (isset($this->getGGrupSup())) {
+    if (isset($this->gGrupSup)) {
       $res->appendChild($this->gGrupSup->toDomElement());
     }
 
-    if (isset($this->getGGrupoSeg())) {
+    if (isset($this->gGrupoSeg)) {
       $res->appendChild($this->gGrupSup->toDomElement());
     }
 
