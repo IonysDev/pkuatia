@@ -625,7 +625,8 @@ class SignatureHelper
   ///SIGNATURE
   //////////////////////////////////////////////////////////////////  
   /**
-   * cargarConf, carga los datos desde una ruta y los pasa a al signatureHelper
+   * La función de esto es, obtener un archivo de una ruta, y así pasar las propiedades
+   * de este a la clase SignatureHelper
    *
    * @param  mixed $ruta
    * @return SignatureHelper
@@ -650,7 +651,8 @@ class SignatureHelper
       }
 
       if (isset($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY])) {
-        $signature->setCertificadoCliente($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY]);
+
+        $signature->setUsarCertidicadoCliente((bool)json_decode(strtolower($ini_array[SignatureHelper::SIFEN_USAR_CERTIFICADO_CLIENTE_KEY])));
       }
 
       if (isset($ini_array[SignatureHelper::SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY])) {
