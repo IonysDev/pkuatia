@@ -218,13 +218,14 @@ class GDtipDE
   {
     if (strcmp($xml->tagName, 'gDtipDE') == 0 && $xml->childElementCount == 7) {
       $res = new GDtipDE();
-      $res->gCamFE = $res->gCamFE->fromDOMElement($xml->getElementsByTagName('gCamFe')->item(0)->nodeValue);
-      $res->gCamAE = $res->gCamAE->fromDOMElement($xml->getElementsByTagName('gCamAE')->item(0)->nodeValue);
-      $res->gCamNCDE = $res->gCamNCDE->fromDOMElement($xml->getElementsByTagName('gCamNCDE')->item(0)->nodeValue);
-      $res->gCamNRE = $res->gCamNRE->fromDOMElement($xml->getElementsByTagName('gCamNRE')->item(0)->nodeValue);
-      $res->gCamCond = $res->gCamCond->fromDOMElement($xml->getElementsByTagName('gCamCond')->item(0)->nodeValue);
-      $res->gCamItem = $res->gCamItem->fromDOMElement($xml->getElementsByTagName('gCamItem')->item(0)->nodeValue);
-      $res->gCamEsp = $res->gCamEsp->fromDOMElement($xml->getElementsByTagName('gCamEsp')->item(0)->nodeValue);
+      $res->setGCamFE($res->gCamFE->fromDOMElement($xml->getElementsByTagName('gDtipFE')->item(0)->nodeValue));
+      $res->setGCamAE($res->gCamAE->fromDOMElement($xml->getElementsByTagName('gCamAE')->item(0)->nodeValue));
+      $res->setGCamNCDE($res->gCamNCDE->fromDOMElement($xml->getElementsByTagName('gCamNCDE')->item(0)->nodeValue));
+      $res->setGCamNRE($res->gCamNRE->fromDOMElement($xml->getElementsByTagName('gCamNRE')->item(0)->nodeValue));
+      $res->setGCamCond($res->gCamCond->fromDOMElement($xml->getElementsByTagName('gCamCond')->item(0)->nodeValue));
+      $res->setGCamItem($res->gCamItem->fromDOMElement($xml->getElementsByTagName('gCamItem')->item(0)->nodeValue));
+      $res->setGCamEsp($res->gCamEsp->fromDOMElement($xml->getElementsByTagName('gCamEsp')->item(0)->nodeValue));
+
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");

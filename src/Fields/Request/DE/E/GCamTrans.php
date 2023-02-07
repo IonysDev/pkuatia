@@ -10,21 +10,21 @@ use DOMElement;
  */
 class GCamTrans
 {
-   public int $iNatTrans; /// E981 Naturaleza del transportista
-   public string $dNomTrans; //E982 Nombre o razón social del transportista 
-   public string $dRucTrans; ///E983  RUC del transportista 
-   public int $dDVTrans; //E984 Dígito verificador del RUC del transportista 
-   public int $iTipIDTrans; ///E985 Tipo de documento de identidad del transportista
-   public string $dNumIDTrans; //E987 Número de documento de identidad del transportista
-   public string $cNacTrans; //E988 Nacionalidad del transportista 
-   public string $dNumIDChof; //E990 Número de documento de identidad del chofer
-   public string $dNomChof; //E991 Nombre y apellido del chofer
-   public string $dDomFisc; //E992 Domicilio fiscal del transportista
-   public string $dDirChof; ///E993 Dirección del chofer
-   public string $dNombAg; //E994 Nombre o razón social del agente 
-   public string $dRucAg; ///E995 RUC del agente
-   public string $dDVAg; ///E996 Dígito verificador del  RUC del agente
-   public string $dDirAge; /// E997 Dirección del agente
+   public int $iNatTrans; // E981 - Naturaleza del transportista
+   public string $dNomTrans; // E982 - Nombre o razón social del transportista 
+   public string $dRucTrans; // E983 - RUC del transportista 
+   public int $dDVTrans; //E984 - Dígito verificador del RUC del transportista 
+   public int $iTipIDTrans; // E985 - Tipo de documento de identidad del transportista
+   public string $dNumIDTrans; // E987 - Número de documento de identidad del transportista
+   public string $cNacTrans; // E988 - Nacionalidad del transportista 
+   public string $dNumIDChof; // E990 - Número de documento de identidad del chofer
+   public string $dNomChof; // E991 - Nombre y apellido del chofer
+   public string $dDomFisc; // E992 - Domicilio fiscal del transportista
+   public string $dDirChof; // E993 - Dirección del chofer
+   public string $dNombAg; // E994 - Nombre o razón social del agente 
+   public string $dRucAg; // E995 - RUC del agente
+   public string $dDVAg; // E996 - Dígito verificador del  RUC del agente
+   public string $dDirAge; // E997 - Dirección del agente
 
    //====================================================//
    ////SETTERS
@@ -449,7 +449,7 @@ class GCamTrans
    //====================================================//
    //XML Element  
    //====================================================//
-   
+
    /**
     * toDOMElement
     *
@@ -494,5 +494,40 @@ class GCamTrans
       $res->appendChild(new DOMElement('dDVAg', $this->getDDVAg()));
       $res->appendChild(new DOMElement('dDirAge', $this->getDDirAge()));
       return $res;
+   }
+
+   /**
+    * fromDOMElement
+    *
+    * @param  mixed $xml
+    * @return GCamTrans
+    */
+   public static function fromDOMElement(DOMElement $xml): GCamTrans
+   {
+      if (strcmp($xml->tagName, 'gCamTrans') === 0 && $xml->childElementCount >= 11) {
+         $res = new GCamTrans();
+         $res->setINatTrans(intval($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
+         $res->setDNomTrans($xml->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
+         $res->setDRucTrans($xml->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
+         $res->setDDVTrans(intval($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
+         $res->setITipIDTrans(intval($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
+         $res->setDNumIDTrans($xml->getElementsByTagName('dDNumIDTrans')->item(0)->nodeValue);
+         $res->setCNacTrans($xml->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
+         $res->setDNumIDChof($xml->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
+         $res->setDNomChof($xml->getElementsByTagName('dNomChof')->item(0)->nodeValue);
+         $res->setDDomFisc($xml->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
+         $res->setDDirChof($xml->getElementsByTagName('dDirChof')->item(0)->nodeValue);
+         $res->setDNombAg($xml->getElementsByTagName('dNombAg')->item(0)->nodeValue);
+         $res->setDRucAg($xml->getElementsByTagName('dRucAg')->item(0)->nodeValue);
+         $res->setDDVAg(intval($xml->getElementsByTagName('dDVAg')->item(0)->nodeValue));
+         $res->setDDirAge($xml->getElementsByTagName('dDirAge')->item(0)->nodeValue);
+
+         return $res;
+
+      } else {
+         throw new \Exception("Invalid XML Element: $xml->tagName");
+         return null;
+
+      }
    }
 }

@@ -12,23 +12,23 @@ use DOMElement;
  */
 class GTransp
 {
-  public int $iTipTrans; //E901 Tipo de transporte
-  public int $iModTrans; ///E903 Modalidad de transporte
-  public int $iRespFlete; //E905 Responsable del costo del flete
-  public string $cCondNeg; //E906 Condición de la negociación 
-  public string $dNuManif; //E907 Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
-  public string $dNuDespImp; ///E908 Número de despacho de importación
-  public DateTime $dIniTras; ///E909 Fecha estimada de inicio de traslado
-  public DateTime $dFinTras; ///E910 Fecha estimada de fin  de traslado
-  public string $cPaisDest; ///E911 Código del país de destino
-  public GCamSal $gCamSal;
-  public GCamEnt $gCamEnt;
-  public GVehTras $gVehTras;
-  public GCamTrans $gCamTrans;
+  public int $iTipTrans;     // E901 - Tipo de transporte
+  public int $iModTrans;     // E903 - Modalidad de transporte
+  public int $iRespFlete;    // E905 - Responsable del costo del flete
+  public string $cCondNeg;   // E906 - Condición de la negociación 
+  public string $dNuManif;   // E907 - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
+  public string $dNuDespImp; // E908 - Número de despacho de importación
+  public DateTime $dIniTras; // E909 - Fecha estimada de inicio de traslado
+  public DateTime $dFinTras; // E910 - Fecha estimada de fin  de traslado
+  public string $cPaisDest;  // E911 - Código del país de destino
+  public GCamSal $gCamSal;   // Campos que identifican el local de salida de las mercaderías 
+  public GCamEnt $gCamEnt;   // Campos que identifican el local de la entrega de las mercaderías
+  public GVehTras $gVehTras; // Campos que identifican al vehículo del traslado de mercaderías
+  public GCamTrans $gCamTrans; // Campos que identifican al transportista
 
-   //====================================================//
+  //====================================================//
   ///SETTERS
- //====================================================//
+  //====================================================//
 
   /**
    * Set the value of iTipTrans
@@ -164,9 +164,9 @@ class GTransp
     return $this;
   }
 
- //====================================================//
+  //====================================================//
   ///Getters
-   //====================================================//
+  //====================================================//
 
 
   /**
@@ -361,9 +361,9 @@ class GTransp
     return "Mordor"; ///test
   }
 
- //====================================================//
+  //====================================================//
   ///xml Element
-   //====================================================//
+  //====================================================//
 
   /**
    * toDOMElement
@@ -388,12 +388,51 @@ class GTransp
     $res->appendChild(new DOMElement('dFinTras', $this->getDFinTras()->format('Y-m-d')));
     $res->appendChild(new DOMElement('cPaisDest', $this->getCPaisDest()));
     $res->appendChild(new DOMElement('dDesPaisDest', $this->getDDesPaisDest()));
+    //Chilren
+    $res->appendChild($this->gCamSal->toDOMElement());
+    $res->appendChild($this->gCamEnt->toDOMElement());
+    $res->appendChild($this->gVehTras->toDOMElement());
+    $res->appendChild($this->gCamTrans->toDOMElement());
+
     return $res;
   }
 
-   //====================================================//
-   //Others
-    //====================================================//
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GTransp
+   */
+  public static function fromDOMElement(DOMElement $xml): GTransp
+  {
+    if (strcmp($xml->tagName, 'gTransp') == 0 && $xml->childElementCount >= 13) {
+      $res = new GTransp();
+      $res->setITipTrans(intval($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
+      $res->setIModTrans(intval($xml->getElementsByTagName('imodTrans')->item(0)->nodeValue));
+      $res->setIRespFlete(intval($xml->getElementsByTagName('iRespFlete')->item(0)->nodeValue));
+      $res->setCCondNeg($xml->getElementsByTagName('cCondNeg')->item(0)->nodeValue);
+      $res->setDNuManif($xml->getElementsByTagName('dNuManif')->item(0)->nodeValue);
+      $res->setDNuDespImp($xml->getElementsByTagName('dNuDespImp')->item(0)->nodeValue);
+      $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dIniTras')->item(0)->nodeValue));
+      $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dfinTras')->item(0)->nodeValue));
+      $res->setCPaisDest($xml->getElementsByTagName('cPaisDest')->item(0)->nodeValue);
+      //Children
+      $res->setGCamSal($res->gCamSal->fromDOMElement($xml->getElementsByTagName('gCamSal')->item(0)->nodeValue));
+      $res->setGCamEnt($res->gCamEnt->fromDOMElement($xml->getElementsByTagName('gCamEnt')->item(0)->nodeValue));
+      $res->setGVehTras($res->gVehTras->fromDOMElement($xml->getElementsByTagName('gVehTras')->item(0)->nodeValue));
+      $res->setGCamTrans($res->gCamTrans->fromDOMElement($xml->getElementsByTagName('gCamTrans')->item(0)->nodeValue));
+
+      return $res;
+
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
+  }
+
+  //====================================================//
+  //Others
+  //====================================================//
 
   /**
    * Get the value of gCamSal
@@ -463,6 +502,30 @@ class GTransp
   public function setGCamTrans(GCamTrans $gCamTrans): self
   {
     $this->gCamTrans = $gCamTrans;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of gCamEnt
+   *
+   * @return GCamEnt
+   */
+  public function getGCamEnt(): GCamEnt
+  {
+    return $this->gCamEnt;
+  }
+
+  /**
+   * Set the value of gCamEnt
+   *
+   * @param GCamEnt $gCamEnt
+   *
+   * @return self
+   */
+  public function setGCamEnt(GCamEnt $gCamEnt): self
+  {
+    $this->gCamEnt = $gCamEnt;
 
     return $this;
   }

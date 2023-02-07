@@ -234,11 +234,11 @@ class GCamNRE
 
     return $res;
   }
-
+  
   /**
    * fromDOMElement
    *
-   * @param  mixed $xmml
+   * @param  mixed $xml
    * @return GCamNRE
    */
   public static function fromDOMElement(DOMElement $xml): GCamNRE

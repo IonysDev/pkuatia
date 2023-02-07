@@ -256,7 +256,7 @@ class GPaConEIni
       $res = new GPaConEIni();
       $res->setITiPago(intval($xml->getElementsByTagName('iTiPago')->item(0)->nodeValue));
       $res->setDMonTiPag(intval($xml->getElementsByTagName('dMonTiPag')->item(0)->nodeValue));
-      $res->setCMoneTiPag($xml->getElementsByTag('cmoneTiPag')->item(0)->nodeValue);
+      $res->setCMoneTiPag($xml->getElementsByTagName('cmoneTiPag')->item(0)->nodeValue);
       $res->setDTiCamTiPag($xml->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue);
 
       //Children

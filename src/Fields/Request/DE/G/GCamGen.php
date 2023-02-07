@@ -130,6 +130,7 @@ class GCamGen
       $res->setDOrdCompra($xml->getElementsByTagName('dOrdCompra')->item(0)->nodeValue);
       $res->setDOrdVta($xml->getElementsByTagName('dOrdVta')->item(0)->nodeValue);
       $res->setDAsiento($xml->getElementsByTagName('dAsiento')->item(0)->nodeValue);
+      ///Choldren
       $res->setGCamCarg($res->gCamCarg->fromDOMElement($xml->getElementsByTagName('gCamCarg')->item(0)->nodeValue));
       return $res;
     } else {

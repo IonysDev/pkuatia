@@ -261,7 +261,7 @@ class GCamSal
   //====================================================//
   ///XML Element  
   //====================================================//
-  
+
   /**
    * toDOMElement
    *
@@ -290,5 +290,31 @@ class GCamSal
     $res->appendChild(new DOMElement('dTelSal', $this->getDTelSal()));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamSal
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamSal
+  {
+    if (strcmp($xml->tagName, 'gCamSal') === 0 && $xml->childElementCount == 8) {
+      $res = new GCamSal();
+      $res->setDDirLocSal($xml->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
+      $res->setDNumCasSal(intval($xml->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
+      $res->setDComp1Sal($xml->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
+      $res->setDComp1Sal($xml->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
+      $res->setCDepSal(intval($xml->getElementsByTagName('cDepSal')->item(0)->nodeValue));
+      $res->setCDisSal(intval($xml->getElementsByTagName('cDisSal')->item(0)->nodeValue));
+      $res->setCCiuSal(intval($xml->getElementsByTagName('cDiuSal')->item(0)->nodeValue));
+      $res->setDTelSal($xml->getElementsByTagName('dTelSal')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+
+    }
   }
 }

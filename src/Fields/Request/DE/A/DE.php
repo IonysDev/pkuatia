@@ -179,7 +179,7 @@ class DE
       $res->setID($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDDVId(intval($xml->getElementsByTagName('dDVId')->item(0)->nodeValue));
       $res->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
-      $res->getDSisFact(intval($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue));
+      $res->setDSisFact(intval($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue));
       ///Children
       $res->setGOpeDe($res->gOpeDe->fromDOMElement($xml->getElementsByTagName('gOpeDE')->item(0)->nodeValue));
       $res->setGTimb($res->gTimb->fromDOMElement($xml->getElementsByTagName('gTimb')->item(0)->nodeValue));

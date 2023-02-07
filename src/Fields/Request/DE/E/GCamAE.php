@@ -539,18 +539,4 @@ class GCamAE
     }
   }
 
-
-  /**
-   * Set the value of dDirProv
-   *
-   * @param string $dDirProv
-   *
-   * @return self
-   */
-  public function setDDirProv(string $dDirProv): self
-  {
-    $this->dDirProv = $dDirProv;
-
-    return $this;
-  }
 }

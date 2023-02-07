@@ -126,7 +126,7 @@ class GOpeDE
             $res->setITipEmi(intval($xml->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
             $res->setDCodSeg(intval($xml->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
             $res->setDInfoEmi($xml->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
-            $res->getDInfoFisc($xml->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
+            $res->setDInfoFisc($xml->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
 
             return $res;
         } else {

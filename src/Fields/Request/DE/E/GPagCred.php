@@ -185,7 +185,7 @@ class GPagCred
       $res->setICondCred(intval($xml->getElementsByTagName('iCondCred')->item(0)->nodeValue));
       $res->setDPlazoCre($xml->getElementsByTagName('dPlazoCre')->item(0)->nodeValue);
       $res->setDCuotas(intval($xml->getElementsByTagName('dCuotas')->item(0)->nodeValue));
-      $res->setDMonEnt(intval($xml->getElementsByTag('dMonEnt')->item(0)->nodeValue));
+      $res->setDMonEnt(intval($xml->getElementsByTagName('dMonEnt')->item(0)->nodeValue));
       //children
       $res->setGCuotas($res->gCuotas->fromDOMElement($xml->getElementsByTagName('gCuotas')));
       return $res;

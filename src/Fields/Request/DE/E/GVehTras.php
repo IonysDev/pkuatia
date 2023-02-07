@@ -216,4 +216,46 @@ class GVehTras
 
         return $res;
     }
+
+    /**
+     * fromDOMElement
+     *
+     * @param  mixed $xml
+     * @return GVehTras
+     */
+    public static function fromDOMElement(DOMElement $xml): GVehTras
+    {
+        if (strcmp($xml->tagName, 'gVehTras') == 0 && $xml->childElementCount >= 5) {
+            $res = new GVehTras();
+            $res->setDTiVehTras($xml->getElementsByTagName('dTiVehTras')->item(0)->nodeValue);
+            $res->setDMarVeh($xml->getElementsByTagName('dMarVeh')->item(0)->nodeValue);
+            $res->setDTipIdenVeh(intval($xml->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue));
+            $res->setDNroIDVeh($xml->getElementsByTagName('dNroIDVeh')->item(0)->nodeValue);
+            $res->setDAdicVeh($xml->getElementsByTagName('dAdicVeh')->item(0)->nodeValue); 
+            $res->setDNroMatVeh($xml->getElementsByTagName('dNroMatVeh')->item(0)->nodeValue);
+            $res->setDNroVuelo($xml->getElementsByTagName('dNroVuelo')->item(0)->nodeValue);
+
+            return $res;
+
+        }
+        else {
+            throw new \Exception("Invalid XML Element: $xml->tagName");
+            return null;
+          }
+    }
+
+
+    /**
+     * Set the value of dAdicVeh
+     *
+     * @param string $dAdicVeh
+     *
+     * @return self
+     */
+    public function setDAdicVeh(string $dAdicVeh): self
+    {
+        $this->dAdicVeh = $dAdicVeh;
+
+        return $this;
+    }
 }

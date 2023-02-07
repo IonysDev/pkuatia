@@ -11,14 +11,14 @@ use DOMElement;
  */
 class GCamEnt
 {
-  public string $dDirLocEnt; //E941 Dirección del local de la entrega 
-  public int $dNumCasEnt; //E942 Número de casa de Entrega
-  public string $dComp1Ent; //E943 Complemento de dirección 1 Entrega
-  public string $dComp2Ent; //E944 Complemento de dirección 2 Entrega
-  public int $cDepEnt; ///E945 Código del departamento del local de Entrega
-  public int $cDisEnt; //E947 Código del distrito del local de Entrega
-  public int $cCiuEnt; //E949 Código de la ciudad del local de Entrega
-  public string $dTelEnt; /// E951 Teléfono de contacto del local de Entrega
+  public string $dDirLocEnt; // E941 - Dirección del local de la entrega 
+  public int $dNumCasEnt;    // E942 - Número de casa de Entrega
+  public string $dComp1Ent;  // E943 - Complemento de dirección 1 Entrega
+  public string $dComp2Ent; // E944 - Complemento de dirección 2 Entrega
+  public int $cDepEnt;      // E945 - Código del departamento del local de Entrega
+  public int $cDisEnt;      // E947 - Código del distrito del local de Entrega
+  public int $cCiuEnt;      // E949 - Código de la ciudad del local de Entrega
+  public string $dTelEnt;   // E951 - Teléfono de contacto del local de Entrega
 
   //====================================================//
   ///Setters
@@ -199,7 +199,6 @@ class GCamEnt
 
   /**
    * E946 Descripción del departamento del local de la entrega
-
    *
    * @return string
    */
@@ -291,5 +290,30 @@ class GCamEnt
     $res->appendChild(new DOMElement('dTelEnt', $this->getDTelEnt()));
 
     return $res;
+  }
+
+  /**
+   * fromDOMElement
+   *
+   * @param  mixed $xml
+   * @return GCamEnt
+   */
+  public static function fromDOMElement(DOMElement $xml): GCamEnt
+  {
+    if (strcmp($xml->tagName, 'gCamEnt') === 0 && $xml->childElementCount == 11) {
+      $res = new GCamEnt();
+      $res->setDDirLocEnt($xml->getElementsByTagName('dDirLocEnt')->item(0)->nodeValue);
+      $res->setDNumCasEnt(intval($xml->getElementsByTagName('dNumCasEnt')->item(0)->nodeValue));
+      $res->setDComp1Ent($xml->getElementsByTagName('dComp1Ent')->item(0)->nodeValue);
+      $res->setDComp2Ent($xml->getElementsByTagName('dComp2Ent')->item(0)->nodeValue);
+      $res->setCDepEnt(intval($xml->getElementsByTagName('cdepEnt')->item(0)->nodeValue));
+      $res->setCDisEnt(intval($xml->getElementsByTagName('cdisEnt')->item(0)->nodeValue));
+      $res->setCCiuEnt(intval($xml->getElementsByTagName('cciuEnt')->item(0)->nodeValue));
+      $res->setDTelEnt($xml->getElementsByTagName('dTelEnt')->item(0)->nodeValue);
+      return $res;
+    } else {
+      throw new \Exception("Invalid XML Element: $xml->tagName");
+      return null;
+    }
   }
 }

@@ -157,7 +157,7 @@ class GDatGralOpe
   {
     if (strcmp($xml->tagName, 'dDatGralOpe') == 0 && $xml->childElementCount == 4) {
       $res = new GDatGralOpe();
-      $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s',$xml->getElementsByTagName('dFeEmiDE')));
+      $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s',$xml->getElementsByTagName('dFeEmiDE')->item(0)->nodeValue));
       ///children
       $res->setGOpeCom($res->gOpeCom->fromDOMElement($xml->getElementsByTagName('gOpeCom')->item(0)->nodeValue));
       $res->setGEmis($res->gEmis->fromDOMElement($xml->getElementsByTagName('gEmis')->item(0)->nodeValue));
