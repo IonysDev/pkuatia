@@ -13,8 +13,8 @@ class TxProtDe
   public string $id;          // PP02 - CDC del DE Procesado
   public DateTime $dFecProc;  // PP03 - Fecha y hora del procesamiento 
   public string $dDigVal;     // PP04 - DigestValue del DE procesado
-  public String $dEstRes;     // PP050 - Estado del resultado
-  public String $dProtAut;    // PP051 - Número de Transacción
+  public string $dEstRes;     // PP050 - Estado del resultado
+  public string $dProtAut;    // PP051 - Número de Transacción
   public TgResProc $gResProc; // PP05 - Grupo Resultado de Procesamiento 
 
   //====================================================//
@@ -69,11 +69,11 @@ class TxProtDe
   /**
    * Set the value of dEstRes
    *
-   * @param String $dEstRes
+   * @param string $dEstRes
    *
    * @return self
    */
-  public function setDEstRes(String $dEstRes): self
+  public function setDEstRes(string $dEstRes): self
   {
     $this->dEstRes = $dEstRes;
 
@@ -84,7 +84,7 @@ class TxProtDe
   /**
    * Set the value of dProtAut
    *
-   * @param String $dProtAut
+   * @param string $dProtAut
    *
    * @return self
    */
@@ -148,9 +148,9 @@ class TxProtDe
   /**
    * Get the value of dEstRes
    *
-   * @return String
+   * @return string
    */
-  public function getDEstRes(): String
+  public function getDEstRes(): string
   {
     return $this->dEstRes;
   }
@@ -158,9 +158,9 @@ class TxProtDe
   /**
    * Get the value of dProtAut
    *
-   * @return String
+   * @return string
    */
-  public function getDProtAut(): String
+  public function getDProtAut(): string
   {
     return $this->dProtAut;
   }

@@ -490,9 +490,9 @@ class GVehNuevo
       $res->setDChasis($xml->getElementsByTagName('dChasis')->item(0)->nodeValue);
       $res->setDColor($xml->getElementsByTagName('dColor')->item(0)->nodeValue);
       $res->setDPotencia(intval($xml->getElementsByTagName('dPotencia')->item(0)->nodeValue));
-      $res->setDCapMot(intval($xml->getElementsByTag('dCapMot')->item(0)->nodeValue));
-      $res->setDPNet(intval($xml->getElementsByTag('dPnet')->item(0)->nodeValue));
-      $res->setDPBruto(intval($xml->getElementsByTag('dPBruto')->item(0)->nodeValue));
+      $res->setDCapMot(intval($xml->getElementsByTagName('dCapMot')->item(0)->nodeValue));
+      $res->setDPNet(intval($xml->getElementsByTagName('dPnet')->item(0)->nodeValue));
+      $res->setDPBruto(intval($xml->getElementsByTagName('dPBruto')->item(0)->nodeValue));
       $res->setITipCom(intval($xml->getElementsByTagName('iTipCom')->item(0)->nodeValue));
       $res->setDNroMotor($xml->getElementsByTagName('dNroMotor')->item(0)->nodeValue);
       $res->setDCapTracc(intval($xml->getElementsByTagName('dCapTracc')->item(0)->nodeValue));

@@ -22,9 +22,9 @@ class TgGroupGesEve
    *
    * @param DOMElement $rGesEve
    */
-  public function setRGesEve(TrGesEve $rGesEve): self
+  public function setRGesEve(TrGesEve $rGesEvee): self
   {
-    $this->rGesEve = $rGesEve;
+    $this->rGesEve = $rGesEvee;
     return $this;
   }
 

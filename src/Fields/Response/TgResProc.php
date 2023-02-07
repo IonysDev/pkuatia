@@ -23,7 +23,7 @@ class TgResProc
    *
    * @return self
    */
-  public function setDCodRes(int $dCodRes): self
+  public function setDCodRes(string $dCodRes): self
   {
     $this->dCodRes = $dCodRes;
 
@@ -54,7 +54,7 @@ class TgResProc
    *
    * @return int
    */
-  public function getDCodRes(): int
+  public function getDCodRes(): string
   {
     return $this->dCodRes;
   }

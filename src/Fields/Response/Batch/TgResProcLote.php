@@ -10,9 +10,9 @@ use DOMElement;
  */
 class TgResProcLote
 {
-  public String $id;           // CRSch050 - CDC del DE
-  public String $dEstRes;     // CRSch051 - Estado del resultado
-  public String $dProtAut;   // CRSch052 - Número de transacción 
+  public string $id;           // CRSch050 - CDC del DE
+  public string $dEstRes;     // CRSch051 - Estado del resultado
+  public string $dProtAut;   // CRSch052 - Número de transacción 
   public TgResProc $gResProc; // CRSch053 - Grupo Mensaje de Resultado
 
   //====================================================//
@@ -22,11 +22,11 @@ class TgResProcLote
   /**
    * Set the value of id
    *
-   * @param String $id
+   * @param string $id
    *
    * @return self
    */
-  public function setId(String $id): self
+  public function setId(string $id): self
   {
     $this->id = $id;
 
@@ -37,11 +37,11 @@ class TgResProcLote
   /**
    * Set the value of dEstRes
    *
-   * @param String $dEstRes
+   * @param string $dEstRes
    *
    * @return self
    */
-  public function setDEstRes(String $dEstRes): self
+  public function setDEstRes(string $dEstRes): self
   {
     $this->dEstRes = $dEstRes;
 
@@ -52,11 +52,11 @@ class TgResProcLote
   /**
    * Set the value of dProtAut
    *
-   * @param String $dProtAut
+   * @param string $dProtAut
    *
    * @return self
    */
-  public function setDProtAut(String $dProtAut): self
+  public function setDProtAut(string $dProtAut): self
   {
     $this->dProtAut = $dProtAut;
 
@@ -85,9 +85,9 @@ class TgResProcLote
   /**
    * Get the value of id
    *
-   * @return String
+   * @return string
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->id;
   }
@@ -95,9 +95,9 @@ class TgResProcLote
   /**
    * Get the value of dEstRes
    *
-   * @return String
+   * @return string
    */
-  public function getDEstRes(): String
+  public function getDEstRes(): string
   {
     return $this->dEstRes;
   }
@@ -105,9 +105,9 @@ class TgResProcLote
   /**
    * Get the value of dProtAut
    *
-   * @return String
+   * @return string
    */
-  public function getDProtAut(): String
+  public function getDProtAut(): string
   {
     return $this->dProtAut;
   }
