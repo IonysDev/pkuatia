@@ -635,7 +635,7 @@ class SignatureHelper
     $ruta = realpath($ruta);
 
     if (!file_exists($ruta)) {
-      throw new \Exception("Ruta no existe:" . $ruta);
+      throw new \Exception("Ruta no existe: " . $ruta);
     } else {
       $archive = basename($ruta);
       $ini_array = parse_ini_file($archive);
@@ -668,12 +668,12 @@ class SignatureHelper
 
       if (isset($ini_array[SignatureHelper::SIFEN_CSC_KEY]))
         $signature->setCSC($ini_array[SignatureHelper::SIFEN_CSC_KEY]); {
-
-        if (isset($ini_array[SignatureHelper::SIFEN_ID_CSC_KEY])) {
-          $signature->setIdCSC($ini_array[SignatureHelper::SIFEN_ID_CSC_KEY]);
-        }
-        return $signature;
       }
+
+      if (isset($ini_array[SignatureHelper::SIFEN_ID_CSC_KEY])) {
+        $signature->setIdCSC($ini_array[SignatureHelper::SIFEN_ID_CSC_KEY]);
+      }
+      return $signature;
     }
   }
 
@@ -684,7 +684,7 @@ class SignatureHelper
    */
   public function toString(): string
   {
-    return "SifenConfig{" .
+    return "SignatureHelper{" .
       "ambiente=" . $this->ambiente .
       ", urlBase='" . $this->urlBase . '\'' .
       ", urlBaseLocal='" . $this->urlBaseLocal . '\'' .
