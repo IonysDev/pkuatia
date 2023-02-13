@@ -108,7 +108,7 @@ class SignatureHelper
     $this->httpConnectTimeout = 15 * 1000; //15 segundos
     $this->httpReadTimeout = 45 * 100; //45 segundos
 
-    $this->userAgent = "-----------";
+    $this->userAgent = "pkuatia" + "/" + Constants::PKUATIA_VERSION + " (LVEA)";
   }
 
   public function __construct2(
