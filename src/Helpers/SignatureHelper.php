@@ -108,7 +108,7 @@ class SignatureHelper
     $this->httpConnectTimeout = 15 * 1000; //15 segundos
     $this->httpReadTimeout = 45 * 100; //45 segundos
 
-    $this->userAgent = "No sé";
+    $this->userAgent = "-----------";
   }
 
   public function __construct2(
