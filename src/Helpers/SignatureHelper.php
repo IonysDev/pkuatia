@@ -627,7 +627,7 @@ class SignatureHelper
   ///SIGNATURE
   //////////////////////////////////////////////////////////////////  
   /**
-   * La función de esto es, obtener un archivo de una ruta, y así pasar las propiedades
+   * La función de esto es obtener un archivo de una ruta y así pasar las propiedades
    * de este a la clase SignatureHelper
    *
    * @param  mixed $ruta
