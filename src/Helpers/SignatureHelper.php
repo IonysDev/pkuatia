@@ -102,7 +102,7 @@ class SignatureHelper
     $this->pathConsulta = Constants::SIFEN_PATH_CONSULTA;
     $this->usarCertidicadoCliente = true;
 
-    $this->idCSC = "002";
+    $this->idCSC = "0002";
     $this->CSC = "EFGH0000000000000000000000000000";
 
     $this->httpConnectTimeout = 15 * 1000; //15 segundos
