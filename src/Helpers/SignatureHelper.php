@@ -116,8 +116,7 @@ class SignatureHelper
     TipoCertificadoCliente $tipoCertificadoCliente,
     string $certificadoCliente,
     string $contraseñaCliente
-  )
-  {
+  ) {
     $this->__construct();
     $this->setAmbiente($tipoAmbiente);
 
@@ -134,8 +133,7 @@ class SignatureHelper
     TipoCertificadoCliente $tipoCertificadoCliente,
     string $certificadoCliente,
     string $contraseCertificadoCliente
-  )
-  {
+  ) {
     $this->__construct2($tipoAmbiente, $tipoCertificadoCliente, $certificadoCliente, $contraseCertificadoCliente);
     $this->setIdCSC($idCSC);
     $this->setCSC($CSC);
@@ -155,6 +153,14 @@ class SignatureHelper
   public function setAmbiente(TipoAmbiente $ambiente): self
   {
     $this->ambiente = $ambiente;
+
+    if ($this->ambiente == TipoAmbiente::DEV) {
+      $this->urlBaseLocal =  Constants::SIFEN_URL_BASE_DEV;
+      $this->urlConsultaQr = Constants::SIFEN_URL_CONSULTA_QR_DEV;
+    } else if ($this->ambiente == TipoAmbiente::PROD) {
+      $this->urlBaseLocal =  Constants::SIFEN_URL_BASE_PROD;
+      $this->urlConsultaQr = Constants::SIFEN_URL_CONSULTA_QR_PROD;
+    }
 
     return $this;
   }
@@ -349,7 +355,7 @@ class SignatureHelper
    */
   public function setIdCSC(string $idCSC): self
   {
-    $this->idCSC = $idCSC;
+    $this->idCSC = str_pad($idCSC, '0', 4, STR_PAD_LEFT);
 
     return $this;
   }
