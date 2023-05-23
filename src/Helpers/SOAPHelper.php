@@ -4,6 +4,8 @@ namespace Abiliomp\Pkuatia\Helpers;
 
 use DOMDocument;
 use DOMElement;
+use SoapClient;
+use stdClass;
 
 /**
  * SOAPHelper
@@ -59,8 +61,11 @@ class SOAPHelper
 
   public static function makeRequest($xml, $wsdl)
   {
-    $client = new \SoapClient($wsdl, array('trace' => 1));
-    $response = $client->__doRequest($xml, $wsdl, 'siConsRUC', 1);
+    $client = new SoapClient($wsdl, array('trace' => 1, 'soap_version' => SOAP_1_2));
+    $params = new stdClass();
+    $params->xml = $xml->asXML();
+
+    $response = $client->siConsRUC($params);
     return $response;
   }
 }
