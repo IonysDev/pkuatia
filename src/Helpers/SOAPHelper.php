@@ -60,24 +60,24 @@ class SOAPHelper
     return $XMLDoc->saveXML();
   }
 
-  public static function makeRequest($xml, $wsdl)
-  {
-    try {
-      $opts = array(
-        'http' => array(
-          'user_agent' => 'PHPSoapClient'
-        )
-      );
-      $context = stream_context_create($opts);
+  // public static function makeRequest($xml, $wsdl)
+  // {
+  //   try {
+  //     $opts = array(
+  //       'http' => array(
+  //         'user_agent' => 'PHPSoapClient'
+  //       )
+  //     );
+  //     $context = stream_context_create($opts);
 
-      $soapClientOptions = array(
-        'stream_context' => $context,
-        'cache_wsdl' => WSDL_CACHE_NONE
-      );
+  //     $soapClientOptions = array(
+  //       'stream_context' => $context,
+  //       'cache_wsdl' => WSDL_CACHE_NONE
+  //     );
 
-      $client = new SoapClient($wsdl, $soapClientOptions);
-    } catch (Exception $e) {
-      echo $e->getMessage();
-    }
-  }
+  //     $client = new SoapClient($wsdl, $soapClientOptions);
+  //   } catch (Exception $e) {
+  //     echo $e->getMessage();
+  //   }
+  // }
 }

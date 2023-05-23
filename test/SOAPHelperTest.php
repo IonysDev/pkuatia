@@ -7,14 +7,10 @@ use Abiliomp\Pkuatia\Helpers\SOAPHelper;
 $xmlFile = $argv[1];
 $wsdl = 'https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
 
-$response = SOAPHelper::makeRequest($xmlFile, $wsdl);
-
-
-// $envelopedXML = SOAPHelper::soapEnvelop($xmlFile);
-
-// // Guardar el archivo XML enveloped
-// $envelopedXMLFile = 'enveloped_' . $xmlFile;
-
-// file_put_contents($envelopedXMLFile, $envelopedXML);
-
-?>
+/// Enviar el xml al servidor
+try{
+  $client = new SoapClient($wsdl, array('trace' => 1, 'soap_version' => SOAP_1_2));
+} catch (Exception $e) {
+  echo $e->getMessage();
+  echo PHP_EOL;
+}
