@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Helpers;
 
 use DOMDocument;
 use DOMElement;
+use Exception;
 use SoapClient;
 use stdClass;
 
@@ -61,11 +62,22 @@ class SOAPHelper
 
   public static function makeRequest($xml, $wsdl)
   {
-    $client = new SoapClient($wsdl, array('trace' => 1, 'soap_version' => SOAP_1_2));
-    $params = new stdClass();
-    $params->xml = $xml->asXML();
+    try {
+      $opts = array(
+        'http' => array(
+          'user_agent' => 'PHPSoapClient'
+        )
+      );
+      $context = stream_context_create($opts);
 
-    $response = $client->siConsRUC($params);
-    return $response;
+      $soapClientOptions = array(
+        'stream_context' => $context,
+        'cache_wsdl' => WSDL_CACHE_NONE
+      );
+
+      $client = new SoapClient($wsdl, $soapClientOptions);
+    } catch (Exception $e) {
+      echo $e->getMessage();
+    }
   }
 }
