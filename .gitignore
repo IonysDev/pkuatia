@@ -1,0 +1,7 @@
+test/*.pem
+test/*.p12
+test/*.crt
+test/*.csr
+test/*.srl
+test/*.xml
+*.log
