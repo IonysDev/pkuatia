@@ -56,4 +56,11 @@ class SOAPHelper
     // RETURN THE XML
     return $XMLDoc->saveXML();
   }
+
+  public static function makeRequest($xml, $wsdl)
+  {
+    $client = new \SoapClient($wsdl, array('trace' => 1));
+    $response = $client->__doRequest($xml, $wsdl, 'siConsRUC', 1);
+    return $response;
+  }
 }
