@@ -53,8 +53,7 @@ class SOAPHelper
       $soapBody->appendChild($XMLDoc->importNode($child, true));
     }
 
-    //guardar el archivo xml con el formato envelop
-    $fileName = 'envelop_' . $xml . '.xml';
-    file_put_contents($fileName, $XMLDoc->saveXML());
+    // RETURN THE XML
+    return $XMLDoc->saveXML();
   }
 }

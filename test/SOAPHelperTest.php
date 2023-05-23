@@ -7,6 +7,11 @@ use Abiliomp\Pkuatia\Helpers\SOAPHelper;
 $xmlFile = $argv[1];
 
 
-$test = SOAPHelper::soapEnvelop($xmlFile);
+$envelopedXML = SOAPHelper::soapEnvelop($xmlFile);
+
+// Guardar el archivo XML enveloped
+$envelopedXMLFile = 'enveloped_' . $xmlFile;
+
+file_put_contents($envelopedXMLFile, $envelopedXML);
 
 ?>
