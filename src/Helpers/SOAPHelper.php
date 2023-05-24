@@ -38,7 +38,7 @@ class SOAPHelper
     $soap->appendChild($soapHeader);
 
     // SOAP BODY ELEMENT
-    $soapBody = $XMLDoc->createElement('soap:Body');
+    $soapBody = $XMLDoc->createElement('soap:body');
     $soap->appendChild($soapBody);
 
     // SOAP BODY CONTENT
@@ -46,15 +46,8 @@ class SOAPHelper
     $source = new DOMDocument();
     $source->load($xml);
 
-    //obtener el nodo root del xml
-    $node = $source->getElementsByTagName('root')->item(0);
-    //obtener los hijos del root
-    $children = $node->childNodes;
-
-    //agregar los hijos del root al body
-    foreach ($children as $child) {
-      $soapBody->appendChild($XMLDoc->importNode($child, true));
-    }
+    //acoplar source al soap body
+    $soapBody->appendChild($XMLDoc->importNode($source->documentElement, true));
 
     // RETURN THE XML
     return $XMLDoc->saveXML();
