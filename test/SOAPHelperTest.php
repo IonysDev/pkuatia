@@ -56,3 +56,38 @@ $url = 'https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
 //   echo $e->getMessage();
 // }
 //////////////////////////////////////////////////SOAPCLIENT//////////////////////////////////////
+
+
+//////////////////////////////////////////////////SOAPCLIENT2//////////////////////////////////////
+
+// Crear el cliente SOAP
+$client = new SoapClient('https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl');
+
+// Construir la solicitud XML
+$requestXml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.example.com/namespace">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ns:YourRequestElement>
+            <!-- Agrega aquí los parámetros de tu solicitud -->
+        </ns:YourRequestElement>
+    </soapenv:Body>
+</soapenv:Envelope>';
+
+// Configurar las opciones del cliente SOAP
+$options = array(
+    'soap_version' => SOAP_1_2,
+    'trace' => 1,
+    'exceptions' => true,
+    'cache_wsdl' => WSDL_CACHE_NONE,
+);
+
+// Enviar la solicitud SOAP
+$response = $client->__doRequest($requestXml, 'https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl', '', SOAP_1_2);
+
+// Procesar la respuesta XML
+$responseXml = simplexml_load_string($response);
+
+// Imprimir la respuesta
+print_r($responseXml);
+
+//////////////////////////////////////////////////SOAPCLIENT2//////////////////////////////////////
