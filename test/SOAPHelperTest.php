@@ -6,6 +6,8 @@ $xmlFile = $argv[1];
 
 $url = 'https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
 
+$soapUser = '80121930-2';  //  username
+$soapPassword = '171222'; // password
 
 ///xml to string
 $xml_post_string = file_get_contents($xmlFile);
@@ -15,8 +17,9 @@ $xml_post_string = file_get_contents($xmlFile);
                 "Accept: text/xml",
                 "Cache-Control: no-cache",
                 "Pragma: no-cache",
-                "SOAPAction: http://webservice-ip1.systemnic.net/index.php?wsdl", 
+                "SOAPAction: https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl", 
                 "Content-length: ".strlen($xml_post_string),
+
             ); //SOAPAction: your op URL
 
  
@@ -29,6 +32,7 @@ $xml_post_string = file_get_contents($xmlFile);
     curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+    curl_setopt($ch, CURLOPT_USERPWD, $soapUser.":".$soapPassword); // username and password - declared at the top of the doc
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
@@ -41,6 +45,7 @@ $xml_post_string = file_get_contents($xmlFile);
     $response = curl_exec($ch); 
     curl_close($ch);
 
+
     // converting
     $response1 = str_replace("<soap:Body>","",$response);
     $response2 = str_replace("</soap:Body>","",$response1);
@@ -48,7 +53,4 @@ $xml_post_string = file_get_contents($xmlFile);
     // convertingc to XML
     $parser = simplexml_load_string($response2);
     // user $parser to get your data out of XML response and to display it.
-
-    echo $parser;
-
 ?>

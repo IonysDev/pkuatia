@@ -38,7 +38,7 @@ class SOAPHelper
     $soap->appendChild($soapHeader);
 
     // SOAP BODY ELEMENT
-    $soapBody = $XMLDoc->createElement('soap:body');
+    $soapBody = $XMLDoc->createElement('soap:Body');
     $soap->appendChild($soapBody);
 
     // SOAP BODY CONTENT
@@ -59,25 +59,4 @@ class SOAPHelper
     // RETURN THE XML
     return $XMLDoc->saveXML();
   }
-
-  // public static function makeRequest($xml, $wsdl)
-  // {
-  //   try {
-  //     $opts = array(
-  //       'http' => array(
-  //         'user_agent' => 'PHPSoapClient'
-  //       )
-  //     );
-  //     $context = stream_context_create($opts);
-
-  //     $soapClientOptions = array(
-  //       'stream_context' => $context,
-  //       'cache_wsdl' => WSDL_CACHE_NONE
-  //     );
-
-  //     $client = new SoapClient($wsdl, $soapClientOptions);
-  //   } catch (Exception $e) {
-  //     echo $e->getMessage();
-  //   }
-  // }
 }
