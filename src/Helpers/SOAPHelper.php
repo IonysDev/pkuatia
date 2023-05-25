@@ -38,7 +38,7 @@ class SOAPHelper
     $soap->appendChild($soapHeader);
 
     // SOAP BODY ELEMENT
-    $soapBody = $XMLDoc->createElement('soap:body');
+    $soapBody = $XMLDoc->createElement('soap:Body');
     $soap->appendChild($soapBody);
 
     // SOAP BODY CONTENT
