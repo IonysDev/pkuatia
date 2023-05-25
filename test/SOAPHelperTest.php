@@ -6,9 +6,27 @@ require '../vendor/autoload.php'; // Include the Composer autoloader
 
 /// Obtener el xml
 $xmlFile = $argv[1];
+$local_cert = $argv[2];
+$local_pk = $argv[3];
 
 // $url ="https://www.w3schools.com/xml/tempconvert.asmx?WSDL";
 $url = "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl";
+$passphrase = "171222";
+
+if (!file_exists($xmlFile)) {
+    echo "El archivo  no existe\n";
+    return false;
+}
+
+if (!file_exists($local_cert)) {
+    echo "El archivo  no existe\n";
+    return false;
+}
+
+if (!file_exists($local_pk)) {
+    echo "El archivo  no existe\n";
+    return false;
+}
 
 $options = array(
     'soap_version' => SOAP_1_2,
@@ -21,6 +39,9 @@ $options = array(
             'verify_peer' => false,
             'verify_peer_name' => false,
             'allow_self_signed' => true,
+            'local_cert' => $local_cert,
+            'local_pk' => $local_pk,
+            'passphrase' => $passphrase,
         ),
     )),
 );
@@ -50,5 +71,3 @@ try {
     echo $e->getMessage();
 }
 //////////////////////////////////////////////////SOAPCLIENT//////////////////////////////////////
-
-
