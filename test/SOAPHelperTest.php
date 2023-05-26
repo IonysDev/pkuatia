@@ -2,47 +2,21 @@
 
 use Abiliomp\Pkuatia\Helpers\SOAPHelper;
 
-require '../vendor/autoload.php'; // Include the Composer autoloader
-
-/// Obtener el xml
+require '../vendor/autoload.php'; 
 $xmlFile = $argv[1];
-
-
-// $url ="https://www.w3schools.com/xml/tempconvert.asmx?WSDL";
-$url = "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl";
-$passphrase = "120108";
-$local_cert = "test\80121930-2.pem";
-
-$options = array(
-    'soap_version' => SOAP_1_2,
+$wsdlUrl = "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl";
+$pemFile = "/80121930-2.pem";
+$passphrase = "179220";
+$action = "siConsRUC";
+$envelopedXML = SOAPHelper::soapEnvelop($xmlFile);
+$options = [
     'trace' => 1,
-    'exceptions' => 0,
-    'local_cert' => $local_cert,
+    'soap_version' => SOAP_1_2,
+    'local_cert' => $pemFile,
     'passphrase' => $passphrase,
-);
+];
+$client = new SoapClient($wsdlUrl, $options);
+$response = $client->__doRequest($envelopedXML, $wsdlUrl, $action, SOAP_1_2);
+echo $response;
+?>
 
-// //////////////////////////////////////////////////SOAPCLIENT//////////////////////////////////////
-try {
-
-    $client = new SoapClient($url, $options);
-
-    $xml_envelope = SOAPHelper::soapEnvelop($xmlFile);
-    echo $xml_envelope;
-    try {
-        $result = $client->__doRequest($xml_envelope, $url, 'siConsRUC', SOAP_1_2, 0);
-        if ($result) {
-            file_put_contents('response.xml', $result);
-            echo "Se ha creado el archivo response.xml\n";
-            return $result;
-        } else {
-            return false;
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        return $e;
-    }
-} catch (Exception $e) {
-    echo nl2br("\n");
-    echo $e->getMessage();
-}
-//////////////////////////////////////////////////SOAPCLIENT//////////////////////////////////////
