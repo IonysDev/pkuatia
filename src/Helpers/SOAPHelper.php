@@ -27,7 +27,7 @@ class SOAPHelper
   {
     $XMLDoc = new DOMDocument('1.0', 'UTF-8');
     $XMLDoc->preserveWhiteSpace = false;
-    $XMLDoc->formatOutput = true;
+    $XMLDoc->formatOutput = false;
 
     // SOAP ENVELOPE ELEMENT AND ATTRIBUTES
     $soap = $XMLDoc->createElementNS('http://www.w3.org/2003/05/soap-envelope', 'soap:Envelope');
@@ -41,15 +41,14 @@ class SOAPHelper
     $soapBody = $XMLDoc->createElement('soap:Body');
     $soap->appendChild($soapBody);
 
-    // SOAP BODY CONTENT
-    ///cargar el xml en un domdocument
-    $source = new DOMDocument();
-    $source->load($xml);
+    // Load the XML content into a new DOMDocument
+    $xmlContent = new DOMDocument();
+    $xmlContent->loadXML($xml);
 
-    //acoplar source al soap body
-    $soapBody->appendChild($XMLDoc->importNode($source->documentElement, true));
+    // Import the root element of the XML content without preserving the original namespace
+    $importedContent = $XMLDoc->importNode($xmlContent->documentElement, true);
+    $soapBody->appendChild($importedContent);
 
-    // RETURN THE XML
     return $XMLDoc->saveXML();
   }
 }
