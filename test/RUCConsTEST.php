@@ -35,7 +35,7 @@ try {
     $responseXML = SoapSSLClient::$client->rEnviConsRUC($myXML);
 
     // echo "\n\nRequest: \n";
-    echo SoapSSLClient::$client->__getLastRequest();
+    // echo SoapSSLClient::$client->__getLastRequest();
 
     echo "Respuesta:" . PHP_EOL;
     // echo var_dump($responseXML);

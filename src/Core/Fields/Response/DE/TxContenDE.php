@@ -156,8 +156,6 @@ class TxContenDE
   {
     echo "TxContenDE::fromResponse\n" . PHP_EOL;
 
-  
-
     if (is_null($response)) {
       throw new \Exception("Error Processing Request: null", 1);
     }
