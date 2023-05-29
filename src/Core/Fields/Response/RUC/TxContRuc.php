@@ -233,7 +233,7 @@ class TxContRuc
   ///create a objet from a stdClass
   public static function fromResponse($std): TxContRuc
   {
-    echo "TxContRuc::fromResponse\n". PHP_EOL;
+    echo "TxContRuc::fromResponse". PHP_EOL;
 
     if(is_null($std))
     {
@@ -241,12 +241,12 @@ class TxContRuc
     }
  
     if ($std->dCodRes != "0502") {
-      echo "Código de respuesta: $std->dCodRes\n"
-        . "Mensaje de respuesta: $std->dMsgRes\n" . PHP_EOL;
+      echo "Código de respuesta: $std->dCodRes" . PHP_EOL
+        . "Mensaje de respuesta: $std->dMsgRes" . PHP_EOL;
       throw new \Exception("Error Processing Request: $std->dMsgRes", 1);
     } else {
-      echo "Código de respuesta: $std->dCodRes\n"
-        . "Mensaje de respuesta: $std->dMsgRes\n" . PHP_EOL;
+      echo "Código de respuesta: $std->dCodRes" . PHP_EOL
+        . "Mensaje de respuesta: $std->dMsgRes" . PHP_EOL;
 
       $res = new TxContRuc();
       $res->setDRUCCons($std->xContRUC->dRUCCons);

@@ -2,24 +2,25 @@
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
 use Abiliomp\Pkuatia\Core\Fields\Response\Ruc\TxContRuc;
+use Abiliomp\Pkuatia\Helpers\RequestXMLHelper;
 use Abiliomp\Pkuatia\SoapSSLClient;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$wsdlUrl = 'https://sifen.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
+$wsdlUrl = 'https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
 $certFile = '80121930-2.cert.pem';
 $keyFile = '80121930-2.key.pem';
 $keyPassphrase = '171222';
 $operation = 'rEnviConsRUC';
-$tagName = "<".$operation."></".$operation.">";
-
+$data = array(
+    'dId' => '552',
+    'dRUCCons' => '80057292'
+);
 // $xml = '<rEnviConsRUC xmlns="http://ekuatia.set.gov.py/sifen/xsd"><dId>552</dId><dRUCCons>80057292</dRUCCons></rEnviConsRUC>';
 
-$xmlr = new SimpleXMLElement($tagName);
-$xmlr->addAttribute('xmlns', 'http://ekuatia.set.gov.py/sifen/xsd');
-$xmlr->addChild('dId', '552');
-$xmlr->addChild('dRUCCons', '80057292');
+/// Create XML for request
+$myXML =  RequestXMLHelper::makeFromArray($operation, $data);
 
 try {
     // Create SOAP client
@@ -29,16 +30,19 @@ try {
 
     // echo var_dump(SoapSSLClient::$client->__getFunctions());
 
-    $params = new SoapVar($xmlr->asXML(), XSD_ANYXML);
+    // // create a new soap request object
+    // $params = new SoapVar($xmlr->asXML(), XSD_ANYXML);
 
-    $responseXML = SoapSSLClient::$client->rEnviConsRUC($xmlr);
+    // make the soap call
+    $responseXML = SoapSSLClient::$client->rEnviConsRUC($myXML);
 
     // echo "\n\nRequest: \n";
     // echo SoapSSLClient::$client->__getLastRequest();
 
-    echo "\n\nResponse: \n";
+    echo "Respuesta:" . PHP_EOL;
     // echo var_dump($responseXML);
 
+    //return the response object
     $responseObject = TxContRuc::fromResponse($responseXML);
     echo  $responseObject->getDRUCCons() . PHP_EOL;
     echo  $responseObject->getDRazCons() . PHP_EOL;
