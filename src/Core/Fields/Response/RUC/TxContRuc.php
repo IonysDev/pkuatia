@@ -230,30 +230,30 @@ class TxContRuc
     }
   }
 
-  ///create a objet from a stdClass
-  public static function fromResponse($std): TxContRuc
+  ///create a objet from a responseClass
+  public static function fromResponse($response): TxContRuc
   {
     echo "TxContRuc::fromResponse". PHP_EOL;
 
-    if(is_null($std))
+    if(is_null($response))
     {
       throw new \Exception("Error Processing Request: null", 1);
     }
  
-    if ($std->dCodRes != "0502") {
-      echo "Código de respuesta: $std->dCodRes" . PHP_EOL
-        . "Mensaje de respuesta: $std->dMsgRes" . PHP_EOL;
-      throw new \Exception("Error Processing Request: $std->dMsgRes", 1);
+    if ($response->dCodRes != "0502") {
+      echo "Código de respuesta: $response->dCodRes" . PHP_EOL
+        . "Mensaje de respuesta: $response->dMsgRes" . PHP_EOL;
+      throw new \Exception("Error Processing Request: $response->dMsgRes", 1);
     } else {
-      echo "Código de respuesta: $std->dCodRes" . PHP_EOL
-        . "Mensaje de respuesta: $std->dMsgRes" . PHP_EOL;
+      echo "Código de respuesta: $response->dCodRes" . PHP_EOL
+        . "Mensaje de respuesta: $response->dMsgRes" . PHP_EOL;
 
       $res = new TxContRuc();
-      $res->setDRUCCons($std->xContRUC->dRUCCons);
-      $res->setDRazCons($std->xContRUC->dRazCons);
-      $res->setDCodEstCons($std->xContRUC->dCodEstCons);
-      $res->setDDesEstCons($std->xContRUC->dDesEstCons);
-      $res->setDRUCFactElec($std->xContRUC->dRUCFactElec);
+      $res->setDRUCCons($response->xContRUC->dRUCCons);
+      $res->setDRazCons($response->xContRUC->dRazCons);
+      $res->setDCodEstCons($response->xContRUC->dCodEstCons);
+      $res->setDDesEstCons($response->xContRUC->dDesEstCons);
+      $res->setDRUCFactElec($response->xContRUC->dRUCFactElec);
     }
 
     return $res;

@@ -8,7 +8,7 @@ use Abiliomp\Pkuatia\SoapSSLClient;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$wsdlUrl = 'https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
+$wsdlUrl = 'https://sifen.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
 $certFile = '80121930-2.cert.pem';
 $keyFile = '80121930-2.key.pem';
 $keyPassphrase = '171222';
@@ -24,20 +24,18 @@ $myXML =  RequestXMLHelper::makeFromArray($operation, $data);
 
 try {
     // Create SOAP client
-    echo 'Creating SOAP client...';
+    echo 'Creating SOAP client...' . PHP_EOL;
     SoapSSLClient::init($wsdlUrl, $certFile, $keyFile, $keyPassphrase);
     echo 'done' . PHP_EOL;
 
-    // echo var_dump(SoapSSLClient::$client->__getFunctions());
-
     // // create a new soap request object
-    // $params = new SoapVar($xmlr->asXML(), XSD_ANYXML);
+    //  $params = new SoapVar($myXML->asXML(), XSD_ANYXML);
 
     // make the soap call
     $responseXML = SoapSSLClient::$client->rEnviConsRUC($myXML);
 
     // echo "\n\nRequest: \n";
-    // echo SoapSSLClient::$client->__getLastRequest();
+    echo SoapSSLClient::$client->__getLastRequest();
 
     echo "Respuesta:" . PHP_EOL;
     // echo var_dump($responseXML);
