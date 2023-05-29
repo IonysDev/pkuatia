@@ -170,6 +170,23 @@ class TxContRuc
     return $this->dRUCFactElec;
   }
 
+  //get the description of dRUCFactElec
+  public function getDRUCFactElecDesc(): string
+  {
+    switch ($this->dRUCFactElec) {
+      case 'S':
+        return "Es facturador electrónico";
+        break;
+      case 'N':
+        return "No es facturador electrónico";
+        break;
+
+      default:
+        return null;
+        break;
+    }
+  }
+
   //====================================================//
   ///XML ELEMENT
   //====================================================//    
@@ -180,7 +197,7 @@ class TxContRuc
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('TxContRic');
+    $res = new DOMElement('TxContRuc');
 
     $res->appendChild(new DOMElement('dRUCCons', $this->dRUCCons));
     $res->appendChild(new DOMElement('dRazCons', $this->dRazCons));
@@ -207,9 +224,40 @@ class TxContRuc
       $res->setDDesEstCons($xml->getElementsByTagName('dDesEstCons ')->item(0)->nodeValue);
       $res->setDRUCFactElec($xml->getElementsByTagName('dRUCFactElec ')->item(0)->nodeValue);
       return $res;
-    }else{
+    } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
   }
+
+  ///create a objet from a stdClass
+  public static function fromResponse($std): TxContRuc
+  {
+    echo "TxContRuc::fromResponse\n". PHP_EOL;
+
+    if(is_null($std))
+    {
+      throw new \Exception("Error Processing Request: null", 1);
+    }
+ 
+    if ($std->dCodRes != "0502") {
+      echo "Código de respuesta: $std->dCodRes\n"
+        . "Mensaje de respuesta: $std->dMsgRes\n" . PHP_EOL;
+      throw new \Exception("Error Processing Request: $std->dMsgRes", 1);
+    } else {
+      echo "Código de respuesta: $std->dCodRes\n"
+        . "Mensaje de respuesta: $std->dMsgRes\n" . PHP_EOL;
+
+      $res = new TxContRuc();
+      $res->setDRUCCons($std->xContRUC->dRUCCons);
+      $res->setDRazCons($std->xContRUC->dRazCons);
+      $res->setDCodEstCons($std->xContRUC->dCodEstCons);
+      $res->setDDesEstCons($std->xContRUC->dDesEstCons);
+      $res->setDRUCFactElec($std->xContRUC->dRUCFactElec);
+    }
+
+    return $res;
+  }
+
+  //
 }

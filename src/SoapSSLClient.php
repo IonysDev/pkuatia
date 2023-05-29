@@ -23,7 +23,7 @@ class SoapSSLClient
                     'passphrase' => $passphrase,
                     'verify_peer' => true,
                     'verify_peer_name' => true,
-                    'allow_self_signed' => false
+                  
                 ]
             ])
         ];
