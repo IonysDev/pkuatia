@@ -40,10 +40,7 @@ try {
   //return the response object
   $res = RespuestaConsultaDE::fromResponse($responseXML);
   echo $res->printData();
-  if (isset($responseXML->xContenDE)) {
-    file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
-    echo "xml generado";
-  }
+  
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();

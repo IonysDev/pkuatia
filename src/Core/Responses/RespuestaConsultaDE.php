@@ -154,16 +154,20 @@ class RespuestaConsultaDE
       $res->setDFecProc($response->dFecProc);
       $res->setDCodRes($response->dCodRes);
       $res->setDMsgRes($response->dMsgRes);
-      $res->setXContEv(TxContenDE::fromResponse($response->xContenDE));
+      if(isset($response->xContenDE))
+      {
+        $res->setXContEv(TxContenDE::fromResponse($response->xContenDE));
+      }
     }
-
-    var_dump($res);
 
     return $res;
   }
 
   public function printData()
   {
+
+    var_dump($this->xContEv);
+
     return "RespuestaConsultaDE: " . PHP_EOL .
       "Fecha de Consulta: " . $this->dFecProc . PHP_EOL .
       "Código de Respuesta: " . $this->dCodRes . PHP_EOL .

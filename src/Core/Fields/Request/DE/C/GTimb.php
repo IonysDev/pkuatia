@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\C;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\C;
 
 use DateTime;
 use DOMElement;
@@ -54,7 +54,7 @@ class GTimb
         $this->dSerieNum = $dSerieNum;
     }
 
-    public function setDFeIniT(string $dFeIniT): void
+    public function setDFeIniT(DateTime $dFeIniT): void
     {
         $this->dFeIniT = $dFeIniT;
     }
@@ -195,5 +195,22 @@ class GTimb
             throw new \Exception("Invalid XML Element: $xml->tagName");
             return null;
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    public static function fromResponse($response): self
+    {
+        $res = new GTimb();
+        $res->setITiDE(intval($response->iTiDE));
+        $res->setDNumTim(intval($response->dNumTim));
+        $res->setDEst($response->dEst);
+        $res->setDPunExp($response->dPunExp);
+        $res->setDNumDoc($response->dNumDoc);
+        if (isset($response->dSerieNum)) {
+
+            $res->setDSerieNum($response->dSerieNum);
+        }
+        $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $response->dFeIniT));
+        return $res;
     }
 }

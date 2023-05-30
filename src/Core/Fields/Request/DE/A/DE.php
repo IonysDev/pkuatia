@@ -2,13 +2,14 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\A;
 
-use Abiliomp\Pkuatia\Core\Fields\C\GTimb;
+
 use Abiliomp\Pkuatia\Core\Fields\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Core\Fields\E\GDtipDE;
 use Abiliomp\Pkuatia\Core\Fields\F\GTotSub;
 use Abiliomp\Pkuatia\Core\Fields\G\GCamGen;
 use Abiliomp\Pkuatia\Core\Fields\H\GCamDEAsoc;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\B\GOpeDE;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\C\GTimb;
 use DateTime;
 use DOMElement;
 
@@ -378,6 +379,7 @@ class DE
     $de->setDSisFact($response->dSisFact);
     ///Children
     $de->setGOpeDe(GOpeDE::fromResponse($response->gOpeDE));
+    $de->setGTimb(GTimb::fromResponse($response->gTimb));
     return $de;
   }
 }
