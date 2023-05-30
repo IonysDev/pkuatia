@@ -1,6 +1,7 @@
 <?php
 
 use Abiliomp\Pkuatia\Core\Fields\Response\De\TxContenDE;
+use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaDE;
 use Abiliomp\Pkuatia\Helpers\RequestXMLHelper;
 use Abiliomp\Pkuatia\SoapSSLClient;
 
@@ -17,14 +18,14 @@ $operation = 'rEnviConsDe';
 $data = array(
   'dId' => '552',
   // 'dCDC' => '01800160967029015003289222023052912371717760'
-  'dCDC' => '01800090853013001001802422023052910014652161'
+  // 'dCDC' => '01800090853013001001802422023052910014652161'
+  'dCDC' => '01800160967029015003289222023052912371717799'
 
-);
-;
+);;
 /// Create XML for request
 $myXML =  RequestXMLHelper::makeFromArray($operation, $data);
 
-if(strlen($data['dCDC']) != 44){
+if (strlen($data['dCDC']) != 44) {
   echo "CDC no valido";
   exit;
 }
@@ -37,9 +38,13 @@ try {
   // make the soap call
   $responseXML = SoapSSLClient::$client->rEnviConsDe($myXML);
   echo 'Response:' . PHP_EOL;
-  $dE = TxContenDE::fromResponse($responseXML);
-  file_put_contents($data['dCDC'] . '_dE.xml', $dE);
-  echo "xml generado";
+  //return the response object
+  $res = RespuestaConsultaDE::fromResponse($responseXML);
+  echo $res->printData();
+  if (isset($responseXML->xContenDE)) {
+    file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
+    echo "xml generado";
+  }
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();
@@ -47,4 +52,3 @@ try {
   // Handle general exceptions
   echo 'Error: ' . $e->getMessage();
 }
-

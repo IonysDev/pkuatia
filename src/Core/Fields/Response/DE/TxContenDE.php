@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\De;
+namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
 
 use Abiliomp\Pkuatia\Core\Fields\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\AA\RDE;
@@ -143,34 +143,6 @@ class TxContenDE
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
-    }
-  }
-
-  /**
-   * fromResponseXML
-   *
-   * @param  mixed $xml
-   * @return TxContenDE
-   */
-  public static function fromResponse($response): TxContenDE
-  {
-    echo "TxContenDE::fromResponse\n" . PHP_EOL;
-
-    if (is_null($response)) {
-      throw new \Exception("Error Processing Request: null", 1);
-    }
-   
-
-    if ($response->dCodRes != '422') {
-      echo "Código de respuesta: $response->dCodRes" . PHP_EOL
-        . "Mensaje de respuesta: $response->dMsgRes" . PHP_EOL
-        . "Fecha de respuesta: $response->dFecProc" . PHP_EOL;
-    } else {
-      echo "Código de respuesta: $response->dCodRes" . PHP_EOL
-        . "Mensaje de respuesta: $response->dMsgRes" . PHP_EOL
-        . "Fecha de respuesta: $response->dFecProc" . PHP_EOL;
-
-      return  $response->xContenDE;
     }
   }
 }

@@ -105,6 +105,7 @@ class RespuestaConsultaRUC
   {
     echo "RespuestaConsultaRUC::fromResponse\n";
 
+
     if (is_null($response)) {
       throw new \Exception("Error Processing Request: null", 1);
       return null;
