@@ -6,7 +6,7 @@ use Abiliomp\Pkuatia\SoapSSLClient;
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
-error_log(E_ALL);
+error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $wsdl = 'https://sifen.set.gov.py/de/ws/consultas/consulta-lote.wsdl?wsdl';
@@ -19,7 +19,7 @@ $data = array(
   'dProtConsLote' => '999'
 );
 
-/// Create XML for request
+// /// Create XML for request
 $myXML =  RequestXMLHelper::makeFromArray($operation, $data);
 
 try {
@@ -32,9 +32,7 @@ try {
   // echo SoapSSLClient::$client->__getLastRequest();
   echo 'Response:' . PHP_EOL;
   $res = RespuestaConsultaLoteDE::fromResponse($responseXML);
-  echo $res->getDFecProd() . PHP_EOL;
-  echo $res->getDCodResLot() . PHP_EOL;
-  echo $res->getDMsgResLot() . PHP_EOL;
+  echo $res->printData();
 } catch (SoapFault $e) {
   echo $e->getMessage();
 } catch (Exception $e) {

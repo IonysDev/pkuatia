@@ -126,4 +126,12 @@ class RespuestaConsultaLoteDE
 
     return $res;
   }
+
+  public function printData()
+  {
+    return "RespuestaConsultaDE: " . PHP_EOL .
+      "Fecha de Consulta: " . $this->dFecProd . PHP_EOL .
+      "Código de Respuesta: " . $this->dCodResLot . PHP_EOL .
+      "Mensaje de Respuesta: " . $this->dMsgResLot . PHP_EOL;
+  }
 }
