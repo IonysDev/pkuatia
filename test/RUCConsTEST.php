@@ -2,6 +2,7 @@
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
 use Abiliomp\Pkuatia\Core\Fields\Response\Ruc\TxContRuc;
+use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaRUC;
 use Abiliomp\Pkuatia\Helpers\RequestXMLHelper;
 use Abiliomp\Pkuatia\SoapSSLClient;
 
@@ -38,14 +39,12 @@ try {
     // echo SoapSSLClient::$client->__getLastRequest();
 
     echo "Respuesta:" . PHP_EOL;
-    // echo var_dump($responseXML);
-
     //return the response object
-    $responseObject = TxContRuc::fromResponse($responseXML);
-    echo  $responseObject->getDRUCCons() . PHP_EOL;
-    echo  $responseObject->getDRazCons() . PHP_EOL;
-    echo  $responseObject->getDDesEstCons() . PHP_EOL;
-    echo  $responseObject->getDRUCFactElecDesc() . PHP_EOL;
+    $res = RespuestaConsultaRUC::fromResponse($responseXML);
+    echo $res->printData();
+    if (isset($res->txContRuc)) {
+        echo $res->getTxContRuc()->printData();
+    }
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();

@@ -230,34 +230,32 @@ class TxContRuc
     }
   }
 
-  ///create a objet from a responseClass
-  public static function fromResponse($response): TxContRuc
+  ///create a objet from a objectClass
+  public static function fromResponse($object): TxContRuc
   {
-    echo "TxContRuc::fromResponse". PHP_EOL;
+    echo "TxContRuc::fromResponse" . PHP_EOL;
 
-    if(is_null($response))
-    {
-      throw new \Exception("Error Processing Request: null", 1);
+    if (is_null($object)) {
+      throw new \Exception("Object error", 1);
+      return null;
     }
- 
-    if ($response->dCodRes != "0502") {
-      echo "Código de respuesta: $response->dCodRes" . PHP_EOL
-        . "Mensaje de respuesta: $response->dMsgRes" . PHP_EOL;
-      throw new \Exception("Error Processing Request: $response->dMsgRes", 1);
-    } else {
-      echo "Código de respuesta: $response->dCodRes" . PHP_EOL
-        . "Mensaje de respuesta: $response->dMsgRes" . PHP_EOL;
-
-      $res = new TxContRuc();
-      $res->setDRUCCons($response->xContRUC->dRUCCons);
-      $res->setDRazCons($response->xContRUC->dRazCons);
-      $res->setDCodEstCons($response->xContRUC->dCodEstCons);
-      $res->setDDesEstCons($response->xContRUC->dDesEstCons);
-      $res->setDRUCFactElec($response->xContRUC->dRUCFactElec);
-    }
+    $res = new TxContRuc();
+    $res->setDRUCCons($object->dRUCCons);
+    $res->setDRazCons($object->dRazCons);
+    $res->setDCodEstCons($object->dCodEstCons);
+    $res->setDDesEstCons($object->dDesEstCons);
+    $res->setDRUCFactElec($object->dRUCFactElec);
 
     return $res;
   }
 
-  //
+  ///print the data of the object
+  public function printData()
+  {
+    return "Datos de la Consulta: " . PHP_EOL .
+      "RUC: " . $this->getDRUCCons() . PHP_EOL .
+      "Razón Social: " . $this->getDRazCons() . PHP_EOL .
+      "Descripción Estado: " . $this->getDDesEstCons() . PHP_EOL .
+      "Facturador Electrónico?: " . $this->getDRUCFactElecDesc() . PHP_EOL;
+  }
 }

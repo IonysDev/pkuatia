@@ -152,7 +152,7 @@ class TxContenDE
    * @param  mixed $xml
    * @return TxContenDE
    */
-  public static function fromResponse($response)
+  public static function fromResponse($response): TxContenDE
   {
     echo "TxContenDE::fromResponse\n" . PHP_EOL;
 
