@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\D;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DOMElement;
 
@@ -384,9 +384,9 @@ class GDatRec
         return "Mordor";
     }
 
-  //====================================================//
-  ///XML Element
-  //====================================================//
+    //====================================================//
+    ///XML Element
+    //====================================================//
 
     /**
      * toDOMElement
@@ -400,19 +400,16 @@ class GDatRec
         $res->appendChild(new DOMElement('iTiOpe', $this->getITiOpe()));
         $res->appendChild(new DOMElement('cPaisRec', $this->getCPaisRec()));
         $res->appendChild(new DOMElement('dDesPaisRe', $this->getDDesPaisRe()));
-        if($this->iNatRec == 1)
-        {
+        if ($this->iNatRec == 1) {
             $res->appendChild(new DOMElement('iTiContRec', $this->getITiContRec()));
             $res->appendChild(new DOMElement('dRucRec', $this->getDRucRec()));
         }
 
-        if(isset($this->dRucRec))
-        {
+        if (isset($this->dRucRec)) {
             $res->appendChild(new DOMElement('dDVRec', $this->getDDVRec()));
         }
 
-        if($this->iNatRec == 2 && $this->iTiOpe != 4)
-        {
+        if ($this->iNatRec == 2 && $this->iTiOpe != 4) {
             $res->appendChild(new DOMElement('iTipIDRec', $this->getITipIDRec()));
             $res->appendChild(new DOMElement('dDTipIDRec', $this->getDDTipIDRec()));
             $res->appendChild(new DOMElement('dNumIDRec', $this->getDNumIDRec()));
@@ -420,8 +417,7 @@ class GDatRec
         $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
         $res->appendChild(new DOMElement('dNomFanRec', $this->getDNomFanRec()));
 
-        if($this->iTiOpe == 2)
-        {
+        if ($this->iTiOpe == 2) {
             $res->appendChild(new DOMElement('dDirRec', $this->getDDirRec()));
             $res->appendChild(new DOMElement('dNumCasRec', $this->getDNumCasRec()));
         }
@@ -432,11 +428,10 @@ class GDatRec
         $res->appendChild(new DOMElement('dDesDisRec', $this->getDDesDisRec()));
         $res->appendChild(new DOMElement('cCiuRec', $this->getCCiuRec()));
         $res->appendChild(new DOMElement('dDesCiuRec', $this->getDDesCiuRec()));
-        if($this->cPaisRec == "PRY")
-        {
+        if ($this->cPaisRec == "PRY") {
             ////Debe incluir el prefijo de la ciudad si D203 = PRY
             $res->appendChild(new DOMElement('dTelRec', $this->getDTelRec()));
-        }else{
+        } else {
             $res->appendChild(new DOMElement('dTelRec', $this->getDTelRec()));
         }
         $res->appendChild(new DOMElement('dCelRec', $this->getDCelRec()));
@@ -444,7 +439,7 @@ class GDatRec
         $res->appendChild(new DOMElement('dCodCliente', $this->getDCodCliente()));
         return $res;
     }
-    
+
     /**
      * fromDOMElement
      *
@@ -453,8 +448,7 @@ class GDatRec
      */
     public static function fromDOMElement(DOMElement $xml): GDatRec
     {
-        if(strcmp($xml->tagName, 'gDatRec') == 0 && $xml->childElementCount >=12)
-        {
+        if (strcmp($xml->tagName, 'gDatRec') == 0 && $xml->childElementCount >= 12) {
             $res = new GDatRec();
             $res->setINatRec(intval($xml->getElementsByTagName('iNatRec')->item(0)->nodeValue));
             $res->setITiOpe(intval($xml->getElementsByTagName('iTiOpe')->item(0)->nodeValue));
@@ -477,11 +471,10 @@ class GDatRec
             $res->setDCodCliente($xml->getElementsByTagName('dCodCliente')->item(0)->nodeValue);
 
             return $res;
-        }
-        else {
+        } else {
             throw new \Exception("Invalid XML Element: $xml->tagName");
             return null;
-          }
+        }
     }
 
 
@@ -512,5 +505,62 @@ class GDatRec
         $this->cCiuRec = $cCiuRec;
 
         return $this;
+    }
+
+    public static function fromResponse($response): self
+    {
+        $res = new GDatRec();
+        $res->setINatRec(intval($response->iNatRec));
+        $res->setITiOpe(intval($response->iTiOpe));
+        $res->setCPaisRec($response->cPaisRec);
+        if (isset($response->iTiContRec)) {
+            $res->setITiContRec(intval($response->iTiContRec));
+        }
+        if (isset($response->dRucRec)) {
+            $res->setDRucRec($response->dRucRec);
+        }
+        if (isset($response->dDVRec)) {
+            $res->setDDVRec(intval($response->dDVRec));
+        }
+        if(isset($response->iTipIDRec))
+        {
+            $res->setITipIDRec(intval($response->iTipIDRec));
+        }
+        if(isset($response->dNumIDRec))
+        {
+            $res->setDNumIDRec($response->dNumIDRec);
+        }
+        $res->setDNomRec($response->dNomRec);
+        if (isset($response->dNomFanRec)) {
+            $res->setDNomFanRec($response->dNomFanRec);
+        }
+        if (isset($response->dDirRec)) {
+            $res->setDDirRec($response->dDirRec);
+        }
+        if (isset($response->dNumCasRec)) {
+            $res->setDNumCasRec(intval($response->dNumCasRec));
+        }
+        if (isset($response->cDepRec)) {
+            $res->setCDepRec(intval($response->cDepRec));
+        }
+        if (isset($response->cDisRec)) {
+            $res->setCDisRec(intval($response->cDisRec));
+        }
+        if (isset($response->cCiuRec)) {
+            $res->setCCiuRec(intval($response->cCiuRec));
+        }
+        if (isset($response->dTelRec)) {
+            $res->setDTelRec($response->dTelRec);
+        }
+        if (isset($response->dCelRec)) {
+            $res->setDCelRec($response->dCelRec);
+        }
+        if (isset($response->dEmailRec)) {
+            $res->setDEmailRec($response->dEmailRec);
+        }
+        if (isset($response->dCodCliente)) {
+            $res->setDCodCliente($response->dCodCliente);
+        }
+        return $res;
     }
 }

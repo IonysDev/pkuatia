@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\D;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DOMElement;
 
@@ -8,6 +8,9 @@ use DOMElement;
  * ID: D140 Grupo de campos que identifican al responsable de la generación del DE PADRE:D100 
  */
 
+/**
+ * GRespDE
+ */
 class GRespDE {
     
     public int $iTipIDRespDE;    // D141 - Tipo de documento de identidad del responsable de la generación del DE
@@ -133,6 +136,23 @@ class GRespDE {
             throw new \Exception("Invalid XML Element: $xml->tagName");
             return null;
           }
+    }
+    
+    /**
+     * fromResponse
+     *
+     * @param  mixed $response
+     * @return self
+     */
+    public static function fromResponse($response): self
+    {
+        $res = new GRespDE();
+        $res->setITipIDRespDE(intval($response->iTipIDRespDE));
+        $res->setDNumIDRespDE($response->dNumIDRespDE);
+        $res->setDNomRespDE($response->dNomRespDE);
+        $res->setDCarRespDE($response->dCarRespDE);
+
+        return $res;
     }
 
 }

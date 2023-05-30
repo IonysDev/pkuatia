@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\E;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
 use DateTime;
 use DOMElement;
@@ -165,5 +165,22 @@ class GCamFE
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
+  }
+
+  public static function fromResponse($response): self
+  {
+    $res = new GCamFE();
+    $res->setIIndPres(intval($response->iIndPres));
+    if(isset($response->dFecEmNR))
+    {
+      $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $response->dFecEmNR));
+    }
+
+    //Children
+    if(isset($response->gComPub))
+    {
+      $res->setGComPub(GCompPub::fromResponse($response->gComPub));
+    }
+    return $res;
   }
 }

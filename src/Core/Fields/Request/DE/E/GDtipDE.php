@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\E;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
 use DOMElement;
 
@@ -232,4 +232,21 @@ class GDtipDE
       return null;
     }
   }
+
+ 
+   /**
+    * fromResponse
+    *
+    * @param  mixed $response
+    * @return self
+    */
+   public static function fromResponse($response):self
+   {
+      $res = new GDtipDE();
+      if(isset($response->gCamFE))
+      {
+          $res->setGCamFE(GCamFE::fromResponse($response->gCamFE));
+      }
+      return $res;
+   }
 }

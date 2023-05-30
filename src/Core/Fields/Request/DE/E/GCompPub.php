@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\E;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
 use DateTime;
 use DOMElement;
@@ -181,5 +181,19 @@ class GCompPub
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
+  }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GCompPub();
+    if(isset($response->gCompPub))
+    {
+      $res->setDModCont($response->dModCont);
+      $res->setDEntCont($response->dEntCont);
+      $res->setDAnoCont($response->dAnoCont);
+      $res->setDSecCont($response->dSecCont);
+      $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $response->dFeCodCont));
+    }
+    return $res;
   }
 }

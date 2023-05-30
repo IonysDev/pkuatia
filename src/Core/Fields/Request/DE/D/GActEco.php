@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\D;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DOMElement;
 
@@ -69,5 +69,18 @@ class GActEco
             throw new \Exception("Invalid XML Element: $xml->tagName");
             return null;
         }
+    }
+    
+    /**
+     * fromResponse
+     *
+     * @param  mixed $response
+     * @return self
+     */
+    public static function fromResponse($response):self
+    {
+        $res = new GActEco();
+        $res->setCActEco($response->cActEco);
+        return $res; 
     }
 }

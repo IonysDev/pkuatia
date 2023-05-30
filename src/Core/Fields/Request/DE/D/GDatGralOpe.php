@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\D;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DateTime;
 use DOMElement;
@@ -167,5 +167,16 @@ class GDatGralOpe
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
+  }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GDatGralOpe();
+    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s',$response->dFeEmiDE));
+    ///children
+    $res->setGOpeCom(GOpeCom::fromResponse($response->gOpeCom));
+    $res->setGEmis(GEmis::fromResponse($response->gEmis));
+    $res->setGDatRec(GDatRec::fromResponse($response->gDatRec));
+    return $res;
   }
 }

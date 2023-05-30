@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\D;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DOMElement;
 
@@ -335,5 +335,49 @@ class GEmis
         $this->cDepEmi = $cDepEmi;
 
         return $this;
+    }
+
+    /**
+     * fromResponse
+     *
+     * @param  mixed $response
+     * @return self
+     */
+    public static function fromResponse($response): self
+    {
+        $gEmis = new GEmis();
+        $gEmis->setDRucEm($response->dRucEm);
+        $gEmis->setDDVEmi($response->dDVEmi);
+        $gEmis->setITipCont($response->iTipCont);
+        if (isset($response->cTipReg)) {
+            $gEmis->setCTipReg($response->cTipReg);
+        }
+        $gEmis->setDNomEmi($response->dNomEmi);
+        if (isset($response->dNomFanEmi)) {
+            $gEmis->setDNomFanEmi($response->dNomFanEmi);
+        }
+        $gEmis->setDDirEmi($response->dDirEmi);
+        $gEmis->setDNumCas($response->dNumCas);
+        if (isset($response->dCompDir1)) {
+            $gEmis->setDCompDir1($response->dCompDir1);
+        }
+        if (isset($response->dCompDir2)) {
+            $gEmis->setDCompDir2($response->dCompDir2);
+        }
+        $gEmis->setCDepEmi($response->cDepEmi);
+        if (isset($response->cDisEmi)) {
+            $gEmis->setCDisEmi($response->cDisEmi);
+        }
+        $gEmis->setCCiuEmi($response->cCiuEmi);
+        $gEmis->setDTelEmi($response->dTelEmi);
+        $gEmis->setDEmailE($response->dEmailE);
+        if (isset($response->dDenSuc)) {
+        $gEmis->setDDenSuc($response->dDenSuc);
+        }
+        $gEmis->setGActEco(GActEco::fromResponse($response->gActEco));
+        if (isset($response->gRespDE)) {
+            $gEmis->setGRespDE(GRespDE::fromResponse($response->gRespDE));
+        }
+        return $gEmis;
     }
 }

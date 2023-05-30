@@ -16,8 +16,8 @@ $keyPassphrase = '171222';
 $operation = 'rEnviConsDe';
 $data = array(
   'dId' => '552',
-  'dCDC' => '01800160967029015003289222023052912371717760'
-  // 'dCDC' => '01800090853013001001802422023052910014652161'
+  // 'dCDC' => '01800160967029015003289222023052912371717760'
+  'dCDC' => '01800090853013001001802422023052910014652161'
   // 'dCDC' => '01800160967029015003289222023052912371717799'
 
 );;
@@ -40,6 +40,10 @@ try {
   //return the response object
   $res = RespuestaConsultaDE::fromResponse($responseXML);
   echo $res->printData();
+  if (isset($responseXML->xContenDE)) {
+    file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
+    echo "xml generado";
+  }
   
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors

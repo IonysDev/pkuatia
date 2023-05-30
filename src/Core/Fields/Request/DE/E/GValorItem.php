@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\E;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
 
 use DOMElement;

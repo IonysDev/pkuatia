@@ -1,14 +1,15 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\D;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DOMElement;
 
 /**
  * ID:D010  Campos inherentes a la operación comercial PADRE:D001 
  */
-class GOpeCom {
-    
+class GOpeCom
+{
+
     public int $iTipTra;     // D011 - Tipo de transacción
     public int $iTImp;       // D013 - Tipo de impuesto afectado
     public string $cMoneOpe; // D015 - Moneda de la operación
@@ -66,7 +67,7 @@ class GOpeCom {
      */
     public function getDDesTipTra(): string
     {
-        switch($this->iTipTra) {
+        switch ($this->iTipTra) {
             case 1:
                 return 'Venta de mercadería';
                 break;
@@ -123,7 +124,7 @@ class GOpeCom {
      */
     public function getDDesTImp(): string
     {
-        switch($this->iTImp) {
+        switch ($this->iTImp) {
             case 1:
                 return 'IVA';
                 break;
@@ -148,7 +149,7 @@ class GOpeCom {
     {
         return $this->cMoneOpe;
     }
-    
+
     /**
      *  D016 Descripción de la moneda de la operación
 
@@ -182,7 +183,7 @@ class GOpeCom {
      */
     public function getDDesCondAnt(): string
     {
-        switch($this->iCondAnt) {
+        switch ($this->iCondAnt) {
             case 1:
                 return 'Anticipo Global';
                 break;
@@ -197,7 +198,7 @@ class GOpeCom {
     ///////////////////////////////////////////////////////////////////////
     // XML Element
     ///////////////////////////////////////////////////////////////////////
-    
+
     /**
      * toDOMElement
      *
@@ -206,34 +207,34 @@ class GOpeCom {
     public function toDOMElement(): DOMElement
     {
         $res = new DOMElement('gOpeCom');
-        
-        if(isset($this->iTipTra)) {
+
+        if (isset($this->iTipTra)) {
             $res->appendChild(new DOMElement('iTipTra', $this->getITipTra()));
             $res->appendChild(new DOMElement('dDesTipTra', $this->getDDesTipTra()));
         }
-        
+
         $res->appendChild(new DOMElement('iTImp', $this->getITImp()));
         $res->appendChild(new DOMElement('dDesTImp', $this->getDDesTImp()));
         $res->appendChild(new DOMElement('cMoneOpe', $this->getCMoneOpe()));
         $res->appendChild(new DOMElement('dDesMoneOpe', $this->getDDesMoneOpe()));
 
-        if(strcmp($this->cMoneOpe, "PYG") != 0) {
+        if (strcmp($this->cMoneOpe, "PYG") != 0) {
             $res->appendChild(new DOMElement('dCondTiCam', $this->getDCondTiCam()));
         }
 
-        if($this->dCondTiCam != 2 && strcmp($this->cMoneOpe, "PYG") != 0) {
+        if ($this->dCondTiCam != 2 && strcmp($this->cMoneOpe, "PYG") != 0) {
             $res->appendChild(new DOMElement('dTiCam', $this->getDTiCam()));
         }
 
-        if($this->iTipTra == 9) {
+        if ($this->iTipTra == 9) {
             // Anticipo
             $res->appendChild(new DOMElement('iCondAnt', $this->getICondAnt()));
             $res->appendChild(new DOMElement('dDesCondAnt', $this->getDDesCondAnt()));
         }
-        
+
         return $res;
     }
-    
+
     /**
      * fromDOMElement
      *
@@ -242,8 +243,7 @@ class GOpeCom {
      */
     public static function fromDOMElement(DOMElement $xml): GOpeCom
     {
-        if(strcmp($xml->tagName,'gOpeCom') == 0 && $xml->childElementCount >=4)
-        {
+        if (strcmp($xml->tagName, 'gOpeCom') == 0 && $xml->childElementCount >= 4) {
             $res = new GOpeCom();
             $res->setITipTra(intval($xml->getElementsByTagName('iTipTra')->item(0)->nodeValue));
             $res->setITImp(intval($xml->getElementsByTagName('iTImp')->item(0)->nodeValue));
@@ -252,12 +252,30 @@ class GOpeCom {
             $res->setDTiCam(intval($xml->getElementsByTagName('dTiCam')->item(0)->nodeValue));
             $res->setICondAnt(intval($xml->getElementsByTagName('iCondAnt')->item(0)->nodeValue));
             return $res;
-        }
-        else {
+        } else {
             throw new \Exception("Invalid XML Element: $xml->tagName");
             return null;
-          }
-        
+        }
     }
 
+    public static function fromResponse($response): self
+    {
+        $res = new GOpeCom();
+        $res->setITipTra(intval($response->iTipTra));
+        $res->setITImp(intval($response->iTImp));
+        $res->setCMoneOpe($response->cMoneOpe);
+        if (isset($response->dCondTiCam)) {
+            $res->setDCondTiCam(intval($response->dCondTiCam));
+        }
+
+        if (isset($response->dTiCam)) {
+            $res->setDTiCam(intval($response->dTiCam));
+        }
+
+        if (isset($response->iCondAnt)) {
+            $res->setICondAnt(intval($response->iCondAnt));
+        }
+
+        return $res;
+    }
 }
