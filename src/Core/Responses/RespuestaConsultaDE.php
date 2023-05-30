@@ -153,6 +153,8 @@ class RespuestaConsultaDE
       $res->setDFecProc($response->dFecProc);
       $res->setDCodRes($response->dCodRes);
       $res->setDMsgRes($response->dMsgRes);
+
+      TxContenDE::fromResponse($response->xContenDE);
     }
 
     return $res;

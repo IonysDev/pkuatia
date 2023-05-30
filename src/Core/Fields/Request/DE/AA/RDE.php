@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\AA;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\AA;
 
 use Abiliomp\Pkuatia\Core\Fields\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\I\Signature;
@@ -158,5 +158,12 @@ class RDE
     $this->gCamFuFD = $gCamFuFD;
 
     return $this;
+  }
+
+  public static function fromResponse($response)
+  {
+    echo "RDE::fromResponse";
+    var_dump($response);
+    new RDE();
   }
 }

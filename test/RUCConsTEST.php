@@ -1,7 +1,6 @@
 <?php
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
-use Abiliomp\Pkuatia\Core\Fields\Response\Ruc\TxContRuc;
 use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaRUC;
 use Abiliomp\Pkuatia\Helpers\RequestXMLHelper;
 use Abiliomp\Pkuatia\SoapSSLClient;

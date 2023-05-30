@@ -1,10 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
+namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;;
 
-use Abiliomp\Pkuatia\Core\Fields\A\DE;
-use Abiliomp\Pkuatia\Core\Fields\AA\RDE;
-use DateTime;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\AA\RDE;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -12,7 +11,7 @@ use DOMElement;
  */
 class TxContenDE
 {
-  public RDE $rDe; //ContDE02 - Archivo XML del DE ContDE01 
+  public  RDE $rDe; //ContDE02 - Archivo XML del DE ContDE01 
   public string $dProtAut; //ContDE03 - Número De Transacción 
   public TxContenEv $xContEv; //ContDE04 - Contenedor de Evento
 
@@ -144,5 +143,27 @@ class TxContenDE
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
+  }
+
+  public static function fromResponse($xml)
+  {
+
+
+    ///add the  <rContDe>  before <rDE>
+    $xml = str_replace('<rDE ', '<rContDe><rDE ', $xml);
+    //close the document with </rContDe>
+    $xml = $xml . '</rContDe>';
+
+    $xml = simplexml_load_string($xml);
+    $json = json_encode($xml);
+    $object = json_decode($json);
+    ///create object
+    $txContenDE = new TxContenDE();
+    ///set dProtAut
+    $txContenDE->setDProtAut($object->dProtAut);
+    ///set xContEv
+    ///cuando se reciba un ejemplo con ese campo
+    ///set rDe
+    $Rde = RDE::fromResponse($object->rDE);
   }
 }

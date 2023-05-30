@@ -1,6 +1,5 @@
 <?php
 
-use Abiliomp\Pkuatia\Core\Fields\Response\De\TxContenDE;
 use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaDE;
 use Abiliomp\Pkuatia\Helpers\RequestXMLHelper;
 use Abiliomp\Pkuatia\SoapSSLClient;
@@ -17,9 +16,9 @@ $keyPassphrase = '171222';
 $operation = 'rEnviConsDe';
 $data = array(
   'dId' => '552',
-  // 'dCDC' => '01800160967029015003289222023052912371717760'
+  'dCDC' => '01800160967029015003289222023052912371717760'
   // 'dCDC' => '01800090853013001001802422023052910014652161'
-  'dCDC' => '01800160967029015003289222023052912371717799'
+  // 'dCDC' => '01800160967029015003289222023052912371717799'
 
 );;
 /// Create XML for request
