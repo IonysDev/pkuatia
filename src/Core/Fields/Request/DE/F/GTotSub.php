@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\F;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\F;
 
 use DOMElement;
 
@@ -35,9 +35,9 @@ class GTotSub
   public int $dTBasGraIVA; //F020 Total de la base gravada de IVA
   public int $dTotalGs; /// F023 Total general de la operación en Guaraníes
 
-   //====================================================//
+  //====================================================//
   ///SETTERS
-   //====================================================//
+  //====================================================//
 
   /**
    * Set the value of dSubExe
@@ -398,9 +398,9 @@ class GTotSub
     return $this;
   }
 
-   //====================================================//
+  //====================================================//
   ///GETTERS
-   //====================================================//
+  //====================================================//
 
 
   /**
@@ -653,10 +653,10 @@ class GTotSub
     return $this->dTotalGs;
   }
 
-   //====================================================//
+  //====================================================//
   ///XML Element  
-   //====================================================//
-   
+  //====================================================//
+
   /**
    * toDOMElement
    *
@@ -681,7 +681,7 @@ class GTotSub
     }
     $res->appendChild(new DOMElement('dDescTotal', $this->getDDescTotal()));
     $res->appendChild(new DOMElement('dAnticipo', $this->getDAnticipo()));
-    $res->appendChild(new DOMElement('dRedon', $this->getDRedon()));///SE Debe redondear dTotOpe con la logica que pide pdf
+    $res->appendChild(new DOMElement('dRedon', $this->getDRedon())); ///SE Debe redondear dTotOpe con la logica que pide pdf
     $res->appendChild(new DOMElement('dComi', $this->getDComi()));
     $res->appendChild(new DOMElement('dTotGralOpe', $this->getDTotGralOpe()));
     $res->appendChild(new DOMElement('dIVA5', $this->getDIVA5()));
@@ -693,20 +693,19 @@ class GTotSub
     $res->appendChild(new DOMElement('dBaseGrav5', $this->dBaseGrav5));
     $res->appendChild(new DOMElement('dBaseGrav10', $this->getDBaseGrav10()));
     $res->appendChild(new DOMElement('dTBasGraIVA', $this->getDTBasGraIVA()));
-    $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));//////leer la logica del pdf de Mordor
+    $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs())); //////leer la logica del pdf de Mordor
     return $res;
   }
-  
+
   /**
    * fromDOMElement
    *
    * @param  mixed $xml
    * @return GTotSub
    */
-  public static function fromDOMElement(DOMElement $xml):GTotSub
+  public static function fromDOMElement(DOMElement $xml): GTotSub
   {
-    if(strcmp($xml->tagName, 'gTotSub') == 0 && $xml->childElementCount == 25)
-    {
+    if (strcmp($xml->tagName, 'gTotSub') == 0 && $xml->childElementCount == 25) {
       $res = new GTotSub();
       $res->setDSubExe(intval($xml->getElementsByTagName('dSubExe')->item(0)->nodeValue));
       $res->setDSubExo(intval($xml->getElementsByTagName('dSubEx')->item(0)->nodeValue));
@@ -735,7 +734,7 @@ class GTotSub
       $res->setDTbasGraIVA(intval($xml->getElementsByTagName('dTBaseGraIVA')->item(0)->nodeValue));
       $res->setDTotalGs(intval($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue));
       return $res;
-    }else {
+    } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
@@ -754,5 +753,57 @@ class GTotSub
     $this->dBaseGrav10 = $dBaseGrav10;
 
     return $this;
+  }
+
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
+  public static function fromResponse($response): self
+  {
+    $res = new GTotSub();
+    $res->setDSubExe(intval($response->dSubExe));
+    if (isset($response->dSubEx)) {
+      $res->setDSubExo(intval($response->dSubEx));
+    }
+    $res->setDSub5(intval($response->dSub5));
+    $res->setDSub10(intval($response->dSub10));
+    $res->setDTotOpe(intval($response->dTotOpe));
+    $res->setDTotDesc(intval($response->dTotDesc));
+    $res->setDTotDescGlotem(intval($response->dTotDescGlotem));
+    $res->setDTotAntItem(intval($response->dTotAntItem));
+    $res->setDTotAnt(intval($response->dTotAnt));
+    $res->setDPorcDescTotal(intval($response->dPorcDescTotal));
+    if (isset($response->dPorcDesc)) {
+      $res->setDPorcDescTotal(intval($response->dPorcDesc));
+    }
+    if (isset($response->dDesc)) {
+      $res->setDDescTotal(intval($response->dDesc));
+    }
+    $res->setDAnticipo(intval($response->dAnticipo));
+    $res->setDRedon(intval($response->dRedon));
+    if (isset($response->dComi)) {
+      $res->setDComi(intval($response->dComi));
+    }
+    $res->setDTotGralOpe(intval($response->dTotGralOpe));
+    $res->setDIVA5(intval($response->dIVA5));
+    $res->setDIVA10(intval($response->dIVA10));
+    $res->setDLiqTotIVA5(intval($response->dLiqTotIVA5));
+    $res->setDLiqTotIVA10(intval($response->dLiqTotIVA10));
+    if (isset($response->dIVAComi)) {
+      $res->setDIVAComi(intval($response->dIVAComi));
+    }
+    $res->setDTotIVA(intval($response->dTotIVA));
+    $res->setDBaseGrav5(intval($response->dBaseGrav5));
+    $res->setDBaseGrav10(intval($response->dBaseGrav10));
+    if (isset($response->dTBaseGraIVA)) {
+      $res->setDTbasGraIVA(intval($response->dTBaseGraIVA));
+    }
+    if (isset($response->dTotalGs)) {
+      $res->setDTotalGs(intval($response->dTotalGs));
+    }
+    return $res;
   }
 }
