@@ -2,9 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\AA;
 
-use Abiliomp\Pkuatia\Core\Fields\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\J\GCamFuFD;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\A\DE;
 use DOMElement;
 
 
@@ -160,10 +160,12 @@ class RDE
     return $this;
   }
 
-  public static function fromResponse($response)
+  public static function fromResponse($response):self
   {
-    echo "RDE::fromResponse";
-    var_dump($response);
-    new RDE();
+    $res = new RDE();
+    $res->setDVerFor(intval($response->dVerFor));
+    $res->setDE(DE::fromResponse($response->DE));
+    return $res;
   }
+
 }

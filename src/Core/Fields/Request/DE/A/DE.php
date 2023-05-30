@@ -1,14 +1,14 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\A;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\A;
 
-use Abiliomp\Pkuatia\Core\Fields\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Core\Fields\E\GDtipDE;
 use Abiliomp\Pkuatia\Core\Fields\F\GTotSub;
 use Abiliomp\Pkuatia\Core\Fields\G\GCamGen;
 use Abiliomp\Pkuatia\Core\Fields\H\GCamDEAsoc;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\B\GOpeDE;
 use DateTime;
 use DOMElement;
 
@@ -365,5 +365,19 @@ class DE
     $this->gTotSub = $gTotSub;
 
     return $this;
+  }
+
+  public static function fromResponse($response):self
+  {
+    ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
+    $array = json_decode(json_encode($response), true);
+    $de = new DE();
+    $de->setID($array['@attributes']['Id']);
+    $de->setDDVId(intval($response->dDVId));
+    $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFirma));
+    $de->setDSisFact($response->dSisFact);
+    ///Children
+    $de->setGOpeDe(GOpeDE::fromResponse($response->gOpeDE));
+    return $de;
   }
 }

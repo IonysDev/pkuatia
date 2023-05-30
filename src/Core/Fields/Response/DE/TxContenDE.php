@@ -145,7 +145,7 @@ class TxContenDE
     }
   }
 
-  public static function fromResponse($xml)
+  public static function fromResponse($xml): self
   {
 
 
@@ -162,8 +162,9 @@ class TxContenDE
     ///set dProtAut
     $txContenDE->setDProtAut($object->dProtAut);
     ///set xContEv
-    ///cuando se reciba un ejemplo con ese campo
+    // $txContenDE->setXContEv(TxContenEv::fromResponse($object->contentEv));
     ///set rDe
-    $Rde = RDE::fromResponse($object->rDE);
+    $txContenDE->setRDe(RDE::fromResponse($object->rDE));
+    return $txContenDE;
   }
 }

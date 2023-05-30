@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\B;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\B;
 
 use DOMElement;
 
@@ -133,5 +133,24 @@ class GOpeDE
             throw new \Exception("Invalid XML Element: $xml->tagName");
             return null;
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    public static function fromResponse($response): self
+    {
+        $res = new GOpeDE();
+        $res->setITipEmi(intval($response->iTipEmi));
+        $res->setDCodSeg(intval($response->dCodSeg));
+        
+        if(isset($response->dInfoEmi))
+        {
+            $res->setDInfoEmi($response->dInfoEmi);
+        }
+
+        if(isset($response->dInfoFisc))
+        {
+            $res->setDInfoFisc($response->dInfoFisc);
+        }
+        return $res;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Abiliomp\Pkuatia\Core\Responses;
+
 use Abiliomp\Pkuatia\Core\Fields\Response\DE\TxContenDE;
 
 /**
@@ -153,9 +154,10 @@ class RespuestaConsultaDE
       $res->setDFecProc($response->dFecProc);
       $res->setDCodRes($response->dCodRes);
       $res->setDMsgRes($response->dMsgRes);
-
-      TxContenDE::fromResponse($response->xContenDE);
+      $res->setXContEv(TxContenDE::fromResponse($response->xContenDE));
     }
+
+    var_dump($res);
 
     return $res;
   }
