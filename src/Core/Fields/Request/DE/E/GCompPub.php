@@ -186,14 +186,11 @@ class GCompPub
   public static function fromResponse($response):self
   {
     $res = new GCompPub();
-    if(isset($response->gCompPub))
-    {
       $res->setDModCont($response->dModCont);
       $res->setDEntCont($response->dEntCont);
       $res->setDAnoCont($response->dAnoCont);
       $res->setDSecCont($response->dSecCont);
       $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $response->dFeCodCont));
-    }
     return $res;
   }
 }

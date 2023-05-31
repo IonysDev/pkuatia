@@ -12,7 +12,6 @@ class GTimb
 {
 
     public int $iTiDE;        // C002 - Tipo de documento electrónico
-    public string $dDesTiDE;  // C003 - Descripción del tipo de documento electrónico
     public int $dNumTim;      // C004 - Número del timbrado
     public string $dEst;      // C005 - Establecimiento
     public string $dPunExp;   // C006 - Punto de expedición
@@ -57,20 +56,6 @@ class GTimb
     public function setDFeIniT(DateTime $dFeIniT): void
     {
         $this->dFeIniT = $dFeIniT;
-    }
-
-    /**
-     * Set the value of dDesTiDE
-     *
-     * @param string $dDesTiDE
-     *
-     * @return self
-     */
-    public function setDDesTiDE(string $dDesTiDE): self
-    {
-        $this->dDesTiDE = $dDesTiDE;
-
-        return $this;
     }
 
     ///////////////////////////////////////////////////////////////////////

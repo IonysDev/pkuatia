@@ -14,7 +14,8 @@ class GDtipDE
   public GCamNCDE $gCamNCDE;
   public GCamNRE $gCamNRE;
   public GCamCond $gCamCond;
-  public GCamItem $gCamItem;
+  ////ARRAY DE GCAMITEM
+  public  array $gCamItem;
   public GCamEsp $gCamEsp;
 
   //====================================================//
@@ -141,15 +142,7 @@ class GDtipDE
     return $this;
   }
 
-  /**
-   * Get the value of gCamItem
-   *
-   * @return GCamItem
-   */
-  public function getGCamItem(): GCamItem
-  {
-    return $this->gCamItem;
-  }
+
 
   /**
    * Set the value of gCamItem
@@ -203,7 +196,6 @@ class GDtipDE
     $res->appendChild($this->gCamNCDE->toDOMElement());
     $res->appendChild($this->gCamNRE->toDOMElement());
     $res->appendChild($this->gCamCond->toDOMElement());
-    $res->appendChild($this->gCamItem->toDOMElement());
     $res->appendChild($this->gCamEsp->toDOMElement());
     return $res;
   }
@@ -223,7 +215,6 @@ class GDtipDE
       $res->setGCamNCDE($res->gCamNCDE->fromDOMElement($xml->getElementsByTagName('gCamNCDE')->item(0)->nodeValue));
       $res->setGCamNRE($res->gCamNRE->fromDOMElement($xml->getElementsByTagName('gCamNRE')->item(0)->nodeValue));
       $res->setGCamCond($res->gCamCond->fromDOMElement($xml->getElementsByTagName('gCamCond')->item(0)->nodeValue));
-      $res->setGCamItem($res->gCamItem->fromDOMElement($xml->getElementsByTagName('gCamItem')->item(0)->nodeValue));
       $res->setGCamEsp($res->gCamEsp->fromDOMElement($xml->getElementsByTagName('gCamEsp')->item(0)->nodeValue));
 
       return $res;
@@ -233,20 +224,58 @@ class GDtipDE
     }
   }
 
- 
-   /**
-    * fromResponse
-    *
-    * @param  mixed $response
-    * @return self
-    */
-   public static function fromResponse($response):self
-   {
-      $res = new GDtipDE();
-      if(isset($response->gCamFE))
-      {
-          $res->setGCamFE(GCamFE::fromResponse($response->gCamFE));
-      }
-      return $res;
-   }
+
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
+  public static function fromResponse($response): self
+  {
+    $res = new GDtipDE();
+    if (isset($response->gCamFE)) {
+      $res->setGCamFE(GCamFE::fromResponse($response->gCamFE));
+    }
+    if (isset($response->gCamAE)) {
+      $res->setGCamAE(GCamAE::fromResponse($response->gCamAE));
+    }
+
+    if (isset($response->gCamNCDE)) {
+      $res->setGCamNCDE(GCamNCDE::fromResponse($response->gCamNCDE));
+    }
+
+    if (isset($response->gCamNRE)) {
+      $res->setGCamNRE(GCamNRE::fromResponse($response->gCamNRE));
+    }
+
+    if (isset($response->gCamCond)) {
+      $res->setGCamCond(GCamCond::fromResponse($response->gCamCond));
+    }
+
+    if(isset($response->gCamItem)){
+      $aux = (array)$response->gCamItem;
+      //count the number of elements in the array
+       $count = count($aux);
+       //if the array has element
+       if($count > 0){
+         //se recorre en un for con el count
+         for ($i=0; $i < $count ; $i++) { 
+           //se agrega al array
+            $res->gCamItem[] = GCamItem::fromResponse($response->gCamItem[$i]);
+         }
+       }
+    }
+    return $res;
+  }
+
+  /**
+   * Get the value of gCamItem
+   *
+   * @return array
+   */
+  public function getGCamItem(): array
+  {
+    return $this->gCamItem;
+  }
 }

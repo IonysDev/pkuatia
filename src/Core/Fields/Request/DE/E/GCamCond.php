@@ -159,4 +159,21 @@ class GCamCond
 
     return $this;
   }
+
+  public static function fromResponse($response): self
+  {
+    $res = new self();
+    if (isset($response)) {
+      $res->setICondOpe(intval($response->iCondOpe));
+      ///children
+      if (isset($response->gPaConEIni)) {
+        $res->setGPaConEIni(GPaConEIni::fromResponse($response->gPaConEIni));
+      }
+      ///children
+      if (isset($response->gPagCred)) {
+        $res->setGPagCred(GPagCred::fromResponse($response->gPagCred));
+      }
+      return $res;
+    }
+  }
 }

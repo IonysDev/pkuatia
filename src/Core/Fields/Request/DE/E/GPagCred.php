@@ -222,4 +222,28 @@ class GPagCred
 
     return $this;
   }
+
+  //====================================================//
+  public static function fromResponse($response):self
+  {
+    $res = new GPagCred();
+    $res->setICondCred(intval($response->iCondCred));
+    if(isset($response->dPlazoCre))
+    {
+      $res->setDPlazoCre($response->dPlazoCre);
+    }
+
+    $res->setDCuotas(intval($response->dCuotas));
+
+    if(isset($response->dMonEnt))
+    {
+      $res->setDMonEnt(intval($response->dMonEnt));
+    }
+    //children
+    if(isset($response->gCuotas))
+    {
+      $res->setGCuotas(GCuotas::fromResponse($response->gCuotas));
+    }
+    return $res;
+  }
 }

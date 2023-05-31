@@ -149,4 +149,24 @@ class GCuotas
       return null;
     }
   }
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
+  public static function fromResponse($response):self
+  {
+    $res = new GCuotas();
+    $res->setCMoneCuo($response->cMoneCuo);
+    $res->setDMonCuota($response->dMonCuota);
+    if(isset($response->dVencCuo))
+    {
+      $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $response->dVencCuo));
+    }
+
+    return $res;
+
+  }
 }

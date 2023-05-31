@@ -163,7 +163,6 @@ class RDE
   public static function fromResponse($response):self
   {
     $res = new RDE();
-    $res->setDVerFor(intval($response->dVerFor));
     $res->setDE(DE::fromResponse($response->DE));
     return $res;
   }

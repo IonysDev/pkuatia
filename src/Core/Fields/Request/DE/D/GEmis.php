@@ -374,6 +374,7 @@ class GEmis
         if (isset($response->dDenSuc)) {
         $gEmis->setDDenSuc($response->dDenSuc);
         }
+        //Children
         $gEmis->setGActEco(GActEco::fromResponse($response->gActEco));
         if (isset($response->gRespDE)) {
             $gEmis->setGRespDE(GRespDE::fromResponse($response->gRespDE));

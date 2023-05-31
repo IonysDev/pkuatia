@@ -101,7 +101,7 @@ class GCamNCDE
 
     return $res;
   }
-  
+
   /**
    * fromDOMElement
    *
@@ -110,15 +110,20 @@ class GCamNCDE
    */
   public static function fromDOMElement(DOMElement $xml): GCamNCDE
   {
-    if(strcmp($xml->tagName,'gCamNCDE') == 0 && $xml->childElementCount ==2)
-    {
+    if (strcmp($xml->tagName, 'gCamNCDE') == 0 && $xml->childElementCount == 2) {
       $res = new GCamNCDE();
       $res->setIMotEmi(intval($xml->getElementsByTagName('iMotE')->item(0)->nodeValue));
       return $res;
-    }
-    else {
+    } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
+  }
+
+  public static function fromResponse($response): self
+  {
+    $res = new GCamNCDE();
+    $res->setIMotEmi(intval($response->iMotEmi));
+    return $res;
   }
 }

@@ -175,7 +175,6 @@ class GCamFE
     {
       $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $response->dFecEmNR));
     }
-
     //Children
     if(isset($response->gComPub))
     {

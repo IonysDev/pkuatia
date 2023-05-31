@@ -314,4 +314,18 @@ class GPagTarCD
       throw new \Exception("Invalid XML Elemement: $xml->tagName");
     }
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GPagTarCD();
+    $res->setIDenTarj(intval($response->iDenTarj));
+    $res->setDRSProTar($response->dRSProTar);
+    $res->setDRUCProTar($response->dRUCProTar);
+    $res->setDDVProTar($response->dDDVProTar);
+    $res->setIForProPa(intval($response->iForProPa));
+    $res->setDCodAuOpe(intval($response->dCodAuOpe));
+    $res->setDNomTit($response->dNomTit);
+    $res->setDNumTarj(intval($response->dNumTarj));
+    return $res;
+  }
 }

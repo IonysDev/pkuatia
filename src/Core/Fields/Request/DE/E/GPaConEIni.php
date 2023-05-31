@@ -319,4 +319,25 @@ class GPaConEIni
 
     return $this;
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GPaConEIni();
+    $res->setITiPago(intval($response->iTiPago));
+    $res->setDMonTiPag(intval($response->dMonTiPag));
+    $res->setCMoneTiPag($response->cMoneTiPag);
+    $res->setDTiCamTiPag($response->dTiCamTiPag);
+    //Children
+    if(isset($response->gPagTarCD))
+    {
+      $res->setGPagTarCD(GPagTarCD::fromResponse($response->gPagTarCD));
+    }
+    if(isset($response->gPagCheq))
+    {
+      $res->setGPagCheq(GPagCheq::fromResponse($response->gPagCheq));
+    } 
+
+    return $res;
+  }
+  
 }

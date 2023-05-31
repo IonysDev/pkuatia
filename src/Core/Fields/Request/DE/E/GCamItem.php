@@ -4,8 +4,10 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
 use DOMElement;
 
+use function PHPSTORM_META\type;
+
 /**
- *ID:E700 
+ *ID:E700
  *Campos que describen los ítems de la operación
  *PADRE:E001
  */
@@ -19,9 +21,9 @@ class GCamItem
   public int $dGtin; //E706 Código GTIN por producto
   public int $dGtinPq; //E707 Código GTIN por paquete
   public string $dDesProSer; //E708  Descripción del producto  y/o servicio
-  public int $cUniMed; //E709 Unidad de medida 
-  public int $dCantProSer; //E711  Cantidad del producto y/o servicio 
-  public string $cPaisOrig; //E712  Código del país de origen del producto 
+  public int $cUniMed; //E709 Unidad de medida
+  public int $dCantProSer; //E711  Cantidad del producto y/o servicio
+  public string $cPaisOrig; //E712  Código del país de origen del producto
   public string $dInfItem; //E714 Información de interés  del emisor con respecto al item;
   public int $cRelMerc; //E715 Código de datos de relevancia de las  mercaderías
   public int $dCanQuiMer; //E717 Cantidad de quiebra o  merma
@@ -370,7 +372,7 @@ class GCamItem
   }
 
   /**
-   * 710  Descripción de la unidad de medida 
+   * 710  Descripción de la unidad de medida
    *
    * @return string
    */
@@ -400,7 +402,7 @@ class GCamItem
   }
 
   /**
-   * E713 Descripción del país de origen del producto 
+   * E713 Descripción del país de origen del producto
    *
    * @return string
    */
@@ -665,5 +667,89 @@ class GCamItem
     $this->gVehNuevo = $gVehNuevo;
 
     return $this;
+  }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GCamItem();
+    $res->setDCodInt($response->dCodInt);
+    if (isset($response->dParAranc))
+    {
+      $res->setDParAranc($response->dParAranc);
+    }
+    if (isset($response->dNCM))
+    {
+      $res->setDNCM($response->dNCM);
+    }
+    if (isset($response->dDDncpG))
+    {
+      $res->setDDncpG($response->dDDncpG);
+    }
+    if (isset($response->dDDncpE))
+    {
+      $res->setDDncpE($response->dDDncpE);
+    }
+    if (isset($response->dGtin))
+    {
+      $res->setDGtin($response->dGtin);
+    }
+    if (isset($response->dGtinPq))
+    {
+      $res->setDGtinPq($response->dGtinPq);
+    }
+    if (isset($response->dDesProSer))
+    {
+      $res->setDDesProSer($response->dDesProSer);
+    }
+    if (isset($response->cUniMed))
+    {
+      $res->setCUniMed($response->cUniMed);
+    }
+    if (isset($response->dcantProSer))
+    {
+      $res->setDCantProSer($response->dcantProSer);
+    }
+    if (isset($response->cPaisOrig))
+    {
+      $res->setCPaisOrig($response->cPaisOrig);
+    }
+    if (isset($response->dInfItem))
+    {
+      $res->setDInfItem($response->dInfItem);
+    }
+    if (isset($response->dRelMerc))
+    {
+      $res->setCRelMerc($response->dRelMerc);
+    }
+    if (isset($response->dcantQuiMer))
+    {
+      $res->setDCanQuiMer($response->dcantQuiMer);
+    }
+    if (isset($response->dporQuiMer))
+    {
+      $res->setDPorQuiMer($response->dporQuiMer);
+    }
+    if (isset($response->dCDCAnticipo))
+    {
+      $res->setDCDCAnticipo($response->dCDCAnticipo);
+    }
+    // //CHILDREN
+    // if (isset($response->gValorItem))
+    // {
+    //   $res->setGValorItem(GValorItem::fromResponse($response->gValorItem));
+    // }
+    // if (isset($response->gCamIVa))
+    // {
+    //   $res->setGCamIVa(GCamIVA::fromResponse($response->gCamIVa));
+    // }
+    // if (isset($response->gRasMerc))
+    // {
+    //   $res->setGRasMerc(GRasMerc::fromResponse($response->gRasMerc));
+    // }
+    // if (isset($response->gVehNuevo))
+    // {
+    //   $res->setGVehNuevo(GVehNuevo::fromResponse($response->gVehNuevo));
+    // }
+    return $res;
   }
 }

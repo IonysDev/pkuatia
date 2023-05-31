@@ -256,4 +256,16 @@ class GCamNRE
       return null;
     }
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GCamNRE();
+
+      $res->setIMotEmiNR(intval($response->gCamNCDE->iMotEmiNR));
+      $res->setIRespEmiNR(intval($response->gCamNCDE->iRespEmiNR));
+      $res->setdkmR(intval($response->gCamNCDE->dkmR));
+      $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $response->gCamNCDE->dFecEm));
+    
+    return $res;
+  }
 }

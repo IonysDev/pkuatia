@@ -539,4 +539,23 @@ class GCamAE
     }
   }
 
+  public static function fromResponse($response): self
+  {
+    $res = new self();
+      $res->setINatVen(intval($response->gCamAE->iNatVen));
+      $res->setITipIDVen(intval($response->gCamAE->iTipIDVen));
+      $res->setDNumIDVen($response->gCamAE->dNumIDVen);
+      $res->setDNomVen($response->gCamAE->dNomVen);
+      $res->setDDirVen($response->gCamAE->dDirVen);
+      $res->setDNumCasVen(intval($response->gCamAE->dNumCasVen));
+      $res->setCDepVen(intval($response->gCamAE->cDepVen));
+      $res->setCDisVen(intval($response->gCamAE->cDisVen));
+      $res->setCCiuVen(intval($response->gCamAE->cCiuVen));
+      $res->setDDirProv($response->gCamAE->dDirProv);
+      $res->setCDepProv(intval($response->gCamAE->cDepProv));
+      $res->setCDisProv(intval($response->gCamAE->cDisProv));
+      $res->setCCiuProv(intval($response->gCamAE->cCiuProv));
+    return $res;
+  }
+
 }
