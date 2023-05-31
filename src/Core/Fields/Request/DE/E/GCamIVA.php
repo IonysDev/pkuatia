@@ -229,11 +229,28 @@ class GCamIVA
   {
 
     $res = new GCamIVA();
-    $res->setIAfecIVA(intval($resposne->iAfecIVA));
-    $res->setDPropIVA(intval($resposne->dPropIVA));
-    $res->setDTasaIVA(intval($resposne->dTasaIVA));
-    $res->setDBasGravIVA(intval($resposne->dBasGravIVA));
-    $res->setDLiqIVAItem(intval($resposne->dLiqIVAItem));
+    if(isset($resposne->iAfecIVA))
+    {
+      $res->setIAfecIVA(intval($resposne->iAfecIVA));
+    }
+    if(isset($resposne->dPropIVA))
+    {
+      $res->setDPropIVA(intval($resposne->dPropIVA));
+    }
+    if(isset($resposne->dTasaIVA))
+    {
+      $res->setDTasaIVA(intval($resposne->dTasaIVA));
+    }
+    if(isset($resposne->dBasGravIVA))
+    {
+      $res->setDBasGravIVA(intval($resposne->dBasGravIVA));
+    }
+    if(isset($resposne->dLiqIVAItem))
+    {
+      $res->setDLiqIVAItem(intval($resposne->dLiqIVAItem));
+    }
+    
+     
     return $res;
   }
 }

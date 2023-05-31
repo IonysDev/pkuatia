@@ -246,11 +246,27 @@ class GCamCarg
   public static function fromResponse($response):self
   {
     $res = new GCamCarg();
-    $res->setCUniMedTotVol(intval($response->cUniMedTotVol));
-    $res->setDTotVolMerc(intval($response->dTotVolMerc));
-    $res->setCUniMedTotPes(intval($response->cUniMedTotPes));
-    $res->setDTotPesMerc(intval($response->dTotPesMerc));
-    $res->setICarCarga(intval($response->iCarCarga));
+    if(isset($response->cUniMedTotVol))
+    {
+      $res->setCUniMedTotVol(intval($response->cUniMedTotVol));
+    }
+    if(isset($response->dTotVolMerc))
+    {
+      $res->setDTotVolMerc(intval($response->dTotVolMerc));
+    }
+    if(isset($response->cUniMedTotPes))
+    {
+      $res->setCUniMedTotPes(intval($response->cUniMedTotPes));
+    }
+    if(isset($response->dTotPesMerc))
+    {
+      $res->setDTotPesMerc(intval($response->dTotPesMerc));
+    }
+    if(isset($response->iCarCarga))
+    {
+      $res->setICarCarga(intval($response->iCarCarga));
+    }
+    
     return $res;
   }
 }

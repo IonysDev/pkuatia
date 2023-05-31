@@ -324,14 +324,38 @@ class GPagTarCD
   public static function fromResponse($response): self
   {
     $res = new GPagTarCD();
-    $res->setIDenTarj(intval($response->iDenTarj));
-    $res->setDRSProTar($response->dRSProTar);
-    $res->setDRUCProTar($response->dRUCProTar);
-    $res->setDDVProTar($response->dDDVProTar);
-    $res->setIForProPa(intval($response->iForProPa));
-    $res->setDCodAuOpe(intval($response->dCodAuOpe));
-    $res->setDNomTit($response->dNomTit);
-    $res->setDNumTarj(intval($response->dNumTarj));
+    if(isset($response->iDenTarj))
+    {
+      $res->setIDenTarj(intval($response->iDenTarj));
+    }
+    if(isset($response->dRSProTar))
+    {
+      $res->setDRSProTar($response->dRSProTar);
+    }
+    if(isset($response->dRUCProTar))
+    {
+      $res->setDRUCProTar($response->dRUCProTar);
+    }
+    if(isset($response->dDVProTar))
+    {
+      $res->setDDVProTar(intval($response->dDVProTar));
+    }
+    if(isset($response->iForProPa))
+    {
+      $res->setIForProPa(intval($response->iForProPa));
+    }
+    if(isset($response->dCodAuOpe))
+    {
+      $res->setDCodAuOpe(intval($response->dCodAuOpe));
+    }
+    if(isset($response->dNomTit))
+    {
+      $res->setDNomTit($response->dNomTit);
+    }
+    if(isset($response->dNumTarj))
+    {
+      $res->setDNumTarj(intval($response->dNumTarj));
+    }
     return $res;
   }
 }

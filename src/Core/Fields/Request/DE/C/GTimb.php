@@ -168,13 +168,12 @@ class GTimb
     //     if (strcmp($xml->tagName, 'gTimb') == 0 && $xml->childElementCount == 8) {
     //         $res = new GTimb();
     //         $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
-    //         $res->setITiDE($xml->getElementsByTagName('dDesTiDE')->item(0)->nodeValue);
-    //         $res->setITiDE(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
-    //         $res->setITiDE($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
-    //         $res->setITiDE($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
-    //         $res->setITiDE($xml->getElementsByTagName('dNumDoc')->item(0)->nodeValue);
-    //         $res->setITiDE($xml->getElementsByTagName('dSerieNum')->item(0)->nodeValue);
-    //         $res->setITiDE(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeIniT')->item(0)->nodeValue));
+    //         $res->setDNumTim(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
+    //         $res->setDEst($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
+    //         $res->setDPunExp($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
+    //         $res->setDNumDoc($xml->getElementsByTagName('dNumDoc')->item(0)->nodeValue);
+    //         $res->setDSerieNum($xml->getElementsByTagName('dSerieNum')->item(0)->nodeValue);
+    //         $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeIniT')->item(0)->nodeValue));
     //         return $res;
     //     } else {
     //         throw new \Exception("Invalid XML Element: $xml->tagName");
@@ -191,16 +190,36 @@ class GTimb
     public static function fromResponse($response): self
     {
         $res = new GTimb();
-        $res->setITiDE(intval($response->iTiDE));
-        $res->setDNumTim(intval($response->dNumTim));
-        $res->setDEst($response->dEst);
-        $res->setDPunExp($response->dPunExp);
-        $res->setDNumDoc($response->dNumDoc);
-        if (isset($response->dSerieNum)) {
-
+        if(isset($response->iTiDE))
+        {
+            $res->setITiDE(intval($response->iTiDE));
+        }
+        if(isset($response->dNumTim))
+        {
+            $res->setDNumTim(intval($response->dNumTim));
+        }
+        if(isset($response->dEst))
+        {
+            $res->setDEst($response->dEst);
+        }
+        if(isset($response->dPunExp))
+        {
+            $res->setDPunExp($response->dPunExp);
+        }
+        if(isset($response->dNumDoc))
+        {
+            $res->setDNumDoc($response->dNumDoc);
+        }
+        if(isset($response->dSerieNum))
+        {
             $res->setDSerieNum($response->dSerieNum);
         }
-        $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $response->dFeIniT));
+        if(isset($response->dFeIniT))
+        {
+            $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $response->dFeIniT));
+        }
+        
+
         return $res;
     }
 }

@@ -147,10 +147,23 @@ class GRespDE {
     public static function fromResponse($response): self
     {
         $res = new GRespDE();
-        $res->setITipIDRespDE(intval($response->iTipIDRespDE));
-        $res->setDNumIDRespDE($response->dNumIDRespDE);
-        $res->setDNomRespDE($response->dNomRespDE);
-        $res->setDCarRespDE($response->dCarRespDE);
+        if(isset($response->iTipIDRespDE))
+        {
+            $res->setITipIDRespDE(intval($response->iTipIDRespDE));
+        }
+        if(isset($response->dNumIDRespDE))
+        {
+            $res->setDNumIDRespDE($response->dNumIDRespDE);
+        }
+        if(isset($response->dNomRespDE))
+        {
+            $res->setDNomRespDE($response->dNomRespDE);
+        }
+        if(isset($response->dCarRespDE))
+        {
+            $res->setDCarRespDE($response->dCarRespDE);
+        }
+        
 
         return $res;
     }

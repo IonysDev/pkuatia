@@ -329,9 +329,18 @@ class GPaConEIni
   public static function fromResponse($response):self
   {
     $res = new GPaConEIni();
-    $res->setITiPago(intval($response->iTiPago));
-    $res->setDMonTiPag(intval($response->dMonTiPag));
-    $res->setCMoneTiPag($response->cMoneTiPag);
+    if(isset($response->iTiPago))
+    {
+      $res->setITiPago(intval($response->iTiPago));
+    }
+    if(isset($response->dMonTiPag))
+    {
+      $res->setDMonTiPag(intval($response->dMonTiPag));
+    }
+    if(isset($response->cMoneTiPag))
+    {
+      $res->setCMoneTiPag($response->cMoneTiPag);
+    }
     if(isset($response->dTiCamTiPag))
     {
       $res->setDTiCamTiPag($response->dTiCamTiPag);

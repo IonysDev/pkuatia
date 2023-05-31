@@ -341,16 +341,46 @@ class GRasMerc
   public static function fromResponse($response): self
   {
     $res = new GRasMerc();
-    $res->setDNumLote($response->dNumLote);
-    $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $response->dVencMerc));
-    $res->setDNSerie($response->dNSerie);
-    $res->setDNumPedi($response->dNumPedi);
-    $res->setDNumSegui($response->dNumSegui);
-    $res->setDNomImp($response->dNomImp);
-    $res->setDDirImp($response->dDirImp);
-    $res->setDNumFir($response->dNumFir);
-    $res->setDNumReg($response->dNumReg);
-    $res->setDNumRegEntCom($response->dNumRegEntCom);
+    if(isset($response->dNumLote))
+    {
+      $res->setDNumLote($response->dNumLote);
+    }
+    if(isset($response->dVencMerc))
+    {
+      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $response->dVencMerc));
+    }
+    if(isset($response->dNSerie))
+    {
+      $res->setDNSerie($response->dNSerie);
+    }
+    if(isset($response->dNumPedi))
+    {
+      $res->setDNumPedi($response->dNumPedi);
+    }
+    if(isset($response->dNumSegui))
+    {
+      $res->setDNumSegui($response->dNumSegui);
+    }
+    if(isset($response->dNomImp))
+    {
+      $res->setDNomImp($response->dNomImp);
+    }
+    if(isset($response->dDirImp))
+    {
+      $res->setDDirImp($response->dDirImp);
+    }
+    if(isset($response->dNumFir))
+    {
+      $res->setDNumFir($response->dNumFir);
+    }
+    if(isset($response->dNumReg))
+    {
+      $res->setDNumReg($response->dNumReg);
+    }
+    if(isset($response->dNumRegEntCom))
+    {
+      $res->setDNumRegEntCom($response->dNumRegEntCom);
+    }
     return $res;
   }
 }

@@ -170,7 +170,10 @@ class RDE
   public static function fromResponse($response):self
   {
     $res = new RDE();
-    $res->setDE(DE::fromResponse($response->DE));
+    if(isset($response->DE))
+    {
+      $res->setDE(DE::fromResponse($response->DE));
+    }
     if(isset($response->signature))
     {
       $res->setSignature(Signature::fromResponse($response->signature));

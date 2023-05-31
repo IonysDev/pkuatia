@@ -326,14 +326,31 @@ class GCamSal
   public static function fromResponse($response): self
   {
     $res = new GCamSal();
-    $res->setDDirLocSal($response->dDirLocSal);
-    $res->setDNumCasSal($response->dNumCasSal);
-    $res->setDComp1Sal($response->dComp1Sal);
-    $res->setDComp2Sal($response->dComp2Sal);
-    $res->setCDepSal($response->cDepSal);
-    $res->setCDisSal($response->cDisSal);
-    $res->setCCiuSal($response->cCiuSal);
-    $res->setDTelSal($response->dTelSal);
+    if(isset($response->dDirLocSal)){
+      $res->setDDirLocSal($response->dDirLocSal);
+    }
+    if(isset($response->dNumCasSal)){
+      $res->setDNumCasSal($response->dNumCasSal);
+    }
+    if(isset($response->dComp1Sal)){
+      $res->setDComp1Sal($response->dComp1Sal);
+    }
+    if(isset($response->dComp2Sal)){
+      $res->setDComp2Sal($response->dComp2Sal);
+    }
+    if(isset($response->cDepSal)){
+      $res->setCDepSal($response->cDepSal);
+    }
+    if(isset($response->cDisSal)){
+      $res->setCDisSal($response->cDisSal);
+    }
+    if(isset($response->cCiuSal)){
+      $res->setCCiuSal($response->cCiuSal);
+    }
+    if(isset($response->dTelSal)){
+      $res->setDTelSal($response->dTelSal);
+    }
+    
     return $res;
   }
 }

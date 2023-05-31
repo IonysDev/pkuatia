@@ -115,7 +115,11 @@ class GGrupSeg
   public static function fromResponse($response):self
   {
     $res = new GGrupSeg();
-    $res->setDCodEmpSeg($response->dCodEmpSeg);
+    if(isset($response->dCodEmpSeg))
+    {
+      $res->setDCodEmpSeg($response->dCodEmpSeg);
+    }
+ 
     if(isset($response->gGrupoPolSeg)){
       $res->setGGrupoPolSeg(GGrupPolSeg::fromResponse($response->gGrupoPolSeg));
     }

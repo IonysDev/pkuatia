@@ -120,8 +120,14 @@ class GPagCheq
   public static function fromResponse($response): self
   {
     $res = new GPagCheq();
-    $res->setDNumCheq($response->dNumCheq);
-    $res->setDBcoEmi($response->dBcoEmi);
+    if(isset($response->dNumCheq))
+    {
+      $res->setDNumCheq($response->dNumCheq);
+    }
+    if(isset($response->dBcoEmi))
+    {
+      $res->setDBcoEmi($response->dBcoEmi);
+    }
     return $res;
   }
 }

@@ -260,13 +260,35 @@ class GGrupPolSeg
   public static function fromResponse($response): self
   {
     $res = new GGrupPolSeg();
-    $res->setDPoliza($response->dPoliza);
-    $res->setDUnidVig($response->dUnidVig);
-    $res->setDVigencia($response->dVigencia);
-    $res->setDNumPoliza($response->dNumPoliza);
-    $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecIniVig));
-    $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFinVig));
-    $res->setDCodInt($response->dCodInt);
+    if(isset($response->dPoliza))
+    {
+      $res->setDPoliza($response->dPoliza);
+    }
+    if(isset($response->dUnidVig))
+    {
+      $res->setDUnidVig($response->dUnidVig);
+    }
+    if(isset($response->dVigencia))
+    {
+      $res->setDVigencia($response->dVigencia);
+    }
+    if(isset($response->dNumPoliza))
+    {
+      $res->setDNumPoliza($response->dNumPoliza);
+    }
+    if(isset($response->dFecIniVig))
+    {
+      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecIniVig));
+    }
+    if(isset($response->dFecFinVig))
+    {
+      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFinVig));
+    }
+    if(isset($response->dCodInt))
+    {
+      $res->setDCodInt($response->dCodInt);
+    }
+    
     return $res;
   }
 }

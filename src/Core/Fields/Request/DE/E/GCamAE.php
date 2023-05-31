@@ -229,7 +229,7 @@ class GCamAE
   /**
    * Get the value of iNatVen
    */
-  public function getINatVen() : int | null
+  public function getINatVen(): int | null
   {
     return $this->iNatVen;
   }
@@ -260,7 +260,7 @@ class GCamAE
   /**
    * Get the value of iTipIDVen
    */
-  public function getITipIDVen() : int | null
+  public function getITipIDVen(): int | null
   {
     return $this->iTipIDVen;
   }
@@ -300,7 +300,7 @@ class GCamAE
   /**
    * Get the value of dNumIDVen
    */
-  public function getDNumIDVen() : string | null
+  public function getDNumIDVen(): string | null
   {
     return $this->dNumIDVen;
   }
@@ -308,7 +308,7 @@ class GCamAE
   /**
    * Get the value of dNomVen
    */
-  public function getDNomVen() : string | null
+  public function getDNomVen(): string | null
   {
     return $this->dNomVen;
   }
@@ -318,7 +318,7 @@ class GCamAE
   /**
    * Get the value of dDirVen
    */
-  public function getDDirVen() : string | null
+  public function getDDirVen(): string | null
   {
     return $this->dDirVen;
   }
@@ -326,7 +326,7 @@ class GCamAE
   /**
    * Get the value of dNumCasVen
    */
-  public function getDNumCasVen() : int | null
+  public function getDNumCasVen(): int | null
   {
     return $this->dNumCasVen;
   }
@@ -334,7 +334,7 @@ class GCamAE
   /**
    * Get the value of cDepVen
    */
-  public function getCDepVen() : int | null
+  public function getCDepVen(): int | null
   {
     return $this->cDepVen;
   }
@@ -537,7 +537,7 @@ class GCamAE
   //     return null;
   //   }
   // }
-  
+
   /**
    * fromResponse
    *
@@ -546,20 +546,57 @@ class GCamAE
    */
   public static function fromResponse($response): self
   {
-    $res = new self();
-    $res->setINatVen(intval($response->gCamAE->iNatVen));
-    $res->setITipIDVen(intval($response->gCamAE->iTipIDVen));
-    $res->setDNumIDVen($response->gCamAE->dNumIDVen);
-    $res->setDNomVen($response->gCamAE->dNomVen);
-    $res->setDDirVen($response->gCamAE->dDirVen);
-    $res->setDNumCasVen(intval($response->gCamAE->dNumCasVen));
-    $res->setCDepVen(intval($response->gCamAE->cDepVen));
-    $res->setCDisVen(intval($response->gCamAE->cDisVen));
-    $res->setCCiuVen(intval($response->gCamAE->cCiuVen));
-    $res->setDDirProv($response->gCamAE->dDirProv);
-    $res->setCDepProv(intval($response->gCamAE->cDepProv));
-    $res->setCDisProv(intval($response->gCamAE->cDisProv));
-    $res->setCCiuProv(intval($response->gCamAE->cCiuProv));
+    $res = new GCamAE();
+    if (isset($response->iNatVen)) {
+      $res->setINatVen(intval($response->iNatVen));
+    }
+
+    if (isset($response->iTipIDVen)) {
+      $res->setITipIDVen(intval($response->iTipIDVen));
+    }
+
+    if (isset($response->dNumIDVen)) {
+      $res->setDNumIDVen($response->dNumIDVen);
+    }
+    if (isset($response->dNomVen)) {
+      $res->setDNomVen($response->dNomVen);
+    }
+    if (isset($response->dDirVen)) {
+      $res->setDDirVen($response->dDirVen);
+    }
+    if (isset($response->dNumCasVen)) {
+      $res->setDNumCasVen(intval($response->dNumCasVen));
+    }
+    if (isset($response->cDepVen)) {
+      $res->setCDepVen(intval($response->cDepVen));
+    }
+
+    if (isset($response->cDisVen)) {
+      $res->setCDisVen(intval($response->cDisVen));
+    }
+
+    if (isset($response->cCiuVen)) {
+      $res->setCCiuVen(intval($response->cCiuVen));
+    }
+
+    if (isset($response->dDirProv)) {
+      $res->setDDirProv($response->dDirProv);
+    }
+    if (isset($response->cDepProv)) {
+      $res->setCDepProv(intval($response->cDepProv));
+    }
+
+    if (isset($response->cDisProv)) {
+      $res->setCDisProv(intval($response->cDisProv));
+    }
+
+    if (isset($response->cCiuProv)) {
+      $res->setCCiuProv(intval($response->cCiuProv));
+    }
+
+    
+
+
     return $res;
   }
 }

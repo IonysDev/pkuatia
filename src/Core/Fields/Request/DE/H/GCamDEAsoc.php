@@ -525,19 +525,59 @@ class GCamDEAsoc
   public static function fromResponse($response): self
   {
     $res = new GCamDEAsoc();
-    $res->setITipDocAso(intval($response->iTipDocAso));
-    $res->setDCdCDERef($response->dCdCDERef);
-    $res->setDNTimDI(intval($response->dNTimDI));
-    $res->setDEstDocAso($response->dStDocAso);
-    $res->setDPExpDocAso($response->dPExpDocAso);
-    $res->setDNumDocAso($response->dNumDocAso);
-    $res->setITipDocAso(intval($response->iTipDocAso));
-    $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $response->dFecEmDi));
-    $res->setDNumComRet($response->dNumComRet);
-    $res->setDNumResCF($response->dNumResCF);
-    $res->setITipCons(intval($response->iTipCons));
-    $res->setDNumCons(intval($response->dNumCons));
-    $res->setDNumControl($response->dNumControl);
+    if(isset($response->iTipDocAso))
+    {
+      $res->setITipDocAso(intval($response->iTipDocAso));
+    }
+    if(isset($response->dCdCDERef))
+    {
+      $res->setDCdCDERef($response->dCdCDERef);
+    }
+    if(isset($response->dNTimDI))
+    {
+      $res->setDNTimDI(intval($response->dNTimDI));
+    }
+    if(isset($response->dEstDocAso))
+    {
+      $res->setDEstDocAso($response->dEstDocAso);
+    }
+    if(isset($response->dPExpDocAso))
+    {
+      $res->setDPExpDocAso($response->dPExpDocAso);
+    }
+    if(isset($response->dNumDocAso))
+    {
+      $res->setDNumDocAso(intval($response->dNumDocAso));
+    }
+    if(isset($response->iTipDocAso))
+    {
+      $res->setITipDocAso(intval($response->iTipDocAso));
+    }
+    if(isset($response->dFecEmiDI))
+    {
+      $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $response->dFecEmiDI));
+    }
+    if(isset($response->dNumComRet))
+    {
+      $res->setDNumComRet($response->dNumComRet);
+    }
+    if(isset($response->dNumResCF))
+    {
+      $res->setDNumResCF($response->dNumResCF);
+    }
+    if(isset($response->iTipCons))
+    {
+      $res->setITipCons(intval($response->iTipCons));
+    }
+    if(isset($response->dNumCons))
+    {
+      $res->setDNumCons(intval($response->dNumCons));
+    }
+    if(isset($response->dNumControl))
+    {
+      $res->setDNumControl($response->dNumControl);
+    }
+    
     return $res;
   }
 }

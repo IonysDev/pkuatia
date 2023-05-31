@@ -113,7 +113,17 @@ class GCamFuFD
   public static function fromResponse($response): self
   {
     $res = new GCamFuFD();
-    $res->setDCarQR($response->dCarQR);
+
+    if(isset($response->dCarQR))
+    {
+      $res->setDCarQR($response->dCarQR);
+    }
+
+    if(isset($response->dInfAdic))
+    {
+      $res->setDInfAdic($response->dInfAdic);
+    }
+
     return $res;
   }
 }

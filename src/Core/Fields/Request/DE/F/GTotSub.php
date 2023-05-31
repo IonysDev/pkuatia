@@ -772,52 +772,79 @@ class GTotSub
     if (isset($response->dSubEx)) {
       $res->setDSubExo(intval($response->dSubEx));
     }
-    if(isset($response->dSub5))
-    {
+    if (isset($response->dSub5)) {
       $res->setDSub5(intval($response->dSub5));
     }
-    $res->setDSub10(intval($response->dSub10));
-    $res->setDTotOpe(intval($response->dTotOpe));
-    $res->setDTotDesc(intval($response->dTotDesc));
-    $res->setDTotDescGlotem(intval($response->dTotDescGlotem));
-    $res->setDTotAntItem(intval($response->dTotAntItem));
-    $res->setDTotAnt(intval($response->dTotAnt));
-    $res->setDPorcDescTotal(intval($response->dPorcDescTotal));
+    if (isset($response->dSub10)) {
+      $res->setDSub10(intval($response->dSub10));
+    }
+    if (isset($response->dTotOpe)) {
+      $res->setDTotOpe(intval($response->dTotOpe));
+    }
+    if (isset($response->dTotDesc)) {
+      $res->setDTotDesc(intval($response->dTotDesc));
+    }
+    if (isset($response->dTotDescGlotem)) {
+      $res->setDTotDescGlotem(intval($response->dTotDescGlotem));
+    }
+    if (isset($response->dTotAntItem)) {
+      $res->setDTotAntItem(intval($response->dTotAntItem));
+    }
+    if (isset($response->dTotAnt)) {
+      $res->setDTotAnt(intval($response->dTotAnt));
+    }
+    if (isset($response->dPorcDescTotal)) {
+      $res->setDPorcDescTotal(intval($response->dPorcDescTotal));
+    }
     if (isset($response->dPorcDesc)) {
       $res->setDPorcDescTotal(intval($response->dPorcDesc));
     }
     if (isset($response->dDesc)) {
       $res->setDDescTotal(intval($response->dDesc));
     }
-    $res->setDAnticipo(intval($response->dAnticipo));
-    $res->setDRedon(intval($response->dRedon));
+    if (isset($response->dAnticipo)) {
+      $res->setDAnticipo(intval($response->dAnticipo));
+    }
+    if (isset($response->dRedon)) {
+      $res->setDRedon(intval($response->dRedon));
+    }
     if (isset($response->dComi)) {
       $res->setDComi(intval($response->dComi));
     }
-    $res->setDTotGralOpe(intval($response->dTotGralOpe));
-    $res->setDIVA5(intval($response->dIVA5));
-    $res->setDIVA10(intval($response->dIVA10));
-    if(isset($response->dLiqTotIVA5))
-    {
+    if (isset($response->dTotGralOpe)) {
+      $res->setDTotGralOpe(intval($response->dTotGralOpe));
+    }
+    if (isset($response->dIVA5)) {
+      $res->setDIVA5(intval($response->dIVA5));
+    }
+    if (isset($response->dIVA10)) {
+      $res->setDIVA10(intval($response->dIVA10));
+    }
+    if (isset($response->dLiqTotIVA5)) {
       $res->setDLiqTotIVA5(intval($response->dLiqTotIVA5));
     }
-   if(isset($response->dLiqTotIVA10))
-   {
-
-     $res->setDLiqTotIVA10(intval($response->dLiqTotIVA10));
-   }
+    if (isset($response->dLiqTotIVA10)) {
+      $res->setDLiqTotIVA10(intval($response->dLiqTotIVA10));
+    }
     if (isset($response->dIVAComi)) {
       $res->setDIVAComi(intval($response->dIVAComi));
     }
-    $res->setDTotIVA(intval($response->dTotIVA));
-    $res->setDBaseGrav5(intval($response->dBaseGrav5));
-    $res->setDBaseGrav10(intval($response->dBaseGrav10));
+    if (isset($response->dTotIVA)) {
+      $res->setDTotIVA(intval($response->dTotIVA));
+    }
+    if (isset($response->dBaseGrav5)) {
+      $res->setDBaseGrav5(intval($response->dBaseGrav5));
+    }
+    if (isset($response->dBaseGrav10)) {
+      $res->setDBaseGrav10(intval($response->dBaseGrav10));
+    }
     if (isset($response->dTBaseGraIVA)) {
       $res->setDTbasGraIVA(intval($response->dTBaseGraIVA));
     }
     if (isset($response->dTotalGs)) {
       $res->setDTotalGs(intval($response->dTotalGs));
     }
+    
     return $res;
   }
 }

@@ -506,7 +506,7 @@ class GVehNuevo
   //     return null;
   //   }
   // }
-  
+
   /**
    * fromResponse
    *
@@ -516,20 +516,48 @@ class GVehNuevo
   public static function fromResponse($response): self
   {
     $res = new self();
-    $res->setITipOpVN(intval($response->iTipOpVN));
-    $res->setDChasis($response->dChasis);
-    $res->setDColor($response->dColor);
-    $res->setDPotencia(intval($response->dPotencia));
-    $res->setDCapMot(intval($response->dCapMot));
-    $res->setDPNet(intval($response->dPNet));
-    $res->setDPBruto(intval($response->dPBruto));
-    $res->setITipCom(intval($response->iTipCom));
-    $res->setDNroMotor($response->dNroMotor);
-    $res->setDCapTracc(intval($response->dCapTracc));
-    $res->setDAnoFab(intval($response->dAnoFab));
-    $res->setCTipVeh($response->cTipVeh);
-    $res->setDCapac(intval($response->dCapac));
-    $res->setDCilin($response->dCilin);
+    if (isset($response->iTipOpVN)) {
+      $res->setITipOpVN(intval($response->iTipOpVN));
+    }
+    if (isset($response->dChasis)) {
+      $res->setDChasis($response->dChasis);
+    }
+    if (isset($response->dColor)) {
+      $res->setDColor($response->dColor);
+    }
+    if (isset($response->dPotencia)) {
+      $res->setDPotencia(intval($response->dPotencia));
+    }
+    if (isset($response->dCapMot)) {
+      $res->setDCapMot(intval($response->dCapMot));
+    }
+    if (isset($response->dPNet)) {
+      $res->setDPNet(intval($response->dPNet));
+    }
+    if (isset($response->dPBruto)) {
+      $res->setDPBruto(intval($response->dPBruto));
+    }
+    if (isset($response->iTipCom)) {
+      $res->setITipCom(intval($response->iTipCom));
+    }
+    if (isset($response->dNroMotor)) {
+      $res->setDNroMotor($response->dNroMotor);
+    }
+    if (isset($response->dCapTracc)) {
+      $res->setDCapTracc(intval($response->dCapTracc));
+    }
+    if (isset($response->dAnoFab)) {
+      $res->setDAnoFab(intval($response->dAnoFab));
+    }
+    if (isset($response->cTipVeh)) {
+      $res->setCTipVeh($response->cTipVeh);
+    }
+    if (isset($response->dCapac)) {
+      $res->setDCapac(intval($response->dCapac));
+    }
+    if (isset($response->dCilin)) {
+      $res->setDCilin($response->dCilin);
+    }
     return $res;
   }
 }

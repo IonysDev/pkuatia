@@ -175,9 +175,18 @@ class GCamGen
   public static function fromResponse($response): self
   {
     $res = new GCamGen();
-    $res->setDOrdCompra($response->dOrdCompra);
-    $res->setDOrdVta($response->dOrdVta);
-    $res->setDAsiento($response->dAsiento);
+    if(isset($response->dOrdCompra))
+    {
+      $res->setDOrdCompra($response->dOrdCompra);
+    }
+    if(isset($response->dOrdVta))
+    {
+      $res->setDOrdVta($response->dOrdVta);
+    }
+    if(isset($response->dAsiento))
+    {
+      $res->setDAsiento($response->dAsiento);
+    }
     //CHOILDREN
     if (isset($response->gCamCarg)) {
       $res->setGCamCarg(GCamCarg::fromResponse($response->gCamCarg));

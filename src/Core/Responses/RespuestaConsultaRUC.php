@@ -103,9 +103,6 @@ class RespuestaConsultaRUC
 
   public static function fromResponse($response): self
   {
-    echo "RespuestaConsultaRUC::fromResponse\n";
-
-
     if (is_null($response)) {
       throw new \Exception("Error Processing Request: null", 1);
       return null;
@@ -121,7 +118,11 @@ class RespuestaConsultaRUC
       $res->setDCodRes($response->dCodRes);
       $res->setDMsgRes($response->dMsgRes);
       ///generate txContRuc object
-      $res->setTxContRuc(TxContRuc::fromResponse($response->xContRUC));
+      if(isset($response->xContRUC))
+      {
+        $res->setTxContRuc(TxContRuc::fromResponse($response->xContRUC));
+      }
+      
     }
 
     return $res;

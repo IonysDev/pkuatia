@@ -381,16 +381,38 @@ class DE
     ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
     $array = json_decode(json_encode($response), true);
     $de = new DE();
-    $de->setID($array['@attributes']['Id']);
-    $de->setDDVId(intval($response->dDVId));
-    $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFirma));
-    $de->setDSisFact($response->dSisFact);
+    if(isset($array['@attributes']['Id']))
+    {
+      $de->setID($array['@attributes']['Id']);
+    }
+    if(isset($response->dDVId))
+    {
+      $de->setDDVId(intval($response->dDVId));
+    }
+    if(isset($response->dFecFirma))
+    {
+      $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFirma));
+    }
+    if(isset($response->dSisFact))
+    {
+      $de->setDSisFact($response->dSisFact);
+    }
     ///Children
-    $de->setGOpeDe(GOpeDE::fromResponse($response->gOpeDE));
-    $de->setGTimb(GTimb::fromResponse($response->gTimb));
-    $de->setDDatGralOpe(GDatGralOpe::fromResponse($response->gDatGralOpe));
-    $de->setGDtipDe(GDtipDE::fromResponse($response->gDtipDE));
-    $de->setGTotSub(GTotSub::fromResponse($response->gTotSub));
+    if (isset($response->gOpeDE)) {
+      $de->setGOpeDe(GOpeDE::fromResponse($response->gOpeDE));
+    }
+    if (isset($response->gTimb)) {
+      $de->setGTimb(GTimb::fromResponse($response->gTimb));
+    }
+    if (isset($response->gDatGralOpe)) {
+      $de->setDDatGralOpe(GDatGralOpe::fromResponse($response->gDatGralOpe));
+    }
+    if (isset($response->gDtipDE)) {
+      $de->setGDtipDe(GDtipDE::fromResponse($response->gDtipDE));
+    }
+    if (isset($response->gTotSub)) {
+      $de->setGTotSub(GTotSub::fromResponse($response->gTotSub));
+    }
     if (isset($response->gCamGen)) {
       $de->setGCamGen(GCamGen::fromResponse($response->gCamGen));
     }

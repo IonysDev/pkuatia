@@ -176,7 +176,11 @@ class GCamFE
   public static function fromResponse($response): self
   {
     $res = new GCamFE();
-    $res->setIIndPres(intval($response->iIndPres));
+    if(isset($response->iIndPres))
+    {
+      $res->setIIndPres(intval($response->iIndPres));
+    }
+ 
     if(isset($response->dFecEmNR))
     {
       $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $response->dFecEmNR));

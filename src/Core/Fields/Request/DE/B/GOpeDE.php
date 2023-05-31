@@ -143,18 +143,23 @@ class GOpeDE
     public static function fromResponse($response): self
     {
         $res = new GOpeDE();
-        $res->setITipEmi(intval($response->iTipEmi));
-        $res->setDCodSeg(intval($response->dCodSeg));
-        
+        if(isset($response->iTipEmi))
+        {
+            $res->setITipEmi(intval($response->iTipEmi));
+        }
+        if(isset($response->dCodSeg))
+        {
+            $res->setDCodSeg(intval($response->dCodSeg));
+        }
         if(isset($response->dInfoEmi))
         {
             $res->setDInfoEmi($response->dInfoEmi);
         }
-
         if(isset($response->dInfoFisc))
         {
             $res->setDInfoFisc($response->dInfoFisc);
         }
+        
 
         return $res;
     }

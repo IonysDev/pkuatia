@@ -257,7 +257,7 @@ class GOpeCom
     //         return null;
     //     }
     // }
-    
+
     /**
      * fromResponse
      *
@@ -267,9 +267,17 @@ class GOpeCom
     public static function fromResponse($response): self
     {
         $res = new GOpeCom();
-        $res->setITipTra(intval($response->iTipTra));
-        $res->setITImp(intval($response->iTImp));
-        $res->setCMoneOpe($response->cMoneOpe);
+        if (isset($response->iTipTra)) {
+            $res->setITipTra(intval($response->iTipTra));
+        }
+
+        if (isset($response->iTImp)) {
+            $res->setITImp(intval($response->iTImp));
+        }
+
+        if (isset($response->cMoneOpe)) {
+            $res->setCMoneOpe($response->cMoneOpe);
+        }
         if (isset($response->dCondTiCam)) {
             $res->setDCondTiCam(intval($response->dCondTiCam));
         }

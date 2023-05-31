@@ -80,7 +80,11 @@ class GActEco
     public static function fromResponse($response):self
     {
         $res = new GActEco();
-        $res->setCActEco($response->cActEco);
+        if(isset($response->cActEco))
+        {
+            $res->setCActEco($response->cActEco);
+        }
+
         return $res; 
     }
 }

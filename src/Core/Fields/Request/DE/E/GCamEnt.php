@@ -326,14 +326,39 @@ class GCamEnt
   public static function fromResponse($response):self
   {
     $res = new GCamEnt();
-    $res->setDDirLocEnt($response->dDirLocEnt);
-    $res->setDNumCasEnt($response->dNumCasEnt);
-    $res->setDComp1Ent($response->dComp1Ent);
-    $res->setDComp2Ent($response->dComp2Ent);
-    $res->setCDepEnt($response->cDepEnt);
-    $res->setCDisEnt($response->cDisEnt);
-    $res->setCCiuEnt($response->cCiuEnt);
-    $res->setDTelEnt($response->dTelEnt);
+    if(isset($response->dDirLocEnt))
+    {
+      $res->setDDirLocEnt($response->dDirLocEnt);
+    }
+    if(isset($response->dNumCasEnt))
+    {
+      $res->setDNumCasEnt($response->dNumCasEnt);
+    }
+    if(isset($response->dComp1Ent))
+    {
+      $res->setDComp1Ent($response->dComp1Ent);
+    }
+    if(isset($response->dComp2Ent))
+    {
+      $res->setDComp2Ent($response->dComp2Ent);
+    }
+    if(isset($response->cDepEnt))
+    {
+      $res->setCDepEnt($response->cDepEnt);
+    }
+    if(isset($response->cDisEnt))
+    {
+      $res->setCDisEnt($response->cDisEnt);
+    }
+    if(isset($response->cCiuEnt))
+    {
+      $res->setCCiuEnt($response->cCiuEnt);
+    }
+    if(isset($response->dTelEnt))
+    {
+      $res->setDTelEnt($response->dTelEnt);
+    }
+    
     return $res;
     
   }

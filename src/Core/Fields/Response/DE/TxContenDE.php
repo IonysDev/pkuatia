@@ -144,7 +144,7 @@ class TxContenDE
   //     return null;
   //   }
   // }
-  
+
   /**
    * fromResponse
    *
@@ -164,13 +164,14 @@ class TxContenDE
     $object = json_decode($json);
     ///create object
     $txContenDE = new TxContenDE();
+    if (isset($object->rDE)) {
+      $txContenDE->setRDe(RDE::fromResponse($object->rDE));
+    }
     ///set dProtAut
-    $txContenDE->setDProtAut($object->dProtAut);
-    ///set xContEv
-    // $txContenDE->setXContEv(TxContenEv::fromResponse($object->contentEv));
-    ///set rDe
-    $txContenDE->setRDe(RDE::fromResponse($object->rDE));
+    if (isset($object->dProtAut)) {
+      $txContenDE->setDProtAut($object->dProtAut);
+    }
+   
     return $txContenDE;
   }
-
 }

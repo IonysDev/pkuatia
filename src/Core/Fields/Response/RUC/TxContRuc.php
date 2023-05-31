@@ -239,18 +239,20 @@ class TxContRuc
    */
   public static function fromResponse($object): TxContRuc
   {
-    echo "TxContRuc::fromResponse" . PHP_EOL;
 
-    if (is_null($object)) {
-      throw new \Exception("Object error", 1);
-      return null;
-    }
     $res = new TxContRuc();
-    $res->setDRUCCons($object->dRUCCons);
-    $res->setDRazCons($object->dRazCons);
-    $res->setDCodEstCons($object->dCodEstCons);
-    $res->setDDesEstCons($object->dDesEstCons);
-    $res->setDRUCFactElec($object->dRUCFactElec);
+    if(isset($object->dRUCCons)){
+      $res->setDRUCCons($object->dRUCCons);
+    }
+    if(isset($object->dRazCons)){
+      $res->setDRazCons($object->dRazCons);
+    }
+    if(isset($object->dCodEstCons)){
+      $res->setDCodEstCons($object->dCodEstCons);
+    }
+    if(isset($object->dRUCFactElec)){
+      $res->setDRUCFactElec($object->dRUCFactElec);
+    }
 
     return $res;
   }

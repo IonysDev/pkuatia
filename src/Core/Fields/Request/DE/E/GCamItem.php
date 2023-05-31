@@ -667,7 +667,7 @@ class GCamItem
 
     return $this;
   }
-  
+
   /**
    * fromResponse
    *
@@ -676,11 +676,10 @@ class GCamItem
    */
   public static function fromResponse($response): self
   {
-
-  
-
     $res = new GCamItem();
-    $res->setDCodInt($response->dCodInt);
+    if (isset($response->dCodInt)) {
+      $res->setDCodInt($response->dCodInt);
+    }
     if (isset($response->dParAranc)) {
       $res->setDParAranc($response->dParAranc);
     }

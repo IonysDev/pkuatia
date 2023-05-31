@@ -35,7 +35,7 @@ class TxContenEv
    *
    * @return TrContEv
    */
-  public function getRContEv(): TrContEv
+  public function getRContEv(): TrContEv | null
   {
     return $this->rContEv;
   }
@@ -79,5 +79,7 @@ class TxContenEv
       return null;
     }
   }
+  
+
   
 }

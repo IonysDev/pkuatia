@@ -178,11 +178,23 @@ class GDatGralOpe
   public static function fromResponse($response): self
   {
     $res = new GDatGralOpe();
-    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFeEmiDE));
+    if(isset($response->dFeEmiDE))
+    {
+      $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFeEmiDE));
+    }
     ///children
-    $res->setGOpeCom(GOpeCom::fromResponse($response->gOpeCom));
-    $res->setGEmis(GEmis::fromResponse($response->gEmis));
-    $res->setGDatRec(GDatRec::fromResponse($response->gDatRec));
+    if(isset($response->gOpeCom))
+    {
+      $res->setGOpeCom(GOpeCom::fromResponse($response->gOpeCom));
+    }
+    if(isset($response->gEmis))
+    {
+      $res->setGEmis(GEmis::fromResponse($response->gEmis));
+    }
+    if(isset($response->gDatRec))
+    {
+      $res->setGDatRec(GDatRec::fromResponse($response->gDatRec));
+    }
     return $res;
   }
 }

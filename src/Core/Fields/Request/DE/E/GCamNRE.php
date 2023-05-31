@@ -267,11 +267,19 @@ class GCamNRE
   {
     $res = new GCamNRE();
 
-    $res->setIMotEmiNR(intval($response->gCamNCDE->iMotEmiNR));
-    $res->setIRespEmiNR(intval($response->gCamNCDE->iRespEmiNR));
-    $res->setdkmR(intval($response->gCamNCDE->dkmR));
-    $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $response->gCamNCDE->dFecEm));
-
+    if(isset($response->iMotEmiNR)){
+      $res->setIMotEmiNR(intval($response->iMotEmiNR));
+    }
+    if(isset($response->iRespEmiNR)){
+      $res->setIRespEmiNR(intval($response->iRespEmiNR));
+    }
+    if(isset($response->dKmR)){
+      $res->setDKmR(intval($response->dKmR));
+    }
+    if(isset($response->dFecEm)){
+      $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $response->dFecEm));
+    }
+    
     return $res;
   }
 }

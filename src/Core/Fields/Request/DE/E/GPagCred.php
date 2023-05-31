@@ -233,13 +233,21 @@ class GPagCred
   public static function fromResponse($response):self
   {
     $res = new GPagCred();
-    $res->setICondCred(intval($response->iCondCred));
+
+    if(isset($response->iCondCred))
+    {
+      $res->setICondCred(intval($response->iCondCred));
+    }
+
     if(isset($response->dPlazoCre))
     {
       $res->setDPlazoCre($response->dPlazoCre);
     }
 
-    $res->setDCuotas(intval($response->dCuotas));
+    if(isset($response->dCuotas))
+    {
+      $res->setDCuotas(intval($response->dCuotas));
+    }
 
     if(isset($response->dMonEnt))
     {

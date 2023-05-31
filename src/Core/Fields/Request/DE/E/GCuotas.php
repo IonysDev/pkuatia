@@ -159,8 +159,14 @@ class GCuotas
   public static function fromResponse($response):self
   {
     $res = new GCuotas();
-    $res->setCMoneCuo($response->cMoneCuo);
-    $res->setDMonCuota($response->dMonCuota);
+    if(isset($response->cMoneCuo))
+    {
+      $res->setCMoneCuo($response->cMoneCuo);
+    }
+    if(isset($response->dMonCuota))
+    {
+      $res->setDMonCuota($response->dMonCuota);
+    }
     if(isset($response->dVencCuo))
     {
       $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $response->dVencCuo));

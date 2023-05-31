@@ -258,23 +258,39 @@ class GVehTras
 
         return $this;
     }
-    
+
     /**
      * fromResponse
      *
      * @param  mixed $response
      * @return self
      */
-    public static function fromResponse($response):self
+    public static function fromResponse($response): self
     {
         $res = new GVehTras();
-        $res->setDTiVehTras($response->dTiVehTras);
-        $res->setDMarVeh($response->dMarVeh);
-        $res->setDTipIdenVeh($response->dTipIdenVeh);
-        $res->setDNroIDVeh($response->dNroIDVeh);
-        $res->setDAdicVeh($response->dAdicVeh);
-        $res->setDNroMatVeh($response->dNroMatVeh);
-        $res->setDNroVuelo($response->dNroVuelo);
+        if (isset($response->dTiVehTras)) {
+            $res->setDTiVehTras($response->dTiVehTras);
+        }
+        if (isset($response->dMarVeh)) {
+            $res->setDMarVeh($response->dMarVeh);
+        }
+
+        if (isset($response->dTipIdenVeh)) {
+
+            $res->setDTipIdenVeh($response->dTipIdenVeh);
+        }
+        if (isset($response->dNroIDVeh)) {
+            $res->setDNroIDVeh($response->dNroIDVeh);
+        }
+        if (isset($response->dAdicVeh)) {
+            $res->setDAdicVeh($response->dAdicVeh);
+        }
+        if (isset($response->dNroMatVeh)) {
+            $res->setDNroMatVeh($response->dNroMatVeh);
+        }
+        if (isset($response->dNroVuelo)) {
+            $res->setDNroVuelo($response->dNroVuelo);
+        }
         return $res;
     }
 }

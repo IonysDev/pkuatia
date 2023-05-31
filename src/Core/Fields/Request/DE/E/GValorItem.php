@@ -180,12 +180,18 @@ class GValorItem
   public static function fromResponse($response):self
   {
     $res = new GValorItem();
-    $res->setDPUniProSer(intval($response->dPUniProSer));
+    if(isset($response->dPUniProSer))
+    {
+      $res->setDPUniProSer(intval($response->dPUniProSer));
+    }
     if(isset($response->dTiCamIt))
     {
       $res->setDTiCamIt(intval($response->dTiCamIt));
     }
-    $res->setDTotBruOpeItem(intval($response->dTotBruOpeItem));
+    if(isset($response->dTotBruOpeItem))
+    {
+      $res->setDTotBruOpeItem(intval($response->dTotBruOpeItem));
+    }
     ///children
     if(isset($response->gValorRestaItem))
     {

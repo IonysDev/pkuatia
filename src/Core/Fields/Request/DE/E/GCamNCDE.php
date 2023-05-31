@@ -129,7 +129,10 @@ class GCamNCDE
   public static function fromResponse($response): self
   {
     $res = new GCamNCDE();
-    $res->setIMotEmi(intval($response->iMotEmi));
+    if(isset($response->iMotEmi))
+    {
+      $res->setIMotEmi(intval($response->iMotEmi));
+    }
     return $res;
   }
 }

@@ -541,21 +541,53 @@ class GCamTrans
    public static function fromResponse($response):self
    {
       $res = new GCamTrans();
-      $res->setINatTrans(intval($response->iNatTrans));
-      $res->setDNomTrans($response->dNomTrans);
-      $res->setDRucTrans($response->dRucTrans);
-      $res->setDDVTrans(intval($response->dDVTrans));
-      $res->setITipIDTrans(intval($response->iTipIDTrans));
-      $res->setDNumIDTrans($response->dNumIDTrans);
-      $res->setCNacTrans($response->cNacTrans);
-      $res->setDNumIDChof($response->dNumIDChof);
-      $res->setDNomChof($response->dNomChof);
-      $res->setDDomFisc($response->dDomFisc);
-      $res->setDDirChof($response->dDirChof);
-      $res->setDNombAg($response->dNombAg);
-      $res->setDRucAg($response->dRucAg);
-      $res->setDDVAg(intval($response->dDVAg));
-      $res->setDDirAge($response->dDirAge);
+      if(isset($response->iNatTrans)){
+         $res->setINatTrans(intval($response->iNatTrans));
+      }
+      if(isset($response->dNomTrans)){
+         $res->setDNomTrans($response->dNomTrans);
+      }
+      if(isset($response->dRucTrans)){
+         $res->setDRucTrans($response->dRucTrans);
+      }
+      if(isset($response->dDVTrans)){
+         $res->setDDVTrans(intval($response->dDVTrans));
+      }
+      if(isset($response->iTipIDTrans)){
+         $res->setITipIDTrans(intval($response->iTipIDTrans));
+      }
+      if(isset($response->dNumIDTrans)){
+         $res->setDNumIDTrans($response->dNumIDTrans);
+      }
+      if(isset($response->cNacTrans)){
+         $res->setCNacTrans($response->cNacTrans);
+      }
+      if(isset($response->dNumIDChof)){
+         $res->setDNumIDChof($response->dNumIDChof);
+      }
+      if(isset($response->dNomChof)){
+         $res->setDNomChof($response->dNomChof);
+      }
+      if(isset($response->dDomFisc)){
+         $res->setDDomFisc($response->dDomFisc);
+      }
+      if(isset($response->dDirChof)){
+         $res->setDDirChof($response->dDirChof);
+      }
+      if(isset($response->dNombAg)){
+         $res->setDNombAg($response->dNombAg);
+      }
+      if(isset($response->dRucAg)){
+         $res->setDRucAg($response->dRucAg);
+      }
+      if(isset($response->dDVAg)){
+         $res->setDDVAg(intval($response->dDVAg));
+      }
+      if(isset($response->dDirAge)){
+         $res->setDDirAge($response->dDirAge);
+      }
+      
+
       return $res;
    }
 }

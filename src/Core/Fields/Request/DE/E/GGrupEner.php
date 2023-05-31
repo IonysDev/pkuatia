@@ -230,12 +230,31 @@ class GGrupEner
   public static function fromResponse($response):self
   {
     $res = new GGrupEner();
-    $res->setDNroMed($response->dNroMed);
-    $res->setDActiv($response->dActiv);
-    $res->setDCateg($response->dCateg);
-    $res->setDLecAnt($response->dLecAnt);
-    $res->setDLecAct($response->dLecAct);
-    $res->setDConKwh($response->dConKwh);
+    if(isset($response->dNroMed))
+    {
+      $res->setDNroMed($response->dNroMed);
+    }
+    if(isset($response->dActiv))
+    {
+      $res->setDActiv($response->dActiv);
+    }
+    if(isset($response->dCateg))
+    {
+      $res->setDCateg($response->dCateg);
+    }
+    if(isset($response->dLecAnt))
+    {
+      $res->setDLecAnt($response->dLecAnt);
+    }
+    if(isset($response->dLecAct))
+    {
+      $res->setDLecAct($response->dLecAct);
+    }
+    if(isset($response->dConKwh))
+    {
+      $res->setDConKwh($response->dConKwh);
+    }
+    
     return $res;
   }
 }

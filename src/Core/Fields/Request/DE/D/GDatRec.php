@@ -516,9 +516,15 @@ class GDatRec
     public static function fromResponse($response): self
     {
         $res = new GDatRec();
-        $res->setINatRec(intval($response->iNatRec));
-        $res->setITiOpe(intval($response->iTiOpe));
-        $res->setCPaisRec($response->cPaisRec);
+        if(isset($response->iNatRec)){
+            $res->setINatRec(intval($response->iNatRec));
+        }
+        if (isset($response->iTiOpe)) {
+            $res->setITiOpe(intval($response->iTiOpe));
+        }
+        if (isset($response->cPaisRec)) {
+            $res->setCPaisRec($response->cPaisRec);
+        }
         if (isset($response->iTiContRec)) {
             $res->setITiContRec(intval($response->iTiContRec));
         }
@@ -534,7 +540,9 @@ class GDatRec
         if (isset($response->dNumIDRec)) {
             $res->setDNumIDRec($response->dNumIDRec);
         }
-        $res->setDNomRec($response->dNomRec);
+        if (isset($response->dNomRec)) {
+            $res->setDNomRec($response->dNomRec);
+        }
         if (isset($response->dNomFanRec)) {
             $res->setDNomFanRec($response->dNomFanRec);
         }

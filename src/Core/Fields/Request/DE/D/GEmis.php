@@ -346,36 +346,59 @@ class GEmis
     public static function fromResponse($response): self
     {
         $gEmis = new GEmis();
-        $gEmis->setDRucEm($response->dRucEm);
-        $gEmis->setDDVEmi($response->dDVEmi);
-        $gEmis->setITipCont($response->iTipCont);
+        if (isset($response->dRucEm)) {
+            $gEmis->setDRucEm($response->dRucEm);
+        }
+        if (isset($response->dDVEmi)) {
+            $gEmis->setDDVEmi($response->dDVEmi);
+        }
+        if (isset($response->iTipCont)) {
+            $gEmis->setITipCont($response->iTipCont);
+        }
         if (isset($response->cTipReg)) {
             $gEmis->setCTipReg($response->cTipReg);
         }
-        $gEmis->setDNomEmi($response->dNomEmi);
+        if (isset($response->dNomEmi)) {
+            $gEmis->setDNomEmi($response->dNomEmi);
+        }
         if (isset($response->dNomFanEmi)) {
             $gEmis->setDNomFanEmi($response->dNomFanEmi);
         }
-        $gEmis->setDDirEmi($response->dDirEmi);
-        $gEmis->setDNumCas($response->dNumCas);
+        if (isset($response->dDirEmi)) {
+            $gEmis->setDDirEmi($response->dDirEmi);
+        }
+        if (isset($response->dNumCas)) {
+            $gEmis->setDNumCas($response->dNumCas);
+        }
+
         if (isset($response->dCompDir1)) {
             $gEmis->setDCompDir1($response->dCompDir1);
         }
         if (isset($response->dCompDir2)) {
             $gEmis->setDCompDir2($response->dCompDir2);
         }
-        $gEmis->setCDepEmi($response->cDepEmi);
+        if (isset($response->cDepEmi)) {
+            $gEmis->setCDepEmi($response->cDepEmi);
+        }
         if (isset($response->cDisEmi)) {
             $gEmis->setCDisEmi($response->cDisEmi);
         }
-        $gEmis->setCCiuEmi($response->cCiuEmi);
-        $gEmis->setDTelEmi($response->dTelEmi);
-        $gEmis->setDEmailE($response->dEmailE);
+        if (isset($response->cCiuEmi)) {
+            $gEmis->setCCiuEmi($response->cCiuEmi);
+        }
+        if (isset($response->dTelEmi)) {
+            $gEmis->setDTelEmi($response->dTelEmi);
+        }
+        if (isset($response->dEmailE)) {
+            $gEmis->setDEmailE($response->dEmailE);
+        }
         if (isset($response->dDenSuc)) {
             $gEmis->setDDenSuc($response->dDenSuc);
         }
         //Children
-        $gEmis->setGActEco(GActEco::fromResponse($response->gActEco));
+        if (isset($response->gActEco)) {
+            $gEmis->setGActEco(GActEco::fromResponse($response->gActEco));
+        }
         if (isset($response->gRespDE)) {
             $gEmis->setGRespDE(GRespDE::fromResponse($response->gRespDE));
         }

@@ -539,15 +539,44 @@ class GTransp
   public static function fromResponse($response): self
   {
     $res = new GTransp();
-    $res->setITipTrans(intval($response->iTipTrans));
-    $res->setIModTrans(intval($response->imodTrans));
-    $res->setIRespFlete(intval($response->iRespFlete));
-    $res->setCCondNeg($response->cCondNeg);
-    $res->setDNuManif($response->dNuManif);
-    $res->setDNuDespImp($response->dNuDespImp);
-    $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $response->dIniTras));
-    $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $response->dFinTras));
-    $res->setCPaisDest($response->cPaisDest);
+    if(isset($response->iModTrans))
+    {
+      $res->setIModTrans(intval($response->iModTrans));
+    }
+    if(isset($response->iTipTrans))
+    {
+      $res->setITipTrans(intval($response->iTipTrans));
+    }
+    if(isset($response->iRespFlete))
+    {
+      $res->setIRespFlete(intval($response->iRespFlete));
+    }
+    if(isset($response->cCondNeg))
+    {
+      $res->setCCondNeg($response->cCondNeg);
+    }
+    if(isset($response->dNuManif))
+    {
+      $res->setDNuManif($response->dNuManif);
+    }
+    if(isset($response->dNuDespImp))
+    {
+      $res->setDNuDespImp($response->dNuDespImp);
+    }
+    if(isset($response->dIniTras))
+    {
+      $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $response->dIniTras));
+    }
+    if(isset($response->dFinTras))
+    {
+      $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $response->dFinTras));
+    }
+    if(isset($response->cPaisDest))
+    {
+      $res->setCPaisDest($response->cPaisDest);
+    }
+    
+
     //Children
     if (isset($response->gCamSal)) {
       $res->setGCamSal(GCamSal::fromResponse($response->gCamSal));
