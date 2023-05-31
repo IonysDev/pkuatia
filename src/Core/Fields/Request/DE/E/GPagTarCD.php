@@ -11,14 +11,14 @@ use DOMElement;
  */
 class GPagTarCD
 {
-  public int $iDenTarj; //E621 Denominación de la tarjeta
-  public string $dRSProTar; //E623  Razón social de la procesadora de tarjeta
-  public string $dRUCProTar; //E624 RUC de la procesadora de tarjeta
-  public int $dDVProTar; //E625 Dígito verificador del  RUC de la procesadora  de tarjeta
-  public int $iForProPa; //E626  Forma de procesamiento de pago
-  public int $dCodAuOpe; //E627 Código de autorización de la operación
-  public string $dNomTit; //dNomTit Nombre del titular de la tarjeta 
-  public int $dNumTarj; //E629 dNumTarj Número de la tarjeta;
+  public ?int $iDenTarj = null; //E621 Denominación de la tarjeta
+  public ?string $dRSProTar = null; //E623  Razón social de la procesadora de tarjeta
+  public ?string $dRUCProTar = null; //E624 RUC de la procesadora de tarjeta
+  public ?int $dDVProTar = null; //E625 Dígito verificador del  RUC de la procesadora  de tarjeta
+  public ?int $iForProPa = null; //E626  Forma de procesamiento de pago
+  public ?int $dCodAuOpe = null; //E627 Código de autorización de la operación
+  public ?string $dNomTit = null; //dNomTit Nombre del titular de la tarjeta 
+  public ?int $dNumTarj = null; //E629 dNumTarj Número de la tarjeta;
 
   //====================================================//
   ///Setters
@@ -152,7 +152,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getIDenTarj(): int
+  public function getIDenTarj(): int | null
   {
     return $this->iDenTarj;
   }
@@ -163,7 +163,7 @@ class GPagTarCD
    *
    * @return string
    */
-  public function getDDesDenTarj(): string
+  public function getDDesDenTarj(): string | null
   {
     switch ($this->iDenTarj) {
       case  1:
@@ -199,8 +199,8 @@ class GPagTarCD
    *
    * @return string
    */
-  public function getDRSProTar(): string
-  {
+  public function getDRSProTar(): string | null
+  { 
     return $this->dRSProTar;
   }
 
@@ -209,7 +209,7 @@ class GPagTarCD
    *
    * @return string
    */
-  public function getDRUCProTar(): string
+  public function getDRUCProTar(): string | null
   {
     return $this->dRUCProTar;
   }
@@ -219,7 +219,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getDDVProTar(): int
+  public function getDDVProTar(): int | null
   {
     return $this->dDVProTar;
   }
@@ -229,7 +229,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getIForProPa(): int
+  public function getIForProPa(): int | null
   {
     return $this->iForProPa;
   }
@@ -239,7 +239,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getDCodAuOpe(): int
+  public function getDCodAuOpe(): int | null
   {
     return $this->dCodAuOpe;
   }
@@ -249,7 +249,7 @@ class GPagTarCD
    *
    * @return string
    */
-  public function getDNomTit(): string
+  public function getDNomTit(): string | null
   {
     return $this->dNomTit;
   }
@@ -259,7 +259,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getDNumTarj(): int
+  public function getDNumTarj(): int | null
   {
     return $this->dNumTarj;
   }
@@ -290,32 +290,38 @@ class GPagTarCD
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GPagTarCD
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GPagTarCD
+  // {
+  //   if (strcmp($xml->tagName, 'gPagTarCD') == 0 && $xml->childElementCount == 9) {
+  //     $res = new GPagTarCD();
+  //     $res->setIDenTarj(intval($xml->getElementsByTagName('iDenTarj')->item(0)->nodeValue));
+  //     $res->setDRSProTar($xml->getElementsByTagName('dRSProTar')->item(0)->nodeValue);
+  //     $res->setDRUCProTar($xml->getElementsByTagName('dRUCProTar')->item(0)->nodeValue);
+  //     $res->setDDVProTar($xml->getElementsByTagName('dDDVProTar')->item(0)->nodeValue);
+  //     $res->setIForProPa(intval($xml->getElementsByTagName('iForProPa')->item(0)->nodeValue));
+  //     $res->setDCodAuOpe(intval($xml->getElementsByTagName('dCodAuOpe')->item(0)->nodeValue));
+  //     $res->setDNomTit($xml->getElementsByTagName('dNomTit')->item(0)->nodeValue);
+  //     $res->setDNumTarj(intval($xml->getElementsByTagName('dNumTarj')->item(0)->nodeValue));
+
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Elemement: $xml->tagName");
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GPagTarCD
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GPagTarCD
-  {
-    if (strcmp($xml->tagName, 'gPagTarCD') == 0 && $xml->childElementCount == 9) {
-      $res = new GPagTarCD();
-      $res->setIDenTarj(intval($xml->getElementsByTagName('iDenTarj')->item(0)->nodeValue));
-      $res->setDRSProTar($xml->getElementsByTagName('dRSProTar')->item(0)->nodeValue);
-      $res->setDRUCProTar($xml->getElementsByTagName('dRUCProTar')->item(0)->nodeValue);
-      $res->setDDVProTar($xml->getElementsByTagName('dDDVProTar')->item(0)->nodeValue);
-      $res->setIForProPa(intval($xml->getElementsByTagName('iForProPa')->item(0)->nodeValue));
-      $res->setDCodAuOpe(intval($xml->getElementsByTagName('dCodAuOpe')->item(0)->nodeValue));
-      $res->setDNomTit($xml->getElementsByTagName('dNomTit')->item(0)->nodeValue);
-      $res->setDNumTarj(intval($xml->getElementsByTagName('dNumTarj')->item(0)->nodeValue));
-
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Elemement: $xml->tagName");
-    }
-  }
-
-  public static function fromResponse($response):self
+  public static function fromResponse($response): self
   {
     $res = new GPagTarCD();
     $res->setIDenTarj(intval($response->iDenTarj));

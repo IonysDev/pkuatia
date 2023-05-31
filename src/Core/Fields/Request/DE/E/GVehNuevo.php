@@ -9,20 +9,20 @@ use DOMElement;
  */
 class GVehNuevo
 {
-  public int $iTipOpVN; // E771 iTipOpVN Tipo de operación de venta de vehículos
-  public string $dChasis; /// E773 Chasis del vehículo;
-  public string $dColor; // E774 Color del vehículo
-  public int $dPotencia; ///E775 Potencia del motor (CV)
-  public int $dCapMot; ///E776 Capacidad del motor
-  public int $dPNet; ///E777 Peso Neto 
-  public int $dPBruto; ///E778 Peso Bruto
-  public int $iTipCom; ///E779 Tipo de combustible
-  public string $dNroMotor; ///E780 Descripción del tipo de combustible
-  public int $dCapTracc; ///E782 Capacidad máxima de  tracción 
-  public int $dAnoFab; ///E783 Año de fabricación
-  public string $cTipVeh; ///E784 Tipo de vehículo
-  public int $dCapac; ///E785 Capacidad máxima de pasajeros 
-  public string $dCilin; ///E786  Cilindradas del motor
+  public ?int $iTipOpVN = null; // E771 iTipOpVN Tipo de operación de venta de vehículos
+  public ?string $dChasis = null; /// E773 Chasis del vehículo;
+  public ?string $dColor = null; // E774 Color del vehículo
+  public ?int $dPotencia = null; ///E775 Potencia del motor (CV)
+  public ?int $dCapMot = null; ///E776 Capacidad del motor
+  public ?int $dPNet = null; ///E777 Peso Neto 
+  public ?int $dPBruto = null; ///E778 Peso Bruto
+  public ?int $iTipCom = null; ///E779 Tipo de combustible
+  public ?string $dNroMotor = null; ///E780 Descripción del tipo de combustible
+  public ?int $dCapTracc = null; ///E782 Capacidad máxima de  tracción 
+  public ?int $dAnoFab = null; ///E783 Año de fabricación
+  public ?string $cTipVeh = null; ///E784 Tipo de vehículo
+  public ?int $dCapac = null; ///E785 Capacidad máxima de pasajeros 
+  public ?string $dCilin = null; ///E786  Cilindradas del motor
 
   //====================================================//
   ///Setters
@@ -246,7 +246,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getITipOpVN(): int
+  public function getITipOpVN(): int | null
   {
     return $this->iTipOpVN;
   }
@@ -257,7 +257,7 @@ class GVehNuevo
    *
    * @return string
    */
-  public function getDDesTipOpVN(): string
+  public function getDDesTipOpVN(): string | null
   {
     switch ($this->iTipOpVN) {
       case 1:
@@ -285,7 +285,7 @@ class GVehNuevo
    *
    * @return string
    */
-  public function getDChasis(): string
+  public function getDChasis(): string | null
   {
     return $this->dChasis;
   }
@@ -295,7 +295,7 @@ class GVehNuevo
    *
    * @return string
    */
-  public function getDColor(): string
+  public function getDColor(): string | null
   {
     return $this->dColor;
   }
@@ -305,7 +305,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDPotencia(): int
+  public function getDPotencia(): int | null
   {
     return $this->dPotencia;
   }
@@ -315,7 +315,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDCapMot(): int
+  public function getDCapMot(): int | null
   {
     return $this->dCapMot;
   }
@@ -325,7 +325,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDPNet(): int
+  public function getDPNet(): int | null
   {
     return $this->dPNet;
   }
@@ -335,7 +335,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDPBruto(): int
+  public function getDPBruto(): int | null
   {
     return $this->dPBruto;
   }
@@ -345,7 +345,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getITipCom(): int
+  public function getITipCom(): int | null
   {
     return $this->iTipCom;
   }
@@ -355,7 +355,7 @@ class GVehNuevo
    *
    * @return string
    */
-  public function getDDesTipCom(): string
+  public function getDDesTipCom(): string | null
   {
     switch ($this->iTipCom) {
       case 1:
@@ -388,7 +388,7 @@ class GVehNuevo
    *
    * @return string
    */
-  public function getDNroMotor(): string
+  public function getDNroMotor(): string | null
   {
     return $this->dNroMotor;
   }
@@ -398,7 +398,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDCapTracc(): int
+  public function getDCapTracc(): int | null
   {
     return $this->dCapTracc;
   }
@@ -408,7 +408,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDAnoFab(): int
+  public function getDAnoFab(): int | null
   {
     return $this->dAnoFab;
   }
@@ -418,7 +418,7 @@ class GVehNuevo
    *
    * @return string
    */
-  public function getCTipVeh(): string
+  public function getCTipVeh(): string | null
   {
     return $this->cTipVeh;
   }
@@ -428,7 +428,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDCapac(): int
+  public function getDCapac(): int | null
   {
     return $this->dCapac;
   }
@@ -438,7 +438,7 @@ class GVehNuevo
    *
    * @return string
    */
-  public function getDCilin(): string
+  public function getDCilin(): string | null
   {
     return $this->dCilin;
   }
@@ -476,38 +476,44 @@ class GVehNuevo
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GVehNuevo
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GVehNuevo
+  // {
+  //   if (strcmp($xml->tagName, 'gVehNuevo') === 0 && $xml->childElementCount == 14) {
+  //     $res = new GVehNuevo();
+  //     $res->setITipOpVN(intval($xml->getElementsByTagName('iTipOpVN')->item(0)->nodeValue));
+  //     $res->setDChasis($xml->getElementsByTagName('dChasis')->item(0)->nodeValue);
+  //     $res->setDColor($xml->getElementsByTagName('dColor')->item(0)->nodeValue);
+  //     $res->setDPotencia(intval($xml->getElementsByTagName('dPotencia')->item(0)->nodeValue));
+  //     $res->setDCapMot(intval($xml->getElementsByTagName('dCapMot')->item(0)->nodeValue));
+  //     $res->setDPNet(intval($xml->getElementsByTagName('dPnet')->item(0)->nodeValue));
+  //     $res->setDPBruto(intval($xml->getElementsByTagName('dPBruto')->item(0)->nodeValue));
+  //     $res->setITipCom(intval($xml->getElementsByTagName('iTipCom')->item(0)->nodeValue));
+  //     $res->setDNroMotor($xml->getElementsByTagName('dNroMotor')->item(0)->nodeValue);
+  //     $res->setDCapTracc(intval($xml->getElementsByTagName('dCapTracc')->item(0)->nodeValue));
+  //     $res->setDAnoFab(intval($xml->getElementsByTagName('dAnoFab')->item(0)->nodeValue));
+  //     $res->setCTipVeh($xml->getElementsByTagName('ctipVeh')->item(0)->nodeValue);
+  //     $res->setDCapac(intval($xml->getElementsByTagName('dCapac')->item(0)->nodeValue));
+  //     $res->setDCilin($xml->getElementsByTagName('dCilin')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GVehNuevo
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GVehNuevo
-  {
-    if (strcmp($xml->tagName, 'gVehNuevo') === 0 && $xml->childElementCount == 14) {
-      $res = new GVehNuevo();
-      $res->setITipOpVN(intval($xml->getElementsByTagName('iTipOpVN')->item(0)->nodeValue));
-      $res->setDChasis($xml->getElementsByTagName('dChasis')->item(0)->nodeValue);
-      $res->setDColor($xml->getElementsByTagName('dColor')->item(0)->nodeValue);
-      $res->setDPotencia(intval($xml->getElementsByTagName('dPotencia')->item(0)->nodeValue));
-      $res->setDCapMot(intval($xml->getElementsByTagName('dCapMot')->item(0)->nodeValue));
-      $res->setDPNet(intval($xml->getElementsByTagName('dPnet')->item(0)->nodeValue));
-      $res->setDPBruto(intval($xml->getElementsByTagName('dPBruto')->item(0)->nodeValue));
-      $res->setITipCom(intval($xml->getElementsByTagName('iTipCom')->item(0)->nodeValue));
-      $res->setDNroMotor($xml->getElementsByTagName('dNroMotor')->item(0)->nodeValue);
-      $res->setDCapTracc(intval($xml->getElementsByTagName('dCapTracc')->item(0)->nodeValue));
-      $res->setDAnoFab(intval($xml->getElementsByTagName('dAnoFab')->item(0)->nodeValue));
-      $res->setCTipVeh($xml->getElementsByTagName('ctipVeh')->item(0)->nodeValue);
-      $res->setDCapac(intval($xml->getElementsByTagName('dCapac')->item(0)->nodeValue));
-      $res->setDCilin($xml->getElementsByTagName('dCilin')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
-  public static function fromResponse($response):self
+  public static function fromResponse($response): self
   {
     $res = new self();
     $res->setITipOpVN(intval($response->iTipOpVN));

@@ -13,27 +13,26 @@ use function PHPSTORM_META\type;
  */
 class GCamItem
 {
-  public string $dCodInt; //E701 Código interno
-  public int $dParAranc; //E702 Partida arancelaria
-  public int $dNCM; //E703 Nomenclatura común del Mercosur (NCM)
-  public string $dDncpG; //E704 Código DNCP – Nivel General
-  public string $dDncpE; //E705 Código DNCP – Nivel Especifico
-  public int $dGtin; //E706 Código GTIN por producto
-  public int $dGtinPq; //E707 Código GTIN por paquete
-  public string $dDesProSer; //E708  Descripción del producto  y/o servicio
-  public int $cUniMed; //E709 Unidad de medida
-  public int $dCantProSer; //E711  Cantidad del producto y/o servicio
-  public string $cPaisOrig; //E712  Código del país de origen del producto
-  public string $dInfItem; //E714 Información de interés  del emisor con respecto al item;
-  public int $cRelMerc; //E715 Código de datos de relevancia de las  mercaderías
-  public int $dCanQuiMer; //E717 Cantidad de quiebra o  merma
-  public int $dPorQuiMer; //E718 Porcentaje de quiebra o merma
-  public int $dCDCAnticipo; //E719 CDC del anticipo
-  public GValorItem $gValorItem;
-  public GCamIVA $gCamIVa;
-  public GRasMerc $gRasMerc;
-  public GVehNuevo $gVehNuevo;
-
+  public ?string $dCodInt  = null; //E701 Código interno
+  public ?int $dParAranc  = null; //E702 Partida arancelaria
+  public ?int $dNCM  = null; //E703 Nomenclatura común del Mercosur (NCM)
+  public ?string $dDncpG  = null; //E704 Código DNCP – Nivel General
+  public ?string $dDncpE  = null; //E705 Código DNCP – Nivel Especifico
+  public ?int $dGtin  = null; //E706 Código GTIN por producto
+  public ?int $dGtinPq  = null; //E707 Código GTIN por paquete
+  public ?string $dDesProSer  = null; //E708  Descripción del producto  y/o servicio
+  public ?int $cUniMed  = null; //E709 Unidad de medida
+  public ?int $dCantProSer  = null; //E711  Cantidad del producto y/o servicio
+  public ?string $cPaisOrig  = null; //E712  Código del país de origen del producto
+  public ?string $dInfItem = null; //E714 Información de interés  del emisor con respecto al item;
+  public ?int $cRelMerc  = null; //E715 Código de datos de relevancia de las  mercaderías
+  public ?int $dCanQuiMer = null; //E717 Cantidad de quiebra o  merma
+  public ?int $dPorQuiMer  = null; //E718 Porcentaje de quiebra o merma
+  public ?int $dCDCAnticipo  = null; //E719 CDC del anticipo
+  public ?GValorItem $gValorItem  = null;
+  public ?GCamIVA $gCamIVa  = null;
+  public ?GRasMerc $gRasMerc  = null;
+  public ?GVehNuevo $gVehNuevo  = null;
   //====================================================//
   ////Setters
   //====================================================//
@@ -286,7 +285,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDCodInt(): string
+  public function getDCodInt(): string | null
   {
     return $this->dCodInt;
   }
@@ -296,7 +295,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDParAranc(): int
+  public function getDParAranc(): int | null
   {
     return $this->dParAranc;
   }
@@ -306,7 +305,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDNCM(): int
+  public function getDNCM(): int | null
   {
     return $this->dNCM;
   }
@@ -316,7 +315,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDDncpG(): string
+  public function getDDncpG(): string | null
   {
     return $this->dDncpG;
   }
@@ -326,7 +325,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDDncpE(): string
+  public function getDDncpE(): string | null
   {
     return $this->dDncpE;
   }
@@ -336,7 +335,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDGtin(): int
+  public function getDGtin(): int | null
   {
     return $this->dGtin;
   }
@@ -346,7 +345,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDGtinPq(): int
+  public function getDGtinPq(): int | null
   {
     return $this->dGtinPq;
   }
@@ -356,7 +355,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDDesProSer(): string
+  public function getDDesProSer(): string | null
   {
     return $this->dDesProSer;
   }
@@ -366,7 +365,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getCUniMed(): int
+  public function getCUniMed(): int | null
   {
     return $this->cUniMed;
   }
@@ -376,7 +375,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDDesUniMed(): string
+  public function getDDesUniMed(): string | null
   {
     return "Unidad de medida de Mordor";
   }
@@ -386,7 +385,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDCantProSer(): int
+  public function getDCantProSer(): int | null
   {
     return $this->dCantProSer;
   }
@@ -396,7 +395,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getCPaisOrig(): string
+  public function getCPaisOrig(): string | null
   {
     return $this->cPaisOrig;
   }
@@ -406,7 +405,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDDesPaisOrig(): string
+  public function getDDesPaisOrig(): string | null
   {
     return "Mordor"; //ver luego
   }
@@ -417,7 +416,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDInfItem(): string
+  public function getDInfItem(): string | null
   {
     return $this->dInfItem;
   }
@@ -427,7 +426,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getCRelMerc(): int
+  public function getCRelMerc(): int | null
   {
     return $this->cRelMerc;
   }
@@ -437,7 +436,7 @@ class GCamItem
    *
    * @return string
    */
-  public function getDDesRelMerc(): string
+  public function getDDesRelMerc(): string | null
   {
     switch ($this->cRelMerc) {
       case 1:
@@ -460,7 +459,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDCanQuiMer(): int
+  public function getDCanQuiMer(): int | null
   {
     return $this->dCanQuiMer;
   }
@@ -470,7 +469,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDPorQuiMer(): int
+  public function getDPorQuiMer(): int | null
   {
     return $this->dPorQuiMer;
   }
@@ -480,7 +479,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDCDCAnticipo(): int
+  public function getDCDCAnticipo(): int | null
   {
     return $this->dCDCAnticipo;
   }
@@ -530,44 +529,44 @@ class GCamItem
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GCamItem
-   */
-  public static function fromDOMElement(DOMElement $xml): GCamItem
-  {
-    if (strcmp($xml->tagName, 'gCamItem') == 0 && $xml->childElementCount >= 20) {
-      $res = new GCamItem();
-      $res->setDCodInt($xml->childNodes->item(0)->nodeValue);
-      $res->setDParAranc(intval($xml->getElementsByTagName('dParAranc')->item(0)->nodeValue));
-      $res->setDNCM(intval($xml->getElementsByTagName('dNCM')->item(0)->nodeValue));
-      $res->setDDncpG($xml->getElementsByTagName('dDDncpG')->item(0)->nodeValue);
-      $res->setDDncpE($xml->getElementsByTagName('dDDncpE')->item(0)->nodeValue);
-      $res->setDGtin(intval($xml->getElementsByTagName('dGtin')->item(0)->nodeValue));
-      $res->setDGtinPq(intval($xml->getElementsByTagName('dGtinPq')->item(0)->nodeValue));
-      $res->setDDesProSer($xml->getElementsByTagName('dDesProSer')->item(0)->nodeValue);
-      $res->setCUniMed(intval($xml->getElementsByTagName('cUniMed')->item('0')->nodeValue));
-      $res->setDCantProSer(intval($xml->getElementsByTagName('dcantProSer')->item(0)->nodeValue));
-      $res->setCPaisOrig($xml->getElementsByTagName('cPaisOrig')->item(0)->nodeValue);
-      $res->setDInfItem($xml->getElementsByTagName('dInfItem')->item(0)->nodeValue);
-      $res->setCRelMerc(intval($xml->getElementsByTagName('dRelMerc')->item(0)->nodeValue));
-      $res->setDCanQuiMer(intval($xml->getElementsByTagName('dcantQuiMer')->item(0)->nodeValue));
-      $res->setDPorQuiMer(intval($xml->getElementsByTagName('dporQuiMer')->item(0)->nodeValue));
-      $res->setDCDCAnticipo($xml->getElementsByTagName('dCDCAnticipo')->item(0)->nodeValue);
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamItem
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamItem
+  // {
+  //   if (strcmp($xml->tagName, 'gCamItem') == 0 && $xml->childElementCount >= 20) {
+  //     $res = new GCamItem();
+  //     $res->setDCodInt($xml->childNodes->item(0)->nodeValue);
+  //     $res->setDParAranc(intval($xml->getElementsByTagName('dParAranc')->item(0)->nodeValue));
+  //     $res->setDNCM(intval($xml->getElementsByTagName('dNCM')->item(0)->nodeValue));
+  //     $res->setDDncpG($xml->getElementsByTagName('dDDncpG')->item(0)->nodeValue);
+  //     $res->setDDncpE($xml->getElementsByTagName('dDDncpE')->item(0)->nodeValue);
+  //     $res->setDGtin(intval($xml->getElementsByTagName('dGtin')->item(0)->nodeValue));
+  //     $res->setDGtinPq(intval($xml->getElementsByTagName('dGtinPq')->item(0)->nodeValue));
+  //     $res->setDDesProSer($xml->getElementsByTagName('dDesProSer')->item(0)->nodeValue);
+  //     $res->setCUniMed(intval($xml->getElementsByTagName('cUniMed')->item('0')->nodeValue));
+  //     $res->setDCantProSer(intval($xml->getElementsByTagName('dcantProSer')->item(0)->nodeValue));
+  //     $res->setCPaisOrig($xml->getElementsByTagName('cPaisOrig')->item(0)->nodeValue);
+  //     $res->setDInfItem($xml->getElementsByTagName('dInfItem')->item(0)->nodeValue);
+  //     $res->setCRelMerc(intval($xml->getElementsByTagName('dRelMerc')->item(0)->nodeValue));
+  //     $res->setDCanQuiMer(intval($xml->getElementsByTagName('dcantQuiMer')->item(0)->nodeValue));
+  //     $res->setDPorQuiMer(intval($xml->getElementsByTagName('dporQuiMer')->item(0)->nodeValue));
+  //     $res->setDCDCAnticipo($xml->getElementsByTagName('dCDCAnticipo')->item(0)->nodeValue);
 
-      //children
-      $res->setGValorItem($res->gValorItem->fromDOMElement($xml->getElementsByTagName('gValorItem')->item(0)->nodeValue));
-      $res->setGCamIVa($res->gCamIVa->fromDOMElement($xml->getElementsByTagName('gCamIVa')->item(0)->nodeValue));
-      $res->setGRasMerc($res->gRasMerc->fromDOMElement($xml->getElementsByTagName('gRasMerc')->item(0)->nodeValue));
-      $res->setGVehNuevo($res->gVehNuevo->fromDOMElement($xml->getElementsByTagName('gVehNuevo')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     //children
+  //     $res->setGValorItem($res->gValorItem->fromDOMElement($xml->getElementsByTagName('gValorItem')->item(0)->nodeValue));
+  //     $res->setGCamIVa($res->gCamIVa->fromDOMElement($xml->getElementsByTagName('gCamIVa')->item(0)->nodeValue));
+  //     $res->setGRasMerc($res->gRasMerc->fromDOMElement($xml->getElementsByTagName('gRasMerc')->item(0)->nodeValue));
+  //     $res->setGVehNuevo($res->gVehNuevo->fromDOMElement($xml->getElementsByTagName('gVehNuevo')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   //====================================================//
   ///Others
@@ -578,7 +577,7 @@ class GCamItem
    *
    * @return GValorItem
    */
-  public function getGValorItem(): GValorItem
+  public function getGValorItem(): GValorItem | null
   {
     return $this->gValorItem;
   }
@@ -602,7 +601,7 @@ class GCamItem
    *
    * @return GCamIVA
    */
-  public function getGCamIVa(): GCamIVA
+  public function getGCamIVa(): GCamIVA | null
   {
     return $this->gCamIVa;
   }
@@ -626,7 +625,7 @@ class GCamItem
    *
    * @return GRasMerc
    */
-  public function getGRasMerc(): GRasMerc
+  public function getGRasMerc(): GRasMerc | null
   {
     return $this->gRasMerc;
   }
@@ -650,7 +649,7 @@ class GCamItem
    *
    * @return GVehNuevo
    */
-  public function getGVehNuevo(): GVehNuevo
+  public function getGVehNuevo(): GVehNuevo | null
   {
     return $this->gVehNuevo;
   }
@@ -668,9 +667,18 @@ class GCamItem
 
     return $this;
   }
-
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response): self
   {
+
+  
+
     $res = new GCamItem();
     $res->setDCodInt($response->dCodInt);
     if (isset($response->dParAranc)) {

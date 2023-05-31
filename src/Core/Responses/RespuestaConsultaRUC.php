@@ -11,7 +11,7 @@ class RespuestaConsultaRUC
 {
   public string $dCodRes; //codigo de respuesta
   public string $dMsgRes; //descripcion del codigo de respuesta
-  public TxContRuc $txContRuc; //objeto de la respuesta
+  public ?TxContRuc $txContRuc = null; //objeto de la respuesta
 
 
   //====================================================//
@@ -92,7 +92,7 @@ class RespuestaConsultaRUC
    *
    * @return TxContRuc
    */
-  public function getTxContRuc(): TxContRuc
+  public function getTxContRuc(): TxContRuc | null
   {
     return $this->txContRuc;
   }
@@ -121,9 +121,7 @@ class RespuestaConsultaRUC
       $res->setDCodRes($response->dCodRes);
       $res->setDMsgRes($response->dMsgRes);
       ///generate txContRuc object
-      $txContRuc = new TxContRuc();
-      $txContRuc = TxContRuc::fromResponse($response->xContRUC);
-      $res->setTxContRuc($txContRuc);
+      $res->setTxContRuc(TxContRuc::fromResponse($response->xContRUC));
     }
 
     return $res;

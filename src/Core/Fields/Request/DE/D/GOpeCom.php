@@ -10,12 +10,12 @@ use DOMElement;
 class GOpeCom
 {
 
-    public int $iTipTra;     // D011 - Tipo de transacción
-    public int $iTImp;       // D013 - Tipo de impuesto afectado
-    public string $cMoneOpe; // D015 - Moneda de la operación
-    public int $dCondTiCam;  // D017 - Condición del tipo de cambio
-    public int $dTiCam;      // D018 - Tipo de cambio de la operación
-    public int $iCondAnt;    // D019 - Condición del Anticipo
+    public ?int $iTipTra = null;     // D011 - Tipo de transacción
+    public ?int $iTImp = null;       // D013 - Tipo de impuesto afectado
+    public ?string $cMoneOpe = null; // D015 - Moneda de la operación
+    public ?int $dCondTiCam = null;  // D017 - Condición del tipo de cambio
+    public ?int $dTiCam = null;      // D018 - Tipo de cambio de la operación
+    public ?int $iCondAnt = null;    // D019 - Condición del Anticipo
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -55,7 +55,7 @@ class GOpeCom
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITipTra(): int
+    public function getITipTra(): int | null
     {
         return $this->iTipTra;
     }
@@ -65,7 +65,7 @@ class GOpeCom
      * 
      * @return string
      */
-    public function getDDesTipTra(): string
+    public function getDDesTipTra(): string | null
     {
         switch ($this->iTipTra) {
             case 1:
@@ -112,7 +112,7 @@ class GOpeCom
         }
     }
 
-    public function getITImp(): int
+    public function getITImp(): int | null
     {
         return $this->iTImp;
     }
@@ -122,7 +122,7 @@ class GOpeCom
      * 
      * @return string
      */
-    public function getDDesTImp(): string
+    public function getDDesTImp(): string | null
     {
         switch ($this->iTImp) {
             case 1:
@@ -145,7 +145,7 @@ class GOpeCom
         }
     }
 
-    public function getCMoneOpe(): string
+    public function getCMoneOpe(): string | null
     {
         return $this->cMoneOpe;
     }
@@ -156,22 +156,22 @@ class GOpeCom
      *
      * @return string
      */
-    public function getDDesMoneOpe(): string
+    public function getDDesMoneOpe(): string | null
     {
         return "Moneda de Mordor";
     }
 
-    public function getDCondTiCam(): string
+    public function getDCondTiCam(): string | null
     {
         return $this->dCondTiCam;
     }
 
-    public function getDTiCam(): string
+    public function getDTiCam(): string | null
     {
         return $this->dTiCam;
     }
 
-    public function getICondAnt(): int
+    public function getICondAnt(): int | null
     {
         return $this->iCondAnt;
     }
@@ -181,7 +181,7 @@ class GOpeCom
      * 
      * @return string
      */
-    public function getDDesCondAnt(): string
+    public function getDDesCondAnt(): string | null
     {
         switch ($this->iCondAnt) {
             case 1:
@@ -235,29 +235,35 @@ class GOpeCom
         return $res;
     }
 
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GOpeCom
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GOpeCom
+    // {
+    //     if (strcmp($xml->tagName, 'gOpeCom') == 0 && $xml->childElementCount >= 4) {
+    //         $res = new GOpeCom();
+    //         $res->setITipTra(intval($xml->getElementsByTagName('iTipTra')->item(0)->nodeValue));
+    //         $res->setITImp(intval($xml->getElementsByTagName('iTImp')->item(0)->nodeValue));
+    //         $res->setCMoneOpe($xml->getElementsByTagName('cMoneOpe')->item(0)->nodeValue);
+    //         $res->setDCondTiCam(intval($xml->getElementsByTagName('dCondTiCam')->item(0)->nodeValue));
+    //         $res->setDTiCam(intval($xml->getElementsByTagName('dTiCam')->item(0)->nodeValue));
+    //         $res->setICondAnt(intval($xml->getElementsByTagName('iCondAnt')->item(0)->nodeValue));
+    //         return $res;
+    //     } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //     }
+    // }
+    
     /**
-     * fromDOMElement
+     * fromResponse
      *
-     * @param  mixed $xml
-     * @return GOpeCom
+     * @param  mixed $response
+     * @return self
      */
-    public static function fromDOMElement(DOMElement $xml): GOpeCom
-    {
-        if (strcmp($xml->tagName, 'gOpeCom') == 0 && $xml->childElementCount >= 4) {
-            $res = new GOpeCom();
-            $res->setITipTra(intval($xml->getElementsByTagName('iTipTra')->item(0)->nodeValue));
-            $res->setITImp(intval($xml->getElementsByTagName('iTImp')->item(0)->nodeValue));
-            $res->setCMoneOpe($xml->getElementsByTagName('cMoneOpe')->item(0)->nodeValue);
-            $res->setDCondTiCam(intval($xml->getElementsByTagName('dCondTiCam')->item(0)->nodeValue));
-            $res->setDTiCam(intval($xml->getElementsByTagName('dTiCam')->item(0)->nodeValue));
-            $res->setICondAnt(intval($xml->getElementsByTagName('iCondAnt')->item(0)->nodeValue));
-            return $res;
-        } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
-    }
-
     public static function fromResponse($response): self
     {
         $res = new GOpeCom();

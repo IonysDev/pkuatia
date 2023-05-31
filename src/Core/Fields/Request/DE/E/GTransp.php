@@ -12,19 +12,19 @@ use DOMElement;
  */
 class GTransp
 {
-  public int $iTipTrans;     // E901 - Tipo de transporte
-  public int $iModTrans;     // E903 - Modalidad de transporte
-  public int $iRespFlete;    // E905 - Responsable del costo del flete
-  public string $cCondNeg;   // E906 - Condición de la negociación 
-  public string $dNuManif;   // E907 - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
-  public string $dNuDespImp; // E908 - Número de despacho de importación
-  public DateTime $dIniTras; // E909 - Fecha estimada de inicio de traslado
-  public DateTime $dFinTras; // E910 - Fecha estimada de fin  de traslado
-  public string $cPaisDest;  // E911 - Código del país de destino
-  public GCamSal $gCamSal;   // Campos que identifican el local de salida de las mercaderías 
-  public GCamEnt $gCamEnt;   // Campos que identifican el local de la entrega de las mercaderías
-  public GVehTras $gVehTras; // Campos que identifican al vehículo del traslado de mercaderías
-  public GCamTrans $gCamTrans; // Campos que identifican al transportista
+  public ?int $iTipTrans = null;     // E901 - Tipo de transporte
+  public ?int $iModTrans = null;     // E903 - Modalidad de transporte
+  public ?int $iRespFlete = null;    // E905 - Responsable del costo del flete
+  public ?string $cCondNeg = null;   // E906 - Condición de la negociación 
+  public ?string $dNuManif = null;   // E907 - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
+  public ?string $dNuDespImp = null; // E908 - Número de despacho de importación
+  public ?DateTime $dIniTras = null; // E909 - Fecha estimada de inicio de traslado
+  public ?DateTime $dFinTras = null; // E910 - Fecha estimada de fin  de traslado
+  public ?string $cPaisDest = null;  // E911 - Código del país de destino
+  public ?GCamSal $gCamSal = null;   // Campos que identifican el local de salida de las mercaderías 
+  public ?GCamEnt $gCamEnt = null;   // Campos que identifican el local de la entrega de las mercaderías
+  public ?GVehTras $gVehTras = null; // Campos que identifican al vehículo del traslado de mercaderías
+  public ?GCamTrans $gCamTrans = null; // Campos que identifican al transportista
 
   //====================================================//
   ///SETTERS
@@ -174,7 +174,7 @@ class GTransp
    *
    * @return int
    */
-  public function getITipTrans(): int
+  public function getITipTrans(): int | null
   {
     return $this->iTipTrans;
   }
@@ -184,7 +184,7 @@ class GTransp
    *
    * @return string
    */
-  public function getDDesTipTrans(): string
+  public function getDDesTipTrans(): string | null
   {
     switch ($this->iTipTrans) {
       case 1:
@@ -206,7 +206,7 @@ class GTransp
    *
    * @return int
    */
-  public function getIModTrans(): int
+  public function getIModTrans(): int | null
   {
     return $this->iModTrans;
   }
@@ -216,7 +216,7 @@ class GTransp
    *
    * @return string
    */
-  public function getDDesModTrans(): string
+  public function getDDesModTrans(): string | null
   {
     switch ($this->iModTrans) {
       case 1:
@@ -248,7 +248,7 @@ class GTransp
    *
    * @return int
    */
-  public function getIRespFlete(): int
+  public function getIRespFlete(): int | null
   {
     return $this->iRespFlete;
   }
@@ -258,7 +258,7 @@ class GTransp
    *
    * @return string
    */
-  public function getCCondNeg(): string
+  public function getCCondNeg(): string | null
   {
     switch ($this->cCondNeg) {
       case 'CFR':
@@ -306,7 +306,7 @@ class GTransp
    *
    * @return string
    */
-  public function getDNuManif(): string
+  public function getDNuManif(): string | null
   {
     return $this->dNuManif;
   }
@@ -316,7 +316,7 @@ class GTransp
    *
    * @return string
    */
-  public function getDNuDespImp(): string
+  public function getDNuDespImp(): string | null
   {
     return $this->dNuDespImp;
   }
@@ -326,7 +326,7 @@ class GTransp
    *
    * @return DateTime
    */
-  public function getDIniTras(): DateTime
+  public function getDIniTras(): DateTime | null
   {
     return $this->dIniTras;
   }
@@ -336,7 +336,7 @@ class GTransp
    *
    * @return DateTime
    */
-  public function getDFinTras(): DateTime
+  public function getDFinTras(): DateTime | null
   {
     return $this->dFinTras;
   }
@@ -346,7 +346,7 @@ class GTransp
    *
    * @return string
    */
-  public function getCPaisDest(): string
+  public function getCPaisDest(): string | null
   {
     return $this->cPaisDest;
   }
@@ -356,7 +356,7 @@ class GTransp
    *
    * @return string
    */
-  public function getDDesPaisDest(): string
+  public function getDDesPaisDest(): string | null
   {
     return "Mordor"; ///test
   }
@@ -397,38 +397,38 @@ class GTransp
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GTransp
-   */
-  public static function fromDOMElement(DOMElement $xml): GTransp
-  {
-    if (strcmp($xml->tagName, 'gTransp') == 0 && $xml->childElementCount >= 13) {
-      $res = new GTransp();
-      $res->setITipTrans(intval($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
-      $res->setIModTrans(intval($xml->getElementsByTagName('imodTrans')->item(0)->nodeValue));
-      $res->setIRespFlete(intval($xml->getElementsByTagName('iRespFlete')->item(0)->nodeValue));
-      $res->setCCondNeg($xml->getElementsByTagName('cCondNeg')->item(0)->nodeValue);
-      $res->setDNuManif($xml->getElementsByTagName('dNuManif')->item(0)->nodeValue);
-      $res->setDNuDespImp($xml->getElementsByTagName('dNuDespImp')->item(0)->nodeValue);
-      $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dIniTras')->item(0)->nodeValue));
-      $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dfinTras')->item(0)->nodeValue));
-      $res->setCPaisDest($xml->getElementsByTagName('cPaisDest')->item(0)->nodeValue);
-      //Children
-      $res->setGCamSal($res->gCamSal->fromDOMElement($xml->getElementsByTagName('gCamSal')->item(0)->nodeValue));
-      $res->setGCamEnt($res->gCamEnt->fromDOMElement($xml->getElementsByTagName('gCamEnt')->item(0)->nodeValue));
-      $res->setGVehTras($res->gVehTras->fromDOMElement($xml->getElementsByTagName('gVehTras')->item(0)->nodeValue));
-      $res->setGCamTrans($res->gCamTrans->fromDOMElement($xml->getElementsByTagName('gCamTrans')->item(0)->nodeValue));
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GTransp
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GTransp
+  // {
+  //   if (strcmp($xml->tagName, 'gTransp') == 0 && $xml->childElementCount >= 13) {
+  //     $res = new GTransp();
+  //     $res->setITipTrans(intval($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
+  //     $res->setIModTrans(intval($xml->getElementsByTagName('imodTrans')->item(0)->nodeValue));
+  //     $res->setIRespFlete(intval($xml->getElementsByTagName('iRespFlete')->item(0)->nodeValue));
+  //     $res->setCCondNeg($xml->getElementsByTagName('cCondNeg')->item(0)->nodeValue);
+  //     $res->setDNuManif($xml->getElementsByTagName('dNuManif')->item(0)->nodeValue);
+  //     $res->setDNuDespImp($xml->getElementsByTagName('dNuDespImp')->item(0)->nodeValue);
+  //     $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dIniTras')->item(0)->nodeValue));
+  //     $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dfinTras')->item(0)->nodeValue));
+  //     $res->setCPaisDest($xml->getElementsByTagName('cPaisDest')->item(0)->nodeValue);
+  //     //Children
+  //     $res->setGCamSal($res->gCamSal->fromDOMElement($xml->getElementsByTagName('gCamSal')->item(0)->nodeValue));
+  //     $res->setGCamEnt($res->gCamEnt->fromDOMElement($xml->getElementsByTagName('gCamEnt')->item(0)->nodeValue));
+  //     $res->setGVehTras($res->gVehTras->fromDOMElement($xml->getElementsByTagName('gVehTras')->item(0)->nodeValue));
+  //     $res->setGCamTrans($res->gCamTrans->fromDOMElement($xml->getElementsByTagName('gCamTrans')->item(0)->nodeValue));
 
-      return $res;
+  //     return $res;
 
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   //====================================================//
   //Others
@@ -439,7 +439,7 @@ class GTransp
    *
    * @return GCamSal
    */
-  public function getGCamSal(): GCamSal
+  public function getGCamSal(): GCamSal | null
   {
     return $this->gCamSal;
   }
@@ -463,7 +463,7 @@ class GTransp
    *
    * @return GVehTras
    */
-  public function getGVehTras(): GVehTras
+  public function getGVehTras(): GVehTras | null
   {
     return $this->gVehTras;
   }
@@ -487,7 +487,7 @@ class GTransp
    *
    * @return GCamTrans
    */
-  public function getGCamTrans(): GCamTrans
+  public function getGCamTrans(): GCamTrans | null
   {
     return $this->gCamTrans;
   }
@@ -511,7 +511,7 @@ class GTransp
    *
    * @return GCamEnt
    */
-  public function getGCamEnt(): GCamEnt
+  public function getGCamEnt(): GCamEnt | null
   {
     return $this->gCamEnt;
   }
@@ -528,5 +528,43 @@ class GTransp
     $this->gCamEnt = $gCamEnt;
 
     return $this;
+  }
+
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
+  public static function fromResponse($response): self
+  {
+    $res = new GTransp();
+    $res->setITipTrans(intval($response->iTipTrans));
+    $res->setIModTrans(intval($response->imodTrans));
+    $res->setIRespFlete(intval($response->iRespFlete));
+    $res->setCCondNeg($response->cCondNeg);
+    $res->setDNuManif($response->dNuManif);
+    $res->setDNuDespImp($response->dNuDespImp);
+    $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $response->dIniTras));
+    $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $response->dFinTras));
+    $res->setCPaisDest($response->cPaisDest);
+    //Children
+    if (isset($response->gCamSal)) {
+      $res->setGCamSal(GCamSal::fromResponse($response->gCamSal));
+    }
+
+    if (isset($response->gCamEnt)) {
+      $res->setGCamEnt(GCamEnt::fromResponse($response->gCamEnt));
+    }
+
+    if (isset($response->gVehTras)) {
+      $res->setGVehTras(GVehTras::fromResponse($response->gVehTras));
+    }
+
+    if (isset($response->gCamTrans)) {
+      $res->setGCamTrans(GCamTrans::fromResponse($response->gCamTrans));
+    }
+
+    return $res;
   }
 }

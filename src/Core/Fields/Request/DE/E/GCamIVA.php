@@ -9,11 +9,11 @@ use DOMElement;
  */
 class GCamIVA
 {
-  public int $iAfecIVA; /// E731  Forma de afectación tributaria del IVA
-  public int $dPropIVA; ///E733 Proporción gravada de IVA
-  public int $dTasaIVA; //E734  Tasa del IVA
-  public int $dBasGravIVA; //E735 Base gravada del IVA por ítem 
-  public int $dLiqIVAItem; //E736  Liquidación del IVA por ítem
+  public ?int $iAfecIVA  = null; /// E731  Forma de afectación tributaria del IVA
+  public ?int $dPropIVA  = null; ///E733 Proporción gravada de IVA
+  public ?int $dTasaIVA  = null; //E734  Tasa del IVA
+  public ?int $dBasGravIVA = null; //E735 Base gravada del IVA por ítem 
+  public ?int $dLiqIVAItem = null; //E736  Liquidación del IVA por ítem
 
   //====================================================//
   //Setters
@@ -102,7 +102,7 @@ class GCamIVA
    *
    * @return int
    */
-  public function getIAfecIVA(): int
+  public function getIAfecIVA(): int | null
   {
     return $this->iAfecIVA;
   }
@@ -113,7 +113,7 @@ class GCamIVA
    *
    * @return string
    */
-  public function getDDesAfecIVA(): string
+  public function getDDesAfecIVA(): string | null
   {
     switch ($this->iAfecIVA) {
       case 1:
@@ -139,7 +139,7 @@ class GCamIVA
    *
    * @return int
    */
-  public function getDPropIVA(): int
+  public function getDPropIVA(): int | null
   {
     return $this->dPropIVA;
   }
@@ -149,7 +149,7 @@ class GCamIVA
    *
    * @return int
    */
-  public function getDTasaIVA(): int
+  public function getDTasaIVA(): int | null
   {
     return $this->dTasaIVA;
   }
@@ -159,7 +159,7 @@ class GCamIVA
    *
    * @return int
    */
-  public function getDBasGravIVA(): int
+  public function getDBasGravIVA(): int | null
   {
     return $this->dBasGravIVA;
   }
@@ -169,7 +169,7 @@ class GCamIVA
    *
    * @return int
    */
-  public function getDLiqIVAItem(): int
+  public function getDLiqIVAItem(): int | null
   {
     return $this->dLiqIVAItem;
   }
@@ -197,28 +197,34 @@ class GCamIVA
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamIVA
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamIVA
+  // {
+  //   if (strcmp($xml->tagName, 'gCamIVA') == 0 && $xml->childElementCount == 6) {
+  //     $res = new GCamIVA();
+  //     $res->setIAfecIVA(intval($xml->getElementsByTagName('iAfecIVA')->item(0)->nodeValue));
+  //     $res->setDPropIVA(intval($xml->getElementsByTagName('dPropIVA')->item(0)->nodeValue));
+  //     $res->setDTasaIVA(intval($xml->getElementsByTagName('dTasaIVA')->item(0)->nodeValue));
+  //     $res->setDBasGravIVA(intval($xml->getElementsByTagName('dBasGravIVA')->item(0)->nodeValue));
+  //     $res->setDLiqIVAItem(intval($xml->getElementsByTagName('dLiqIVAItem')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCamIVA
+   * @param  mixed $resposne
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCamIVA
-  {
-    if (strcmp($xml->tagName, 'gCamIVA') == 0 && $xml->childElementCount == 6) {
-      $res = new GCamIVA();
-      $res->setIAfecIVA(intval($xml->getElementsByTagName('iAfecIVA')->item(0)->nodeValue));
-      $res->setDPropIVA(intval($xml->getElementsByTagName('dPropIVA')->item(0)->nodeValue));
-      $res->setDTasaIVA(intval($xml->getElementsByTagName('dTasaIVA')->item(0)->nodeValue));
-      $res->setDBasGravIVA(intval($xml->getElementsByTagName('dBasGravIVA')->item(0)->nodeValue));
-      $res->setDLiqIVAItem(intval($xml->getElementsByTagName('dLiqIVAItem')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($resposne): self
   {
 

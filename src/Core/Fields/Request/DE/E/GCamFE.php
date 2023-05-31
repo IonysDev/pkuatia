@@ -12,9 +12,9 @@ use DOMElement;
  */
 class GCamFE
 {
-  public int $iIndPres; //indicador de presencia ID:E011 PADRE:E010
-  public DateTime $dFecEmNR; //Fecha en el formato: AAAA-MM-DD Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda. RG 41/14 ID:E013 PADRE:E010
-  public GCompPub $gComPub;
+  public ?int $iIndPres  = null; //indicador de presencia ID:E011 PADRE:E010
+  public ?DateTime $dFecEmNR  = null; //Fecha en el formato: AAAA-MM-DD Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda. RG 41/14 ID:E013 PADRE:E010
+  public ?GCompPub $gComPub  = null;
 
   //====================================================//
   ////Setters
@@ -71,7 +71,7 @@ class GCamFE
   /**
    * Get the value of iIndPres
    */
-  public function getIIndPres(): int
+  public function getIIndPres(): int | null
   {
     return $this->iIndPres;
   }
@@ -79,7 +79,7 @@ class GCamFE
   /**
    * Get the value of dFecEmNR
    */
-  public function getDFecEmNR(): DateTime
+  public function getDFecEmNR(): DateTime | null
   {
     return $this->dFecEmNR;
   }
@@ -89,7 +89,7 @@ class GCamFE
    *
    * @return string
    */
-  public function getDDesIndPres(): string
+  public function getDDesIndPres(): string | null
   {
     switch ($this->iIndPres) {
       case 1:
@@ -146,27 +146,33 @@ class GCamFE
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamFE
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamFE
+  // {
+  //   if (strcmp($xml->tagName, 'gCamFE') == 0 && $xml->childElementCount == 3) {
+  //     $res = new GCamFE();
+  //     $res->setIIndPres(intval($xml->getElementsByTagName('iIndPres')->item(0)->nodeValue));
+  //     $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEmNR')->item(0)->nodeValue));
+  //     //Children
+  //     $res->setGComPub($res->gComPub->fromDOMElement($xml->getElementsByTagName('gComPub')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCamFE
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCamFE
-  {
-    if (strcmp($xml->tagName, 'gCamFE') == 0 && $xml->childElementCount == 3) {
-      $res = new GCamFE();
-      $res->setIIndPres(intval($xml->getElementsByTagName('iIndPres')->item(0)->nodeValue));
-      $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEmNR')->item(0)->nodeValue));
-      //Children
-      $res->setGComPub($res->gComPub->fromDOMElement($xml->getElementsByTagName('gComPub')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response): self
   {
     $res = new GCamFE();

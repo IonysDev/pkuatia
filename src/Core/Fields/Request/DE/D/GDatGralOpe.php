@@ -13,10 +13,10 @@ use DOMElement;
 class GDatGralOpe
 {
 
-  public DateTime $dFeEmiDE; // D002 - Fecha y hora de emisión del DE (D002) AAAA-MM-DDThh:mm:ss
-  public GOpeCom $gOpeCom;   // Campos inherentes a la operación comercial (D010)
-  public GEmis $gEmis;       // Grupo de campos que identifican al emisor (D100)
-  public GDatRec $gDatRec;   // Grupo de campos que identifican al receptor (D200)
+  public ?DateTime $dFeEmiDE = null; // D002 - Fecha y hora de emisión del DE (D002) AAAA-MM-DDThh:mm:ss
+  public ?GOpeCom $gOpeCom = null;   // Campos inherentes a la operación comercial (D010)
+  public ?GEmis $gEmis = null;       // Grupo de campos que identifican al emisor (D100)
+  public ?GDatRec $gDatRec = null;   // Grupo de campos que identifican al receptor (D200)
 
   //====================================================//
   ///Setters
@@ -92,7 +92,7 @@ class GDatGralOpe
    *
    * @return DateTime
    */
-  public function getDFeEmiDE(): DateTime
+  public function getDFeEmiDE(): DateTime | null
   {
     return $this->dFeEmiDE;
   }
@@ -102,7 +102,7 @@ class GDatGralOpe
    *
    * @return GOpeCom
    */
-  public function getGOpeCom(): GOpeCom
+  public function getGOpeCom(): GOpeCom | null
   {
     return $this->gOpeCom;
   }
@@ -112,7 +112,7 @@ class GDatGralOpe
    *
    * @return GEmis
    */
-  public function getGEmis(): GEmis
+  public function getGEmis(): GEmis | null
   {
     return $this->gEmis;
   }
@@ -122,7 +122,7 @@ class GDatGralOpe
    *
    * @return GDatRec
    */
-  public function getGDatRec(): GDatRec
+  public function getGDatRec(): GDatRec | null
   {
     return $this->gDatRec;
   }
@@ -147,32 +147,38 @@ class GDatGralOpe
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GDatGralOpe
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GDatGralOpe
+  // {
+  //   if (strcmp($xml->tagName, 'dDatGralOpe') == 0 && $xml->childElementCount == 4) {
+  //     $res = new GDatGralOpe();
+  //     $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFeEmiDE')->item(0)->nodeValue));
+  //     ///children
+  //     $res->setGOpeCom($res->gOpeCom->fromDOMElement($xml->getElementsByTagName('gOpeCom')->item(0)->nodeValue));
+  //     $res->setGEmis($res->gEmis->fromDOMElement($xml->getElementsByTagName('gEmis')->item(0)->nodeValue));
+  //     $res->setGDatRec($res->gDatRec->fromDOMElement($xml->getElementsByTagName('gDatRec')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GDatGralOpe
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GDatGralOpe
-  {
-    if (strcmp($xml->tagName, 'dDatGralOpe') == 0 && $xml->childElementCount == 4) {
-      $res = new GDatGralOpe();
-      $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s',$xml->getElementsByTagName('dFeEmiDE')->item(0)->nodeValue));
-      ///children
-      $res->setGOpeCom($res->gOpeCom->fromDOMElement($xml->getElementsByTagName('gOpeCom')->item(0)->nodeValue));
-      $res->setGEmis($res->gEmis->fromDOMElement($xml->getElementsByTagName('gEmis')->item(0)->nodeValue));
-      $res->setGDatRec($res->gDatRec->fromDOMElement($xml->getElementsByTagName('gDatRec')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
-  public static function fromResponse($response):self
+  public static function fromResponse($response): self
   {
     $res = new GDatGralOpe();
-    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s',$response->dFeEmiDE));
+    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFeEmiDE));
     ///children
     $res->setGOpeCom(GOpeCom::fromResponse($response->gOpeCom));
     $res->setGEmis(GEmis::fromResponse($response->gEmis));

@@ -10,11 +10,11 @@ use DOMElement;
  */
 class GGrupSup
 {
-  public string $dNomCaj; ///E811 Nombre del cajero
-  public int $dEfectivo; /// E812 Efectivo
-  public int $dVuelto; //E813 Vuelto
-  public int $dDonac; ///E814 Monto de la donación
-  public string $dDesDonac; ///E815 Descripción de la donación
+  public ?string $dNomCaj = null; ///E811 Nombre del cajero
+  public ?int $dEfectivo = null; /// E812 Efectivo
+  public ?int $dVuelto = null; //E813 Vuelto
+  public ?int $dDonac = null; ///E814 Monto de la donación
+  public ?string $dDesDonac = null; ///E815 Descripción de la donación
 
   //====================================================//
   ////Setters
@@ -103,7 +103,7 @@ class GGrupSup
    *
    * @return string
    */
-  public function getDNomCaj(): string
+  public function getDNomCaj(): string | null
   {
     return $this->dNomCaj;
   }
@@ -113,7 +113,7 @@ class GGrupSup
    *
    * @return int
    */
-  public function getDEfectivo(): int
+  public function getDEfectivo(): int | null
   {
     return $this->dEfectivo;
   }
@@ -123,7 +123,7 @@ class GGrupSup
    *
    * @return int
    */
-  public function getDVuelto(): int
+  public function getDVuelto(): int | null
   {
     return $this->dVuelto;
   }
@@ -133,7 +133,7 @@ class GGrupSup
    *
    * @return int
    */
-  public function getDDonac(): int
+  public function getDDonac(): int | null
   {
     return $this->dDonac;
   }
@@ -143,7 +143,7 @@ class GGrupSup
    *
    * @return string
    */
-  public function getDDesDonac(): string
+  public function getDDesDonac(): string | null
   {
     return $this->dDesDonac;
   }
@@ -170,29 +170,35 @@ class GGrupSup
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GGrupSup
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GGrupSup
+  // {
+  //   if (strcmp($xml->tagName, 'gGrupSup') === 0 && $xml->childElementCount == 5) {
+  //     $res = new GGrupSup();
+  //     $res->setDNomCaj($xml->getElementsByTagName('dNomCaj')->item(0)->nodeValue);
+  //     $res->setDEfectivo(intval($xml->getElementsByTagName('dEfectivo')->item(0)->nodeValue));
+  //     $res->setDVuelto(intval($xml->getElementsByTagName('dVuelto')->item(0)->nodeValue));
+  //     $res->setDDonac(intval($xml->getElementsByTagName('dDonac')->item(0)->nodeValue));
+  //     $res->setDDesDonac(strval($xml->getElementsByTagName('dDesDonac')->item(0)->nodeValue));
+
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GGrupSup
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GGrupSup
-  {
-    if (strcmp($xml->tagName, 'gGrupSup') === 0 && $xml->childElementCount == 5) {
-      $res = new GGrupSup();
-      $res->setDNomCaj($xml->getElementsByTagName('dNomCaj')->item(0)->nodeValue);
-      $res->setDEfectivo(intval($xml->getElementsByTagName('dEfectivo')->item(0)->nodeValue));
-      $res->setDVuelto(intval($xml->getElementsByTagName('dVuelto')->item(0)->nodeValue));
-      $res->setDDonac(intval($xml->getElementsByTagName('dDonac')->item(0)->nodeValue));
-      $res->setDDesDonac(strval($xml->getElementsByTagName('dDesDonac')->item(0)->nodeValue));
-
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response): self
   {
     $res = new GGrupSup();

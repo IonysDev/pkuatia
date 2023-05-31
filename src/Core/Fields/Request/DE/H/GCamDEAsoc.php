@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\H;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\H;
 
 use DateTime;
 use DOMElement;
@@ -10,19 +10,19 @@ use DOMElement;
  */
 class GCamDEAsoc
 {
-  public int $iTipDocAso; ///H002 Tipo de documento asociado
-  public string $dCdCDERef; ///H004 CDC del DTE referenciado
-  public int $dNTimDI; ///H005 Nro. timbrado documento impreso de referencia
-  public string $dEstDocAso; ///H006 Establecimiento
-  public string $dPExpDocAso; ///H007 Punto de expedición
-  public string $dNumDocAso; ///H008 Número del documento
-  public int $iTipoDocAso; ///H009 Tipo de documento  impreso
-  public DateTime $dFecEmiDI; ///H011 Fecha de emisión del documento impreso de referencia
-  public string $dNumComRet; /// H012  Número de comprobante de retención
-  public string $dNumResCF; /// H013 Número de resolución de crédito fiscal
-  public int $iTipCons; //H014 Tipo de constancia
-  public int $dNumCons; //H016 Número de constancia 
-  public string $dNumControl; ///H017 Número de control de la constancia 
+  public ?int $iTipDocAso = null; ///H002 Tipo de documento asociado
+  public ?string $dCdCDERef = null; ///H004 CDC del DTE referenciado
+  public ?int $dNTimDI = null; ///H005 Nro. timbrado documento impreso de referencia
+  public ?string $dEstDocAso = null; ///H006 Establecimiento
+  public ?string $dPExpDocAso = null; ///H007 Punto de expedición
+  public ?string $dNumDocAso = null; ///H008 Número del documento
+  public ?int $iTipoDocAso = null; ///H009 Tipo de documento  impreso
+  public ?DateTime $dFecEmiDI = null; ///H011 Fecha de emisión del documento impreso de referencia
+  public ?string $dNumComRet = null; /// H012  Número de comprobante de retención
+  public ?string $dNumResCF = null; /// H013 Número de resolución de crédito fiscal
+  public ?int $iTipCons = null; //H014 Tipo de constancia
+  public ?int $dNumCons = null; //H016 Número de constancia 
+  public ?string $dNumControl = null; ///H017 Número de control de la constancia 
 
   //====================================================//
   ///SETTERS
@@ -231,7 +231,7 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getITipDocAso(): int
+  public function getITipDocAso(): int | null
   {
     return $this->iTipDocAso;
   }
@@ -241,7 +241,7 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getDNTimDI(): int
+  public function getDNTimDI(): int | null
   {
     return $this->dNTimDI;
   }
@@ -252,7 +252,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDDesTipDocAso(): string
+  public function getDDesTipDocAso(): string | null
   {
     switch ($this->iTipDocAso) {
       case 1:
@@ -278,7 +278,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDCdCDERef(): string
+  public function getDCdCDERef(): string | null
   {
     return $this->dCdCDERef;
   }
@@ -288,7 +288,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDEstDocAso(): string
+  public function getDEstDocAso(): string | null
   {
     return $this->dEstDocAso;
   }
@@ -298,7 +298,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDPExpDocAso(): string
+  public function getDPExpDocAso(): string | null
   {
     return $this->dPExpDocAso;
   }
@@ -308,7 +308,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumDocAso(): string
+  public function getDNumDocAso(): string | null
   {
     return $this->dNumDocAso;
   }
@@ -318,7 +318,7 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getITipoDocAso(): int
+  public function getITipoDocAso(): int | null
   {
     return $this->iTipoDocAso;
   }
@@ -328,7 +328,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDDTipoDocAso(): string
+  public function getDDTipoDocAso(): string | null
   {
     switch ($this->iTipDocAso) {
       case 1:
@@ -360,7 +360,7 @@ class GCamDEAsoc
    *
    * @return DateTime
    */
-  public function getDFecEmiDI(): DateTime
+  public function getDFecEmiDI(): DateTime | null
   {
     return $this->dFecEmiDI;
   }
@@ -370,7 +370,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumComRet(): string
+  public function getDNumComRet(): string | null
   {
     return $this->dNumComRet;
   }
@@ -380,7 +380,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumResCF(): string
+  public function getDNumResCF(): string | null
   {
     return $this->dNumResCF;
   }
@@ -390,7 +390,7 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getITipCons(): int
+  public function getITipCons(): int | null
   {
     return $this->iTipCons;
   }
@@ -400,7 +400,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDDesTipCons(): string
+  public function getDDesTipCons(): string | null
   {
     switch ($this->iTipCons) {
       case 1:
@@ -423,7 +423,7 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getDNumCons(): int
+  public function getDNumCons(): int | null
   {
     return $this->dNumCons;
   }
@@ -433,7 +433,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumControl(): string
+  public function getDNumControl(): string | null
   {
     return $this->dNumControl;
   }
@@ -485,39 +485,44 @@ class GCamDEAsoc
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamDEAsoc
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamDEAsoc
+  // {
+  //   if (strcmp($xml->tagName, 'gCamDEAsoc') == 0 && $xml->childElementCount >= 4) {
+  //     $res = new GCamDEAsoc();
+  //     $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
+  //     $res->setDCdCDERef($xml->getElementsByTagName('dCdCDERef')->item(0)->nodeValue);
+  //     $res->setDNTimDI(intval($xml->getElementsByTagName('dNTimDI')->item(0)->nodeValue));
+  //     $res->setDEstDocAso($xml->getElementsByTagName('dStDocAso')->item(0)->nodeValue);
+  //     $res->setDPExpDocAso($xml->getElementsByTagName('dPExpDocAso')->item(0)->nodeValue);
+  //     $res->setDNumDocAso($xml->getElementsByTagName('dNumDocAso')->item(0)->nodeValue);
+  //     $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
+  //     $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEmDi')->item(0)->nodeValue));
+  //     $res->setDNumComRet($xml->getElementsByTagName('dNumComRet')->item(0)->nodeValue);
+  //     $res->setDNumResCF($xml->getElementsByTagName('dNumResCF')->item(0)->nodeValue);
+  //     $res->setITipCons(intval($xml->getElementsByTagName('iTipCons')->item(0)->nodeValue));
+  //     $res->setDNumCons(intval($xml->getElementsByTagName('dNumCons')->item(0)->nodeValue));
+  //     $res->setDNumControl($xml->getElementsByTagName('dNumControl')->item(0)->nodeValue);
+
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCamDEAsoc
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCamDEAsoc
-  {
-    if (strcmp($xml->tagName, 'gCamDEAsoc') == 0 && $xml->childElementCount >= 4) {
-      $res = new GCamDEAsoc();
-      $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
-      $res->setDCdCDERef($xml->getElementsByTagName('dCdCDERef')->item(0)->nodeValue);
-      $res->setDNTimDI(intval($xml->getElementsByTagName('dNTimDI')->item(0)->nodeValue));
-      $res->setDEstDocAso($xml->getElementsByTagName('dStDocAso')->item(0)->nodeValue);
-      $res->setDPExpDocAso($xml->getElementsByTagName('dPExpDocAso')->item(0)->nodeValue);
-      $res->setDNumDocAso($xml->getElementsByTagName('dNumDocAso')->item(0)->nodeValue);
-      $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
-      $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEmDi')->item(0)->nodeValue));
-      $res->setDNumComRet($xml->getElementsByTagName('dNumComRet')->item(0)->nodeValue);
-      $res->setDNumResCF($xml->getElementsByTagName('dNumResCF')->item(0)->nodeValue);
-      $res->setITipCons(intval($xml->getElementsByTagName('iTipCons')->item(0)->nodeValue));
-      $res->setDNumCons(intval($xml->getElementsByTagName('dNumCons')->item(0)->nodeValue));
-      $res->setDNumControl($xml->getElementsByTagName('dNumControl')->item(0)->nodeValue);
-
-      return $res;
-
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
-  public static function fromResponse($response):self
+  public static function fromResponse($response): self
   {
     $res = new GCamDEAsoc();
     $res->setITipDocAso(intval($response->iTipDocAso));

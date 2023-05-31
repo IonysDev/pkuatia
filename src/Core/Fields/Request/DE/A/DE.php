@@ -6,12 +6,12 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\A;
 
 
 use Abiliomp\Pkuatia\Core\Fields\G\GCamGen;
-use Abiliomp\Pkuatia\Core\Fields\H\GCamDEAsoc;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GDtipDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\F\GTotSub;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\H\GCamDEAsoc;
 use DateTime;
 use DOMElement;
 
@@ -20,17 +20,17 @@ use DOMElement;
  */
 class DE
 {
-  public string $iD;               // A002 - Identificador del DE
-  public int $dDVId;               // A003 - dígito verificador del dentificador del DE 
-  public DateTime $dFecFirma;      // A004 - Fecha de la firma
-  public int $dSisFact;            // A005 - Sistema de facturación
-  public GOpeDE $gOpeDe;           // Campos inherentes a la operación de DE
-  public GTimb $gTimb;             // Datos del timbrado 
-  public GDatGralOpe $dDatGralOpe; // Campos generales del DE
-  public GDtipDE $gDtipDe;
-  public GTotSub $gTotSub;
-  public GCamGen $gCamGen;
-  public GCamDEAsoc $gCamDEAsoc;
+  public ?string $iD = null;               // A002 - Identificador del DE
+  public ?int $dDVId = null;               // A003 - dígito verificador del dentificador del DE 
+  public ?DateTime $dFecFirma = null;      // A004 - Fecha de la firma
+  public ?int $dSisFact = null;            // A005 - Sistema de facturación
+  public ?GOpeDE $gOpeDe = null;           // Campos inherentes a la operación de DE
+  public ?GTimb $gTimb = null;             // Datos del timbrado 
+  public ?GDatGralOpe $dDatGralOpe = null; // Campos generales del DE
+  public ?GDtipDE $gDtipDe = null;
+  public ?GTotSub $gTotSub = null;
+  public ?GCamGen $gCamGen = null;
+  public ?GCamDEAsoc $gCamDEAsoc = null;
 
   //====================================================//
   ///Setters
@@ -104,7 +104,7 @@ class DE
    *
    * @return string
    */
-  public function getID(): string
+  public function getID(): string | null
   {
     return $this->iD;
   }
@@ -114,7 +114,7 @@ class DE
    *
    * @return int
    */
-  public function getDDVId(): int
+  public function getDDVId(): int | null
   {
     return $this->dDVId;
   }
@@ -124,7 +124,7 @@ class DE
    *
    * @return DateTime
    */
-  public function getDFecFirma(): DateTime
+  public function getDFecFirma(): DateTime | null
   {
     return $this->dFecFirma;
   }
@@ -134,7 +134,7 @@ class DE
    *
    * @return int
    */
-  public function getDSisFact(): int
+  public function getDSisFact(): int | null
   {
     return $this->dSisFact;
   }
@@ -169,34 +169,34 @@ class DE
   }
 
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return DE
-   */
-  public static function fromDOMElement(DOMElement $xml): DE
-  {
-    if (strcmp($xml->tagName, 'DE') == 0 && $xml->childElementCount == 11) {
-      $res = new DE();
-      $res->setID($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDDVId(intval($xml->getElementsByTagName('dDVId')->item(0)->nodeValue));
-      $res->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
-      $res->setDSisFact(intval($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue));
-      ///Children
-      $res->setGOpeDe($res->gOpeDe->fromDOMElement($xml->getElementsByTagName('gOpeDE')->item(0)->nodeValue));
-      $res->setGTimb($res->gTimb->fromDOMElement($xml->getElementsByTagName('gTimb')->item(0)->nodeValue));
-      $res->setDDatGralOpe($res->dDatGralOpe->fromDOMElement($xml->getElementsByTagName('dDatGralOpe')->item(0)->nodeValue));
-      $res->setGDtipDe($res->gDtipDe->fromDOMElement($xml->getElementsByTagName('gDtipDe')->item(0)->nodeValue));
-      $res->setGTotSub($res->gTotSub->fromDOMElement($xml->getElementsByTagName('dTotSub')->item(0)->nodeValue));
-      $res->setGCamGen($res->gCamGen->fromDOMElement($xml->getElementsByTagName('gCamGen')->item(0)->nodeValue));
-      $res->setGCamDEAsoc($res->gCamDEAsoc->fromDOMElement($xml->getElementsByTagName('gCamDEAsoc')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return DE
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): DE
+  // {
+  //   if (strcmp($xml->tagName, 'DE') == 0 && $xml->childElementCount == 11) {
+  //     $res = new DE();
+  //     $res->setID($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setDDVId(intval($xml->getElementsByTagName('dDVId')->item(0)->nodeValue));
+  //     $res->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
+  //     $res->setDSisFact(intval($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue));
+  //     ///Children
+  //     $res->setGOpeDe($res->gOpeDe->fromDOMElement($xml->getElementsByTagName('gOpeDE')->item(0)->nodeValue));
+  //     $res->setGTimb($res->gTimb->fromDOMElement($xml->getElementsByTagName('gTimb')->item(0)->nodeValue));
+  //     $res->setDDatGralOpe($res->dDatGralOpe->fromDOMElement($xml->getElementsByTagName('dDatGralOpe')->item(0)->nodeValue));
+  //     $res->setGDtipDe($res->gDtipDe->fromDOMElement($xml->getElementsByTagName('gDtipDe')->item(0)->nodeValue));
+  //     $res->setGTotSub($res->gTotSub->fromDOMElement($xml->getElementsByTagName('dTotSub')->item(0)->nodeValue));
+  //     $res->setGCamGen($res->gCamGen->fromDOMElement($xml->getElementsByTagName('gCamGen')->item(0)->nodeValue));
+  //     $res->setGCamDEAsoc($res->gCamDEAsoc->fromDOMElement($xml->getElementsByTagName('gCamDEAsoc')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   //====================================================//
   //Others
@@ -207,7 +207,7 @@ class DE
    *
    * @return GOpeDE
    */
-  public function getGOpeDe(): GOpeDE
+  public function getGOpeDe(): GOpeDE | null
   {
     return $this->gOpeDe;
   }
@@ -231,7 +231,7 @@ class DE
    *
    * @return GTimb
    */
-  public function getGTimb(): GTimb
+  public function getGTimb(): GTimb | null
   {
     return $this->gTimb;
   }
@@ -255,7 +255,7 @@ class DE
    *
    * @return GDatGralOpe
    */
-  public function getDDatGralOpe(): GDatGralOpe
+  public function getDDatGralOpe(): GDatGralOpe | null
   {
     return $this->dDatGralOpe;
   }
@@ -279,7 +279,7 @@ class DE
    *
    * @return GDtipDE
    */
-  public function getGDtipDe(): GDtipDE
+  public function getGDtipDe(): GDtipDE | null
   {
     return $this->gDtipDe;
   }
@@ -303,7 +303,7 @@ class DE
    *
    * @return GCamDEAsoc
    */
-  public function getGCamDEAsoc(): GCamDEAsoc
+  public function getGCamDEAsoc(): GCamDEAsoc | null
   {
     return $this->gCamDEAsoc;
   }
@@ -327,7 +327,7 @@ class DE
    *
    * @return GCamGen
    */
-  public function getGCamGen(): GCamGen
+  public function getGCamGen(): GCamGen | null
   {
     return $this->gCamGen;
   }
@@ -351,7 +351,7 @@ class DE
    *
    * @return GTotSub
    */
-  public function getGTotSub(): GTotSub
+  public function getGTotSub(): GTotSub | null
   {
     return $this->gTotSub;
   }
@@ -369,7 +369,13 @@ class DE
 
     return $this;
   }
-
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response): self
   {
     ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas

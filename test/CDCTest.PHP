@@ -39,11 +39,15 @@ try {
   echo 'Response:' . PHP_EOL;
   //return the response object
   $res = RespuestaConsultaDE::fromResponse($responseXML);
-  echo $res->printData();
-  if (isset($responseXML->xContenDE)) {
-    file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
-    echo "xml generado";
+   echo $res->printData();
+  if(!is_null($res->getXContEv()))
+  {
+    var_dump($res->getXContEv());
   }
+  // if (isset($responseXML->xContenDE)) {
+  //   file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
+  //   echo "xml generado";
+  // }
   
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors

@@ -11,7 +11,7 @@ use DOMElement;
  */
 class GCamNCDE
 {
-  public int $iMotEmi; //ID:E401  Motivo de emisión PADRE:E400
+  public ?int $iMotEmi  = null; //ID:E401  Motivo de emisión PADRE:E400
 
   //====================================================//
   ///Setters
@@ -40,7 +40,7 @@ class GCamNCDE
    *
    * @return int
    */
-  public function getIMotEmi(): int
+  public function getIMotEmi(): int | null
   {
     return $this->iMotEmi;
   }
@@ -50,7 +50,7 @@ class GCamNCDE
    *
    * @return string
    */
-  public function getDDesMotEmi(): string
+  public function getDDesMotEmi(): string | null
   {
     switch ($this->iMotEmi) {
       case 1:
@@ -102,24 +102,30 @@ class GCamNCDE
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamNCDE
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamNCDE
+  // {
+  //   if (strcmp($xml->tagName, 'gCamNCDE') == 0 && $xml->childElementCount == 2) {
+  //     $res = new GCamNCDE();
+  //     $res->setIMotEmi(intval($xml->getElementsByTagName('iMotE')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCamNCDE
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCamNCDE
-  {
-    if (strcmp($xml->tagName, 'gCamNCDE') == 0 && $xml->childElementCount == 2) {
-      $res = new GCamNCDE();
-      $res->setIMotEmi(intval($xml->getElementsByTagName('iMotE')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response): self
   {
     $res = new GCamNCDE();

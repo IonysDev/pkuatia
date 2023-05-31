@@ -12,7 +12,7 @@ class RespuestaConsultaDE
   public string $dFecProc; //fecha de proceso
   public string $dCodRes; //codigo de respuesta
   public string $dMsgRes; //descripcion del codigo de respuesta
-  public TxContenDE $xContEv; //objeto de la respuesta
+  public ?TxContenDE $xContEv = null; //objeto de la respuesta
 
   //====================================================//
   ///SETTERS
@@ -70,7 +70,7 @@ class RespuestaConsultaDE
    *
    * @return self
    */
-  public function setXContEv(TxContenDE $xContEv): self
+  public function setXContEv(TxContenDE $xContEv): self 
   {
     $this->xContEv = $xContEv;
 
@@ -117,7 +117,7 @@ class RespuestaConsultaDE
    *
    * @return TxContenDE
    */
-  public function getXContEv(): TxContenDE
+  public function getXContEv(): TxContenDE | null
   {
     return $this->xContEv;
   }
@@ -134,7 +134,6 @@ class RespuestaConsultaDE
    */
   public static function fromResponse($response): self
   {
-    echo "RespuestaConsultaDE::fromResponse\n";
 
     if (is_null($response)) {
       throw new \Exception("RespuestaConsultaDE::fromResponse: response is null");
@@ -161,9 +160,6 @@ class RespuestaConsultaDE
 
   public function printData()
   {
-
-    var_dump($this->xContEv);
-
     return "RespuestaConsultaDE: " . PHP_EOL .
       "Fecha de Consulta: " . $this->dFecProc . PHP_EOL .
       "Código de Respuesta: " . $this->dCodRes . PHP_EOL .

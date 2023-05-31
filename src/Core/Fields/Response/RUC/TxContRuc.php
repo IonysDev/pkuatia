@@ -9,11 +9,11 @@ use DOMElement;
  */
 class TxContRuc
 {
-  public string $dRUCCons;      // ContRUC02 - RUC Consultado
-  public string $dRazCons;      // ContRUC03 - Razón social del RUC Consultado
-  public string $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado
-  public string $dDesEstCons;   //ContRUC05 - Descripción Código del Estado del RUC Consultado
-  public string $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico
+  public ?string $dRUCCons = null;      // ContRUC02 - RUC Consultado
+  public ?string $dRazCons = null;      // ContRUC03 - Razón social del RUC Consultado
+  public ?string $dCodEstCons = null;   // ContRUC04 - Código del Estado del RUC Consultado
+  public ?string $dDesEstCons = null;   //ContRUC05 - Descripción Código del Estado del RUC Consultado
+  public ?string $dRUCFactElec = null;  // ContRUC06 - consultado es facturador electrónico
 
   //====================================================//
   ///SETTERS
@@ -101,7 +101,7 @@ class TxContRuc
    *
    * @return string
    */
-  public function getDRUCCons(): string
+  public function getDRUCCons(): string | null
   {
     return $this->dRUCCons;
   }
@@ -111,7 +111,7 @@ class TxContRuc
    *
    * @return string
    */
-  public function getDRazCons(): string
+  public function getDRazCons(): string | null
   {
     return $this->dRazCons;
   }
@@ -121,7 +121,7 @@ class TxContRuc
    *
    * @return string
    */
-  public function getDCodEstCons(): string
+  public function getDCodEstCons(): string | null
   {
     return $this->dCodEstCons;
   }
@@ -131,7 +131,7 @@ class TxContRuc
    *
    * @return string
    */
-  public function getDDesEstCons(): string
+  public function getDDesEstCons(): string | null
   {
     switch ($this->dCodEstCons) {
       case 'ACT':
@@ -165,13 +165,13 @@ class TxContRuc
    *
    * @return string
    */
-  public function getDRUCFactElec(): string
-  {
+  public function getDRUCFactElec(): string | null
+  { 
     return $this->dRUCFactElec;
   }
 
   //get the description of dRUCFactElec
-  public function getDRUCFactElecDesc(): string
+  public function getDRUCFactElecDesc(): string | null
   {
     switch ($this->dRUCFactElec) {
       case 'S':
@@ -208,29 +208,35 @@ class TxContRuc
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return TxContRuc
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): TxContRuc
+  // {
+  //   if (strcmp($xml->tagName, 'rContRUC ') == 0 && $xml->childElementCount == 5) {
+  //     $res = new TxContRuc();
+  //     $res->setDRUCCons($xml->getElementsByTagName('rContRUC ')->item(0)->nodeValue);
+  //     $res->setDRazCons($xml->getElementsByTagName('dRazCons ')->item(0)->nodeValue);
+  //     $res->setDCodEstCons($xml->getElementsByTagName('dCodEstCons ')->item(0)->nodeValue);
+  //     $res->setDDesEstCons($xml->getElementsByTagName('dDesEstCons ')->item(0)->nodeValue);
+  //     $res->setDRUCFactElec($xml->getElementsByTagName('dRUCFactElec ')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+
+  ///create a objet from a objectClass  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
+   * @param  mixed $object
    * @return TxContRuc
    */
-  public static function fromDOMElement(DOMElement $xml): TxContRuc
-  {
-    if (strcmp($xml->tagName, 'rContRUC ') == 0 && $xml->childElementCount == 5) {
-      $res = new TxContRuc();
-      $res->setDRUCCons($xml->getElementsByTagName('rContRUC ')->item(0)->nodeValue);
-      $res->setDRazCons($xml->getElementsByTagName('dRazCons ')->item(0)->nodeValue);
-      $res->setDCodEstCons($xml->getElementsByTagName('dCodEstCons ')->item(0)->nodeValue);
-      $res->setDDesEstCons($xml->getElementsByTagName('dDesEstCons ')->item(0)->nodeValue);
-      $res->setDRUCFactElec($xml->getElementsByTagName('dRUCFactElec ')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
-  ///create a objet from a objectClass
   public static function fromResponse($object): TxContRuc
   {
     echo "TxContRuc::fromResponse" . PHP_EOL;

@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\E\GTransp;
 use DOMElement;
 
 // Campos específicos por tipo de Documento Electrónico (E001-E009)
@@ -9,14 +10,15 @@ use DOMElement;
 //Padre:A001
 class GDtipDE
 {
-  public GCamFE $gCamFE;
-  public GCamAE $gCamAE;
-  public GCamNCDE $gCamNCDE;
-  public GCamNRE $gCamNRE;
-  public GCamCond $gCamCond;
+  public ?GCamFE $gCamFE = null;
+  public ?GCamAE $gCamAE = null;
+  public ?GCamNCDE $gCamNCDE = null;
+  public ?GCamNRE $gCamNRE = null;
+  public ?GCamCond $gCamCond = null;
   ////ARRAY DE GCAMITEM
-  public  array $gCamItem;
-  public GCamEsp $gCamEsp;
+  public ?array $gCamItem = null;
+  public ?GCamEsp $gCamEsp = null;
+  public ?GTransp $gTransp = null;
 
   //====================================================//
   ///Others
@@ -27,7 +29,7 @@ class GDtipDE
    *
    * @return GCamFE
    */
-  public function getGCamFE(): GCamFE
+  public function getGCamFE(): GCamFE | null
   {
     return $this->gCamFE;
   }
@@ -51,7 +53,7 @@ class GDtipDE
    *
    * @return GCamAE
    */
-  public function getGCamAE(): GCamAE
+  public function getGCamAE(): GCamAE | null
   {
     return $this->gCamAE;
   }
@@ -75,7 +77,7 @@ class GDtipDE
    *
    * @return GCamNCDE
    */
-  public function getGCamNCDE(): GCamNCDE
+  public function getGCamNCDE(): GCamNCDE | null
   {
     return $this->gCamNCDE;
   }
@@ -99,7 +101,7 @@ class GDtipDE
    *
    * @return GCamNRE
    */
-  public function getGCamNRE(): GCamNRE
+  public function getGCamNRE(): GCamNRE | null
   {
     return $this->gCamNRE;
   }
@@ -123,7 +125,7 @@ class GDtipDE
    *
    * @return GCamCond
    */
-  public function getGCamCond(): GCamCond
+  public function getGCamCond(): GCamCond | null
   {
     return $this->gCamCond;
   }
@@ -163,7 +165,7 @@ class GDtipDE
    *
    * @return GCamEsp
    */
-  public function getGCamEsp(): GCamEsp
+  public function getGCamEsp(): GCamEsp | null
   {
     return $this->gCamEsp;
   }
@@ -197,32 +199,33 @@ class GDtipDE
     $res->appendChild($this->gCamNRE->toDOMElement());
     $res->appendChild($this->gCamCond->toDOMElement());
     $res->appendChild($this->gCamEsp->toDOMElement());
+    $res->appendChild($this->gTransp->toDOMElement());
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GDtipDE
-   */
-  public static function fromDOMElement(DOMElement $xml): GDtipDE
-  {
-    if (strcmp($xml->tagName, 'gDtipDE') == 0 && $xml->childElementCount == 7) {
-      $res = new GDtipDE();
-      $res->setGCamFE($res->gCamFE->fromDOMElement($xml->getElementsByTagName('gDtipFE')->item(0)->nodeValue));
-      $res->setGCamAE($res->gCamAE->fromDOMElement($xml->getElementsByTagName('gCamAE')->item(0)->nodeValue));
-      $res->setGCamNCDE($res->gCamNCDE->fromDOMElement($xml->getElementsByTagName('gCamNCDE')->item(0)->nodeValue));
-      $res->setGCamNRE($res->gCamNRE->fromDOMElement($xml->getElementsByTagName('gCamNRE')->item(0)->nodeValue));
-      $res->setGCamCond($res->gCamCond->fromDOMElement($xml->getElementsByTagName('gCamCond')->item(0)->nodeValue));
-      $res->setGCamEsp($res->gCamEsp->fromDOMElement($xml->getElementsByTagName('gCamEsp')->item(0)->nodeValue));
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GDtipDE
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GDtipDE
+  // {
+  //   if (strcmp($xml->tagName, 'gDtipDE') == 0 && $xml->childElementCount == 7) {
+  //     $res = new GDtipDE();
+  //     $res->setGCamFE($res->gCamFE->fromDOMElement($xml->getElementsByTagName('gDtipFE')->item(0)->nodeValue));
+  //     $res->setGCamAE($res->gCamAE->fromDOMElement($xml->getElementsByTagName('gCamAE')->item(0)->nodeValue));
+  //     $res->setGCamNCDE($res->gCamNCDE->fromDOMElement($xml->getElementsByTagName('gCamNCDE')->item(0)->nodeValue));
+  //     $res->setGCamNRE($res->gCamNRE->fromDOMElement($xml->getElementsByTagName('gCamNRE')->item(0)->nodeValue));
+  //     $res->setGCamCond($res->gCamCond->fromDOMElement($xml->getElementsByTagName('gCamCond')->item(0)->nodeValue));
+  //     $res->setGCamEsp($res->gCamEsp->fromDOMElement($xml->getElementsByTagName('gCamEsp')->item(0)->nodeValue));
 
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
 
   /**
@@ -253,33 +256,68 @@ class GDtipDE
       $res->setGCamCond(GCamCond::fromResponse($response->gCamCond));
     }
 
-    if(isset($response->gCamItem)){
-      $aux = (array)$response->gCamItem;
-      //count the number of elements in the array
-       $count = count($aux);
-       //if the array has element
-       if($count > 0){
-         //se recorre en un for con el count
-         for ($i=0; $i < $count ; $i++) { 
-           //se agrega al array
-            $res->gCamItem[] = GCamItem::fromResponse($response->gCamItem[$i]);
-         }
-       }
+
+    if (isset($response->gCamItem)) {
+      ///BANDERA PARA SABER SI ES MAS DE UN ITEM
+      //convert the object to array
+      $aux = (array)$response;
+      ///dependE del tipo de response
+      if (gettype($aux['gCamItem']) == 'array') { ///mas de un objeto viene en arrays
+        $count = count($response->gCamItem);
+        for ($i = 0; $i < $count; $i++) {
+          ///se deuelve el objeto en el array
+          $res->gCamItem[] = GCamItem::fromResponse($response->gCamItem[$i]);
+        }
+      } else if (gettype($aux['gCamItem']) == 'object') {  ///1 objeto, viene en objeto
+        ///se deuelve el objeto en el array
+        $res->gCamItem[] = GCamItem::fromResponse($response->gCamItem);
+      }
     }
+
 
     if (isset($response->gCamEsp)) {
       $res->setGCamEsp(GCamEsp::fromResponse($response->gCamEsp));
     }
+
+    if (isset($response->gTransp)) {
+      $res->setGTransp(GTransp::fromResponse($response->gTransp));
+    }
     return $res;
   }
+
+
 
   /**
    * Get the value of gCamItem
    *
    * @return array
    */
-  public function getGCamItem(): array
+  public function getGCamItem(): array | null
   {
     return $this->gCamItem;
+  }
+
+  /**
+   * Get the value of gTransp
+   *
+   * @return GTransp
+   */
+  public function getGTransp(): GTransp | null
+  {
+    return $this->gTransp;
+  }
+
+  /**
+   * Set the value of gTransp
+   *
+   * @param GTransp $gTransp
+   *
+   * @return self
+   */
+  public function setGTransp(GTransp $gTransp): self
+  {
+    $this->gTransp = $gTransp;
+
+    return $this;
   }
 }

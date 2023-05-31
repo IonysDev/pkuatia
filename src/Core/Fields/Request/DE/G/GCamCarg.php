@@ -9,11 +9,11 @@ use DOMElement;
  */
 class GCamCarg
 {
-  public int $cUniMedTotVol; //G051 Unidad de medida del total de volumen de la mercadería
-  public int $dTotVolMerc; //G053 Total volumen de la mercadería
-  public int $cUniMedTotPes; //G054 Unidad de medida del peso total de la mercadería
-  public int $dTotPesMerc; //G056 Total peso de la mercadería
-  public int $iCarCarga; //G057 Características de la  Carga 
+  public ?int $cUniMedTotVol = null; //G051 Unidad de medida del total de volumen de la mercadería
+  public ?int $dTotVolMerc = null; //G053 Total volumen de la mercadería
+  public ?int $cUniMedTotPes = null; //G054 Unidad de medida del peso total de la mercadería
+  public ?int $dTotPesMerc = null; //G056 Total peso de la mercadería
+  public ?int $iCarCarga = null; //G057 Características de la  Carga 
 
   //====================================================//
   ///SETTER
@@ -103,7 +103,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getCUniMedTotVol(): int
+  public function getCUniMedTotVol(): int | null
   {
     return $this->cUniMedTotVol;
   }
@@ -113,7 +113,7 @@ class GCamCarg
    *
    * @return string
    */
-  public function getDDesUniMedTotVol(): string
+  public function getDDesUniMedTotVol(): string | null
   {
     return "Unidad de medida de Mordor";
   }
@@ -124,7 +124,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getDTotVolMerc(): int
+  public function getDTotVolMerc(): int | null
   {
     return $this->dTotVolMerc;
   }
@@ -134,7 +134,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getCUniMedTotPes(): int
+  public function getCUniMedTotPes(): int | null
   {
     return $this->cUniMedTotPes;
   }
@@ -145,7 +145,7 @@ class GCamCarg
    *
    * @return string
    */
-  public function getdDesUniMedTotPes(): string
+  public function getdDesUniMedTotPes(): string | null
   {
     return "Unidad de medida de Mordor";
   }
@@ -155,7 +155,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getDTotPesMerc(): int
+  public function getDTotPesMerc(): int | null
   {
     return $this->dTotPesMerc;
   }
@@ -165,7 +165,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getICarCarga(): int
+  public function getICarCarga(): int | null
   {
     return $this->iCarCarga;
   }
@@ -175,7 +175,7 @@ class GCamCarg
    *
    * @return string
    */
-  public function getDDesCarCarga(): string
+  public function getDDesCarCarga(): string | null
   {
     switch ($this->iCarCarga) {
       case 1:
@@ -221,22 +221,28 @@ class GCamCarg
     return $res;
   }
 
-  public static function fromDOMElement(DOMElement $xml): GCamCarg
-  {
-    if (strcmp($xml->tagName, 'gCamcarg' == 0) && $xml->childElementCount == 5) {
-      $res = new GCamCarg();
-      $res->setCUniMedTotVol(intval($xml->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));
-      $res->setDTotVolMerc(intval($xml->getElementsByTagName('dTotVolMerc')->item(0)->nodeValue));
-      $res->setCUniMedTotPes(intval($xml->getElementsByTagName('cUniMedTotPes')->item(0)->nodeValue));
-      $res->setDTotPesMerc(intval($xml->getElementsByTagName('dTotPesMerc')->item(0)->nodeValue));
-      $res->setICarCarga(intval($xml->getElementsByTagName('iCarCarga')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
+  // public static function fromDOMElement(DOMElement $xml): GCamCarg
+  // {
+  //   if (strcmp($xml->tagName, 'gCamcarg' == 0) && $xml->childElementCount == 5) {
+  //     $res = new GCamCarg();
+  //     $res->setCUniMedTotVol(intval($xml->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));
+  //     $res->setDTotVolMerc(intval($xml->getElementsByTagName('dTotVolMerc')->item(0)->nodeValue));
+  //     $res->setCUniMedTotPes(intval($xml->getElementsByTagName('cUniMedTotPes')->item(0)->nodeValue));
+  //     $res->setDTotPesMerc(intval($xml->getElementsByTagName('dTotPesMerc')->item(0)->nodeValue));
+  //     $res->setICarCarga(intval($xml->getElementsByTagName('iCarCarga')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response):self
   {
     $res = new GCamCarg();

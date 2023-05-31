@@ -9,10 +9,10 @@ use DOMElement;
  */
 class GCamGen
 {
-  public string $dOrdCompra; //G002 Número de orden de compra
-  public string $dOrdVta; ///G003 Número de orden de venta 
-  public string $dAsiento; ///G004 Número de asiento contable
-  public GCamCarg $gCamCarg;
+  public ?string $dOrdCompra = null; //G002 Número de orden de compra
+  public ?string $dOrdVta = null; ///G003 Número de orden de venta 
+  public ?string $dAsiento = null; ///G004 Número de asiento contable
+  public ?GCamCarg $gCamCarg = null;
 
   //====================================================//
   ///SETTER
@@ -72,7 +72,7 @@ class GCamGen
    *
    * @return string
    */
-  public function getDOrdCompra(): string
+  public function getDOrdCompra(): string | null
   {
     return $this->dOrdCompra;
   }
@@ -82,7 +82,7 @@ class GCamGen
    *
    * @return string
    */
-  public function getDOrdVta(): string
+  public function getDOrdVta(): string | null
   {
     return $this->dOrdVta;
   }
@@ -92,7 +92,7 @@ class GCamGen
    *
    * @return string
    */
-  public function getDAsiento(): string
+  public function getDAsiento(): string | null
   {
     return $this->dAsiento;
   }
@@ -117,27 +117,27 @@ class GCamGen
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GCamGen
-   */
-  public static function fromDOMElement(DOMElement $xml): GCamGen
-  {
-    if (strcmp($xml->tagName, 'gCamGen') == 0 && $xml->childElementCount == 4) {
-      $res = new GCamGen();
-      $res->setDOrdCompra($xml->getElementsByTagName('dOrdCompra')->item(0)->nodeValue);
-      $res->setDOrdVta($xml->getElementsByTagName('dOrdVta')->item(0)->nodeValue);
-      $res->setDAsiento($xml->getElementsByTagName('dAsiento')->item(0)->nodeValue);
-      ///Choldren
-      $res->setGCamCarg($res->gCamCarg->fromDOMElement($xml->getElementsByTagName('gCamCarg')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamGen
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamGen
+  // {
+  //   if (strcmp($xml->tagName, 'gCamGen') == 0 && $xml->childElementCount == 4) {
+  //     $res = new GCamGen();
+  //     $res->setDOrdCompra($xml->getElementsByTagName('dOrdCompra')->item(0)->nodeValue);
+  //     $res->setDOrdVta($xml->getElementsByTagName('dOrdVta')->item(0)->nodeValue);
+  //     $res->setDAsiento($xml->getElementsByTagName('dAsiento')->item(0)->nodeValue);
+  //     ///Choldren
+  //     $res->setGCamCarg($res->gCamCarg->fromDOMElement($xml->getElementsByTagName('gCamCarg')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   //====================================================//
   ///Others
@@ -148,7 +148,7 @@ class GCamGen
    *
    * @return GCamCarg
    */
-  public function getGCamCarg(): GCamCarg
+  public function getGCamCarg(): GCamCarg | null
   {
     return $this->gCamCarg;
   }
@@ -166,14 +166,20 @@ class GCamGen
     return $this;
   }
 
-  public static function fromResponse($response):self
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
+  public static function fromResponse($response): self
   {
     $res = new GCamGen();
     $res->setDOrdCompra($response->dOrdCompra);
     $res->setDOrdVta($response->dOrdVta);
     $res->setDAsiento($response->dAsiento);
-    if(isset($response->gCamCarg))
-    {
+    //CHOILDREN
+    if (isset($response->gCamCarg)) {
       $res->setGCamCarg(GCamCarg::fromResponse($response->gCamCarg));
     }
     return $res;

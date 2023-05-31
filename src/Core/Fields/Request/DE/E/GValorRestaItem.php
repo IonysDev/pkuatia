@@ -9,13 +9,13 @@ use DOMElement;
  */
 class GValorRestaItem
 {
-  public int $dDescItem; ///EA002 Descuento particular sobre el precio unitario por ítem (incluidos impuestos)
-  public int $dPorcDesIt; /// EA003 Porcentaje de descuento particular por ítem
-  public int $dDescGloItem; ///EA004 Descuento global sobre el precio unitario por ítem (incluidos impuestos)
-  public int $dAntPreUniIt; ///EA006 Anticipo particular sobre el precio unitario por ítem (incluidos impuestos)
-  public int $dAntGloPreUniIt; ///EA007 Anticipo global sobre el  precio unitario por ítem  (incluidos impuestos)
-  public int $dTotOpeItem; /// EA008 Valor total de la operación por ítem 
-  public int $dTotOpeGs; ///EA009 Valor total de la operación por ítem en guaraníes
+  public ?int $dDescItem = null; ///EA002 Descuento particular sobre el precio unitario por ítem (incluidos impuestos)
+  public ?int $dPorcDesIt = null; /// EA003 Porcentaje de descuento particular por ítem
+  public ?int $dDescGloItem = null; ///EA004 Descuento global sobre el precio unitario por ítem (incluidos impuestos)
+  public ?int $dAntPreUniIt = null; ///EA006 Anticipo particular sobre el precio unitario por ítem (incluidos impuestos)
+  public ?int $dAntGloPreUniIt = null; ///EA007 Anticipo global sobre el  precio unitario por ítem  (incluidos impuestos)
+  public ?int $dTotOpeItem = null; /// EA008 Valor total de la operación por ítem 
+  public ?int $dTotOpeGs = null; ///EA009 Valor total de la operación por ítem en guaraníes
 
   //====================================================//
   ///Setters
@@ -135,7 +135,7 @@ class GValorRestaItem
    *
    * @return int
    */
-  public function getDDescItem(): int
+  public function getDDescItem(): int | null
   {
     return $this->dDescItem;
   }
@@ -145,7 +145,7 @@ class GValorRestaItem
    *
    * @return int
    */
-  public function getDPorcDesIt(): int
+  public function getDPorcDesIt(): int | null
   {
     return $this->dPorcDesIt;
   }
@@ -155,7 +155,7 @@ class GValorRestaItem
    *
    * @return int
    */
-  public function getDDescGloItem(): int
+  public function getDDescGloItem(): int | null
   {
     return $this->dDescGloItem;
   }
@@ -165,7 +165,7 @@ class GValorRestaItem
    *
    * @return int
    */
-  public function getDAntPreUniIt(): int
+  public function getDAntPreUniIt(): int | null
   {
     return $this->dAntPreUniIt;
   }
@@ -175,7 +175,7 @@ class GValorRestaItem
    *
    * @return int
    */
-  public function getDAntGloPreUniIt(): int
+  public function getDAntGloPreUniIt(): int | null
   {
     return $this->dAntGloPreUniIt;
   }
@@ -185,7 +185,7 @@ class GValorRestaItem
    *
    * @return int
    */
-  public function getDTotOpeItem(): int
+  public function getDTotOpeItem(): int | null
   {
     return $this->dTotOpeItem;
   }
@@ -195,7 +195,7 @@ class GValorRestaItem
    *
    * @return int
    */
-  public function getDTotOpeGs(): int
+  public function getDTotOpeGs(): int | null
   {
     return $this->dTotOpeGs;
   }
@@ -226,47 +226,69 @@ class GValorRestaItem
     return $res;
   }
   
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GValorRestaItem
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GValorRestaItem
+  // {
+  //   if(strcmp($xml->tagName, 'gValorRestaItem') == 0 && $xml->childElementCount == 5)
+  //   {
+  //     $res = new GValorRestaItem();
+  //     $res->setDDescItem(intval($xml->getElementsByTagName('dDescItem')->item(0)->nodeValue));
+  //     $res->setDPorcDesIt(intval($xml->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
+  //     $res->setDDescGloItem(intval($xml->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
+  //     $res->setDAntPreUniIt(intval($xml->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
+  //     $res->setDAntGloPreUniIt(intval($xml->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
+  //     $res->setDTotOpeItem(intval($xml->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
+  //     $res->setDTotOpeGs(intval($xml->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
+  //     return $res;
+  //   }
+  //   else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GValorRestaItem
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GValorRestaItem
-  {
-    if(strcmp($xml->tagName, 'gValorRestaItem') == 0 && $xml->childElementCount == 5)
-    {
-      $res = new GValorRestaItem();
-      $res->setDDescItem(intval($xml->getElementsByTagName('dDescItem')->item(0)->nodeValue));
-      $res->setDPorcDesIt(intval($xml->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
-      $res->setDDescGloItem(intval($xml->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
-      $res->setDAntPreUniIt(intval($xml->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
-      $res->setDAntGloPreUniIt(intval($xml->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
-      $res->setDTotOpeItem(intval($xml->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
-      $res->setDTotOpeGs(intval($xml->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
-      return $res;
-    }
-    else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response):self
   {
     $res = new GValorRestaItem();
-    $res->setDDescItem(intval($response->dDescItem));
+    if( isset($response->dDescItem))
+    {
+      $res->setDDescItem(intval($response->dDescItem));
+    }
     if( isset($response->dPorcDesIt))
     {
       $res->setDPorcDesIt(intval($response->dPorcDesIt));
     }
-    $res->setDDescGloItem(intval($response->dDescGloItem));
+    if( isset($response->dDescGloItem))
+    {
+      $res->setDDescGloItem(intval($response->dDescGloItem));
+    }
+
     if( isset($response->dAntPreUniIt))
     {
       $res->setDAntPreUniIt(intval($response->dAntPreUniIt));
     }
-    $res->setDAntGloPreUniIt(intval($response->dAntGloPreUniIt));
-    $res->setDTotOpeItem(intval($response->dTotOpeItem));
+
+    if( isset($response->dAntGloPreUniIt))
+    {
+      $res->setDAntGloPreUniIt(intval($response->dAntGloPreUniIt));
+    }
+
+    if( isset($response->dTotOpeItem))
+    {
+      $res->setDTotOpeItem(intval($response->dTotOpeItem));
+    }
+
     if( isset($response->dTotOpeGs))
     {
       $res->setDTotOpeGs(intval($response->dTotOpeGs));

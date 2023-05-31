@@ -11,8 +11,8 @@ use DOMElement;
  */
 class GPagCheq
 {
-  public string $dNumCheq; //E631 Número de cheque  
-  public string $dBcoEmi; //E632  Banco emisor
+  public ?string $dNumCheq = null; //E631 Número de cheque  
+  public ?string $dBcoEmi = null; //E632  Banco emisor
 
   //====================================================//
   ///Settets
@@ -58,7 +58,7 @@ class GPagCheq
    *
    * @return string
    */
-  public function getDNumCheq(): string
+  public function getDNumCheq(): string | null
   {
     return $this->dNumCheq;
   }
@@ -68,7 +68,7 @@ class GPagCheq
    *
    * @return string
    */
-  public function getDBcoEmi(): string
+  public function getDBcoEmi(): string | null
   {
     return $this->dBcoEmi;
   }
@@ -92,25 +92,31 @@ class GPagCheq
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GPagCheq
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GPagCheq
+  // {
+  //   if (strcmp($xml->tagName, 'gPagCheq') == 0 && $xml->childElementCount == 2) {
+  //     $res = new GPagCheq();
+  //     $res->setDNumCheq($xml->getElementsByTagName('dNumCheq')->item(0)->nodeValue);
+  //     $res->setDBcoEmi($xml->getElementsByTagName('dBcoEmi')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GPagCheq
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GPagCheq
-  {
-    if (strcmp($xml->tagName, 'gPagCheq') == 0 && $xml->childElementCount == 2) {
-      $res = new GPagCheq();
-      $res->setDNumCheq($xml->getElementsByTagName('dNumCheq')->item(0)->nodeValue);
-      $res->setDBcoEmi($xml->getElementsByTagName('dBcoEmi')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response): self
   {
     $res = new GPagCheq();

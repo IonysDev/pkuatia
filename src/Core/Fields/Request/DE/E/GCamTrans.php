@@ -10,21 +10,21 @@ use DOMElement;
  */
 class GCamTrans
 {
-   public int $iNatTrans; // E981 - Naturaleza del transportista
-   public string $dNomTrans; // E982 - Nombre o razón social del transportista 
-   public string $dRucTrans; // E983 - RUC del transportista 
-   public int $dDVTrans; //E984 - Dígito verificador del RUC del transportista 
-   public int $iTipIDTrans; // E985 - Tipo de documento de identidad del transportista
-   public string $dNumIDTrans; // E987 - Número de documento de identidad del transportista
-   public string $cNacTrans; // E988 - Nacionalidad del transportista 
-   public string $dNumIDChof; // E990 - Número de documento de identidad del chofer
-   public string $dNomChof; // E991 - Nombre y apellido del chofer
-   public string $dDomFisc; // E992 - Domicilio fiscal del transportista
-   public string $dDirChof; // E993 - Dirección del chofer
-   public string $dNombAg; // E994 - Nombre o razón social del agente 
-   public string $dRucAg; // E995 - RUC del agente
-   public string $dDVAg; // E996 - Dígito verificador del  RUC del agente
-   public string $dDirAge; // E997 - Dirección del agente
+   public ?int $iNatTrans  = null; // E981 - Naturaleza del transportista
+   public ?string $dNomTrans  = null; // E982 - Nombre o razón social del transportista 
+   public ?string $dRucTrans  = null; // E983 - RUC del transportista 
+   public ?int $dDVTrans  = null; //E984 - Dígito verificador del RUC del transportista 
+   public ?int $iTipIDTrans  = null; // E985 - Tipo de documento de identidad del transportista
+   public ?string $dNumIDTrans  = null; // E987 - Número de documento de identidad del transportista
+   public ?string $cNacTrans  = null; // E988 - Nacionalidad del transportista 
+   public ?string $dNumIDChof  = null; // E990 - Número de documento de identidad del chofer
+   public ?string $dNomChof  = null; // E991 - Nombre y apellido del chofer
+   public ?string $dDomFisc  = null; // E992 - Domicilio fiscal del transportista
+   public ?string $dDirChof  = null; // E993 - Dirección del chofer
+   public ?string $dNombAg  = null; // E994 - Nombre o razón social del agente 
+   public ?string $dRucAg  = null; // E995 - RUC del agente
+   public ?string $dDVAg  = null; // E996 - Dígito verificador del  RUC del agente
+   public ?string $dDirAge  = null; // E997 - Dirección del agente
 
    //====================================================//
    ////SETTERS
@@ -262,7 +262,7 @@ class GCamTrans
     *
     * @return int
     */
-   public function getINatTrans(): int
+   public function getINatTrans(): int | null
    {
       return $this->iNatTrans;
    }
@@ -272,7 +272,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDNomTrans(): string
+   public function getDNomTrans(): string | null
    {
       return $this->dNomTrans;
    }
@@ -282,7 +282,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDRucTrans(): string
+   public function getDRucTrans(): string | null
    {
       return $this->dRucTrans;
    }
@@ -292,7 +292,7 @@ class GCamTrans
     *
     * @return int
     */
-   public function getDDVTrans(): int
+   public function getDDVTrans(): int | null
    {
       return $this->dDVTrans;
    }
@@ -302,7 +302,7 @@ class GCamTrans
     *
     * @return int
     */
-   public function getITipIDTrans(): int
+   public function getITipIDTrans(): int | null
    {
       return $this->iTipIDTrans;
    }
@@ -312,7 +312,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDDTipIDTrans(): string
+   public function getDDTipIDTrans(): string | null
    {
       switch ($this->iTipIDTrans) {
          case 1:
@@ -341,7 +341,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDNumIDTrans(): string
+   public function getDNumIDTrans(): string | null
    {
       return $this->dNumIDTrans;
    }
@@ -351,7 +351,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getCNacTrans(): string
+   public function getCNacTrans(): string | null
    {
       return $this->cNacTrans;
    }
@@ -361,7 +361,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDDesNacTrans(): string
+   public function getDDesNacTrans(): string | null
    {
       return "Mordor";
    }
@@ -371,7 +371,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDNumIDChof(): string
+   public function getDNumIDChof(): string | null
    {
       return $this->dNumIDChof;
    }
@@ -381,7 +381,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDNomChof(): string
+   public function getDNomChof(): string | null
    {
       return $this->dNomChof;
    }
@@ -391,7 +391,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDDomFisc(): string
+   public function getDDomFisc(): string | null
    {
       return $this->dDomFisc;
    }
@@ -401,7 +401,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDDirChof(): string
+   public function getDDirChof(): string | null
    {
       return $this->dDirChof;
    }
@@ -411,7 +411,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDNombAg(): string
+   public function getDNombAg(): string | null
    {
       return $this->dNombAg;
    }
@@ -421,7 +421,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDRucAg(): string
+   public function getDRucAg(): string | null
    {
       return $this->dRucAg;
    }
@@ -431,7 +431,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDDVAg(): string
+   public function getDDVAg(): string | null
    {
       return $this->dDVAg;
    }
@@ -441,7 +441,7 @@ class GCamTrans
     *
     * @return string
     */
-   public function getDDirAge(): string
+   public function getDDirAge(): string | null
    {
       return $this->dDirAge;
    }
@@ -496,38 +496,66 @@ class GCamTrans
       return $res;
    }
 
+   // /**
+   //  * fromDOMElement
+   //  *
+   //  * @param  mixed $xml
+   //  * @return GCamTrans
+   //  */
+   // public static function fromDOMElement(DOMElement $xml): GCamTrans
+   // {
+   //    if (strcmp($xml->tagName, 'gCamTrans') === 0 && $xml->childElementCount >= 11) {
+   //       $res = new GCamTrans();
+   //       $res->setINatTrans(intval($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
+   //       $res->setDNomTrans($xml->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
+   //       $res->setDRucTrans($xml->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
+   //       $res->setDDVTrans(intval($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
+   //       $res->setITipIDTrans(intval($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
+   //       $res->setDNumIDTrans($xml->getElementsByTagName('dDNumIDTrans')->item(0)->nodeValue);
+   //       $res->setCNacTrans($xml->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
+   //       $res->setDNumIDChof($xml->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
+   //       $res->setDNomChof($xml->getElementsByTagName('dNomChof')->item(0)->nodeValue);
+   //       $res->setDDomFisc($xml->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
+   //       $res->setDDirChof($xml->getElementsByTagName('dDirChof')->item(0)->nodeValue);
+   //       $res->setDNombAg($xml->getElementsByTagName('dNombAg')->item(0)->nodeValue);
+   //       $res->setDRucAg($xml->getElementsByTagName('dRucAg')->item(0)->nodeValue);
+   //       $res->setDDVAg(intval($xml->getElementsByTagName('dDVAg')->item(0)->nodeValue));
+   //       $res->setDDirAge($xml->getElementsByTagName('dDirAge')->item(0)->nodeValue);
+
+   //       return $res;
+
+   //    } else {
+   //       throw new \Exception("Invalid XML Element: $xml->tagName");
+   //       return null;
+
+   //    }
+   // }
+
+    
    /**
-    * fromDOMElement
+    * fromResponse
     *
-    * @param  mixed $xml
-    * @return GCamTrans
+    * @param  mixed $response
+    * @return self
     */
-   public static function fromDOMElement(DOMElement $xml): GCamTrans
+   public static function fromResponse($response):self
    {
-      if (strcmp($xml->tagName, 'gCamTrans') === 0 && $xml->childElementCount >= 11) {
-         $res = new GCamTrans();
-         $res->setINatTrans(intval($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
-         $res->setDNomTrans($xml->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
-         $res->setDRucTrans($xml->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
-         $res->setDDVTrans(intval($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
-         $res->setITipIDTrans(intval($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
-         $res->setDNumIDTrans($xml->getElementsByTagName('dDNumIDTrans')->item(0)->nodeValue);
-         $res->setCNacTrans($xml->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
-         $res->setDNumIDChof($xml->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
-         $res->setDNomChof($xml->getElementsByTagName('dNomChof')->item(0)->nodeValue);
-         $res->setDDomFisc($xml->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
-         $res->setDDirChof($xml->getElementsByTagName('dDirChof')->item(0)->nodeValue);
-         $res->setDNombAg($xml->getElementsByTagName('dNombAg')->item(0)->nodeValue);
-         $res->setDRucAg($xml->getElementsByTagName('dRucAg')->item(0)->nodeValue);
-         $res->setDDVAg(intval($xml->getElementsByTagName('dDVAg')->item(0)->nodeValue));
-         $res->setDDirAge($xml->getElementsByTagName('dDirAge')->item(0)->nodeValue);
-
-         return $res;
-
-      } else {
-         throw new \Exception("Invalid XML Element: $xml->tagName");
-         return null;
-
-      }
+      $res = new GCamTrans();
+      $res->setINatTrans(intval($response->iNatTrans));
+      $res->setDNomTrans($response->dNomTrans);
+      $res->setDRucTrans($response->dRucTrans);
+      $res->setDDVTrans(intval($response->dDVTrans));
+      $res->setITipIDTrans(intval($response->iTipIDTrans));
+      $res->setDNumIDTrans($response->dNumIDTrans);
+      $res->setCNacTrans($response->cNacTrans);
+      $res->setDNumIDChof($response->dNumIDChof);
+      $res->setDNomChof($response->dNomChof);
+      $res->setDDomFisc($response->dDomFisc);
+      $res->setDDirChof($response->dDirChof);
+      $res->setDNombAg($response->dNombAg);
+      $res->setDRucAg($response->dRucAg);
+      $res->setDDVAg(intval($response->dDVAg));
+      $res->setDDirAge($response->dDirAge);
+      return $res;
    }
 }

@@ -11,19 +11,19 @@ use DOMElement;
  */
 class GCamAE
 {
-  public int $iNatVen; //ID:E301 Naturaleza del vendedor PADRE:E300
-  public int $iTipIDVen; //ID:E304 Tipo de documento de identidad del vendedor PADRE:E300
-  public string $dNumIDVen; //ID:E306 Número de documento de identidad del vendedor PADRE:E300
-  public string $dNomVen; //ID:E307 Nombre y apellido delvendedor PADRE:E300
-  public string $dDirVen; //ID:E308 Dirección del vendedor PADRE:E300
-  public int $dNumCasVen; //ID:E309 dNumCasVen Número de casa del vendedor PADRE:E300
-  public int $cDepVen; //ID:E310 Código del departamento del vendedor PADRE:E300
-  public int $cDisVen; //ID:E312 Código del distrito del vendedor PADRE:E300
-  public int $cCiuVen; //ID:E314 Código de la ciudad del vendedor PADRE:E300
-  public string $dDirProv; //ID:E316 dDirProv Lugar de la transacción PADRE:E300
-  public int $cDepProv; //ID:E317 Código del departamento  donde se realiza la  transacción
-  public int $cDisProv; //ID:E319 cDisProv Código del distrito donde se realiza la transacción
-  public int $cCiuProv; //ID:E321 cCiuProv Código de la ciudad  donde se realiza la transacción
+  public ?int $iNatVen = null; //ID:E301 Naturaleza del vendedor PADRE:E300
+  public ?int $iTipIDVen = null; //ID:E304 Tipo de documento de identidad del vendedor PADRE:E300
+  public ?string $dNumIDVen = null; //ID:E306 Número de documento de identidad del vendedor PADRE:E300
+  public ?string $dNomVen = null; //ID:E307 Nombre y apellido delvendedor PADRE:E300
+  public ?string $dDirVen = null; //ID:E308 Dirección del vendedor PADRE:E300
+  public ?int $dNumCasVen = null; //ID:E309 dNumCasVen Número de casa del vendedor PADRE:E300
+  public ?int $cDepVen = null; //ID:E310 Código del departamento del vendedor PADRE:E300
+  public ?int $cDisVen = null; //ID:E312 Código del distrito del vendedor PADRE:E300
+  public ?int $cCiuVen = null; //ID:E314 Código de la ciudad del vendedor PADRE:E300
+  public ?string $dDirProv = null; //ID:E316 dDirProv Lugar de la transacción PADRE:E300
+  public ?int $cDepProv = null; //ID:E317 Código del departamento  donde se realiza la  transacción
+  public ?int $cDisProv = null; //ID:E319 cDisProv Código del distrito donde se realiza la transacción
+  public ?int $cCiuProv = null; //ID:E321 cCiuProv Código de la ciudad  donde se realiza la transacción
 
   //====================================================//
   ///Setters
@@ -229,7 +229,7 @@ class GCamAE
   /**
    * Get the value of iNatVen
    */
-  public function getINatVen()
+  public function getINatVen() : int | null
   {
     return $this->iNatVen;
   }
@@ -239,7 +239,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDesNatVen(): string
+  public function getDDesNatVen(): string | null
   {
     switch ($this->iNatVen) {
       case 1:
@@ -260,7 +260,7 @@ class GCamAE
   /**
    * Get the value of iTipIDVen
    */
-  public function getITipIDVen()
+  public function getITipIDVen() : int | null
   {
     return $this->iTipIDVen;
   }
@@ -271,7 +271,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDTipIDVen(): string
+  public function getDDTipIDVen(): string | null
   {
     switch ($this->iTipIDVen) {
       case 1:
@@ -300,7 +300,7 @@ class GCamAE
   /**
    * Get the value of dNumIDVen
    */
-  public function getDNumIDVen()
+  public function getDNumIDVen() : string | null
   {
     return $this->dNumIDVen;
   }
@@ -308,7 +308,7 @@ class GCamAE
   /**
    * Get the value of dNomVen
    */
-  public function getDNomVen()
+  public function getDNomVen() : string | null
   {
     return $this->dNomVen;
   }
@@ -318,7 +318,7 @@ class GCamAE
   /**
    * Get the value of dDirVen
    */
-  public function getDDirVen()
+  public function getDDirVen() : string | null
   {
     return $this->dDirVen;
   }
@@ -326,7 +326,7 @@ class GCamAE
   /**
    * Get the value of dNumCasVen
    */
-  public function getDNumCasVen()
+  public function getDNumCasVen() : int | null
   {
     return $this->dNumCasVen;
   }
@@ -334,7 +334,7 @@ class GCamAE
   /**
    * Get the value of cDepVen
    */
-  public function getCDepVen()
+  public function getCDepVen() : int | null
   {
     return $this->cDepVen;
   }
@@ -344,7 +344,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDesDepVen(): string
+  public function getDDesDepVen(): string | null
   {
     return "Mordor";
   }
@@ -355,7 +355,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCDisVen(): int
+  public function getCDisVen(): int | null
   {
     return $this->cDisVen;
   }
@@ -365,7 +365,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDesDisVen(): string
+  public function getDDesDisVen(): string | null
   {
     return "Mordor";
   }
@@ -375,7 +375,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCCiuVen(): int
+  public function getCCiuVen(): int | null
   {
     return $this->cCiuVen;
   }
@@ -385,7 +385,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDesCiuVen(): string
+  public function getDDesCiuVen(): string | null
   {
     return "Mordor";
   }
@@ -396,7 +396,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDirProv(): string
+  public function getDDirProv(): string | null
   {
     return $this->dDirProv;
   }
@@ -406,7 +406,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCDepProv(): int
+  public function getCDepProv(): int | null
   {
     return $this->cDepProv;
   }
@@ -416,7 +416,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDesDepProv(): string
+  public function getDDesDepProv(): string | null
   {
     return "Mordor";
   }
@@ -427,7 +427,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCDisProv(): int
+  public function getCDisProv(): int | null
   {
     return $this->cDisProv;
   }
@@ -437,7 +437,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDesDisProv(): string
+  public function getDDesDisProv(): string | null
   {
     return "Mordor";
   }
@@ -447,7 +447,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCCiuProv(): int
+  public function getCCiuProv(): int | null
   {
     return $this->cCiuProv;
   }
@@ -457,7 +457,7 @@ class GCamAE
    *
    * @return string
    */
-  public function getDDesCiuProv(): string
+  public function getDDesCiuProv(): string | null
   {
     return "Mordor";
   }
@@ -507,55 +507,59 @@ class GCamAE
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamAE
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamAE
+  // {
+  //   if (strcmp($xml->tagName, 'gcamAE') == 0 && $xml->childElementCount >= 14) {
+  //     $res = new GCamAE();
+  //     $res->setINatVen(intval($xml->getElementsByTagName('iNatVen')->item(0)->nodeValue));
+  //     $res->setITipIDVen(intval($xml->getElementsByTagName('iTipIDVen')->item(0)->nodeValue));
+  //     $res->setDNumIDVen($xml->getElementsByTagName('dNumIDVen')->item(0)->nodeValue);
+  //     $res->setDNomVen($xml->getElementsByTagName('dNomVen')->item(0)->nodeValue);
+  //     $res->setDDirVen($xml->getElementsByTagName('dDirVen')->item(0)->nodeValue);
+  //     $res->setDNumCasVen(intval($xml->getElementsByTagName('dNumCasVen')->item(0)->nodeValue));
+  //     $res->setCDepVen(intval($xml->getElementsByTagName('cDepVen')->item(0)->nodeValue));
+  //     $res->setCDisVen(intval($xml->getElementsByTagName('cDisVen')->item(0)->nodeValue));
+  //     $res->setCCiuVen(intval($xml->getElementsByTagName('cCiuVen')->item(0)->nodeValue));
+  //     $res->setDDirProv($xml->getElementsByTagName('dDirProv')->item(0)->nodeValue);
+  //     $res->setCDepProv(intval($xml->getElementsByTagName('cDepProv')->item(0)->nodeValue));
+  //     $res->setCDisProv(intval($xml->getElementsByTagName('cDisProv')->item(0)->nodeValue));
+  //     $res->setCCiuProv(intval($xml->getElementsByTagName('cCiuProv')->item(0)->nodeValue));
+
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCamAE
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCamAE
-  {
-    if (strcmp($xml->tagName, 'gcamAE') == 0 && $xml->childElementCount >= 14) {
-      $res = new GCamAE();
-      $res->setINatVen(intval($xml->getElementsByTagName('iNatVen')->item(0)->nodeValue));
-      $res->setITipIDVen(intval($xml->getElementsByTagName('iTipIDVen')->item(0)->nodeValue));
-      $res->setDNumIDVen($xml->getElementsByTagName('dNumIDVen')->item(0)->nodeValue);
-      $res->setDNomVen($xml->getElementsByTagName('dNomVen')->item(0)->nodeValue);
-      $res->setDDirVen($xml->getElementsByTagName('dDirVen')->item(0)->nodeValue);
-      $res->setDNumCasVen(intval($xml->getElementsByTagName('dNumCasVen')->item(0)->nodeValue));
-      $res->setCDepVen(intval($xml->getElementsByTagName('cDepVen')->item(0)->nodeValue));
-      $res->setCDisVen(intval($xml->getElementsByTagName('cDisVen')->item(0)->nodeValue));
-      $res->setCCiuVen(intval($xml->getElementsByTagName('cCiuVen')->item(0)->nodeValue));
-      $res->setDDirProv($xml->getElementsByTagName('dDirProv')->item(0)->nodeValue);
-      $res->setCDepProv(intval($xml->getElementsByTagName('cDepProv')->item(0)->nodeValue));
-      $res->setCDisProv(intval($xml->getElementsByTagName('cDisProv')->item(0)->nodeValue));
-      $res->setCCiuProv(intval($xml->getElementsByTagName('cCiuProv')->item(0)->nodeValue));
-
-      return $res;
-
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response): self
   {
     $res = new self();
-      $res->setINatVen(intval($response->gCamAE->iNatVen));
-      $res->setITipIDVen(intval($response->gCamAE->iTipIDVen));
-      $res->setDNumIDVen($response->gCamAE->dNumIDVen);
-      $res->setDNomVen($response->gCamAE->dNomVen);
-      $res->setDDirVen($response->gCamAE->dDirVen);
-      $res->setDNumCasVen(intval($response->gCamAE->dNumCasVen));
-      $res->setCDepVen(intval($response->gCamAE->cDepVen));
-      $res->setCDisVen(intval($response->gCamAE->cDisVen));
-      $res->setCCiuVen(intval($response->gCamAE->cCiuVen));
-      $res->setDDirProv($response->gCamAE->dDirProv);
-      $res->setCDepProv(intval($response->gCamAE->cDepProv));
-      $res->setCDisProv(intval($response->gCamAE->cDisProv));
-      $res->setCCiuProv(intval($response->gCamAE->cCiuProv));
+    $res->setINatVen(intval($response->gCamAE->iNatVen));
+    $res->setITipIDVen(intval($response->gCamAE->iTipIDVen));
+    $res->setDNumIDVen($response->gCamAE->dNumIDVen);
+    $res->setDNomVen($response->gCamAE->dNomVen);
+    $res->setDDirVen($response->gCamAE->dDirVen);
+    $res->setDNumCasVen(intval($response->gCamAE->dNumCasVen));
+    $res->setCDepVen(intval($response->gCamAE->cDepVen));
+    $res->setCDisVen(intval($response->gCamAE->cDisVen));
+    $res->setCCiuVen(intval($response->gCamAE->cCiuVen));
+    $res->setDDirProv($response->gCamAE->dDirProv);
+    $res->setCDepProv(intval($response->gCamAE->cDepProv));
+    $res->setCDisProv(intval($response->gCamAE->cDisProv));
+    $res->setCCiuProv(intval($response->gCamAE->cCiuProv));
     return $res;
   }
-
 }

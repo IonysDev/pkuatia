@@ -9,12 +9,12 @@ use DOMElement;
  */
 class GPaConEIni
 {
-  public int $iTiPago; //E606 Tipo de pago
-  public int $dMonTiPag; // E608 Monto por tipo de pago
-  public string $cMoneTiPag; //E609 Moneda por tipo de pago
-  public int $dTiCamTiPag; //E611 Tipo de cambio por tipo de pago
-  public GPagTarCD $gPagTarCD;
-  public GPagCheq $gPagCheq;
+  public ?int $iTiPago = null; //E606 Tipo de pago
+  public ?int $dMonTiPag = null; // E608 Monto por tipo de pago
+  public ?string $cMoneTiPag = null; //E609 Moneda por tipo de pago
+  public ?int $dTiCamTiPag = null; //E611 Tipo de cambio por tipo de pago
+  public ?GPagTarCD $gPagTarCD = null;
+  public ?GPagCheq $gPagCheq = null;
 
 
   //====================================================//
@@ -88,7 +88,7 @@ class GPaConEIni
    *
    * @return int
    */
-  public function getITiPago(): int
+  public function getITiPago(): int | null
   {
     return $this->iTiPago;
   }
@@ -98,7 +98,7 @@ class GPaConEIni
    *
    * @return string
    */
-  public function getDDesTiPag(): string
+  public function getDDesTiPag(): string | null
   {
     switch ($this->iTiPago) {
       case 1:
@@ -180,7 +180,7 @@ class GPaConEIni
    *
    * @return int
    */
-  public function getDMonTiPag(): int
+  public function getDMonTiPag(): int | null
   {
     return $this->dMonTiPag;
   }
@@ -190,7 +190,7 @@ class GPaConEIni
    *
    * @return string
    */
-  public function getCMoneTiPag(): string
+  public function getCMoneTiPag(): string | null
   {
     return $this->cMoneTiPag; ///VER EL TEMA DE LAS MONEDAS
   }
@@ -200,7 +200,7 @@ class GPaConEIni
    *
    * @return string
    */
-  public function getDDMoneTiPag(): string
+  public function getDDMoneTiPag(): string | null
   {
     return "Moneda de Mordor"; ///ver el tema de la tabla
   }
@@ -211,7 +211,7 @@ class GPaConEIni
    *
    * @return int
    */
-  public function getDTiCamTiPag(): int
+  public function getDTiCamTiPag(): int | null
   {
     return $this->dTiCamTiPag;
   }
@@ -244,30 +244,30 @@ class GPaConEIni
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GPaConEIni
-   */
-  public function fromDOMElement(DOMElement $xml): GPaConEIni
-  {
-    if (strcmp($xml->tagName, 'gPaConEIni') == 0 && $xml->childElementCount >= 5) {
-      $res = new GPaConEIni();
-      $res->setITiPago(intval($xml->getElementsByTagName('iTiPago')->item(0)->nodeValue));
-      $res->setDMonTiPag(intval($xml->getElementsByTagName('dMonTiPag')->item(0)->nodeValue));
-      $res->setCMoneTiPag($xml->getElementsByTagName('cmoneTiPag')->item(0)->nodeValue);
-      $res->setDTiCamTiPag($xml->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue);
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GPaConEIni
+  //  */
+  // public function fromDOMElement(DOMElement $xml): GPaConEIni
+  // {
+  //   if (strcmp($xml->tagName, 'gPaConEIni') == 0 && $xml->childElementCount >= 5) {
+  //     $res = new GPaConEIni();
+  //     $res->setITiPago(intval($xml->getElementsByTagName('iTiPago')->item(0)->nodeValue));
+  //     $res->setDMonTiPag(intval($xml->getElementsByTagName('dMonTiPag')->item(0)->nodeValue));
+  //     $res->setCMoneTiPag($xml->getElementsByTagName('cmoneTiPag')->item(0)->nodeValue);
+  //     $res->setDTiCamTiPag($xml->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue);
 
-      //Children
-      $res->setGPagTarCD($res->gPagTarCD->fromDOMElement($xml->getElementsByTagName('gPagTarCD')->item(0)->nodeValue));
-      $res->setGPagCheq($res->gPagCheq->fromDOMElement($xml->getElementsByTagName('gPagCheq')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     //Children
+  //     $res->setGPagTarCD($res->gPagTarCD->fromDOMElement($xml->getElementsByTagName('gPagTarCD')->item(0)->nodeValue));
+  //     $res->setGPagCheq($res->gPagCheq->fromDOMElement($xml->getElementsByTagName('gPagCheq')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
 
   ////
@@ -277,7 +277,7 @@ class GPaConEIni
    *
    * @return GPagTarCD
    */
-  public function getGPagTarCD(): GPagTarCD
+  public function getGPagTarCD(): GPagTarCD | null
   {
     return $this->gPagTarCD;
   }
@@ -301,7 +301,7 @@ class GPaConEIni
    *
    * @return GPagCheq
    */
-  public function getGPagCheq(): GPagCheq
+  public function getGPagCheq(): GPagCheq | null
   {
     return $this->gPagCheq;
   }
@@ -319,14 +319,23 @@ class GPaConEIni
 
     return $this;
   }
-
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response):self
   {
     $res = new GPaConEIni();
     $res->setITiPago(intval($response->iTiPago));
     $res->setDMonTiPag(intval($response->dMonTiPag));
     $res->setCMoneTiPag($response->cMoneTiPag);
-    $res->setDTiCamTiPag($response->dTiCamTiPag);
+    if(isset($response->dTiCamTiPag))
+    {
+      $res->setDTiCamTiPag($response->dTiCamTiPag);
+    }
     //Children
     if(isset($response->gPagTarCD))
     {

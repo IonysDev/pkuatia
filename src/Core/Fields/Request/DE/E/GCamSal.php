@@ -11,14 +11,14 @@ use DOMElement;
  */
 class GCamSal
 {
-  public string $dDirLocSal; //E921 Dirección del local de salida
-  public int $dNumCasSal; //E922 Número de casa de salida
-  public string $dComp1Sal; //E923 Complemento de dirección 1 salida
-  public string $dComp2Sal; //E924 Complemento de dirección 2 salida
-  public int $cDepSal; ///E925 Código del departamento del local de salida
-  public int $cDisSal; //E927 Código del distrito del local de salida
-  public int $cCiuSal; //E929 Código de la ciudad del local de salida
-  public string $dTelSal; /// E931 Teléfono de contacto del local de salida
+  public ?string $dDirLocSal  = null; //E921 Dirección del local de salida
+  public ?int $dNumCasSal  = null; //E922 Número de casa de salida
+  public ?string $dComp1Sal  = null; //E923 Complemento de dirección 1 salida
+  public ?string $dComp2Sal  = null; //E924 Complemento de dirección 2 salida
+  public ?int $cDepSal  = null; ///E925 Código del departamento del local de salida
+  public ?int $cDisSal  = null; //E927 Código del distrito del local de salida
+  public ?int $cCiuSal  = null; //E929 Código de la ciudad del local de salida
+  public ?string $dTelSal  = null; /// E931 Teléfono de contacto del local de salida
 
   //====================================================//
   ///SETTERS
@@ -151,7 +151,7 @@ class GCamSal
    *
    * @return string
    */
-  public function getDDirLocSal(): string
+  public function getDDirLocSal(): string | null
   {
     return $this->dDirLocSal;
   }
@@ -161,7 +161,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getDNumCasSal(): int
+  public function getDNumCasSal(): int | null
   {
     return $this->dNumCasSal;
   }
@@ -171,7 +171,7 @@ class GCamSal
    *
    * @return string
    */
-  public function getDComp1Sal(): string
+  public function getDComp1Sal(): string | null
   {
     return $this->dComp1Sal;
   }
@@ -181,7 +181,7 @@ class GCamSal
    *
    * @return string
    */
-  public function getDComp2Sal(): string
+  public function getDComp2Sal(): string | null
   {
     return $this->dComp2Sal;
   }
@@ -191,7 +191,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getCDepSal(): int
+  public function getCDepSal(): int | null
   {
     return $this->cDepSal;
   }
@@ -202,7 +202,7 @@ class GCamSal
    *
    * @return string
    */
-  public function getDDesDepSal(): string
+  public function getDDesDepSal(): string | null
   {
     return "Mordor";
   }
@@ -212,7 +212,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getCDisSal(): int
+  public function getCDisSal(): int | null
   {
     return $this->cDisSal;
   }
@@ -222,7 +222,7 @@ class GCamSal
    *
    * @return string
    */
-  public function getDDesDisSal(): string
+  public function getDDesDisSal(): string | null
   {
     return "Mordor";
   }
@@ -232,7 +232,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getCCiuSal(): int
+  public function getCCiuSal(): int | null
   {
     return $this->cCiuSal;
   }
@@ -243,7 +243,7 @@ class GCamSal
    *
    * @return string
    */
-  public function getDDesCiuSal(): string
+  public function getDDesCiuSal(): string | null
   {
     return "Mordor";
   }
@@ -253,7 +253,7 @@ class GCamSal
    *
    * @return string
    */
-  public function getDTelSal(): string
+  public function getDTelSal(): string | null
   {
     return $this->dTelSal;
   }
@@ -292,29 +292,48 @@ class GCamSal
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GCamSal
-   */
-  public static function fromDOMElement(DOMElement $xml): GCamSal
-  {
-    if (strcmp($xml->tagName, 'gCamSal') === 0 && $xml->childElementCount == 8) {
-      $res = new GCamSal();
-      $res->setDDirLocSal($xml->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
-      $res->setDNumCasSal(intval($xml->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
-      $res->setDComp1Sal($xml->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
-      $res->setDComp1Sal($xml->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
-      $res->setCDepSal(intval($xml->getElementsByTagName('cDepSal')->item(0)->nodeValue));
-      $res->setCDisSal(intval($xml->getElementsByTagName('cDisSal')->item(0)->nodeValue));
-      $res->setCCiuSal(intval($xml->getElementsByTagName('cDiuSal')->item(0)->nodeValue));
-      $res->setDTelSal($xml->getElementsByTagName('dTelSal')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamSal
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamSal
+  // {
+  //   if (strcmp($xml->tagName, 'gCamSal') === 0 && $xml->childElementCount == 8) {
+  //     $res = new GCamSal();
+  //     $res->setDDirLocSal($xml->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
+  //     $res->setDNumCasSal(intval($xml->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
+  //     $res->setDComp1Sal($xml->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
+  //     $res->setDComp1Sal($xml->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
+  //     $res->setCDepSal(intval($xml->getElementsByTagName('cDepSal')->item(0)->nodeValue));
+  //     $res->setCDisSal(intval($xml->getElementsByTagName('cDisSal')->item(0)->nodeValue));
+  //     $res->setCCiuSal(intval($xml->getElementsByTagName('cDiuSal')->item(0)->nodeValue));
+  //     $res->setDTelSal($xml->getElementsByTagName('dTelSal')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
-    }
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
+  public static function fromResponse($response): self
+  {
+    $res = new GCamSal();
+    $res->setDDirLocSal($response->dDirLocSal);
+    $res->setDNumCasSal($response->dNumCasSal);
+    $res->setDComp1Sal($response->dComp1Sal);
+    $res->setDComp2Sal($response->dComp2Sal);
+    $res->setCDepSal($response->cDepSal);
+    $res->setCDisSal($response->cDisSal);
+    $res->setCCiuSal($response->cCiuSal);
+    $res->setDTelSal($response->dTelSal);
+    return $res;
   }
 }

@@ -11,13 +11,13 @@ use DOMElement;
 class GTimb
 {
 
-    public int $iTiDE;        // C002 - Tipo de documento electrónico
-    public int $dNumTim;      // C004 - Número del timbrado
-    public string $dEst;      // C005 - Establecimiento
-    public string $dPunExp;   // C006 - Punto de expedición
-    public string $dNumDoc;   // C007 - Número del documento
-    public string $dSerieNum; // C010 - Serie del número de timbrado
-    public DateTime $dFeIniT; // C008 - Fecha inicio de vigencia del timbrado
+    public ?int $iTiDE = null;        // C002 - Tipo de documento electrónico
+    public ?int $dNumTim = null;      // C004 - Número del timbrado
+    public ?string $dEst = null;      // C005 - Establecimiento
+    public ?string $dPunExp = null;   // C006 - Punto de expedición
+    public ?string $dNumDoc = null;   // C007 - Número del documento
+    public ?string $dSerieNum = null; // C010 - Serie del número de timbrado
+    public ?DateTime $dFeIniT = null; // C008 - Fecha inicio de vigencia del timbrado
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -62,7 +62,7 @@ class GTimb
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITiDE(): int
+    public function getITiDE(): int | null
     {
         return $this->iTiDE;
     }
@@ -72,7 +72,7 @@ class GTimb
      * 
      * @return string
      */
-    public function getDDesTiDE(): string
+    public function getDDesTiDE(): string | null
     {
         switch ($this->iTiDE) {
             case 1:
@@ -104,32 +104,32 @@ class GTimb
         }
     }
 
-    public function getDNumTim(): int
+    public function getDNumTim(): int | null
     {
         return $this->dNumTim;
     }
 
-    public function getDEst(): string
+    public function getDEst(): string | null
     {
         return $this->dEst;
     }
 
-    public function getDPunExp(): string
+    public function getDPunExp(): string | null
     {
         return $this->dPunExp;
     }
 
-    public function getDNumDoc(): string
+    public function getDNumDoc(): string | null
     {
         return $this->dNumDoc;
     }
 
-    public function getDSerieNum(): string
+    public function getDSerieNum(): string | null
     {
         return $this->dSerieNum;
     }
 
-    public function getDFeIniT(): DateTime
+    public function getDFeIniT(): DateTime | null
     {
         return $this->dFeIniT;
     }
@@ -157,32 +157,37 @@ class GTimb
         return $res;
     }
 
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GTimb
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GTimb
+    // {
+    //     if (strcmp($xml->tagName, 'gTimb') == 0 && $xml->childElementCount == 8) {
+    //         $res = new GTimb();
+    //         $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
+    //         $res->setITiDE($xml->getElementsByTagName('dDesTiDE')->item(0)->nodeValue);
+    //         $res->setITiDE(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
+    //         $res->setITiDE($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
+    //         $res->setITiDE($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
+    //         $res->setITiDE($xml->getElementsByTagName('dNumDoc')->item(0)->nodeValue);
+    //         $res->setITiDE($xml->getElementsByTagName('dSerieNum')->item(0)->nodeValue);
+    //         $res->setITiDE(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeIniT')->item(0)->nodeValue));
+    //         return $res;
+    //     } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //     }
+    // }
+    
     /**
-     * fromDOMElement
+     * fromResponse
      *
-     * @param  mixed $xml
-     * @return GTimb
+     * @param  mixed $response
+     * @return self
      */
-    public static function fromDOMElement(DOMElement $xml): GTimb
-    {
-        if (strcmp($xml->tagName, 'gTimb') == 0 && $xml->childElementCount == 8) {
-            $res = new GTimb();
-            $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
-            $res->setITiDE($xml->getElementsByTagName('dDesTiDE')->item(0)->nodeValue);
-            $res->setITiDE(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
-            $res->setITiDE($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
-            $res->setITiDE($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
-            $res->setITiDE($xml->getElementsByTagName('dNumDoc')->item(0)->nodeValue);
-            $res->setITiDE($xml->getElementsByTagName('dSerieNum')->item(0)->nodeValue);
-            $res->setITiDE(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeIniT')->item(0)->nodeValue));
-            return $res;
-        } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////
     public static function fromResponse($response): self
     {
         $res = new GTimb();

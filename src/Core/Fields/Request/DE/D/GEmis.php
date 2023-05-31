@@ -12,24 +12,24 @@ use DOMElement;
 class GEmis
 {
 
-    public string $dRucEm; // RUC del contribuyente emisor (D101)
-    public int $dDVEmi; // Dígito verificador del RUC del contribuyente emisor (D102)
-    public int $iTipCont; // Tipo de contribuyente (D103): 1 = Persona Física | 2 = Persona Jurídica
-    public int $cTipReg; // Tipo de régimen (D104): 1 = Régimen de Turismo | 2 = Importador | 3 = Exportador | 4 = Maquila | 5 = Ley N° 60/90 | 6 = Régimen del Pequeño Productor | 7 = Régimen del Mediano Productor | 8 = Régimen Contable
-    public string $dNomEmi; // Nombre o razón social del emisor del DE (D105)
-    public string $dNomFanEmi; // Nombre de fantasía (D106)
-    public string $dDirEmi; // Dirección del local donde se emite el DE (D107)
-    public int $dNumCas; // Número de casa (D108)
-    public string $dCompDir1; // Complemento de dirección 1 (D109)
-    public string $dCompDir2; // Complemento de dirección 2 (D110)
-    public int $cDepEmi; // Código del departamento de emisión (D111)
-    public int $cDisEmi; // Código de la distrito de emisión (D113)
-    public int $cCiuEmi; // Código de la ciudad de emisión (D115)
-    public string $dTelEmi; // Teléfono local de emisión de DE (D117)
-    public string $dEmailE; // Correo electrónico del emisor (D118)
-    public string $dDenSuc; // Denominación comercial de la sucursal (D119)
-    public GActEco $gActEco; // Grupo de campos que describen la actividad económica del emisor
-    public GRespDE $gRespDE; // Grupo de campos que identifican al responsable de la generación del DE
+    public ?string $dRucEm = null; // RUC del contribuyente emisor (D101)
+    public ?int $dDVEmi = null; // Dígito verificador del RUC del contribuyente emisor (D102)
+    public ?int $iTipCont = null; // Tipo de contribuyente (D103): 1 = Persona Física | 2 = Persona Jurídica
+    public ?int $cTipReg = null; // Tipo de régimen (D104): 1 = Régimen de Turismo | 2 = Importador | 3 = Exportador | 4 = Maquila | 5 = Ley N° 60/90 | 6 = Régimen del Pequeño Productor | 7 = Régimen del Mediano Productor | 8 = Régimen Contable
+    public ?string $dNomEmi = null; // Nombre o razón social del emisor del DE (D105)
+    public ?string $dNomFanEmi = null; // Nombre de fantasía (D106)
+    public ?string $dDirEmi = null; // Dirección del local donde se emite el DE (D107)
+    public ?int $dNumCas = null; // Número de casa (D108)
+    public ?string $dCompDir1 = null; // Complemento de dirección 1 (D109)
+    public ?string $dCompDir2 = null; // Complemento de dirección 2 (D110)
+    public ?int $cDepEmi = null; // Código del departamento de emisión (D111)
+    public ?int $cDisEmi = null; // Código de la distrito de emisión (D113)
+    public ?int $cCiuEmi = null; // Código de la ciudad de emisión (D115)
+    public ?string $dTelEmi = null; // Teléfono local de emisión de DE (D117)
+    public ?string $dEmailE = null; // Correo electrónico del emisor (D118)
+    public ?string $dDenSuc = null; // Denominación comercial de la sucursal (D119)
+    public ?GActEco $gActEco = null; // Grupo de campos que describen la actividad económica del emisor
+    public ?GRespDE $gRespDE = null; // Grupo de campos que identifican al responsable de la generación del DE
 
 
     ///////////////////////////////////////////////////////////////////////
@@ -131,72 +131,72 @@ class GEmis
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getDRucEm(): string
+    public function getDRucEm(): string | null
     {
         return $this->dRucEm;
     }
 
-    public function getDDVEmi(): int
+    public function getDDVEmi(): int | null
     {
         return $this->dDVEmi;
     }
 
-    public function getITipCont(): int
+    public function getITipCont(): int | null
     {
         return $this->iTipCont;
     }
 
-    public function getCTipReg(): int
+    public function getCTipReg(): int | null
     {
         return $this->cTipReg;
     }
 
-    public function getDNomEmi(): string
+    public function getDNomEmi(): string | null
     {
         return $this->dNomEmi;
     }
 
-    public function getDNomFanEmi(): string
+    public function getDNomFanEmi(): string  | null
     {
         return $this->dNomFanEmi;
     }
 
-    public function getDDirEmi(): string
+    public function getDDirEmi(): string | null
     {
         return $this->dDirEmi;
     }
 
-    public function getDNumCas(): int
+    public function getDNumCas(): int | null
     {
         return $this->dNumCas;
     }
 
-    public function getDCompDir1(): string
+    public function getDCompDir1(): string | null
     {
         return $this->dCompDir1;
     }
 
-    public function getDCompDir2(): string
+    public function getDCompDir2(): string | null
     {
         return $this->dCompDir2;
     }
 
-    public function getDDepEmi(): int
+    public function getDDepEmi(): int | null
     {
         return $this->cDepEmi;
     }
 
     /**
      * D112 Descripción del departamento de emisión
-     *
+     * 
      * @return string
      */
-    public function getDDesDepEmi(): string
+    public function getDDesDepEmi(): string | null
     {
         return "Mordor";
     }
 
-    public function getCDisEmi(): int
+    public function getCDisEmi(): int | null
     {
         return $this->cDisEmi;
     }
@@ -206,12 +206,12 @@ class GEmis
      *
      * @return string
      */
-    public function getDDesDisEmi(): string
+    public function getDDesDisEmi(): string | null
     {
         return "Mordor";
     }
 
-    public function getCCiuEmi(): int
+    public function getCCiuEmi(): int | null
     {
         return $this->cCiuEmi;
     }
@@ -221,32 +221,32 @@ class GEmis
      *
      * @return string
      */
-    public function getDDesCiuEmi(): string
+    public function getDDesCiuEmi(): string | null
     {
         return "Mordor";
     }
 
-    public function getDTelEmi(): string
+    public function getDTelEmi(): string | null
     {
         return $this->dTelEmi;
     }
 
-    public function getDEmailE(): string
+    public function getDEmailE(): string | null
     {
         return $this->dEmailE;
     }
 
-    public function getDDenSuc(): string
+    public function getDDenSuc(): string | null
     {
         return $this->dDenSuc;
     }
 
-    public function getGActEco(): GActEco
+    public function getGActEco(): GActEco | null
     {
         return $this->gActEco;
     }
 
-    public function getGRespDE(): GRespDE
+    public function getGRespDE(): GRespDE | null
     {
         return $this->gRespDE;
     }
@@ -285,41 +285,41 @@ class GEmis
         return $res;
     }
 
-    /**
-     * fromDOMElement
-     *
-     * @param  mixed $xml
-     * @return GEmis
-     */
-    public static function fromDOMElement(DOMElement $xml): GEmis
-    {
-        if (strcmp($xml->tagName, 'gEmis') == 0 && $xml->childElementCount == 21) {
-            $res = new GEmis();
-            $res->setDRucEm($xml->getElementsByTagName('dRucEm')->item(0)->nodeValue);
-            $res->setDDVEmi(intval($xml->getElementsByTagName('dDVEmi')->item(0)->nodeValue));
-            $res->setITipCont(intval($xml->getElementsByTagName('iTipCont')->item(0)->nodeValue));
-            $res->setCTipReg(intval($xml->getElementsByTagName('cTipReg')->item(0)->nodeValue));
-            $res->setDNomEmi($xml->getElementsByTagName('dNomEmi')->item(0)->nodeValue);
-            $res->setDNomFanEmi($xml->getElementsByTagName('dNomFanEmi')->item(0)->nodeValue);
-            $res->setDDirEmi($xml->getElementsByTagName('dDirEmi')->item(0)->nodeValue);
-            $res->setDNumCas(intval($xml->getElementsByTagName('dNumCas')->item(0)->nodeValue));
-            $res->setDCompDir1($xml->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
-            $res->setDCompDir2($xml->getElementsByTagName('dCompDir2')->item(0)->nodeValue);
-            $res->setCDepEmi(intval($xml->getElementsByTagName('cDepEmi')->item(0)->nodeValue));
-            $res->setCDisEmi(intval($xml->getElementsByTagName('cDisEmi')->item(0)->nodeValue));
-            $res->setCCiuEmi(intval($xml->getElementsByTagName('cCiuEmi')->item(0)->nodeValue));
-            $res->setDTelEmi($xml->getElementsByTagName('dTelEmi')->item(0)->nodeValue);
-            $res->setDEmailE($xml->getElementsByTagName('dEmailE')->item(0)->nodeValue);
-            $res->setDDenSuc($xml->getElementsByTagName('dDenSuc')->item(0)->nodeValue);
-            /////children
-            $res->setGActEco($res->gActEco->fromDOMElement($xml->getElementsByTagName('gActEco')->item(0)->nodeValue));
-            $res->setGRespDE($res->gRespDE->fromDOMElement($xml->getElementsByTagName('gRespDE')->item(0)->nodeValue));
-            return $res;
-        } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
-    }
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GEmis
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GEmis
+    // {
+    //     if (strcmp($xml->tagName, 'gEmis') == 0 && $xml->childElementCount == 21) {
+    //         $res = new GEmis();
+    //         $res->setDRucEm($xml->getElementsByTagName('dRucEm')->item(0)->nodeValue);
+    //         $res->setDDVEmi(intval($xml->getElementsByTagName('dDVEmi')->item(0)->nodeValue));
+    //         $res->setITipCont(intval($xml->getElementsByTagName('iTipCont')->item(0)->nodeValue));
+    //         $res->setCTipReg(intval($xml->getElementsByTagName('cTipReg')->item(0)->nodeValue));
+    //         $res->setDNomEmi($xml->getElementsByTagName('dNomEmi')->item(0)->nodeValue);
+    //         $res->setDNomFanEmi($xml->getElementsByTagName('dNomFanEmi')->item(0)->nodeValue);
+    //         $res->setDDirEmi($xml->getElementsByTagName('dDirEmi')->item(0)->nodeValue);
+    //         $res->setDNumCas(intval($xml->getElementsByTagName('dNumCas')->item(0)->nodeValue));
+    //         $res->setDCompDir1($xml->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
+    //         $res->setDCompDir2($xml->getElementsByTagName('dCompDir2')->item(0)->nodeValue);
+    //         $res->setCDepEmi(intval($xml->getElementsByTagName('cDepEmi')->item(0)->nodeValue));
+    //         $res->setCDisEmi(intval($xml->getElementsByTagName('cDisEmi')->item(0)->nodeValue));
+    //         $res->setCCiuEmi(intval($xml->getElementsByTagName('cCiuEmi')->item(0)->nodeValue));
+    //         $res->setDTelEmi($xml->getElementsByTagName('dTelEmi')->item(0)->nodeValue);
+    //         $res->setDEmailE($xml->getElementsByTagName('dEmailE')->item(0)->nodeValue);
+    //         $res->setDDenSuc($xml->getElementsByTagName('dDenSuc')->item(0)->nodeValue);
+    //         /////children
+    //         $res->setGActEco($res->gActEco->fromDOMElement($xml->getElementsByTagName('gActEco')->item(0)->nodeValue));
+    //         $res->setGRespDE($res->gRespDE->fromDOMElement($xml->getElementsByTagName('gRespDE')->item(0)->nodeValue));
+    //         return $res;
+    //     } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //     }
+    // }
 
 
 
@@ -372,7 +372,7 @@ class GEmis
         $gEmis->setDTelEmi($response->dTelEmi);
         $gEmis->setDEmailE($response->dEmailE);
         if (isset($response->dDenSuc)) {
-        $gEmis->setDDenSuc($response->dDenSuc);
+            $gEmis->setDDenSuc($response->dDenSuc);
         }
         //Children
         $gEmis->setGActEco(GActEco::fromResponse($response->gActEco));

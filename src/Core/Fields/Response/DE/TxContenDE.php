@@ -11,9 +11,9 @@ use DOMElement;
  */
 class TxContenDE
 {
-  public  RDE $rDe; //ContDE02 - Archivo XML del DE ContDE01 
-  public string $dProtAut; //ContDE03 - Número De Transacción 
-  public TxContenEv $xContEv; //ContDE04 - Contenedor de Evento
+  public ?RDE $rDe = null; //ContDE02 - Archivo XML del DE ContDE01 
+  public ?string $dProtAut = null; //ContDE03 - Número De Transacción 
+  public ?TxContenEv $xContEv = null; //ContDE04 - Contenedor de Evento
 
   //====================================================//
   ///SETTERS
@@ -74,7 +74,7 @@ class TxContenDE
    *
    * @return RDE
    */
-  public function getRDe(): RDE
+  public function getRDe(): RDE | null
   {
     return $this->rDe;
   }
@@ -84,7 +84,7 @@ class TxContenDE
    *
    * @return string
    */
-  public function getDProtAut(): string
+  public function getDProtAut(): string | null
   {
     return $this->dProtAut;
   }
@@ -94,7 +94,7 @@ class TxContenDE
    *
    * @return TxContenEv
    */
-  public function getXContEv(): TxContenEv
+  public function getXContEv(): TxContenEv | null
   {
     return $this->xContEv;
   }
@@ -117,37 +117,42 @@ class TxContenDE
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return TxContenDE
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): TxContenDE
+  // {
+  //   if (strcmp($xml->tagName, 'contenDE') == 0 && $xml->childElementCount == 3) {
+  //     $res = new TxContenDE();
+
+  //     $aux = new RDE();
+  //     $aux->fromDOMElement($xml->getElementsByTagName('rDe')->item(0)->nodeValue);
+  //     $res->setRDe($aux);
+
+  //     $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
+
+  //     $aux = new TxContenEv();
+  //     $aux->fromDOMElement($xml->getElementsByTagName('contentEv')->item(0)->nodeValue);
+  //     $res->setXContEv($aux);
+
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
    * @param  mixed $xml
-   * @return TxContenDE
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): TxContenDE
-  {
-    if (strcmp($xml->tagName, 'contenDE') == 0 && $xml->childElementCount == 3) {
-      $res = new TxContenDE();
-
-      $aux = new RDE();
-      $aux->fromDOMElement($xml->getElementsByTagName('rDe')->item(0)->nodeValue);
-      $res->setRDe($aux);
-
-      $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
-
-      $aux = new TxContenEv();
-      $aux->fromDOMElement($xml->getElementsByTagName('contentEv')->item(0)->nodeValue);
-      $res->setXContEv($aux);
-
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($xml): self
   {
-
 
     ///add the  <rContDe>  before <rDE>
     $xml = str_replace('<rDE ', '<rContDe><rDE ', $xml);
@@ -167,4 +172,5 @@ class TxContenDE
     $txContenDE->setRDe(RDE::fromResponse($object->rDE));
     return $txContenDE;
   }
+
 }

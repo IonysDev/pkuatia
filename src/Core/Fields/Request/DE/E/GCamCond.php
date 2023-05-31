@@ -10,9 +10,9 @@ use DOMElement;
  */
 class GCamCond
 {
-  public int $iCondOpe; ///E601 iCondOpe Condición de la operación
-  public GPaConEIni $gPaConEIni;
-  public GPagCred $gPagCred;
+  public ?int $iCondOpe = null; ///E601 iCondOpe Condición de la operación
+  public ?GPaConEIni $gPaConEIni = null;
+  public ?GPagCred $gPagCred = null;
 
   //====================================================//
   ///Setters
@@ -41,7 +41,7 @@ class GCamCond
    *
    * @return int
    */
-  public function getICondOpe(): int
+  public function getICondOpe(): int | null
   {
     return $this->iCondOpe;
   }
@@ -51,7 +51,7 @@ class GCamCond
    *
    * @return string
    */
-  public function getDDCondOpe(): string
+  public function getDDCondOpe(): string | null
   {
     switch ($this->iCondOpe) {
       case 1:
@@ -90,23 +90,23 @@ class GCamCond
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GCAMCond
-   */
-  public static function fromDOMElement(DOMElement $xml): GCamCond
-  {
-    if (strcmp($xml->tagName, 'gCamCond') == 0 && $xml->childElementCount == 3) {
-      $res = new GCamCond();
-      $res->setICondOpe(intval($xml->getElementsByTagName('iCondOpe')->item(0)->nodeValue));
-      ///children
-      $res->setGPaConEIni($res->gPaConEIni->fromDOMElement($xml->getElementsByTagName('gPaConEIni')->item(0)->nodeValue));
-      $res->setGPagCred($res->gPagCred->fromDOMElement($xml->getElementsByTagName('gPagCred')->item(0)->nodeValue));
-      return $res;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCAMCond
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamCond
+  // {
+  //   if (strcmp($xml->tagName, 'gCamCond') == 0 && $xml->childElementCount == 3) {
+  //     $res = new GCamCond();
+  //     $res->setICondOpe(intval($xml->getElementsByTagName('iCondOpe')->item(0)->nodeValue));
+  //     ///children
+  //     $res->setGPaConEIni($res->gPaConEIni->fromDOMElement($xml->getElementsByTagName('gPaConEIni')->item(0)->nodeValue));
+  //     $res->setGPagCred($res->gPagCred->fromDOMElement($xml->getElementsByTagName('gPagCred')->item(0)->nodeValue));
+  //     return $res;
+  //   }
+  // }
 
   //====================================================//
   ///Others
@@ -117,7 +117,7 @@ class GCamCond
    *
    * @return GPaConEIni
    */
-  public function getGPaConEIni(): GPaConEIni
+  public function getGPaConEIni(): GPaConEIni | null
   {
     return $this->gPaConEIni;
   }
@@ -141,7 +141,7 @@ class GCamCond
    *
    * @return GPagCred
    */
-  public function getGPagCred(): GPagCred
+  public function getGPagCred(): GPagCred | null
   {
     return $this->gPagCred;
   }
@@ -159,7 +159,13 @@ class GCamCond
 
     return $this;
   }
-
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response): self
   {
     $res = new self();

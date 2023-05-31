@@ -13,11 +13,11 @@ use DOMElement;
  */
 class GCompPub
 {
-  public string $dModCont; //Modalidad - Código emitido por la DNCP ID:E021 PADRE:E020
-  public int $dEntCont; //Entidad - Código emitido por la DNC ID:E022 PADRE:E020
-  public int $dAnoCont; //Año - Código emitido por la DNCP ID:E023 PADRE:E020
-  public int $dSecCont; //Secuencia - emitido por la DNCP ID:E024 PADRE:E020
-  public DateTime $dFeCodCont; //Fecha de emisión del código de contratación por la DNCP ID:E025 PADRE:E020
+  public ?string $dModCont  = null; //Modalidad - Código emitido por la DNCP ID:E021 PADRE:E020
+  public ?int $dEntCont  = null; //Entidad - Código emitido por la DNC ID:E022 PADRE:E020
+  public ?int $dAnoCont  = null; //Año - Código emitido por la DNCP ID:E023 PADRE:E020
+  public ?int $dSecCont  = null; //Secuencia - emitido por la DNCP ID:E024 PADRE:E020
+  public ?DateTime $dFeCodCont  = null; //Fecha de emisión del código de contratación por la DNCP ID:E025 PADRE:E020
 
   //====================================================//
   ///Setters
@@ -105,7 +105,7 @@ class GCompPub
   /**
    * Get the value of dModCont
    */
-  public function getDModCont(): string
+  public function getDModCont(): string | null
   {
     return $this->dModCont;
   }
@@ -113,7 +113,7 @@ class GCompPub
   /**
    * Get the value of dEntCont
    */
-  public function getDEntCont(): int
+  public function getDEntCont(): int | null
   {
     return $this->dEntCont;
   }
@@ -121,7 +121,7 @@ class GCompPub
   /**
    * Get the value of dAnoCont
    */
-  public function getDAnoCont(): int
+  public function getDAnoCont(): int | null
   {
     return $this->dAnoCont;
   }
@@ -129,7 +129,7 @@ class GCompPub
   /**
    * Get the value of dSecCont
    */
-  public function getDSecCont(): int
+  public function getDSecCont(): int | null
   {
     return $this->dSecCont;
   }
@@ -137,7 +137,7 @@ class GCompPub
   /**
    * Get the value of dFeCodCont
    */
-  public function getDFeCodCont(): DateTime
+  public function getDFeCodCont(): DateTime | null
   {
     return $this->dFeCodCont;
   }
@@ -161,28 +161,34 @@ class GCompPub
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCompPub
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCompPub
+  // {
+  //   if (strcmp($xml->tagName, 'gComPub') == 0 && $xml->childElementCount == 5) {
+  //     $res = new GCompPub();
+  //     $res->setDModCont($xml->getElementsByTagName('gComPub')->item(0)->nodeValue);
+  //     $res->setDEntCont(intval($xml->getElementsByTagName('dEntCont')->item(0)->nodeValue));
+  //     $res->setDAnoCont(intval($xml->getElementsByTagName('dAnoCont')->item(0)->nodeValue));
+  //     $res->setDSecCont(intval($xml->getElementsByTagName('dSecCont')->item(0)->nodeValue));
+  //     $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeCodCont')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCompPub
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCompPub
-  {
-    if (strcmp($xml->tagName, 'gComPub') == 0 && $xml->childElementCount == 5) {
-      $res = new GCompPub();
-      $res->setDModCont($xml->getElementsByTagName('gComPub')->item(0)->nodeValue);
-      $res->setDEntCont(intval($xml->getElementsByTagName('dEntCont')->item(0)->nodeValue));
-      $res->setDAnoCont(intval($xml->getElementsByTagName('dAnoCont')->item(0)->nodeValue));
-      $res->setDSecCont(intval($xml->getElementsByTagName('dSecCont')->item(0)->nodeValue));
-      $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeCodCont')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response):self
   {
     $res = new GCompPub();

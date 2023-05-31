@@ -11,9 +11,9 @@ use DOMElement;
  */
 class GCamEsp
 {
-  public GGrupEner $gGrupoEner;
-  public GGrupSeg $gGrupoSeg;
-  public GGrupSup $gGrupSup;
+  public ?GGrupEner $gGrupoEner = null;
+  public ?GGrupSeg $gGrupoSeg  = null;
+  public ?GGrupSup $gGrupSup  = null;
 
   //====================================================//
   ///Others
@@ -24,7 +24,7 @@ class GCamEsp
    *
    * @return GGrupEner
    */
-  public function getGGrupoEner(): GGrupEner
+  public function getGGrupoEner(): GGrupEner | null
   {
     return $this->gGrupoEner;
   }
@@ -48,7 +48,7 @@ class GCamEsp
    *
    * @return GGrupSeg
    */
-  public function getGGrupoSeg(): GGrupSeg
+  public function getGGrupoSeg(): GGrupSeg | null
   {
     return $this->gGrupoSeg;
   }
@@ -72,7 +72,7 @@ class GCamEsp
    *
    * @return GGrupSup
    */
-  public function getGGrupSup(): GGrupSup
+  public function getGGrupSup(): GGrupSup | null
   {
     return $this->gGrupSup;
   }
@@ -116,27 +116,33 @@ class GCamEsp
   }
 
   
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GCamEsp
-   */
-  public static function fromDOMElement(DOMElement $xml): GCamEsp
-  {
-    if (strcmp($xml->tagName, 'gCamEsp') == 0 && $xml->childElementCount >= 1) {
-      $res = new GCamEsp();
-      $res->setGGrupoEner($res->gGrupoEner->fromDOMElement($xml->getElementsByTagName('gGrupoEner')->item(0)->nodeValue));
-      $res->setGGrupSup($res->gGrupSup->fromDOMElement($xml->getElementsByTagName('gGrupoSup')->item(0)->nodeValue));
-      $res->setGGrupoSeg($res->gGrupoSeg->fromDOMElement($xml->getElementsByTagName('gGrupoSeg')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamEsp
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamEsp
+  // {
+  //   if (strcmp($xml->tagName, 'gCamEsp') == 0 && $xml->childElementCount >= 1) {
+  //     $res = new GCamEsp();
+  //     $res->setGGrupoEner($res->gGrupoEner->fromDOMElement($xml->getElementsByTagName('gGrupoEner')->item(0)->nodeValue));
+  //     $res->setGGrupSup($res->gGrupSup->fromDOMElement($xml->getElementsByTagName('gGrupoSup')->item(0)->nodeValue));
+  //     $res->setGGrupoSeg($res->gGrupoSeg->fromDOMElement($xml->getElementsByTagName('gGrupoSeg')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
-  //====================================================//
+   
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response):self
   {
     $res = new GCamEsp();

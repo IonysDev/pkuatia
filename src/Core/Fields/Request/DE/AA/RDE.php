@@ -2,9 +2,10 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\AA;
 
-use Abiliomp\Pkuatia\Core\Fields\I\Signature;
-use Abiliomp\Pkuatia\Core\Fields\J\GCamFuFD;
+
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\A\DE;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\I\Signature;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\J\GCamFuFD;
 use DOMElement;
 
 
@@ -15,10 +16,10 @@ use DOMElement;
  */
 class RDE
 {
-  public int $dVerFor;         // AA002 Versión del formato
-  public DE $dE;               // Campos firmados del  DE
-  public Signature $signature; // Firma Digital del DTE
-  public GCamFuFD $gCamFuFD;   // Campos fuera de la firma digital 
+  public ?int $dVerFor  = null;         // AA002 Versión del formato
+  public ?DE $dE = null;               // Campos firmados del  DE
+  public ?Signature $signature = null; // Firma Digital del DTE
+  public ?GCamFuFD $gCamFuFD = null;   // Campos fuera de la firma digital 
 
   //====================================================//
   //Constructor
@@ -61,7 +62,7 @@ class RDE
    *
    * @return int
    */
-  public function getDVerFor(): int
+  public function getDVerFor(): int | null
   {
     return $this->dVerFor;
   }
@@ -86,27 +87,27 @@ class RDE
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RDE
-   */
-  public static function fromDOMElement(DOMElement $xml): RDE
-  {
-    if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 4) {
-      $res = new RDE();
-      $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
-      ///children
-      $res->setDE($res->dE->fromDOMElement($xml->getElementsByTagName('DE')->item(0)->nodeValue));
-      //Signature
-      $res->setGCamFuFD($res->gCamFuFD->fromDOMElement($xml->getElementsByTagName('gCamFuFD')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RDE
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RDE
+  // {
+  //   if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 4) {
+  //     $res = new RDE();
+  //     $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
+  //     ///children
+  //     $res->setDE($res->dE->fromDOMElement($xml->getElementsByTagName('DE')->item(0)->nodeValue));
+  //     //Signature
+  //     $res->setGCamFuFD($res->gCamFuFD->fromDOMElement($xml->getElementsByTagName('gCamFuFD')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   //====================================================//
   ///Others
@@ -117,7 +118,7 @@ class RDE
    *
    * @return DE
    */
-  public function getDE(): DE
+  public function getDE(): DE | null
   {
     return $this->dE;
   }
@@ -141,7 +142,7 @@ class RDE
    *
    * @return GCamFuFD
    */
-  public function getGCamFuFD(): GCamFuFD
+  public function getGCamFuFD(): GCamFuFD | null
   {
     return $this->gCamFuFD;
   }
@@ -159,12 +160,54 @@ class RDE
 
     return $this;
   }
-
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response):self
   {
     $res = new RDE();
     $res->setDE(DE::fromResponse($response->DE));
+    if(isset($response->signature))
+    {
+      $res->setSignature(Signature::fromResponse($response->signature));
+    }
+      
+
+    if(isset($response->gCamFuFD))
+    {
+      $res->setGCamFuFD(GCamFuFD::fromResponse($response->gCamFuFD));
+    }
+  
+
     return $res;
   }
 
+
+  /**
+   * Get the value of signature
+   *
+   * @return ?Signature
+   */
+  public function getSignature(): Signature | null
+  {
+    return $this->signature;
+  }
+
+  /**
+   * Set the value of signature
+   *
+   * @param ?Signature $signature
+   *
+   * @return self
+   */
+  public function setSignature( Signature $signature): self
+  {
+    $this->signature = $signature;
+
+    return $this;
+  }
 }

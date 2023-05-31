@@ -11,10 +11,10 @@ use DOMElement;
  */
 class GValorItem
 {
-  public int $dPUniProSer; ///E721 Precio unitario del producto y/o servicio (incluidos impuestos)
-  public int $dTiCamIt; ///E725 Tipo de cambio por ítem
-  public int $dTotBruOpeItem; ///E727 Total bruto de la operación por ítem
-  public GValorRestaItem $gValorRestaItem;
+  public ?int $dPUniProSer = null; ///E721 Precio unitario del producto y/o servicio (incluidos impuestos)
+  public ?int $dTiCamIt = null; ///E725 Tipo de cambio por ítem
+  public ?int $dTotBruOpeItem = null; ///E727 Total bruto de la operación por ítem
+  public ?GValorRestaItem $gValorRestaItem = null;
 
   //====================================================//
   ///Setters
@@ -74,7 +74,7 @@ class GValorItem
    *
    * @return int
    */
-  public function getDPUniProSer(): int
+  public function getDPUniProSer(): int | null
   {
     return $this->dPUniProSer;
   }
@@ -84,7 +84,7 @@ class GValorItem
    *
    * @return int
    */
-  public function getDTiCamIt(): int
+  public function getDTiCamIt(): int | null
   {
     return $this->dTiCamIt;
   }
@@ -94,7 +94,7 @@ class GValorItem
    *
    * @return int
    */
-  public function getDTotBruOpeItem(): int
+  public function getDTotBruOpeItem(): int | null
   {
     return $this->dTotBruOpeItem;
   }
@@ -121,27 +121,27 @@ class GValorItem
     return $res;
   }
   
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GValorItem
-   */
-  public static function fromDOMElement(DOMElement $xml): GValorItem
-  {
-    if (strcmp($xml->tagName, 'gValorItem') == 0 && $xml->childElementCount == 4) {
-      $res = new GValorItem();
-      $res->setDPUniProSer(intval($xml->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
-      $res->setDTiCamIt(intval($xml->getElementsByTagName('dTiCamIt')->item(0)->nodeValue));
-      $res->setDTotBruOpeItem(intval($xml->getElementsByTagName('dTotBruOpeItem')->item(0)->nodeValue));
-      ///children
-      $res->setGValorRestaItem($res->gValorRestaItem->fromDOMElement($xml->getElementsByTagName('gValorRestaItem')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GValorItem
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GValorItem
+  // {
+  //   if (strcmp($xml->tagName, 'gValorItem') == 0 && $xml->childElementCount == 4) {
+  //     $res = new GValorItem();
+  //     $res->setDPUniProSer(intval($xml->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
+  //     $res->setDTiCamIt(intval($xml->getElementsByTagName('dTiCamIt')->item(0)->nodeValue));
+  //     $res->setDTotBruOpeItem(intval($xml->getElementsByTagName('dTotBruOpeItem')->item(0)->nodeValue));
+  //     ///children
+  //     $res->setGValorRestaItem($res->gValorRestaItem->fromDOMElement($xml->getElementsByTagName('gValorRestaItem')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  //}
 
   //====================================================//
   ///Others
@@ -152,7 +152,7 @@ class GValorItem
    *
    * @return GValorRestaItem
    */
-  public function getGValorRestaItem(): GValorRestaItem
+  public function getGValorRestaItem(): GValorRestaItem | null
   {
     return $this->gValorRestaItem;
   }
@@ -170,7 +170,13 @@ class GValorItem
 
     return $this;
   }
-
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response):self
   {
     $res = new GValorItem();

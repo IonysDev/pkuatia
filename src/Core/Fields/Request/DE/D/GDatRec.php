@@ -12,25 +12,25 @@ use DOMElement;
 class GDatRec
 {
 
-    public int $iNatRec; // Naturaleza del receptor (D201): 1 = contribuyente | 2 = no contribuyente
-    public int $iTiOpe; // Tipo de operación (D202): 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
-    public string $cPaisRec; // Código de país del receptor (D203)
-    public int $iTiContRec; // Tipo de contribuyente receptor (D205): 1 = Persona Física | 2 = Persona Jurídica
-    public string $dRucRec; // RUC del receptor (D206)
-    public int $dDVRec; // Dígito verificador del RUC del receptor (D207)
-    public int $iTipIDRec; // Tipo de documento de identidad del receptor (D208): 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
-    public string $dNumIDRec; // Número de documento de identidad (D210)
-    public string $dNomRec; // Nombre o razón social del receptor del DE (D211)
-    public string $dNomFanRec; // Nombre de fantasía (D212)
-    public string $dDirRec; // Dirección del receptor (D213)
-    public string $dTelRec; // Número de teléfono del receptor (D214)
-    public string $dCelRec; // Número de celular del receptor (D215)
-    public string $dEmailRec; // Correo electrónico de receptor (D216)
-    public string $dCodCliente; // Código del cliente (D217)
-    public int $dNumCasRec; // Número de casa del receptor (D218)
-    public int $cDepRec; // Código del departamento del receptor (D219)
-    public int $cDisRec; // Código del distrito del receptor (D221)
-    public int $cCiuRec; // Código del ciudad del receptor (D223)
+    public ?int $iNatRec = null; // Naturaleza del receptor (D201): 1 = contribuyente | 2 = no contribuyente
+    public ?int $iTiOpe = null; // Tipo de operación (D202): 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
+    public ?string $cPaisRec = null; // Código de país del receptor (D203)
+    public ?int $iTiContRec = null; // Tipo de contribuyente receptor (D205): 1 = Persona Física | 2 = Persona Jurídica
+    public ?string $dRucRec = null; // RUC del receptor (D206)
+    public ?int $dDVRec = null; // Dígito verificador del RUC del receptor (D207)
+    public ?int $iTipIDRec = null; // Tipo de documento de identidad del receptor (D208): 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
+    public ?string $dNumIDRec = null; // Número de documento de identidad (D210)
+    public ?string $dNomRec = null; // Nombre o razón social del receptor del DE (D211)
+    public ?string $dNomFanRec = null; // Nombre de fantasía (D212)
+    public ?string $dDirRec = null; // Dirección del receptor (D213)
+    public ?string $dTelRec = null; // Número de teléfono del receptor (D214)
+    public ?string $dCelRec = null; // Número de celular del receptor (D215)
+    public ?string $dEmailRec = null; // Correo electrónico de receptor (D216)
+    public ?string $dCodCliente = null; // Código del cliente (D217)
+    public ?int $dNumCasRec = null; // Número de casa del receptor (D218)
+    public ?int $cDepRec = null; // Código del departamento del receptor (D219)
+    public ?int $cDisRec = null; // Código del distrito del receptor (D221)
+    public ?int $cCiuRec = null; // Código del ciudad del receptor (D223)
 
 
     ///////////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ class GDatRec
     /**
      * Get the value of iNatRec
      */
-    public function getINatRec()
+    public function getINatRec(): int | null
     {
         return $this->iNatRec;
     }
@@ -136,7 +136,7 @@ class GDatRec
     /**
      * Get the value of iTiOpe
      */
-    public function getITiOpe()
+    public function getITiOpe() : int | null
     {
         return $this->iTiOpe;
     }
@@ -146,7 +146,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getCPaisRec(): string
+    public function getCPaisRec(): string | null
     {
         return $this->cPaisRec;
     }
@@ -156,7 +156,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesPaisRe(): string
+    public function getDDesPaisRe(): string | null
     {
         return "Mordor";
     }
@@ -165,7 +165,7 @@ class GDatRec
     /**
      * Get the value of iTiContRec
      */
-    public function getITiContRec()
+    public function getITiContRec() : int | null
     {
         return $this->iTiContRec;
     }
@@ -175,7 +175,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDRucRec(): string
+    public function getDRucRec(): string | null
     {
         return $this->dRucRec;
     }
@@ -185,7 +185,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getDDVRec(): int
+    public function getDDVRec(): int | null
     {
         return $this->dDVRec;
     }
@@ -193,7 +193,7 @@ class GDatRec
     /**
      * Get the value of iTipIDRec
      */
-    public function getITipIDRec()
+    public function getITipIDRec() : int | null
     {
         return $this->iTipIDRec;
     }
@@ -203,7 +203,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDTipIDRec(): string
+    public function getDDTipIDRec(): string | null
     {
         switch ($this->iTipIDRec) {
             case 1:
@@ -238,7 +238,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDNumIDRec(): string
+    public function getDNumIDRec(): string | null
     {
         return $this->dNumIDRec;
     }
@@ -248,7 +248,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDNomRec(): string
+    public function getDNomRec(): string | null
     {
         return $this->dNomRec;
     }
@@ -258,17 +258,17 @@ class GDatRec
      *
      * @return string
      */
-    public function getDNomFanRec(): string
+    public function getDNomFanRec(): string | null
     {
         return $this->dNomFanRec;
     }
 
     /**
-     * Get the value of dDirRec
+     * Get the value of dDirRec 
      *
      * @return string
      */
-    public function getDDirRec(): string
+    public function getDDirRec(): string | null
     {
         return $this->dDirRec;
     }
@@ -278,7 +278,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDTelRec(): string
+    public function getDTelRec(): string | null
     {
         return $this->dTelRec;
     }
@@ -288,7 +288,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDCelRec(): string
+    public function getDCelRec(): string | null
     {
         return $this->dCelRec;
     }
@@ -298,7 +298,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDEmailRec(): string
+    public function getDEmailRec(): string | null
     {
         return $this->dEmailRec;
     }
@@ -308,7 +308,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDCodCliente(): string
+    public function getDCodCliente(): string | null
     {
         return $this->dCodCliente;
     }
@@ -318,7 +318,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getDNumCasRec(): int
+    public function getDNumCasRec(): int | null
     {
         return $this->dNumCasRec;
     }
@@ -328,7 +328,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getCDepRec(): int
+    public function getCDepRec(): int | null
     {
         return $this->cDepRec;
     }
@@ -338,7 +338,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesDepRec(): string
+    public function getDDesDepRec(): string | null
     {
         return "Mordor";
     }
@@ -348,7 +348,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getCDisRec(): int
+    public function getCDisRec(): int | null
     {
         return $this->cDisRec;
     }
@@ -358,7 +358,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesDisRec(): string
+    public function getDDesDisRec(): string | null
     {
         return "MORDOR";
     }
@@ -369,7 +369,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getCCiuRec(): int
+    public function getCCiuRec(): int | null
     {
         return $this->cCiuRec;
     }
@@ -379,7 +379,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesCiuRec(): string
+    public function getDDesCiuRec(): string | null
     {
         return "Mordor";
     }
@@ -440,42 +440,42 @@ class GDatRec
         return $res;
     }
 
-    /**
-     * fromDOMElement
-     *
-     * @param  mixed $xml
-     * @return GDatRec
-     */
-    public static function fromDOMElement(DOMElement $xml): GDatRec
-    {
-        if (strcmp($xml->tagName, 'gDatRec') == 0 && $xml->childElementCount >= 12) {
-            $res = new GDatRec();
-            $res->setINatRec(intval($xml->getElementsByTagName('iNatRec')->item(0)->nodeValue));
-            $res->setITiOpe(intval($xml->getElementsByTagName('iTiOpe')->item(0)->nodeValue));
-            $res->setCPaisRec($xml->getElementsByTagName('cPaisRec')->item(0)->nodeValue);
-            $res->setITiContRec(intval($xml->getElementsByTagName('iTiContRec')->item(0)->nodeValue));
-            $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
-            $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
-            $res->setITipIDRec(intval($xml->getElementsByTagName('iTipIDRec')->item(0)->nodeValue));
-            $res->setDNumIDRec($xml->getElementsByTagName('dNumIDRec')->item(0)->nodeValue);
-            $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
-            $res->setDNomFanRec($xml->getElementsByTagName('dNomFanRec')->item(0)->nodeValue);
-            $res->setDDirRec($xml->getElementsByTagName('dDirRec')->item(0)->nodeValue);
-            $res->setDNumCasRec(intval($xml->getElementsByTagName('dNumCasRec')->item(0)->nodeValue));
-            $res->setCDepRec(intval($xml->getElementsByTagName('cDepRec')->item(0)->nodeValue));
-            $res->setCDisRec(intval($xml->getElementsByTagName('cDisRec')->item(0)->nodeValue));
-            $res->setCCiuRec(intval($xml->getElementsByTagName('cCiuRec')->item(0)->nodeValue));
-            $res->setDTelRec($xml->getElementsByTagName('dTelRec')->item(0)->nodeValue);
-            $res->setDCelRec($xml->getElementsByTagName('dCelRec')->item(0)->nodeValue);
-            $res->setDEmailRec($xml->getElementsByTagName('dEmailRec')->item(0)->nodeValue);
-            $res->setDCodCliente($xml->getElementsByTagName('dCodCliente')->item(0)->nodeValue);
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GDatRec
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GDatRec
+    // {
+    //     if (strcmp($xml->tagName, 'gDatRec') == 0 && $xml->childElementCount >= 12) {
+    //         $res = new GDatRec();
+    //         $res->setINatRec(intval($xml->getElementsByTagName('iNatRec')->item(0)->nodeValue));
+    //         $res->setITiOpe(intval($xml->getElementsByTagName('iTiOpe')->item(0)->nodeValue));
+    //         $res->setCPaisRec($xml->getElementsByTagName('cPaisRec')->item(0)->nodeValue);
+    //         $res->setITiContRec(intval($xml->getElementsByTagName('iTiContRec')->item(0)->nodeValue));
+    //         $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
+    //         $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
+    //         $res->setITipIDRec(intval($xml->getElementsByTagName('iTipIDRec')->item(0)->nodeValue));
+    //         $res->setDNumIDRec($xml->getElementsByTagName('dNumIDRec')->item(0)->nodeValue);
+    //         $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
+    //         $res->setDNomFanRec($xml->getElementsByTagName('dNomFanRec')->item(0)->nodeValue);
+    //         $res->setDDirRec($xml->getElementsByTagName('dDirRec')->item(0)->nodeValue);
+    //         $res->setDNumCasRec(intval($xml->getElementsByTagName('dNumCasRec')->item(0)->nodeValue));
+    //         $res->setCDepRec(intval($xml->getElementsByTagName('cDepRec')->item(0)->nodeValue));
+    //         $res->setCDisRec(intval($xml->getElementsByTagName('cDisRec')->item(0)->nodeValue));
+    //         $res->setCCiuRec(intval($xml->getElementsByTagName('cCiuRec')->item(0)->nodeValue));
+    //         $res->setDTelRec($xml->getElementsByTagName('dTelRec')->item(0)->nodeValue);
+    //         $res->setDCelRec($xml->getElementsByTagName('dCelRec')->item(0)->nodeValue);
+    //         $res->setDEmailRec($xml->getElementsByTagName('dEmailRec')->item(0)->nodeValue);
+    //         $res->setDCodCliente($xml->getElementsByTagName('dCodCliente')->item(0)->nodeValue);
 
-            return $res;
-        } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
-    }
+    //         return $res;
+    //     } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //     }
+    // }
 
 
     /**
@@ -506,7 +506,13 @@ class GDatRec
 
         return $this;
     }
-
+    
+    /**
+     * fromResponse
+     *
+     * @param  mixed $response
+     * @return self
+     */
     public static function fromResponse($response): self
     {
         $res = new GDatRec();
@@ -522,12 +528,10 @@ class GDatRec
         if (isset($response->dDVRec)) {
             $res->setDDVRec(intval($response->dDVRec));
         }
-        if(isset($response->iTipIDRec))
-        {
+        if (isset($response->iTipIDRec)) {
             $res->setITipIDRec(intval($response->iTipIDRec));
         }
-        if(isset($response->dNumIDRec))
-        {
+        if (isset($response->dNumIDRec)) {
             $res->setDNumIDRec($response->dNumIDRec);
         }
         $res->setDNomRec($response->dNomRec);

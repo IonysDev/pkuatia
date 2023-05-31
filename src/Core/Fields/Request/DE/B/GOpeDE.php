@@ -9,10 +9,10 @@ use DOMElement;
  */
 class GOpeDE
 {
-    public int $iTipEmi;       // B002 - Tipo de emision: 1 = Normal | 2 = Contingencia
-    public int $dCodSeg;       // B004 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
-    public string $dInfoEmi;   // B005 - Información de interés del emisor respecto al DE
-    public string $dInfoFisc;  // B006 - Información de interés del fisco respecto al DE
+    public ?int $iTipEmi = null;       // B002 - Tipo de emision: 1 = Normal | 2 = Contingencia
+    public ?int $dCodSeg = null;       // B004 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
+    public ?string $dInfoEmi = null;   // B005 - Información de interés del emisor respecto al DE
+    public ?string $dInfoFisc = null;  // B006 - Información de interés del fisco respecto al DE
 
     ///////////////////////////////////////////////////////////////////////
     // Constructors
@@ -60,12 +60,12 @@ class GOpeDE
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITipEmi(): int
+    public function getITipEmi(): int | null
     {
         return $this->iTipEmi;
     }
 
-    public function getDDesTipEmi(): string
+    public function getDDesTipEmi(): string | null
     {
         switch ($this->iTipEmi) {
             case 1:
@@ -79,12 +79,12 @@ class GOpeDE
         }
     }
 
-    public function getDCodSeg(): int
+    public function getDCodSeg(): int | null
     {
         return $this->dCodSeg;
     }
 
-    public function getDInfoEmi(): string
+    public function getDInfoEmi(): string | null
     {
         return $this->dInfoEmi;
     }
@@ -94,7 +94,7 @@ class GOpeDE
      *
      * @return string
      */
-    public function getDInfoFisc(): string
+    public function getDInfoFisc(): string | null
     {
         return $this->dInfoFisc;
     }
@@ -113,29 +113,33 @@ class GOpeDE
         return $res;
     }
 
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GOpeDE
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GOpeDE
+    // {
+    //     if (strcmp($xml->tagName, 'gOpeDE') == 0 && $xml->childElementCount == 5) {
+    //         $res = new GOpeDE();
+    //         $res->setITipEmi(intval($xml->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
+    //         $res->setDCodSeg(intval($xml->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
+    //         $res->setDInfoEmi($xml->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
+    //         $res->setDInfoFisc($xml->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
+
+    //         return $res;
+    //     } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //     }
+    // }    
     /**
-     * fromDOMElement
+     * fromResponse
      *
-     * @param  mixed $xml
-     * @return GOpeDE
+     * @param  mixed $response
+     * @return self
      */
-    public static function fromDOMElement(DOMElement $xml): GOpeDE
-    {
-        if (strcmp($xml->tagName, 'gOpeDE') == 0 && $xml->childElementCount == 5) {
-            $res = new GOpeDE();
-            $res->setITipEmi(intval($xml->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
-            $res->setDCodSeg(intval($xml->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
-            $res->setDInfoEmi($xml->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
-            $res->setDInfoFisc($xml->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
-
-            return $res;
-        } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////
     public static function fromResponse($response): self
     {
         $res = new GOpeDE();
@@ -151,6 +155,7 @@ class GOpeDE
         {
             $res->setDInfoFisc($response->dInfoFisc);
         }
+
         return $res;
     }
 }

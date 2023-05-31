@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\J;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\J;
 
 use DOMElement;
 
@@ -9,8 +9,8 @@ use DOMElement;
  */
 class GCamFuFD
 {
-  public string $dCarQR;   // J002 - Caracteres correspondientes al código QR
-  public string $dInfAdic; // J003 - Información adicional de interés para el emisor
+  public ?string $dCarQR = null;   // J002 - Caracteres correspondientes al código QR
+  public ?string $dInfAdic = null; // J003 - Información adicional de interés para el emisor
 
   //====================================================//
   //SETTER
@@ -55,7 +55,7 @@ class GCamFuFD
    *
    * @return string
    */
-  public function getDCarQR(): string
+  public function getDCarQR(): string | null
   {
     return $this->dCarQR;
   }
@@ -65,7 +65,7 @@ class GCamFuFD
    *
    * @return string
    */
-  public function getDInfAdic(): string
+  public function getDInfAdic(): string | null
   {
     return $this->dInfAdic;
   }
@@ -86,21 +86,34 @@ class GCamFuFD
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamFuFD
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamFuFD
+  // {
+  //   if (strcmp($xml->tagName, 'gCamFuFD') == 0 && $xml->childElementCount == 1) {
+  //     $res = new GCamFuFD();
+  //     $res->setDCarQR($xml->getElementsByTagName('dCarQR')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCamFuFD
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCamFuFD
+  public static function fromResponse($response): self
   {
-    if (strcmp($xml->tagName, 'gCamFuFD') == 0 && $xml->childElementCount == 1) {
-      $res = new GCamFuFD();
-      $res->setDCarQR($xml->getElementsByTagName('dCarQR')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
+    $res = new GCamFuFD();
+    $res->setDCarQR($response->dCarQR);
+    return $res;
   }
 }

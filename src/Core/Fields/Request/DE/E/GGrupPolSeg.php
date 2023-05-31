@@ -11,13 +11,13 @@ use DOMElement;
  */
 class GGrupPolSeg
 {
-  public string $dPoliza; /// EA791 Código de la póliza
-  public string $dUnidVig; //EA792 Descripción de la unidad de tiempo de vigencia
-  public int $dVigencia; ///EA793 Vigencia de la póliza
-  public string $dNumPoliza; /// EA794 Número de la póliza
-  public DateTime $dFecIniVig; ///EA795 Fecha de inicio de vigencia
-  public DateTime $dFecFinVig; //EA796 Fecha de fin de vigencia
-  public string $dCodInt; ///EA797 Código interno del ítem
+  public ?string $dPoliza = null; /// EA791 Código de la póliza
+  public ?string $dUnidVig = null; //EA792 Descripción de la unidad de tiempo de vigencia
+  public ?int $dVigencia = null; ///EA793 Vigencia de la póliza
+  public ?string $dNumPoliza = null; /// EA794 Número de la póliza
+  public ?DateTime $dFecIniVig = null; ///EA795 Fecha de inicio de vigencia
+  public ?DateTime $dFecFinVig = null; //EA796 Fecha de fin de vigencia
+  public ?string $dCodInt = null; ///EA797 Código interno del ítem
 
   //====================================================//
   //SETTERS
@@ -138,7 +138,7 @@ class GGrupPolSeg
    *
    * @return string
    */
-  public function getDPoliza(): string
+  public function getDPoliza(): string | null
   {
     return $this->dPoliza;
   }
@@ -148,7 +148,7 @@ class GGrupPolSeg
    *
    * @return string
    */
-  public function getDUnidVig(): string
+  public function getDUnidVig(): string | null
   {
     return $this->dUnidVig;
   }
@@ -158,7 +158,7 @@ class GGrupPolSeg
    *
    * @return int
    */
-  public function getDVigencia(): int
+  public function getDVigencia(): int | null
   {
     return $this->dVigencia;
   }
@@ -168,7 +168,7 @@ class GGrupPolSeg
    *
    * @return string
    */
-  public function getDNumPoliza(): string
+  public function getDNumPoliza(): string | null
   {
     return $this->dNumPoliza;
   }
@@ -178,7 +178,7 @@ class GGrupPolSeg
    *
    * @return DateTime
    */
-  public function getDFecIniVig(): DateTime
+  public function getDFecIniVig(): DateTime | null
   {
     return $this->dFecIniVig;
   }
@@ -188,7 +188,7 @@ class GGrupPolSeg
    *
    * @return DateTime
    */
-  public function getDFecFinVig(): DateTime
+  public function getDFecFinVig(): DateTime | null
   {
     return $this->dFecFinVig;
   }
@@ -198,7 +198,7 @@ class GGrupPolSeg
    *
    * @return string
    */
-  public function getDCodInt(): string
+  public function getDCodInt(): string | null
   {
     return $this->dCodInt;
   }
@@ -227,30 +227,36 @@ class GGrupPolSeg
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GGrupPolSeg
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GGrupPolSeg
+  // {
+  //   if (strcmp($xml->tagName, 'gGrupPolSeg') === 0 && $xml->childElementCount == 7) {
+  //     $res = new GGrupPolSeg();
+  //     $res->setDPoliza($xml->getElementsByTagName('dDPoliza')->item(0)->nodeValue);
+  //     $res->setDUnidVig($xml->getElementsByTagName('dUnidVig')->item(0)->nodeValue);
+  //     $res->setDVigencia(intval($xml->getElementsByTagName('dVigencia')->item(0)->nodeValue));
+  //     $res->setDNumPoliza($xml->getElementsByTagName('dNumPoliza')->item(0)->nodeValue);
+  //     $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dfecIniVig')->item(0)->nodeValue));
+  //     $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFinVig')->item(0)->nodeValue));
+  //     $res->setDCodInt($xml->getElementsByTagName('gGrupoPolSeg')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GGrupPolSeg
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GGrupPolSeg
-  {
-    if (strcmp($xml->tagName, 'gGrupPolSeg') === 0 && $xml->childElementCount == 7) {
-      $res = new GGrupPolSeg();
-      $res->setDPoliza($xml->getElementsByTagName('dDPoliza')->item(0)->nodeValue);
-      $res->setDUnidVig($xml->getElementsByTagName('dUnidVig')->item(0)->nodeValue);
-      $res->setDVigencia(intval($xml->getElementsByTagName('dVigencia')->item(0)->nodeValue));
-      $res->setDNumPoliza($xml->getElementsByTagName('dNumPoliza')->item(0)->nodeValue);
-      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dfecIniVig')->item(0)->nodeValue));
-      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFinVig')->item(0)->nodeValue));
-      $res->setDCodInt($xml->getElementsByTagName('gGrupoPolSeg')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
-
   public static function fromResponse($response): self
   {
     $res = new GGrupPolSeg();

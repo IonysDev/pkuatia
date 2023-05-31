@@ -9,11 +9,11 @@ use DOMElement;
  */
 class GPagCred
 {
-  public int $iCondCred; //E641  Condición de la  operación a crédito 
-  public string $dPlazoCre; //E643  Plazo del crédito
-  public int $dCuotas; //E644  Cantidad de cuotas
-  public int $dMonEnt; //E645  Monto de la entrega inicial
-  public GCuotas $gCuotas;
+  public ?int $iCondCred = null; //E641  Condición de la  operación a crédito 
+  public ?string $dPlazoCre = null; //E643  Plazo del crédito
+  public ?int $dCuotas = null; //E644  Cantidad de cuotas
+  public ?int $dMonEnt = null; //E645  Monto de la entrega inicial
+  public ?GCuotas $gCuotas = null;
 
   //====================================================//
   //Setters
@@ -87,7 +87,7 @@ class GPagCred
    *
    * @return int
    */
-  public function getICondCred(): int
+  public function getICondCred(): int | null
   {
     return $this->iCondCred;
   }
@@ -97,7 +97,7 @@ class GPagCred
    *
    * @return string
    */
-  public function getDDCondCred(): string
+  public function getDDCondCred(): string | null
   {
     switch ($this->iCondCred) {
       case 1:
@@ -118,7 +118,7 @@ class GPagCred
    *
    * @return string
    */
-  public function getDPlazoCre(): string
+  public function getDPlazoCre(): string | null
   {
     return $this->dPlazoCre;
   }
@@ -128,7 +128,7 @@ class GPagCred
    *
    * @return int
    */
-  public function getDCuotas(): int
+  public function getDCuotas(): int | null
   {
     return $this->dCuotas;
   }
@@ -138,7 +138,7 @@ class GPagCred
    *
    * @return int
    */
-  public function getDMonEnt(): int
+  public function getDMonEnt(): int | null
   {
     return $this->dMonEnt;
   }
@@ -172,28 +172,28 @@ class GPagCred
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GPagCred
-   */
-  public static function fromDOMElement(DOMElement $xml): GPagCred
-  {
-    if (strcmp($xml->tagName, 'gPagCred') == 0 && $xml->childElementCount == 4) {
-      $res = new GPagCred();
-      $res->setICondCred(intval($xml->getElementsByTagName('iCondCred')->item(0)->nodeValue));
-      $res->setDPlazoCre($xml->getElementsByTagName('dPlazoCre')->item(0)->nodeValue);
-      $res->setDCuotas(intval($xml->getElementsByTagName('dCuotas')->item(0)->nodeValue));
-      $res->setDMonEnt(intval($xml->getElementsByTagName('dMonEnt')->item(0)->nodeValue));
-      //children
-      $res->setGCuotas($res->gCuotas->fromDOMElement($xml->getElementsByTagName('gCuotas')));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GPagCred
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GPagCred
+  // {
+  //   if (strcmp($xml->tagName, 'gPagCred') == 0 && $xml->childElementCount == 4) {
+  //     $res = new GPagCred();
+  //     $res->setICondCred(intval($xml->getElementsByTagName('iCondCred')->item(0)->nodeValue));
+  //     $res->setDPlazoCre($xml->getElementsByTagName('dPlazoCre')->item(0)->nodeValue);
+  //     $res->setDCuotas(intval($xml->getElementsByTagName('dCuotas')->item(0)->nodeValue));
+  //     $res->setDMonEnt(intval($xml->getElementsByTagName('dMonEnt')->item(0)->nodeValue));
+  //     //children
+  //     $res->setGCuotas($res->gCuotas->fromDOMElement($xml->getElementsByTagName('gCuotas')));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   //====================================================//
   //Cuotas
@@ -204,7 +204,7 @@ class GPagCred
    *
    * @return GCuotas
    */
-  public function getGCuotas(): GCuotas
+  public function getGCuotas(): GCuotas | null
   {
     return $this->gCuotas;
   }
@@ -223,7 +223,13 @@ class GPagCred
     return $this;
   }
 
-  //====================================================//
+    
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response):self
   {
     $res = new GPagCred();

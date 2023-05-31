@@ -10,13 +10,13 @@ use DOMElement;
  */
 class GVehTras
 {
-    public string $dTiVehTras; //E961Tipo de vehículo
-    public string $dMarVeh; //E962 Marca
-    public int $dTipIdenVeh; ///E967 Tipo de identificación del vehículo 
-    public string $dNroIDVeh; /// E963 Número de identificación del vehículo
-    public string $dAdicVeh; ///E964 Datos adicionales del vehículo
-    public string $dNroMatVeh; // E965 Número de matrícula del vehículo
-    public string $dNroVuelo; //E966 Número de vuelo
+    public ?string $dTiVehTras = null; //E961Tipo de vehículo
+    public ?string $dMarVeh = null; //E962 Marca
+    public ?int $dTipIdenVeh = null; ///E967 Tipo de identificación del vehículo 
+    public ?string $dNroIDVeh = null; /// E963 Número de identificación del vehículo
+    public ?string $dAdicVeh = null; ///E964 Datos adicionales del vehículo
+    public ?string $dNroMatVeh = null; // E965 Número de matrícula del vehículo
+    public ?string $dNroVuelo = null; //E966 Número de vuelo
 
     //====================================================//
     ///Setters
@@ -120,7 +120,7 @@ class GVehTras
      *
      * @return string
      */
-    public function getDTiVehTras(): string
+    public function getDTiVehTras(): string | null
     {
         return $this->dTiVehTras;
     }
@@ -130,7 +130,7 @@ class GVehTras
      *
      * @return string
      */
-    public function getDMarVeh(): string
+    public function getDMarVeh(): string | null
     {
         return $this->dMarVeh;
     }
@@ -140,7 +140,7 @@ class GVehTras
      *
      * @return int
      */
-    public function getDTipIdenVeh(): int
+    public function getDTipIdenVeh(): int | null
     {
         return $this->dTipIdenVeh;
     }
@@ -150,7 +150,7 @@ class GVehTras
      *
      * @return string
      */
-    public function getDNroIDVeh(): string
+    public function getDNroIDVeh(): string | null
     {
         return $this->dNroIDVeh;
     }
@@ -160,7 +160,7 @@ class GVehTras
      *
      * @return string
      */
-    public function getDAdicVeh(): string
+    public function getDAdicVeh(): string | null
     {
         return $this->dAdicVeh;
     }
@@ -170,7 +170,7 @@ class GVehTras
      *
      * @return string
      */
-    public function getDNroMatVeh(): string
+    public function getDNroMatVeh(): string | null
     {
         return $this->dNroMatVeh;
     }
@@ -180,7 +180,7 @@ class GVehTras
      *
      * @return string
      */
-    public function getDNroVuelo(): string
+    public function getDNroVuelo(): string | null
     {
         return $this->dNroVuelo;
     }
@@ -217,32 +217,32 @@ class GVehTras
         return $res;
     }
 
-    /**
-     * fromDOMElement
-     *
-     * @param  mixed $xml
-     * @return GVehTras
-     */
-    public static function fromDOMElement(DOMElement $xml): GVehTras
-    {
-        if (strcmp($xml->tagName, 'gVehTras') == 0 && $xml->childElementCount >= 5) {
-            $res = new GVehTras();
-            $res->setDTiVehTras($xml->getElementsByTagName('dTiVehTras')->item(0)->nodeValue);
-            $res->setDMarVeh($xml->getElementsByTagName('dMarVeh')->item(0)->nodeValue);
-            $res->setDTipIdenVeh(intval($xml->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue));
-            $res->setDNroIDVeh($xml->getElementsByTagName('dNroIDVeh')->item(0)->nodeValue);
-            $res->setDAdicVeh($xml->getElementsByTagName('dAdicVeh')->item(0)->nodeValue); 
-            $res->setDNroMatVeh($xml->getElementsByTagName('dNroMatVeh')->item(0)->nodeValue);
-            $res->setDNroVuelo($xml->getElementsByTagName('dNroVuelo')->item(0)->nodeValue);
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GVehTras
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GVehTras
+    // {
+    //     if (strcmp($xml->tagName, 'gVehTras') == 0 && $xml->childElementCount >= 5) {
+    //         $res = new GVehTras();
+    //         $res->setDTiVehTras($xml->getElementsByTagName('dTiVehTras')->item(0)->nodeValue);
+    //         $res->setDMarVeh($xml->getElementsByTagName('dMarVeh')->item(0)->nodeValue);
+    //         $res->setDTipIdenVeh(intval($xml->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue));
+    //         $res->setDNroIDVeh($xml->getElementsByTagName('dNroIDVeh')->item(0)->nodeValue);
+    //         $res->setDAdicVeh($xml->getElementsByTagName('dAdicVeh')->item(0)->nodeValue); 
+    //         $res->setDNroMatVeh($xml->getElementsByTagName('dNroMatVeh')->item(0)->nodeValue);
+    //         $res->setDNroVuelo($xml->getElementsByTagName('dNroVuelo')->item(0)->nodeValue);
 
-            return $res;
+    //         return $res;
 
-        }
-        else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-          }
-    }
+    //     }
+    //     else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //       }
+    // }
 
 
     /**
@@ -257,5 +257,24 @@ class GVehTras
         $this->dAdicVeh = $dAdicVeh;
 
         return $this;
+    }
+    
+    /**
+     * fromResponse
+     *
+     * @param  mixed $response
+     * @return self
+     */
+    public static function fromResponse($response):self
+    {
+        $res = new GVehTras();
+        $res->setDTiVehTras($response->dTiVehTras);
+        $res->setDMarVeh($response->dMarVeh);
+        $res->setDTipIdenVeh($response->dTipIdenVeh);
+        $res->setDNroIDVeh($response->dNroIDVeh);
+        $res->setDAdicVeh($response->dAdicVeh);
+        $res->setDNroMatVeh($response->dNroMatVeh);
+        $res->setDNroVuelo($response->dNroVuelo);
+        return $res;
     }
 }

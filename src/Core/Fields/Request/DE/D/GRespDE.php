@@ -13,10 +13,10 @@ use DOMElement;
  */
 class GRespDE {
     
-    public int $iTipIDRespDE;    // D141 - Tipo de documento de identidad del responsable de la generación del DE
-    public string $dNumIDRespDE; // D143 - Número de documento de identidad del responsable de la generación del DE
-    public string $dNomRespDE;   // D144 - Nombre o razón social del responsable de la generación del DE
-    public string $dCarRespDE;   // D145 - Cargo del responsable de la generación del DE 
+    public ?int $iTipIDRespDE = null;    // D141 - Tipo de documento de identidad del responsable de la generación del DE
+    public ?string $dNumIDRespDE= null; // D143 - Número de documento de identidad del responsable de la generación del DE
+    public ?string $dNomRespDE= null;   // D144 - Nombre o razón social del responsable de la generación del DE
+    public ?string $dCarRespDE= null;   // D145 - Cargo del responsable de la generación del DE 
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -46,7 +46,7 @@ class GRespDE {
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITipIDRespDE(): int
+    public function getITipIDRespDE(): int | null
     {
         return $this->iTipIDRespDE;
     }
@@ -56,7 +56,7 @@ class GRespDE {
      * 
      * @return string
      */
-    public function getDDTipIDRespDE(): string
+    public function getDDTipIDRespDE(): string | null
     {
         switch($this->iTipIDRespDE) {
             case 1:
@@ -79,17 +79,17 @@ class GRespDE {
         }
     }
 
-    public function getDNumIDRespDE(): string
+    public function getDNumIDRespDE(): string | null
     {
         return $this->dNumIDRespDE;
     }
 
-    public function getDNomRespDE(): string
+    public function getDNomRespDE(): string | null
     {
         return $this->dNomRespDE;
     }
 
-    public function getDCarRespDE(): string
+    public function getDCarRespDE(): string | null
     {
         return $this->dCarRespDE;
     }
@@ -114,29 +114,29 @@ class GRespDE {
         return $res;
     }
     
-    /**
-     * fromDOMElement
-     *
-     * @param  mixed $xml
-     * @return GRespDE
-     */
-    public static function fromDOMElement(DOMElement $xml): GRespDE
-    {
-        if(strcmp($xml->tagName,'gRespDE') == 0 && $xml->childElementCount ==5)
-        {
-            $res = new GRespDE();
-            $res->setITipIDRespDE(intval($xml->getElementsByTagName('iTipIDRespDE')->item(0)->nodeValue));
-            $res->setDNumIDRespDE($xml->getElementsByTagName('dNumIDRespDE')->item(0)->nodeValue);
-            $res->setDNomRespDE($xml->getElementsByTagName('dNomRespDE')->item(0)->nodeValue);
-            $res->setDCarRespDE($xml->getElementsByTagName('dCarRespDE')->item(0)->nodeValue);
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GRespDE
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GRespDE
+    // {
+    //     if(strcmp($xml->tagName,'gRespDE') == 0 && $xml->childElementCount ==5)
+    //     {
+    //         $res = new GRespDE();
+    //         $res->setITipIDRespDE(intval($xml->getElementsByTagName('iTipIDRespDE')->item(0)->nodeValue));
+    //         $res->setDNumIDRespDE($xml->getElementsByTagName('dNumIDRespDE')->item(0)->nodeValue);
+    //         $res->setDNomRespDE($xml->getElementsByTagName('dNomRespDE')->item(0)->nodeValue);
+    //         $res->setDCarRespDE($xml->getElementsByTagName('dCarRespDE')->item(0)->nodeValue);
 
-            return $res;
-        }
-        else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-          }
-    }
+    //         return $res;
+    //     }
+    //     else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //       }
+    // }
     
     /**
      * fromResponse
@@ -156,5 +156,3 @@ class GRespDE {
     }
 
 }
-
-?> 

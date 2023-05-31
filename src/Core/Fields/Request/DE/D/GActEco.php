@@ -11,7 +11,7 @@ use DOMElement;
 class GActEco
 {
 
-    public string $cActEco; // D131 - Código de la actividad económica del emisor 
+    public ?string $cActEco = null; // D131 - Código de la actividad económica del emisor 
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -26,7 +26,7 @@ class GActEco
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getCActEco(): string
+    public function getCActEco(): string | null
     {
         return $this->cActEco;
     }
@@ -36,7 +36,7 @@ class GActEco
      *
      * @return string
      */
-    public function getDDesActEco(): string
+    public function getDDesActEco(): string | null
     {
         return "Mordor";
     }
@@ -53,23 +53,23 @@ class GActEco
         return $res;
     }
 
-    /**
-     * fromDOMElement
-     *
-     * @param  mixed $xml
-     * @return GActEco
-     */
-    public static function fromDOMElement(DOMElement $xml): GActEco
-    {
-        if (strcmp($xml->tagName, 'gActEco') == 0 && $xml->childElementCount >= 1) {
-            $res = new GActEco();
-            $res->setCActEco($xml->getElementsByTagName('cActEco')->item(0)->nodeValue);
-            return $res;
-        } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
-    }
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GActEco
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GActEco
+    // {
+    //     if (strcmp($xml->tagName, 'gActEco') == 0 && $xml->childElementCount >= 1) {
+    //         $res = new GActEco();
+    //         $res->setCActEco($xml->getElementsByTagName('cActEco')->item(0)->nodeValue);
+    //         return $res;
+    //     } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //     }
+    // }
     
     /**
      * fromResponse

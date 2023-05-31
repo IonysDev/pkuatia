@@ -11,8 +11,8 @@ use DOMException;
  */
 class GGrupSeg
 {
-  public string $dCodEmpSeg; //E801 Código de la empresa de seguros en la Superintendencia de Seguros
-  public GGrupPolSeg $gGrupoPolSeg;
+  public ?string $dCodEmpSeg = null; //E801 Código de la empresa de seguros en la Superintendencia de Seguros
+  public ?GGrupPolSeg $gGrupoPolSeg = null;
 
   //====================================================//
   ///Setter
@@ -41,7 +41,7 @@ class GGrupSeg
    *
    * @return string
    */
-  public function getDCodEmpSeg(): string
+  public function getDCodEmpSeg(): string | null
   {
     return $this->dCodEmpSeg;
   }
@@ -64,25 +64,25 @@ class GGrupSeg
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GGrupSeg
-   */
-  public static function fromDOMElement(DOMElement $xml): GGrupSeg
-  {
-    if (strcmp($xml->tagName, 'GGrupSeg' == 0) && $xml->childElementCount == 2) {
-      $res = new GGrupSeg();
-      $res->setDCodEmpSeg($xml->getElementsByTagName('dCodEmpSeg')->item(0)->nodeValue);
-      ///children
-      $res->setGGrupoPolSeg($res->gGrupoPolSeg->fromDOMElement($xml->getElementsByTagName('GGrupoPolSeg')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GGrupSeg
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GGrupSeg
+  // {
+  //   if (strcmp($xml->tagName, 'GGrupSeg' == 0) && $xml->childElementCount == 2) {
+  //     $res = new GGrupSeg();
+  //     $res->setDCodEmpSeg($xml->getElementsByTagName('dCodEmpSeg')->item(0)->nodeValue);
+  //     ///children
+  //     $res->setGGrupoPolSeg($res->gGrupoPolSeg->fromDOMElement($xml->getElementsByTagName('GGrupoPolSeg')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   //====================================================//
   //Others
@@ -93,7 +93,7 @@ class GGrupSeg
    *
    * @return GGrupPolSeg
    */
-  public function getGGrupoPolSeg(): GGrupPolSeg
+  public function getGGrupoPolSeg(): GGrupPolSeg | null
   {
     return $this->gGrupoPolSeg;
   }

@@ -11,14 +11,14 @@ use DOMElement;
  */
 class GCamEnt
 {
-  public string $dDirLocEnt; // E941 - Dirección del local de la entrega 
-  public int $dNumCasEnt;    // E942 - Número de casa de Entrega
-  public string $dComp1Ent;  // E943 - Complemento de dirección 1 Entrega
-  public string $dComp2Ent; // E944 - Complemento de dirección 2 Entrega
-  public int $cDepEnt;      // E945 - Código del departamento del local de Entrega
-  public int $cDisEnt;      // E947 - Código del distrito del local de Entrega
-  public int $cCiuEnt;      // E949 - Código de la ciudad del local de Entrega
-  public string $dTelEnt;   // E951 - Teléfono de contacto del local de Entrega
+  public ?string $dDirLocEnt = null; // E941 - Dirección del local de la entrega 
+  public ?int $dNumCasEnt = null;    // E942 - Número de casa de Entrega
+  public ?string $dComp1Ent = null;  // E943 - Complemento de dirección 1 Entrega
+  public ?string $dComp2Ent = null; // E944 - Complemento de dirección 2 Entrega
+  public ?int $cDepEnt = null;      // E945 - Código del departamento del local de Entrega
+  public ?int $cDisEnt = null;      // E947 - Código del distrito del local de Entrega
+  public ?int $cCiuEnt = null;      // E949 - Código de la ciudad del local de Entrega
+  public ?string $dTelEnt = null;   // E951 - Teléfono de contacto del local de Entrega
 
   //====================================================//
   ///Setters
@@ -152,7 +152,7 @@ class GCamEnt
    *
    * @return string
    */
-  public function getDDirLocEnt(): string
+  public function getDDirLocEnt(): string | null
   {
     return $this->dDirLocEnt;
   }
@@ -162,7 +162,7 @@ class GCamEnt
    *
    * @return int
    */
-  public function getDNumCasEnt(): int
+  public function getDNumCasEnt(): int | null
   {
     return $this->dNumCasEnt;
   }
@@ -172,7 +172,7 @@ class GCamEnt
    *
    * @return string
    */
-  public function getDComp1Ent(): string
+  public function getDComp1Ent(): string | null
   {
     return $this->dComp1Ent;
   }
@@ -182,7 +182,7 @@ class GCamEnt
    *
    * @return string
    */
-  public function getDComp2Ent(): string
+  public function getDComp2Ent(): string | null
   {
     return $this->dComp2Ent;
   }
@@ -192,7 +192,7 @@ class GCamEnt
    *
    * @return int
    */
-  public function getCDepEnt(): int
+  public function getCDepEnt(): int | null
   {
     return $this->cDepEnt;
   }
@@ -202,7 +202,7 @@ class GCamEnt
    *
    * @return string
    */
-  public function getDDesDepEnt(): string
+  public function getDDesDepEnt(): string | null
   {
     return "Mordor";
   }
@@ -213,7 +213,7 @@ class GCamEnt
    *
    * @return int
    */
-  public function getCDisEnt(): int
+  public function getCDisEnt(): int | null
   {
     return $this->cDisEnt;
   }
@@ -223,7 +223,7 @@ class GCamEnt
    *
    * @return string
    */
-  public function getDDesDisEnt(): string
+  public function getDDesDisEnt(): string | null
   {
     return "Mordor";
   }
@@ -233,7 +233,7 @@ class GCamEnt
    *
    * @return int
    */
-  public function getCCiuEnt(): int
+  public function getCCiuEnt(): int | null
   {
     return $this->cCiuEnt;
   }
@@ -243,7 +243,7 @@ class GCamEnt
    *
    * @return string
    */
-  public function getDDesCiuEnt(): string
+  public function getDDesCiuEnt(): string | null
   {
     return "Mordor";
   }
@@ -253,7 +253,7 @@ class GCamEnt
    *
    * @return string
    */
-  public function getDTelEnt(): string
+  public function getDTelEnt(): string | null
   {
     return $this->dTelEnt;
   }
@@ -292,28 +292,49 @@ class GCamEnt
     return $res;
   }
 
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCamEnt
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCamEnt
+  // {
+  //   if (strcmp($xml->tagName, 'gCamEnt') === 0 && $xml->childElementCount == 11) {
+  //     $res = new GCamEnt();
+  //     $res->setDDirLocEnt($xml->getElementsByTagName('dDirLocEnt')->item(0)->nodeValue);
+  //     $res->setDNumCasEnt(intval($xml->getElementsByTagName('dNumCasEnt')->item(0)->nodeValue));
+  //     $res->setDComp1Ent($xml->getElementsByTagName('dComp1Ent')->item(0)->nodeValue);
+  //     $res->setDComp2Ent($xml->getElementsByTagName('dComp2Ent')->item(0)->nodeValue);
+  //     $res->setCDepEnt(intval($xml->getElementsByTagName('cdepEnt')->item(0)->nodeValue));
+  //     $res->setCDisEnt(intval($xml->getElementsByTagName('cdisEnt')->item(0)->nodeValue));
+  //     $res->setCCiuEnt(intval($xml->getElementsByTagName('cciuEnt')->item(0)->nodeValue));
+  //     $res->setDTelEnt($xml->getElementsByTagName('dTelEnt')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
+  
   /**
-   * fromDOMElement
+   * fromResponse
    *
-   * @param  mixed $xml
-   * @return GCamEnt
+   * @param  mixed $response
+   * @return self
    */
-  public static function fromDOMElement(DOMElement $xml): GCamEnt
+  public static function fromResponse($response):self
   {
-    if (strcmp($xml->tagName, 'gCamEnt') === 0 && $xml->childElementCount == 11) {
-      $res = new GCamEnt();
-      $res->setDDirLocEnt($xml->getElementsByTagName('dDirLocEnt')->item(0)->nodeValue);
-      $res->setDNumCasEnt(intval($xml->getElementsByTagName('dNumCasEnt')->item(0)->nodeValue));
-      $res->setDComp1Ent($xml->getElementsByTagName('dComp1Ent')->item(0)->nodeValue);
-      $res->setDComp2Ent($xml->getElementsByTagName('dComp2Ent')->item(0)->nodeValue);
-      $res->setCDepEnt(intval($xml->getElementsByTagName('cdepEnt')->item(0)->nodeValue));
-      $res->setCDisEnt(intval($xml->getElementsByTagName('cdisEnt')->item(0)->nodeValue));
-      $res->setCCiuEnt(intval($xml->getElementsByTagName('cciuEnt')->item(0)->nodeValue));
-      $res->setDTelEnt($xml->getElementsByTagName('dTelEnt')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
+    $res = new GCamEnt();
+    $res->setDDirLocEnt($response->dDirLocEnt);
+    $res->setDNumCasEnt($response->dNumCasEnt);
+    $res->setDComp1Ent($response->dComp1Ent);
+    $res->setDComp2Ent($response->dComp2Ent);
+    $res->setCDepEnt($response->cDepEnt);
+    $res->setCDisEnt($response->cDisEnt);
+    $res->setCCiuEnt($response->cCiuEnt);
+    $res->setDTelEnt($response->dTelEnt);
+    return $res;
+    
   }
 }

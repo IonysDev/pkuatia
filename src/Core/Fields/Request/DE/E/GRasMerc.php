@@ -10,16 +10,16 @@ use DOMElement;
  */
 class GRasMerc
 {
-  public int $dNumLote; //E751 Número de lote 
-  public DateTime $dVencMerc; ///E752 Fecha de vencimiento  de la mercadería
-  public string $dNSerie; //E753  Número de serie
-  public string $dNumPedi; //E754 Número de pedido
-  public string $dNumSegui; //E755 Número de  seguimiento del envío
-  public string $dNomImp; //E756 Nombre del Importador
-  public string $dDirImp; //E757 Dirección de Importador
-  public string $dNumFir; //E758 Número de registro de la firma del importador
-  public string $dNumReg; //E759 Número de registro del  producto otorgado por  el SENAVE
-  public string $dNumRegEntCom; //E760  Número de registro de  entidad comercial otorgado por el SENAVE
+  public ?int $dNumLote = null; //E751 Número de lote 
+  public ?DateTime $dVencMerc = null; ///E752 Fecha de vencimiento  de la mercadería
+  public ?string $dNSerie = null; //E753  Número de serie
+  public ?string $dNumPedi = null; //E754 Número de pedido
+  public ?string $dNumSegui = null; //E755 Número de  seguimiento del envío
+  public ?string $dNomImp = null; //E756 Nombre del Importador
+  public ?string $dDirImp = null; //E757 Dirección de Importador
+  public ?string $dNumFir = null; //E758 Número de registro de la firma del importador
+  public ?string $dNumReg = null; //E759 Número de registro del  producto otorgado por  el SENAVE
+  public ?string $dNumRegEntCom = null; //E760  Número de registro de  entidad comercial otorgado por el SENAVE
 
   //====================================================//
   ///SETTERS
@@ -183,7 +183,7 @@ class GRasMerc
    *
    * @return int
    */
-  public function getDNumLote(): int
+  public function getDNumLote(): int | null
   {
     return $this->dNumLote;
   }
@@ -193,7 +193,7 @@ class GRasMerc
    *
    * @return DateTime
    */
-  public function getDVencMerc(): DateTime
+  public function getDVencMerc(): DateTime | null
   {
     return $this->dVencMerc;
   }
@@ -203,7 +203,7 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDNSerie(): string
+  public function getDNSerie(): string | null
   {
     return $this->dNSerie;
   }
@@ -213,7 +213,7 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDNumPedi(): string
+  public function getDNumPedi(): string | null
   {
     return $this->dNumPedi;
   }
@@ -223,7 +223,7 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDNumSegui(): string
+  public function getDNumSegui(): string | null
   {
     return $this->dNumSegui;
   }
@@ -233,7 +233,7 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDNomImp(): string
+  public function getDNomImp(): string | null
   {
     return $this->dNomImp;
   }
@@ -243,8 +243,8 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDDirImp(): string
-  {
+  public function getDDirImp(): string | null
+  { 
     return $this->dDirImp;
   }
 
@@ -253,7 +253,7 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDNumFir(): string
+  public function getDNumFir(): string | null
   {
     return $this->dNumFir;
   }
@@ -263,7 +263,7 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDNumReg(): string
+  public function getDNumReg(): string | null
   {
     return $this->dNumReg;
   }
@@ -273,7 +273,7 @@ class GRasMerc
    *
    * @return string
    */
-  public function getDNumRegEntCom(): string
+  public function getDNumRegEntCom(): string | null
   {
     return $this->dNumRegEntCom;
   }
@@ -304,34 +304,40 @@ class GRasMerc
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GRasMerc
-   */
-  public static function fromDOMElement(DOMElement $xml): GRasMerc
-  {
-    if (strcmp($xml->tagName, 'gRasMerc') === 0 && $xml->childElementCount == 10) {
-      $res = new GRasMerc();
-      $res->setDNumLote($xml->getElementsByTagName('dNumLote')->item(0)->nodeValue);
-      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dVencMerc')->item(0)->nodeValue));
-      $res->setDNSerie($xml->getElementsByTagName('dNSerie')->item(0)->nodeValue);
-      $res->setDNumPedi($xml->getElementsByTagName('dNumPedi')->item(0)->nodeValue);
-      $res->setDNumSegui($xml->getElementsByTagName('dNumSegui')->item(0)->nodeValue);
-      $res->setDNomImp($xml->getElementsByTagName('dNomImp')->item(0)->nodeValue);
-      $res->setDDirImp($xml->getElementsByTagName('dDirImp')->item(0)->nodeValue);
-      $res->setDNumFir($xml->getElementsByTagName('dNumFir')->item(0)->nodeValue);
-      $res->setDNumReg($xml->getElementsByTagName('dNumReg')->item(0)->nodeValue);
-      $res->setDNumRegEntCom($xml->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GRasMerc
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GRasMerc
+  // {
+  //   if (strcmp($xml->tagName, 'gRasMerc') === 0 && $xml->childElementCount == 10) {
+  //     $res = new GRasMerc();
+  //     $res->setDNumLote($xml->getElementsByTagName('dNumLote')->item(0)->nodeValue);
+  //     $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dVencMerc')->item(0)->nodeValue));
+  //     $res->setDNSerie($xml->getElementsByTagName('dNSerie')->item(0)->nodeValue);
+  //     $res->setDNumPedi($xml->getElementsByTagName('dNumPedi')->item(0)->nodeValue);
+  //     $res->setDNumSegui($xml->getElementsByTagName('dNumSegui')->item(0)->nodeValue);
+  //     $res->setDNomImp($xml->getElementsByTagName('dNomImp')->item(0)->nodeValue);
+  //     $res->setDDirImp($xml->getElementsByTagName('dDirImp')->item(0)->nodeValue);
+  //     $res->setDNumFir($xml->getElementsByTagName('dNumFir')->item(0)->nodeValue);
+  //     $res->setDNumReg($xml->getElementsByTagName('dNumReg')->item(0)->nodeValue);
+  //     $res->setDNumRegEntCom($xml->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
-  //====================================================//
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
   public static function fromResponse($response): self
   {
     $res = new GRasMerc();

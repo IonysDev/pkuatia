@@ -12,9 +12,9 @@ use DOMElement;
  */
 class GCuotas
 {
-  public string $cMoneCuo; //E653 Moneda de las cuotas
-  public int $dMonCuota; //E651 Monto de cada cuota
-  public DateTime $dVencCuo; //E652  Fecha de vencimiento de cada cuota;
+  public ?string $cMoneCuo = null; //E653 Moneda de las cuotas
+  public ?int $dMonCuota = null; //E651 Monto de cada cuota
+  public ?DateTime $dVencCuo = null; //E652  Fecha de vencimiento de cada cuota;
 
   //====================================================//
   ///Setters
@@ -74,7 +74,7 @@ class GCuotas
    *
    * @return string
    */
-  public function getCMoneCuo(): string
+  public function getCMoneCuo(): string | null
   {
     return $this->cMoneCuo;
   }
@@ -84,7 +84,7 @@ class GCuotas
    *
    * @return string
    */
-  public function getDDMoneCuo(): string
+  public function getDDMoneCuo(): string | null
   {
     return "Moneda de Mordor";
   }
@@ -94,7 +94,7 @@ class GCuotas
    *
    * @return int
    */
-  public function getDMonCuota(): int
+  public function getDMonCuota(): int | null
   {
     return $this->dMonCuota;
   }
@@ -104,7 +104,7 @@ class GCuotas
    *
    * @return DateTime
    */
-  public function getDVencCuo(): DateTime
+  public function getDVencCuo(): DateTime | null
   {
     return $this->dVencCuo;
   }
@@ -130,25 +130,25 @@ class GCuotas
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GCuotas
-   */
-  public static function fromDOMElement(DOMElement $xml): GCuotas
-  {
-    if (strcmp($xml->tagName, 'gCuotas') == 0 && $xml->childElementCount == 4) {
-      $res = new GCuotas();
-      $res->setCMoneCuo($xml->getElementsByTagName('cMoneCuo')->item(0)->nodeValue);
-      $res->setDMonCuota($xml->getElementsByTagName('dDMoneCuo')->item(0)->nodeValue);
-      $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dVencCuo')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GCuotas
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GCuotas
+  // {
+  //   if (strcmp($xml->tagName, 'gCuotas') == 0 && $xml->childElementCount == 4) {
+  //     $res = new GCuotas();
+  //     $res->setCMoneCuo($xml->getElementsByTagName('cMoneCuo')->item(0)->nodeValue);
+  //     $res->setDMonCuota($xml->getElementsByTagName('dDMoneCuo')->item(0)->nodeValue);
+  //     $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dVencCuo')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
   
   /**
    * fromResponse

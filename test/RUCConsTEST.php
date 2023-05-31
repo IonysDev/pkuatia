@@ -41,7 +41,9 @@ try {
     //return the response object
     $res = RespuestaConsultaRUC::fromResponse($responseXML);
     echo $res->printData();
-    if (isset($res->txContRuc)) {
+
+    if (!is_null($res->getTxContRuc()))
+    {
         echo $res->getTxContRuc()->printData();
     }
 } catch (SoapFault $e) {
