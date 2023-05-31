@@ -159,11 +159,15 @@ class TxContenDE
     //close the document with </rContDe>
     $xml = $xml . '</rContDe>';
 
+    ///load the xml
     $xml = simplexml_load_string($xml);
+    ///convert to json
     $json = json_encode($xml);
+    ///convert to object
     $object = json_decode($json);
-    ///create object
+    ///create the object to return
     $txContenDE = new TxContenDE();
+    ///set rDE
     if (isset($object->rDE)) {
       $txContenDE->setRDe(RDE::fromResponse($object->rDE));
     }
