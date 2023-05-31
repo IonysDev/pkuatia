@@ -192,4 +192,15 @@ class GGrupSup
       return null;
     }
   }
+
+  public static function fromResponse($response): self
+  {
+    $res = new GGrupSup();
+    $res->setDNomCaj($response->dNomCaj);
+    $res->setDEfectivo($response->dEfectivo);
+    $res->setDVuelto($response->dVuelto);
+    $res->setDDonac($response->dDonac);
+    $res->setDDesDonac($response->dDesDonac);
+    return $res;
+  }
 }

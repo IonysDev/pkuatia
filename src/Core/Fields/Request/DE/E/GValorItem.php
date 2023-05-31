@@ -170,4 +170,21 @@ class GValorItem
 
     return $this;
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GValorItem();
+    $res->setDPUniProSer(intval($response->dPUniProSer));
+    if(isset($response->dTiCamIt))
+    {
+      $res->setDTiCamIt(intval($response->dTiCamIt));
+    }
+    $res->setDTotBruOpeItem(intval($response->dTotBruOpeItem));
+    ///children
+    if(isset($response->gValorRestaItem))
+    {
+      $res->setGValorRestaItem(GValorRestaItem::fromResponse($response->gValorRestaItem));
+    }
+    return $res;
+  }
 }

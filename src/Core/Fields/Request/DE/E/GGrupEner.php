@@ -220,4 +220,16 @@ class GGrupEner
       return null;
     }
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GGrupEner();
+    $res->setDNroMed($response->dNroMed);
+    $res->setDActiv($response->dActiv);
+    $res->setDCateg($response->dCateg);
+    $res->setDLecAnt($response->dLecAnt);
+    $res->setDLecAct($response->dLecAct);
+    $res->setDConKwh($response->dConKwh);
+    return $res;
+  }
 }

@@ -330,4 +330,21 @@ class GRasMerc
       return null;
     }
   }
+
+  //====================================================//
+  public static function fromResponse($response): self
+  {
+    $res = new GRasMerc();
+    $res->setDNumLote($response->dNumLote);
+    $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $response->dVencMerc));
+    $res->setDNSerie($response->dNSerie);
+    $res->setDNumPedi($response->dNumPedi);
+    $res->setDNumSegui($response->dNumSegui);
+    $res->setDNomImp($response->dNomImp);
+    $res->setDDirImp($response->dDirImp);
+    $res->setDNumFir($response->dNumFir);
+    $res->setDNumReg($response->dNumReg);
+    $res->setDNumRegEntCom($response->dNumRegEntCom);
+    return $res;
+  }
 }

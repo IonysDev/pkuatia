@@ -385,8 +385,12 @@ class DE
     $de->setDDatGralOpe(GDatGralOpe::fromResponse($response->gDatGralOpe));
     $de->setGDtipDe(GDtipDE::fromResponse($response->gDtipDE));
     $de->setGTotSub(GTotSub::fromResponse($response->gTotSub));
-    // $de->setGCamGen(GCamGen::fromResponse($response->gCamGen));
-    // $de->setGCamDEAsoc(GCamDEAsoc::fromResponse($response->gCamDEAsoc));
+    if (isset($response->gCamGen)) {
+      $de->setGCamGen(GCamGen::fromResponse($response->gCamGen));
+    }
+    if (isset($response->gCamDEAsoc)) {
+      $de->setGCamDEAsoc(GCamDEAsoc::fromResponse($response->gCamDEAsoc));
+    }
     return $de;
   }
 }

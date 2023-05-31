@@ -165,4 +165,17 @@ class GCamGen
     $this->gCamCarg = $gCamCarg;
     return $this;
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GCamGen();
+    $res->setDOrdCompra($response->dOrdCompra);
+    $res->setDOrdVta($response->dOrdVta);
+    $res->setDAsiento($response->dAsiento);
+    if(isset($response->gCamCarg))
+    {
+      $res->setGCamCarg(GCamCarg::fromResponse($response->gCamCarg));
+    }
+    return $res;
+  }
 }

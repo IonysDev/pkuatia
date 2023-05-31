@@ -669,87 +669,68 @@ class GCamItem
     return $this;
   }
 
-  public static function fromResponse($response):self
+  public static function fromResponse($response): self
   {
     $res = new GCamItem();
     $res->setDCodInt($response->dCodInt);
-    if (isset($response->dParAranc))
-    {
+    if (isset($response->dParAranc)) {
       $res->setDParAranc($response->dParAranc);
     }
-    if (isset($response->dNCM))
-    {
+    if (isset($response->dNCM)) {
       $res->setDNCM($response->dNCM);
     }
-    if (isset($response->dDDncpG))
-    {
+    if (isset($response->dDDncpG)) {
       $res->setDDncpG($response->dDDncpG);
     }
-    if (isset($response->dDDncpE))
-    {
+    if (isset($response->dDDncpE)) {
       $res->setDDncpE($response->dDDncpE);
     }
-    if (isset($response->dGtin))
-    {
+    if (isset($response->dGtin)) {
       $res->setDGtin($response->dGtin);
     }
-    if (isset($response->dGtinPq))
-    {
+    if (isset($response->dGtinPq)) {
       $res->setDGtinPq($response->dGtinPq);
     }
-    if (isset($response->dDesProSer))
-    {
+    if (isset($response->dDesProSer)) {
       $res->setDDesProSer($response->dDesProSer);
     }
-    if (isset($response->cUniMed))
-    {
+    if (isset($response->cUniMed)) {
       $res->setCUniMed($response->cUniMed);
     }
-    if (isset($response->dcantProSer))
-    {
+    if (isset($response->dcantProSer)) {
       $res->setDCantProSer($response->dcantProSer);
     }
-    if (isset($response->cPaisOrig))
-    {
+    if (isset($response->cPaisOrig)) {
       $res->setCPaisOrig($response->cPaisOrig);
     }
-    if (isset($response->dInfItem))
-    {
+    if (isset($response->dInfItem)) {
       $res->setDInfItem($response->dInfItem);
     }
-    if (isset($response->dRelMerc))
-    {
+    if (isset($response->dRelMerc)) {
       $res->setCRelMerc($response->dRelMerc);
     }
-    if (isset($response->dcantQuiMer))
-    {
+    if (isset($response->dcantQuiMer)) {
       $res->setDCanQuiMer($response->dcantQuiMer);
     }
-    if (isset($response->dporQuiMer))
-    {
+    if (isset($response->dporQuiMer)) {
       $res->setDPorQuiMer($response->dporQuiMer);
     }
-    if (isset($response->dCDCAnticipo))
-    {
+    if (isset($response->dCDCAnticipo)) {
       $res->setDCDCAnticipo($response->dCDCAnticipo);
     }
     // //CHILDREN
-    // if (isset($response->gValorItem))
-    // {
-    //   $res->setGValorItem(GValorItem::fromResponse($response->gValorItem));
-    // }
-    // if (isset($response->gCamIVa))
-    // {
-    //   $res->setGCamIVa(GCamIVA::fromResponse($response->gCamIVa));
-    // }
-    // if (isset($response->gRasMerc))
-    // {
-    //   $res->setGRasMerc(GRasMerc::fromResponse($response->gRasMerc));
-    // }
-    // if (isset($response->gVehNuevo))
-    // {
-    //   $res->setGVehNuevo(GVehNuevo::fromResponse($response->gVehNuevo));
-    // }
+    if (isset($response->gValorItem)) {
+      $res->setGValorItem(GValorItem::fromResponse($response->gValorItem));
+    }
+    if (isset($response->gCamIVA)) {
+      $res->setGCamIVa(GCamIVA::fromResponse($response->gCamIVA));
+    }
+    if (isset($response->gRasMerc)) {
+      $res->setGRasMerc(GRasMerc::fromResponse($response->gRasMerc));
+    }
+    if (isset($response->gVehNuevo)) {
+      $res->setGVehNuevo(GVehNuevo::fromResponse($response->gVehNuevo));
+    }
     return $res;
   }
 }

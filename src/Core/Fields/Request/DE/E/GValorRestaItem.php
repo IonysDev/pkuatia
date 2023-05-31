@@ -251,4 +251,27 @@ class GValorRestaItem
       return null;
     }
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GValorRestaItem();
+    $res->setDDescItem(intval($response->dDescItem));
+    if( isset($response->dPorcDesIt))
+    {
+      $res->setDPorcDesIt(intval($response->dPorcDesIt));
+    }
+    $res->setDDescGloItem(intval($response->dDescGloItem));
+    if( isset($response->dAntPreUniIt))
+    {
+      $res->setDAntPreUniIt(intval($response->dAntPreUniIt));
+    }
+    $res->setDAntGloPreUniIt(intval($response->dAntGloPreUniIt));
+    $res->setDTotOpeItem(intval($response->dTotOpeItem));
+    if( isset($response->dTotOpeGs))
+    {
+      $res->setDTotOpeGs(intval($response->dTotOpeGs));
+    }
+    
+    return $res;
+  }
 }

@@ -236,4 +236,15 @@ class GCamCarg
       return null;
     }
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GCamCarg();
+    $res->setCUniMedTotVol(intval($response->cUniMedTotVol));
+    $res->setDTotVolMerc(intval($response->dTotVolMerc));
+    $res->setCUniMedTotPes(intval($response->cUniMedTotPes));
+    $res->setDTotPesMerc(intval($response->dTotPesMerc));
+    $res->setICarCarga(intval($response->iCarCarga));
+    return $res;
+  }
 }

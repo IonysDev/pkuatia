@@ -135,4 +135,26 @@ class GCamEsp
       return null;
     }
   }
+
+  //====================================================//
+  public static function fromResponse($response):self
+  {
+    $res = new GCamEsp();
+    if(isset($response->gGrupoEner))
+    {
+      $res->setGGrupoEner(GGrupEner::fromResponse($response->gGrupoEner));
+    }
+
+    if(isset($response->gGrupoSeg))
+    {
+      $res->setGGrupoSeg(GGrupSeg::fromResponse($response->gGrupoSeg));
+    }
+
+    if(isset($response->gGrupoSup))
+    {
+      $res->setGGrupSup(GGrupSup::fromResponse($response->gGrupoSup));
+    }
+
+    return $res;
+  }
 }

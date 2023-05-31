@@ -266,6 +266,10 @@ class GDtipDE
          }
        }
     }
+
+    if (isset($response->gCamEsp)) {
+      $res->setGCamEsp(GCamEsp::fromResponse($response->gCamEsp));
+    }
     return $res;
   }
 

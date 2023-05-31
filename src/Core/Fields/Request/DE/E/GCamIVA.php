@@ -218,4 +218,16 @@ class GCamIVA
       return null;
     }
   }
+
+  public static function fromResponse($resposne): self
+  {
+
+    $res = new GCamIVA();
+    $res->setIAfecIVA(intval($resposne->iAfecIVA));
+    $res->setDPropIVA(intval($resposne->dPropIVA));
+    $res->setDTasaIVA(intval($resposne->dTasaIVA));
+    $res->setDBasGravIVA(intval($resposne->dBasGravIVA));
+    $res->setDLiqIVAItem(intval($resposne->dLiqIVAItem));
+    return $res;
+  }
 }

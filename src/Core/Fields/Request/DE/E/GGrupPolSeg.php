@@ -250,4 +250,17 @@ class GGrupPolSeg
       return null;
     }
   }
+
+  public static function fromResponse($response): self
+  {
+    $res = new GGrupPolSeg();
+    $res->setDPoliza($response->dPoliza);
+    $res->setDUnidVig($response->dUnidVig);
+    $res->setDVigencia($response->dVigencia);
+    $res->setDNumPoliza($response->dNumPoliza);
+    $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecIniVig));
+    $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFinVig));
+    $res->setDCodInt($response->dCodInt);
+    return $res;
+  }
 }

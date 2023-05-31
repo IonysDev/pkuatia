@@ -506,4 +506,24 @@ class GVehNuevo
       return null;
     }
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new self();
+    $res->setITipOpVN(intval($response->iTipOpVN));
+    $res->setDChasis($response->dChasis);
+    $res->setDColor($response->dColor);
+    $res->setDPotencia(intval($response->dPotencia));
+    $res->setDCapMot(intval($response->dCapMot));
+    $res->setDPNet(intval($response->dPNet));
+    $res->setDPBruto(intval($response->dPBruto));
+    $res->setITipCom(intval($response->iTipCom));
+    $res->setDNroMotor($response->dNroMotor);
+    $res->setDCapTracc(intval($response->dCapTracc));
+    $res->setDAnoFab(intval($response->dAnoFab));
+    $res->setCTipVeh($response->cTipVeh);
+    $res->setDCapac(intval($response->dCapac));
+    $res->setDCilin($response->dCilin);
+    return $res;
+  }
 }

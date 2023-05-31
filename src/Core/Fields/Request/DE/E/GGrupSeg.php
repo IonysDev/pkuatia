@@ -111,4 +111,14 @@ class GGrupSeg
 
     return $this;
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GGrupSeg();
+    $res->setDCodEmpSeg($response->dCodEmpSeg);
+    if(isset($response->gGrupoPolSeg)){
+      $res->setGGrupoPolSeg(GGrupPolSeg::fromResponse($response->gGrupoPolSeg));
+    }
+    return $res;
+  }
 }

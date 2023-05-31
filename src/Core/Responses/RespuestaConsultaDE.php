@@ -9,15 +9,15 @@ use Abiliomp\Pkuatia\Core\Fields\Response\DE\TxContenDE;
  */
 class RespuestaConsultaDE
 {
-  public string $dFecProc;//fecha de proceso
-  public string $dCodRes;//codigo de respuesta
-  public string $dMsgRes;//descripcion del codigo de respuesta
-  public TxContenDE $xContEv;//objeto de la respuesta
+  public string $dFecProc; //fecha de proceso
+  public string $dCodRes; //codigo de respuesta
+  public string $dMsgRes; //descripcion del codigo de respuesta
+  public TxContenDE $xContEv; //objeto de la respuesta
 
   //====================================================//
   ///SETTERS
   //====================================================//
-  
+
   /**
    * Set the value of dFecProc
    *
@@ -80,7 +80,7 @@ class RespuestaConsultaDE
   //====================================================//
   ///GETTERS
   //====================================================//
-  
+
 
   /**
    * Get the value of dFecProc
@@ -125,7 +125,7 @@ class RespuestaConsultaDE
   //====================================================//
   ///METHODS
   //====================================================//
-  
+
   /**
    * fromResponse
    *
@@ -136,26 +136,22 @@ class RespuestaConsultaDE
   {
     echo "RespuestaConsultaDE::fromResponse\n";
 
-    if(is_null($response))
-    {
+    if (is_null($response)) {
       throw new \Exception("RespuestaConsultaDE::fromResponse: response is null");
       return null;
     }
 
-    if($response->dCodRes != '0422')
-    {
+    if ($response->dCodRes != '0422') {
       $res = new RespuestaConsultaDE();
       $res->setDFecProc($response->dFecProc);
       $res->setDCodRes($response->dCodRes);
       $res->setDMsgRes($response->dMsgRes);
-    }else
-    {
+    } else {
       $res = new RespuestaConsultaDE();
       $res->setDFecProc($response->dFecProc);
       $res->setDCodRes($response->dCodRes);
       $res->setDMsgRes($response->dMsgRes);
-      if(isset($response->xContenDE))
-      {
+      if (isset($response->xContenDE)) {
         $res->setXContEv(TxContenDE::fromResponse($response->xContenDE));
       }
     }

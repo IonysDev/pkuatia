@@ -516,4 +516,23 @@ class GCamDEAsoc
       return null;
     }
   }
+
+  public static function fromResponse($response):self
+  {
+    $res = new GCamDEAsoc();
+    $res->setITipDocAso(intval($response->iTipDocAso));
+    $res->setDCdCDERef($response->dCdCDERef);
+    $res->setDNTimDI(intval($response->dNTimDI));
+    $res->setDEstDocAso($response->dStDocAso);
+    $res->setDPExpDocAso($response->dPExpDocAso);
+    $res->setDNumDocAso($response->dNumDocAso);
+    $res->setITipDocAso(intval($response->iTipDocAso));
+    $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $response->dFecEmDi));
+    $res->setDNumComRet($response->dNumComRet);
+    $res->setDNumResCF($response->dNumResCF);
+    $res->setITipCons(intval($response->iTipCons));
+    $res->setDNumCons(intval($response->dNumCons));
+    $res->setDNumControl($response->dNumControl);
+    return $res;
+  }
 }
