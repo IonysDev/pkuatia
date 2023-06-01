@@ -175,7 +175,7 @@ class TxContenDE
     if (isset($object->dProtAut)) {
       $txContenDE->setDProtAut($object->dProtAut);
     }
-   
+
     return $txContenDE;
   }
 }
