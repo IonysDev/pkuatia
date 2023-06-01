@@ -9,7 +9,7 @@ require '../vendor/autoload.php'; // Include the Composer autoloader
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$wsdl = 'https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl?wsdl';
+$wsdl = 'https://sifen.set.gov.py/de/ws/consultas/consulta.wsdl?wsdl';
 $certFile = '80121930-2.cert.pem';
 $keyFile = '80121930-2.key.pem';
 $keyPassphrase = '171222';
@@ -44,10 +44,10 @@ try {
   {
     var_dump($res->getXContEv());
   }
-  // if (isset($responseXML->xContenDE)) {
-  //   file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
-  //   echo "xml generado";
-  // }
+  if (isset($responseXML->xContenDE)) {
+    file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
+    echo "xml generado";
+  }
   
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
