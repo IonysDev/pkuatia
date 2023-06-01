@@ -17,7 +17,7 @@ $operation = 'rEnviConsDe';
 $data = array(
   'dId' => '552',
   // 'dCDC' => '01800160967029015003289222023052912371717760'////supermercado stock
-  // 'dCDC' => '01800090853013001001802422023052910014652161' ////electropar
+  'dCDC' => '01800090853013001001802422023052910014652161' ////electropar
   // 'dCDC' => '01800160967029015003289222023052912371717799'///no existe
 
 );;
@@ -39,16 +39,14 @@ try {
   echo 'Response:' . PHP_EOL;
   //return the response object
   $res = RespuestaConsultaDE::fromResponse($responseXML);
-   echo $res->printData();
-  if(!is_null($res->getXContEv()))
-  {
-    var_dump($res->getXContEv());
+  echo $res->printData();
+  if (!is_null($res->getXContEv())) {
+    var_dump($res->getXContEv()->getRDe()); ///getRDe() returns a RDE object
   }
   if (isset($responseXML->xContenDE)) {
     file_put_contents($data['dCDC'] . '_dE.xml', $responseXML->xContenDE);
     echo "xml generado";
   }
-  
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();
