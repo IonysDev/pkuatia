@@ -157,7 +157,7 @@ class GOpeCom
      *
      * @return string
      */
-    public function getDDesMoneOpe(): string | null
+    public function getDDesMoneOpe() : string | null
     {
         return CurrencyHelper::getCurrDesc($this->cMoneOpe);
     }
@@ -279,6 +279,10 @@ class GOpeCom
         if (isset($response->cMoneOpe)) {
             $res->setCMoneOpe($response->cMoneOpe);
         }
+
+        echo "cMoneOpe: " . $res->getCMoneOpe() . "\n";
+        echo "dDESMODEPE" . $res->getDDesMoneOpe() . "\n";
+
         if (isset($response->dCondTiCam)) {
             $res->setDCondTiCam(intval($response->dCondTiCam));
         }

@@ -25,9 +25,9 @@ class CurrencyHelper
    * getCurrDesc
    *
    * @param  mixed $curr
-   * @return void
+   * @return string|null
    */
-  public static function getCurrDesc(string $curr)
+  public static function getCurrDesc(string $curr) : string | null
   {
     $curr = strtoupper($curr);
     $array = self::getArray();
