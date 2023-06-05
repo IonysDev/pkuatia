@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
+use Abiliomp\Pkuatia\Helpers\GeoRefHelper;
 use DOMElement;
 
 /**
@@ -341,7 +342,7 @@ class GDatRec
      */
     public function getDDesDepRec(): string | null
     {
-        return "Mordor";
+        return GeoRefHelper::getDepName(strval($this->cDepRec));
     }
 
     /**
@@ -361,7 +362,7 @@ class GDatRec
      */
     public function getDDesDisRec(): string | null
     {
-        return "MORDOR";
+        return GeoRefHelper::getDistName(strval($this->cDisRec));
     }
 
 
@@ -382,7 +383,7 @@ class GDatRec
      */
     public function getDDesCiuRec(): string | null
     {
-        return "Mordor";
+        return GeoRefHelper::getCiuName(strval($this->cCiuRec));
     }
 
     //====================================================//

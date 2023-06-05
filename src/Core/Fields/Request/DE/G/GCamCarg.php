@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\G;
 
+use Abiliomp\Pkuatia\Helpers\UMHelper;
 use DOMElement;
 
 /**
@@ -115,7 +116,7 @@ class GCamCarg
    */
   public function getDDesUniMedTotVol(): string | null
   {
-    return "Unidad de medida de Mordor";
+    return UMHelper::getUMDesc(strval($this->cUniMedTotVol)); //Si D202 = 3 utilizar los datos del  WS del link de la DNCP Utilizar el atributo “ID”
   }
 
 
@@ -147,7 +148,8 @@ class GCamCarg
    */
   public function getdDesUniMedTotPes(): string | null
   {
-    return "Unidad de medida de Mordor";
+    return UMHelper::getUMDesc(strval($this->cUniMedTotPes));//Si D202 = 3 utilizar los datos del  WS del link de la DNCP Utilizar el atributo “ID”
+    
   }
 
   /**

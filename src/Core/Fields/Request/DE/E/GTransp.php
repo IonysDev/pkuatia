@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\E;
 
+use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use DateTime;
 use DOMElement;
 
@@ -358,7 +359,7 @@ class GTransp
    */
   public function getDDesPaisDest(): string | null
   {
-    return "Mordor"; ///test
+    return CountryHelper::getCountryDesc($this->cPaisDest);
   }
 
   //====================================================//

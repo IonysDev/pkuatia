@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
+use Abiliomp\Pkuatia\Helpers\CurrencyHelper;
 use DateTime;
 use DOMElement;
 
@@ -86,7 +87,7 @@ class GCuotas
    */
   public function getDDMoneCuo(): string | null
   {
-    return "Moneda de Mordor";
+    return CurrencyHelper::getCurrDesc($this->cMoneCuo);
   }
 
   /**

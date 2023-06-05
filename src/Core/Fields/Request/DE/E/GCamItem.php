@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
+use Abiliomp\Pkuatia\Helpers\CountryHelper;
+use Abiliomp\Pkuatia\Helpers\UMHelper;
 use DOMElement;
 
 use function PHPSTORM_META\type;
@@ -377,7 +379,7 @@ class GCamItem
    */
   public function getDDesUniMed(): string | null
   {
-    return "Unidad de medida de Mordor";
+    return UMHelper::getUMDesc(strval($this->cUniMed));
   }
 
   /**
@@ -407,7 +409,7 @@ class GCamItem
    */
   public function getDDesPaisOrig(): string | null
   {
-    return "Mordor"; //ver luego
+    return CountryHelper::getCountryDesc($this->cPaisOrig);
   }
 
 

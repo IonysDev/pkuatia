@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
+use Abiliomp\Pkuatia\Helpers\GeoRefHelper;
 use DOMElement;
 
 /**
@@ -193,7 +194,7 @@ class GEmis
      */
     public function getDDesDepEmi(): string | null
     {
-        return "Mordor";
+        return GeoRefHelper::getDepName(strval($this->cDepEmi));
     }
 
     public function getCDisEmi(): int | null
@@ -208,7 +209,7 @@ class GEmis
      */
     public function getDDesDisEmi(): string | null
     {
-        return "Mordor";
+        return GeoRefHelper::getDistName(strval($this->cDisEmi));
     }
 
     public function getCCiuEmi(): int | null
@@ -223,7 +224,7 @@ class GEmis
      */
     public function getDDesCiuEmi(): string | null
     {
-        return "Mordor";
+        return GeoRefHelper::getCiuName(strval($this->cCiuEmi));
     }
 
     public function getDTelEmi(): string | null

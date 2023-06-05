@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
+use Abiliomp\Pkuatia\Helpers\CurrencyHelper;
 use DOMElement;
 
 /**
@@ -202,7 +203,7 @@ class GPaConEIni
    */
   public function getDDMoneTiPag(): string | null
   {
-    return "Moneda de Mordor"; ///ver el tema de la tabla
+    return CurrencyHelper::getCurrDesc($this->cMoneTiPag);
   }
 
 

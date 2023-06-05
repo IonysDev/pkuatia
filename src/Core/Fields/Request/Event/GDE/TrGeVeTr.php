@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
 
+use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use DOMElement;
 
 /**
@@ -423,7 +424,7 @@ class TrGeVeTr
    */
   public function getDDesDepEnt(): string
   {
-    return "Mordor";
+    return CountryHelper::getCountryDesc(strval($this->cDepEnt));
   }
 
 
@@ -445,7 +446,7 @@ class TrGeVeTr
    */
   public function getDDesDisEnt(): string
   {
-    return "Mordor";
+    return CountryHelper::getCountryDesc(strval($this->cDisEnt));
   }
 
 
@@ -467,7 +468,7 @@ class TrGeVeTr
    */
   public function getDDesCiuEnt(): string
   {
-    return "Mordor";
+    return CountryHelper::getCountryDesc(strval($this->cCiuEnt));
   }
 
 
@@ -579,7 +580,27 @@ class TrGeVeTr
    */
   public function getdDTipIDTrans(): string
   {
-    return "Mordor";
+    switch ($this->iTipIDTrans) {
+      case 1:
+        return "Cédula paraguaya";
+        break;
+
+      case 2:
+        return "Pasaporte";
+        break;
+
+      case 3:
+        return "Cédula extranjera";
+        break;
+
+      case 4:
+        return "Carnet de residencia";
+        break;
+      
+      default:
+        # code...
+        break;
+    }
   }
 
   /**

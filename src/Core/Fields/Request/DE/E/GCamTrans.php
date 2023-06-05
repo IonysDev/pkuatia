@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\E;
 
+use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use DOMElement;
 
 /**
@@ -363,7 +364,7 @@ class GCamTrans
     */
    public function getDDesNacTrans(): string | null
    {
-      return "Mordor";
+      return CountryHelper::getCountryDesc($this->cNacTrans);
    }
 
    /**
