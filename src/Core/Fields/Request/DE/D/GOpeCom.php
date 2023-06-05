@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
+use Abiliomp\Pkuatia\Helpers\CurrencyHelper;
 use DOMElement;
 
 /**
@@ -158,7 +159,7 @@ class GOpeCom
      */
     public function getDDesMoneOpe(): string | null
     {
-        return "Moneda de Mordor";
+        return CurrencyHelper::getCurrDesc($this->cMoneOpe);
     }
 
     public function getDCondTiCam(): string | null
