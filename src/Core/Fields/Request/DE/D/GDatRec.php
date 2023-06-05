@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
+use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use DOMElement;
 
 /**
@@ -158,7 +159,7 @@ class GDatRec
      */
     public function getDDesPaisRe(): string | null
     {
-        return "Mordor";
+        return CountryHelper::getCountryDesc($this->cPaisRec);
     }
 
 

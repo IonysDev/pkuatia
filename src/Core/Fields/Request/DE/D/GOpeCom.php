@@ -280,9 +280,6 @@ class GOpeCom
             $res->setCMoneOpe($response->cMoneOpe);
         }
 
-        echo "cMoneOpe: " . $res->getCMoneOpe() . "\n";
-        echo "dDESMODEPE" . $res->getDDesMoneOpe() . "\n";
-
         if (isset($response->dCondTiCam)) {
             $res->setDCondTiCam(intval($response->dCondTiCam));
         }

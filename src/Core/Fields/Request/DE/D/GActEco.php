@@ -12,6 +12,7 @@ class GActEco
 {
 
     public ?string $cActEco = null; // D131 - Código de la actividad económica del emisor 
+    public ?string $dDesActEco = null; // D132 - Descripción de la actividad económica del emisor
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -38,7 +39,7 @@ class GActEco
      */
     public function getDDesActEco(): string | null
     {
-        return "Mordor";
+        return $this->dDesActEco;////no se donde se consigue la tabla de actividades economicas
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -84,7 +85,25 @@ class GActEco
         {
             $res->setCActEco($response->cActEco);
         }
+        if(isset($response->dDesActEco))
+        {
+            $res->setDDesActEco($response->dDesActEco);
+        }
 
         return $res; 
+    }
+
+    /**
+     * Set the value of dDesActEco
+     *
+     * @param ?string $dDesActEco
+     *
+     * @return self
+     */
+    public function setDDesActEco(?string $dDesActEco): self
+    {
+        $this->dDesActEco = $dDesActEco;
+
+        return $this;
     }
 }

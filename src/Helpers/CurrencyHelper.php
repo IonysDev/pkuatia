@@ -11,7 +11,7 @@ class CurrencyHelper
   /**
    * getArray
    *
-   * @return void
+   * @return array
    */
   public static function getArray()
   {
