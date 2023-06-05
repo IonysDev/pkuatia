@@ -14,7 +14,7 @@ class DepartamentoHelper
   public static function getArray(): array
   {
     $xml = new DOMDocument();
-    $xml->load('C:\Users\USER\Desktop\pkuatia\src\Helpers\departamentos.xml');
+    $xml->load(__DIR__ . '/departamentos.xml');
     $xml->preserveWhiteSpace = true;
     $parseObj = str_replace($xml->lastChild->prefix.':',"", $xml->saveXML($xml->lastChild));
     $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);

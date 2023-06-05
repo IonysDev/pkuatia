@@ -18,7 +18,7 @@ class CurrencyHelper
   public static function getArray()
   {
     $xml = new DOMDocument();
-    $xml->load('C:\Users\USER\Desktop\pkuatia\src\Helpers\iso4217.xml');
+    $xml->load(__DIR__ . '/iso4217.xml');
     $xml->preserveWhiteSpace = true;
     $parseObj = str_replace($xml->lastChild->prefix . ':', "", $xml->saveXML($xml->lastChild));
     $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);

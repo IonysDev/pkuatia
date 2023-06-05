@@ -218,7 +218,6 @@ class GTimb
         {
             $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $response->dFeIniT));
         }
-        
 
         return $res;
     }

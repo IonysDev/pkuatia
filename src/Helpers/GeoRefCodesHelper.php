@@ -15,7 +15,7 @@ class GeoRefCodesHelper
    */
   public static function getArray()
   {
-    $xml = simplexml_load_file('C:\Users\USER\Desktop\pkuatia\src\Helpers\georef.xml');
+    $xml = simplexml_load_file(__DIR__ . '/georef.xml');
     $json = json_encode($xml);
     $array = json_decode($json, true);
     return $array;

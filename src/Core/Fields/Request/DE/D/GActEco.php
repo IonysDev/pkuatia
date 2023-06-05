@@ -53,24 +53,6 @@ class GActEco
         $res->appendChild(new DOMElement('dDesActEco', $this->getDDesActEco()));
         return $res;
     }
-
-    // /**
-    //  * fromDOMElement
-    //  *
-    //  * @param  mixed $xml
-    //  * @return GActEco
-    //  */
-    // public static function fromDOMElement(DOMElement $xml): GActEco
-    // {
-    //     if (strcmp($xml->tagName, 'gActEco') == 0 && $xml->childElementCount >= 1) {
-    //         $res = new GActEco();
-    //         $res->setCActEco($xml->getElementsByTagName('cActEco')->item(0)->nodeValue);
-    //         return $res;
-    //     } else {
-    //         throw new \Exception("Invalid XML Element: $xml->tagName");
-    //         return null;
-    //     }
-    // }
     
     /**
      * fromResponse

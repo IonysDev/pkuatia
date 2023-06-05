@@ -8,7 +8,7 @@ use Abiliomp\Pkuatia\SoapSSLClient;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$wsdlUrl = 'https://sifen.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
+$wsdlUrl = 'https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl?wsdl';
 $certFile = '80121930-2.cert.pem';
 $keyFile = '80121930-2.key.pem';
 $keyPassphrase = '171222';

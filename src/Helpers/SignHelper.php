@@ -6,6 +6,7 @@ use Selective\XmlDSig\PrivateKeyStore;
 use Selective\XmlDSig\Algorithm;
 use Selective\XmlDSig\CryptoSigner;
 use Selective\XmlDSig\XmlSigner;
+use DOMDocument;
 
 /**
  * Clase que contiene los métodos para firmar los documentos XML según MT Sifen.
@@ -86,7 +87,12 @@ class SignHelper
         $startPos = strpos($signedXml, "<KeyValue>");
         $endPos = strpos($signedXml, "</KeyValue>") + strlen("</KeyValue>");
         $signedXml = substr_replace($signedXml, "", $startPos, $endPos - $startPos);
-        return $signedXml;
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($signedXml);
+        $canonicalXml = $dom->C14N(false, false, null, null);
+        return $canonicalXml;
     }
 
 }
@@ -96,3 +102,5 @@ enum KeyFormat
     case P12;
     case PEM;
 }
+
+?>

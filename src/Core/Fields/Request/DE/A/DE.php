@@ -2,9 +2,6 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\A;
 
-
-
-
 use Abiliomp\Pkuatia\Core\Fields\G\GCamGen;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\C\GTimb;
@@ -21,16 +18,16 @@ use DOMElement;
 class DE
 {
   public ?string $iD = null;               // A002 - Identificador del DE
-  public ?int $dDVId = null;               // A003 - dígito verificador del dentificador del DE 
+  public ?int $dDVId = null;               // A003 - dígito verificador del identificador del DE 
   public ?DateTime $dFecFirma = null;      // A004 - Fecha de la firma
   public ?int $dSisFact = null;            // A005 - Sistema de facturación
   public ?GOpeDE $gOpeDe = null;           // Campos inherentes a la operación de DE
   public ?GTimb $gTimb = null;             // Datos del timbrado 
   public ?GDatGralOpe $dDatGralOpe = null; // Campos generales del DE
-  public ?GDtipDE $gDtipDe = null;
-  public ?GTotSub $gTotSub = null;
-  public ?GCamGen $gCamGen = null;
-  public ?GCamDEAsoc $gCamDEAsoc = null;
+  public ?GDtipDE $gDtipDe = null;         // Campos específicos por tipo de Documento Electrónico
+  public ?GTotSub $gTotSub = null;         // Campos de subtotales y totales
+  public ?GCamGen $gCamGen = null;         // Campos de uso general
+  public ?GCamDEAsoc $gCamDEAsoc = null;   // Campos que identifican al DE asociado
 
   //====================================================//
   ///Setters
