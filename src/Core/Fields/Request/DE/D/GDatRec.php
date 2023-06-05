@@ -3,7 +3,8 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
-use Abiliomp\Pkuatia\Helpers\GeoRefHelper;
+use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
+use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use DOMElement;
 
 /**
@@ -342,7 +343,7 @@ class GDatRec
      */
     public function getDDesDepRec(): string | null
     {
-        return GeoRefHelper::getDepName(strval($this->cDepRec));
+        return DepartamentoHelper::getDepName(strval($this->cDepRec));
     }
 
     /**
@@ -362,7 +363,7 @@ class GDatRec
      */
     public function getDDesDisRec(): string | null
     {
-        return GeoRefHelper::getDistName(strval($this->cDisRec));
+        return GeoRefCodesHelper::getDistName(strval($this->cDisRec));
     }
 
 
@@ -383,7 +384,7 @@ class GDatRec
      */
     public function getDDesCiuRec(): string | null
     {
-        return GeoRefHelper::getCiuName(strval($this->cCiuRec));
+        return GeoRefCodesHelper::getCiudName(strval($this->cCiuRec));
     }
 
     //====================================================//

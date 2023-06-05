@@ -2,7 +2,8 @@
 
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use Abiliomp\Pkuatia\Helpers\CurrencyHelper;
-use Abiliomp\Pkuatia\Helpers\GeoRefHelper;
+use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
+use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use Abiliomp\Pkuatia\Helpers\UMHelper;
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
@@ -14,10 +15,12 @@ $medidad = UMHelper::getUMDesc('79');
 echo $medidad . PHP_EOL;
 $moneda = CurrencyHelper::getCurrDesc('usd');
 echo $moneda . PHP_EOL;
-$dep = GeoRefHelper::getDepName('1');
-echo $dep . PHP_EOL;
-$dist = GeoRefHelper::getDistName('1');
+$depto = DepartamentoHelper::getDepName('1');
+echo $depto . PHP_EOL;
+$dist = GeoRefCodesHelper::getDistName('1');
 echo $dist . PHP_EOL;
-$cuidad = GeoRefHelper::getCiuName('1');
-echo $cuidad . PHP_EOL;
+$ciudad = GeoRefCodesHelper::getCiudName('1');
+echo $ciudad . PHP_EOL;
+$barrio = GeoRefCodesHelper::getBarrName('1');
+echo $barrio . PHP_EOL;
 ?>

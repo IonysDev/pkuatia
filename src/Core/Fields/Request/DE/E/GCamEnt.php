@@ -2,7 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\E;
 
-use Abiliomp\Pkuatia\Helpers\GeoRefHelper;
+use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
+use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use DOMElement;
 
 /**
@@ -205,7 +206,7 @@ class GCamEnt
    */
   public function getDDesDepEnt(): string | null
   {
-    return GeoRefHelper::getDepName(strval($this->cDepEnt));
+    return DepartamentoHelper::getDepName(strval($this->cDepEnt));
   }
 
 
@@ -226,7 +227,7 @@ class GCamEnt
    */
   public function getDDesDisEnt(): string | null
   {
-    return GeoRefHelper::getDistName(strval($this->cDisEnt));
+    return GeoRefCodesHelper::getDistName(strval($this->cDisEnt));
   }
 
   /**
@@ -246,7 +247,7 @@ class GCamEnt
    */
   public function getDDesCiuEnt(): string | null
   {
-    return GeoRefHelper::getCiuName(strval($this->cCiuEnt));
+    return GeoRefCodesHelper::getCiudName(strval($this->cCiuEnt));
   }
 
   /**

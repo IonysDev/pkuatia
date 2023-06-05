@@ -2,7 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
-use Abiliomp\Pkuatia\Helpers\GeoRefHelper;
+use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
+use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use DOMElement;
 
 /**
@@ -347,7 +348,7 @@ class GCamAE
    */
   public function getDDesDepVen(): string | null
   {
-    return GeoRefHelper::getDepName(strval($this->cDepVen));
+    return DepartamentoHelper::getDepName(strval($this->cDepVen));
   }
 
 
@@ -368,7 +369,7 @@ class GCamAE
    */
   public function getDDesDisVen(): string | null
   {
-    return GeoRefHelper::getDistName(strval($this->cDisVen));
+    return GeoRefCodesHelper::getDistName(strval($this->cDisVen));
   }
 
   /**
@@ -388,7 +389,7 @@ class GCamAE
    */
   public function getDDesCiuVen(): string | null
   {
-    return GeoRefHelper::getCiuName(strval($this->cCiuVen));
+    return GeoRefCodesHelper::getCiudName(strval($this->cCiuVen));
   }
 
 
@@ -419,7 +420,7 @@ class GCamAE
    */
   public function getDDesDepProv(): string | null
   {
-    return GeoRefHelper::getDepName(strval($this->cDepProv));
+    return DepartamentoHelper::getDepName(strval($this->cDepProv));
   }
 
 
@@ -440,7 +441,7 @@ class GCamAE
    */
   public function getDDesDisProv(): string | null
   {
-    return GeoRefHelper::getDistName(strval($this->cDisProv));
+    return GeoRefCodesHelper::getDistName(strval($this->cDisProv));
   }
 
   /**
@@ -460,7 +461,7 @@ class GCamAE
    */
   public function getDDesCiuProv(): string | null
   {
-    return GeoRefHelper::getCiuName(strval($this->cCiuProv));
+    return GeoRefCodesHelper::getCiudName(strval($this->cCiuProv));
   }
 
   //====================================================//
