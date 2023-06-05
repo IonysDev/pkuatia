@@ -1,1963 +1,1433 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ISO_4217 Pblshd="2023-01-01">
-	<CcyTbl>
-		<CcyNtry>
-			<CtryNm>AFGHANISTAN</CtryNm>
-			<CcyNm>Afghani</CcyNm>
-			<Ccy>AFN</Ccy>
-			<CcyNbr>971</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ÅLAND ISLANDS</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ALBANIA</CtryNm>
-			<CcyNm>Lek</CcyNm>
-			<Ccy>ALL</Ccy>
-			<CcyNbr>008</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ALGERIA</CtryNm>
-			<CcyNm>Algerian Dinar</CcyNm>
-			<Ccy>DZD</Ccy>
-			<CcyNbr>012</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>AMERICAN SAMOA</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ANDORRA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ANGOLA</CtryNm>
-			<CcyNm>Kwanza</CcyNm>
-			<Ccy>AOA</Ccy>
-			<CcyNbr>973</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ANGUILLA</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ANTARCTICA</CtryNm>
-			<CcyNm>No universal currency</CcyNm>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ANTIGUA AND BARBUDA</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ARGENTINA</CtryNm>
-			<CcyNm>Argentine Peso</CcyNm>
-			<Ccy>ARS</Ccy>
-			<CcyNbr>032</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ARMENIA</CtryNm>
-			<CcyNm>Armenian Dram</CcyNm>
-			<Ccy>AMD</Ccy>
-			<CcyNbr>051</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ARUBA</CtryNm>
-			<CcyNm>Aruban Florin</CcyNm>
-			<Ccy>AWG</Ccy>
-			<CcyNbr>533</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>AUSTRALIA</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>AUSTRIA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>AZERBAIJAN</CtryNm>
-			<CcyNm>Azerbaijan Manat</CcyNm>
-			<Ccy>AZN</Ccy>
-			<CcyNbr>944</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BAHAMAS (THE)</CtryNm>
-			<CcyNm>Bahamian Dollar</CcyNm>
-			<Ccy>BSD</Ccy>
-			<CcyNbr>044</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BAHRAIN</CtryNm>
-			<CcyNm>Bahraini Dinar</CcyNm>
-			<Ccy>BHD</Ccy>
-			<CcyNbr>048</CcyNbr>
-			<CcyMnrUnts>3</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BANGLADESH</CtryNm>
-			<CcyNm>Taka</CcyNm>
-			<Ccy>BDT</Ccy>
-			<CcyNbr>050</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BARBADOS</CtryNm>
-			<CcyNm>Barbados Dollar</CcyNm>
-			<Ccy>BBD</Ccy>
-			<CcyNbr>052</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BELARUS</CtryNm>
-			<CcyNm>Belarusian Ruble</CcyNm>
-			<Ccy>BYN</Ccy>
-			<CcyNbr>933</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BELGIUM</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BELIZE</CtryNm>
-			<CcyNm>Belize Dollar</CcyNm>
-			<Ccy>BZD</Ccy>
-			<CcyNbr>084</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BENIN</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BERMUDA</CtryNm>
-			<CcyNm>Bermudian Dollar</CcyNm>
-			<Ccy>BMD</Ccy>
-			<CcyNbr>060</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BHUTAN</CtryNm>
-			<CcyNm>Indian Rupee</CcyNm>
-			<Ccy>INR</Ccy>
-			<CcyNbr>356</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BHUTAN</CtryNm>
-			<CcyNm>Ngultrum</CcyNm>
-			<Ccy>BTN</Ccy>
-			<CcyNbr>064</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BOLIVIA (PLURINATIONAL STATE OF)</CtryNm>
-			<CcyNm>Boliviano</CcyNm>
-			<Ccy>BOB</Ccy>
-			<CcyNbr>068</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BOLIVIA (PLURINATIONAL STATE OF)</CtryNm>
-			<CcyNm IsFund="true">Mvdol</CcyNm>
-			<Ccy>BOV</Ccy>
-			<CcyNbr>984</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BONAIRE, SINT EUSTATIUS AND SABA</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BOSNIA AND HERZEGOVINA</CtryNm>
-			<CcyNm>Convertible Mark</CcyNm>
-			<Ccy>BAM</Ccy>
-			<CcyNbr>977</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BOTSWANA</CtryNm>
-			<CcyNm>Pula</CcyNm>
-			<Ccy>BWP</Ccy>
-			<CcyNbr>072</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BOUVET ISLAND</CtryNm>
-			<CcyNm>Norwegian Krone</CcyNm>
-			<Ccy>NOK</Ccy>
-			<CcyNbr>578</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BRAZIL</CtryNm>
-			<CcyNm>Brazilian Real</CcyNm>
-			<Ccy>BRL</Ccy>
-			<CcyNbr>986</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BRITISH INDIAN OCEAN TERRITORY (THE)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BRUNEI DARUSSALAM</CtryNm>
-			<CcyNm>Brunei Dollar</CcyNm>
-			<Ccy>BND</Ccy>
-			<CcyNbr>096</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BULGARIA</CtryNm>
-			<CcyNm>Bulgarian Lev</CcyNm>
-			<Ccy>BGN</Ccy>
-			<CcyNbr>975</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BURKINA FASO</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>BURUNDI</CtryNm>
-			<CcyNm>Burundi Franc</CcyNm>
-			<Ccy>BIF</Ccy>
-			<CcyNbr>108</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CABO VERDE</CtryNm>
-			<CcyNm>Cabo Verde Escudo</CcyNm>
-			<Ccy>CVE</Ccy>
-			<CcyNbr>132</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CAMBODIA</CtryNm>
-			<CcyNm>Riel</CcyNm>
-			<Ccy>KHR</Ccy>
-			<CcyNbr>116</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CAMEROON</CtryNm>
-			<CcyNm>CFA Franc BEAC</CcyNm>
-			<Ccy>XAF</Ccy>
-			<CcyNbr>950</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CANADA</CtryNm>
-			<CcyNm>Canadian Dollar</CcyNm>
-			<Ccy>CAD</Ccy>
-			<CcyNbr>124</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CAYMAN ISLANDS (THE)</CtryNm>
-			<CcyNm>Cayman Islands Dollar</CcyNm>
-			<Ccy>KYD</Ccy>
-			<CcyNbr>136</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CENTRAL AFRICAN REPUBLIC (THE)</CtryNm>
-			<CcyNm>CFA Franc BEAC</CcyNm>
-			<Ccy>XAF</Ccy>
-			<CcyNbr>950</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CHAD</CtryNm>
-			<CcyNm>CFA Franc BEAC</CcyNm>
-			<Ccy>XAF</Ccy>
-			<CcyNbr>950</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CHILE</CtryNm>
-			<CcyNm>Chilean Peso</CcyNm>
-			<Ccy>CLP</Ccy>
-			<CcyNbr>152</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CHILE</CtryNm>
-			<CcyNm IsFund="true">Unidad de Fomento</CcyNm>
-			<Ccy>CLF</Ccy>
-			<CcyNbr>990</CcyNbr>
-			<CcyMnrUnts>4</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CHINA</CtryNm>
-			<CcyNm>Yuan Renminbi</CcyNm>
-			<Ccy>CNY</Ccy>
-			<CcyNbr>156</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CHRISTMAS ISLAND</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>COCOS (KEELING) ISLANDS (THE)</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>COLOMBIA</CtryNm>
-			<CcyNm>Colombian Peso</CcyNm>
-			<Ccy>COP</Ccy>
-			<CcyNbr>170</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>COLOMBIA</CtryNm>
-			<CcyNm IsFund="true">Unidad de Valor Real</CcyNm>
-			<Ccy>COU</Ccy>
-			<CcyNbr>970</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>COMOROS (THE)</CtryNm>
-			<CcyNm>Comorian Franc </CcyNm>
-			<Ccy>KMF</Ccy>
-			<CcyNbr>174</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CONGO (THE DEMOCRATIC REPUBLIC OF THE)</CtryNm>
-			<CcyNm>Congolese Franc</CcyNm>
-			<Ccy>CDF</Ccy>
-			<CcyNbr>976</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CONGO (THE)</CtryNm>
-			<CcyNm>CFA Franc BEAC</CcyNm>
-			<Ccy>XAF</Ccy>
-			<CcyNbr>950</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>COOK ISLANDS (THE)</CtryNm>
-			<CcyNm>New Zealand Dollar</CcyNm>
-			<Ccy>NZD</Ccy>
-			<CcyNbr>554</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>COSTA RICA</CtryNm>
-			<CcyNm>Costa Rican Colon</CcyNm>
-			<Ccy>CRC</Ccy>
-			<CcyNbr>188</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CÔTE D'IVOIRE</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CROATIA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CUBA</CtryNm>
-			<CcyNm>Cuban Peso</CcyNm>
-			<Ccy>CUP</Ccy>
-			<CcyNbr>192</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CUBA</CtryNm>
-			<CcyNm>Peso Convertible</CcyNm>
-			<Ccy>CUC</Ccy>
-			<CcyNbr>931</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CURAÇAO</CtryNm>
-			<CcyNm>Netherlands Antillean Guilder</CcyNm>
-			<Ccy>ANG</Ccy>
-			<CcyNbr>532</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CYPRUS</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>CZECHIA</CtryNm>
-			<CcyNm>Czech Koruna</CcyNm>
-			<Ccy>CZK</Ccy>
-			<CcyNbr>203</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>DENMARK</CtryNm>
-			<CcyNm>Danish Krone</CcyNm>
-			<Ccy>DKK</Ccy>
-			<CcyNbr>208</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>DJIBOUTI</CtryNm>
-			<CcyNm>Djibouti Franc</CcyNm>
-			<Ccy>DJF</Ccy>
-			<CcyNbr>262</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>DOMINICA</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>DOMINICAN REPUBLIC (THE)</CtryNm>
-			<CcyNm>Dominican Peso</CcyNm>
-			<Ccy>DOP</Ccy>
-			<CcyNbr>214</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ECUADOR</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>EGYPT</CtryNm>
-			<CcyNm>Egyptian Pound</CcyNm>
-			<Ccy>EGP</Ccy>
-			<CcyNbr>818</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>EL SALVADOR</CtryNm>
-			<CcyNm>El Salvador Colon</CcyNm>
-			<Ccy>SVC</Ccy>
-			<CcyNbr>222</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>EL SALVADOR</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>EQUATORIAL GUINEA</CtryNm>
-			<CcyNm>CFA Franc BEAC</CcyNm>
-			<Ccy>XAF</Ccy>
-			<CcyNbr>950</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ERITREA</CtryNm>
-			<CcyNm>Nakfa</CcyNm>
-			<Ccy>ERN</Ccy>
-			<CcyNbr>232</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ESTONIA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ESWATINI</CtryNm>
-			<CcyNm>Lilangeni</CcyNm>
-			<Ccy>SZL</Ccy>
-			<CcyNbr>748</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ETHIOPIA</CtryNm>
-			<CcyNm>Ethiopian Birr</CcyNm>
-			<Ccy>ETB</Ccy>
-			<CcyNbr>230</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>EUROPEAN UNION</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FALKLAND ISLANDS (THE) [MALVINAS]</CtryNm>
-			<CcyNm>Falkland Islands Pound</CcyNm>
-			<Ccy>FKP</Ccy>
-			<CcyNbr>238</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FAROE ISLANDS (THE)</CtryNm>
-			<CcyNm>Danish Krone</CcyNm>
-			<Ccy>DKK</Ccy>
-			<CcyNbr>208</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FIJI</CtryNm>
-			<CcyNm>Fiji Dollar</CcyNm>
-			<Ccy>FJD</Ccy>
-			<CcyNbr>242</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FINLAND</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FRANCE</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FRENCH GUIANA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FRENCH POLYNESIA</CtryNm>
-			<CcyNm>CFP Franc</CcyNm>
-			<Ccy>XPF</Ccy>
-			<CcyNbr>953</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>FRENCH SOUTHERN TERRITORIES (THE)</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GABON</CtryNm>
-			<CcyNm>CFA Franc BEAC</CcyNm>
-			<Ccy>XAF</Ccy>
-			<CcyNbr>950</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GAMBIA (THE)</CtryNm>
-			<CcyNm>Dalasi</CcyNm>
-			<Ccy>GMD</Ccy>
-			<CcyNbr>270</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GEORGIA</CtryNm>
-			<CcyNm>Lari</CcyNm>
-			<Ccy>GEL</Ccy>
-			<CcyNbr>981</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GERMANY</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GHANA</CtryNm>
-			<CcyNm>Ghana Cedi</CcyNm>
-			<Ccy>GHS</Ccy>
-			<CcyNbr>936</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GIBRALTAR</CtryNm>
-			<CcyNm>Gibraltar Pound</CcyNm>
-			<Ccy>GIP</Ccy>
-			<CcyNbr>292</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GREECE</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GREENLAND</CtryNm>
-			<CcyNm>Danish Krone</CcyNm>
-			<Ccy>DKK</Ccy>
-			<CcyNbr>208</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GRENADA</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GUADELOUPE</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GUAM</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GUATEMALA</CtryNm>
-			<CcyNm>Quetzal</CcyNm>
-			<Ccy>GTQ</Ccy>
-			<CcyNbr>320</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GUERNSEY</CtryNm>
-			<CcyNm>Pound Sterling</CcyNm>
-			<Ccy>GBP</Ccy>
-			<CcyNbr>826</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GUINEA</CtryNm>
-			<CcyNm>Guinean Franc</CcyNm>
-			<Ccy>GNF</Ccy>
-			<CcyNbr>324</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GUINEA-BISSAU</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>GUYANA</CtryNm>
-			<CcyNm>Guyana Dollar</CcyNm>
-			<Ccy>GYD</Ccy>
-			<CcyNbr>328</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>HAITI</CtryNm>
-			<CcyNm>Gourde</CcyNm>
-			<Ccy>HTG</Ccy>
-			<CcyNbr>332</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>HAITI</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>HEARD ISLAND AND McDONALD ISLANDS</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>HOLY SEE (THE)</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>HONDURAS</CtryNm>
-			<CcyNm>Lempira</CcyNm>
-			<Ccy>HNL</Ccy>
-			<CcyNbr>340</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>HONG KONG</CtryNm>
-			<CcyNm>Hong Kong Dollar</CcyNm>
-			<Ccy>HKD</Ccy>
-			<CcyNbr>344</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>HUNGARY</CtryNm>
-			<CcyNm>Forint</CcyNm>
-			<Ccy>HUF</Ccy>
-			<CcyNbr>348</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ICELAND</CtryNm>
-			<CcyNm>Iceland Krona</CcyNm>
-			<Ccy>ISK</Ccy>
-			<CcyNbr>352</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>INDIA</CtryNm>
-			<CcyNm>Indian Rupee</CcyNm>
-			<Ccy>INR</Ccy>
-			<CcyNbr>356</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>INDONESIA</CtryNm>
-			<CcyNm>Rupiah</CcyNm>
-			<Ccy>IDR</Ccy>
-			<CcyNbr>360</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>INTERNATIONAL MONETARY FUND (IMF) </CtryNm>
-			<CcyNm>SDR (Special Drawing Right)</CcyNm>
-			<Ccy>XDR</Ccy>
-			<CcyNbr>960</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>IRAN (ISLAMIC REPUBLIC OF)</CtryNm>
-			<CcyNm>Iranian Rial</CcyNm>
-			<Ccy>IRR</Ccy>
-			<CcyNbr>364</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>IRAQ</CtryNm>
-			<CcyNm>Iraqi Dinar</CcyNm>
-			<Ccy>IQD</Ccy>
-			<CcyNbr>368</CcyNbr>
-			<CcyMnrUnts>3</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>IRELAND</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ISLE OF MAN</CtryNm>
-			<CcyNm>Pound Sterling</CcyNm>
-			<Ccy>GBP</Ccy>
-			<CcyNbr>826</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ISRAEL</CtryNm>
-			<CcyNm>New Israeli Sheqel</CcyNm>
-			<Ccy>ILS</Ccy>
-			<CcyNbr>376</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ITALY</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>JAMAICA</CtryNm>
-			<CcyNm>Jamaican Dollar</CcyNm>
-			<Ccy>JMD</Ccy>
-			<CcyNbr>388</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>JAPAN</CtryNm>
-			<CcyNm>Yen</CcyNm>
-			<Ccy>JPY</Ccy>
-			<CcyNbr>392</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>JERSEY</CtryNm>
-			<CcyNm>Pound Sterling</CcyNm>
-			<Ccy>GBP</Ccy>
-			<CcyNbr>826</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>JORDAN</CtryNm>
-			<CcyNm>Jordanian Dinar</CcyNm>
-			<Ccy>JOD</Ccy>
-			<CcyNbr>400</CcyNbr>
-			<CcyMnrUnts>3</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>KAZAKHSTAN</CtryNm>
-			<CcyNm>Tenge</CcyNm>
-			<Ccy>KZT</Ccy>
-			<CcyNbr>398</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>KENYA</CtryNm>
-			<CcyNm>Kenyan Shilling</CcyNm>
-			<Ccy>KES</Ccy>
-			<CcyNbr>404</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>KIRIBATI</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>KOREA (THE DEMOCRATIC PEOPLE’S REPUBLIC OF)</CtryNm>
-			<CcyNm>North Korean Won</CcyNm>
-			<Ccy>KPW</Ccy>
-			<CcyNbr>408</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>KOREA (THE REPUBLIC OF)</CtryNm>
-			<CcyNm>Won</CcyNm>
-			<Ccy>KRW</Ccy>
-			<CcyNbr>410</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>KUWAIT</CtryNm>
-			<CcyNm>Kuwaiti Dinar</CcyNm>
-			<Ccy>KWD</Ccy>
-			<CcyNbr>414</CcyNbr>
-			<CcyMnrUnts>3</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>KYRGYZSTAN</CtryNm>
-			<CcyNm>Som</CcyNm>
-			<Ccy>KGS</Ccy>
-			<CcyNbr>417</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LAO PEOPLE’S DEMOCRATIC REPUBLIC (THE)</CtryNm>
-			<CcyNm>Lao Kip</CcyNm>
-			<Ccy>LAK</Ccy>
-			<CcyNbr>418</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LATVIA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LEBANON</CtryNm>
-			<CcyNm>Lebanese Pound</CcyNm>
-			<Ccy>LBP</Ccy>
-			<CcyNbr>422</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LESOTHO</CtryNm>
-			<CcyNm>Loti</CcyNm>
-			<Ccy>LSL</Ccy>
-			<CcyNbr>426</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LESOTHO</CtryNm>
-			<CcyNm>Rand</CcyNm>
-			<Ccy>ZAR</Ccy>
-			<CcyNbr>710</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LIBERIA</CtryNm>
-			<CcyNm>Liberian Dollar</CcyNm>
-			<Ccy>LRD</Ccy>
-			<CcyNbr>430</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LIBYA</CtryNm>
-			<CcyNm>Libyan Dinar</CcyNm>
-			<Ccy>LYD</Ccy>
-			<CcyNbr>434</CcyNbr>
-			<CcyMnrUnts>3</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LIECHTENSTEIN</CtryNm>
-			<CcyNm>Swiss Franc</CcyNm>
-			<Ccy>CHF</Ccy>
-			<CcyNbr>756</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LITHUANIA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>LUXEMBOURG</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MACAO</CtryNm>
-			<CcyNm>Pataca</CcyNm>
-			<Ccy>MOP</Ccy>
-			<CcyNbr>446</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NORTH MACEDONIA</CtryNm>
-			<CcyNm>Denar</CcyNm>
-			<Ccy>MKD</Ccy>
-			<CcyNbr>807</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MADAGASCAR</CtryNm>
-			<CcyNm>Malagasy Ariary</CcyNm>
-			<Ccy>MGA</Ccy>
-			<CcyNbr>969</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MALAWI</CtryNm>
-			<CcyNm>Malawi Kwacha</CcyNm>
-			<Ccy>MWK</Ccy>
-			<CcyNbr>454</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MALAYSIA</CtryNm>
-			<CcyNm>Malaysian Ringgit</CcyNm>
-			<Ccy>MYR</Ccy>
-			<CcyNbr>458</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MALDIVES</CtryNm>
-			<CcyNm>Rufiyaa</CcyNm>
-			<Ccy>MVR</Ccy>
-			<CcyNbr>462</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MALI</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MALTA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MARSHALL ISLANDS (THE)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MARTINIQUE</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MAURITANIA</CtryNm>
-			<CcyNm>Ouguiya</CcyNm>
-			<Ccy>MRU</Ccy>
-			<CcyNbr>929</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MAURITIUS</CtryNm>
-			<CcyNm>Mauritius Rupee</CcyNm>
-			<Ccy>MUR</Ccy>
-			<CcyNbr>480</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MAYOTTE</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MEMBER COUNTRIES OF THE AFRICAN DEVELOPMENT BANK GROUP</CtryNm>
-			<CcyNm>ADB Unit of Account</CcyNm>
-			<Ccy>XUA</Ccy>
-			<CcyNbr>965</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MEXICO</CtryNm>
-			<CcyNm>Mexican Peso</CcyNm>
-			<Ccy>MXN</Ccy>
-			<CcyNbr>484</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MEXICO</CtryNm>
-			<CcyNm IsFund="true">Mexican Unidad de Inversion (UDI)</CcyNm>
-			<Ccy>MXV</Ccy>
-			<CcyNbr>979</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MICRONESIA (FEDERATED STATES OF)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MOLDOVA (THE REPUBLIC OF)</CtryNm>
-			<CcyNm>Moldovan Leu</CcyNm>
-			<Ccy>MDL</Ccy>
-			<CcyNbr>498</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MONACO</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MONGOLIA</CtryNm>
-			<CcyNm>Tugrik</CcyNm>
-			<Ccy>MNT</Ccy>
-			<CcyNbr>496</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MONTENEGRO</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MONTSERRAT</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MOROCCO</CtryNm>
-			<CcyNm>Moroccan Dirham</CcyNm>
-			<Ccy>MAD</Ccy>
-			<CcyNbr>504</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MOZAMBIQUE</CtryNm>
-			<CcyNm>Mozambique Metical</CcyNm>
-			<Ccy>MZN</Ccy>
-			<CcyNbr>943</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>MYANMAR</CtryNm>
-			<CcyNm>Kyat</CcyNm>
-			<Ccy>MMK</Ccy>
-			<CcyNbr>104</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NAMIBIA</CtryNm>
-			<CcyNm>Namibia Dollar</CcyNm>
-			<Ccy>NAD</Ccy>
-			<CcyNbr>516</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NAMIBIA</CtryNm>
-			<CcyNm>Rand</CcyNm>
-			<Ccy>ZAR</Ccy>
-			<CcyNbr>710</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NAURU</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NEPAL</CtryNm>
-			<CcyNm>Nepalese Rupee</CcyNm>
-			<Ccy>NPR</Ccy>
-			<CcyNbr>524</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NETHERLANDS (THE)</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NEW CALEDONIA</CtryNm>
-			<CcyNm>CFP Franc</CcyNm>
-			<Ccy>XPF</Ccy>
-			<CcyNbr>953</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NEW ZEALAND</CtryNm>
-			<CcyNm>New Zealand Dollar</CcyNm>
-			<Ccy>NZD</Ccy>
-			<CcyNbr>554</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NICARAGUA</CtryNm>
-			<CcyNm>Cordoba Oro</CcyNm>
-			<Ccy>NIO</Ccy>
-			<CcyNbr>558</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NIGER (THE)</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NIGERIA</CtryNm>
-			<CcyNm>Naira</CcyNm>
-			<Ccy>NGN</Ccy>
-			<CcyNbr>566</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NIUE</CtryNm>
-			<CcyNm>New Zealand Dollar</CcyNm>
-			<Ccy>NZD</Ccy>
-			<CcyNbr>554</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NORFOLK ISLAND</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NORTHERN MARIANA ISLANDS (THE)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>NORWAY</CtryNm>
-			<CcyNm>Norwegian Krone</CcyNm>
-			<Ccy>NOK</Ccy>
-			<CcyNbr>578</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>OMAN</CtryNm>
-			<CcyNm>Rial Omani</CcyNm>
-			<Ccy>OMR</Ccy>
-			<CcyNbr>512</CcyNbr>
-			<CcyMnrUnts>3</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PAKISTAN</CtryNm>
-			<CcyNm>Pakistan Rupee</CcyNm>
-			<Ccy>PKR</Ccy>
-			<CcyNbr>586</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PALAU</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PALESTINE, STATE OF</CtryNm>
-			<CcyNm>No universal currency</CcyNm>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PANAMA</CtryNm>
-			<CcyNm>Balboa</CcyNm>
-			<Ccy>PAB</Ccy>
-			<CcyNbr>590</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PANAMA</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PAPUA NEW GUINEA</CtryNm>
-			<CcyNm>Kina</CcyNm>
-			<Ccy>PGK</Ccy>
-			<CcyNbr>598</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PARAGUAY</CtryNm>
-			<CcyNm>Guarani</CcyNm>
-			<Ccy>PYG</Ccy>
-			<CcyNbr>600</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PERU</CtryNm>
-			<CcyNm>Sol</CcyNm>
-			<Ccy>PEN</Ccy>
-			<CcyNbr>604</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PHILIPPINES (THE)</CtryNm>
-			<CcyNm>Philippine Peso</CcyNm>
-			<Ccy>PHP</Ccy>
-			<CcyNbr>608</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PITCAIRN</CtryNm>
-			<CcyNm>New Zealand Dollar</CcyNm>
-			<Ccy>NZD</Ccy>
-			<CcyNbr>554</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>POLAND</CtryNm>
-			<CcyNm>Zloty</CcyNm>
-			<Ccy>PLN</Ccy>
-			<CcyNbr>985</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PORTUGAL</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>PUERTO RICO</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>QATAR</CtryNm>
-			<CcyNm>Qatari Rial</CcyNm>
-			<Ccy>QAR</Ccy>
-			<CcyNbr>634</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>RÉUNION</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ROMANIA</CtryNm>
-			<CcyNm>Romanian Leu</CcyNm>
-			<Ccy>RON</Ccy>
-			<CcyNbr>946</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>RUSSIAN FEDERATION (THE)</CtryNm>
-			<CcyNm>Russian Ruble</CcyNm>
-			<Ccy>RUB</Ccy>
-			<CcyNbr>643</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>RWANDA</CtryNm>
-			<CcyNm>Rwanda Franc</CcyNm>
-			<Ccy>RWF</Ccy>
-			<CcyNbr>646</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAINT BARTHÉLEMY</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA</CtryNm>
-			<CcyNm>Saint Helena Pound</CcyNm>
-			<Ccy>SHP</Ccy>
-			<CcyNbr>654</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAINT KITTS AND NEVIS</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAINT LUCIA</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAINT MARTIN (FRENCH PART)</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAINT PIERRE AND MIQUELON</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAINT VINCENT AND THE GRENADINES</CtryNm>
-			<CcyNm>East Caribbean Dollar</CcyNm>
-			<Ccy>XCD</Ccy>
-			<CcyNbr>951</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAMOA</CtryNm>
-			<CcyNm>Tala</CcyNm>
-			<Ccy>WST</Ccy>
-			<CcyNbr>882</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAN MARINO</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAO TOME AND PRINCIPE</CtryNm>
-			<CcyNm>Dobra</CcyNm>
-			<Ccy>STN</Ccy>
-			<CcyNbr>930</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SAUDI ARABIA</CtryNm>
-			<CcyNm>Saudi Riyal</CcyNm>
-			<Ccy>SAR</Ccy>
-			<CcyNbr>682</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SENEGAL</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SERBIA</CtryNm>
-			<CcyNm>Serbian Dinar</CcyNm>
-			<Ccy>RSD</Ccy>
-			<CcyNbr>941</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SEYCHELLES</CtryNm>
-			<CcyNm>Seychelles Rupee</CcyNm>
-			<Ccy>SCR</Ccy>
-			<CcyNbr>690</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SIERRA LEONE</CtryNm>
-			<CcyNm>Leone</CcyNm>
-			<Ccy>SLL</Ccy>
-			<CcyNbr>694</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SIERRA LEONE</CtryNm>
-			<CcyNm>Leone</CcyNm>
-			<Ccy>SLE</Ccy>
-			<CcyNbr>925</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SINGAPORE</CtryNm>
-			<CcyNm>Singapore Dollar</CcyNm>
-			<Ccy>SGD</Ccy>
-			<CcyNbr>702</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SINT MAARTEN (DUTCH PART)</CtryNm>
-			<CcyNm>Netherlands Antillean Guilder</CcyNm>
-			<Ccy>ANG</Ccy>
-			<CcyNbr>532</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SISTEMA UNITARIO DE COMPENSACION REGIONAL DE PAGOS "SUCRE"</CtryNm>
-			<CcyNm>Sucre</CcyNm>
-			<Ccy>XSU</Ccy>
-			<CcyNbr>994</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SLOVAKIA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SLOVENIA</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SOLOMON ISLANDS</CtryNm>
-			<CcyNm>Solomon Islands Dollar</CcyNm>
-			<Ccy>SBD</Ccy>
-			<CcyNbr>090</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SOMALIA</CtryNm>
-			<CcyNm>Somali Shilling</CcyNm>
-			<Ccy>SOS</Ccy>
-			<CcyNbr>706</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SOUTH AFRICA</CtryNm>
-			<CcyNm>Rand</CcyNm>
-			<Ccy>ZAR</Ccy>
-			<CcyNbr>710</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</CtryNm>
-			<CcyNm>No universal currency</CcyNm>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SOUTH SUDAN</CtryNm>
-			<CcyNm>South Sudanese Pound</CcyNm>
-			<Ccy>SSP</Ccy>
-			<CcyNbr>728</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SPAIN</CtryNm>
-			<CcyNm>Euro</CcyNm>
-			<Ccy>EUR</Ccy>
-			<CcyNbr>978</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SRI LANKA</CtryNm>
-			<CcyNm>Sri Lanka Rupee</CcyNm>
-			<Ccy>LKR</Ccy>
-			<CcyNbr>144</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SUDAN (THE)</CtryNm>
-			<CcyNm>Sudanese Pound</CcyNm>
-			<Ccy>SDG</Ccy>
-			<CcyNbr>938</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SURINAME</CtryNm>
-			<CcyNm>Surinam Dollar</CcyNm>
-			<Ccy>SRD</Ccy>
-			<CcyNbr>968</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SVALBARD AND JAN MAYEN</CtryNm>
-			<CcyNm>Norwegian Krone</CcyNm>
-			<Ccy>NOK</Ccy>
-			<CcyNbr>578</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SWEDEN</CtryNm>
-			<CcyNm>Swedish Krona</CcyNm>
-			<Ccy>SEK</Ccy>
-			<CcyNbr>752</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SWITZERLAND</CtryNm>
-			<CcyNm>Swiss Franc</CcyNm>
-			<Ccy>CHF</Ccy>
-			<CcyNbr>756</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SWITZERLAND</CtryNm>
-			<CcyNm IsFund="true">WIR Euro</CcyNm>
-			<Ccy>CHE</Ccy>
-			<CcyNbr>947</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SWITZERLAND</CtryNm>
-			<CcyNm IsFund="true">WIR Franc</CcyNm>
-			<Ccy>CHW</Ccy>
-			<CcyNbr>948</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>SYRIAN ARAB REPUBLIC</CtryNm>
-			<CcyNm>Syrian Pound</CcyNm>
-			<Ccy>SYP</Ccy>
-			<CcyNbr>760</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TAIWAN (PROVINCE OF CHINA)</CtryNm>
-			<CcyNm>New Taiwan Dollar</CcyNm>
-			<Ccy>TWD</Ccy>
-			<CcyNbr>901</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TAJIKISTAN</CtryNm>
-			<CcyNm>Somoni</CcyNm>
-			<Ccy>TJS</Ccy>
-			<CcyNbr>972</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TANZANIA, UNITED REPUBLIC OF</CtryNm>
-			<CcyNm>Tanzanian Shilling</CcyNm>
-			<Ccy>TZS</Ccy>
-			<CcyNbr>834</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>THAILAND</CtryNm>
-			<CcyNm>Baht</CcyNm>
-			<Ccy>THB</Ccy>
-			<CcyNbr>764</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TIMOR-LESTE</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TOGO</CtryNm>
-			<CcyNm>CFA Franc BCEAO</CcyNm>
-			<Ccy>XOF</Ccy>
-			<CcyNbr>952</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TOKELAU</CtryNm>
-			<CcyNm>New Zealand Dollar</CcyNm>
-			<Ccy>NZD</Ccy>
-			<CcyNbr>554</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TONGA</CtryNm>
-			<CcyNm>Pa’anga</CcyNm>
-			<Ccy>TOP</Ccy>
-			<CcyNbr>776</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TRINIDAD AND TOBAGO</CtryNm>
-			<CcyNm>Trinidad and Tobago Dollar</CcyNm>
-			<Ccy>TTD</Ccy>
-			<CcyNbr>780</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TUNISIA</CtryNm>
-			<CcyNm>Tunisian Dinar</CcyNm>
-			<Ccy>TND</Ccy>
-			<CcyNbr>788</CcyNbr>
-			<CcyMnrUnts>3</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TÜRKİYE</CtryNm>
-			<CcyNm>Turkish Lira</CcyNm>
-			<Ccy>TRY</Ccy>
-			<CcyNbr>949</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TURKMENISTAN</CtryNm>
-			<CcyNm>Turkmenistan New Manat</CcyNm>
-			<Ccy>TMT</Ccy>
-			<CcyNbr>934</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TURKS AND CAICOS ISLANDS (THE)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>TUVALU</CtryNm>
-			<CcyNm>Australian Dollar</CcyNm>
-			<Ccy>AUD</Ccy>
-			<CcyNbr>036</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UGANDA</CtryNm>
-			<CcyNm>Uganda Shilling</CcyNm>
-			<Ccy>UGX</Ccy>
-			<CcyNbr>800</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UKRAINE</CtryNm>
-			<CcyNm>Hryvnia</CcyNm>
-			<Ccy>UAH</Ccy>
-			<CcyNbr>980</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UNITED ARAB EMIRATES (THE)</CtryNm>
-			<CcyNm>UAE Dirham</CcyNm>
-			<Ccy>AED</Ccy>
-			<CcyNbr>784</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND (THE)</CtryNm>
-			<CcyNm>Pound Sterling</CcyNm>
-			<Ccy>GBP</Ccy>
-			<CcyNbr>826</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UNITED STATES MINOR OUTLYING ISLANDS (THE)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UNITED STATES OF AMERICA (THE)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UNITED STATES OF AMERICA (THE)</CtryNm>
-			<CcyNm IsFund="true">US Dollar (Next day)</CcyNm>
-			<Ccy>USN</Ccy>
-			<CcyNbr>997</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>URUGUAY</CtryNm>
-			<CcyNm>Peso Uruguayo</CcyNm>
-			<Ccy>UYU</Ccy>
-			<CcyNbr>858</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>URUGUAY</CtryNm>
-			<CcyNm IsFund="true">Uruguay Peso en Unidades Indexadas (UI)</CcyNm>
-			<Ccy>UYI</Ccy>
-			<CcyNbr>940</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>URUGUAY</CtryNm>
-			<CcyNm>Unidad Previsional</CcyNm>
-			<Ccy>UYW</Ccy>
-			<CcyNbr>927</CcyNbr>
-			<CcyMnrUnts>4</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>UZBEKISTAN</CtryNm>
-			<CcyNm>Uzbekistan Sum</CcyNm>
-			<Ccy>UZS</Ccy>
-			<CcyNbr>860</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>VANUATU</CtryNm>
-			<CcyNm>Vatu</CcyNm>
-			<Ccy>VUV</Ccy>
-			<CcyNbr>548</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>VENEZUELA (BOLIVARIAN REPUBLIC OF)</CtryNm>
-			<CcyNm>Bolívar Soberano</CcyNm>
-			<Ccy>VES</Ccy>
-			<CcyNbr>928</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>VENEZUELA (BOLIVARIAN REPUBLIC OF)</CtryNm>
-			<CcyNm>Bolívar Soberano</CcyNm>
-			<Ccy>VED</Ccy>
-			<CcyNbr>926</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>VIET NAM</CtryNm>
-			<CcyNm>Dong</CcyNm>
-			<Ccy>VND</Ccy>
-			<CcyNbr>704</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>VIRGIN ISLANDS (BRITISH)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>VIRGIN ISLANDS (U.S.)</CtryNm>
-			<CcyNm>US Dollar</CcyNm>
-			<Ccy>USD</Ccy>
-			<CcyNbr>840</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>WALLIS AND FUTUNA</CtryNm>
-			<CcyNm>CFP Franc</CcyNm>
-			<Ccy>XPF</Ccy>
-			<CcyNbr>953</CcyNbr>
-			<CcyMnrUnts>0</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>WESTERN SAHARA</CtryNm>
-			<CcyNm>Moroccan Dirham</CcyNm>
-			<Ccy>MAD</Ccy>
-			<CcyNbr>504</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>YEMEN</CtryNm>
-			<CcyNm>Yemeni Rial</CcyNm>
-			<Ccy>YER</Ccy>
-			<CcyNbr>886</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZAMBIA</CtryNm>
-			<CcyNm>Zambian Kwacha</CcyNm>
-			<Ccy>ZMW</Ccy>
-			<CcyNbr>967</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZIMBABWE</CtryNm>
-			<CcyNm>Zimbabwe Dollar</CcyNm>
-			<Ccy>ZWL</Ccy>
-			<CcyNbr>932</CcyNbr>
-			<CcyMnrUnts>2</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ01_Bond Markets Unit European_EURCO</CtryNm>
-			<CcyNm>Bond Markets Unit European Composite Unit (EURCO)</CcyNm>
-			<Ccy>XBA</Ccy>
-			<CcyNbr>955</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ02_Bond Markets Unit European_EMU-6</CtryNm>
-			<CcyNm>Bond Markets Unit European Monetary Unit (E.M.U.-6)</CcyNm>
-			<Ccy>XBB</Ccy>
-			<CcyNbr>956</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ03_Bond Markets Unit European_EUA-9</CtryNm>
-			<CcyNm>Bond Markets Unit European Unit of Account 9 (E.U.A.-9)</CcyNm>
-			<Ccy>XBC</Ccy>
-			<CcyNbr>957</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ04_Bond Markets Unit European_EUA-17</CtryNm>
-			<CcyNm>Bond Markets Unit European Unit of Account 17 (E.U.A.-17)</CcyNm>
-			<Ccy>XBD</Ccy>
-			<CcyNbr>958</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ06_Testing_Code</CtryNm>
-			<CcyNm>Codes specifically reserved for testing purposes</CcyNm>
-			<Ccy>XTS</Ccy>
-			<CcyNbr>963</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ07_No_Currency</CtryNm>
-			<CcyNm>The codes assigned for transactions where no currency is involved</CcyNm>
-			<Ccy>XXX</Ccy>
-			<CcyNbr>999</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ08_Gold</CtryNm>
-			<CcyNm>Gold</CcyNm>
-			<Ccy>XAU</Ccy>
-			<CcyNbr>959</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ09_Palladium</CtryNm>
-			<CcyNm>Palladium</CcyNm>
-			<Ccy>XPD</Ccy>
-			<CcyNbr>964</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ10_Platinum</CtryNm>
-			<CcyNm>Platinum</CcyNm>
-			<Ccy>XPT</Ccy>
-			<CcyNbr>962</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-		<CcyNtry>
-			<CtryNm>ZZ11_Silver</CtryNm>
-			<CcyNm>Silver</CcyNm>
-			<Ccy>XAG</Ccy>
-			<CcyNbr>961</CcyNbr>
-			<CcyMnrUnts>N.A.</CcyMnrUnts>
-		</CcyNtry>
-	</CcyTbl>
-</ISO_4217>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Monedas -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+           elementFormDefault="qualified"
+           targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+
+    <xs:annotation>
+        <xs:documentation>
+            CODIFICACION DE MONEDAS
+            Estandar Internacional ISO 4217
+        </xs:documentation>
+    </xs:annotation>
+
+
+    <xs:simpleType name="cMondT">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="AED">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dirham</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AFN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Afghani</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ALL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lek</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dram</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ANG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Netherlands Antillian Guilder</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AOA">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kwanza</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ARS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Argentine Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AUD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Australian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AWG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Aruban Guilder</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AZM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Azerbaijanian Manat</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BAM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Convertible Mark</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BBD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Barbados Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BYN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Belarusian Ruble</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BDT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Taka</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BGN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bulgarian Lev</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BHD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bahraini Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BIF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Burundi Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bermudian Dollar (customarily: Bermuda Dollar)</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BND">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Brunei Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BOB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Boliviano</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BOV">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Mvdol</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BRL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Brazilian Real</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BSD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bahamian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BTN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ngultrum</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BWP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pula</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BYR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Belarussian Ruble</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BZD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Belize Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CAD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Canadian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CDF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Franc Congolais</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Swiss Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHE">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>WIR Euro</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHW">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>WIR Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CLP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Chilean Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CLF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Unidad de Fomento</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CNY">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Yuan Renminbi</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="COP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Colombian Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="COU">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Unidad de Valor Real</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CRC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Costa Rican Colon</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CUP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cuban Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CUC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Peso Convertible</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVE">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cape Verde Escudo</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CYP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cyprus Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CZK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Czech Koruna</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DJF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Djibouti Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DKK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Danish Krone</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DOP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dominican Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DZD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Algerian Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EEK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kroon</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EGP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Egyptian Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ERN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Nakfa</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ETB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ethopian Birr</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EUR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Euro</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FJD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Fiji Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FKP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Falkland Islands Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GBP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pound Sterling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GEL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lari</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GHS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ghana Cedi</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GHC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cedi</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GIP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Gibraltar Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dalasi</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GNF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Guinea Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GTQ">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Quetzal</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GYD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Guyana Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HKD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Honk Kong Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HNL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lempira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HRK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kuna</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HTG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Gourde</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HUF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Forint</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IDR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rupiah</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ILS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Israeli Sheqel</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="INR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Indian Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IQD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Iraqi Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IRR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Iranian Rial</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ISK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Iceland Krona</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="JMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Jamaican Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="JOD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Jordanian Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="JPY">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Yen</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KES">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kenyan Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KGS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Som</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KHR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Riel</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KMF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Comoro Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KPW">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>North Korean Won</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KRW">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Won</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KWD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kuwaiti Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KYD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cayman Islands Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KZT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tenge</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LAK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kip</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LBP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lebanese Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LKR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Sri Lanka Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LRD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Liberian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LSL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Loti</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LTL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lithuanian Litas</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LVL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Latvian Lats</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LYD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Libyan Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MAD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Morrocan Dirham</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MZN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Mozambique Metical</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MDL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Moldovan Leu</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Malagasy Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MKD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Denar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGA">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Malagasy Ariary</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kyat</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MNT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tugrik</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MOP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pataca</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MRO">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ouguiya</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MTL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Maltese Lira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MUR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Mauritius Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XUA">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>ADB Unit of Account</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MVR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rufiyaa</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MRU">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ouguiya</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MWK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kwacha</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MXN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Mexican Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MXV">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Mexican Unidad de Inversion</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MYR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Malaysian Ringgit</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MZM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Metical</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NAD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Namibia Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NGN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Naira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NIO">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cordoba Oro</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NOK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Norwegian Krone</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NPR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Nepalese Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NZD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Zealand Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OMR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rial Omani</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Balboa</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PEN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Nuevo Sol</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PGK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kina</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Philippine Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PKR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pakistan Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Zloty</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PYG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Guarani</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="QAR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Qatari Rial</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RON">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Romanian Leu</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ROL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Leu</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RUB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Russian Ruble</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RWF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rwanda Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SAR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Saudi Riyal</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RSD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Serbian Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SBD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Solomon Islands Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Seychelles Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SDD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Sudanese Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SDG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Sudanese Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SRD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Surinam Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SEK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Swedish Krona</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SGD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Singapore Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SHP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>St. Helena Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SIT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tolar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SKK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Slovak Koruna</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SLL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Leone</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SOS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Somali Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SRG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Suriname Guilder</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SSP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>South Sudanese Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="STD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dobra</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SVC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>El Salvador Colon</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SYP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Syrian Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SZL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lilangeni</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="THB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Baht</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TJS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Somoni</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TMM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Manat</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TND">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tunisian Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TRY">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Turkish Lira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TMT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Turkmenistan New Manat</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TOP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pa&apos;anga</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TRL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Turkish Lira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TTD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Trinidad and Tobago Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TWD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Taiwan Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TZS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tanzanian Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UAH">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Hryvnia</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UGX">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Uganda Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="USD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>US Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="USN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>US Dollar(Next day)</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UYU">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Peso Uruguayo</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UYI">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Uruguay Peso en Unidades Indexadas(UI)</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UYW">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Unidad Previsional</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UZS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Uzbekistan Sum</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VEB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bolivar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VND">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dong</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VUV">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Vatu</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VES">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bolivar Soberano</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WST">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tala</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="STN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dobra</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XAF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>CFA Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XAG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Silver</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XAU">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Gold</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XCD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>East Carribean Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XDR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>SDR</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XOF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>CFA Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XPD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Palladium</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XPF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>CFP Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XPT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Platinum</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XSU">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Sucre</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XBA">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bond Markets Unit European Composite Unit(EURCO)</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XBB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bond Markets Unit European Monetary Unit(E.M.U.-6)</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XBC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bond Markets Unit European Unit of Account 17 (E.U.A.-17)</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XTS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Codes specifically reserved for testing purposes</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XXX">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>The codes assigned for transactions where no currency is involved</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="YER">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Yemeni Rial</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="YUM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZMW">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Zambian Kwacha</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZWL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Zimbabwe Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZAR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rand</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZMK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kwacha</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZWD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Zimbabwe Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="CurrencyCodeType">
+        <xs:annotation>
+            <xs:documentation>ISO 4217 Alpha</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="cMondT">
+                <xs:attribute name="codeListID" type="xs:normalizedString" fixed="ISO 4217 Alpha"
+                              use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

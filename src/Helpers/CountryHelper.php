@@ -2,22 +2,27 @@
 
 namespace Abiliomp\Pkuatia\Helpers;
 
+use DOMDocument;
+
 /**
  * Read the iso3166.xml file and return an array
  */
 class CountryHelper
-{  
+{
   /**
    * getArray
    *
    * @return array
    */
-  public static function getArray() : array
+  public static function getArray(): array
   {
-    $xml = simplexml_load_file('C:\Users\USER\Desktop\pkuatia\src\Helpers\iso3166.xml');
-    $json = json_encode($xml);
-    $array = json_decode($json, true);
-    return $array;
+    $xml = new DOMDocument();
+    $xml->load('C:\Users\USER\Desktop\pkuatia\src\Helpers\iso3166.xml');
+    $xml->preserveWhiteSpace = true;
+    $parseObj = str_replace($xml->lastChild->prefix.':',"", $xml->saveXML($xml->lastChild));
+    $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
+    //retorna el array con la lista de paises
+    return $array['simpleType']['restriction']['enumeration'];
   }
 
   /**
@@ -26,17 +31,17 @@ class CountryHelper
    * @param  mixed $country
    * @return string|null
    */
-  public static function getCountryDesc(string $code) : string | null
+  public static function getCountryDesc($code): string | null
   {
     $country = strtoupper($code);
     $array = self::getArray();
     ///search the country name in the array, using the aplha-3 element
-    foreach ($array['country'] as $key => $value) {
-      if(isset($value['@attributes']['alpha-3']) && $value['@attributes']['alpha-3'] == $country){
-        return $value['@attributes']['name'];
+    foreach ($array as $key => $value) {
+      ///if the country code is found, return the name
+      if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $country) {
+        return $value['annotation']['documentation'];///THE NAME OF THE COUNTRY
       }
     }
     return null;
   }
-  
 }

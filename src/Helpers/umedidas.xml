@@ -1,37 +1,366 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<root>
-    <unit><CODIGO>87</CODIGO><REPRESENTACION>m</REPRESENTACION><DESCRIPCION>Metros</DESCRIPCION></unit>
-    <unit><CODIGO>2366</CODIGO><REPRESENTACION>CPM</REPRESENTACION><DESCRIPCION>Costo por Mil</DESCRIPCION></unit>
-    <unit><CODIGO>2329</CODIGO><REPRESENTACION>UI</REPRESENTACION><DESCRIPCION>Unidad Internacional</DESCRIPCION></unit>
-    <unit><CODIGO>110</CODIGO><REPRESENTACION>M3</REPRESENTACION><DESCRIPCION>Metros cúbicos</DESCRIPCION></unit>
-    <unit><CODIGO>77</CODIGO><REPRESENTACION>UNI</REPRESENTACION><DESCRIPCION>Unidad</DESCRIPCION></unit>
-    <unit><CODIGO>86</CODIGO><REPRESENTACION>g</REPRESENTACION><DESCRIPCION>Gramos</DESCRIPCION></unit>
-    <unit><CODIGO>89</CODIGO><REPRESENTACION>LT</REPRESENTACION><DESCRIPCION>Litros</DESCRIPCION></unit>
-    <unit><CODIGO>90</CODIGO><REPRESENTACION>MG</REPRESENTACION><DESCRIPCION>Miligramos</DESCRIPCION></unit>
-    <unit><CODIGO>91</CODIGO><REPRESENTACION>CM</REPRESENTACION><DESCRIPCION>Centimetros</DESCRIPCION></unit>
-    <unit><CODIGO>92</CODIGO><REPRESENTACION>CM2</REPRESENTACION><DESCRIPCION>Centimetros cuadrados</DESCRIPCION></unit>
-    <unit><CODIGO>93</CODIGO><REPRESENTACION>CM3</REPRESENTACION><DESCRIPCION>Centimetros cubicos</DESCRIPCION></unit>
-    <unit><CODIGO>94</CODIGO><REPRESENTACION>PUL</REPRESENTACION><DESCRIPCION>Pulgadas</DESCRIPCION></unit>
-    <unit><CODIGO>96</CODIGO><REPRESENTACION>MM2</REPRESENTACION><DESCRIPCION>Milímetros cuadrados</DESCRIPCION></unit>
-    <unit><CODIGO>79</CODIGO><REPRESENTACION>kg/m² </REPRESENTACION><DESCRIPCION>Kilogramos s/ metro cuadrado</DESCRIPCION></unit>
-    <unit><CODIGO>97</CODIGO><REPRESENTACION>AA</REPRESENTACION><DESCRIPCION>Año</DESCRIPCION></unit>
-    <unit><CODIGO>98</CODIGO><REPRESENTACION>ME</REPRESENTACION><DESCRIPCION>Mes</DESCRIPCION></unit>
-    <unit><CODIGO>99</CODIGO><REPRESENTACION>TN</REPRESENTACION><DESCRIPCION>Tonelada</DESCRIPCION></unit>
-    <unit><CODIGO>100</CODIGO><REPRESENTACION>Hs</REPRESENTACION><DESCRIPCION>Hora</DESCRIPCION></unit>
-    <unit><CODIGO>101</CODIGO><REPRESENTACION>Mi</REPRESENTACION><DESCRIPCION>Minuto</DESCRIPCION></unit>
-    <unit><CODIGO>104</CODIGO><REPRESENTACION>DET</REPRESENTACION><DESCRIPCION>Determinación</DESCRIPCION></unit>
-    <unit><CODIGO>103</CODIGO><REPRESENTACION>Ya</REPRESENTACION><DESCRIPCION>Yardas</DESCRIPCION></unit>
-    <unit><CODIGO>108</CODIGO><REPRESENTACION>MT</REPRESENTACION><DESCRIPCION>Metros</DESCRIPCION></unit>
-    <unit><CODIGO>109</CODIGO><REPRESENTACION>M2</REPRESENTACION><DESCRIPCION>Metros cuadrados</DESCRIPCION></unit>
-    <unit><CODIGO>95</CODIGO><REPRESENTACION>MM</REPRESENTACION><DESCRIPCION>Milímetros</DESCRIPCION></unit>
-    <unit><CODIGO>666</CODIGO><REPRESENTACION>Se</REPRESENTACION><DESCRIPCION>Segundo</DESCRIPCION></unit>
-    <unit><CODIGO>102</CODIGO><REPRESENTACION>Di</REPRESENTACION><DESCRIPCION>Día</DESCRIPCION></unit>
-    <unit><CODIGO>83</CODIGO><REPRESENTACION>kg</REPRESENTACION><DESCRIPCION>Kilogramos</DESCRIPCION></unit>
-    <unit><CODIGO>88</CODIGO><REPRESENTACION>ML</REPRESENTACION><DESCRIPCION>Mililitros</DESCRIPCION></unit>
-    <unit><CODIGO>625</CODIGO><REPRESENTACION>Km</REPRESENTACION><DESCRIPCION>Kilómetros</DESCRIPCION></unit>
-    <unit><CODIGO>660</CODIGO><REPRESENTACION>ml</REPRESENTACION><DESCRIPCION>Metro lineal</DESCRIPCION></unit>
-    <unit><CODIGO>885</CODIGO><REPRESENTACION>GL</REPRESENTACION><DESCRIPCION>Unidad Medidad Global</DESCRIPCION></unit>
-    <unit><CODIGO>891</CODIGO><REPRESENTACION>pm</REPRESENTACION><DESCRIPCION>Por Milaje</DESCRIPCION></unit>
-    <unit><CODIGO>869</CODIGO><REPRESENTACION>ha</REPRESENTACION><DESCRIPCION>Hectáreas</DESCRIPCION></unit>
-    <unit><CODIGO>569</CODIGO><REPRESENTACION>ración</REPRESENTACION><DESCRIPCION>Ración</DESCRIPCION></unit>
-</root>
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://ekuatia.set.gov.py/sifen/xsd" elementFormDefault="qualified" targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+    <xs:annotation>
+        <xs:documentation>
+            CODIFICACION DE UNIDADES DE MEDIDA (DNCP)
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:simpleType name="tcUniMed">
+        <xs:restriction base="xs:integer">
+            <xs:enumeration value="87">
+                <xs:annotation>
+                    <xs:documentation>Metros - m</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2366">
+                <xs:annotation>
+                    <xs:documentation>Costo Por Mil - CPM</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2329">
+                <xs:annotation>
+                    <xs:documentation>Unidad Internacional - UI</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="110">
+                <xs:annotation>
+                    <xs:documentation>Metros cúbicos - M3</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="77">
+                <xs:annotation>
+                    <xs:documentation>Unidad - UNI</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+                <xs:annotation>
+                    <xs:documentation>Gramos - g</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+                <xs:annotation>
+                    <xs:documentation>Litros - LT</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+                <xs:annotation>
+                    <xs:documentation>Miligramos - MG</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="91">
+                <xs:annotation>
+                    <xs:documentation>Centimetros - CM</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="92">
+                <xs:annotation>
+                    <xs:documentation>Centimetros cuadrados - CM2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+                <xs:annotation>
+                    <xs:documentation>Centimetros cubicos - CM3</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="94">
+                <xs:annotation>
+                    <xs:documentation>Pulgadas - PUL</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+                <xs:annotation>
+                    <xs:documentation>Milímetros cuadrados - MM2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+                <xs:annotation>
+                    <xs:documentation>Kilogramos s/ metro cuadrado - kg/m2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="97">
+                <xs:annotation>
+                    <xs:documentation>Año - AA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="98">
+                <xs:annotation>
+                    <xs:documentation>Mes - ME</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+                <xs:annotation>
+                    <xs:documentation>Tonelada - TN</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+                <xs:annotation>
+                    <xs:documentation>Hora - Hs</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="101">
+                <xs:annotation>
+                    <xs:documentation>Minuto - Mi</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="104">
+                <xs:annotation>
+                    <xs:documentation>Determinación - DET</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="103">
+                <xs:annotation>
+                    <xs:documentation>Yardas - Ya</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="108">
+                <xs:annotation>
+                    <xs:documentation>Metros - MT</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="109">
+                <xs:annotation>
+                    <xs:documentation>Metros cuadrados - M2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="95">
+                <xs:annotation>
+                    <xs:documentation>Milímetros - MM</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="666">
+                <xs:annotation>
+                    <xs:documentation>Segundo - Se</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+                <xs:annotation>
+                    <xs:documentation>Día - Di</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+                <xs:annotation>
+                    <xs:documentation>Kilogramos - kg</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="88">
+                <xs:annotation>
+                    <xs:documentation>Mililitros - ML</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="625">
+                <xs:annotation>
+                    <xs:documentation>Kilómetros - Km</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="660">
+                <xs:annotation>
+                    <xs:documentation>Metro lineal - ml</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="885">
+                <xs:annotation>
+                    <xs:documentation>Unidad Medida Global - GL</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="891">
+                <xs:annotation>
+                    <xs:documentation>Por Milaje - pm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="869">
+                <xs:annotation>
+                    <xs:documentation>Hectáreas - ha</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="569">
+                <xs:annotation>
+                    <xs:documentation>Ración - ración</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>            
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:annotation>
+        <xs:documentation>
+            DESCRIPCION DE UNIDADES DE MEDIDA (DNCP)
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:simpleType name="tdDesUniMed">
+        <xs:restriction base="xs:string"> 
+        	<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>           
+            <xs:enumeration value="m">
+                <xs:annotation>
+                    <xs:documentation>Metros</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CPM">
+                <xs:annotation>
+                    <xs:documentation>Costo Por Mil</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UI">
+                <xs:annotation>
+                    <xs:documentation>Unidad Internacional</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M3">
+                <xs:annotation>
+                    <xs:documentation>Metros cúbicos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNI">
+                <xs:annotation>
+                    <xs:documentation>Unidad</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>            
+            <xs:enumeration value="g">
+                <xs:annotation>
+                    <xs:documentation>Gramos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LT">
+                <xs:annotation>
+                    <xs:documentation>Litros</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MG">
+                <xs:annotation>
+                    <xs:documentation>Miligramos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CM">
+                <xs:annotation>
+                    <xs:documentation>Centimetros</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CM2">
+                <xs:annotation>
+                    <xs:documentation>Centimetros cuadrados</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CM3">
+                <xs:annotation>
+                    <xs:documentation>Centimetros cubicos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PUL">
+                <xs:annotation>
+                    <xs:documentation>Pulgadas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MM2">
+                <xs:annotation>
+                    <xs:documentation>Milímetros cuadrados</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kg/m2">
+                <xs:annotation>
+                    <xs:documentation>Kilogramos s/ metro cuadrado</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AA">
+                <xs:annotation>
+                    <xs:documentation>Año</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ME">
+                <xs:annotation>
+                    <xs:documentation>Mes</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TN">
+                <xs:annotation>
+                    <xs:documentation>Tonelada</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hs">
+                <xs:annotation>
+                    <xs:documentation>Hora</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mi">
+                <xs:annotation>
+                    <xs:documentation>Minuto</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DET">
+                <xs:annotation>
+                    <xs:documentation>Determinación</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ya">
+                <xs:annotation>
+                    <xs:documentation>Yardas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MT">
+                <xs:annotation>
+                    <xs:documentation>Metros</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M2">
+                <xs:annotation>
+                    <xs:documentation>Metros cuadrados</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MM">
+                <xs:annotation>
+                    <xs:documentation>Milímetros</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Se">
+                <xs:annotation>
+                    <xs:documentation>Segundo</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Di">
+                <xs:annotation>
+                    <xs:documentation>Día</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kg">
+                <xs:annotation>
+                    <xs:documentation>Kilogramos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ML">
+                <xs:annotation>
+                    <xs:documentation>Mililitros</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Km">
+                <xs:annotation>
+                    <xs:documentation>Kilómetros</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ml">
+                <xs:annotation>
+                    <xs:documentation>Metro lineal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GL">
+                <xs:annotation>
+                    <xs:documentation>Unidad Medida Global</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pm">
+                <xs:annotation>
+                    <xs:documentation>Por Milaje</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ha">
+                <xs:annotation>
+                    <xs:documentation>Hectáreas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ración">
+                <xs:annotation>
+                    <xs:documentation>Ración</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>            
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
