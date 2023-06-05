@@ -217,7 +217,7 @@
   <country name="Sweden" alpha-2="SE" alpha-3="SWE" country-code="752" iso_3166-2="ISO 3166-2:SE" region="Europe" sub-region="Northern Europe" intermediate-region="" region-code="150" sub-region-code="154" intermediate-region-code=""/>
   <country name="Switzerland" alpha-2="CH" alpha-3="CHE" country-code="756" iso_3166-2="ISO 3166-2:CH" region="Europe" sub-region="Western Europe" intermediate-region="" region-code="150" sub-region-code="155" intermediate-region-code=""/>
   <country name="Syrian Arab Republic" alpha-2="SY" alpha-3="SYR" country-code="760" iso_3166-2="ISO 3166-2:SY" region="Asia" sub-region="Western Asia" intermediate-region="" region-code="142" sub-region-code="145" intermediate-region-code=""/>
-  <country name="Taiwan, Province of China" alpha-2="TW" alpha-3="TWN" country-code="158" iso_3166-2="ISO 3166-2:TW" region="Asia" sub-region="Eastern Asia" intermediate-region="" region-code="142" sub-region-code="030" intermediate-region-code=""/>
+  <country name="Taiwán (Provincia de China)" alpha-2="TW" alpha-3="TWN" country-code="158" iso_3166-2="ISO 3166-2:TW" region="Asia" sub-region="Eastern Asia" intermediate-region="" region-code="142" sub-region-code="030" intermediate-region-code=""/>
   <country name="Tajikistan" alpha-2="TJ" alpha-3="TJK" country-code="762" iso_3166-2="ISO 3166-2:TJ" region="Asia" sub-region="Central Asia" intermediate-region="" region-code="142" sub-region-code="143" intermediate-region-code=""/>
   <country name="Tanzania, United Republic of" alpha-2="TZ" alpha-3="TZA" country-code="834" iso_3166-2="ISO 3166-2:TZ" region="Africa" sub-region="Sub-Saharan Africa" intermediate-region="Eastern Africa" region-code="002" sub-region-code="202" intermediate-region-code="014"/>
   <country name="Thailand" alpha-2="TH" alpha-3="THA" country-code="764" iso_3166-2="ISO 3166-2:TH" region="Asia" sub-region="South-eastern Asia" intermediate-region="" region-code="142" sub-region-code="035" intermediate-region-code=""/>
@@ -249,4 +249,5 @@
   <country name="Yemen" alpha-2="YE" alpha-3="YEM" country-code="887" iso_3166-2="ISO 3166-2:YE" region="Asia" sub-region="Western Asia" intermediate-region="" region-code="142" sub-region-code="145" intermediate-region-code=""/>
   <country name="Zambia" alpha-2="ZM" alpha-3="ZMB" country-code="894" iso_3166-2="ISO 3166-2:ZM" region="Africa" sub-region="Sub-Saharan Africa" intermediate-region="Eastern Africa" region-code="002" sub-region-code="202" intermediate-region-code="014"/>
   <country name="Zimbabwe" alpha-2="ZW" alpha-3="ZWE" country-code="716" iso_3166-2="ISO 3166-2:ZW" region="Africa" sub-region="Sub-Saharan Africa" intermediate-region="Eastern Africa" region-code="002" sub-region-code="202" intermediate-region-code="014"/>
+  <country name="No Existe" alpha-2="NN" alpha-3="NN" country-code="NN" iso_3166-2="NN" region="NN" sub-region="NN" intermediate-region="NN" region-code="NN" sub-region-code="NN" intermediate-region-code="NN"/>
 </countries>

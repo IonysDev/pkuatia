@@ -9,6 +9,5 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $code = "83";
-$test = UMHelper::getUMDesc($code);
-echo $test;
+CountryHelper::getArray();
 ?>
