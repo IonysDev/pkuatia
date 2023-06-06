@@ -5,7 +5,6 @@ namespace Abiliomp\Pkuatia\Core;
 use Abiliomp\Pkuatia\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\AA\RDE;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
@@ -56,6 +55,18 @@ class Factura
     $this->rDE->getDE()->setDFecFirma( new \DateTime('America/Asuncion'));
     //Sistema de facturación
     $this->rDE->getDE()->setDSisFact(Constants::SISTEMA_FACTURACION_CONTRIBUYENTE);
+    //NUMERO TIMBRADO
+    $this->rDE->getDE()->getGTimb()->setDNumTim($array["dNumTim"]);
+    //Fecha de inicio de timbrado
+    $this->rDE->getDE()->getGTimb()->setDFeIniT($array["dFeIniT"]);
+    //TIPO DE TRANSACCION
+    $this->rDE->getDE()->getDDatGralOpe()->getGOpeCom()->setITipTra(Constants::TIPO_TRANSACCION_VENTA_MERCADERIA);
+    //TIPO DE IMPUESTO
+    $this->rDE->getDE()->getDDatGralOpe()->getGOpeCom()->setITImp(Constants::TIPO_IMPUESTO_IVA);
+    //TIPO DE MONEDA
+    $this->rDE->getDE()->getDDatGralOpe()->getGOpeCom()->setCMoneOpe(Constants::MONEDA_BASE);
+    
+
   }
 
 }

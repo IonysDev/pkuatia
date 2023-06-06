@@ -22,6 +22,7 @@ class GDatGralOpe
   public function __construct()
   {
     $this->gEmis = new GEmis();
+    $this->gOpeCom = new GOpeCom();
   }
 
   //====================================================//

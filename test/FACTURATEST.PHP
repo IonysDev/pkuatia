@@ -11,6 +11,9 @@ $data = array(
     'dPunExp' => '1',
     'dNumDoc' => '7650',
     'dFeEmiDE' =>  DateTime::createFromFormat('Y-m-d\TH:i:s', '2021-08-31T00:00:00'),
+    'dNumTim' => 11232,
+    'dFeIniT' => DateTime::createFromFormat('Y-m-d', '2021-08-31'),
+    'dFeEmiDE' => new DateTime('America/Asuncion'),
 );
 $factura = new Factura($data);
 var_dump($factura);
