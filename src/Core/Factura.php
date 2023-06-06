@@ -5,10 +5,10 @@ namespace Abiliomp\Pkuatia\Core;
 use Abiliomp\Pkuatia\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\AA\RDE;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
-
 class Factura
 {
   ///rde
@@ -48,6 +48,14 @@ class Factura
     ///CDC
     /////////////////////////////////////////////////////////////////////////////
     $this->rDE->getDE()->setID(CDCHelper::CDCMaker( $this->rDE->getDE()));
+    //Firma digital
+    /////////////////////////////////////////////////////////////////////////////
+    //TODO: Firma digital
+    /////////////////////////////////////////////////////////////////////////////
+    //Fecha de firma
+    $this->rDE->getDE()->setDFecFirma( new \DateTime('America/Asuncion'));
+    //Sistema de facturación
+    $this->rDE->getDE()->setDSisFact(Constants::SISTEMA_FACTURACION_CONTRIBUYENTE);
   }
 
 }

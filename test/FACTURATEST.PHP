@@ -5,16 +5,16 @@ use Abiliomp\Pkuatia\Helpers\CDCHelper;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// $data = array(
-//     'dRucEm' => '80057292',
-//     'dEst' => 1,
-//     'dPunExp' => '1',
-//     'dNumDoc' => '7650',
-//     'dFeEmiDE' =>  DateTime::createFromFormat('Y-m-d\TH:i:s', '2021-08-31T00:00:00'),
-// );
-// $factura = new Factura($data);
-// var_dump($factura);
+$data = array(
+    'dRucEm' => '80057292',
+    'dEst' => 1,
+    'dPunExp' => '1',
+    'dNumDoc' => '7650',
+    'dFeEmiDE' =>  DateTime::createFromFormat('Y-m-d\TH:i:s', '2021-08-31T00:00:00'),
+);
+$factura = new Factura($data);
+var_dump($factura);
 
 // echo $data['dFeEmiDE']->format('Y-m-d\TH:i:s');
 
-echo CDCHelper::decryptCDC('01800160967029015003289222023052912371717760');
+// echo CDCHelper::decryptCDC('01800160967029015003289222023052912371717760');

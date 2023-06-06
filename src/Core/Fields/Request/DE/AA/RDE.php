@@ -160,12 +160,7 @@ class RDE
     {
       $res->setDE(DE::fromResponse($response->DE));
     }
-    if(isset($response->signature))
-    {
-      $res->setSignature(Signature::fromResponse($response->signature));
-    }
-      
-
+ 
     if(isset($response->gCamFuFD))
     {
       $res->setGCamFuFD(GCamFuFD::fromResponse($response->gCamFuFD));
