@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\G;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\G;
 
 use Abiliomp\Pkuatia\Helpers\UMHelper;
 use DOMElement;

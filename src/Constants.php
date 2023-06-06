@@ -31,4 +31,23 @@ class Constants
     const SIFEN_PATH_CONSULTA_LOTE = "/de/ws/consultas/consulta-lote.wsdl";
     const SIFEN_PATH_CONSULTA_RUC = "/de/ws/consultas/consulta-ruc.wsdl";
     const SIFEN_PATH_CONSULTA = "/de/ws/consultas/consulta.wsdl";
+
+    // Tipos de Documentos
+    const TIPO_DOCUMENTO_FACTURA = 1;
+    const TIPO_DOCUMENTO_FACTURA_EXPORTACION = 2;
+    const TIPO_DOCUMENTO_FACTURA_IMPORTACION = 3;
+    const TIPO_DOCUMENTO_AUTOFACTURA = 4;
+    const TIPO_DOCUMENTO_NOTA_CREDITO = 5;
+    const TIPO_DOCUMENTO_NOTA_DEBITO = 6;
+    const TIPO_DOCUMENTO_COMPROBANTE_RETENCION = 7;
+
+    //Tipos de contribuyentes
+    const TIPO_CONTRIBUYENTE_PERSONA_FISICA = 1;
+    const TIPO_CONTRIBUYENTE_PERSONA_JURIDICA = 2;
+
+    //Tipos de emisión
+    CONST TIPO_EMISION_NORMAL = 1;
+    CONST TIPO_EMISION_CONTINGENCIA = 2;
+
+    
 }

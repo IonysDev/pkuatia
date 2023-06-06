@@ -18,6 +18,12 @@ class GDatGralOpe
   public ?GEmis $gEmis = null;       // Grupo de campos que identifican al emisor (D100)
   public ?GDatRec $gDatRec = null;   // Grupo de campos que identifican al receptor (D200)
 
+
+  public function __construct()
+  {
+    $this->gEmis = new GEmis();
+  }
+
   //====================================================//
   ///Setters
   //====================================================//

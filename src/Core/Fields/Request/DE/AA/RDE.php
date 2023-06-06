@@ -22,20 +22,6 @@ class RDE
   public ?GCamFuFD $gCamFuFD = null;   // Campos fuera de la firma digital 
 
   //====================================================//
-  //Constructor
-  //====================================================//  
-
-  /**
-   * __construct
-   *
-   * @return void
-   */
-  public function __construct()
-  {
-    $this->dVerFor = 150;
-  }
-
-  //====================================================//
   ///SETTERS
   //====================================================//
 

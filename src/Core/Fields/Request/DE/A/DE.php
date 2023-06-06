@@ -2,15 +2,12 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\A;
 
-
-
-
-use Abiliomp\Pkuatia\Core\Fields\G\GCamGen;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GDtipDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\F\GTotSub;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\G\GCamGen;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\H\GCamDEAsoc;
 use DateTime;
 use DOMElement;
@@ -31,6 +28,16 @@ class DE
   public ?GTotSub $gTotSub = null;
   public ?GCamGen $gCamGen = null;
   public ?GCamDEAsoc $gCamDEAsoc = null;
+
+  //////////////////////////////////////////////////////
+  // CONSTRUCTOR
+  //////////////////////////////////////////////////////
+  public function __construct()
+  {
+    $this->gOpeDe = new GOpeDE();
+    $this->gTimb = new GTimb();
+    $this->dDatGralOpe = new GDatGralOpe();
+  }
 
   //====================================================//
   ///Setters
