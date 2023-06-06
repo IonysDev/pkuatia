@@ -38,7 +38,7 @@ class Factura
     //Fecha de Emisión
     $this->rDE->getDE()->getDDatGralOpe()->setDFeEmiDE($array["dFeEmiDE"]);
     //tipo de emision
-    $this->rDE->getDE()->getGOpeDe()->setITipEmi(Constants::TIPO_EMISION_NORMAL);
+    $this->rDE->getDE()->getGOpeDe()->setITipEmi(Constants::TIPO_EMISION_CONTINGENCIA);
     //Código de Seguridad
     $this->rDE->getDE()->getGOpeDe()->setDCodSeg(RNGMaker::MakeSegurityCode( $this->rDE->getDE()->gTimb->getDNumDoc()));
     //digito verificado
@@ -65,7 +65,21 @@ class Factura
     $this->rDE->getDE()->getDDatGralOpe()->getGOpeCom()->setITImp(Constants::TIPO_IMPUESTO_IVA);
     //TIPO DE MONEDA
     $this->rDE->getDE()->getDDatGralOpe()->getGOpeCom()->setCMoneOpe(Constants::MONEDA_BASE);
-    
+    ////nombre emisor
+    $this->rDE->getDE()->getDDatGralOpe()->getGEmis()->setDNomEmi($array["dNomEmi"]);
+    ///direccion emisor
+    $this->rDE->getDE()->getDDatGralOpe()->getGEmis()->setDDirEmi($array["dDirEmi"]);
+    //nro casa
+    $this->rDE->getDE()->getDDatGralOpe()->getGEmis()->setDNumCas($array["dNumCas"]);
+    //departamento
+    $this->rDE->getDE()->getDDatGralOpe()->getGEmis()->setDDepEmi($array["dDepEmi"]);
+    //ciudad
+    $this->rDE->getDE()->getDDatGralOpe()->getGEmis()->setCCiuEmi($array["dCiuEmi"]);
+    //telefono
+    $this->rDE->getDE()->getDDatGralOpe()->getGEmis()->setDTelEmi($array["dTelEmi"]);
+    //correo
+    $this->rDE->getDE()->getDDatGralOpe()->getGEmis()->setDEmailE($array["dEmailE"]);
+    ///DATOS RECEPTOR
 
   }
 
