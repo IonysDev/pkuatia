@@ -23,6 +23,7 @@ class GDatGralOpe
   {
     $this->gEmis = new GEmis();
     $this->gOpeCom = new GOpeCom();
+    $this->gDatRec = new GDatRec();
   }
 
   //====================================================//

@@ -9,13 +9,13 @@ use DOMElement;
  */
 class GValorRestaItem
 {
-  public ?int $dDescItem = null; ///EA002 Descuento particular sobre el precio unitario por ítem (incluidos impuestos)
-  public ?int $dPorcDesIt = null; /// EA003 Porcentaje de descuento particular por ítem
-  public ?int $dDescGloItem = null; ///EA004 Descuento global sobre el precio unitario por ítem (incluidos impuestos)
-  public ?int $dAntPreUniIt = null; ///EA006 Anticipo particular sobre el precio unitario por ítem (incluidos impuestos)
-  public ?int $dAntGloPreUniIt = null; ///EA007 Anticipo global sobre el  precio unitario por ítem  (incluidos impuestos)
-  public ?int $dTotOpeItem = null; /// EA008 Valor total de la operación por ítem 
-  public ?int $dTotOpeGs = null; ///EA009 Valor total de la operación por ítem en guaraníes
+  public ?float $dDescItem = null; ///EA002 Descuento particular sobre el precio unitario por ítem (incluidos impuestos)
+  public ?float $dPorcDesIt = null; /// EA003 Porcentaje de descuento particular por ítem
+  public ?float $dDescGloItem = null; ///EA004 Descuento global sobre el precio unitario por ítem (incluidos impuestos)
+  public ?float $dAntPreUniIt = null; ///EA006 Anticipo particular sobre el precio unitario por ítem (incluidos impuestos)
+  public ?float $dAntGloPreUniIt = null; ///EA007 Anticipo global sobre el  precio unitario por ítem  (incluidos impuestos)
+  public ?float $dTotOpeItem = null; /// EA008 Valor total de la operación por ítem 
+  public ?float $dTotOpeGs = null; ///EA009 Valor total de la operación por ítem en guaraníes
 
   //====================================================//
   ///Setters
@@ -24,11 +24,11 @@ class GValorRestaItem
   /**
    * Set the value of dDescItem
    *
-   * @param int $dDescItem
+   * @param float $dDescItem
    *
    * @return self
    */
-  public function setDDescItem(int $dDescItem): self
+  public function setDDescItem(float $dDescItem): self
   {
     $this->dDescItem = $dDescItem;
 
@@ -39,11 +39,11 @@ class GValorRestaItem
   /**
    * Set the value of dPorcDesIt
    *
-   * @param int $dPorcDesIt
+   * @param float $dPorcDesIt
    *
    * @return self
    */
-  public function setDPorcDesIt(int $dPorcDesIt): self
+  public function setDPorcDesIt(float $dPorcDesIt): self
   {
     $this->dPorcDesIt = $dPorcDesIt;
 
@@ -54,11 +54,11 @@ class GValorRestaItem
   /**
    * Set the value of dDescGloItem
    *
-   * @param int $dDescGloItem
+   * @param float $dDescGloItem
    *
    * @return self
    */
-  public function setDDescGloItem(int $dDescGloItem): self
+  public function setDDescGloItem(float $dDescGloItem): self
   {
     $this->dDescGloItem = $dDescGloItem;
 
@@ -69,11 +69,11 @@ class GValorRestaItem
   /**
    * Set the value of dAntPreUniIt
    *
-   * @param int $dAntPreUniIt
+   * @param float $dAntPreUniIt
    *
    * @return self
    */
-  public function setDAntPreUniIt(int $dAntPreUniIt): self
+  public function setDAntPreUniIt(float $dAntPreUniIt): self
   {
     $this->dAntPreUniIt = $dAntPreUniIt;
 
@@ -84,11 +84,11 @@ class GValorRestaItem
   /**
    * Set the value of dAntGloPreUniIt
    *
-   * @param int $dAntGloPreUniIt
+   * @param float $dAntGloPreUniIt
    *
    * @return self
    */
-  public function setDAntGloPreUniIt(int $dAntGloPreUniIt): self
+  public function setDAntGloPreUniIt(float $dAntGloPreUniIt): self
   {
     $this->dAntGloPreUniIt = $dAntGloPreUniIt;
 
@@ -99,11 +99,11 @@ class GValorRestaItem
   /**
    * Set the value of dTotOpeItem
    *
-   * @param int $dTotOpeItem
+   * @param float $dTotOpeItem
    *
    * @return self
    */
-  public function setDTotOpeItem(int $dTotOpeItem): self
+  public function setDTotOpeItem(float $dTotOpeItem): self
   {
     $this->dTotOpeItem = $dTotOpeItem;
 
@@ -114,11 +114,11 @@ class GValorRestaItem
   /**
    * Set the value of dTotOpeGs
    *
-   * @param int $dTotOpeGs
+   * @param float $dTotOpeGs
    *
    * @return self
    */
-  public function setDTotOpeGs(int $dTotOpeGs): self
+  public function setDTotOpeGs(float $dTotOpeGs): self
   {
     $this->dTotOpeGs = $dTotOpeGs;
 
@@ -133,9 +133,9 @@ class GValorRestaItem
   /**
    * Get the value of dDescItem
    *
-   * @return int
+   * @return float
    */
-  public function getDDescItem(): int | null
+  public function getDDescItem(): float | null
   {
     return $this->dDescItem;
   }
@@ -143,9 +143,9 @@ class GValorRestaItem
   /**
    * Get the value of dPorcDesIt
    *
-   * @return int
+   * @return float
    */
-  public function getDPorcDesIt(): int | null
+  public function getDPorcDesIt(): float | null
   {
     return $this->dPorcDesIt;
   }
@@ -153,9 +153,9 @@ class GValorRestaItem
   /**
    * Get the value of dDescGloItem
    *
-   * @return int
+   * @return float
    */
-  public function getDDescGloItem(): int | null
+  public function getDDescGloItem(): float | null
   {
     return $this->dDescGloItem;
   }
@@ -163,9 +163,9 @@ class GValorRestaItem
   /**
    * Get the value of dAntPreUniIt
    *
-   * @return int
+   * @return float
    */
-  public function getDAntPreUniIt(): int | null
+  public function getDAntPreUniIt(): float | null
   {
     return $this->dAntPreUniIt;
   }
@@ -173,9 +173,9 @@ class GValorRestaItem
   /**
    * Get the value of dAntGloPreUniIt
    *
-   * @return int
+   * @return float
    */
-  public function getDAntGloPreUniIt(): int | null
+  public function getDAntGloPreUniIt(): float | null
   {
     return $this->dAntGloPreUniIt;
   }
@@ -183,9 +183,9 @@ class GValorRestaItem
   /**
    * Get the value of dTotOpeItem
    *
-   * @return int
+   * @return float
    */
-  public function getDTotOpeItem(): int | null
+  public function getDTotOpeItem(): float | null
   {
     return $this->dTotOpeItem;
   }
@@ -193,9 +193,9 @@ class GValorRestaItem
   /**
    * Get the value of dTotOpeGs
    *
-   * @return int
+   * @return float
    */
-  public function getDTotOpeGs(): int | null
+  public function getDTotOpeGs(): float | null
   {
     return $this->dTotOpeGs;
   }
@@ -237,13 +237,13 @@ class GValorRestaItem
   //   if(strcmp($xml->tagName, 'gValorRestaItem') == 0 && $xml->childElementCount == 5)
   //   {
   //     $res = new GValorRestaItem();
-  //     $res->setDDescItem(intval($xml->getElementsByTagName('dDescItem')->item(0)->nodeValue));
-  //     $res->setDPorcDesIt(intval($xml->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
-  //     $res->setDDescGloItem(intval($xml->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
-  //     $res->setDAntPreUniIt(intval($xml->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
-  //     $res->setDAntGloPreUniIt(intval($xml->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
-  //     $res->setDTotOpeItem(intval($xml->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
-  //     $res->setDTotOpeGs(intval($xml->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
+  //     $res->setDDescItem(floatval($xml->getElementsByTagName('dDescItem')->item(0)->nodeValue));
+  //     $res->setDPorcDesIt(floatval($xml->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
+  //     $res->setDDescGloItem(floatval($xml->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
+  //     $res->setDAntPreUniIt(floatval($xml->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
+  //     $res->setDAntGloPreUniIt(floatval($xml->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
+  //     $res->setDTotOpeItem(floatval($xml->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
+  //     $res->setDTotOpeGs(floatval($xml->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
   //     return $res;
   //   }
   //   else {
@@ -263,35 +263,35 @@ class GValorRestaItem
     $res = new GValorRestaItem();
     if( isset($response->dDescItem))
     {
-      $res->setDDescItem(intval($response->dDescItem));
+      $res->setDDescItem(floatval($response->dDescItem));
     }
     if( isset($response->dPorcDesIt))
     {
-      $res->setDPorcDesIt(intval($response->dPorcDesIt));
+      $res->setDPorcDesIt(floatval($response->dPorcDesIt));
     }
     if( isset($response->dDescGloItem))
     {
-      $res->setDDescGloItem(intval($response->dDescGloItem));
+      $res->setDDescGloItem(floatval($response->dDescGloItem));
     }
 
     if( isset($response->dAntPreUniIt))
     {
-      $res->setDAntPreUniIt(intval($response->dAntPreUniIt));
+      $res->setDAntPreUniIt(floatval($response->dAntPreUniIt));
     }
 
     if( isset($response->dAntGloPreUniIt))
     {
-      $res->setDAntGloPreUniIt(intval($response->dAntGloPreUniIt));
+      $res->setDAntGloPreUniIt(floatval($response->dAntGloPreUniIt));
     }
 
     if( isset($response->dTotOpeItem))
     {
-      $res->setDTotOpeItem(intval($response->dTotOpeItem));
+      $res->setDTotOpeItem(floatval($response->dTotOpeItem));
     }
 
     if( isset($response->dTotOpeGs))
     {
-      $res->setDTotOpeGs(intval($response->dTotOpeGs));
+      $res->setDTotOpeGs(floatval($response->dTotOpeGs));
     }
     
     return $res;

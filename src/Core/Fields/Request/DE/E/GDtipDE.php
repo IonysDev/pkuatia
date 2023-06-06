@@ -20,6 +20,16 @@ class GDtipDE
   public ?GCamEsp $gCamEsp = null;
   public ?GTransp $gTransp = null;
 
+
+  ///////////////////////////////////////////////////////////////////////
+  // CONSTRUCTOR
+  ///////////////////////////////////////////////////////////////////////
+  public function __construct()
+  {
+    $this->gCamFE = new GCamFE();
+    $this->gCamCond = new GCamCond();
+  }
+
   //====================================================//
   ///Others
   //====================================================//
@@ -319,5 +329,10 @@ class GDtipDE
     $this->gTransp = $gTransp;
 
     return $this;
+  }
+
+  public function pushIntoGCamItem(GCamItem $gCamItem)
+  {
+    $this->gCamItem[] = $gCamItem;
   }
 }

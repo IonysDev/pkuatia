@@ -37,6 +37,7 @@ class DE
     $this->gOpeDe = new GOpeDE();
     $this->gTimb = new GTimb();
     $this->dDatGralOpe = new GDatGralOpe();
+    $this->gDtipDe = new GDtipDE();
   }
 
   //====================================================//
