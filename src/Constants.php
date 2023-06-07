@@ -78,5 +78,17 @@ class Constants
     //Tipos de monedas
     CONST MONEDA_BASE = "PYG";
 
+    //TIPO OPERACION
+    const TIPO_OPERACION_B2G = 3;
+
+    ///Condiciones operacion
+    const CONDICION_OPERACION_CONTADO = 1;
+    const CONDICION_OPERACION_CREDITO = 2;
+
+    //tipo de pagos
+    const PAGO_CHEQUE = 2;
+    const PAGO_TARJETA_CREDITO = 3;
+    const PAGO_TARJETA_DEBITO = 4;
+
     
 }

@@ -14,6 +14,15 @@ class GGrupSeg
   public ?string $dCodEmpSeg = null; //E801 Código de la empresa de seguros en la Superintendencia de Seguros
   public ?GGrupPolSeg $gGrupoPolSeg = null;
 
+
+  /////////////////////////////////////////////////
+  ///CONSTRUCTOR
+  /////////////////////////////////////////////////
+  public function __construct()
+  {
+    $this->gGrupoPolSeg = new GGrupPolSeg();
+  }
+
   //====================================================//
   ///Setter
   //====================================================//

@@ -34,14 +34,13 @@ class GEmis
     public ?string $dDenSuc = null; // Denominación comercial de la sucursal (D119)
     public ?GActEco $gActEco = null; // Grupo de campos que describen la actividad económica del emisor
     public ?GRespDE $gRespDE = null; // Grupo de campos que identifican al responsable de la generación del DE
-
-
     //====================================================//
     ///Constructor
     //====================================================//
     public function __construct()
     {
-
+        $this->gActEco = new GActEco();
+        $this->gRespDE = new GRespDE();
     }
 
     ///////////////////////////////////////////////////////////////////////

@@ -40,11 +40,10 @@ class Config
     public string $numeroDocumento; // Número de documento del contribuyente emisor.
     public string $establecimiento; // Establecimiento del contribuyente emisor.
     public string $puntoExpedicion; // Punto de expedición del contribuyente emisor.
-    public int $tipoOperacion;
-    public int $tipoOperacionFactura;
-    public int $condicionOperacion;
+    public int $tipoOperacionComercial;
+    public int $condicionOperacionComercial;
     public int $montoEntregaInicial;
-    public int $tipoDePagoOperacion;
+    public int $tipoPagoOPeracionComercial;
 
     public function __construct()
     {

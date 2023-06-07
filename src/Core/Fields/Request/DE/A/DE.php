@@ -25,7 +25,7 @@ class DE
   ///Children
   public ?GOpeDE $gOpeDe = null;           // Campos inherentes a la operación de DE
   public ?GTimb $gTimb = null;             // Datos del timbrado 
-  public ?GDatGralOpe $dDatGralOpe = null; // Campos generales del DE
+  public ?GDatGralOpe $gDatGralOpe = null; // Campos generales del DE
   public ?GDtipDE $gDtipDe = null;         //Campos específicos por tipo de Documento Electrónico 
   public ?GTotSub $gTotSub = null;         //Campos de subtotales y totales
   public ?GCamGen $gCamGen = null;         //Campos de uso general
@@ -38,8 +38,11 @@ class DE
   {
     //General
     $this->dSisFact = Constants::SISTEMA_FACTURACION_CONTRIBUYENTE;
-    $this->dDatGralOpe = new GDatGralOpe();
+    $this->gOpeDe = new GOpeDE();
     $this->gTimb = new GTimb();
+    $this->gDatGralOpe = new GDatGralOpe();
+    $this->gDtipDe = new GDtipDE();
+    $this->gCamGen = new GCamGen();
   }
 
   //====================================================//
@@ -169,7 +172,7 @@ class DE
     ///children
     $res->appendChild($this->gOpeDe->toDOMElement());
     $res->appendChild($this->gTimb->toDOMElement());
-    $res->appendChild($this->dDatGralOpe->toDOMElement());
+    $res->appendChild($this->gDatGralOpe->toDOMElement());
     $res->appendChild($this->gDtipDe->toDOMElement());
     $res->appendChild($this->gTotSub->toDOMElement());
     $res->appendChild($this->gCamGen->toDOMElement());
@@ -196,7 +199,7 @@ class DE
   //     ///Children
   //     $res->setGOpeDe($res->gOpeDe->fromDOMElement($xml->getElementsByTagName('gOpeDE')->item(0)->nodeValue));
   //     $res->setGTimb($res->gTimb->fromDOMElement($xml->getElementsByTagName('gTimb')->item(0)->nodeValue));
-  //     $res->setDDatGralOpe($res->dDatGralOpe->fromDOMElement($xml->getElementsByTagName('dDatGralOpe')->item(0)->nodeValue));
+  //     $res->setDDatGralOpe($res->gDatGralOpe->fromDOMElement($xml->getElementsByTagName('gDatGralOpe')->item(0)->nodeValue));
   //     $res->setGDtipDe($res->gDtipDe->fromDOMElement($xml->getElementsByTagName('gDtipDe')->item(0)->nodeValue));
   //     $res->setGTotSub($res->gTotSub->fromDOMElement($xml->getElementsByTagName('dTotSub')->item(0)->nodeValue));
   //     $res->setGCamGen($res->gCamGen->fromDOMElement($xml->getElementsByTagName('gCamGen')->item(0)->nodeValue));
@@ -261,25 +264,25 @@ class DE
   }
 
   /**
-   * Get the value of dDatGralOpe
+   * Get the value of gDatGralOpe
    *
    * @return GDatGralOpe
    */
   public function getDDatGralOpe(): GDatGralOpe | null
   {
-    return $this->dDatGralOpe;
+    return $this->gDatGralOpe;
   }
 
   /**
-   * Set the value of dDatGralOpe
+   * Set the value of gDatGralOpe
    *
-   * @param GDatGralOpe $dDatGralOpe
+   * @param GDatGralOpe $gDatGralOpe
    *
    * @return self
    */
-  public function setDDatGralOpe(GDatGralOpe $dDatGralOpe): self
+  public function setDDatGralOpe(GDatGralOpe $gDatGralOpe): self
   {
-    $this->dDatGralOpe = $dDatGralOpe;
+    $this->gDatGralOpe = $gDatGralOpe;
 
     return $this;
   }
@@ -379,7 +382,7 @@ class DE
 
     return $this;
   }
-  
+
   /**
    * fromResponse
    *
@@ -391,20 +394,16 @@ class DE
     ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
     $array = json_decode(json_encode($response), true);
     $de = new DE();
-    if(isset($array['@attributes']['Id']))
-    {
+    if (isset($array['@attributes']['Id'])) {
       $de->setID($array['@attributes']['Id']);
     }
-    if(isset($response->dDVId))
-    {
+    if (isset($response->dDVId)) {
       $de->setDDVId(intval($response->dDVId));
     }
-    if(isset($response->dFecFirma))
-    {
+    if (isset($response->dFecFirma)) {
       $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFirma));
     }
-    if(isset($response->dSisFact))
-    {
+    if (isset($response->dSisFact)) {
       $de->setDSisFact($response->dSisFact);
     }
     ///Children
