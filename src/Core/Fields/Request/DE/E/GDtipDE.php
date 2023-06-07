@@ -20,16 +20,6 @@ class GDtipDE
   public ?GTransp $gTransp = null;    //Campos que describen  el transporte de mercaderías
 
 
-  ///////////////////////////////////////////////////////////////////////
-  // CONSTRUCTOR
-  ///////////////////////////////////////////////////////////////////////
-  public function __construct()
-  {
-    ///Gemeral
-    $this->gCamItem = array();
-  }
-
-
   //====================================================//
   ///Others
   //====================================================//

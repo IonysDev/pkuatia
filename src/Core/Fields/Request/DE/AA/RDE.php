@@ -29,6 +29,8 @@ class RDE
     ///General
     $this->dE = new DE();
     $this->setDVerFor(Constants::SIFEN_VERSION);
+    $this->signature = new Signature();
+    $this->gCamFuFD = new GCamFuFD();
   }
 
   //====================================================//

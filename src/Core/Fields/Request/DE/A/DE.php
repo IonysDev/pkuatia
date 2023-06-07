@@ -40,8 +40,6 @@ class DE
     $this->dSisFact = Constants::SISTEMA_FACTURACION_CONTRIBUYENTE;
     $this->dDatGralOpe = new GDatGralOpe();
     $this->gTimb = new GTimb();
-    $this->gDtipDe = new GDtipDE();
-    $this->gTotSub = new GTotSub();
   }
 
   //====================================================//

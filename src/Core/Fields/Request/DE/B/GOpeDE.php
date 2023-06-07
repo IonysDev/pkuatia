@@ -13,11 +13,6 @@ class GOpeDE
     public ?int $dCodSeg = null;       // B004 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
     public ?string $dInfoEmi = null;   // B005 - Información de interés del emisor respecto al DE
     public ?string $dInfoFisc = null;  // B006 - Información de interés del fisco respecto al DE
-
-    ///////////////////////////////////////////////////////////////////////
-    // Constructors
-    ///////////////////////////////////////////////////////////////////////
-
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////

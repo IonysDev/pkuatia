@@ -36,13 +36,13 @@ class CDCHelper
       $dEst = str_pad($dEst, 3, "0", STR_PAD_LEFT);
     }
     //Punto de expedición
-    $dPunExp = strval($dE->getGTimb()->getDPunExp());
+    $dPunExp = $dE->getGTimb()->getDPunExp();
     //validation
     if (strlen($dPunExp) < 3) {
       $dPunExp = str_pad($dPunExp, 3, "0", STR_PAD_LEFT);
     }
     //Número del documento
-    $dNumDoc = strval($dE->getGTimb()->getDNumDoc());
+    $dNumDoc = $dE->getGTimb()->getDNumDoc();
     //validation
     if (strlen($dNumDoc) < 7) {
       $dNumDoc = str_pad($dNumDoc, 7, "0", STR_PAD_LEFT);
@@ -66,21 +66,5 @@ class CDCHelper
     } else {
       return $cDC;
     }
-  }
-
-  public static function decryptCDC($cdc)
-  {
-    $Test = "TIPO DE DOCUMENTO ELECTRONICO: " . substr($cdc, 0, 2) . PHP_EOL.
-    "RUC DEL EMISOR: " . substr($cdc, 2, 8) . PHP_EOL.
-    "DV DEL RUC DEL EMISOR: " . substr($cdc, 10, 1) . PHP_EOL.
-    "ESTABLECIMIENTO: " . substr($cdc, 11, 3) . PHP_EOL.
-    "PUNTO DE EXPEDICION: " . substr($cdc, 14, 3) . PHP_EOL.
-    "NUMERO DEL DOCUMENTO: " . substr($cdc, 17, 7) . PHP_EOL.
-    "TIPO DE CONTRIBUYENTE: " . substr($cdc, 24, 1) . PHP_EOL.
-    "FECHA DE EMISION: " . substr($cdc, 25, 8) . PHP_EOL.
-    "TIPO DE EMISION: " . substr($cdc, 33, 1) . PHP_EOL.
-    "CODIGO DE SEGURIDAD: " . substr($cdc, 34, 9) . PHP_EOL.
-    "DIGITO VERIFICADOR: " . substr($cdc, 43, 1) . PHP_EOL;
-    return $Test;
   }
 }
