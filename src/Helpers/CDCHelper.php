@@ -54,11 +54,12 @@ class CDCHelper
     //tipo de emision
     $iTipEmi = strval($dE->getGOpeDe()->getITipEmi());
     //codigo de seguridad
-    $dCodSeg = strval($dE->getGOpeDe()->getDCodSeg());
+    $dCodSeg = strval(str_pad(($dE->getGOpeDe()->getDCodSeg() % 1000000000), 9, "0", STR_PAD_LEFT));
     //digito verificador
-    $dDVid =  strval($dE->getDDVid());
+    $cDC = $iTide . $dRucEm . $dDvRucEm . $dEst . $dPunExp . $dNumDoc . $iTipCont . $dFeEmiDE . $iTipEmi . $dCodSeg;
+    $dDVid =  strval(SETPyTools::calcDV($cDC));
     //armado del codigo de control
-    $cDC = $iTide . $dRucEm . $dDvRucEm . $dEst . $dPunExp . $dNumDoc . $iTipCont . $dFeEmiDE . $iTipEmi . $dCodSeg . $dDVid;
+    $cDC = $cDC . $dDVid;
     //validacion
     if (strlen($cDC) < 44) {
       return "ERROR: El codigo de control no tiene 44 caracteres";

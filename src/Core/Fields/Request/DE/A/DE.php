@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\A;
 
+use Abiliomp\Pkuatia\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GDatGralOpe;
@@ -21,23 +22,26 @@ class DE
   public ?int $dDVId = null;               // A003 - dígito verificador del dentificador del DE 
   public ?DateTime $dFecFirma = null;      // A004 - Fecha de la firma
   public ?int $dSisFact = null;            // A005 - Sistema de facturación
+  ///Children
   public ?GOpeDE $gOpeDe = null;           // Campos inherentes a la operación de DE
   public ?GTimb $gTimb = null;             // Datos del timbrado 
   public ?GDatGralOpe $dDatGralOpe = null; // Campos generales del DE
-  public ?GDtipDE $gDtipDe = null;         // Datos del tipo de DE
-  public ?GTotSub $gTotSub = null;         // Totales y subtotales del DE
-  public ?GCamGen $gCamGen = null;        // Campos generales del DE
-  public ?GCamDEAsoc $gCamDEAsoc = null;  // Campos del DE asociado
+  public ?GDtipDE $gDtipDe = null;         //Campos específicos por tipo de Documento Electrónico 
+  public ?GTotSub $gTotSub = null;         //Campos de subtotales y totales
+  public ?GCamGen $gCamGen = null;         //Campos de uso general
+  public ?GCamDEAsoc $gCamDEAsoc = null;   //Campos que identifican al DE asociado
 
   //////////////////////////////////////////////////////
   // CONSTRUCTOR
   //////////////////////////////////////////////////////
   public function __construct()
   {
-    $this->gOpeDe = new GOpeDE();
-    $this->gTimb = new GTimb();
+    //General
+    $this->dSisFact = Constants::SISTEMA_FACTURACION_CONTRIBUYENTE;
     $this->dDatGralOpe = new GDatGralOpe();
+    $this->gTimb = new GTimb();
     $this->gDtipDe = new GDtipDE();
+    $this->gTotSub = new GTotSub();
   }
 
   //====================================================//
@@ -377,7 +381,7 @@ class DE
 
     return $this;
   }
-
+  
   /**
    * fromResponse
    *
@@ -389,16 +393,20 @@ class DE
     ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
     $array = json_decode(json_encode($response), true);
     $de = new DE();
-    if (isset($array['@attributes']['Id'])) {
+    if(isset($array['@attributes']['Id']))
+    {
       $de->setID($array['@attributes']['Id']);
     }
-    if (isset($response->dDVId)) {
+    if(isset($response->dDVId))
+    {
       $de->setDDVId(intval($response->dDVId));
     }
-    if (isset($response->dFecFirma)) {
+    if(isset($response->dFecFirma))
+    {
       $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFirma));
     }
-    if (isset($response->dSisFact)) {
+    if(isset($response->dSisFact))
+    {
       $de->setDSisFact($response->dSisFact);
     }
     ///Children

@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\AA;
 
-
+use Abiliomp\Pkuatia\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\J\GCamFuFD;
@@ -19,7 +19,17 @@ class RDE
   public ?int $dVerFor  = null;         // AA002 Versión del formato
   public ?DE $dE = null;               // Campos firmados del  DE
   public ?Signature $signature = null; // Firma Digital del DTE
-  public ?GCamFuFD $gCamFuFD = null;   // Campos fuera de la firma digital 
+  public ?GCamFuFD $gCamFuFD = null;   // Campos fuera de la firma digital
+
+  //====================================================//
+  ///Constructor
+  //====================================================//
+  public function __construct()
+  {
+    ///General
+    $this->dE = new DE();
+    $this->setDVerFor(Constants::SIFEN_VERSION);
+  }
 
   //====================================================//
   ///SETTERS

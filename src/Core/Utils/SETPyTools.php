@@ -9,7 +9,7 @@ class SETPyTools {
 	
 	private static $ruc_basemax = 11;
 	
-	public static function calcDV($value){
+	public static function calcDV(string $value){
 		$ruc_al = "";
 		for($i = 0; $i < strlen($value); $i++){
 			$c = $value[$i];

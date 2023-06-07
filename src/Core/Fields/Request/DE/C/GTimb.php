@@ -23,39 +23,46 @@ class GTimb
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setITiDE(int $iTiDE): void
+    public function setITiDE(int $iTiDE): self
     {
         $this->iTiDE = $iTiDE;
+        return $this;
     }
 
-    public function setDNumTim(int $dNumTim): void
+    public function setDNumTim(int $dNumTim): self
     {
         $this->dNumTim = $dNumTim;
+        return $this;
     }
 
-    public function setDEst(string $dEst): void
+    public function setDEst(string $dEst): self
     {
         $this->dEst = $dEst;
+        return $this;
     }
 
-    public function setDPunExp(string $dPunExp): void
+    public function setDPunExp(string $dPunExp): self
     {
         $this->dPunExp = $dPunExp;
+        return $this;
     }
 
-    public function setDNumDoc(string $dNumDoc): void
+    public function setDNumDoc(string $dNumDoc): self
     {
         $this->dNumDoc = $dNumDoc;
+        return $this;
     }
 
-    public function setDSerieNum(string $dSerieNum): void
+    public function setDSerieNum(string $dSerieNum): self
     {
         $this->dSerieNum = $dSerieNum;
+        return $this;
     }
 
-    public function setDFeIniT(DateTime $dFeIniT): void
+    public function setDFeIniT(DateTime $dFeIniT): self
     {
         $this->dFeIniT = $dFeIniT;
+        return $this;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -219,7 +226,6 @@ class GTimb
             $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $response->dFeIniT));
         }
         
-
         return $res;
     }
 }

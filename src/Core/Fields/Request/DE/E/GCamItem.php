@@ -41,11 +41,7 @@ class GCamItem
   //Constructor
   /////////////////////////////////////////////////////////
 
-  public function __construct()
-  {
-    $this->gValorItem = new GValorItem();
-    $this->gCamIVa = new GCamIVA();
-  }
+ 
 
   //====================================================//
   ////Setters

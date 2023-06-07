@@ -19,12 +19,15 @@ class GDatGralOpe
   public ?GDatRec $gDatRec = null;   // Grupo de campos que identifican al receptor (D200)
 
 
+  //====================================================//
+  ///Constructor
+  //====================================================//
   public function __construct()
   {
+    ///General
     $this->gEmis = new GEmis();
-    $this->gOpeCom = new GOpeCom();
-    $this->gDatRec = new GDatRec();
   }
+
 
   //====================================================//
   ///Setters

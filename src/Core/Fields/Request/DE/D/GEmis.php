@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
+use Abiliomp\Pkuatia\Config;
+use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
 use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use DOMElement;
@@ -34,10 +36,18 @@ class GEmis
     public ?GRespDE $gRespDE = null; // Grupo de campos que identifican al responsable de la generación del DE
 
 
+    //====================================================//
+    ///Constructor
+    //====================================================//
+    public function __construct()
+    {
+        //General
+        $this->gActEco = new GActEco();
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
-
     public function setDRucEm(string $dRucEm): void
     {
         $this->dRucEm = $dRucEm;

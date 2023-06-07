@@ -10,13 +10,11 @@ class RNGMaker
 
   public static function MakeSegurityCode($dNumDoc): int
   {
-    $code = strval(random_int(1, 999999999));
-    while ($code == $dNumDoc) {
-      $code = strval(random_int(1, 999999999));
+    $numDoc = intval($dNumDoc);
+    $code = random_int(1, 999999999);
+    while ($code == $numDoc) {
+      $code = random_int(1, 999999999);
     }
-    ///padding
-    $code = str_pad($code, 9, "0", STR_PAD_LEFT);
-
-    return intval($code);
+    return $code;
   }
 }

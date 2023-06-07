@@ -10,15 +10,14 @@ use DOMElement;
 //Padre:A001
 class GDtipDE
 {
-  public ?GCamFE $gCamFE = null;
-  public ?GCamAE $gCamAE = null;
-  public ?GCamNCDE $gCamNCDE = null;
-  public ?GCamNRE $gCamNRE = null;
-  public ?GCamCond $gCamCond = null;
-  ////ARRAY DE GCAMITEM
-  public ?array $gCamItem = null;
-  public ?GCamEsp $gCamEsp = null;
-  public ?GTransp $gTransp = null;
+  public ?GCamFE $gCamFE = null;      //Campos que componen la FE
+  public ?GCamAE $gCamAE = null;      //Campos que componen la Autofactura Electrónica
+  public ?GCamNCDE $gCamNCDE = null;  //Campos que componen la Nota de Crédito Electrónica
+  public ?GCamNRE $gCamNRE = null;    //Campos que componen la Nota de Remisión Electrónica
+  public ?GCamCond $gCamCond = null;  //Campos que describen la condición de la operación
+  public ?array $gCamItem = null;     //Campos que describen los ítems de la operación
+  public ?GCamEsp $gCamEsp = null;    //complementarios comerciales de uso específico
+  public ?GTransp $gTransp = null;    //Campos que describen  el transporte de mercaderías
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -26,9 +25,10 @@ class GDtipDE
   ///////////////////////////////////////////////////////////////////////
   public function __construct()
   {
-    $this->gCamFE = new GCamFE();
-    $this->gCamCond = new GCamCond();
+    ///Gemeral
+    $this->gCamItem = array();
   }
+
 
   //====================================================//
   ///Others
