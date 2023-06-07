@@ -8,6 +8,9 @@ use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
 use Abiliomp\Pkuatia\Config;
+use Abiliomp\Pkuatia\Core\Fields\E\GCamSal;
+use Abiliomp\Pkuatia\Core\Fields\E\GCamTrans;
+use Abiliomp\Pkuatia\Core\Fields\E\GTransp;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamCond;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamFE;
@@ -69,7 +72,16 @@ class Factura extends DocumentoElectronico
       $this->rDE->dE->gDtipDe->gCamCond->gPagCred = new GPagCred();
     }
     $this->rDE->dE->gDtipDe->gCamCond->gPagCred->gCuotas = new GCuotas();
-    //F
+    //Obligatorio si C002 = 7 Opcional si C002 = 1 No informar si C002= 4, 5, 6
+    $this->rDE->dE->gDtipDe->gTransp = new GTransp();
+    //Obligatorio si C002 = 7Opcional si C002 = 1 No informar si C002 = 4, 5, 6
+    $this->rDE->dE->gDtipDe->gTransp->gCamSal = new GCamSal();
+    //Obligatorio si C002 = 7 No informar si C002 = 4, 5, 6 Opcional cuanDO E903=1
+    if(Config::getInstance()->modalidadTransporte == Constants::TRANSPORTE_TERRESTRE)
+    {
+      $this->rDE->dE->gDtipDe->gTransp->gCamTrans = new GCamTrans();
+    }
+    //F Obligatorio si C002 ≠ 7 No informar si C002 = 7 Cuando C002= 4, no informar  F002, F003, F004, F005, F015, F01, F017, F018, F01
     $this->rDE->dE->gTotSub = new GTotSub();
     //G
     //Opcional cuando C002=1 o C002=7 No informar si C002 ≠ 1 o 7

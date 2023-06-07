@@ -44,6 +44,7 @@ class Config
     public int $condicionOperacionComercial;
     public int $montoEntregaInicial;
     public int $tipoPagoOPeracionComercial;
+    public int $modalidadTransporte;
 
     public function __construct()
     {

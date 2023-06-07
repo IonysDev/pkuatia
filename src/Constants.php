@@ -90,5 +90,8 @@ class Constants
     const PAGO_TARJETA_CREDITO = 3;
     const PAGO_TARJETA_DEBITO = 4;
 
+    //MODALIDAD TRASNPORTE
+    const TRANSPORTE_TERRESTRE = 1;
+
     
 }

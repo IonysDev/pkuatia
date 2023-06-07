@@ -7,6 +7,7 @@ use Abiliomp\Pkuatia\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamNCDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\F\GTotSub;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\H\GCamDEAsoc;
 use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
@@ -26,13 +27,17 @@ class NotaCredito extends DocumentoElectronico
     ///Inicializar las clases correspondiete a su tipo de documento
     /////////////////////////////////////////////////////////////////////////////
     //D
-    $this->rDE->dE->dDatGralOpe->gOpeCom = new GOpeCom();
+    //Obligatorio si C002 ≠ 7 No informar si C002 = 7
+    $this->rDE->dE->gDatGralOpe->gOpeCom = new GOpeCom();
     //E
+    //Obligatorio si C002 = 5 o 6 (NCE y NDE)No informar si C002 ≠ 5 o 6
     $this->rDE->dE->gDtipDe->gCamNCDE = new GCamNCDE();
-    $this->rDE->dE->gDtipDe->gCamItem = [];
-    //F
+    //F Obligatorio si C002 ≠ 7 No informar si C002 = 7 Cuando C002= 4, no informar  F002, F003, F004, F005, F015, F01, F017, F018, F01
     $this->rDE->dE->gTotSub = new GTotSub();
-     /////////////////////////////////////////////////////////////////////////////
+    //H 
+    //Obligatorio si C002 = 4, 5, 6  Opcional si C002=1 o 7
+    $this->rDE->dE->gCamDEAsoc = new GCamDEAsoc();
+    /////////////////////////////////////////////////////////////////////////////
     ///antes se debe generator todos los campos que se necesitan para el CDC
     /////////////////////////////////////////////////////////////////////////////
     //Establecimiento
@@ -44,11 +49,11 @@ class NotaCredito extends DocumentoElectronico
     //tipo de documento
     $this->rDE->dE->gTimb->iTiDE = Constants::TIPO_DOCUMENTO_NOTA_CREDITO;
     //ruc del emisor
-    $this->rDE->dE->dDatGralOpe->gEmis->dRucEm = Config::getInstance()->ruc;
+    $this->rDE->dE->gDatGralOpe->gEmis->dRucEm = Config::getInstance()->ruc;
     //DV del RUC del emisor
-    $this->rDE->dE->dDatGralOpe->gEmis->dDVEmi = SETPyTools::calcDV(Config::getInstance()->ruc);
+    $this->rDE->dE->gDatGralOpe->gEmis->dDVEmi = SETPyTools::calcDV(Config::getInstance()->ruc);
     //Tipo de contribuyente
-    $this->rDE->dE->dDatGralOpe->gEmis->iTipCont = Config::getInstance()->tipoContribuyente;
+    $this->rDE->dE->gDatGralOpe->gEmis->iTipCont = Config::getInstance()->tipoContribuyente;
     //tipo de emision
     $this->rDE->dE->gOpeDe->iTipEmi = Constants::TIPO_EMISION_CONTINGENCIA; //REVISAR !!!!
     //Código de Seguridad
