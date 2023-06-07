@@ -55,8 +55,8 @@ class Autofactura extends DocumentoElectronico
     //Obligatorio si E601 = 2 No informar si E601 ≠ 2
     if (Config::getInstance()->condicionOperacionComercial == Constants::CONDICION_OPERACION_CREDITO) {
       $this->rDE->dE->gDtipDe->gCamCond->gPagCred = new GPagCred();
+      $this->rDE->dE->gDtipDe->gCamCond->gPagCred->gCuotas = new GCuotas();
     }
-    $this->rDE->dE->gDtipDe->gCamCond->gPagCred->gCuotas = new GCuotas();
     //F Obligatorio si C002 ≠ 7 No informar si C002 = 7 Cuando C002= 4, no informar  F002, F003, F004, F005, F015, F01, F017, F018, F01
     $this->rDE->dE->gTotSub = new GTotSub();
     //H

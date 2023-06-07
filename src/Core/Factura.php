@@ -8,18 +8,18 @@ use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
 use Abiliomp\Pkuatia\Config;
-use Abiliomp\Pkuatia\Core\Fields\E\GCamSal;
-use Abiliomp\Pkuatia\Core\Fields\E\GCamTrans;
-use Abiliomp\Pkuatia\Core\Fields\E\GTransp;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamCond;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamFE;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamSal;;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamTrans;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCompPub;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCuotas;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPaConEIni;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPagCheq;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPagCred;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPagTarCD;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GTransp;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\F\GTotSub;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\G\GCamCarg;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\H\GCamDEAsoc;
@@ -35,6 +35,7 @@ class Factura extends DocumentoElectronico
   public function __construct()
   {
     parent::__construct();
+    var_dump(Config::getInstance());
     /////////////////////////////////////////////////////////////////////////////
     ///Inicializar las clases correspondiete a su tipo de documento
     /////////////////////////////////////////////////////////////////////////////
@@ -45,40 +46,34 @@ class Factura extends DocumentoElectronico
     //Obligatorio si C002 = 1 No informar si C002 ≠ 1
     $this->rDE->dE->gDtipDe->gCamFE = new GCamFE();
     //Obligatorio si D202 = 3 (Tipo de operación B2G)
-    if(Config::getInstance()->tipoOperacionComercial == Constants::TIPO_OPERACION_B2G)
-    {
+    if (Config::getInstance()->tipoOperacionComercial == Constants::TIPO_OPERACION_B2G) {
       $this->rDE->dE->gDtipDe->gCamFE->gComPub = new GCompPub();
     }
     //Obligatorio si C002 = 1 o 4 No informar si C002 ≠ 1 o 4
     $this->rDE->dE->gDtipDe->gCamCond = new GCamCond();
     //Obligatorio si E601 = 1 Obligatorio si existe el campo  E642
-    if(Config::getInstance()->condicionOperacionComercial == Constants::CONDICION_OPERACION_CONTADO || isset(Config::getInstance()->montoEntregaInicial))
-    {
+    if (Config::getInstance()->condicionOperacionComercial == Constants::CONDICION_OPERACION_CONTADO || isset(Config::getInstance()->montoEntregaInicial)) {
       $this->rDE->dE->gDtipDe->gCamCond->gPaConEIni = new GPaConEIni();
     }
     //Se activa si E606 = 3 o 4
-    if(Config::getInstance()->tipoPagoOPeracionComercial == Constants::PAGO_TARJETA_DEBITO || Config::getInstance()->tipoPagoOPeracionComercial == Constants::PAGO_TARJETA_CREDITO)
-    {
+    if (Config::getInstance()->tipoPagoOPeracionComercial == Constants::PAGO_TARJETA_DEBITO || Config::getInstance()->tipoPagoOPeracionComercial == Constants::PAGO_TARJETA_CREDITO) {
       $this->rDE->dE->gDtipDe->gCamCond->gPaConEIni->gPagTarCD = new GPagTarCD();
     }
     //Se activa si E606 = 2
-    if(Config::getInstance()->tipoPagoOPeracionComercial == Constants::PAGO_CHEQUE)
-    {
+    if (Config::getInstance()->tipoPagoOPeracionComercial == Constants::PAGO_CHEQUE) {
       $this->rDE->dE->gDtipDe->gCamCond->gPaConEIni->gPagCheq = new GPagCheq();
     }
     //Obligatorio si E601 = 2 No informar si E601 ≠ 2
-    if(Config::getInstance()->condicionOperacionComercial == Constants::CONDICION_OPERACION_CREDITO)
-    {
+    if (Config::getInstance()->condicionOperacionComercial == Constants::CONDICION_OPERACION_CREDITO) {
       $this->rDE->dE->gDtipDe->gCamCond->gPagCred = new GPagCred();
+      $this->rDE->dE->gDtipDe->gCamCond->gPagCred->gCuotas = new GCuotas();
     }
-    $this->rDE->dE->gDtipDe->gCamCond->gPagCred->gCuotas = new GCuotas();
     //Obligatorio si C002 = 7 Opcional si C002 = 1 No informar si C002= 4, 5, 6
     $this->rDE->dE->gDtipDe->gTransp = new GTransp();
     //Obligatorio si C002 = 7Opcional si C002 = 1 No informar si C002 = 4, 5, 6
     $this->rDE->dE->gDtipDe->gTransp->gCamSal = new GCamSal();
     //Obligatorio si C002 = 7 No informar si C002 = 4, 5, 6 Opcional cuanDO E903=1
-    if(Config::getInstance()->modalidadTransporte == Constants::TRANSPORTE_TERRESTRE)
-    {
+    if (Config::getInstance()->modalidadTransporte == Constants::TRANSPORTE_TERRESTRE) {
       $this->rDE->dE->gDtipDe->gTransp->gCamTrans = new GCamTrans();
     }
     //F Obligatorio si C002 ≠ 7 No informar si C002 = 7 Cuando C002= 4, no informar  F002, F003, F004, F005, F015, F01, F017, F018, F01

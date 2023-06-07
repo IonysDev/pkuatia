@@ -46,22 +46,42 @@ class Config
     public int $tipoPagoOPeracionComercial;
     public int $modalidadTransporte;
 
-    public function __construct()
-    {
-    }
-
     ///instancia de config
     public static function getInstance(): Config
     {
+        
         if (!isset(self::$instance)) {
             self::$instance = new Config();
+            ///initialize values
+            self::$instance->ambiente = "dev";
+            self::$instance->usarCertificado = false;
+            self::$instance->tipoCertificado = "pfx";
+            self::$instance->certificado = "";
+            self::$instance->contraseñaCertificado = "";
+            self::$instance->idCsc = "";
+            self::$instance->csc = "";
+            self::$instance->ruc = "";
+            self::$instance->tipoContribuyente = 2;
+            self::$instance->razonSocial = "";
+            self::$instance->direccion = "";
+            self::$instance->numeroCasa = "";
+            self::$instance->telefono = "";
+            self::$instance->correo = "";
+            self::$instance->departamento = 0;
+            self::$instance->ciudad = 0;
+            self::$instance->actEco = "";
+            self::$instance->descActEco = "";
+            self::$instance->numeroDocumento = "";
+            self::$instance->establecimiento = "";
+            self::$instance->puntoExpedicion = "";
+            self::$instance->tipoOperacionComercial = 1;
+            self::$instance->condicionOperacionComercial = 1;
+            self::$instance->montoEntregaInicial = 0;
+            self::$instance->tipoPagoOPeracionComercial = 1;
+            self::$instance->modalidadTransporte = 1;
         }
         return self::$instance;
     }
 
-    ///setea los datos de la config
-    public static function setConfig($config)
-    {
-        $instance = self::getInstance();
-    }
+
 }

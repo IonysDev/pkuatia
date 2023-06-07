@@ -27,6 +27,8 @@ class GDatGralOpe
     ///General
     $this->gEmis = new GEmis();
     $this->gDatRec = new GDatRec();
+    ///FOR TEST ONLY
+    $this->dFeEmiDE = new DateTime();
   }
 
 

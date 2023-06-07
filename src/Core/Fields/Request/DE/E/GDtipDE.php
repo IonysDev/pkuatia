@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
-use Abiliomp\Pkuatia\Core\Fields\E\GTransp;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GTransp;
 use DOMElement;
 
 // Campos específicos por tipo de Documento Electrónico (E001-E009)
