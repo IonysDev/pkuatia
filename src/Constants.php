@@ -9,7 +9,7 @@ namespace Abiliomp\Pkuatia;
 class Constants
 {  
     // Versiones
-    const PKUATIA_VERSION = "0.2.0";
+    const PKUATIA_VERSION = "0.0.1";
     const SIFEN_VERSION = "150";
 
     // Namespaces
