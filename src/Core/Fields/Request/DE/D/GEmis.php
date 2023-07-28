@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
+use Abiliomp\Pkuatia\Config;
+use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
 use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use DOMElement;
@@ -32,12 +34,18 @@ class GEmis
     public ?string $dDenSuc = null; // Denominación comercial de la sucursal (D119)
     public ?GActEco $gActEco = null; // Grupo de campos que describen la actividad económica del emisor
     public ?GRespDE $gRespDE = null; // Grupo de campos que identifican al responsable de la generación del DE
-
+    //====================================================//
+    ///Constructor
+    //====================================================//
+    public function __construct()
+    {
+        $this->gActEco = new GActEco();
+        $this->gRespDE = new GRespDE();
+    }
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
-
     public function setDRucEm(string $dRucEm): void
     {
         $this->dRucEm = $dRucEm;

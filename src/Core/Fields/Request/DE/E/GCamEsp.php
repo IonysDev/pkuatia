@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
+
 use DOMElement;
 
 /**
@@ -14,6 +15,16 @@ class GCamEsp
   public ?GGrupEner $gGrupoEner = null;
   public ?GGrupSeg $gGrupoSeg  = null;
   public ?GGrupSup $gGrupSup  = null;
+  public ?GGrupAdi $gGrupAdi = null;
+
+  public function __construct()
+  {
+    //General
+    $this->gGrupoEner = new GGrupEner();
+    $this->gGrupoSeg  = new GGrupSeg();
+    $this->gGrupSup  = new GGrupSup();
+    $this->gGrupAdi = new GGrupAdi();
+  }
 
   //====================================================//
   ///Others
@@ -112,6 +123,10 @@ class GCamEsp
       $res->appendChild($this->gGrupSup->toDomElement());
     }
 
+    if (isset($this->gGrupAdi)) {
+      $res->appendChild($this->gGrupAdi->toDomElement());
+    }
+
     return $res;
   }
 
@@ -161,6 +176,35 @@ class GCamEsp
       $res->setGGrupSup(GGrupSup::fromResponse($response->gGrupoSup));
     }
 
+    if(isset($response->gGrupAdi))
+    {
+      $res->setGGrupAdi(GGrupAdi::fromResponse($response->gGrupAdi));
+    }
+
     return $res;
+  }
+
+  /**
+   * Get the value of gGrupAdi
+   *
+   * @return ?GGrupAdi
+   */
+  public function getGGrupAdi(): ?GGrupAdi
+  {
+    return $this->gGrupAdi;
+  }
+
+  /**
+   * Set the value of gGrupAdi
+   *
+   * @param ?GGrupAdi $gGrupAdi
+   *
+   * @return self
+   */
+  public function setGGrupAdi(?GGrupAdi $gGrupAdi): self
+  {
+    $this->gGrupAdi = $gGrupAdi;
+
+    return $this;
   }
 }

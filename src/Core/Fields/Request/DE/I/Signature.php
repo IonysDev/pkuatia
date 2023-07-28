@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\I;
 
+use Abiliomp\Pkuatia\Helpers\SignHelper;
+
 /**
  *  ID:I001  Firma Digital del DTE  PADRE:AA001
  */
@@ -9,21 +11,7 @@ class Signature
 {
   public ?string $dSig = null; // I002 - Firma Digital del DTE
 
-  ///TODO
-
-
-  public static function fromResponse($response): self
-  {
-    $instance = new self();
-
-    ///TODO
-    if (isset($response->dSig)) {
-      $instance->setDSig($response->dSig);
-    }
-
-    return $instance;
-  }
-
+  
   /**
    * Get the value of dSig
    *

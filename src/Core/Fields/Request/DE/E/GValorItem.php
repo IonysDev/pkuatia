@@ -11,9 +11,9 @@ use DOMElement;
  */
 class GValorItem
 {
-  public ?int $dPUniProSer = null; ///E721 Precio unitario del producto y/o servicio (incluidos impuestos)
-  public ?int $dTiCamIt = null; ///E725 Tipo de cambio por ítem
-  public ?int $dTotBruOpeItem = null; ///E727 Total bruto de la operación por ítem
+  public ?float $dPUniProSer = null; ///E721 Precio unitario del producto y/o servicio (incluidos impuestos)
+  public ?float $dTiCamIt = null; ///E725 Tipo de cambio por ítem
+  public ?float $dTotBruOpeItem = null; ///E727 Total bruto de la operación por ítem
   public ?GValorRestaItem $gValorRestaItem = null;
 
   //====================================================//
@@ -23,11 +23,11 @@ class GValorItem
   /**
    * Set the value of dPUniProSer
    *
-   * @param int $dPUniProSer
+   * @param float $dPUniProSer
    *
    * @return self
    */
-  public function setDPUniProSer(int $dPUniProSer): self
+  public function setDPUniProSer(float $dPUniProSer): self
   {
     $this->dPUniProSer = $dPUniProSer;
 
@@ -38,11 +38,11 @@ class GValorItem
   /**
    * Set the value of dTiCamIt
    *
-   * @param int $dTiCamIt
+   * @param float $dTiCamIt
    *
    * @return self
    */
-  public function setDTiCamIt(int $dTiCamIt): self
+  public function setDTiCamIt(float $dTiCamIt): self
   {
     $this->dTiCamIt = $dTiCamIt;
 
@@ -53,11 +53,11 @@ class GValorItem
   /**
    * Set the value of dTotBruOpeItem
    *
-   * @param int $dTotBruOpeItem
+   * @param float $dTotBruOpeItem
    *
    * @return self
    */
-  public function setDTotBruOpeItem(int $dTotBruOpeItem): self
+  public function setDTotBruOpeItem(float $dTotBruOpeItem): self
   {
     $this->dTotBruOpeItem = $dTotBruOpeItem;
 
@@ -72,9 +72,9 @@ class GValorItem
   /**
    * Get the value of dPUniProSer
    *
-   * @return int
+   * @return float
    */
-  public function getDPUniProSer(): int | null
+  public function getDPUniProSer(): float | null
   {
     return $this->dPUniProSer;
   }
@@ -82,9 +82,9 @@ class GValorItem
   /**
    * Get the value of dTiCamIt
    *
-   * @return int
+   * @return float
    */
-  public function getDTiCamIt(): int | null
+  public function getDTiCamIt(): float | null
   {
     return $this->dTiCamIt;
   }
@@ -92,9 +92,9 @@ class GValorItem
   /**
    * Get the value of dTotBruOpeItem
    *
-   * @return int
+   * @return float
    */
-  public function getDTotBruOpeItem(): int | null
+  public function getDTotBruOpeItem(): float | null
   {
     return $this->dTotBruOpeItem;
   }
@@ -131,9 +131,9 @@ class GValorItem
   // {
   //   if (strcmp($xml->tagName, 'gValorItem') == 0 && $xml->childElementCount == 4) {
   //     $res = new GValorItem();
-  //     $res->setDPUniProSer(intval($xml->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
-  //     $res->setDTiCamIt(intval($xml->getElementsByTagName('dTiCamIt')->item(0)->nodeValue));
-  //     $res->setDTotBruOpeItem(intval($xml->getElementsByTagName('dTotBruOpeItem')->item(0)->nodeValue));
+  //     $res->setDPUniProSer(floatval($xml->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
+  //     $res->setDTiCamIt(floatval($xml->getElementsByTagName('dTiCamIt')->item(0)->nodeValue));
+  //     $res->setDTotBruOpeItem(floatval($xml->getElementsByTagName('dTotBruOpeItem')->item(0)->nodeValue));
   //     ///children
   //     $res->setGValorRestaItem($res->gValorRestaItem->fromDOMElement($xml->getElementsByTagName('gValorRestaItem')->item(0)->nodeValue));
   //     return $res;
@@ -182,15 +182,15 @@ class GValorItem
     $res = new GValorItem();
     if(isset($response->dPUniProSer))
     {
-      $res->setDPUniProSer(intval($response->dPUniProSer));
+      $res->setDPUniProSer(floatval($response->dPUniProSer));
     }
     if(isset($response->dTiCamIt))
     {
-      $res->setDTiCamIt(intval($response->dTiCamIt));
+      $res->setDTiCamIt(floatval($response->dTiCamIt));
     }
     if(isset($response->dTotBruOpeItem))
     {
-      $res->setDTotBruOpeItem(intval($response->dTotBruOpeItem));
+      $res->setDTotBruOpeItem(floatval($response->dTotBruOpeItem));
     }
     ///children
     if(isset($response->gValorRestaItem))

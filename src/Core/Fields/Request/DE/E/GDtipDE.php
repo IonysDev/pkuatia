@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
-use Abiliomp\Pkuatia\Core\Fields\E\GTransp;
+use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GTransp;
 use DOMElement;
 
 // Campos específicos por tipo de Documento Electrónico (E001-E009)
@@ -10,15 +10,23 @@ use DOMElement;
 //Padre:A001
 class GDtipDE
 {
-  public ?GCamFE $gCamFE = null;
-  public ?GCamAE $gCamAE = null;
-  public ?GCamNCDE $gCamNCDE = null;
-  public ?GCamNRE $gCamNRE = null;
-  public ?GCamCond $gCamCond = null;
-  ////ARRAY DE GCAMITEM
-  public ?array $gCamItem = null;
-  public ?GCamEsp $gCamEsp = null;
-  public ?GTransp $gTransp = null;
+  public ?GCamFE $gCamFE = null;      //Campos que componen la FE
+  public ?GCamAE $gCamAE = null;      //Campos que componen la Autofactura Electrónica
+  public ?GCamNCDE $gCamNCDE = null;  //Campos que componen la Nota de Crédito Electrónica
+  public ?GCamNRE $gCamNRE = null;    //Campos que componen la Nota de Remisión Electrónica
+  public ?GCamCond $gCamCond = null;  //Campos que describen la condición de la operación
+  public ?array $gCamItem = null;     //Campos que describen los ítems de la operación
+  public ?GCamEsp $gCamEsp = null;    //complementarios comerciales de uso específico
+  public ?GTransp $gTransp = null;    //Campos que describen  el transporte de mercaderías
+
+
+
+  public function __construct()
+  {
+    //Genral
+    $this->gCamItem = [];
+    $this->gCamEsp = new GCamEsp();
+  }
 
   //====================================================//
   ///Others
@@ -319,5 +327,10 @@ class GDtipDE
     $this->gTransp = $gTransp;
 
     return $this;
+  }
+
+  public function pushIntoGCamItem(GCamItem $gCamItem)
+  {
+    $this->gCamItem[] = $gCamItem;
   }
 }

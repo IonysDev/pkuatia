@@ -76,7 +76,7 @@ class GOpeCom
                 return 'Prestación de servicios';
                 break;
             case 3:
-                return 'Mixto'; // Venta de mercadería y servicios
+                return 'Mixto (Venta de mercadería y servicios)';
                 break;
             case 4:
                 return 'Venta de activo fijo';

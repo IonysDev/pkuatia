@@ -12,8 +12,8 @@ class GCamIVA
   public ?int $iAfecIVA  = null; /// E731  Forma de afectación tributaria del IVA
   public ?int $dPropIVA  = null; ///E733 Proporción gravada de IVA
   public ?int $dTasaIVA  = null; //E734  Tasa del IVA
-  public ?int $dBasGravIVA = null; //E735 Base gravada del IVA por ítem 
-  public ?int $dLiqIVAItem = null; //E736  Liquidación del IVA por ítem
+  public ?float $dBasGravIVA = null; //E735 Base gravada del IVA por ítem 
+  public ?float $dLiqIVAItem = null; //E736  Liquidación del IVA por ítem
 
   //====================================================//
   //Setters
@@ -67,11 +67,11 @@ class GCamIVA
   /**
    * Set the value of dBasGravIVA
    *
-   * @param int $dBasGravIVA
+   * @param float $dBasGravIVA
    *
    * @return self
    */
-  public function setDBasGravIVA(int $dBasGravIVA): self
+  public function setDBasGravIVA(float $dBasGravIVA): self
   {
     $this->dBasGravIVA = $dBasGravIVA;
 
@@ -82,11 +82,11 @@ class GCamIVA
   /**
    * Set the value of dLiqIVAItem
    *
-   * @param int $dLiqIVAItem
+   * @param float $dLiqIVAItem
    *
    * @return self
    */
-  public function setDLiqIVAItem(int $dLiqIVAItem): self
+  public function setDLiqIVAItem(float $dLiqIVAItem): self
   {
     $this->dLiqIVAItem = $dLiqIVAItem;
 
@@ -157,9 +157,9 @@ class GCamIVA
   /**
    * Get the value of dBasGravIVA
    *
-   * @return int
+   * @return float
    */
-  public function getDBasGravIVA(): int | null
+  public function getDBasGravIVA(): float | null
   {
     return $this->dBasGravIVA;
   }
@@ -167,9 +167,9 @@ class GCamIVA
   /**
    * Get the value of dLiqIVAItem
    *
-   * @return int
+   * @return float
    */
-  public function getDLiqIVAItem(): int | null
+  public function getDLiqIVAItem(): float | null
   {
     return $this->dLiqIVAItem;
   }
@@ -243,11 +243,11 @@ class GCamIVA
     }
     if(isset($resposne->dBasGravIVA))
     {
-      $res->setDBasGravIVA(intval($resposne->dBasGravIVA));
+      $res->setDBasGravIVA(floatval($resposne->dBasGravIVA));
     }
     if(isset($resposne->dLiqIVAItem))
     {
-      $res->setDLiqIVAItem(intval($resposne->dLiqIVAItem));
+      $res->setDLiqIVAItem(floatval($resposne->dLiqIVAItem));
     }
     
      

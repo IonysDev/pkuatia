@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
+use Abiliomp\Pkuatia\Config;
 use DOMElement;
 
 /**
@@ -14,6 +15,7 @@ class GActEco
     public ?string $cActEco = null; // D131 - Código de la actividad económica del emisor 
     public ?string $dDesActEco = null; // D132 - Descripción de la actividad económica del emisor
 
+  
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////

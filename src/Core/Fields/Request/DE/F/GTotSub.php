@@ -9,31 +9,31 @@ use DOMElement;
  */
 class GTotSub
 {
-  public ?int $dSubExe = null; //F002 Subtotal de la operación exenta
-  public ?int $dSubExo = null; //F003 Subtotal de la operación exonerada
-  public ?int $dSub5 = null; ///F004 Subtotal de la operación con IVA incluido a la tasa 5%
-  public ?int $dSub10 = null; ///F005 Subtotal de la  operación con IVA  incluido a la tasa 10%
-  public ?int $dTotOpe = null; ///F008 dTotOpe Total Bruto de la operación 
-  public ?int $dTotDesc = null; //F009 dTotDesc Total descuento particular por ítem
-  public ?int $dTotDescGlotem = null; //F033 Total descuento global  por ítem
-  public ?int $dTotAntItem = null; ///F034 Total Anticipo por ítem
-  public ?int $dTotAnt = null; //F035 Total Anticipo global por ítem
-  public ?int $dPorcDescTotal = null; ///F010 Porcentaje de descuento global sobre total de la operación
-  public ?int $dDescTotal = null; ///F011 Total Descuentos de la operación 
-  public ?int $dAnticipo = null; ///F012 Total Anticipos de la operación 
-  public ?int $dRedon = null; ///F013 Redondeo de la  operación 
-  public ?int $dComi = null; ///F025 Comisión de la operación
-  public ?int $dTotGralOpe = null; ///F014 Total Neto de la operación
-  public ?int $dIVA5 = null; ///F015 Liquidación del IVA a la tasa del 5%
-  public ?int $dIVA10 = null; ///F016 Liquidación del IVA a la tasa del 10%
-  public ?int $dLiqTotIVA5; ///F036 Liquidación total del IVA por redondeo a la tasa del 5%
-  public ?int $dLiqTotIVA10 = null; /// F037Liquidación total del IVA por redondeo a la tasa del 10%
-  public ?int $dIVAComi = null; ///F026 Liquidación total del IVA de la comisión
-  public ?int $dTotIVA = null; //F017 Liquidación total del IVA 
-  public ?int $dBaseGrav5 = null; //F018  Total base gravada al  5%
-  public ?int $dBaseGrav10 = null; ///F019  Total base gravada 
-  public ?int $dTBasGraIVA = null; //F020 Total de la base gravada de IVA
-  public ?int $dTotalGs = null; /// F023 Total general de la operación en Guaraníes
+  public ?float $dSubExe = null; //F002 Subtotal de la operación exenta
+  public ?float $dSubExo = null; //F003 Subtotal de la operación exonerada
+  public ?float $dSub5 = null; ///F004 Subtotal de la operación con IVA incluido a la tasa 5%
+  public ?float $dSub10 = null; ///F005 Subtotal de la  operación con IVA  incluido a la tasa 10%
+  public ?float $dTotOpe = null; ///F008 dTotOpe Total Bruto de la operación 
+  public ?float $dTotDesc = null; //F009 dTotDesc Total descuento particular por ítem
+  public ?float $dTotDescGlotem = null; //F033 Total descuento global  por ítem
+  public ?float $dTotAntItem = null; ///F034 Total Anticipo por ítem
+  public ?float $dTotAnt = null; //F035 Total Anticipo global por ítem
+  public ?float $dPorcDescTotal = null; ///F010 Porcentaje de descuento global sobre total de la operación
+  public ?float $dDescTotal = null; ///F011 Total Descuentos de la operación 
+  public ?float $dAnticipo = null; ///F012 Total Anticipos de la operación 
+  public ?float $dRedon = null; ///F013 Redondeo de la  operación 
+  public ?float $dComi = null; ///F025 Comisión de la operación
+  public ?float $dTotGralOpe = null; ///F014 Total Neto de la operación
+  public ?float $dIVA5 = null; ///F015 Liquidación del IVA a la tasa del 5%
+  public ?float $dIVA10 = null; ///F016 Liquidación del IVA a la tasa del 10%
+  public ?float $dLiqTotIVA5; ///F036 Liquidación total del IVA por redondeo a la tasa del 5%
+  public ?float $dLiqTotIVA10 = null; /// F037Liquidación total del IVA por redondeo a la tasa del 10%
+  public ?float $dIVAComi = null; ///F026 Liquidación total del IVA de la comisión
+  public ?float $dTotIVA = null; //F017 Liquidación total del IVA 
+  public ?float $dBaseGrav5 = null; //F018  Total base gravada al  5%
+  public ?float $dBaseGrav10 = null; ///F019  Total base gravada 
+  public ?float $dTBasGraIVA = null; //F020 Total de la base gravada de IVA
+  public ?float $dTotalGs = null; /// F023 Total general de la operación en Guaraníes
 
   //====================================================//
   ///SETTERS
@@ -42,11 +42,11 @@ class GTotSub
   /**
    * Set the value of dSubExe
    *
-   * @param int $dSubExe
+   * @param float $dSubExe
    *
    * @return self
    */
-  public function setDSubExe(int $dSubExe): self
+  public function setDSubExe(float $dSubExe): self
   {
     $this->dSubExe = $dSubExe;
 
@@ -57,11 +57,11 @@ class GTotSub
   /**
    * Set the value of dSubExo
    *
-   * @param int $dSubExo
+   * @param float $dSubExo
    *
    * @return self
    */
-  public function setDSubExo(int $dSubExo): self
+  public function setDSubExo(float $dSubExo): self
   {
     $this->dSubExo = $dSubExo;
 
@@ -72,11 +72,11 @@ class GTotSub
   /**
    * Set the value of dSub5
    *
-   * @param int $dSub5
+   * @param float $dSub5
    *
    * @return self
    */
-  public function setDSub5(int $dSub5): self
+  public function setDSub5(float $dSub5): self
   {
     $this->dSub5 = $dSub5;
 
@@ -87,11 +87,11 @@ class GTotSub
   /**
    * Set the value of dSub10
    *
-   * @param int $dSub10
+   * @param float $dSub10
    *
    * @return self
    */
-  public function setDSub10(int $dSub10): self
+  public function setDSub10(float $dSub10): self
   {
     $this->dSub10 = $dSub10;
 
@@ -102,11 +102,11 @@ class GTotSub
   /**
    * Set the value of dTotOpe
    *
-   * @param int $dTotOpe
+   * @param float $dTotOpe
    *
    * @return self
    */
-  public function setDTotOpe(int $dTotOpe): self
+  public function setDTotOpe(float $dTotOpe): self
   {
     $this->dTotOpe = $dTotOpe;
 
@@ -117,11 +117,11 @@ class GTotSub
   /**
    * Set the value of dTotDesc
    *
-   * @param int $dTotDesc
+   * @param float $dTotDesc
    *
    * @return self
    */
-  public function setDTotDesc(int $dTotDesc): self
+  public function setDTotDesc(float $dTotDesc): self
   {
     $this->dTotDesc = $dTotDesc;
 
@@ -132,11 +132,11 @@ class GTotSub
   /**
    * Set the value of dTotDescGlotem
    *
-   * @param int $dTotDescGlotem
+   * @param float $dTotDescGlotem
    *
    * @return self
    */
-  public function setDTotDescGlotem(int $dTotDescGlotem): self
+  public function setDTotDescGlotem(float $dTotDescGlotem): self
   {
     $this->dTotDescGlotem = $dTotDescGlotem;
 
@@ -147,11 +147,11 @@ class GTotSub
   /**
    * Set the value of dTotAntItem
    *
-   * @param int $dTotAntItem
+   * @param float $dTotAntItem
    *
    * @return self
    */
-  public function setDTotAntItem(int $dTotAntItem): self
+  public function setDTotAntItem(float $dTotAntItem): self
   {
     $this->dTotAntItem = $dTotAntItem;
 
@@ -162,11 +162,11 @@ class GTotSub
   /**
    * Set the value of dTotAnt
    *
-   * @param int $dTotAnt
+   * @param float $dTotAnt
    *
    * @return self
    */
-  public function setDTotAnt(int $dTotAnt): self
+  public function setDTotAnt(float $dTotAnt): self
   {
     $this->dTotAnt = $dTotAnt;
 
@@ -177,11 +177,11 @@ class GTotSub
   /**
    * Set the value of dPorcDescTotal
    *
-   * @param int $dPorcDescTotal
+   * @param float $dPorcDescTotal
    *
    * @return self
    */
-  public function setDPorcDescTotal(int $dPorcDescTotal): self
+  public function setDPorcDescTotal(float $dPorcDescTotal): self
   {
     $this->dPorcDescTotal = $dPorcDescTotal;
 
@@ -192,11 +192,11 @@ class GTotSub
   /**
    * Set the value of dDescTotal
    *
-   * @param int $dDescTotal
+   * @param float $dDescTotal
    *
    * @return self
    */
-  public function setDDescTotal(int $dDescTotal): self
+  public function setDDescTotal(float $dDescTotal): self
   {
     $this->dDescTotal = $dDescTotal;
 
@@ -207,11 +207,11 @@ class GTotSub
   /**
    * Set the value of dAnticipo
    *
-   * @param int $dAnticipo
+   * @param float $dAnticipo
    *
    * @return self
    */
-  public function setDAnticipo(int $dAnticipo): self
+  public function setDAnticipo(float $dAnticipo): self
   {
     $this->dAnticipo = $dAnticipo;
 
@@ -222,11 +222,11 @@ class GTotSub
   /**
    * Set the value of dRedon
    *
-   * @param int $dRedon
+   * @param float $dRedon
    *
    * @return self
    */
-  public function setDRedon(int $dRedon): self
+  public function setDRedon(float $dRedon): self
   {
     $this->dRedon = $dRedon;
 
@@ -237,11 +237,11 @@ class GTotSub
   /**
    * Set the value of dComi
    *
-   * @param int $dComi
+   * @param float $dComi
    *
    * @return self
    */
-  public function setDComi(int $dComi): self
+  public function setDComi(float $dComi): self
   {
     $this->dComi = $dComi;
 
@@ -252,11 +252,11 @@ class GTotSub
   /**
    * Set the value of dTotGralOpe
    *
-   * @param int $dTotGralOpe
+   * @param float $dTotGralOpe
    *
    * @return self
    */
-  public function setDTotGralOpe(int $dTotGralOpe): self
+  public function setDTotGralOpe(float $dTotGralOpe): self
   {
     $this->dTotGralOpe = $dTotGralOpe;
 
@@ -267,11 +267,11 @@ class GTotSub
   /**
    * Set the value of dIVA5
    *
-   * @param int $dIVA5
+   * @param float $dIVA5
    *
    * @return self
    */
-  public function setDIVA5(int $dIVA5): self
+  public function setDIVA5(float $dIVA5): self
   {
     $this->dIVA5 = $dIVA5;
 
@@ -282,11 +282,11 @@ class GTotSub
   /**
    * Set the value of dIVA10
    *
-   * @param int $dIVA10
+   * @param float $dIVA10
    *
    * @return self
    */
-  public function setDIVA10(int $dIVA10): self
+  public function setDIVA10(float $dIVA10): self
   {
     $this->dIVA10 = $dIVA10;
 
@@ -297,11 +297,11 @@ class GTotSub
   /**
    * Set the value of dLiqTotIVA5
    *
-   * @param int $dLiqTotIVA5
+   * @param float $dLiqTotIVA5
    *
    * @return self
    */
-  public function setDLiqTotIVA5(int $dLiqTotIVA5): self
+  public function setDLiqTotIVA5(float $dLiqTotIVA5): self
   {
     $this->dLiqTotIVA5 = $dLiqTotIVA5;
 
@@ -312,11 +312,11 @@ class GTotSub
   /**
    * Set the value of dLiqTotIVA10
    *
-   * @param int $dLiqTotIVA10
+   * @param float $dLiqTotIVA10
    *
    * @return self
    */
-  public function setDLiqTotIVA10(int $dLiqTotIVA10): self
+  public function setDLiqTotIVA10(float $dLiqTotIVA10): self
   {
     $this->dLiqTotIVA10 = $dLiqTotIVA10;
 
@@ -327,11 +327,11 @@ class GTotSub
   /**
    * Set the value of dIVAComi
    *
-   * @param int $dIVAComi
+   * @param float $dIVAComi
    *
    * @return self
    */
-  public function setDIVAComi(int $dIVAComi): self
+  public function setDIVAComi(float $dIVAComi): self
   {
     $this->dIVAComi = $dIVAComi;
 
@@ -342,11 +342,11 @@ class GTotSub
   /**
    * Set the value of dTotIVA
    *
-   * @param int $dTotIVA
+   * @param float $dTotIVA
    *
    * @return self
    */
-  public function setDTotIVA(int $dTotIVA): self
+  public function setDTotIVA(float $dTotIVA): self
   {
     $this->dTotIVA = $dTotIVA;
 
@@ -357,11 +357,11 @@ class GTotSub
   /**
    * Set the value of dBaseGrav5
    *
-   * @param int $dBaseGrav5
+   * @param float $dBaseGrav5
    *
    * @return self
    */
-  public function setDBaseGrav5(int $dBaseGrav5): self
+  public function setDBaseGrav5(float $dBaseGrav5): self
   {
     $this->dBaseGrav5 = $dBaseGrav5;
 
@@ -372,11 +372,11 @@ class GTotSub
   /**
    * Set the value of dTBasGraIVA
    *
-   * @param int $dTBasGraIVA
+   * @param float $dTBasGraIVA
    *
    * @return self
    */
-  public function setDTBasGraIVA(int $dTBasGraIVA): self
+  public function setDTBasGraIVA(float $dTBasGraIVA): self
   {
     $this->dTBasGraIVA = $dTBasGraIVA;
 
@@ -387,11 +387,11 @@ class GTotSub
   /**
    * Set the value of dTotalGs
    *
-   * @param int $dTotalGs
+   * @param float $dTotalGs
    *
    * @return self
    */
-  public function setDTotalGs(int $dTotalGs): self
+  public function setDTotalGs(float $dTotalGs): self
   {
     $this->dTotalGs = $dTotalGs;
 
@@ -406,9 +406,9 @@ class GTotSub
   /**
    * Get the value of dSubExe
    *
-   * @return int
+   * @return float
    */
-  public function getDSubExe(): int | null
+  public function getDSubExe(): float | null
   {
     return $this->dSubExe;
   }
@@ -416,9 +416,9 @@ class GTotSub
   /**
    * Get the value of dSubExo
    *
-   * @return int
+   * @return float
    */
-  public function getDSubExo(): int | null
+  public function getDSubExo(): float | null
   {
     return $this->dSubExo;
   }
@@ -426,9 +426,9 @@ class GTotSub
   /**
    * Get the value of dSub5
    *
-   * @return int
+   * @return float
    */
-  public function getDSub5(): int | null
+  public function getDSub5(): float | null
   {
     return $this->dSub5;
   }
@@ -436,9 +436,9 @@ class GTotSub
   /**
    * Get the value of dSub10
    *
-   * @return int
+   * @return float
    */
-  public function getDSub10(): int | null
+  public function getDSub10(): float | null
   {
     return $this->dSub10;
   }
@@ -446,9 +446,9 @@ class GTotSub
   /**
    * Get the value of dTotOpe
    *
-   * @return int
+   * @return float
    */
-  public function getDTotOpe(): int | null
+  public function getDTotOpe(): float | null
   {
     return $this->dSubExe + $this->dSubExo + $this->dSub5 + $this->dSub10;
   }
@@ -456,9 +456,9 @@ class GTotSub
   /**
    * Get the value of dTotDesc
    *
-   * @return int
+   * @return float
    */
-  public function getDTotDesc(): int | null
+  public function getDTotDesc(): float | null
   {
     return $this->dTotDesc;
   }
@@ -466,9 +466,9 @@ class GTotSub
   /**
    * Get the value of dTotDescGlotem
    *
-   * @return int
+   * @return float
    */
-  public function getDTotDescGlotem(): int | null
+  public function getDTotDescGlotem(): float | null
   {
     return $this->dTotDescGlotem;
   }
@@ -476,9 +476,9 @@ class GTotSub
   /**
    * Get the value of dTotAntItem
    *
-   * @return int
+   * @return float
    */
-  public function getDTotAntItem(): int | null
+  public function getDTotAntItem(): float | null
   {
     return $this->dTotAntItem;
   }
@@ -486,9 +486,9 @@ class GTotSub
   /**
    * Get the value of dTotAnt
    *
-   * @return int
+   * @return float
    */
-  public function getDTotAnt(): int | null
+  public function getDTotAnt(): float | null
   {
     return $this->dTotAnt;
   }
@@ -496,9 +496,9 @@ class GTotSub
   /**
    * Get the value of dPorcDescTotal
    *
-   * @return int
+   * @return float
    */
-  public function getDPorcDescTotal(): int | null
+  public function getDPorcDescTotal(): float | null
   {
     return $this->dPorcDescTotal;
   }
@@ -506,9 +506,9 @@ class GTotSub
   /**
    * Get the value of dDescTotal
    *
-   * @return int
+   * @return float
    */
-  public function getDDescTotal(): int | null
+  public function getDDescTotal(): float | null
   {
     return $this->dDescTotal;
   }
@@ -516,9 +516,9 @@ class GTotSub
   /**
    * Get the value of dAnticipo
    *
-   * @return int
+   * @return float
    */
-  public function getDAnticipo(): int | null
+  public function getDAnticipo(): float | null
   {
     return $this->dAnticipo;
   }
@@ -526,9 +526,9 @@ class GTotSub
   /**
    * Get the value of dRedon
    *
-   * @return int
+   * @return float
    */
-  public function getDRedon(): int | null
+  public function getDRedon(): float | null
   {
     return $this->dRedon;
   }
@@ -536,9 +536,9 @@ class GTotSub
   /**
    * Get the value of dComi
    *
-   * @return int
+   * @return float
    */
-  public function getDComi(): int | null
+  public function getDComi(): float | null
   {
     return $this->dComi;
   }
@@ -546,9 +546,9 @@ class GTotSub
   /**
    * Get the value of dTotGralOpe
    *
-   * @return int
+   * @return float
    */
-  public function getDTotGralOpe(): int | null
+  public function getDTotGralOpe(): float | null
   {
     return $this->dTotOpe - $this->dRedon + $this->dComi;
   }
@@ -556,9 +556,9 @@ class GTotSub
   /**
    * Get the value of dIVA5
    *
-   * @return int
+   * @return float
    */
-  public function getDIVA5(): int | null
+  public function getDIVA5(): float | null
   {
     return $this->dIVA5;
   }
@@ -566,9 +566,9 @@ class GTotSub
   /**
    * Get the value of dIVA10
    *
-   * @return int
+   * @return float
    */
-  public function getDIVA10(): int | null
+  public function getDIVA10(): float | null
   {
     return $this->dIVA10;
   }
@@ -576,9 +576,9 @@ class GTotSub
   /**
    * Get the value of dLiqTotIVA5
    *
-   * @return int
+   * @return float
    */
-  public function getDLiqTotIVA5(): int | null
+  public function getDLiqTotIVA5(): float | null
   {
     return $this->dLiqTotIVA5;
   }
@@ -586,9 +586,9 @@ class GTotSub
   /**
    * Get the value of dLiqTotIVA10
    *
-   * @return int
+   * @return float
    */
-  public function getDLiqTotIVA10(): int | null
+  public function getDLiqTotIVA10(): float | null
   {
     return $this->dLiqTotIVA10;
   }
@@ -596,9 +596,9 @@ class GTotSub
   /**
    * Get the value of dIVAComi
    *
-   * @return int
+   * @return float
    */
-  public function getDIVAComi(): int | null
+  public function getDIVAComi(): float | null
   {
     return $this->dIVAComi;
   }
@@ -606,9 +606,9 @@ class GTotSub
   /**
    * Get the value of dTotIVA
    *
-   * @return int
+   * @return float
    */
-  public function getDTotIVA(): int | null
+  public function getDTotIVA(): float | null
   {
     return $this->dTotIVA;
   }
@@ -616,9 +616,9 @@ class GTotSub
   /**
    * Get the value of dBaseGrav5
    *
-   * @return int
+   * @return float
    */
-  public function getDBaseGrav5(): int | null
+  public function getDBaseGrav5(): float | null
   {
     return $this->dBaseGrav5;
   }
@@ -626,9 +626,9 @@ class GTotSub
   /**
    * Get the value of dBaseGrav10
    *
-   * @return int
+   * @return float
    */
-  public function getDBaseGrav10(): int | null
+  public function getDBaseGrav10(): float | null
   {
     return $this->dBaseGrav10;
   }
@@ -636,9 +636,9 @@ class GTotSub
   /**
    * Get the value of dTBasGraIVA
    *
-   * @return int
+   * @return float
    */
-  public function getDTBasGraIVA(): int | null
+  public function getDTBasGraIVA(): float | null
   {
     return $this->dBaseGrav5 + $this->dBaseGrav10;
   }
@@ -646,9 +646,9 @@ class GTotSub
   /**
    * Get the value of dTotalGs
    *
-   * @return int
+   * @return float
    */
-  public function getDTotalGs(): int | null
+  public function getDTotalGs(): float | null
   {
     return $this->dTotalGs;
   }
@@ -707,32 +707,32 @@ class GTotSub
   // {
   //   if (strcmp($xml->tagName, 'gTotSub') == 0 && $xml->childElementCount == 25) {
   //     $res = new GTotSub();
-  //     $res->setDSubExe(intval($xml->getElementsByTagName('dSubExe')->item(0)->nodeValue));
-  //     $res->setDSubExo(intval($xml->getElementsByTagName('dSubEx')->item(0)->nodeValue));
-  //     $res->setDSub5(intval($xml->getElementsByTagName('dSub5')->item(0)->nodeValue));
-  //     $res->setDSub10(intval($xml->getElementsByTagName('dSub10')->item(0)->nodeValue));
-  //     $res->setDTotOpe(intval($xml->getElementsByTagName('dTotOpe')->item(0)->nodeValue));
-  //     $res->setDTotDesc(intval($xml->getElementsByTagName('dTotDesc')->item(0)->nodeValue));
-  //     $res->setDTotDescGlotem(intval($xml->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue));
-  //     $res->setDTotAntItem(intval($xml->getElementsByTagName('dTotAntItem')->item(0)->nodeValue));
-  //     $res->setDTotAnt(intval($xml->getElementsByTagName('dTotAnt')->item(0)->nodeValue));
-  //     $res->setDPorcDescTotal(intval($xml->getElementsByTagName('dPorcDescTotal')->item(0)->nodeValue));
-  //     $res->setDPorcDescTotal(intval($xml->getElementsByTagName('dPorcDesc')->item(0)->nodeValue));
-  //     $res->setDDescTotal(intval($xml->getElementsByTagName('dDesc')->item(0)->nodeValue));
-  //     $res->setDAnticipo(intval($xml->getElementsByTagName('dAnticipo')->item(0)->nodeValue));
-  //     $res->setDRedon(intval($xml->getElementsByTagName('dRedon')->item(0)->nodeValue));
-  //     $res->setDComi(intval($xml->getElementsByTagName('dComi')->item(0)->nodeValue));
-  //     $res->setDTotGralOpe(intval($xml->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue));
-  //     $res->setDIVA5(intval($xml->getElementsByTagName('dIVA5')->item(0)->nodeValue));
-  //     $res->setDIVA10(intval($xml->getElementsByTagName('dIVA10')->item(0)->nodeValue));
-  //     $res->setDLiqTotIVA5(intval($xml->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue));
-  //     $res->setDLiqTotIVA10(intval($xml->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue));
-  //     $res->setDIVAComi(intval($xml->getElementsByTagName('dIVAComi')->item(0)->nodeValue));
-  //     $res->setDTotIVA(intval($xml->getElementsByTagName('dTotIVA')->item(0)->nodeValue));
-  //     $res->setDBaseGrav5(intval($xml->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue));
-  //     $res->setDBaseGrav10(intval($xml->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue));
-  //     $res->setDTbasGraIVA(intval($xml->getElementsByTagName('dTBaseGraIVA')->item(0)->nodeValue));
-  //     $res->setDTotalGs(intval($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue));
+  //     $res->setDSubExe(floatval($xml->getElementsByTagName('dSubExe')->item(0)->nodeValue));
+  //     $res->setDSubExo(floatval($xml->getElementsByTagName('dSubEx')->item(0)->nodeValue));
+  //     $res->setDSub5(floatval($xml->getElementsByTagName('dSub5')->item(0)->nodeValue));
+  //     $res->setDSub10(floatval($xml->getElementsByTagName('dSub10')->item(0)->nodeValue));
+  //     $res->setDTotOpe(floatval($xml->getElementsByTagName('dTotOpe')->item(0)->nodeValue));
+  //     $res->setDTotDesc(floatval($xml->getElementsByTagName('dTotDesc')->item(0)->nodeValue));
+  //     $res->setDTotDescGlotem(floatval($xml->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue));
+  //     $res->setDTotAntItem(floatval($xml->getElementsByTagName('dTotAntItem')->item(0)->nodeValue));
+  //     $res->setDTotAnt(floatval($xml->getElementsByTagName('dTotAnt')->item(0)->nodeValue));
+  //     $res->setDPorcDescTotal(floatval($xml->getElementsByTagName('dPorcDescTotal')->item(0)->nodeValue));
+  //     $res->setDPorcDescTotal(floatval($xml->getElementsByTagName('dPorcDesc')->item(0)->nodeValue));
+  //     $res->setDDescTotal(floatval($xml->getElementsByTagName('dDesc')->item(0)->nodeValue));
+  //     $res->setDAnticipo(floatval($xml->getElementsByTagName('dAnticipo')->item(0)->nodeValue));
+  //     $res->setDRedon(floatval($xml->getElementsByTagName('dRedon')->item(0)->nodeValue));
+  //     $res->setDComi(floatval($xml->getElementsByTagName('dComi')->item(0)->nodeValue));
+  //     $res->setDTotGralOpe(floatval($xml->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue));
+  //     $res->setDIVA5(floatval($xml->getElementsByTagName('dIVA5')->item(0)->nodeValue));
+  //     $res->setDIVA10(floatval($xml->getElementsByTagName('dIVA10')->item(0)->nodeValue));
+  //     $res->setDLiqTotIVA5(floatval($xml->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue));
+  //     $res->setDLiqTotIVA10(floatval($xml->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue));
+  //     $res->setDIVAComi(floatval($xml->getElementsByTagName('dIVAComi')->item(0)->nodeValue));
+  //     $res->setDTotIVA(floatval($xml->getElementsByTagName('dTotIVA')->item(0)->nodeValue));
+  //     $res->setDBaseGrav5(floatval($xml->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue));
+  //     $res->setDBaseGrav10(floatval($xml->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue));
+  //     $res->setDTbasGraIVA(floatval($xml->getElementsByTagName('dTBaseGraIVA')->item(0)->nodeValue));
+  //     $res->setDTotalGs(floatval($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue));
   //     return $res;
   //   } else {
   //     throw new \Exception("Invalid XML Element: $xml->tagName");
@@ -744,11 +744,11 @@ class GTotSub
   /**
    * Set the value of dBaseGrav10
    *
-   * @param int $dBaseGrav10
+   * @param float $dBaseGrav10
    *
    * @return self
    */
-  public function setDBaseGrav10(int $dBaseGrav10): self
+  public function setDBaseGrav10(float $dBaseGrav10): self
   {
     $this->dBaseGrav10 = $dBaseGrav10;
 
@@ -767,82 +767,82 @@ class GTotSub
 
     $res = new GTotSub();
     if (isset($response->dSubExe)) {
-      $res->setDSubExe(intval($response->dSubExe));
+      $res->setDSubExe(floatval($response->dSubExe));
     }
     if (isset($response->dSubEx)) {
-      $res->setDSubExo(intval($response->dSubEx));
+      $res->setDSubExo(floatval($response->dSubEx));
     }
     if (isset($response->dSub5)) {
-      $res->setDSub5(intval($response->dSub5));
+      $res->setDSub5(floatval($response->dSub5));
     }
     if (isset($response->dSub10)) {
-      $res->setDSub10(intval($response->dSub10));
+      $res->setDSub10(floatval($response->dSub10));
     }
     if (isset($response->dTotOpe)) {
-      $res->setDTotOpe(intval($response->dTotOpe));
+      $res->setDTotOpe(floatval($response->dTotOpe));
     }
     if (isset($response->dTotDesc)) {
-      $res->setDTotDesc(intval($response->dTotDesc));
+      $res->setDTotDesc(floatval($response->dTotDesc));
     }
     if (isset($response->dTotDescGlotem)) {
-      $res->setDTotDescGlotem(intval($response->dTotDescGlotem));
+      $res->setDTotDescGlotem(floatval($response->dTotDescGlotem));
     }
     if (isset($response->dTotAntItem)) {
-      $res->setDTotAntItem(intval($response->dTotAntItem));
+      $res->setDTotAntItem(floatval($response->dTotAntItem));
     }
     if (isset($response->dTotAnt)) {
-      $res->setDTotAnt(intval($response->dTotAnt));
+      $res->setDTotAnt(floatval($response->dTotAnt));
     }
     if (isset($response->dPorcDescTotal)) {
-      $res->setDPorcDescTotal(intval($response->dPorcDescTotal));
+      $res->setDPorcDescTotal(floatval($response->dPorcDescTotal));
     }
     if (isset($response->dPorcDesc)) {
-      $res->setDPorcDescTotal(intval($response->dPorcDesc));
+      $res->setDPorcDescTotal(floatval($response->dPorcDesc));
     }
     if (isset($response->dDesc)) {
-      $res->setDDescTotal(intval($response->dDesc));
+      $res->setDDescTotal(floatval($response->dDesc));
     }
     if (isset($response->dAnticipo)) {
-      $res->setDAnticipo(intval($response->dAnticipo));
+      $res->setDAnticipo(floatval($response->dAnticipo));
     }
     if (isset($response->dRedon)) {
-      $res->setDRedon(intval($response->dRedon));
+      $res->setDRedon(floatval($response->dRedon));
     }
     if (isset($response->dComi)) {
-      $res->setDComi(intval($response->dComi));
+      $res->setDComi(floatval($response->dComi));
     }
     if (isset($response->dTotGralOpe)) {
-      $res->setDTotGralOpe(intval($response->dTotGralOpe));
+      $res->setDTotGralOpe(floatval($response->dTotGralOpe));
     }
     if (isset($response->dIVA5)) {
-      $res->setDIVA5(intval($response->dIVA5));
+      $res->setDIVA5(floatval($response->dIVA5));
     }
     if (isset($response->dIVA10)) {
-      $res->setDIVA10(intval($response->dIVA10));
+      $res->setDIVA10(floatval($response->dIVA10));
     }
     if (isset($response->dLiqTotIVA5)) {
-      $res->setDLiqTotIVA5(intval($response->dLiqTotIVA5));
+      $res->setDLiqTotIVA5(floatval($response->dLiqTotIVA5));
     }
     if (isset($response->dLiqTotIVA10)) {
-      $res->setDLiqTotIVA10(intval($response->dLiqTotIVA10));
+      $res->setDLiqTotIVA10(floatval($response->dLiqTotIVA10));
     }
     if (isset($response->dIVAComi)) {
-      $res->setDIVAComi(intval($response->dIVAComi));
+      $res->setDIVAComi(floatval($response->dIVAComi));
     }
     if (isset($response->dTotIVA)) {
-      $res->setDTotIVA(intval($response->dTotIVA));
+      $res->setDTotIVA(floatval($response->dTotIVA));
     }
     if (isset($response->dBaseGrav5)) {
-      $res->setDBaseGrav5(intval($response->dBaseGrav5));
+      $res->setDBaseGrav5(floatval($response->dBaseGrav5));
     }
     if (isset($response->dBaseGrav10)) {
-      $res->setDBaseGrav10(intval($response->dBaseGrav10));
+      $res->setDBaseGrav10(floatval($response->dBaseGrav10));
     }
     if (isset($response->dTBaseGraIVA)) {
-      $res->setDTbasGraIVA(intval($response->dTBaseGraIVA));
+      $res->setDTbasGraIVA(floatval($response->dTBaseGraIVA));
     }
     if (isset($response->dTotalGs)) {
-      $res->setDTotalGs(intval($response->dTotalGs));
+      $res->setDTotalGs(floatval($response->dTotalGs));
     }
     
     return $res;

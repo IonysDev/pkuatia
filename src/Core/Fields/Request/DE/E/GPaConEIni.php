@@ -16,12 +16,9 @@ class GPaConEIni
   public ?int $dTiCamTiPag = null; //E611 Tipo de cambio por tipo de pago
   public ?GPagTarCD $gPagTarCD = null;
   public ?GPagCheq $gPagCheq = null;
-
-
   //====================================================//
   //Setters
   //====================================================//
-
   /**
    * Set the value of iTiPago
    *

@@ -24,7 +24,7 @@ class GCamItem
   public ?int $dGtinPq  = null; //E707 Código GTIN por paquete
   public ?string $dDesProSer  = null; //E708  Descripción del producto  y/o servicio
   public ?int $cUniMed  = null; //E709 Unidad de medida
-  public ?int $dCantProSer  = null; //E711  Cantidad del producto y/o servicio
+  public ?float $dCantProSer  = null; //E711  Cantidad del producto y/o servicio
   public ?string $cPaisOrig  = null; //E712  Código del país de origen del producto
   public ?string $dInfItem = null; //E714 Información de interés  del emisor con respecto al item;
   public ?int $cRelMerc  = null; //E715 Código de datos de relevancia de las  mercaderías
@@ -35,6 +35,14 @@ class GCamItem
   public ?GCamIVA $gCamIVa  = null;
   public ?GRasMerc $gRasMerc  = null;
   public ?GVehNuevo $gVehNuevo  = null;
+
+
+  /////////////////////////////////////////////////////////
+  //Constructor
+  /////////////////////////////////////////////////////////
+
+ 
+
   //====================================================//
   ////Setters
   //====================================================//
@@ -181,7 +189,7 @@ class GCamItem
    *
    * @return self
    */
-  public function setDCantProSer(int $dCantProSer): self
+  public function setDCantProSer(float $dCantProSer): self
   {
     $this->dCantProSer = $dCantProSer;
 
@@ -387,7 +395,7 @@ class GCamItem
    *
    * @return int
    */
-  public function getDCantProSer(): int | null
+  public function getDCantProSer(): float | null
   {
     return $this->dCantProSer;
   }
@@ -706,8 +714,8 @@ class GCamItem
     if (isset($response->cUniMed)) {
       $res->setCUniMed($response->cUniMed);
     }
-    if (isset($response->dcantProSer)) {
-      $res->setDCantProSer($response->dcantProSer);
+    if (isset($response->dCantProSer)) {
+      $res->setDCantProSer($response->dCantProSer);
     }
     if (isset($response->cPaisOrig)) {
       $res->setCPaisOrig($response->cPaisOrig);
@@ -718,11 +726,11 @@ class GCamItem
     if (isset($response->dRelMerc)) {
       $res->setCRelMerc($response->dRelMerc);
     }
-    if (isset($response->dcantQuiMer)) {
-      $res->setDCanQuiMer($response->dcantQuiMer);
+    if (isset($response->dCanQuiMer)) {
+      $res->setDCanQuiMer($response->dCanQuiMer);
     }
-    if (isset($response->dporQuiMer)) {
-      $res->setDPorQuiMer($response->dporQuiMer);
+    if (isset($response->dPorQuiMer)) {
+      $res->setDPorQuiMer($response->dPorQuiMer);
     }
     if (isset($response->dCDCAnticipo)) {
       $res->setDCDCAnticipo($response->dCDCAnticipo);
