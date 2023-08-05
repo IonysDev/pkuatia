@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia;
+namespace Abiliomp\Pkuatia\Core;
 
 
 /**
@@ -92,6 +92,9 @@ class Constants
 
     //MODALIDAD TRASNPORTE
     const TRANSPORTE_TERRESTRE = 1;
+
+    // Valor Máximo del DID
+    const MAX_DID = 999999999999999;
 
     
 }
