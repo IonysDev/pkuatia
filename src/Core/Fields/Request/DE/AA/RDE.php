@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\AA;
 
-use Abiliomp\Pkuatia\Constants;
+use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\J\GCamFuFD;

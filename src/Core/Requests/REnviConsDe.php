@@ -3,21 +3,21 @@
 namespace Abiliomp\Pkuatia\Core\Requests;
 
 /**
- * ID RSch01: Clase que compone la solicitud de consulta de RUC
+ * ID DSch01: Clase que compone la solicitud de consulta de un DE por su CDC
  * 
  */
 
-class REnviConsRUC {
+class REnviConsDe {
 
-    public int $dId; // RSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
-    public String $dRUCCons; // RSch03 - RUC que se desea consultar sin dígito verificador.
+    public int $dId; // DSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
+    public String $dCDC; // DSch03 - CDC del documento electrónico que se desea consultar.
 
     /**
      * Constructor de la clase
      */
-    public function __construct($dId, $dRUCCons) {
+    public function __construct($dId, $dCDC) {
         $this->dId = $dId;
-        $this->dRUCCons = $dRUCCons;
+        $this->dCDC = $dCDC;
     }
 
     //====================================================//
@@ -38,15 +38,15 @@ class REnviConsRUC {
     }
 
     /**
-     * Establece el valor dRUCCons de la solicitud.
+     * Establece el valor dCDC de la solicitud.
      *
-     * @param String $dRUCCons
+     * @param String $dCDC
      *
      * @return self
      */
-    public function setDRUCCons(String $dRUCCons): self
+    public function setDCDC(String $dCDC): self
     {
-        $this->dRUCCons = $dRUCCons;
+        $this->dCDC = $dCDC;
         return $this;
     }
 
@@ -65,14 +65,16 @@ class REnviConsRUC {
     }
 
     /**
-     * Obtiene el valor dRUCCons de la solicitud.
+     * Obtiene el valor dCDC de la solicitud.
      *
      * @return String
      */
-    public function getDRUCCons(): String
+    public function getDCDC(): String
     {
-        return $this->dRUCCons;
+        return $this->dCDC;
     }
+    
 }
+
 
 ?>

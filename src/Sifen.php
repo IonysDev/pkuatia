@@ -5,8 +5,9 @@ namespace Abiliomp\Pkuatia;
 use Abiliomp\Pkuatia\Core\Config;
 use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Requests\REnviConsRUC;
+use Abiliomp\Pkuatia\Core\Requests\REnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaRUC;
-use DOMDocument;
+use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaDE;
 use SoapClient;
 
 class Sifen
@@ -15,8 +16,7 @@ class Sifen
     private static Config $config;
     private static $options;
 
-
-    public static function Init(Config $config) {       
+    public static function Init(Config $config) {    
         if(!file_exists($config->certificateFilePath)) {
             throw new \Exception("Certificate file not found in path: " . $config->certificateFilePath . ".");
         }
@@ -35,21 +35,22 @@ class Sifen
                     'local_pk' => $config->privateKeyFilePath,
                     'passphrase' => $config->privateKeyPassphrase,
                     'verify_peer' => true,
-                    'verify_peer_name' => true,
-                  
+                    'verify_peer_name' => true,                  
                 ]
             ])
         ];
     }
     
-    public static function ConsultaRUC(String $ruc): RespuestaConsultaRUC {
-        $request = new REnviConsRUC();
-        $request->setDId(self::GetDId());
-        $request->setDRUCCons($ruc);
-        $wsdlUrl = self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl";
-        self::$client = new SoapClient($wsdlUrl, self::$options);
-        $response = self::$client->rEnviConsRUC($request);
+    public static function ConsultarRUC(String $ruc): RespuestaConsultaRUC {
+        self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl", self::$options);
+        $response = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
         return RespuestaConsultaRUC::fromResponse($response);
+    }
+
+    public static function ConsultarDE(String $cdc): RespuestaConsultaDE {
+        self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl", self::$options);
+        $response = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
+        return RespuestaConsultaDE::fromResponse($response);
     }
 
     private static function GetSifenUrlBase() : string {

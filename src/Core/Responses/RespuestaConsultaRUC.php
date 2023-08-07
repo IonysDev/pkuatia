@@ -127,11 +127,4 @@ class RespuestaConsultaRUC
 
     return $res;
   }
-
-  public function printData()
-  {
-    return "RespuestaConsultaRUC: " . PHP_EOL .
-      "Código de Respuesta: " . $this->dCodRes . PHP_EOL .
-      "Mensaje de Respuesta: " . $this->dMsgRes . PHP_EOL;
-  }
 }

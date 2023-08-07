@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core;
+namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
 
 use Abiliomp\Pkuatia\Config;
-use Abiliomp\Pkuatia\Constants;
+use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamAE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamCond;

@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Helpers;
 
-use Abiliomp\Pkuatia\Constants;
+use Abiliomp\Pkuatia\Core\Constants;
 
 /**
  * Enum con los tipos de certificados disponibles para la conexión segura y la firma digital.

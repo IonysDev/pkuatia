@@ -3,7 +3,7 @@
 namespace Abiliomp\Pkuatia\Core;
 
 use Abiliomp\Pkuatia\Core\DocumentoElectronico;
-use Abiliomp\Pkuatia\Constants;
+use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
@@ -35,7 +35,6 @@ class Factura extends DocumentoElectronico
   public function __construct()
   {
     parent::__construct();
-    var_dump(Config::getInstance());
     /////////////////////////////////////////////////////////////////////////////
     ///Inicializar las clases correspondiete a su tipo de documento
     /////////////////////////////////////////////////////////////////////////////

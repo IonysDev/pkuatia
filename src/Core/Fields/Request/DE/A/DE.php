@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\A;
 
-use Abiliomp\Pkuatia\Constants;
+use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GDatGralOpe;
