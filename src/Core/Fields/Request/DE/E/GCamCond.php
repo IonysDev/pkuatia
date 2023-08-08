@@ -11,7 +11,6 @@ use DOMElement;
 class GCamCond
 {
   public ?int $iCondOpe = null; ///E601 iCondOpe Condición de la operación
-  public ?string $dDCondOpe = null; ///E602 dDCondOpe Descripción de la condición de operación
   public ?GPaConEIni $gPaConEIni = null;
   public ?GPagCred $gPagCred = null;
 
@@ -172,8 +171,6 @@ class GCamCond
     $res = new self();
     if (isset($response->iCondOpe)) {
       $res->setICondOpe(intval($response->iCondOpe));
-      //get the desc
-      $res->dDCondOpe = $res->getDDCondOpe();
     }
     ///children
     if (isset($response->gPaConEIni)) {
