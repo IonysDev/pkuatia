@@ -8,3 +8,5 @@ test/*.xml
 *.log.*
 *.log-*
 *.dat.*
+test/80121930-2.pem.key
+test/PKuatiaDId.json

@@ -78,4 +78,119 @@ class Config
         return self::ParseObject($obj);
     }
 
+    // Setters
+
+    /**
+     * Set the value of env
+     *
+     * @param String $env
+     *
+     * @return self
+     */
+    public function setEnv(String $env): self
+    {
+        $this->env = $env;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of certificateFormat
+     *
+     * @param String $certificateFormat
+     *
+     * @return self
+     */
+    public function setCertificateFormat(String $certificateFormat): self
+    {
+        $this->certificateFormat = $certificateFormat;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of certificateFilePath
+     *
+     * @param String $certificateFilePath
+     *
+     * @return self
+     */
+    public function setCertificateFilePath(String $certificateFilePath): self
+    {
+        $this->certificateFilePath = $certificateFilePath;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of privateKeyFilePath
+     *
+     * @param String $privateKeyFilePath
+     *
+     * @return self
+     */
+    public function setPrivateKeyFilePath(String $privateKeyFilePath): self
+    {
+        $this->privateKeyFilePath = $privateKeyFilePath;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of privateKeyPassphrase
+     *
+     * @param String $privateKeyPassphrase
+     *
+     * @return self
+     */
+    public function setPrivateKeyPassphrase(String $privateKeyPassphrase): self
+    {
+        $this->privateKeyPassphrase = $privateKeyPassphrase;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of idCsc
+     *
+     * @param String $idCsc
+     *
+     * @return self
+     */
+    public function setIdCsc(String $idCsc): self
+    {
+        $this->idCsc = $idCsc;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of csc
+     *
+     * @param String $csc
+     *
+     * @return self
+     */
+    public function setCsc(String $csc): self
+    {
+        $this->csc = $csc;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of dIdFilePath
+     *
+     * @param String $dIdFilePath
+     *
+     * @return self
+     */
+    public function setDIdFilePath(String $dIdFilePath): self
+    {
+        $this->dIdFilePath = $dIdFilePath;
+
+        return $this;
+    }
+    
+
 }
