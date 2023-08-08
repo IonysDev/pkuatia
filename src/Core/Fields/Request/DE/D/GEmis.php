@@ -29,6 +29,7 @@ class GEmis
     public ?int $cDepEmi = null; // Código del departamento de emisión (D111)
     public ?int $cDisEmi = null; // Código de la distrito de emisión (D113)
     public ?int $cCiuEmi = null; // Código de la ciudad de emisión (D115)
+    public ?string $dDesCiuEmi = null; // Descripción de la ciudad de emisión (D116)
     public ?string $dTelEmi = null; // Teléfono local de emisión de DE (D117)
     public ?string $dEmailE = null; // Correo electrónico del emisor (D118)
     public ?string $dDenSuc = null; // Denominación comercial de la sucursal (D119)
@@ -395,7 +396,10 @@ class GEmis
         }
         if (isset($response->cCiuEmi)) {
             $gEmis->setCCiuEmi($response->cCiuEmi);
+            ///get the ciu Name
+            $gEmis->dDesCiuEmi = $gEmis->getDDesCiuEmi($response->cCiuEmi);
         }
+
         if (isset($response->dTelEmi)) {
             $gEmis->setDTelEmi($response->dTelEmi);
         }
