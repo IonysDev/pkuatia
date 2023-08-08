@@ -5,3 +5,6 @@ test/*.csr
 test/*.srl
 test/*.xml
 *.log
+*.log.*
+*.log-*
+*.dat.*

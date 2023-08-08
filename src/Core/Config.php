@@ -21,7 +21,7 @@ class Config
     public String $csc = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
 
     // Lugar donde se almacena el archivo JSON que contiene el registro del último valor del dId utilizado.
-    public String $dIdFilePath = "PKuatiaDId.json";
+    public String $dIdFilePath = "PKuatiaDId.dat.json";
 
     public static function ParseObject($config): Config {
         $res = new Config();

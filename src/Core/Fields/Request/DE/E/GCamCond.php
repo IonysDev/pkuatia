@@ -169,7 +169,7 @@ class GCamCond
   public static function fromResponse($response): self
   {
     $res = new self();
-    if (!isset($response->iCondOpe)) {
+    if (isset($response->iCondOpe)) {
       $res->setICondOpe(intval($response->iCondOpe));
     }
     ///children
