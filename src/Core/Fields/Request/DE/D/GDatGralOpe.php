@@ -4,10 +4,12 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DateTime;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * Campos generales del DE (D001)
- * Nodo padre DE (A001): Campos firmados del DE
+ * Nodo Id: D001
+ * Descripción: Campos generales del DE
+ * Nodo Padre: A001 - Campos firmados del DE
  */
 
 class GDatGralOpe
@@ -19,9 +21,9 @@ class GDatGralOpe
   public ?GDatRec $gDatRec = null;   // Grupo de campos que identifican al receptor (D200)
 
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///Constructor
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   public function __construct()
   {
     ///General
@@ -32,9 +34,9 @@ class GDatGralOpe
   }
 
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///Setters
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dFeEmiDE
@@ -96,9 +98,9 @@ class GDatGralOpe
   }
 
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///Getters
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
 
   /**
@@ -141,9 +143,29 @@ class GDatGralOpe
     return $this->gDatRec;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///XML Element
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Instancia la clase a partir de un SimpleXMLElement
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
+  {
+    if(strcmp($xml->getName(), 'gDatGralOpe') != 0)
+    {
+      throw new \Exception("Invalid XML Element: $xml->getName()");
+      return null;
+    }
+    $res = new GDatGralOpe();
+    $res->setDFeEmiDE(DateTime::createFromFormat(DateTime::ATOM, $xml->dFeEmiDE));
+    if(isset($xml->gOpeCom))
+      $res->setGOpeCom(GOpeCom::FromSimpleXMLElement($xml->gOpeCom));
+    $res->gEmis = GEmis::FromSimpleXMLElement($xml->gEmis);
+    $res->gDatRec = GDatRec::FromSimpleXMLElement($xml->gDatRec);
+    return $res;
+  }
+
 
   /**
    * toDOMElement

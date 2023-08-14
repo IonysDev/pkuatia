@@ -9,6 +9,9 @@ use DOMElement;
  */
 class GTotSub
 {
+
+  // TODO cambiar todo a Decimal
+  
   public ?float $dSubExe = null; //F002 Subtotal de la operación exenta
   public ?float $dSubExo = null; //F003 Subtotal de la operación exonerada
   public ?float $dSub5 = null; ///F004 Subtotal de la operación con IVA incluido a la tasa 5%
@@ -35,9 +38,9 @@ class GTotSub
   public ?float $dTBasGraIVA = null; //F020 Total de la base gravada de IVA
   public ?float $dTotalGs = null; /// F023 Total general de la operación en Guaraníes
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///SETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dSubExe
@@ -398,9 +401,9 @@ class GTotSub
     return $this;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///GETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
 
   /**
@@ -653,9 +656,9 @@ class GTotSub
     return $this->dTotalGs;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///XML Element  
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * toDOMElement

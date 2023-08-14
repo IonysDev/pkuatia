@@ -4,8 +4,8 @@ namespace Abiliomp\Pkuatia\Core;
 
 use Abiliomp\Pkuatia\Core\DocumentoElectronico;
 use Abiliomp\Pkuatia\Core\Constants;
-use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
-use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
+use Abiliomp\Pkuatia\Utils\RNGMaker;
+use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
 use Abiliomp\Pkuatia\Config;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
@@ -97,7 +97,7 @@ class Factura extends DocumentoElectronico
     //ruc del emisor
     $this->rDE->dE->gDatGralOpe->gEmis->dRucEm = Config::getInstance()->ruc;
     //DV del RUC del emisor
-    $this->rDE->dE->gDatGralOpe->gEmis->dDVEmi = SETPyTools::calcDV(Config::getInstance()->ruc);
+    $this->rDE->dE->gDatGralOpe->gEmis->dDVEmi = RucUtils::calcDV(Config::getInstance()->ruc);
     //Tipo de contribuyente
     $this->rDE->dE->gDatGralOpe->gEmis->iTipCont = Config::getInstance()->tipoContribuyente;
     //tipo de emision

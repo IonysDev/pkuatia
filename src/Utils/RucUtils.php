@@ -1,15 +1,23 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Utils;
+namespace Abiliomp\Pkuatia\Utils;
 
 /**
- * SETPyTools
+ * Clase con funciones de utilidad para el procesamiento de datos del RUC
  */
-class SETPyTools {
+
+class RucUtils {
 	
 	private static $ruc_basemax = 11;
 	
-	public static function calcDV(string $value){
+	/**
+	 * Función para calcular el dígito verificador de un RUC.
+	 * 
+	 * @param string $value RUC
+	 * 
+	 * @return int DV
+	 */
+	public static function CalcDV(string $value){
 		$ruc_al = "";
 		for($i = 0; $i < strlen($value); $i++){
 			$c = $value[$i];
@@ -17,7 +25,6 @@ class SETPyTools {
 				$ruc_al = $ruc_al . $c;
 			}
 			else{
-				//se debe allar el valor ascii de la letra
 				$ascii = ord($c);
 				$ruc_al = $ruc_al . $ascii;
 			}
@@ -25,7 +32,7 @@ class SETPyTools {
 		$k = 2;
 		$v = 0;
 		for($i = (strlen($ruc_al) - 1); $i >= 0; $i--){
-			if($k > SETPyTools::$ruc_basemax){
+			if($k > self::$ruc_basemax){
 				$k = 2;
 			}
 			$aux = intval($ruc_al[$i]);

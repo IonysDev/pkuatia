@@ -18,25 +18,21 @@ use DOMElement;
  */
 class DE
 {
-  public ?string $iD = null;               // A002 - Identificador del DE
-  public ?int $dDVId = null;               // A003 - dígito verificador del dentificador del DE 
-  public ?DateTime $dFecFirma = null;      // A004 - Fecha de la firma
-  public ?int $dSisFact = null;            // A005 - Sistema de facturación
-  ///Children
-  public ?GOpeDE $gOpeDe = null;           // Campos inherentes a la operación de DE
-  public ?GTimb $gTimb = null;             // Datos del timbrado 
-  public ?GDatGralOpe $gDatGralOpe = null; // Campos generales del DE
-  public ?GDtipDE $gDtipDe = null;         //Campos específicos por tipo de Documento Electrónico 
-  public ?GTotSub $gTotSub = null;         //Campos de subtotales y totales
-  public ?GCamGen $gCamGen = null;         //Campos de uso general
-  public ?GCamDEAsoc $gCamDEAsoc = null;   //Campos que identifican al DE asociado
+  public String   $id;        // A002 - Identificador del DE
+  public int      $dDVId;     // A003 - dígito verificador del dentificador del DE 
+  public DateTime $dFecFirma; // A004 - Fecha de la firma
+  public int      $dSisFact;  // A005 - Sistema de facturación
 
-  //////////////////////////////////////////////////////
-  // CONSTRUCTOR
-  //////////////////////////////////////////////////////
+  public GOpeDE      $gOpeDe;      // Campos inherentes a la operación de DE
+  public GTimb       $gTimb;       // Datos del timbrado 
+  public GDatGralOpe $gDatGralOpe; // Campos generales del DE
+  public GDtipDE     $gDtipDe;     // Campos específicos por tipo de Documento Electrónico 
+  public GTotSub     $gTotSub;     // Campos de subtotales y totales
+  public GCamGen     $gCamGen;     // Campos de uso general
+  public GCamDEAsoc  $gCamDEAsoc;  // Campos que identifican al DE asociado
+
   public function __construct()
   {
-    //General
     $this->dSisFact = Constants::SISTEMA_FACTURACION_CONTRIBUYENTE;
     $this->gOpeDe = new GOpeDE();
     $this->gTimb = new GTimb();
@@ -45,21 +41,20 @@ class DE
     $this->gCamGen = new GCamGen();
   }
 
-  //====================================================//
-  ///Setters
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
+  // Setters
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of iD
    *
-   * @param string $iD
+   * @param String $iD
    *
    * @return self
    */
-  public function setID(string $iD): self
+  public function setId(String $id): self
   {
-    $this->iD = $iD;
-
+    $this->id = $id;
     return $this;
   }
 
@@ -74,7 +69,6 @@ class DE
   public function setDDVId(int $dDVId): self
   {
     $this->dDVId = $dDVId;
-
     return $this;
   }
 
@@ -89,7 +83,6 @@ class DE
   public function setDFecFirma(DateTime $dFecFirma): self
   {
     $this->dFecFirma = $dFecFirma;
-
     return $this;
   }
 
@@ -104,22 +97,112 @@ class DE
   public function setDSisFact(int $dSisFact): self
   {
     $this->dSisFact = $dSisFact;
-
     return $this;
   }
 
-  //====================================================//
-  ///Getters
-  //====================================================//
+  /**
+   * Establece el valor de gOpeDe
+   * 
+   * @param GOpeDE $gOpeDe
+   * 
+   * @return self
+   */
+  public function setGOpeDe(GOpeDE $gOpeDe): self
+  {
+    $this->gOpeDe = $gOpeDe;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gTimb
+   * 
+   * @param GTimb $gTimb
+   * 
+   * @return self
+   */
+  public function setGTimb(GTimb $gTimb): self
+  {
+    $this->gTimb = $gTimb;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gDatGralOpe
+   * 
+   * @param GDatGralOpe $gDatGralOpe
+   * 
+   * @return self
+   */
+  public function setGDatGralOpe(GDatGralOpe $gDatGralOpe): self
+  {
+    $this->gDatGralOpe = $gDatGralOpe;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gDtipDe
+   * 
+   * @param GDtipDE $gDtipDe
+   * 
+   * @return self
+   */
+  public function setGDtipDe(GDtipDE $gDtipDe): self
+  {
+    $this->gDtipDe = $gDtipDe;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gTotSub
+   * 
+   * @param GTotSub $gTotSub
+   * 
+   * @return self
+   */
+  public function setGTotSub(GTotSub $gTotSub): self
+  {
+    $this->gTotSub = $gTotSub;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gCamGen
+   * 
+   * @param GCamGen $gCamGen
+   * 
+   * @return self
+   */
+  public function setGCamGen(GCamGen $gCamGen): self
+  {
+    $this->gCamGen = $gCamGen;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gCamDEAsoc
+   * 
+   * @param GCamDEAsoc $gCamDEAsoc
+   * 
+   * @return self
+   */
+  public function setGCamDEAsoc(GCamDEAsoc $gCamDEAsoc): self
+  {
+    $this->gCamDEAsoc = $gCamDEAsoc;
+    return $this;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Getters
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Get the value of iD
    *
    * @return string
    */
-  public function getID(): string | null
+  public function getId(): String
   {
-    return $this->iD;
+    return $this->id;
   }
 
   /**
@@ -127,7 +210,7 @@ class DE
    *
    * @return int
    */
-  public function getDDVId(): int | null
+  public function getDDVId(): int
   {
     return $this->dDVId;
   }
@@ -137,7 +220,7 @@ class DE
    *
    * @return DateTime
    */
-  public function getDFecFirma(): DateTime | null
+  public function getDFecFirma(): DateTime
   {
     return $this->dFecFirma;
   }
@@ -147,14 +230,84 @@ class DE
    *
    * @return int
    */
-  public function getDSisFact(): int | null
+  public function getDSisFact(): int
   {
     return $this->dSisFact;
   }
 
-  //====================================================//
+  /**
+   * Devuelve el valor de gOpeDe
+   * 
+   * @return GOpeDE
+   */
+  public function getGOpeDe(): GOpeDE
+  {
+    return $this->gOpeDe;
+  }
+
+  /**
+   * Devuelve el valor de gTimb
+   * 
+   * @return GTimb
+   */
+  public function getGTimb(): GTimb
+  {
+    return $this->gTimb;
+  }
+
+  /**
+   * Devuelve el valor de gDatGralOpe
+   * 
+   * @return GDatGralOpe
+   */
+  public function getGDatGralOpe(): GDatGralOpe
+  {
+    return $this->gDatGralOpe;
+  }
+
+  /**
+   * Devuelve el valor de gDtipDe
+   * 
+   * @return GDtipDE
+   */
+  public function getGDtipDe(): GDtipDE
+  {
+    return $this->gDtipDe;
+  }
+
+  /**
+   * Devuelve el valor de gTotSub
+   * 
+   * @return GTotSub
+   */
+  public function getGTotSub(): GTotSub
+  {
+    return $this->gTotSub;
+  }
+
+  /**
+   * Devuelve el valor de gCamGen
+   * 
+   * @return GCamGen
+   */
+  public function getGCamGen(): GCamGen
+  {
+    return $this->gCamGen;
+  }
+
+  /**
+   * Devuelve el valor de gCamDEAsoc
+   * 
+   * @return GCamDEAsoc
+   */
+  public function getGCamDEAsoc(): GCamDEAsoc
+  {
+    return $this->gCamDEAsoc;
+  }
+  
+  ///////////////////////////////////////////////////////////////////////
   ///XML Element
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * toDOMElement
@@ -165,7 +318,7 @@ class DE
   {
     $res = new DOMElement('DE');
 
-    $res->setAttribute('Id', $this->getID());
+    $res->setAttribute('Id', $this->getId());
     $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
     $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
@@ -181,206 +334,33 @@ class DE
     return $res;
   }
 
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return DE
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): DE
-  // {
-  //   if (strcmp($xml->tagName, 'DE') == 0 && $xml->childElementCount == 11) {
-  //     $res = new DE();
-  //     $res->setID($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-  //     $res->setDDVId(intval($xml->getElementsByTagName('dDVId')->item(0)->nodeValue));
-  //     $res->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
-  //     $res->setDSisFact(intval($xml->getElementsByTagName('dSisFact')->item(0)->nodeValue));
-  //     ///Children
-  //     $res->setGOpeDe($res->gOpeDe->fromDOMElement($xml->getElementsByTagName('gOpeDE')->item(0)->nodeValue));
-  //     $res->setGTimb($res->gTimb->fromDOMElement($xml->getElementsByTagName('gTimb')->item(0)->nodeValue));
-  //     $res->setDDatGralOpe($res->gDatGralOpe->fromDOMElement($xml->getElementsByTagName('gDatGralOpe')->item(0)->nodeValue));
-  //     $res->setGDtipDe($res->gDtipDe->fromDOMElement($xml->getElementsByTagName('gDtipDe')->item(0)->nodeValue));
-  //     $res->setGTotSub($res->gTotSub->fromDOMElement($xml->getElementsByTagName('dTotSub')->item(0)->nodeValue));
-  //     $res->setGCamGen($res->gCamGen->fromDOMElement($xml->getElementsByTagName('gCamGen')->item(0)->nodeValue));
-  //     $res->setGCamDEAsoc($res->gCamDEAsoc->fromDOMElement($xml->getElementsByTagName('gCamDEAsoc')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
-  //====================================================//
-  //Others
-  //====================================================//
-
   /**
-   * Get the value of gOpeDe
-   *
-   * @return GOpeDE
+   * Devuelve un objeto DE a partir de un SimpleXMLElement
+   * 
+   * @param \SimpleXMLElement $xml
+   * 
+   * @return DE 
    */
-  public function getGOpeDe(): GOpeDE | null
+  public static function FromSimpleXMLElement(\SimpleXMLElement $xml)
   {
-    return $this->gOpeDe;
-  }
+    if(strcmp($xml->getName(), 'DE') != 0)
+      throw new \Exception('Invalid XML Node Name: ' . $xml->getName());
+    
+    $res = new DE();
+    $res->id = $xml->attributes()['Id'];
+    $res->dDVId = intval($xml->dDVId);
+    $res->dFecFirma = DateTime::createFromFormat(DateTime::ATOM, $xml->dFecFirma);
+    $res->dSisFact = intval($xml->dSisFact);
 
-  /**
-   * Set the value of gOpeDe
-   *
-   * @param GOpeDE $gOpeDe
-   *
-   * @return self
-   */
-  public function setGOpeDe(GOpeDE $gOpeDe): self
-  {
-    $this->gOpeDe = $gOpeDe;
+    $res->gOpeDe = GOpeDE::FromSimpleXMLElement($xml->gOpeDe);
+    $res->gTimb = GTimb::FromSimpleXMLElement($xml->gTimb);
+    $res->gDatGralOpe = GDatGralOpe::FromSimpleXMLElement($xml->gDatGralOpe);
+    $res->gDtipDe = GDtipDE::FromSimpleXMLElement($xml->gDtipDE);
+    $res->gTotSub = GTotSub::FromSimpleXMLElement($xml->gTotSub);
+    $res->gCamGen = GCamGen::FromSimpleXMLElement($xml->gCamGen);
+    $res->gCamDEAsoc = GCamDEAsoc::FromSimpleXMLElement($xml->gCamDEAsoc);
 
-    return $this;
-  }
-
-  /**
-   * Get the value of gTimb
-   *
-   * @return GTimb
-   */
-  public function getGTimb(): GTimb | null
-  {
-    return $this->gTimb;
-  }
-
-  /**
-   * Set the value of gTimb
-   *
-   * @param GTimb $gTimb
-   *
-   * @return self
-   */
-  public function setGTimb(GTimb $gTimb): self
-  {
-    $this->gTimb = $gTimb;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of gDatGralOpe
-   *
-   * @return GDatGralOpe
-   */
-  public function getDDatGralOpe(): GDatGralOpe | null
-  {
-    return $this->gDatGralOpe;
-  }
-
-  /**
-   * Set the value of gDatGralOpe
-   *
-   * @param GDatGralOpe $gDatGralOpe
-   *
-   * @return self
-   */
-  public function setDDatGralOpe(GDatGralOpe $gDatGralOpe): self
-  {
-    $this->gDatGralOpe = $gDatGralOpe;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of gDtipDe
-   *
-   * @return GDtipDE
-   */
-  public function getGDtipDe(): GDtipDE | null
-  {
-    return $this->gDtipDe;
-  }
-
-  /**
-   * Set the value of gDtipDe
-   *
-   * @param GDtipDE $gDtipDe
-   *
-   * @return self
-   */
-  public function setGDtipDe(GDtipDE $gDtipDe): self
-  {
-    $this->gDtipDe = $gDtipDe;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of gCamDEAsoc
-   *
-   * @return GCamDEAsoc
-   */
-  public function getGCamDEAsoc(): GCamDEAsoc | null
-  {
-    return $this->gCamDEAsoc;
-  }
-
-  /**
-   * Set the value of gCamDEAsoc
-   *
-   * @param GCamDEAsoc $gCamDEAsoc
-   *
-   * @return self
-   */
-  public function setGCamDEAsoc(GCamDEAsoc $gCamDEAsoc): self
-  {
-    $this->gCamDEAsoc = $gCamDEAsoc;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of gCamGen
-   *
-   * @return GCamGen
-   */
-  public function getGCamGen(): GCamGen | null
-  {
-    return $this->gCamGen;
-  }
-
-  /**
-   * Set the value of gCamGen
-   *
-   * @param GCamGen $gCamGen
-   *
-   * @return self
-   */
-  public function setGCamGen(GCamGen $gCamGen): self
-  {
-    $this->gCamGen = $gCamGen;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of gTotSub
-   *
-   * @return GTotSub
-   */
-  public function getGTotSub(): GTotSub | null
-  {
-    return $this->gTotSub;
-  }
-
-  /**
-   * Set the value of gTotSub
-   *
-   * @param GTotSub $gTotSub
-   *
-   * @return self
-   */
-  public function setGTotSub(GTotSub $gTotSub): self
-  {
-    $this->gTotSub = $gTotSub;
-
-    return $this;
+    return $res;
   }
 
   /**
@@ -414,7 +394,7 @@ class DE
       $de->setGTimb(GTimb::fromResponse($response->gTimb));
     }
     if (isset($response->gDatGralOpe)) {
-      $de->setDDatGralOpe(GDatGralOpe::fromResponse($response->gDatGralOpe));
+      $de->setGDatGralOpe(GDatGralOpe::fromResponse($response->gDatGralOpe));
     }
     if (isset($response->gDtipDE)) {
       $de->setGDtipDe(GDtipDE::fromResponse($response->gDtipDE));

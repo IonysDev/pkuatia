@@ -21,9 +21,9 @@ class RDE
   public ?Signature $signature = null; // Firma Digital del DTE
   public ?GCamFuFD $gCamFuFD = null;   // Campos fuera de la firma digital
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///Constructor
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   public function __construct()
   {
     ///General
@@ -33,9 +33,9 @@ class RDE
     $this->gCamFuFD = new GCamFuFD();
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///SETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dVerFor
@@ -51,23 +51,23 @@ class RDE
     return $this;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///Getters
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Get the value of dVerFor
    *
    * @return int
    */
-  public function getDVerFor(): int | null
+  public function getDVerFor(): int
   {
     return $this->dVerFor;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///XML Element
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * toDOMElement
@@ -85,31 +85,53 @@ class RDE
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return RDE
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): RDE
-  // {
-  //   if (strcmp($xml->tagName, 'rDe') == 0 && $xml->childElementCount == 4) {
-  //     $res = new RDE();
-  //     $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
-  //     ///children
-  //     $res->setDE($res->dE->fromDOMElement($xml->getElementsByTagName('DE')->item(0)->nodeValue));
-  //     //Signature
-  //     $res->setGCamFuFD($res->gCamFuFD->fromDOMElement($xml->getElementsByTagName('gCamFuFD')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
+  
+  
+  /**
+   * fromResponse
+   *
+   * @param  mixed $response
+   * @return self
+   */
+  public static function fromResponse($response) : self
+  {
+    $res = new RDE();
+    if(isset($response->DE))
+    {
+      $res->setDE(DE::fromResponse($response->DE));
+    }
+ 
+    if(isset($response->gCamFuFD))
+    {
+      $res->setGCamFuFD(GCamFuFD::fromResponse($response->gCamFuFD));
+    }
+    return $res;
+  }
 
-  //====================================================//
+  /**
+   * fromSimpleXMLElement
+   * 
+   * @param  mixed $xml
+   * 
+   * @return self
+   */
+  public static function FromSimpleXMLElement($xml): self
+  {
+    if(strcmp($xml->getName(), 'rDe') != 0)
+      throw new \Exception('Invalid XML Node Name: ' . $xml->getName());
+    
+    $res = new RDE();
+    $res->setDVerFor((int)$xml->dVerFor);
+    $res->setDE(DE::FromSimpleXMLElement($xml->DE));
+    $res->setGCamFuFD(GCamFuFD::FromSimpleXMLElement($xml->gCamFuFD));
+    $res->setSignature(Signature::FromSimpleXMLElement($xml->signature));
+    return $res;
+  }
+   
+
+  ///////////////////////////////////////////////////////////////////////
   ///Others
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Get the value of dE
@@ -158,30 +180,6 @@ class RDE
 
     return $this;
   }
-  
-  /**
-   * fromResponse
-   *
-   * @param  mixed $response
-   * @return self
-   */
-  public static function fromResponse($response):self
-  {
-    $res = new RDE();
-    if(isset($response->DE))
-    {
-      $res->setDE(DE::fromResponse($response->DE));
-    }
- 
-    if(isset($response->gCamFuFD))
-    {
-      $res->setGCamFuFD(GCamFuFD::fromResponse($response->gCamFuFD));
-    }
-  
-
-    return $res;
-  }
-
 
   /**
    * Get the value of signature

@@ -3,18 +3,19 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Response;
 
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01 
  */
-class TgResProc
+class GResProc
 {
   public string $dCodRes;   // PP052 - Código del resultado de procesamiento 
   public string $dMsgRes; // PP053 - Mensaje del resultado de procesamiento
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///SETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dCodRes
@@ -45,9 +46,9 @@ class TgResProc
     return $this;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   //GETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Get the value of dCodRes
@@ -69,9 +70,9 @@ class TgResProc
     return $this->dMsgRes;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///XML ELEMENT
-  //====================================================//  
+  ///////////////////////////////////////////////////////////////////////  
   /**
    * toDOMElement
    *
@@ -107,4 +108,25 @@ class TgResProc
       return null;
     }
   }
+
+  /**
+   * Converts SimpleXMLElement to object
+   * 
+   * @param SimpleXMLElement $xml
+   * 
+   * @return GResProc
+   */
+  public static function fromSimpleXMLElement(SimpleXMLElement $xml): GResProc
+  {
+    if(strcmp($xml->getName(),'gResProc') != 0) {
+      throw new \Exception("Invalid XML Element: $xml->getName()");
+      return null;
+    }
+
+    $res = new GResProc();
+    $res->setDCodRes($xml->dCodRes);
+    $res->setDMsgRes($xml->dMsgRes);
+    return $res;
+  }
+
 }

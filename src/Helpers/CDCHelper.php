@@ -3,8 +3,8 @@
 namespace Abiliomp\Pkuatia\Helpers;
 
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\A\DE;
-use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
-use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
+use Abiliomp\Pkuatia\Utils\RNGMaker;
+use Abiliomp\Pkuatia\Utils\RucUtils;
 
 class CDCHelper
 {
@@ -57,7 +57,7 @@ class CDCHelper
     $dCodSeg = strval(str_pad(($dE->getGOpeDe()->getDCodSeg() % 1000000000), 9, "0", STR_PAD_LEFT));
     //digito verificador
     $cDC = $iTide . $dRucEm . $dDvRucEm . $dEst . $dPunExp . $dNumDoc . $iTipCont . $dFeEmiDE . $iTipEmi . $dCodSeg;
-    $dDVid =  strval(SETPyTools::calcDV($cDC));
+    $dDVid =  strval(RucUtils::calcDV($cDC));
     //armado del codigo de control
     $cDC = $cDC . $dDVid;
     //validacion

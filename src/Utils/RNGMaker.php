@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Utils;
+namespace Abiliomp\Pkuatia\Utils;
 
 class RNGMaker
 {

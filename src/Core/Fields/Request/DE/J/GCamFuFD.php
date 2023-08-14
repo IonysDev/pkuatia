@@ -9,24 +9,23 @@ use DOMElement;
  */
 class GCamFuFD
 {
-  public ?string $dCarQR = null;   // J002 - Caracteres correspondientes al código QR
-  public ?string $dInfAdic = null; // J003 - Información adicional de interés para el emisor
+  public String $dCarQR;   // J002 - Caracteres correspondientes al código QR
+  public String $dInfAdic; // J003 - Información adicional de interés para el emisor
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   //SETTER
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dCarQR
    *
-   * @param string $dCarQR
+   * @param String $dCarQR
    *
    * @return self
    */
-  public function setDCarQR(string $dCarQR): self
+  public function setDCarQR(String $dCarQR): self
   {
     $this->dCarQR = $dCarQR;
-
     return $this;
   }
 
@@ -34,28 +33,27 @@ class GCamFuFD
   /**
    * Set the value of dInfAdic
    *
-   * @param string $dInfAdic
+   * @param String $dInfAdic
    *
    * @return self
    */
-  public function setDInfAdic(string $dInfAdic): self
+  public function setDInfAdic(String $dInfAdic): self
   {
     $this->dInfAdic = $dInfAdic;
-
     return $this;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///GETTER
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
 
   /**
    * Get the value of dCarQR
    *
-   * @return string
+   * @return String
    */
-  public function getDCarQR(): string | null
+  public function getDCarQR(): String
   {
     return $this->dCarQR;
   }
@@ -63,16 +61,16 @@ class GCamFuFD
   /**
    * Get the value of dInfAdic
    *
-   * @return string
+   * @return String
    */
-  public function getDInfAdic(): string | null
+  public function getDInfAdic(): String
   {
     return $this->dInfAdic;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///XML ELEMENT  
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * toDOMElement
@@ -86,23 +84,22 @@ class GCamFuFD
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamFuFD
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamFuFD
-  // {
-  //   if (strcmp($xml->tagName, 'gCamFuFD') == 0 && $xml->childElementCount == 1) {
-  //     $res = new GCamFuFD();
-  //     $res->setDCarQR($xml->getElementsByTagName('dCarQR')->item(0)->nodeValue);
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
+  /**
+   * fromSimpleXMLElement
+   */
+  public static function fromSimpleXMLElement(\SimpleXMLElement $xml): self
+  {
+    if(strcmp($xml->getName(), 'gCamFuFD') != 0)
+    {
+      throw new \Exception('Invalid XML Node Name: ' . $xml->getName());
+    }
+    $res = new GCamFuFD();
+    if(isset($xml->dCarQR))
+      $res->setDCarQR((string)$xml->dCarQR);
+    if(isset($xml->dInfAdic))
+      $res->setDInfAdic((string)$xml->dInfAdic);
+    return $res;
+  }
   
   /**
    * fromResponse

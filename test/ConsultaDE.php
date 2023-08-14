@@ -7,8 +7,8 @@ use Abiliomp\Pkuatia\Sifen;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$certFile = '80121930-2.crt.pem';
-$keyFile = '80121930-2.key.pem';
+$certFile = '80121930-2.pem.crt';
+$keyFile = '80121930-2.pem.key';
 $keyPassphrase = '171222';
 
 $config = new Config();

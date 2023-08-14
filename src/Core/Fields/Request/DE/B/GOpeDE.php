@@ -5,44 +5,71 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\B;
 use DOMElement;
 
 /**
- * ID:B001 Campos inherentes a la operación de DE PADRE:A001
+ * Nodo Id: B001
+ * Descripción: Campos inherentes a la operación de DE 
+ * Nodo Padre: A001
  */
 class GOpeDE
 {
-    public ?int $iTipEmi = null;       // B002 - Tipo de emision: 1 = Normal | 2 = Contingencia
-    public ?int $dCodSeg = null;       // B004 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
-    public ?string $dInfoEmi = null;   // B005 - Información de interés del emisor respecto al DE
-    public ?string $dInfoFisc = null;  // B006 - Información de interés del fisco respecto al DE
+    public int    $iTipEmi;   // B002 - Tipo de emision: 1 = Normal | 2 = Contingencia
+    public int    $dCodSeg;   // B004 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
+    public String $dInfoEmi;  // B005 - Información de interés del emisor respecto al DE
+    public String $dInfoFisc; // B006 - Información de interés del fisco respecto al DE
+
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setITipEmi(int $iTipEmi): void
+    /**
+     * Establece el valor de iTipEmi que representa el tipo de emisión del documento.
+     * 
+     * @param int $iTipEmi
+     * 
+     * @return self
+     */
+    public function setITipEmi(int $iTipEmi): self
     {
         $this->iTipEmi = $iTipEmi;
+        return $this;
     }
 
-    public function setDCodSeg(int $dCodSeg): void
+
+    /**
+     * Establece el valor de dCodSeg que representa el código de seguridad del documento.
+     * 
+     * @param int $dCodSeg
+     * 
+     * @return self
+     */
+    public function setDCodSeg(int $dCodSeg): self
     {
         $this->dCodSeg = $dCodSeg;
-    }
-
-    public function setDInfoEmi(string $dInfoEmi): void
-    {
-        $this->dInfoEmi = $dInfoEmi;
+        return $this;
     }
 
     /**
-     * Set the value of dInfoFisc
+     * Establece el valor de dInfoEmi que representa información de interés del emisor respecto al documento.
+     * 
+     * @param String $dInfoEmi
+     * 
+     * @return self
+     */
+    public function setDInfoEmi(String $dInfoEmi): self
+    {
+        $this->dInfoEmi = $dInfoEmi;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de dInfoFisc que representa información de interés del fisco respecto al documento.
      *
-     * @param string $dInfoFisc
+     * @param String $dInfoFisc
      *
      * @return self
      */
-    public function setDInfoFisc(string $dInfoFisc): self
+    public function setDInfoFisc(String $dInfoFisc): self
     {
         $this->dInfoFisc = $dInfoFisc;
-
         return $this;
     }
 
@@ -50,12 +77,12 @@ class GOpeDE
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITipEmi(): int | null
+    public function getITipEmi(): int
     {
         return $this->iTipEmi;
     }
 
-    public function getDDesTipEmi(): string | null
+    public function getDDesTipEmi(): String
     {
         switch ($this->iTipEmi) {
             case 1:
@@ -69,12 +96,12 @@ class GOpeDE
         }
     }
 
-    public function getDCodSeg(): int | null
+    public function getDCodSeg(): int
     {
         return $this->dCodSeg;
     }
 
-    public function getDInfoEmi(): string | null
+    public function getDInfoEmi(): String
     {
         return $this->dInfoEmi;
     }
@@ -82,9 +109,9 @@ class GOpeDE
     /**
      * Get the value of dInfoFisc
      *
-     * @return string
+     * @return String
      */
-    public function getDInfoFisc(): string | null
+    public function getDInfoFisc(): String
     {
         return $this->dInfoFisc;
     }
@@ -92,6 +119,18 @@ class GOpeDE
     // XML Element
     ///////////////////////////////////////////////////////////////////////
 
+    public static function FromSimpleXMLElement(\SimpleXMLElement $xml){
+        if(strcmp($xml->getName(), 'gOpeDE') != 0){
+            throw new \Exception('El nombre del nodo no corresponde a gOpeDE');
+        }
+        $res = new GOpeDE();
+        $res->setITipEmi(intval($xml->iTipEmi));
+        $res->setDCodSeg(intval($xml->dCodSeg));
+        $res->setDInfoEmi($xml->dInfoEmi);
+        $res->setDInfoFisc($xml->dInfoFisc);
+        return $res;
+    }
+    
     public function toDOMElement(): DOMElement
     {
         $res = new DOMElement('gOpeDE');
@@ -103,33 +142,6 @@ class GOpeDE
         return $res;
     }
 
-    // /**
-    //  * fromDOMElement
-    //  *
-    //  * @param  mixed $xml
-    //  * @return GOpeDE
-    //  */
-    // public static function fromDOMElement(DOMElement $xml): GOpeDE
-    // {
-    //     if (strcmp($xml->tagName, 'gOpeDE') == 0 && $xml->childElementCount == 5) {
-    //         $res = new GOpeDE();
-    //         $res->setITipEmi(intval($xml->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
-    //         $res->setDCodSeg(intval($xml->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
-    //         $res->setDInfoEmi($xml->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
-    //         $res->setDInfoFisc($xml->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
-
-    //         return $res;
-    //     } else {
-    //         throw new \Exception("Invalid XML Element: $xml->tagName");
-    //         return null;
-    //     }
-    // }    
-    /**
-     * fromResponse
-     *
-     * @param  mixed $response
-     * @return self
-     */
     public static function fromResponse($response): self
     {
         $res = new GOpeDE();

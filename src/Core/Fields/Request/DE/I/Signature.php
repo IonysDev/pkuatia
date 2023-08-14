@@ -2,22 +2,19 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\I;
 
-use Abiliomp\Pkuatia\Helpers\SignHelper;
-
 /**
- *  ID:I001  Firma Digital del DTE  PADRE:AA001
+ * ID I001 - Firma Digital del DTE  PADRE:AA001
  */
 class Signature
 {
-  public ?string $dSig = null; // I002 - Firma Digital del DTE
-
+  public String $dSig; // I002 - Firma Digital del DTE
   
   /**
    * Get the value of dSig
    *
-   * @return ?string
+   * @return String
    */
-  public function getDSig(): string | null
+  public function getDSig(): String
   {
     return $this->dSig;
   }
@@ -25,14 +22,25 @@ class Signature
   /**
    * Set the value of dSig
    *
-   * @param ?string $dSig
+   * @param String $dSig
    *
    * @return self
    */
-  public function setDSig(string $dSig): self
+  public function setDSig(String $dSig): self
   {
     $this->dSig = $dSig;
-
     return $this;
+  }
+
+  /**
+   * fromSimpleXMLElement
+   */
+  public static function FromSimpleXMLElement(\SimpleXMLElement $xml): self
+  {
+    if(strcmp($xml->getName(), 'Signature') != 0)
+      throw new \Exception("Invalid XML Node Name: " . $xml->getName());
+    $res = new Signature();
+    $res->setDSig((String)$xml->dSig);
+    return $res;
   }
 }

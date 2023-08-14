@@ -3,21 +3,21 @@
 namespace Abiliomp\Pkuatia\Core\Requests;
 
 /**
- * ID DSch01: Clase que compone la solicitud de consulta de un DE por su CDC
+ * ID GSch01: Clase que coforma una petición de recepción de documento electrónico.
  * 
  */
 
-class REnviConsDe {
+class REnviEventoDe {
 
-    public int $dId; // DSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
-    public String $dCDC; // DSch03 - CDC del documento electrónico que se desea consultar.
+    public int $dId; // GSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
+    public String $dEvReg;  // GSch03 - Evento a ser registrado en XML.
 
     /**
      * Constructor de la clase
      */
-    public function __construct($dId, $dCDC) {
+    public function __construct($dId, $dEvReg) {
         $this->dId = $dId;
-        $this->dCDC = $dCDC;
+        $this->dEvReg = $dEvReg;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -26,9 +26,9 @@ class REnviConsDe {
 
     /**
      * Establece el valor dId de la solicitud.
-     *
+     * 
      * @param int $dId
-     *
+     * 
      * @return self
      */
     public function setDId(int $dId): self
@@ -38,15 +38,15 @@ class REnviConsDe {
     }
 
     /**
-     * Establece el valor dCDC de la solicitud.
-     *
-     * @param String $dCDC
-     *
+     * Establece el valor en XML del dEvReg de la solicitud.
+     * 
+     * @param String $dEvReg
+     * 
      * @return self
      */
-    public function setDCDC(String $dCDC): self
+    public function setDEvReg(String $dEvReg): self
     {
-        $this->dCDC = $dCDC;
+        $this->dEvReg = $dEvReg;
         return $this;
     }
 
@@ -56,7 +56,7 @@ class REnviConsDe {
 
     /**
      * Obtiene el valor dId de la solicitud.
-     *
+     * 
      * @return int
      */
     public function getDId(): int
@@ -65,16 +65,14 @@ class REnviConsDe {
     }
 
     /**
-     * Obtiene el valor dCDC de la solicitud.
-     *
-     * @return String
+     * Obtiene el valor XML dEvReg de la solicitud.
      */
-    public function getDCDC(): String
+    public function getDEvReg(): String
     {
-        return $this->dCDC;
+        return $this->dEvReg;
     }
-    
-}
 
+
+}
 
 ?>

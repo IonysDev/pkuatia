@@ -6,8 +6,10 @@ use Abiliomp\Pkuatia\Core\Config;
 use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Requests\REnviConsRUC;
 use Abiliomp\Pkuatia\Core\Requests\REnviConsDe;
-use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaRUC;
-use Abiliomp\Pkuatia\Core\Responses\RespuestaConsultaDE;
+use Abiliomp\Pkuatia\Core\Responses\RResEnviConsRUC;
+use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
+use Abiliomp\Pkuatia\Core\Requests\REnviDe;
+use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
 use SoapClient;
 
 class Sifen
@@ -41,16 +43,22 @@ class Sifen
         ];
     }
     
-    public static function ConsultarRUC(String $ruc): RespuestaConsultaRUC {
+    public static function ConsultarRUC(String $ruc): RResEnviConsRUC {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl", self::$options);
         $response = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
-        return RespuestaConsultaRUC::fromResponse($response);
+        return RResEnviConsRUC::fromStdClassObject($response);
     }
 
-    public static function ConsultarDE(String $cdc): RespuestaConsultaDE {
+    public static function ConsultarDE(String $cdc): RResEnviConsDe {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl", self::$options);
         $response = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
-        return RespuestaConsultaDE::fromResponse($response);
+        return RResEnviConsDe::fromSifenResponseObject($response);
+    }
+
+    public static function EnviarDE(DocumentoElectronico $de) {
+        self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
+        $response = self::$client->SiRecepDE(new REnviDe(self::GetDId(), $de));
+        return Res::fromResponse($response);
     }
 
     private static function GetSifenUrlBase() : string {

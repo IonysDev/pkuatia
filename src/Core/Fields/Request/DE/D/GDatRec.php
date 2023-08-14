@@ -6,10 +6,12 @@ use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
 use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * Grupo de campos que identifican al receptor (D200)
- * Nodo Padre gDatGralOpe (D001)
+ * Nodo Id: D200
+ * Descripción: Grupo de campos que identifican al receptor
+ * Nodo Padre: gDatGralOpe (D001)
  */
 
 class GDatRec
@@ -18,31 +20,44 @@ class GDatRec
     public ?int $iNatRec = null; // Naturaleza del receptor (D201): 1 = contribuyente | 2 = no contribuyente
     public ?int $iTiOpe = null; // Tipo de operación (D202): 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
     public ?string $cPaisRec = null; // Código de país del receptor (D203)
+    public ?string $dDesPaisRe = null; // Descripción del país del receptor (D204)
     public ?int $iTiContRec = null; // Tipo de contribuyente receptor (D205): 1 = Persona Física | 2 = Persona Jurídica
     public ?string $dRucRec = null; // RUC del receptor (D206)
     public ?int $dDVRec = null; // Dígito verificador del RUC del receptor (D207)
     public ?int $iTipIDRec = null; // Tipo de documento de identidad del receptor (D208): 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
+    public ?String $dDTipIDRec = null; // Descripción del tipo de documento de identidad del receptor (D209)
     public ?string $dNumIDRec = null; // Número de documento de identidad (D210)
     public ?string $dNomRec = null; // Nombre o razón social del receptor del DE (D211)
     public ?string $dNomFanRec = null; // Nombre de fantasía (D212)
     public ?string $dDirRec = null; // Dirección del receptor (D213)
+    public ?int $dNumCasRec = null; // Número de casa del receptor (D218)
+    public ?int $cDepRec = null; // Código del departamento del receptor (D219)
+    public ?String $dDesDepRec = null; // Descripción del departamento del receptor (D220)
+    public ?int $cDisRec = null; // Código del distrito del receptor (D221)
+    public ?String $dDesDisRec = null; // Descripción del distrito del receptor (D222)
+    public ?int $cCiuRec = null; // Código del ciudad del receptor (D223)
+    public ?String $dDesCiuRec = null; // Descripción del ciudad del receptor (D224)
     public ?string $dTelRec = null; // Número de teléfono del receptor (D214)
     public ?string $dCelRec = null; // Número de celular del receptor (D215)
     public ?string $dEmailRec = null; // Correo electrónico de receptor (D216)
     public ?string $dCodCliente = null; // Código del cliente (D217)
-    public ?int $dNumCasRec = null; // Número de casa del receptor (D218)
-    public ?int $cDepRec = null; // Código del departamento del receptor (D219)
-    public ?int $cDisRec = null; // Código del distrito del receptor (D221)
-    public ?int $cCiuRec = null; // Código del ciudad del receptor (D223)
 
+    /**
+     * GDatRec constructor.
+     */
+    public function __construct()
+    {
+        $this->dNomRec = 'Sin Nombre';
+    }
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setINatRec(int $iNatRec): void
+    public function setINatRec(int $iNatRec): self
     {
         $this->iNatRec = $iNatRec;
+        return $this;
     }
 
     public function setITiOpe(int $iTiOpe): void
@@ -53,6 +68,11 @@ class GDatRec
     public function setCPaisRec(string $cPaisRec): void
     {
         $this->cPaisRec = $cPaisRec;
+    }
+
+    public function setDDesPaisRe(string $dDesPaisRe): void
+    {
+        $this->dDesPaisRe = $dDesPaisRe;
     }
 
     public function setITiContRec(int $iTiContRec): void
@@ -73,6 +93,11 @@ class GDatRec
     public function setITipIDRec(int $iTipIDRec): void
     {
         $this->iTipIDRec = $iTipIDRec;
+    }
+
+    public function setDDTipIDRec(string $dDTipIDRec): void
+    {
+        $this->dDTipIDRec = $dDTipIDRec;
     }
 
     public function setDNumIDRec(string $dNumIDRec): void
@@ -125,6 +150,40 @@ class GDatRec
         $this->cDepRec = $cDepRec;
     }
 
+    public function setDDesDepRec(string $dDesDepRec): self
+    {
+        $this->dDesDepRec = $dDesDepRec;
+        return $this;
+    }
+
+    public function setCDisRec(int $cDisRec): self
+    {
+        $this->cDisRec = $cDisRec;
+
+        return $this;
+    }
+
+    public function setDDesDisRec(string $dDesDisRec): self
+    {
+        $this->dDesDisRec = $dDesDisRec;
+
+        return $this;
+    }
+
+    public function setCCiuRec(int $cCiuRec): self
+    {
+        $this->cCiuRec = $cCiuRec;
+
+        return $this;
+    }
+
+    public function setDDesCiuRec(string $dDesCiuRec): self
+    {
+        $this->dDesCiuRec = $dDesCiuRec;
+
+        return $this;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
@@ -161,7 +220,8 @@ class GDatRec
      */
     public function getDDesPaisRe(): string | null
     {
-        return CountryHelper::getCountryDesc($this->cPaisRec);
+        // return CountryHelper::getCountryDesc($this->cPaisRec);
+        return $this->dDesPaisRe;
     }
 
 
@@ -387,9 +447,69 @@ class GDatRec
         return GeoRefCodesHelper::getCiudName(strval($this->cCiuRec));
     }
 
-    //====================================================//
+    ///////////////////////////////////////////////////////////////////////
     ///XML Element
-    //====================================================//
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Instancia la clase a partir de un SimpleXMLElement
+     * 
+     * @param SimpleXMLElement $node
+     * 
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if(strcmp($node->getName(), 'gDatRec') != 0){
+            throw new \InvalidArgumentException("El nombre del elemento no es gDatRec");
+        }
+
+        $res = new GDatRec();
+        $res->setINatRec(intval($node->iNatRec));
+        $res->setITiOpe(intval($node->iTiOpe));
+        $res->setCPaisRec(strval($node->cPaisRec));
+        $res->setDDesPaisRe(strval($node->dDesPaisRe));
+        if(isset($node->iTiContRec))
+            $res->setITiContRec(intval($node->iTiContRec));
+        if(isset($node->dRucRec))
+            $res->setDRucRec(strval($node->dRucRec));
+        if(isset($node->dDVRec))
+            $res->setITipIDRec(intval($node->dDVRec));
+        if(isset($node->iTipIDRec))
+            $res->setDNumIDRec(intval($node->iTipIDRec));
+        if(isset($node->dDTipIDRec))
+            $res->setDDTipIDRec(strval($node->dDTipIDRec));
+        if(isset($node->dNumIDRec))
+            $res->setDNomFanRec(strval($node->dNumIDRec));
+        $res->setDNomRec(strval($node->dNomRec));
+        if(isset($node->dNomFanRec))
+            $res->setDNomFanRec(strval($node->dNomFanRec));
+        if(isset($node->dDirRec))
+            $res->setDDirRec(strval($node->dDirRec));
+        if(isset($node->getDNumCasRec))
+            $res->setDNumCasRec(intval($node->getDNumCasRec));
+        if(isset($node->cDepRec))
+            $res->setCDepRec(intval($node->cDepRec));
+        if(isset($node->cCiuRec))
+            $res->setDDesDepRec(strval($node->dDesDepRec));
+        if(isset($node->cDisRec))
+            $res->setCDisRec(intval($node->cDisRec));
+        if(isset($node->dDesDisRec))
+            $res->setDDesDisRec(strval($node->dDesDisRec));
+        if(isset($node->cCiuRec))
+            $res->setCCiuRec(intval($node->cCiuRec));
+        if(isset($node->dDesCiuRec))
+            $res->setDDesCiuRec(strval($node->dDesCiuRec));
+        if(isset($node->dTelRec))
+            $res->setDTelRec(strval($node->dTelRec));
+        if(isset($node->dCelRec))
+            $res->setDCelRec(strval($node->dCelRec));
+        if(isset($node->dEmailRec))
+            $res->setDEmailRec(strval($node->dEmailRec));
+        if(isset($node->dCodCliente))
+            $res->setDCodCliente(strval($node->dCodCliente));
+        return $res;
+    }
 
     /**
      * toDOMElement
@@ -442,73 +562,7 @@ class GDatRec
         $res->appendChild(new DOMElement('dCodCliente', $this->getDCodCliente()));
         return $res;
     }
-
-    // /**
-    //  * fromDOMElement
-    //  *
-    //  * @param  mixed $xml
-    //  * @return GDatRec
-    //  */
-    // public static function fromDOMElement(DOMElement $xml): GDatRec
-    // {
-    //     if (strcmp($xml->tagName, 'gDatRec') == 0 && $xml->childElementCount >= 12) {
-    //         $res = new GDatRec();
-    //         $res->setINatRec(intval($xml->getElementsByTagName('iNatRec')->item(0)->nodeValue));
-    //         $res->setITiOpe(intval($xml->getElementsByTagName('iTiOpe')->item(0)->nodeValue));
-    //         $res->setCPaisRec($xml->getElementsByTagName('cPaisRec')->item(0)->nodeValue);
-    //         $res->setITiContRec(intval($xml->getElementsByTagName('iTiContRec')->item(0)->nodeValue));
-    //         $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
-    //         $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
-    //         $res->setITipIDRec(intval($xml->getElementsByTagName('iTipIDRec')->item(0)->nodeValue));
-    //         $res->setDNumIDRec($xml->getElementsByTagName('dNumIDRec')->item(0)->nodeValue);
-    //         $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
-    //         $res->setDNomFanRec($xml->getElementsByTagName('dNomFanRec')->item(0)->nodeValue);
-    //         $res->setDDirRec($xml->getElementsByTagName('dDirRec')->item(0)->nodeValue);
-    //         $res->setDNumCasRec(intval($xml->getElementsByTagName('dNumCasRec')->item(0)->nodeValue));
-    //         $res->setCDepRec(intval($xml->getElementsByTagName('cDepRec')->item(0)->nodeValue));
-    //         $res->setCDisRec(intval($xml->getElementsByTagName('cDisRec')->item(0)->nodeValue));
-    //         $res->setCCiuRec(intval($xml->getElementsByTagName('cCiuRec')->item(0)->nodeValue));
-    //         $res->setDTelRec($xml->getElementsByTagName('dTelRec')->item(0)->nodeValue);
-    //         $res->setDCelRec($xml->getElementsByTagName('dCelRec')->item(0)->nodeValue);
-    //         $res->setDEmailRec($xml->getElementsByTagName('dEmailRec')->item(0)->nodeValue);
-    //         $res->setDCodCliente($xml->getElementsByTagName('dCodCliente')->item(0)->nodeValue);
-
-    //         return $res;
-    //     } else {
-    //         throw new \Exception("Invalid XML Element: $xml->tagName");
-    //         return null;
-    //     }
-    // }
-
-
-    /**
-     * Set the value of cDisRec
-     *
-     * @param int $cDisRec
-     *
-     * @return self
-     */
-    public function setCDisRec(int $cDisRec): self
-    {
-        $this->cDisRec = $cDisRec;
-
-        return $this;
-    }
-
-
-    /**
-     * Set the value of cCiuRec
-     *
-     * @param int $cCiuRec
-     *
-     * @return self
-     */
-    public function setCCiuRec(int $cCiuRec): self
-    {
-        $this->cCiuRec = $cCiuRec;
-
-        return $this;
-    }
+    
     
     /**
      * fromResponse

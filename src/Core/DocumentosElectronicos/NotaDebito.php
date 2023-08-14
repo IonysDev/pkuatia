@@ -8,8 +8,8 @@ use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamNCDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\F\GTotSub;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\H\GCamDEAsoc;
-use Abiliomp\Pkuatia\Core\Utils\RNGMaker;
-use Abiliomp\Pkuatia\Core\Utils\SETPyTools;
+use Abiliomp\Pkuatia\Utils\RNGMaker;
+use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
 
 /**
@@ -52,7 +52,7 @@ class NotaDebito extends DocumentoElectronico
     //ruc del emisor
     $this->rDE->dE->gDatGralOpe->gEmis->dRucEm = Config::getInstance()->ruc;
     //DV del RUC del emisor
-    $this->rDE->dE->gDatGralOpe->gEmis->dDVEmi = SETPyTools::calcDV(Config::getInstance()->ruc);
+    $this->rDE->dE->gDatGralOpe->gEmis->dDVEmi = RucUtils::calcDV(Config::getInstance()->ruc);
     //Tipo de contribuyente
     $this->rDE->dE->gDatGralOpe->gEmis->iTipCont = Config::getInstance()->tipoContribuyente;
     //tipo de emision

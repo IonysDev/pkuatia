@@ -5,11 +5,13 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GTransp;
 use DOMElement;
 
-// Campos específicos por tipo de Documento Electrónico (E001-E009)
-//ID:E001
-//Padre:A001
+// Nodo Id:E001
+// Descripción: Campos específicos por tipo de Documento Electrónico (E001-E009)
+// Nodo Padre:A001
+
 class GDtipDE
 {
+
   public ?GCamFE $gCamFE = null;      //Campos que componen la FE
   public ?GCamAE $gCamAE = null;      //Campos que componen la Autofactura Electrónica
   public ?GCamNCDE $gCamNCDE = null;  //Campos que componen la Nota de Crédito Electrónica
@@ -19,8 +21,9 @@ class GDtipDE
   public ?GCamEsp $gCamEsp = null;    //complementarios comerciales de uso específico
   public ?GTransp $gTransp = null;    //Campos que describen  el transporte de mercaderías
 
-
-
+  /**
+   * Constructor
+   */
   public function __construct()
   {
     //Genral
@@ -28,9 +31,9 @@ class GDtipDE
     $this->gCamEsp = new GCamEsp();
   }
 
-  //====================================================//
-  ///Others
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
+  // Getters y Setters
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Get the value of gCamFE
@@ -192,7 +195,74 @@ class GDtipDE
     return $this;
   }
 
-  ///XML ELement  
+  ///////////////////////////////////////////////////////////////////////
+  // XML
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Instancia la clase a partir de un SimpleXMLElement
+   * 
+   * @param SimpleXMLElement $xml
+   * 
+   * @return GDtipDE
+   */
+  public static function FromSimpleXMLElement(\SimpleXMLElement $xml): GDtipDE
+  {
+    if(strcmp($xml->getName(), 'gDtipDE') != 0)
+      throw new \Exception('El nombre del elemento no es gDtipDE');
+
+    $res = new GDtipDE();
+    
+    if(isset($xml->gCamFE))
+      $res->gCamFE = GCamFE::FromSimpleXMLElement($xml->gCamFE);
+    else
+      $res->gCamFE = null;
+
+    if(isset($xml->gCamAE))
+      $res->gCamAE = GCamAE::FromSimpleXMLElement($xml->gCamAE);
+    else
+      $res->gCamAE = null;
+    
+    if(isset($xml->gCamNCDE))
+      $res->gCamNCDE = GCamNCDE::FromSimpleXMLElement($xml->gCamNCDE);
+    else
+      $res->gCamNCDE = null;
+
+    if(isset($xml->gCamNRE))
+      $res->gCamNRE = GCamNRE::FromSimpleXMLElement($xml->gCamNRE);
+    else
+      $res->gCamNRE = null;
+
+    if(isset($xml->gCamCond))
+      $res->gCamCond = GCamCond::FromSimpleXMLElement($xml->gCamCond);
+    else
+      $res->gCamCond = null;
+
+    if(isset($xml->gCamItem) && count($xml->gCamItem) > 0) {
+      $res->gCamItem = [];
+      foreach($xml->gCamItem as $gCamItem)
+        $res->gCamItem[] = GCamItem::FromSimpleXMLElement($gCamItem);
+    }
+    else
+      $res->gCamItem = null;
+
+    if(isset($xml->gCamEsp))
+      $res->gCamEsp = GCamEsp::FromSimpleXMLElement($xml->gCamEsp);
+    else
+      $res->gCamEsp = null;
+    
+    if(isset($xml->gTransp))
+      $res->gTransp = GTransp::FromSimpleXMLElement($xml->gTransp);
+    else
+      $res->gTransp = null;
+    
+    return $res;    
+  }
+
+
+
+
+
   /**
    * toDOMElement
    *

@@ -9,15 +9,15 @@ use DOMElement;
 /**
  * Nodo: ContEv01 - Elemento Raíz de Contenedor de Evento
  */
-class TrContEv
+class RContEv
 {
     public TrGesEve $xEvento;              //ContEv02 - XML del Evento
     public TgResProcEVe $rResEnviEventoDe; //ContEv03 - Respuesta del WS Recepción Evento 
 
 
-    //====================================================//
+    ///////////////////////////////////////////////////////////////////////
     // Setters
-    //====================================================//
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * Establece el valor de xEvento
@@ -46,9 +46,9 @@ class TrContEv
     }
 
 
-    //====================================================//
+    ///////////////////////////////////////////////////////////////////////
     // Getters
-    //====================================================//
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * Obtiene el valor de xEvento
@@ -71,9 +71,9 @@ class TrContEv
     }
 
 
-    //====================================================//
+    ///////////////////////////////////////////////////////////////////////
     // Conversiones XML
-    //====================================================// 
+    /////////////////////////////////////////////////////////////////////// 
 
     /**
      * toDOMElement
@@ -92,12 +92,12 @@ class TrContEv
      * fromDOMElement
      *
      * @param  mixed $xml
-     * @return TrContEv
+     * @return RContEv
      */
-    public static function fromDOMElement(DOMElement $xml): TrContEv
+    public static function fromDOMElement(DOMElement $xml): self
     {
         if (strcmp($xml->tagName, 'rContEv') == 0 && $xml->childElementCount == 2) {
-            $res = new TrContEv();
+            $res = new RContEv();
 
             $aux = new TrGesEve;
             $aux->fromDOMElement($xml->getElementsByTagName('xEvento')->item(0)->nodeValue);

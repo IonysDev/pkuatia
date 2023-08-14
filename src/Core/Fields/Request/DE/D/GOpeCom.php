@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use Abiliomp\Pkuatia\Helpers\CurrencyHelper;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID:D010  Campos inherentes a la operación comercial PADRE:D001 
@@ -13,7 +14,7 @@ class GOpeCom
 
     public ?int $iTipTra = null;     // D011 - Tipo de transacción
     public ?int $iTImp = null;       // D013 - Tipo de impuesto afectado
-    public ?string $cMoneOpe = null; // D015 - Moneda de la operación
+    public ?String $cMoneOpe = null; // D015 - Moneda de la operación
     public ?int $dCondTiCam = null;  // D017 - Condición del tipo de cambio
     public ?int $dTiCam = null;      // D018 - Tipo de cambio de la operación
     public ?int $iCondAnt = null;    // D019 - Condición del Anticipo
@@ -199,6 +200,30 @@ class GOpeCom
     ///////////////////////////////////////////////////////////////////////
     // XML Element
     ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Instancia la clase a partir de un SimpleXMLElement
+     * 
+     * @param SimpleXMLElement $node
+     * 
+     * @return GOpeCom
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): GOpeCom
+    {
+        if(strcmp($node->getName(), 'gOpeCom') != 0){
+            throw new \InvalidArgumentException("El nombre del elemento debe ser 'gOpeCom'.");
+        }
+        $res = new GOpeCom();
+        if(isset($node->iTipTra)){
+            $res->setITipTra(intval($node->iTipTra));
+        }
+        $res->setITImp(intval($node->iTImp));
+        $res->setCMoneOpe((String)$node->cMoneOpe);
+        $res->setDCondTiCam(intval($node->dCondTiCam));
+        $res->setDTiCam(intval($node->dTiCam));
+        $res->setICondAnt(intval($node->iCondAnt));
+        return $res;
+    }
 
     /**
      * toDOMElement

@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core;
+namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
 use Abiliomp\Pkuatia\Core\Fields\Request\DE\AA\RDE;
 
 /**

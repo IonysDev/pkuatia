@@ -3,9 +3,12 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\D;
 
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * ID: D140 Grupo de campos que identifican al responsable de la generación del DE PADRE:D100 
+ * Nodo Id: D140 
+ * Descripción: Grupo de campos que identifican al responsable de la generación del DE.
+ * Nodo Padre: gEmis (D100) - Grupo de campos que identifican al emisor
  */
 
 /**
@@ -13,40 +16,77 @@ use DOMElement;
  */
 class GRespDE {
     
-    public ?int $iTipIDRespDE = null;    // D141 - Tipo de documento de identidad del responsable de la generación del DE
-    public ?string $dNumIDRespDE= null; // D143 - Número de documento de identidad del responsable de la generación del DE
-    public ?string $dNomRespDE= null;   // D144 - Nombre o razón social del responsable de la generación del DE
-    public ?string $dCarRespDE= null;   // D145 - Cargo del responsable de la generación del DE 
+    public int    $iTipIDRespDE; // D141 - Tipo de documento de identidad del responsable de la generación del DE
+    public String $dNumIDRespDE; // D143 - Número de documento de identidad del responsable de la generación del DE
+    public String $dNomRespDE;   // D144 - Nombre o razón social del responsable de la generación del DE
+    public String $dCarRespDE;   // D145 - Cargo del responsable de la generación del DE 
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setITipIDRespDE(int $iTipIDRespDE): void
+    /**
+     * Establece el valor iTipIDRespDE que corresponde al tipo de documento de identidad del responsable de la generación del DE
+     * 
+     * @param int $iTipIDRespDE
+     * 
+     * @return self
+     */
+    public function setITipIDRespDE(int $iTipIDRespDE): self
     {
         $this->iTipIDRespDE = $iTipIDRespDE;
+        return $this;
     }
 
-    public function setDNumIDRespDE(string $dNumIDRespDE): void
+    /**
+     * Establece el valor dNumIDRespDE que corresponde al número de documento de identidad del responsable de la generación del DE
+     * 
+     * @param string $dNumIDRespDE
+     * 
+     * @return self
+     */
+    public function setDNumIDRespDE(string $dNumIDRespDE): self
     {
         $this->dNumIDRespDE = $dNumIDRespDE;
+        return $this;
     }
 
-    public function setDNomRespDE(string $dNomRespDE): void
+    /**
+     * Establece el valor dNomRespDE que corresponde al nombre o razón social del responsable de la generación del DE
+     * 
+     * @param string $dNomRespDE
+     * 
+     * @return self
+     */
+    public function setDNomRespDE(string $dNomRespDE): self
     {
         $this->dNomRespDE = $dNomRespDE;
+        return $this;
     }
 
-    public function setDCarRespDE(string $dCarRespDE): void
+    /**
+     * Establece el valor de dCarRespDE que corresponde al cargo del responsable de la generación del DE
+     * 
+     * @param string $dCarRespDE
+     * 
+     * @return self
+     */
+    public function setDCarRespDE(string $dCarRespDE): self
     {
         $this->dCarRespDE = $dCarRespDE;
+        return $this;
     }
 
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITipIDRespDE(): int | null
+    /**
+     * Devuelve el valor iTipIDRespDE que corresponde al tipo de documento de identidad del responsable de la generación del DE.
+     * 
+     * @return int
+     */
+    public function getITipIDRespDE(): int
     {
         return $this->iTipIDRespDE;
     }
@@ -56,7 +96,7 @@ class GRespDE {
      * 
      * @return string
      */
-    public function getDDTipIDRespDE(): string | null
+    public function getDDTipIDRespDE(): string
     {
         switch($this->iTipIDRespDE) {
             case 1:
@@ -79,17 +119,32 @@ class GRespDE {
         }
     }
 
-    public function getDNumIDRespDE(): string | null
+    /**
+     * Devuelve el valor dNumIDRespDE que corresponde al número de documento de identidad del responsable de la generación del DE
+     * 
+     * @return String
+     */
+    public function getDNumIDRespDE(): String
     {
         return $this->dNumIDRespDE;
     }
 
-    public function getDNomRespDE(): string | null
+    /**
+     * Devuelve el valor dNomRespDE que corresponde al nombre o razón social del responsable de la generación del DE.
+     * 
+     * @return String
+     */
+    public function getDNomRespDE(): String
     {
         return $this->dNomRespDE;
     }
 
-    public function getDCarRespDE(): string | null
+    /**
+     * Devuelve el valor dCarRespDE que corresponde al cargo del responsable de la generación del DE.
+     * 
+     * @return String
+     */
+    public function getDCarRespDE(): String
     {
         return $this->dCarRespDE;
     }
@@ -98,6 +153,27 @@ class GRespDE {
     // XML Element
     ///////////////////////////////////////////////////////////////////////
     
+    /**
+     * Instancia la clase a partir de un SimpleXMLElement
+     * 
+     * @param SimpleXMLElement $node
+     * 
+     * @return GRespDE
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): GRespDE
+    {
+        if(strcmp($node->getName(),'gRespDE') != 0)
+        {
+            throw new \Exception('El nombre del nodo no corresponde a "gRespDE"');
+        }
+        $res = new GRespDE();
+        $res->setITipIDRespDE(intval($node->iTipIDRespDE));
+        $res->setDNumIDRespDE((String) $node->dNumIDRespDE);
+        $res->setDNomRespDE((String) $node->dNomRespDE);
+        $res->setDCarRespDE((String) $node->dCarRespDE);
+        return $res;
+    }
+
     /**
      * toDOMElement
      *

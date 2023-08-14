@@ -11,13 +11,13 @@ use DOMElement;
 class GTimb
 {
 
-    public ?int $iTiDE = null;        // C002 - Tipo de documento electrónico
-    public ?int $dNumTim = null;      // C004 - Número del timbrado
-    public ?string $dEst = null;      // C005 - Establecimiento
-    public ?string $dPunExp = null;   // C006 - Punto de expedición
-    public ?string $dNumDoc = null;   // C007 - Número del documento
-    public ?string $dSerieNum = null; // C010 - Serie del número de timbrado
-    public ?DateTime $dFeIniT = null; // C008 - Fecha inicio de vigencia del timbrado
+    public int $iTiDE;        // C002 - Tipo de documento electrónico
+    public int $dNumTim;      // C004 - Número del timbrado
+    public String $dEst;      // C005 - Establecimiento
+    public String $dPunExp;   // C006 - Punto de expedición
+    public String $dNumDoc;   // C007 - Número del documento
+    public String $dSerieNum; // C010 - Serie del número de timbrado
+    public DateTime $dFeIniT; // C008 - Fecha inicio de vigencia del timbrado AAAA-MM-DD
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -35,25 +35,25 @@ class GTimb
         return $this;
     }
 
-    public function setDEst(string $dEst): self
+    public function setDEst(String $dEst): self
     {
         $this->dEst = $dEst;
         return $this;
     }
 
-    public function setDPunExp(string $dPunExp): self
+    public function setDPunExp(String $dPunExp): self
     {
         $this->dPunExp = $dPunExp;
         return $this;
     }
 
-    public function setDNumDoc(string $dNumDoc): self
+    public function setDNumDoc(String $dNumDoc): self
     {
         $this->dNumDoc = $dNumDoc;
         return $this;
     }
 
-    public function setDSerieNum(string $dSerieNum): self
+    public function setDSerieNum(String $dSerieNum): self
     {
         $this->dSerieNum = $dSerieNum;
         return $this;
@@ -69,7 +69,7 @@ class GTimb
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITiDE(): int | null
+    public function getITiDE(): int
     {
         return $this->iTiDE;
     }
@@ -77,9 +77,9 @@ class GTimb
     /**
      * Devuelve la descripción del tipo de documento electrónico
      * 
-     * @return string
+     * @return String
      */
-    public function getDDesTiDE(): string | null
+    public function getDDesTiDE(): String
     {
         switch ($this->iTiDE) {
             case 1:
@@ -111,32 +111,32 @@ class GTimb
         }
     }
 
-    public function getDNumTim(): int | null
+    public function getDNumTim(): int
     {
         return $this->dNumTim;
     }
 
-    public function getDEst(): string | null
+    public function getDEst(): String
     {
         return $this->dEst;
     }
 
-    public function getDPunExp(): string | null
+    public function getDPunExp(): String
     {
         return $this->dPunExp;
     }
 
-    public function getDNumDoc(): string | null
+    public function getDNumDoc(): String
     {
         return $this->dNumDoc;
     }
 
-    public function getDSerieNum(): string | null
+    public function getDSerieNum(): String
     {
         return $this->dSerieNum;
     }
 
-    public function getDFeIniT(): DateTime | null
+    public function getDFeIniT(): DateTime
     {
         return $this->dFeIniT;
     }
@@ -144,6 +144,22 @@ class GTimb
     ///////////////////////////////////////////////////////////////////////
     // XML Element
     ///////////////////////////////////////////////////////////////////////
+
+    public static function FromSimpleXMLElement(\SimpleXMLElement $xml) 
+    {
+        if(strcmp($xml->getName(), 'gTimb') != 0) {
+            throw new \Exception('El nombre del elemento no es gTimb');
+        }
+        $res = new GTimb();
+        $res->setITiDE(intval($xml->iTiDE));
+        $res->setDNumTim(intval($xml->dNumTim));
+        $res->setDEst($xml->dEst);
+        $res->setDPunExp($xml->dPunExp);
+        $res->setDNumDoc($xml->dNumDoc);
+        $res->setDSerieNum($xml->dSerieNum);
+        $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $xml->dFeIniT));
+        return $res;
+    }
 
     /**
      * toDOMElement

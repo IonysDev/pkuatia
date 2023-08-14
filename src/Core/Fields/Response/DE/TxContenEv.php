@@ -6,43 +6,43 @@ use DOMElement;
 
 class TxContenEv
 {
-  public ?TrContEv $rContEv = null;
+  public ?RContEv $rContEv = null;
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///SETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of rContEv
    *
-   * @param TrContEv $rContEv
+   * @param RContEv $rContEv
    *
    * @return self
    */
-  public function setRContEv(TrContEv $rContEv): self
+  public function setRContEv(RContEv $rContEv): self
   {
     $this->rContEv = $rContEv;
 
     return $this;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   //GETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Get the value of rContEv
    *
-   * @return TrContEv
+   * @return RContEv
    */
-  public function getRContEv(): TrContEv | null
+  public function getRContEv(): RContEv
   {
     return $this->rContEv;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///XML ELEMENT
-  //====================================================//  
+  ///////////////////////////////////////////////////////////////////////  
 
   /**
    * toDOMElement
@@ -69,7 +69,7 @@ class TxContenEv
     if (strcmp($xml->tagName, 'contentEv') == 0 && $xml->childElementCount == 1) {
       $res = new TxContenEv();
 
-      $aux = new TrContEv;
+      $aux = new RContEv;
       $aux->fromDOMElement($xml->getElementsByTagName('rContEv')->item(0)->nodeValue);
       $res->setRContEv($aux);
 

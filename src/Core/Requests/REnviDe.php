@@ -2,22 +2,19 @@
 
 namespace Abiliomp\Pkuatia\Core\Requests;
 
-/**
- * ID DSch01: Clase que compone la solicitud de consulta de un DE por su CDC
- * 
- */
-
-class REnviConsDe {
-
-    public int $dId; // DSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
-    public String $dCDC; // DSch03 - CDC del documento electrónico que se desea consultar.
+class REnviDe {
 
     /**
-     * Constructor de la clase
+     * ID ASch01: solitud de envio de documento electronico
      */
-    public function __construct($dId, $dCDC) {
+
+    public int $dId;    // ASch02 - Identificador  de control de envío 
+    public String $xDe; // ASch03 - XML  del  DE transmitido 
+
+    public function __construct(int $dId, String $xDe)
+    {
         $this->dId = $dId;
-        $this->dCDC = $dCDC;
+        $this->xDe = $xDe;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -26,9 +23,9 @@ class REnviConsDe {
 
     /**
      * Establece el valor dId de la solicitud.
-     *
+     * 
      * @param int $dId
-     *
+     * 
      * @return self
      */
     public function setDId(int $dId): self
@@ -38,15 +35,15 @@ class REnviConsDe {
     }
 
     /**
-     * Establece el valor dCDC de la solicitud.
-     *
-     * @param String $dCDC
-     *
+     * Establece el valor en XML del xDe de la solicitud.
+     * 
+     * @param String $xDe
+     * 
      * @return self
      */
-    public function setDCDC(String $dCDC): self
+    public function setXDe(String $xDe): self
     {
-        $this->dCDC = $dCDC;
+        $this->xDe = $xDe;
         return $this;
     }
 
@@ -56,7 +53,7 @@ class REnviConsDe {
 
     /**
      * Obtiene el valor dId de la solicitud.
-     *
+     * 
      * @return int
      */
     public function getDId(): int
@@ -65,16 +62,13 @@ class REnviConsDe {
     }
 
     /**
-     * Obtiene el valor dCDC de la solicitud.
-     *
-     * @return String
+     * Obtiene el valor XML xDe de la solicitud.
      */
-    public function getDCDC(): String
+    public function getXDe(): String
     {
-        return $this->dCDC;
+        return $this->xDe;
     }
-    
-}
 
+}
 
 ?>

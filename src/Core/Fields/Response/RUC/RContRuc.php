@@ -3,21 +3,23 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Response\Ruc;
 
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * ContRUC01 Raíz
+ * ContRUC01 Elemento raiz de la respuesta a la consulta de RUC
  */
-class TxContRuc
-{
-  public ?string $dRUCCons = null;      // ContRUC02 - RUC Consultado
-  public ?string $dRazCons = null;      // ContRUC03 - Razón social del RUC Consultado
-  public ?string $dCodEstCons = null;   // ContRUC04 - Código del Estado del RUC Consultado
-  public ?string $dDesEstCons = null;   //ContRUC05 - Descripción Código del Estado del RUC Consultado
-  public ?string $dRUCFactElec = null;  // ContRUC06 - consultado es facturador electrónico
 
-  //====================================================//
+class RContRUC
+{
+  public String $dRUCCons;      // ContRUC02 - RUC Consultado
+  public String $dRazCons;      // ContRUC03 - Razón social del RUC Consultado
+  public String $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado
+  public String $dDesEstCons;   // ContRUC05 - Descripción Código del Estado del RUC Consultado
+  public String $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico
+
+  ///////////////////////////////////////////////////////////////////////
   ///SETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dRUCCons
@@ -92,16 +94,16 @@ class TxContRuc
     return $this;
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   //GETTERS
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Get the value of dRUCCons
    *
-   * @return string
+   * @return String
    */
-  public function getDRUCCons(): string | null
+  public function getDRUCCons(): String
   {
     return $this->dRUCCons;
   }
@@ -109,9 +111,9 @@ class TxContRuc
   /**
    * Get the value of dRazCons
    *
-   * @return string
+   * @return String
    */
-  public function getDRazCons(): string | null
+  public function getDRazCons(): String
   {
     return $this->dRazCons;
   }
@@ -119,9 +121,9 @@ class TxContRuc
   /**
    * Get the value of dCodEstCons
    *
-   * @return string
+   * @return String
    */
-  public function getDCodEstCons(): string | null
+  public function getDCodEstCons(): String
   {
     return $this->dCodEstCons;
   }
@@ -129,9 +131,9 @@ class TxContRuc
   /**
    * ContRUC05 - Descripción Código del Estado del RUC Consultado
    *
-   * @return string
+   * @return String
    */
-  public function getDDesEstCons(): string | null
+  public function getDDesEstCons(): String
   {
     switch ($this->dCodEstCons) {
       case 'ACT':
@@ -163,15 +165,15 @@ class TxContRuc
   /**
    * Get the value of dRUCFactElec
    *
-   * @return string
+   * @return String
    */
-  public function getDRUCFactElec(): string | null
+  public function getDRUCFactElec(): String
   { 
     return $this->dRUCFactElec;
   }
 
   //get the description of dRUCFactElec
-  public function getDRUCFactElecDesc(): string | null
+  public function getDRUCFactElecDesc(): String
   {
     switch ($this->dRUCFactElec) {
       case 'S':
@@ -187,9 +189,9 @@ class TxContRuc
     }
   }
 
-  //====================================================//
+  ///////////////////////////////////////////////////////////////////////
   ///XML ELEMENT
-  //====================================================//    
+  ///////////////////////////////////////////////////////////////////////    
   /**
    * toDOMElement
    *
@@ -197,7 +199,7 @@ class TxContRuc
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('TxContRuc');
+    $res = new DOMElement('rContRuc');
 
     $res->appendChild(new DOMElement('dRUCCons', $this->dRUCCons));
     $res->appendChild(new DOMElement('dRazCons', $this->dRazCons));
@@ -208,39 +210,16 @@ class TxContRuc
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return TxContRuc
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): TxContRuc
-  // {
-  //   if (strcmp($xml->tagName, 'rContRUC ') == 0 && $xml->childElementCount == 5) {
-  //     $res = new TxContRuc();
-  //     $res->setDRUCCons($xml->getElementsByTagName('rContRUC ')->item(0)->nodeValue);
-  //     $res->setDRazCons($xml->getElementsByTagName('dRazCons ')->item(0)->nodeValue);
-  //     $res->setDCodEstCons($xml->getElementsByTagName('dCodEstCons ')->item(0)->nodeValue);
-  //     $res->setDDesEstCons($xml->getElementsByTagName('dDesEstCons ')->item(0)->nodeValue);
-  //     $res->setDRUCFactElec($xml->getElementsByTagName('dRUCFactElec ')->item(0)->nodeValue);
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
   ///create a objet from a objectClass  
   /**
    * fromResponse
    *
    * @param  mixed $object
-   * @return TxContRuc
+   * @return RContRuc
    */
-  public static function fromResponse($object): TxContRuc
+  public static function fromStdClassObject($object): RContRuc
   {
-
-    $res = new TxContRuc();
+    $res = new RContRuc();
     if(isset($object->dRUCCons)){
       $res->setDRUCCons($object->dRUCCons);
     }
@@ -253,7 +232,38 @@ class TxContRuc
     if(isset($object->dRUCFactElec)){
       $res->setDRUCFactElec($object->dRUCFactElec);
     }
+    return $res;
+  }
 
+  /**
+   * Instantiates a RContRuc from a SimpleXMLElement.
+   * 
+   * @param  SimpleXMLElement $xml
+   * 
+   * @return RContRuc
+   */
+  public static function fromSimpleXMLElement(SimpleXMLElement $xml): RContRuc
+  {
+    if(strcmp($xml->getName(),'rContRUC') != 0) {
+      throw new \Exception("Invalid XML Element: $xml->getName()");
+      return null;
+    }
+    $res = new RContRuc();
+    if(isset($xml->dRUCCons)){
+      $res->setDRUCCons((string)$xml->dRUCCons);
+    }
+    if(isset($xml->dRazCons)){
+      $res->setDRazCons((string)$xml->dRazCons);
+    }
+    if(isset($xml->dCodEstCons)){
+      $res->setDCodEstCons((string)$xml->dCodEstCons);
+    }
+    if(isset($xml->dDesEstCons)){
+      $res->setDRUCFactElec((string)$xml->dDesEstCons);
+    }
+    if(isset($xml->dRUCFactElec)){
+      $res->setDRUCFactElec((string)$xml->dRUCFactElec);
+    }
     return $res;
   }
 
