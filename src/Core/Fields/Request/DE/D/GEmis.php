@@ -444,8 +444,6 @@ class GEmis
         }
         if (isset($response->cCiuEmi)) {
             $gEmis->setCCiuEmi($response->cCiuEmi);
-            ///get the ciu Name
-            $gEmis->dDesCiuEmi = $gEmis->getDDesCiuEmi($response->cCiuEmi);
         }
 
         if (isset($response->dTelEmi)) {
