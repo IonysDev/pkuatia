@@ -182,57 +182,57 @@ class GEmis
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getDRucEm(): String | null
+    public function getDRucEm(): String
     {
         return $this->dRucEm;
     }
 
-    public function getDDVEmi(): int | null
+    public function getDDVEmi(): int
     {
         return $this->dDVEmi;
     }
 
-    public function getITipCont(): int | null
+    public function getITipCont(): int
     {
         return $this->iTipCont;
     }
 
-    public function getCTipReg(): int | null
+    public function getCTipReg(): int
     {
         return $this->cTipReg;
     }
 
-    public function getDNomEmi(): String | null
+    public function getDNomEmi(): String
     {
         return $this->dNomEmi;
     }
 
-    public function getDNomFanEmi(): String  | null
+    public function getDNomFanEmi(): String 
     {
         return $this->dNomFanEmi;
     }
 
-    public function getDDirEmi(): String | null
+    public function getDDirEmi(): String
     {
         return $this->dDirEmi;
     }
 
-    public function getDNumCas(): int | null
+    public function getDNumCas(): int
     {
         return $this->dNumCas;
     }
 
-    public function getDCompDir1(): String | null
+    public function getDCompDir1(): String
     {
         return $this->dCompDir1;
     }
 
-    public function getDCompDir2(): String | null
+    public function getDCompDir2(): String
     {
         return $this->dCompDir2;
     }
 
-    public function getCDepEmi(): int | null
+    public function getCDepEmi(): int
     {
         return $this->cDepEmi;
     }
@@ -242,13 +242,13 @@ class GEmis
      * 
      * @return String
      */
-    public function getDDesDepEmi(): String | null
+    public function getDDesDepEmi(): String
     {
         // return DepartamentoHelper::getDepName(strval($this->cDepEmi));
         return $this->dDesDepEmi;
     }
 
-    public function getCDisEmi(): int | null
+    public function getCDisEmi(): int
     {
         return $this->cDisEmi;
     }
@@ -258,13 +258,13 @@ class GEmis
      *
      * @return String
      */
-    public function getDDesDisEmi(): String | null
+    public function getDDesDisEmi(): String
     {
         // return GeoRefCodesHelper::getDistName(strval($this->cDisEmi));
         return $this->dDesDisEmi;
     }
 
-    public function getCCiuEmi(): int | null
+    public function getCCiuEmi(): int
     {
         return $this->cCiuEmi;
     }
@@ -274,33 +274,33 @@ class GEmis
      *
      * @return String
      */
-    public function getDDesCiuEmi(): String | null
+    public function getDDesCiuEmi(): String
     {
         // return GeoRefCodesHelper::getCiudName(strval($this->cCiuEmi));
         return $this->dDesCiuEmi;
     }
 
-    public function getDTelEmi(): String | null
+    public function getDTelEmi(): String
     {
         return $this->dTelEmi;
     }
 
-    public function getDEmailE(): String | null
+    public function getDEmailE(): String
     {
         return $this->dEmailE;
     }
 
-    public function getDDenSuc(): String | null
+    public function getDDenSuc(): String
     {
         return $this->dDenSuc;
     }
 
-    public function getGActEco(): array | null
+    public function getGActEco(): array
     {
         return $this->gActEco;
     }
 
-    public function getGRespDE(): GRespDE | null
+    public function getGRespDE(): GRespDE
     {
         return $this->gRespDE;
     }
@@ -457,7 +457,14 @@ class GEmis
         }
         //Children
         if (isset($response->gActEco)) {
-            $gEmis->setGActEco(GActEco::fromResponse($response->gActEco));
+            if(is_array($response->gActEco)) {
+                foreach($response->gActEco as $g) {
+                    $gEmis->gActEco[] = GActEco::fromResponse($g);
+                }
+            }
+            else {
+                $gEmis->gActEco[] = GActEco::fromResponse($response->gActEco);
+            }
         }
         if (isset($response->gRespDE)) {
             $gEmis->setGRespDE(GRespDE::fromResponse($response->gRespDE));

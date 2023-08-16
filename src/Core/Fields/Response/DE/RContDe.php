@@ -105,7 +105,7 @@ class RContDe
    * 
    * @return self
    */
-  public static function fromSimpleXMLElement(SimpleXMLElement $xml): self
+  public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
     if(strcmp($xml->getName(),'rContDe') != 0) {
       throw new \Exception("Invalid XML Element: $xml->getName()");
@@ -116,7 +116,7 @@ class RContDe
       $res->setDProtAut((string) $xml->dProtAut);
     }
     if (isset($xml->rDE)) {
-      $res->setRDe(RDE::fromResponse($xml->rDE));
+      $res->setRDe(RDE::FromSimpleXMLElement($xml->rDE));
     }
     if (isset($xml->rContEv)) {
       $res->setRContEv(RContEv::fromDOMElement($xml->rContEv));

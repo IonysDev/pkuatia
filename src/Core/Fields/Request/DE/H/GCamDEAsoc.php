@@ -4,28 +4,36 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\H;
 
 use DateTime;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * ID:H001 Campos que identifican al DE asociado PADRE:A001
+ * Nodo Id:H001
+ * Descripción: Campos que identifican al DE asociado
+ * Nodo Padre: A001 - Campos firmados del DE
  */
+
 class GCamDEAsoc
 {
-  public ?int $iTipDocAso = null; ///H002 Tipo de documento asociado
-  public ?string $dCdCDERef = null; ///H004 CDC del DTE referenciado
-  public ?int $dNTimDI = null; ///H005 Nro. timbrado documento impreso de referencia
-  public ?string $dEstDocAso = null; ///H006 Establecimiento
-  public ?string $dPExpDocAso = null; ///H007 Punto de expedición
-  public ?string $dNumDocAso = null; ///H008 Número del documento
-  public ?int $iTipoDocAso = null; ///H009 Tipo de documento  impreso
-  public ?DateTime $dFecEmiDI = null; ///H011 Fecha de emisión del documento impreso de referencia
-  public ?string $dNumComRet = null; /// H012  Número de comprobante de retención
-  public ?string $dNumResCF = null; /// H013 Número de resolución de crédito fiscal
-  public ?int $iTipCons = null; //H014 Tipo de constancia
-  public ?int $dNumCons = null; //H016 Número de constancia 
-  public ?string $dNumControl = null; ///H017 Número de control de la constancia 
+
+  public int      $iTipDocAso;    // H002 - 1     - 1-1 - Tipo de documento asociado
+  public String   $dDesTipDocAso; // H003 - 7-11  - 1-1 - Descripción del tipo de documento asociado
+  public String   $dCdCDERef;     // H004 - 44    - 0-1 - CDC del DTE referenciado
+  public int      $dNTimDI;       // H005 - 8     - 0-1 - Nro. timbrado documento impreso de referencia
+  public String   $dEstDocAso;    // H006 - 3     - 0-1 - Establecimiento
+  public String   $dPExpDocAso;   // H007 - 3     - 0-1 - Punto de expedición
+  public String   $dNumDocAso;    // H008 - 7     - 0-1 - Número del documento
+  public int      $iTipoDocAso;   // H009 - 1     - 0-1 - Tipo de documento  impreso
+  public String   $dDTipoDocAso;  // H010 - 7-16  - 0-1 - Descripción del tipo de documento impreso
+  public DateTime $dFecEmiDI;     // H011 - 10    - 0-1 - Fecha de emisión del documento impreso de referencia AAAA-MM-DD
+  public String   $dNumComRet;    // H012 - 15    - 0-1 - Número de comprobante de retención
+  public String   $dNumResCF;     // H013 - 15    - 0-1 - Número de resolución de crédito fiscal
+  public int      $iTipCons;      // H014 - 1     - 0-1 - Tipo de constancia
+  public String   $dDesTipCons;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
+  public int      $dNumCons;      // H016 - 11    - 0-1 - Número de constancia 
+  public String   $dNumControl;   // H017 - 8     - 0-1 - Número de control de la constancia 
 
   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -38,7 +46,40 @@ class GCamDEAsoc
   public function setITipDocAso(int $iTipDocAso): self
   {
     $this->iTipDocAso = $iTipDocAso;
+    switch ($this->iTipDocAso) {
+      case 1:
+        $this->setDDesTipDocAso("Electrónico");
+        break;
+      case 2:
+        $this->setDDesTipDocAso("Impreso");
+        break;
+      case 3:
+        $this->setDDesTipDocAso("Constancia Electrónica");
+        break;
+      default:
+        throw new \Exception("Invalid iTipDocAso: $iTipDocAso");
+        break;
+    }
+    return $this;
+  }
 
+  /**
+   * Set the value of dDesTipDocAso
+   * 
+   * @param string $dDesTipDocAso
+   * 
+   * @return self
+   */
+  public function setDDesTipDocAso(string $dDesTipDocAso): self
+  {
+    if(is_null($dDesTipDocAso) || strlen($dDesTipDocAso) == 0)
+    {
+      $this->dDesTipDocAso = null;
+    }
+    else
+    {
+      $this->dDesTipDocAso = substr($dDesTipDocAso, 0, 11);
+    }
     return $this;
   }
 
@@ -128,7 +169,46 @@ class GCamDEAsoc
   public function setITipoDocAso(int $iTipoDocAso): self
   {
     $this->iTipoDocAso = $iTipoDocAso;
+    switch ($this->iTipDocAso) {
+      case 1:
+        $this->setDDTipoDocAso("Factura");
+        break;
+      case 2:
+        $this->setDDTipoDocAso("Nota de crédito");
+        break;
+      case 3:
+        $this->setDDTipoDocAso("Nota de débito");
+        break;
+      case 4:
+        $this->setDDTipoDocAso("Nota de remisión");
+        break;
+      case 5:
+        $this->setDDTipoDocAso("Comprobante de retención");
+        break;
+      default:
+        throw new \Exception("Invalid iTipoDocAso: $iTipoDocAso");
+        break;
+    }
+    return $this;
+  }
 
+  /**
+   * Set the value of dDTipoDocAso
+   * 
+   * @param string $dDTipoDocAso
+   * 
+   * @return self
+   */
+  public function setDDTipoDocAso(string $dDTipoDocAso): self
+  {
+    if(is_null($dDTipoDocAso) || strlen($dDTipoDocAso) == 0)
+    {
+      $this->dDesTipDocAso = null;
+    }
+    else
+    {
+      $this->dDesTipDocAso = substr($dDTipoDocAso, 0, 16);
+    }
     return $this;
   }
 
@@ -177,7 +257,6 @@ class GCamDEAsoc
     return $this;
   }
 
-
   /**
    * Set the value of iTipCons
    *
@@ -188,7 +267,37 @@ class GCamDEAsoc
   public function setITipCons(int $iTipCons): self
   {
     $this->iTipCons = $iTipCons;
+    switch ($this->iTipCons) {
+      case 1:
+        $this->setDDesTipCons("Constancia de no ser contribuyente");
+        break;
+      case 2:
+        $this->setDDesTipCons("Constancia de microproductores");
+        break;
+      default:
+        throw new \Exception("Invalid iTipCons: $iTipCons");
+        break;
+    }
+    return $this;
+  }
 
+  /**
+   * Set the value of dDesTipCons
+   * 
+   * @param string $dDesTipCons
+   * 
+   * @return self
+   */
+  public function setDDesTipCons(string $dDesTipCons): self
+  {
+    if(is_null($dDesTipCons) || strlen($dDesTipCons) == 0)
+    {
+      $this->dDesTipCons = null;
+    }
+    else
+    {
+      $this->dDesTipCons = substr($dDesTipCons, 0, 34);
+    }
     return $this;
   }
 
@@ -223,7 +332,7 @@ class GCamDEAsoc
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
+  // Getters
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -231,9 +340,29 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getITipDocAso(): int | null
+  public function getITipDocAso(): int
   {
     return $this->iTipDocAso;
+  }
+
+  /**
+   * Get the value of dDesTipDocAso
+   *
+   * @return string
+   */
+  public function getDDesTipDocAso(): string
+  {
+    return $this->dDesTipDocAso;
+  }
+
+  /**
+   * Get the value of dCdCDERef
+   *
+   * @return string
+   */
+  public function getDCdCDERef(): string
+  {
+    return $this->dCdCDERef;
   }
 
   /**
@@ -241,54 +370,17 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getDNTimDI(): int | null
+  public function getDNTimDI(): int
   {
     return $this->dNTimDI;
-  }
-
-
-  /**
-   * H003  Descripción del tipo de documento asociado 
-   *
-   * @return string
-   */
-  public function getDDesTipDocAso(): string | null
-  {
-    switch ($this->iTipDocAso) {
-      case 1:
-        return "Electrónico";
-        break;
-      case 2:
-        return "Impreso";
-        break;
-      case 3:
-        return "Constancia Electrónica";
-        break;
-
-      default:
-        return null;
-        break;
-    }
-  }
-
-
-
-  /**
-   * Get the value of dCdCDERef
-   *
-   * @return string
-   */
-  public function getDCdCDERef(): string | null
-  {
-    return $this->dCdCDERef;
-  }
+  }  
 
   /**
    * Get the value of dEstDocAso
    *
    * @return string
    */
-  public function getDEstDocAso(): string | null
+  public function getDEstDocAso(): string
   {
     return $this->dEstDocAso;
   }
@@ -298,7 +390,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDPExpDocAso(): string | null
+  public function getDPExpDocAso(): string
   {
     return $this->dPExpDocAso;
   }
@@ -308,7 +400,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumDocAso(): string | null
+  public function getDNumDocAso(): string
   {
     return $this->dNumDocAso;
   }
@@ -318,49 +410,27 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getITipoDocAso(): int | null
+  public function getITipoDocAso(): int
   {
     return $this->iTipoDocAso;
   }
 
   /**
-   *  H010 Descripción del tipo de documento impreso
-   *
+   * Get the value of dDTipoDocAso
+   * 
    * @return string
    */
-  public function getDDTipoDocAso(): string | null
+  public function getDDTipoDocAso(): string
   {
-    switch ($this->iTipDocAso) {
-      case 1:
-        return "Factura";
-        break;
-      case 2:
-        return "Nota de crédito";
-        break;
-      case 3:
-        return "Nota de débito";
-        break;
-      case 4:
-        return "Nota de remisión";
-        break;
-      case 5:
-        return "Comprobante de retención";
-        break;
-
-      default:
-        return null;
-        break;
-    }
+    return $this->dDTipoDocAso;
   }
-
-
 
   /**
    * Get the value of dFecEmiDI
    *
    * @return DateTime
    */
-  public function getDFecEmiDI(): DateTime | null
+  public function getDFecEmiDI(): DateTime
   {
     return $this->dFecEmiDI;
   }
@@ -370,7 +440,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumComRet(): string | null
+  public function getDNumComRet(): string
   {
     return $this->dNumComRet;
   }
@@ -380,7 +450,7 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumResCF(): string | null
+  public function getDNumResCF(): string
   {
     return $this->dNumResCF;
   }
@@ -390,40 +460,27 @@ class GCamDEAsoc
    *
    * @return int
    */
-  public function getITipCons(): int | null
+  public function getITipCons(): int
   {
     return $this->iTipCons;
   }
 
   /**
-   * H015 Descripción del tipo de constancia
+   * Get the value of dDesTipCons
    *
    * @return string
    */
-  public function getDDesTipCons(): string | null
+  public function getDDesTipCons(): string
   {
-    switch ($this->iTipCons) {
-      case 1:
-        return "Constancia de no ser contribuyente";
-        break;
-      case 2:
-        return "Constancia de microproductores";
-        break;
-
-      default:
-        return null;
-        break;
-    }
+    return $this->dDesTipCons;
   }
-
-
 
   /**
    * Get the value of dNumCons
    *
    * @return int
    */
-  public function getDNumCons(): int | null
+  public function getDNumCons(): int
   {
     return $this->dNumCons;
   }
@@ -433,14 +490,89 @@ class GCamDEAsoc
    *
    * @return string
    */
-  public function getDNumControl(): string | null
+  public function getDNumControl(): string
   {
     return $this->dNumControl;
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element
+  // XML Element
   ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Instancia un objeto GCamDEAsoc a partir de un SimpleXMLElement
+   * 
+   * @param SimpleXMLElement $nodo
+   * 
+   * @return GCamDEAsoc
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $nodo): GCamDEAsoc
+  {
+    if(strcmp($nodo->getName(), 'gCamDEAsoc') != 0)
+    {
+      throw new \Exception("El nombre del nodo no es gCamDEAsoc");
+    }
+    $res = new GCamDEAsoc();
+    $res->setITipDocAso(intval($nodo->iTipDocAso));
+    $res->setDDesTipDocAso(strval($nodo->dDesTipDocAso));
+    if(isset($nodo->dCdCDERef))
+    {
+      $res->setDCdCDERef(strval($nodo->dCdCDERef));
+    }
+    if(isset($nodo->dNTimDI))
+    {
+      $res->setDNTimDI(intval($nodo->dNTimDI));
+    }
+    if(isset($nodo->dEstDocAso))
+    {
+      $res->setDEstDocAso(strval($nodo->dEstDocAso));
+    }
+    if(isset($nodo->dPExpDocAso))
+    {
+      $res->setDPExpDocAso(strval($nodo->dPExpDocAso));
+    }
+    if(isset($nodo->dNumDocAso))
+    {
+      $res->setDNumDocAso(strval($nodo->dNumDocAso));
+    }
+    if(isset($nodo->iTipoDocAso))
+    {
+      $res->setITipoDocAso(intval($nodo->iTipoDocAso));
+    }
+    if(isset($nodo->dDTipoDocAso))
+    {
+      $res->setDDTipoDocAso(strval($nodo->dDTipoDocAso));
+    }
+    if(isset($nodo->dFecEmiDI))
+    {
+      $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', strval($nodo->dFecEmiDI)));
+    }
+    if(isset($nodo->dNumComRet))
+    {
+      $res->setDNumComRet(strval($nodo->dNumComRet));
+    }
+    if(isset($nodo->dNumResCF))
+    {
+      $res->setDNumResCF(strval($nodo->dNumResCF));
+    }
+    if(isset($nodo->iTipCons))
+    {
+      $res->setITipCons(intval($nodo->iTipCons));
+    }
+    if(isset($nodo->dDesTipCons))
+    {
+      $res->setDDesTipCons(strval($nodo->dDesTipCons));
+    }
+    if(isset($nodo->dNumCons))
+    {
+      $res->setDNumCons(intval($nodo->dNumCons));
+    }
+    if(isset($nodo->dNumControl))
+    {
+      $res->setDNumControl(strval($nodo->dNumControl));
+    }
+    return $res;
+  }
 
   /**
    * toDOMElement

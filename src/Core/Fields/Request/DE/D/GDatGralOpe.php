@@ -108,7 +108,7 @@ class GDatGralOpe
    *
    * @return DateTime
    */
-  public function getDFeEmiDE(): DateTime | null
+  public function getDFeEmiDE(): DateTime
   {
     return $this->dFeEmiDE;
   }
@@ -118,7 +118,7 @@ class GDatGralOpe
    *
    * @return GOpeCom
    */
-  public function getGOpeCom(): GOpeCom | null
+  public function getGOpeCom(): GOpeCom
   {
     return $this->gOpeCom;
   }
@@ -128,7 +128,7 @@ class GDatGralOpe
    *
    * @return GEmis
    */
-  public function getGEmis(): GEmis | null
+  public function getGEmis(): GEmis
   {
     return $this->gEmis;
   }
@@ -138,7 +138,7 @@ class GDatGralOpe
    *
    * @return GDatRec
    */
-  public function getGDatRec(): GDatRec | null
+  public function getGDatRec(): GDatRec
   {
     return $this->gDatRec;
   }
@@ -158,7 +158,7 @@ class GDatGralOpe
       return null;
     }
     $res = new GDatGralOpe();
-    $res->setDFeEmiDE(DateTime::createFromFormat(DateTime::ATOM, $xml->dFeEmiDE));
+    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->dFeEmiDE));
     if(isset($xml->gOpeCom))
       $res->setGOpeCom(GOpeCom::FromSimpleXMLElement($xml->gOpeCom));
     $res->gEmis = GEmis::FromSimpleXMLElement($xml->gEmis);

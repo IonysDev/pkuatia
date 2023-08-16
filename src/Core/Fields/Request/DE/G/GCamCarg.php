@@ -2,19 +2,26 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\G;
 
-use Abiliomp\Pkuatia\Helpers\UMHelper;
+use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * ID:G050 Campos generales de la carga PADRE:G001 
+ * Nodo Id:G050
+ * Descripción: Campos generales de la carga 
+ * Nodo Padre: G001 - GCamGen - Campos de uso general 
  */
 class GCamCarg
 {
-  public ?int $cUniMedTotVol = null; //G051 Unidad de medida del total de volumen de la mercadería
-  public ?int $dTotVolMerc = null; //G053 Total volumen de la mercadería
-  public ?int $cUniMedTotPes = null; //G054 Unidad de medida del peso total de la mercadería
-  public ?int $dTotPesMerc = null; //G056 Total peso de la mercadería
-  public ?int $iCarCarga = null; //G057 Características de la  Carga 
+                                   // Id - Longitud - Ocurrencia - Descripción
+  public int $cUniMedTotVol;       // G051 - 1-5  - 0-1 - Unidad de medida del total de volumen de la mercadería
+  public String $dDesUniMedTotVol; // G052 - 1-10 - 0-1 - Descripción de la unidad de medida del total de volumen de la mercadería
+  public int $dTotVolMerc;         // G053 - 1-20 - 0-1 - Total volumen de la mercadería
+  public int $cUniMedTotPes;       // G054 - 1-5  - 0-1 - Unidad de medida del peso total de la mercadería
+  public String $dDesUniMedTotPes; // G055 - 1-10 - 0-1 - Descripción de la unidad de medida del peso total de la mercadería
+  public int $dTotPesMerc;         // G056 - 1-20 - 0-1 - Total peso de la mercadería;
+  public int $iCarCarga;           // G057 - 1-1  - 0-1 - Características de la  Carga 
+  public String $dDesCarCarga;     // G058 - 1-50 - 0-1 - Descripción de las características de la carga
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTER
@@ -30,10 +37,29 @@ class GCamCarg
   public function setCUniMedTotVol(int $cUniMedTotVol): self
   {
     $this->cUniMedTotVol = $cUniMedTotVol;
-
+    $this->setDDesUniMedTotVol(UnidadMedidaMapping::GetDesc(strval($cUniMedTotVol)));
     return $this;
   }
 
+  /**
+   * Set the value of dDesUniMedTotVol
+   * 
+   * @param string $dDesUniMedTotVol
+   * 
+   * @return self
+   */
+  public function setDDesUniMedTotVol(string $dDesUniMedTotVol): self
+  {
+    if(is_null($dDesUniMedTotVol) || strlen($dDesUniMedTotVol) == 0)
+    {
+      $this->dDesUniMedTotVol = null;
+    }
+    else
+    {
+      $this->dDesUniMedTotVol = substr($dDesUniMedTotVol, 0, 10);
+    }
+    return $this;
+  }
 
   /**
    * Set the value of dTotVolMerc
@@ -60,10 +86,29 @@ class GCamCarg
   public function setCUniMedTotPes(int $cUniMedTotPes): self
   {
     $this->cUniMedTotPes = $cUniMedTotPes;
-
+    $this->setDDesUniMedTotPes(UnidadMedidaMapping::GetDesc(strval($cUniMedTotPes)));
     return $this;
   }
 
+  /**
+   * Set the value of dDesUniMedTotPes
+   *
+   * @param string $dDesUniMedTotPes
+   *
+   * @return self
+   */
+  public function setDDesUniMedTotPes(string $dDesUniMedTotPes): self
+  {
+    if(is_null($dDesUniMedTotPes) || strlen($dDesUniMedTotPes) == 0)
+    {
+      $this->dDesUniMedTotPes = null;
+    }
+    else
+    {
+      $this->dDesUniMedTotPes = substr($dDesUniMedTotPes, 0, 10);
+    }
+    return $this;
+  }
 
   /**
    * Set the value of dTotPesMerc
@@ -90,7 +135,34 @@ class GCamCarg
   public function setICarCarga(int $iCarCarga): self
   {
     $this->iCarCarga = $iCarCarga;
+    switch ($iCarCarga) {
+      case 1:
+        $this->setDDesCarCarga("Mercaderías con cadena de frío");
+        break;
+      case 2:
+        $this->setDDesCarCarga("Carga peligrosa");
+        break;
+    }
+    return $this;
+  }
 
+  /**
+   * Set the value of dDesCarCarga
+   * 
+   * @param string $dDesCarCarga
+   * 
+   * @return self
+   */
+  public function setDDesCarCarga(string $dDesCarCarga): self
+  {
+    if(is_null($dDesCarCarga) || strlen($dDesCarCarga) == 0)
+    {
+      $this->dDesCarCarga = null;
+    }
+    else
+    {
+      $this->dDesCarCarga = substr($dDesCarCarga, 0, 50);
+    }
     return $this;
   }
 
@@ -104,7 +176,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getCUniMedTotVol(): int | null
+  public function getCUniMedTotVol(): int
   {
     return $this->cUniMedTotVol;
   }
@@ -114,9 +186,9 @@ class GCamCarg
    *
    * @return string
    */
-  public function getDDesUniMedTotVol(): string | null
+  public function getDDesUniMedTotVol(): string
   {
-    return UMHelper::getUMDesc(strval($this->cUniMedTotVol)); //Si D202 = 3 utilizar los datos del  WS del link de la DNCP Utilizar el atributo “ID”
+    return $this->dDesUniMedTotVol;
   }
 
 
@@ -125,7 +197,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getDTotVolMerc(): int | null
+  public function getDTotVolMerc(): int
   {
     return $this->dTotVolMerc;
   }
@@ -135,7 +207,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getCUniMedTotPes(): int | null
+  public function getCUniMedTotPes(): int
   {
     return $this->cUniMedTotPes;
   }
@@ -146,9 +218,9 @@ class GCamCarg
    *
    * @return string
    */
-  public function getdDesUniMedTotPes(): string | null
+  public function getdDesUniMedTotPes(): string
   {
-    return UMHelper::getUMDesc(strval($this->cUniMedTotPes));//Si D202 = 3 utilizar los datos del  WS del link de la DNCP Utilizar el atributo “ID”
+    return $this->dDesUniMedTotPes;
     
   }
 
@@ -157,7 +229,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getDTotPesMerc(): int | null
+  public function getDTotPesMerc(): int
   {
     return $this->dTotPesMerc;
   }
@@ -167,7 +239,7 @@ class GCamCarg
    *
    * @return int
    */
-  public function getICarCarga(): int | null
+  public function getICarCarga(): int
   {
     return $this->iCarCarga;
   }
@@ -177,30 +249,63 @@ class GCamCarg
    *
    * @return string
    */
-  public function getDDesCarCarga(): string | null
+  public function getDDesCarCarga(): string
   {
-    switch ($this->iCarCarga) {
-      case 1:
-        return "Mercaderías con cadena de frío";
-        break;
-
-      case 2:
-        return "Carga peligrosa";
-        break;
-
-      case 3:
-        return "Otro de características similares (especificar)";
-        break;
-
-      default:
-        return null;
-        break;
-    }
+    return $this->dDesCarCarga;
   }
 
   ///////////////////////////////////////////////////////////////////////
   ///XML Element
   ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Instancia un objeto de la GCamCarg a partir de un SimpleXMLElement
+   * 
+   * @param SimpleXMLElement $node
+   * 
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node)
+  {
+    if(strcmp($node->getName(), 'gCamCarg') != 0)
+    {
+      throw new \Exception("El nombre del nodo no corresponde a 'gCamCarg'");
+    }
+    $res = new GCamCarg();
+    if(isset($node->cUniMedTotVol))
+    {
+      $res->setCUniMedTotVol(intval($node->cUniMedTotVol));
+    }
+    if(isset($node->dDesUniMedTotVol))
+    {
+      $res->setDDesUniMedTotVol(strval($node->dDesUniMedTotVol));
+    }
+    if(isset($node->dTotVolMerc))
+    {
+      $res->setDTotVolMerc(intval($node->dTotVolMerc));
+    }
+    if(isset($node->cUniMedTotPes))
+    {
+      $res->setCUniMedTotPes(intval($node->cUniMedTotPes));
+    }
+    if(isset($node->dDesUniMedTotPes))
+    {
+      $res->setDDesUniMedTotPes(strval($node->dDesUniMedTotPes));
+    }
+    if(isset($node->dTotPesMerc))
+    {
+      $res->setDTotPesMerc(intval($node->dTotPesMerc));
+    }
+    if(isset($node->iCarCarga))
+    {
+      $res->setICarCarga(intval($node->iCarCarga));
+    }
+    if(isset($node->dDesCarCarga))
+    {
+      $res->setDDesCarCarga(strval($node->dDesCarCarga));
+    }
+    return $res;
+  }
 
   /**
    * toDOMElement
@@ -222,22 +327,6 @@ class GCamCarg
 
     return $res;
   }
-
-  // public static function fromDOMElement(DOMElement $xml): GCamCarg
-  // {
-  //   if (strcmp($xml->tagName, 'gCamcarg' == 0) && $xml->childElementCount == 5) {
-  //     $res = new GCamCarg();
-  //     $res->setCUniMedTotVol(intval($xml->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));
-  //     $res->setDTotVolMerc(intval($xml->getElementsByTagName('dTotVolMerc')->item(0)->nodeValue));
-  //     $res->setCUniMedTotPes(intval($xml->getElementsByTagName('cUniMedTotPes')->item(0)->nodeValue));
-  //     $res->setDTotPesMerc(intval($xml->getElementsByTagName('dTotPesMerc')->item(0)->nodeValue));
-  //     $res->setICarCarga(intval($xml->getElementsByTagName('iCarCarga')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
    * fromResponse

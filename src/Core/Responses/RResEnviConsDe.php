@@ -154,7 +154,7 @@ class RResEnviConsDe
         $xml = str_replace('<rDE ', '<rContDe><rDE ', $object->xContenDE);
         $xml = $xml . '</rContDe>';
         file_put_contents("xContenDE.xml", $xml);
-        $res->setRContDe(RContDe::fromSimpleXMLElement(simplexml_load_string($xml)));
+        $res->setRContDe(RContDe::FromSimpleXMLElement(simplexml_load_string($xml)));
         
       }
       else{

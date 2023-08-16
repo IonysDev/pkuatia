@@ -1,20 +1,20 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Helpers;
+namespace Abiliomp\Pkuatia\DataMappings;
 
 use DOMDocument;
 
-class UMHelper
+class UnidadMedidaMapping
 {  
   /**
-   * getArray
-   *
-   * @return array
+   * Devuelve un array con la lista de unidades de medida.
+   * 
+   * @return array La lista de unidades de medida.
    */
-  public static function getArray(): array
+  public static function GetArray(): array
   {
     $xml = new DOMDocument();
-    $xml->load(__DIR__ . '/umedidas.xml');
+    $xml->load(__DIR__ . 'Sources/Unidades_Medida_v141.xml');
     $xml->preserveWhiteSpace = true;
     $parseObj = str_replace($xml->lastChild->prefix.':',"", $xml->saveXML($xml->lastChild));
     $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
@@ -23,15 +23,15 @@ class UMHelper
   }
   
   /**
-   * getUMDesc
+   * Devuelve la descripción de la unidad de medida a partir del código
    *
-   * @param  mixed $code
-   * @return string
+   * @param  String $code El código de la unidad de medida
+   * @return String La descripción de la unidad de medida o null si no se encuentra.
    */
-  public static function getUMDesc($code): string | null
+  public static function GetDesc(String $code): String
   {
     $country = strtoupper($code);
-    $array = self::getArray();
+    $array = self::GetArray();
     foreach ($array as $key => $value) {
       if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $country) {
         return substr($value['annotation']['documentation'], strrpos($value['annotation']['documentation'], '-' )+2);

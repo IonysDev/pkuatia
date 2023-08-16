@@ -14,7 +14,9 @@ use DateTime;
 use DOMElement;
 
 /**
- * ID:A001  Campos firmados del DE PADRE:AA001
+ * Nodo Id: A001
+ * Descripción: Campos firmados del DE
+ * Nodo Padre: AA001 - Documento Electrónico elemento raíz
  */
 class DE
 {
@@ -349,10 +351,10 @@ class DE
     $res = new DE();
     $res->id = $xml->attributes()['Id'];
     $res->dDVId = intval($xml->dDVId);
-    $res->dFecFirma = DateTime::createFromFormat(DateTime::ATOM, $xml->dFecFirma);
+    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->dFecFirma);
     $res->dSisFact = intval($xml->dSisFact);
 
-    $res->gOpeDe = GOpeDE::FromSimpleXMLElement($xml->gOpeDe);
+    $res->gOpeDe = GOpeDE::FromSimpleXMLElement($xml->gOpeDE);
     $res->gTimb = GTimb::FromSimpleXMLElement($xml->gTimb);
     $res->gDatGralOpe = GDatGralOpe::FromSimpleXMLElement($xml->gDatGralOpe);
     $res->gDtipDe = GDtipDE::FromSimpleXMLElement($xml->gDtipDE);

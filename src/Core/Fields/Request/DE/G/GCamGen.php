@@ -3,19 +3,23 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\G;
 
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- *  ID:G001 Campos de uso general PADRE:A001 
+ * Nodo Id: G001
+ * Descripción: Campos de uso general
+ * Nodo Padre: A001 - Campos firmados del DE 
  */
+
 class GCamGen
 {
-  public ?string $dOrdCompra = null; //G002 Número de orden de compra
-  public ?string $dOrdVta = null; ///G003 Número de orden de venta 
-  public ?string $dAsiento = null; ///G004 Número de asiento contable
-  public ?GCamCarg $gCamCarg = null;
+  public String $dOrdCompra; // G002 - 1-15 - 0-1 - Número de orden de compra
+  public String $dOrdVta;    // G003 - 1-15 - 0-1 - Número de orden de venta 
+  public String $dAsiento;   // G004 - 1-10 - 0-1 - Número de asiento contable
+  public GCamCarg $gCamCarg; // G050 -      - 0-1 - Campos generales de la carga
 
   ///////////////////////////////////////////////////////////////////////
-  ///SETTER
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -25,10 +29,16 @@ class GCamGen
    *
    * @return self
    */
-  public function setDOrdCompra(string $dOrdCompra): self
+  public function setDOrdCompra(String $dOrdCompra): self
   {
-    $this->dOrdCompra = $dOrdCompra;
-
+    if(is_null($dOrdCompra) || strlen($dOrdCompra) == 0)
+    {
+      $this->dOrdCompra = null;
+    }
+    else
+    {
+      $this->dOrdCompra = substr($dOrdCompra, 0, 15);
+    }
     return $this;
   }
 
@@ -42,8 +52,14 @@ class GCamGen
    */
   public function setDOrdVta(string $dOrdVta): self
   {
-    $this->dOrdVta = $dOrdVta;
-
+    if(is_null($dOrdVta) || strlen($dOrdVta) == 0)
+    {
+      $this->dOrdVta = null;
+    }
+    else
+    {
+      $this->dOrdVta = substr($dOrdVta, 0, 15);
+    }
     return $this;
   }
 
@@ -57,22 +73,33 @@ class GCamGen
    */
   public function setDAsiento(string $dAsiento): self
   {
-    $this->dAsiento = $dAsiento;
+    if(is_null($dAsiento) || strlen($dAsiento) == 0)
+    {
+      $this->dAsiento = null;
+    }
+    else
+    {
+      $this->dAsiento = substr($dAsiento, 0, 10);
+    }
+    return $this;
+  }
 
+  public function setGCamCarg(GCamCarg $gCamCarg): self
+  {
+    $this->gCamCarg = $gCamCarg;
     return $this;
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
+  // Getters
   ///////////////////////////////////////////////////////////////////////
-
 
   /**
    * Get the value of dOrdCompra
    *
    * @return string
    */
-  public function getDOrdCompra(): string | null
+  public function getDOrdCompra(): String
   {
     return $this->dOrdCompra;
   }
@@ -82,7 +109,7 @@ class GCamGen
    *
    * @return string
    */
-  public function getDOrdVta(): string | null
+  public function getDOrdVta(): String
   {
     return $this->dOrdVta;
   }
@@ -92,14 +119,57 @@ class GCamGen
    *
    * @return string
    */
-  public function getDAsiento(): string | null
+  public function getDAsiento(): String
   {
     return $this->dAsiento;
   }
 
+  /**
+   * Get the value of gCamCarg
+   *
+   * @return GCamCarg
+   */
+  public function getGCamCarg(): GCamCarg
+  {
+    return $this->gCamCarg;
+  }
+
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element
+  // XML Element
   ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Instancia un objeto de esta clase a partir de un SimpleXMLElement
+   * 
+   * @param  SimpleXMLElement $node
+   * 
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    if(strcmp($node->getName(), 'gCamGen') != 0)
+    {
+      throw new \Exception('El nombre del nodo no corresponde a gCamGen', 1);
+    }
+    $res = new GCamGen();
+    if(isset($node->dOrdCompra))
+    {
+      $res->setDOrdCompra($node->dOrdCompra);
+    }
+    if(isset($node->dOrdVta))
+    {
+      $res->setDOrdVta($node->dOrdVta);
+    }
+    if(isset($node->dAsiento))
+    {
+      $res->setDAsiento($node->dAsiento);
+    }
+    if(isset($node->gCamCarg))
+    {
+      $res->setGCamCarg(GCamCarg::FromSimpleXMLElement($node->gCamCarg));
+    }
+    return $res;
+  }
 
   /**
    * toDOMElement
@@ -115,56 +185,7 @@ class GCamGen
     //Children
     $res->appendChild($this->gCamCarg->toDOMElement());
     return $res;
-  }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamGen
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamGen
-  // {
-  //   if (strcmp($xml->tagName, 'gCamGen') == 0 && $xml->childElementCount == 4) {
-  //     $res = new GCamGen();
-  //     $res->setDOrdCompra($xml->getElementsByTagName('dOrdCompra')->item(0)->nodeValue);
-  //     $res->setDOrdVta($xml->getElementsByTagName('dOrdVta')->item(0)->nodeValue);
-  //     $res->setDAsiento($xml->getElementsByTagName('dAsiento')->item(0)->nodeValue);
-  //     ///Choldren
-  //     $res->setGCamCarg($res->gCamCarg->fromDOMElement($xml->getElementsByTagName('gCamCarg')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///Others
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Get the value of gCamCarg
-   *
-   * @return GCamCarg
-   */
-  public function getGCamCarg(): GCamCarg | null
-  {
-    return $this->gCamCarg;
-  }
-
-  /**
-   * Set the value of gCamCarg
-   *
-   * @param GCamCarg $gCamCarg
-   *
-   * @return self
-   */
-  public function setGCamCarg(GCamCarg $gCamCarg): self
-  {
-    $this->gCamCarg = $gCamCarg;
-    return $this;
-  }
+  }  
 
   /**
    * fromResponse

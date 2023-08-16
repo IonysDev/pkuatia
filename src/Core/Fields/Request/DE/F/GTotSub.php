@@ -2,57 +2,80 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\F;
 
+use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * ID:F001 Campos de subtotales y totales PADRE:A001 
+ * Nodo Id: F001 
+ * Descripción: Campos de subtotales y totales 
+ * Nodo Padre: A001 
  */
 class GTotSub
 {
+  // Representación de números como cadenas para trabajar con BCMath para evitar errores de redondeo o truncamiento
+                                 // ID - Longitud - Ocurrencia - Descripción
+  public String $dSubExe;        // F002 - 1-15p(0-8) - 0-1 - Subtotal de la operación exenta
+  public String $dSubExo;        // F003 - 1-15p(0-8) - 0-1 - Subtotal de la operación exonerada
+  public String $dSub5;          // F004 - 1-15p(0-8) - 0-1 - Subtotal de la operación con IVA incluido a la tasa 5%
+  public String $dSub10;         // F005 - 1-15p(0-8) - 0-1 - Subtotal de la  operación con IVA  incluido a la tasa 10%
+  public String $dTotOpe;        // F008 - 1-15p(0-8) - 1-1 - Total Bruto de la operación 
+  public String $dTotDesc;       // F009 - 1-15p(0-8) - 1-1 - Total descuento particular por ítem
+  public String $dTotDescGlotem; // F033 - 1-15p(0-8) - 1-1 - Total descuento global  por ítem
+  public String $dTotAntItem;    // F034 - 1-15p(0-8) - 1-1 - Total Anticipo por ítem
+  public String $dTotAnt;        // F035 - 1-15p(0-8) - 1-1 - Total Anticipo global por ítem
+  public String $dPorcDescTotal; // F010 - 1-3p(0-8)  - 1-1 - Porcentaje de descuento global sobre total de la operación
+  public String $dDescTotal;     // F011 - 1-15p(0-8) - 1-1 - Total Descuentos de la operación 
+  public String $dAnticipo;      // F012 - 1-15p(0-8) - 1-1 - Total Anticipos de la operación 
+  public String $dRedon;         // F013 - 1-3p(0-4)  - 1-1 - Redondeo de la operación 
+  public String $dComi;          // F025 - 1-15p(0-8) - 0-1 - Comisión de la operación
+  public String $dTotGralOpe;    // F014 - 1-15p(0-8) - 1-1 - Total Neto de la operación
+  public String $dIVA5;          // F015 - 1-15p(0-8) - 0-1 - Liquidación del IVA a la tasa del 5%
+  public String $dIVA10;         // F016 - 1-15p(0-8) - 0-1 - Liquidación del IVA a la tasa del 10%
+  public String $dLiqTotIVA5;    // F036 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 5%
+  public String $dLiqTotIVA10;   // F037 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 10%
+  public String $dIVAComi;       // F026 - 1-15p(0-8) - 0-1 - Liquidación total del IVA de la comisión
+  public String $dTotIVA;        // F017 - 1-15p(0-8) - 0-1 - Liquidación total del IVA 
+  public String $dBaseGrav5;     // F018 - 1-15p(0-8) - 0-1 - Total base gravada al 5%
+  public String $dBaseGrav10;    // F019 - 1-15p(0-8) - 0-1 - Total base gravada al 10%
+  public String $dTBasGraIVA;    // F020 - 1-15p(0-8) - 0-1 - Total de la base gravada de IVA F018+F019 
+  public String $dTotalGs;       // F023 - 1-15p(0-8) - 0-1 - Total general de la operación en Guaraníes
 
-  // TODO cambiar todo a Decimal
+  /**
+   * Constructor de la clase
+   */
+  public function __construct()
+  {
+    // Solo incializar a 0 los campos que no son opcionales
+    $this->dTotOpe = '0';
+    $this->dTotDesc = '0';
+    $this->dTotDescGlotem = '0';
+    $this->dTotAntItem = '0';
+    $this->dTotAnt = '0';
+    $this->dPorcDescTotal = '0';
+    $this->dDescTotal = '0';
+    $this->dAnticipo = '0';
+    $this->dRedon = '0';
+    $this->dTotGralOpe = '0';
+  }
   
-  public ?float $dSubExe = null; //F002 Subtotal de la operación exenta
-  public ?float $dSubExo = null; //F003 Subtotal de la operación exonerada
-  public ?float $dSub5 = null; ///F004 Subtotal de la operación con IVA incluido a la tasa 5%
-  public ?float $dSub10 = null; ///F005 Subtotal de la  operación con IVA  incluido a la tasa 10%
-  public ?float $dTotOpe = null; ///F008 dTotOpe Total Bruto de la operación 
-  public ?float $dTotDesc = null; //F009 dTotDesc Total descuento particular por ítem
-  public ?float $dTotDescGlotem = null; //F033 Total descuento global  por ítem
-  public ?float $dTotAntItem = null; ///F034 Total Anticipo por ítem
-  public ?float $dTotAnt = null; //F035 Total Anticipo global por ítem
-  public ?float $dPorcDescTotal = null; ///F010 Porcentaje de descuento global sobre total de la operación
-  public ?float $dDescTotal = null; ///F011 Total Descuentos de la operación 
-  public ?float $dAnticipo = null; ///F012 Total Anticipos de la operación 
-  public ?float $dRedon = null; ///F013 Redondeo de la  operación 
-  public ?float $dComi = null; ///F025 Comisión de la operación
-  public ?float $dTotGralOpe = null; ///F014 Total Neto de la operación
-  public ?float $dIVA5 = null; ///F015 Liquidación del IVA a la tasa del 5%
-  public ?float $dIVA10 = null; ///F016 Liquidación del IVA a la tasa del 10%
-  public ?float $dLiqTotIVA5; ///F036 Liquidación total del IVA por redondeo a la tasa del 5%
-  public ?float $dLiqTotIVA10 = null; /// F037Liquidación total del IVA por redondeo a la tasa del 10%
-  public ?float $dIVAComi = null; ///F026 Liquidación total del IVA de la comisión
-  public ?float $dTotIVA = null; //F017 Liquidación total del IVA 
-  public ?float $dBaseGrav5 = null; //F018  Total base gravada al  5%
-  public ?float $dBaseGrav10 = null; ///F019  Total base gravada 
-  public ?float $dTBasGraIVA = null; //F020 Total de la base gravada de IVA
-  public ?float $dTotalGs = null; /// F023 Total general de la operación en Guaraníes
-
   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dSubExe
    *
-   * @param float $dSubExe
+   * @param String $dSubExe
    *
    * @return self
    */
-  public function setDSubExe(float $dSubExe): self
+  public function setDSubExe(String $dSubExe): self
   {
-    $this->dSubExe = $dSubExe;
-
+    $newVal = trim($dSubExe);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dSubExe: $newVal");
+    $this->dSubExe = $newVal;
     return $this;
   }
 
@@ -60,14 +83,16 @@ class GTotSub
   /**
    * Set the value of dSubExo
    *
-   * @param float $dSubExo
+   * @param String $dSubExo
    *
    * @return self
    */
-  public function setDSubExo(float $dSubExo): self
+  public function setDSubExo(String $dSubExo): self
   {
-    $this->dSubExo = $dSubExo;
-
+    $newVal = trim($dSubExo);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dSubExo: $newVal");
+    $this->dSubExo = $newVal;
     return $this;
   }
 
@@ -75,14 +100,16 @@ class GTotSub
   /**
    * Set the value of dSub5
    *
-   * @param float $dSub5
+   * @param String $dSub5
    *
    * @return self
    */
-  public function setDSub5(float $dSub5): self
+  public function setDSub5(String $dSub5): self
   {
-    $this->dSub5 = $dSub5;
-
+    $newVal = trim($dSub5);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dSub5: $newVal");
+    $this->dSub5 = $newVal;
     return $this;
   }
 
@@ -90,14 +117,16 @@ class GTotSub
   /**
    * Set the value of dSub10
    *
-   * @param float $dSub10
+   * @param String $dSub10
    *
    * @return self
    */
-  public function setDSub10(float $dSub10): self
+  public function setDSub10(String $dSub10): self
   {
-    $this->dSub10 = $dSub10;
-
+    $newVal = trim($dSub10);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dSub10: $newVal");
+    $this->dSub10 = $newVal;
     return $this;
   }
 
@@ -105,14 +134,16 @@ class GTotSub
   /**
    * Set the value of dTotOpe
    *
-   * @param float $dTotOpe
+   * @param String $dTotOpe
    *
    * @return self
    */
-  public function setDTotOpe(float $dTotOpe): self
+  public function setDTotOpe(String $dTotOpe): self
   {
-    $this->dTotOpe = $dTotOpe;
-
+    $newVal = trim($dTotOpe);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotOpe: $newVal");
+    $this->dTotOpe = $newVal;
     return $this;
   }
 
@@ -120,14 +151,16 @@ class GTotSub
   /**
    * Set the value of dTotDesc
    *
-   * @param float $dTotDesc
+   * @param String $dTotDesc
    *
    * @return self
    */
-  public function setDTotDesc(float $dTotDesc): self
+  public function setDTotDesc(String $dTotDesc): self
   {
-    $this->dTotDesc = $dTotDesc;
-
+    $newVal = trim($dTotDesc);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotDesc: $newVal");
+    $this->dTotDesc = $newVal;
     return $this;
   }
 
@@ -135,14 +168,16 @@ class GTotSub
   /**
    * Set the value of dTotDescGlotem
    *
-   * @param float $dTotDescGlotem
+   * @param String $dTotDescGlotem
    *
    * @return self
    */
-  public function setDTotDescGlotem(float $dTotDescGlotem): self
+  public function setDTotDescGlotem(String $dTotDescGlotem): self
   {
-    $this->dTotDescGlotem = $dTotDescGlotem;
-
+    $newVal = trim($dTotDescGlotem);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotDescGlotem: $newVal");
+    $this->dTotDescGlotem = $newVal;
     return $this;
   }
 
@@ -150,14 +185,16 @@ class GTotSub
   /**
    * Set the value of dTotAntItem
    *
-   * @param float $dTotAntItem
+   * @param String $dTotAntItem
    *
    * @return self
    */
-  public function setDTotAntItem(float $dTotAntItem): self
+  public function setDTotAntItem(String $dTotAntItem): self
   {
-    $this->dTotAntItem = $dTotAntItem;
-
+    $newVal = trim($dTotAntItem);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotAntItem: $newVal");
+    $this->dTotAntItem = $newVal;
     return $this;
   }
 
@@ -165,14 +202,16 @@ class GTotSub
   /**
    * Set the value of dTotAnt
    *
-   * @param float $dTotAnt
+   * @param String $dTotAnt
    *
    * @return self
    */
-  public function setDTotAnt(float $dTotAnt): self
+  public function setDTotAnt(String $dTotAnt): self
   {
-    $this->dTotAnt = $dTotAnt;
-
+    $newVal = trim($dTotAnt);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotAnt: $newVal");
+    $this->dTotAnt = $newVal;
     return $this;
   }
 
@@ -180,14 +219,16 @@ class GTotSub
   /**
    * Set the value of dPorcDescTotal
    *
-   * @param float $dPorcDescTotal
+   * @param String $dPorcDescTotal
    *
    * @return self
    */
-  public function setDPorcDescTotal(float $dPorcDescTotal): self
+  public function setDPorcDescTotal(String $dPorcDescTotal): self
   {
-    $this->dPorcDescTotal = $dPorcDescTotal;
-
+    $newVal = trim($dPorcDescTotal);
+    if(!ValueValidations::isValidStringDecimal($newVal, 3, 0, 8))
+      throw new \Exception("Valor no válido para el campo dPorcDescTotal: $newVal");
+    $this->dPorcDescTotal = $newVal;
     return $this;
   }
 
@@ -195,14 +236,16 @@ class GTotSub
   /**
    * Set the value of dDescTotal
    *
-   * @param float $dDescTotal
+   * @param String $dDescTotal
    *
    * @return self
    */
-  public function setDDescTotal(float $dDescTotal): self
+  public function setDDescTotal(String $dDescTotal): self
   {
-    $this->dDescTotal = $dDescTotal;
-
+    $newVal = trim($dDescTotal);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dDescTotal: $newVal");
+    $this->dDescTotal = $newVal;
     return $this;
   }
 
@@ -210,14 +253,16 @@ class GTotSub
   /**
    * Set the value of dAnticipo
    *
-   * @param float $dAnticipo
+   * @param String $dAnticipo
    *
    * @return self
    */
-  public function setDAnticipo(float $dAnticipo): self
+  public function setDAnticipo(String $dAnticipo): self
   {
-    $this->dAnticipo = $dAnticipo;
-
+    $newVal = trim($dAnticipo);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dAnticipo: $newVal");
+    $this->dAnticipo = $newVal;
     return $this;
   }
 
@@ -225,14 +270,16 @@ class GTotSub
   /**
    * Set the value of dRedon
    *
-   * @param float $dRedon
+   * @param String $dRedon
    *
    * @return self
    */
-  public function setDRedon(float $dRedon): self
+  public function setDRedon(String $dRedon): self
   {
-    $this->dRedon = $dRedon;
-
+    $newVal = trim($dRedon);
+    if(!ValueValidations::isValidStringDecimal($newVal, 3, 0, 4))
+      throw new \Exception("Valor no válido para el campo dRedon: $newVal");
+    $this->dRedon = $newVal;
     return $this;
   }
 
@@ -240,14 +287,16 @@ class GTotSub
   /**
    * Set the value of dComi
    *
-   * @param float $dComi
+   * @param String $dComi
    *
    * @return self
    */
-  public function setDComi(float $dComi): self
+  public function setDComi(String $dComi): self
   {
-    $this->dComi = $dComi;
-
+    $newVal = trim($dComi);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dComi: $newVal");
+    $this->dComi = $newVal;
     return $this;
   }
 
@@ -255,14 +304,16 @@ class GTotSub
   /**
    * Set the value of dTotGralOpe
    *
-   * @param float $dTotGralOpe
+   * @param String $dTotGralOpe
    *
    * @return self
    */
-  public function setDTotGralOpe(float $dTotGralOpe): self
+  public function setDTotGralOpe(String $dTotGralOpe): self
   {
-    $this->dTotGralOpe = $dTotGralOpe;
-
+    $newVal = trim($dTotGralOpe);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotGralOpe: $newVal");
+    $this->dTotGralOpe = $newVal;
     return $this;
   }
 
@@ -270,14 +321,16 @@ class GTotSub
   /**
    * Set the value of dIVA5
    *
-   * @param float $dIVA5
+   * @param String $dIVA5
    *
    * @return self
    */
-  public function setDIVA5(float $dIVA5): self
+  public function setDIVA5(String $dIVA5): self
   {
-    $this->dIVA5 = $dIVA5;
-
+    $newVal = trim($dIVA5);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dIVA5: $newVal");
+    $this->dIVA5 = $newVal;
     return $this;
   }
 
@@ -285,14 +338,16 @@ class GTotSub
   /**
    * Set the value of dIVA10
    *
-   * @param float $dIVA10
+   * @param String $dIVA10
    *
    * @return self
    */
-  public function setDIVA10(float $dIVA10): self
+  public function setDIVA10(String $dIVA10): self
   {
-    $this->dIVA10 = $dIVA10;
-
+    $newVal = trim($dIVA10);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dIVA10: $newVal");
+    $this->dIVA10 = $newVal;
     return $this;
   }
 
@@ -300,14 +355,16 @@ class GTotSub
   /**
    * Set the value of dLiqTotIVA5
    *
-   * @param float $dLiqTotIVA5
+   * @param String $dLiqTotIVA5
    *
    * @return self
    */
-  public function setDLiqTotIVA5(float $dLiqTotIVA5): self
+  public function setDLiqTotIVA5(String $dLiqTotIVA5): self
   {
-    $this->dLiqTotIVA5 = $dLiqTotIVA5;
-
+    $newVal = trim($dLiqTotIVA5);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dLiqTotIVA5: $newVal");
+    $this->dLiqTotIVA5 = $newVal;
     return $this;
   }
 
@@ -315,14 +372,16 @@ class GTotSub
   /**
    * Set the value of dLiqTotIVA10
    *
-   * @param float $dLiqTotIVA10
+   * @param String $dLiqTotIVA10
    *
    * @return self
    */
-  public function setDLiqTotIVA10(float $dLiqTotIVA10): self
+  public function setDLiqTotIVA10(String $dLiqTotIVA10): self
   {
-    $this->dLiqTotIVA10 = $dLiqTotIVA10;
-
+    $newVal = trim($dLiqTotIVA10);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dLiqTotIVA10: $newVal");
+    $this->dLiqTotIVA10 = $newVal;
     return $this;
   }
 
@@ -330,14 +389,16 @@ class GTotSub
   /**
    * Set the value of dIVAComi
    *
-   * @param float $dIVAComi
+   * @param String $dIVAComi
    *
    * @return self
    */
-  public function setDIVAComi(float $dIVAComi): self
+  public function setDIVAComi(String $dIVAComi): self
   {
-    $this->dIVAComi = $dIVAComi;
-
+    $newVal = trim($dIVAComi);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dIVAComi: $newVal");
+    $this->dIVAComi = $newVal;
     return $this;
   }
 
@@ -345,14 +406,16 @@ class GTotSub
   /**
    * Set the value of dTotIVA
    *
-   * @param float $dTotIVA
+   * @param String $dTotIVA
    *
    * @return self
    */
-  public function setDTotIVA(float $dTotIVA): self
+  public function setDTotIVA(String $dTotIVA): self
   {
-    $this->dTotIVA = $dTotIVA;
-
+    $newVal = trim($dTotIVA);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotIVA: $newVal");
+    $this->dTotIVA = $newVal;
     return $this;
   }
 
@@ -360,14 +423,16 @@ class GTotSub
   /**
    * Set the value of dBaseGrav5
    *
-   * @param float $dBaseGrav5
+   * @param String $dBaseGrav5
    *
    * @return self
    */
-  public function setDBaseGrav5(float $dBaseGrav5): self
+  public function setDBaseGrav5(String $dBaseGrav5): self
   {
-    $this->dBaseGrav5 = $dBaseGrav5;
-
+    $newVal = trim($dBaseGrav5);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dBaseGrav5: $newVal");
+    $this->dBaseGrav5 = $newVal;
     return $this;
   }
 
@@ -375,14 +440,16 @@ class GTotSub
   /**
    * Set the value of dTBasGraIVA
    *
-   * @param float $dTBasGraIVA
+   * @param String $dTBasGraIVA
    *
    * @return self
    */
-  public function setDTBasGraIVA(float $dTBasGraIVA): self
+  public function setDTBasGraIVA(String $dTBasGraIVA): self
   {
-    $this->dTBasGraIVA = $dTBasGraIVA;
-
+    $newVal = trim($dTBasGraIVA);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTBasGraIVA: $newVal");
+    $this->dTBasGraIVA = $newVal;
     return $this;
   }
 
@@ -390,28 +457,30 @@ class GTotSub
   /**
    * Set the value of dTotalGs
    *
-   * @param float $dTotalGs
+   * @param String $dTotalGs
    *
    * @return self
    */
-  public function setDTotalGs(float $dTotalGs): self
+  public function setDTotalGs(String $dTotalGs): self
   {
-    $this->dTotalGs = $dTotalGs;
-
+    $newVal = trim($dTotalGs);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("Valor no válido para el campo dTotalGs: $newVal");
+    $this->dTotalGs = $newVal;
     return $this;
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
+  // Getters
   ///////////////////////////////////////////////////////////////////////
 
 
   /**
    * Get the value of dSubExe
    *
-   * @return float
+   * @return String
    */
-  public function getDSubExe(): float | null
+  public function getDSubExe(): String
   {
     return $this->dSubExe;
   }
@@ -419,9 +488,9 @@ class GTotSub
   /**
    * Get the value of dSubExo
    *
-   * @return float
+   * @return String
    */
-  public function getDSubExo(): float | null
+  public function getDSubExo(): String
   {
     return $this->dSubExo;
   }
@@ -429,9 +498,9 @@ class GTotSub
   /**
    * Get the value of dSub5
    *
-   * @return float
+   * @return String
    */
-  public function getDSub5(): float | null
+  public function getDSub5(): String
   {
     return $this->dSub5;
   }
@@ -439,9 +508,9 @@ class GTotSub
   /**
    * Get the value of dSub10
    *
-   * @return float
+   * @return String
    */
-  public function getDSub10(): float | null
+  public function getDSub10(): String
   {
     return $this->dSub10;
   }
@@ -449,19 +518,21 @@ class GTotSub
   /**
    * Get the value of dTotOpe
    *
-   * @return float
+   * @return String
    */
-  public function getDTotOpe(): float | null
+  public function getDTotOpe(): String
   {
-    return $this->dSubExe + $this->dSubExo + $this->dSub5 + $this->dSub10;
+    return $this->dTotOpe;
   }
+
+
 
   /**
    * Get the value of dTotDesc
    *
-   * @return float
+   * @return String
    */
-  public function getDTotDesc(): float | null
+  public function getDTotDesc(): String
   {
     return $this->dTotDesc;
   }
@@ -469,9 +540,9 @@ class GTotSub
   /**
    * Get the value of dTotDescGlotem
    *
-   * @return float
+   * @return String
    */
-  public function getDTotDescGlotem(): float | null
+  public function getDTotDescGlotem(): String
   {
     return $this->dTotDescGlotem;
   }
@@ -479,9 +550,9 @@ class GTotSub
   /**
    * Get the value of dTotAntItem
    *
-   * @return float
+   * @return String
    */
-  public function getDTotAntItem(): float | null
+  public function getDTotAntItem(): String
   {
     return $this->dTotAntItem;
   }
@@ -489,9 +560,9 @@ class GTotSub
   /**
    * Get the value of dTotAnt
    *
-   * @return float
+   * @return String
    */
-  public function getDTotAnt(): float | null
+  public function getDTotAnt(): String
   {
     return $this->dTotAnt;
   }
@@ -499,9 +570,9 @@ class GTotSub
   /**
    * Get the value of dPorcDescTotal
    *
-   * @return float
+   * @return String
    */
-  public function getDPorcDescTotal(): float | null
+  public function getDPorcDescTotal(): String
   {
     return $this->dPorcDescTotal;
   }
@@ -509,9 +580,9 @@ class GTotSub
   /**
    * Get the value of dDescTotal
    *
-   * @return float
+   * @return String
    */
-  public function getDDescTotal(): float | null
+  public function getDDescTotal(): String
   {
     return $this->dDescTotal;
   }
@@ -519,9 +590,9 @@ class GTotSub
   /**
    * Get the value of dAnticipo
    *
-   * @return float
+   * @return String
    */
-  public function getDAnticipo(): float | null
+  public function getDAnticipo(): String
   {
     return $this->dAnticipo;
   }
@@ -529,9 +600,9 @@ class GTotSub
   /**
    * Get the value of dRedon
    *
-   * @return float
+   * @return String
    */
-  public function getDRedon(): float | null
+  public function getDRedon(): String
   {
     return $this->dRedon;
   }
@@ -539,9 +610,9 @@ class GTotSub
   /**
    * Get the value of dComi
    *
-   * @return float
+   * @return String
    */
-  public function getDComi(): float | null
+  public function getDComi(): String
   {
     return $this->dComi;
   }
@@ -549,19 +620,19 @@ class GTotSub
   /**
    * Get the value of dTotGralOpe
    *
-   * @return float
+   * @return String
    */
-  public function getDTotGralOpe(): float | null
+  public function getDTotGralOpe(): String
   {
-    return $this->dTotOpe - $this->dRedon + $this->dComi;
+    return $this->dTotGralOpe;
   }
 
   /**
    * Get the value of dIVA5
    *
-   * @return float
+   * @return String
    */
-  public function getDIVA5(): float | null
+  public function getDIVA5(): String
   {
     return $this->dIVA5;
   }
@@ -569,9 +640,9 @@ class GTotSub
   /**
    * Get the value of dIVA10
    *
-   * @return float
+   * @return String
    */
-  public function getDIVA10(): float | null
+  public function getDIVA10(): String
   {
     return $this->dIVA10;
   }
@@ -579,9 +650,9 @@ class GTotSub
   /**
    * Get the value of dLiqTotIVA5
    *
-   * @return float
+   * @return String
    */
-  public function getDLiqTotIVA5(): float | null
+  public function getDLiqTotIVA5(): String
   {
     return $this->dLiqTotIVA5;
   }
@@ -589,9 +660,9 @@ class GTotSub
   /**
    * Get the value of dLiqTotIVA10
    *
-   * @return float
+   * @return String
    */
-  public function getDLiqTotIVA10(): float | null
+  public function getDLiqTotIVA10(): String
   {
     return $this->dLiqTotIVA10;
   }
@@ -599,9 +670,9 @@ class GTotSub
   /**
    * Get the value of dIVAComi
    *
-   * @return float
+   * @return String
    */
-  public function getDIVAComi(): float | null
+  public function getDIVAComi(): String
   {
     return $this->dIVAComi;
   }
@@ -609,9 +680,9 @@ class GTotSub
   /**
    * Get the value of dTotIVA
    *
-   * @return float
+   * @return String
    */
-  public function getDTotIVA(): float | null
+  public function getDTotIVA(): String
   {
     return $this->dTotIVA;
   }
@@ -619,9 +690,9 @@ class GTotSub
   /**
    * Get the value of dBaseGrav5
    *
-   * @return float
+   * @return String
    */
-  public function getDBaseGrav5(): float | null
+  public function getDBaseGrav5(): String
   {
     return $this->dBaseGrav5;
   }
@@ -629,9 +700,9 @@ class GTotSub
   /**
    * Get the value of dBaseGrav10
    *
-   * @return float
+   * @return String
    */
-  public function getDBaseGrav10(): float | null
+  public function getDBaseGrav10(): String
   {
     return $this->dBaseGrav10;
   }
@@ -639,26 +710,95 @@ class GTotSub
   /**
    * Get the value of dTBasGraIVA
    *
-   * @return float
+   * @return String
    */
-  public function getDTBasGraIVA(): float | null
+  public function getDTBasGraIVA(): String
   {
-    return $this->dBaseGrav5 + $this->dBaseGrav10;
+    return $this->dTBasGraIVA;
   }
 
   /**
    * Get the value of dTotalGs
    *
-   * @return float
+   * @return String
    */
-  public function getDTotalGs(): float | null
+  public function getDTotalGs(): String
   {
     return $this->dTotalGs;
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  // XML Element  
   ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Instancia un objeto de la clase a partir de un SimpleXMLElement
+   * 
+   * @param SimpleXMLElement $xml
+   * 
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
+  {
+    if(strcmp($xml->getName(), 'gTotSub') != 0)
+      throw new \Exception("El nombre del elemento no es del tipo gTotSub");
+    $res = new GTotSub();
+    if (isset($xml->dSubExe)) {
+      $res->setDSubExe($xml->dSubExe);
+    }
+    if (isset($xml->dSubExo)) {
+      $res->setDSubExo($xml->dSubExo);
+    }
+    if (isset($xml->dSub5)) {
+      $res->setDSub5($xml->dSub5);
+    }
+    if (isset($xml->dSub10)) {
+      $res->setDSub10($xml->dSub10);
+    }
+    $res->setDTotOpe($xml->dTotOpe);
+    $res->setDTotDesc($xml->dTotDesc);
+    $res->setDTotDescGlotem($xml->dTotDescGlotem);
+    $res->setDTotAntItem($xml->dTotAntItem);
+    $res->setDTotAnt($xml->dTotAnt);
+    $res->setDPorcDescTotal($xml->dPorcDescTotal);
+    $res->setDDescTotal($xml->dDescTotal);
+    $res->setDAnticipo($xml->dAnticipo);
+    $res->setDRedon($xml->dRedon);
+    if(isset($xml->dComi)) {
+      $res->setDComi($xml->dComi);
+    }
+    $res->setDTotGralOpe($xml->dTotGralOpe);
+    if (isset($xml->dIVA5)) {
+      $res->setDIVA5($xml->dIVA5);
+    }
+    if (isset($xml->dIVA10)) {
+      $res->setDIVA10($xml->dIVA10);
+    }
+    if (isset($xml->dLiqTotIVA5)) {
+      $res->setDLiqTotIVA5($xml->dLiqTotIVA5);
+    }
+    if (isset($xml->dLiqTotIVA10)) {
+      $res->setDLiqTotIVA10($xml->dLiqTotIVA10);
+    }
+    if (isset($xml->dIVAComi)) {
+      $res->setDIVAComi($xml->dIVAComi);
+    }
+    if (isset($xml->dTotIVA)) {
+      $res->setDTotIVA($xml->dTotIVA);
+    }
+    if (isset($xml->dBaseGrav5)) {
+      $res->setDBaseGrav5($xml->dBaseGrav5);
+    }
+    if (isset($xml->dBaseGrav10)) {
+      $res->setDBaseGrav10($xml->dBaseGrav10);
+    }
+    if (isset($xml->dTBasGraIVA)) {
+      $res->setDTBasGraIVA($xml->dTBasGraIVA);
+    }
+    if (isset($xml->dTotalGs)) {
+      $res->setDTotalGs($xml->dTotalGs);
+    }
+  }
 
   /**
    * toDOMElement
@@ -700,58 +840,14 @@ class GTotSub
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GTotSub
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GTotSub
-  // {
-  //   if (strcmp($xml->tagName, 'gTotSub') == 0 && $xml->childElementCount == 25) {
-  //     $res = new GTotSub();
-  //     $res->setDSubExe(floatval($xml->getElementsByTagName('dSubExe')->item(0)->nodeValue));
-  //     $res->setDSubExo(floatval($xml->getElementsByTagName('dSubEx')->item(0)->nodeValue));
-  //     $res->setDSub5(floatval($xml->getElementsByTagName('dSub5')->item(0)->nodeValue));
-  //     $res->setDSub10(floatval($xml->getElementsByTagName('dSub10')->item(0)->nodeValue));
-  //     $res->setDTotOpe(floatval($xml->getElementsByTagName('dTotOpe')->item(0)->nodeValue));
-  //     $res->setDTotDesc(floatval($xml->getElementsByTagName('dTotDesc')->item(0)->nodeValue));
-  //     $res->setDTotDescGlotem(floatval($xml->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue));
-  //     $res->setDTotAntItem(floatval($xml->getElementsByTagName('dTotAntItem')->item(0)->nodeValue));
-  //     $res->setDTotAnt(floatval($xml->getElementsByTagName('dTotAnt')->item(0)->nodeValue));
-  //     $res->setDPorcDescTotal(floatval($xml->getElementsByTagName('dPorcDescTotal')->item(0)->nodeValue));
-  //     $res->setDPorcDescTotal(floatval($xml->getElementsByTagName('dPorcDesc')->item(0)->nodeValue));
-  //     $res->setDDescTotal(floatval($xml->getElementsByTagName('dDesc')->item(0)->nodeValue));
-  //     $res->setDAnticipo(floatval($xml->getElementsByTagName('dAnticipo')->item(0)->nodeValue));
-  //     $res->setDRedon(floatval($xml->getElementsByTagName('dRedon')->item(0)->nodeValue));
-  //     $res->setDComi(floatval($xml->getElementsByTagName('dComi')->item(0)->nodeValue));
-  //     $res->setDTotGralOpe(floatval($xml->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue));
-  //     $res->setDIVA5(floatval($xml->getElementsByTagName('dIVA5')->item(0)->nodeValue));
-  //     $res->setDIVA10(floatval($xml->getElementsByTagName('dIVA10')->item(0)->nodeValue));
-  //     $res->setDLiqTotIVA5(floatval($xml->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue));
-  //     $res->setDLiqTotIVA10(floatval($xml->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue));
-  //     $res->setDIVAComi(floatval($xml->getElementsByTagName('dIVAComi')->item(0)->nodeValue));
-  //     $res->setDTotIVA(floatval($xml->getElementsByTagName('dTotIVA')->item(0)->nodeValue));
-  //     $res->setDBaseGrav5(floatval($xml->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue));
-  //     $res->setDBaseGrav10(floatval($xml->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue));
-  //     $res->setDTbasGraIVA(floatval($xml->getElementsByTagName('dTBaseGraIVA')->item(0)->nodeValue));
-  //     $res->setDTotalGs(floatval($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
-
   /**
    * Set the value of dBaseGrav10
    *
-   * @param float $dBaseGrav10
+   * @param String $dBaseGrav10
    *
    * @return self
    */
-  public function setDBaseGrav10(float $dBaseGrav10): self
+  public function setDBaseGrav10(String $dBaseGrav10): self
   {
     $this->dBaseGrav10 = $dBaseGrav10;
 
@@ -766,88 +862,125 @@ class GTotSub
    */
   public static function fromResponse($response): self
   {
-
-
     $res = new GTotSub();
     if (isset($response->dSubExe)) {
-      $res->setDSubExe(floatval($response->dSubExe));
+      $res->setDSubExe($response->dSubExe);
     }
     if (isset($response->dSubEx)) {
-      $res->setDSubExo(floatval($response->dSubEx));
+      $res->setDSubExo($response->dSubEx);
     }
     if (isset($response->dSub5)) {
-      $res->setDSub5(floatval($response->dSub5));
+      $res->setDSub5($response->dSub5);
     }
     if (isset($response->dSub10)) {
-      $res->setDSub10(floatval($response->dSub10));
+      $res->setDSub10($response->dSub10);
     }
     if (isset($response->dTotOpe)) {
-      $res->setDTotOpe(floatval($response->dTotOpe));
+      $res->setDTotOpe($response->dTotOpe);
     }
     if (isset($response->dTotDesc)) {
-      $res->setDTotDesc(floatval($response->dTotDesc));
+      $res->setDTotDesc($response->dTotDesc);
     }
     if (isset($response->dTotDescGlotem)) {
-      $res->setDTotDescGlotem(floatval($response->dTotDescGlotem));
+      $res->setDTotDescGlotem($response->dTotDescGlotem);
     }
     if (isset($response->dTotAntItem)) {
-      $res->setDTotAntItem(floatval($response->dTotAntItem));
+      $res->setDTotAntItem($response->dTotAntItem);
     }
     if (isset($response->dTotAnt)) {
-      $res->setDTotAnt(floatval($response->dTotAnt));
+      $res->setDTotAnt($response->dTotAnt);
     }
     if (isset($response->dPorcDescTotal)) {
-      $res->setDPorcDescTotal(floatval($response->dPorcDescTotal));
+      $res->setDPorcDescTotal($response->dPorcDescTotal);
     }
     if (isset($response->dPorcDesc)) {
-      $res->setDPorcDescTotal(floatval($response->dPorcDesc));
+      $res->setDPorcDescTotal($response->dPorcDesc);
     }
     if (isset($response->dDesc)) {
-      $res->setDDescTotal(floatval($response->dDesc));
+      $res->setDDescTotal($response->dDesc);
     }
     if (isset($response->dAnticipo)) {
-      $res->setDAnticipo(floatval($response->dAnticipo));
+      $res->setDAnticipo($response->dAnticipo);
     }
     if (isset($response->dRedon)) {
-      $res->setDRedon(floatval($response->dRedon));
+      $res->setDRedon($response->dRedon);
     }
     if (isset($response->dComi)) {
-      $res->setDComi(floatval($response->dComi));
+      $res->setDComi($response->dComi);
     }
     if (isset($response->dTotGralOpe)) {
-      $res->setDTotGralOpe(floatval($response->dTotGralOpe));
+      $res->setDTotGralOpe($response->dTotGralOpe);
     }
     if (isset($response->dIVA5)) {
-      $res->setDIVA5(floatval($response->dIVA5));
+      $res->setDIVA5($response->dIVA5);
     }
     if (isset($response->dIVA10)) {
-      $res->setDIVA10(floatval($response->dIVA10));
+      $res->setDIVA10($response->dIVA10);
     }
     if (isset($response->dLiqTotIVA5)) {
-      $res->setDLiqTotIVA5(floatval($response->dLiqTotIVA5));
+      $res->setDLiqTotIVA5($response->dLiqTotIVA5);
     }
     if (isset($response->dLiqTotIVA10)) {
-      $res->setDLiqTotIVA10(floatval($response->dLiqTotIVA10));
+      $res->setDLiqTotIVA10($response->dLiqTotIVA10);
     }
     if (isset($response->dIVAComi)) {
-      $res->setDIVAComi(floatval($response->dIVAComi));
+      $res->setDIVAComi($response->dIVAComi);
     }
     if (isset($response->dTotIVA)) {
-      $res->setDTotIVA(floatval($response->dTotIVA));
+      $res->setDTotIVA($response->dTotIVA);
     }
     if (isset($response->dBaseGrav5)) {
-      $res->setDBaseGrav5(floatval($response->dBaseGrav5));
+      $res->setDBaseGrav5($response->dBaseGrav5);
     }
     if (isset($response->dBaseGrav10)) {
-      $res->setDBaseGrav10(floatval($response->dBaseGrav10));
+      $res->setDBaseGrav10($response->dBaseGrav10);
     }
     if (isset($response->dTBaseGraIVA)) {
-      $res->setDTbasGraIVA(floatval($response->dTBaseGraIVA));
+      $res->setDTbasGraIVA($response->dTBaseGraIVA);
     }
     if (isset($response->dTotalGs)) {
-      $res->setDTotalGs(floatval($response->dTotalGs));
-    }
-    
+      $res->setDTotalGs($response->dTotalGs);
+    }    
     return $res;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Funciones de Cálculo
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Calcula el parámetro dTotOpe (total BRUTO de la operación) a partir de la suma de los parámetros dSubExe, dSubExo, dSub5 y dSub10.
+   * 
+   * @return String dTotOpe calculado
+   */
+  public function calcDTotOpe(): String
+  {
+    $this->dTotOpe = bcadd($this->dSubExe ?? '0', $this->dSubExo ?? '0', 8);
+    $this->dTotOpe = bcadd($this->dTotOpe ?? '0', $this->dSub5 ?? '0', 8);
+    $this->dTotOpe = bcadd($this->dTotOpe ?? '0', $this->dSub10 ?? '0', 8);
+    return $this->dTotOpe;
+  }
+
+  /**
+   * Calcula el parámetro dTotGralOpe (total NETO de la operación) a partir de dTotOpe - dRedon + dComi.
+   * 
+   * @return String dTotGralOpe calculado
+   */
+  public function calcDTotGralOpe(): String
+  {
+    $this->dTotGralOpe = bcadd($this->dTotOpe ?? '0', $this->dComi ?? '0', 8);
+    $this->dTotGralOpe = bcsub($this->dTotGralOpe ?? '0', $this->dRedon ?? '0', 8);
+    return $this->dTotGralOpe;
+  }
+
+  /**
+   * Calcula el parámetro dTBasGraIVA (total de la base gravada de IVA) a partir de la suma de los parámetros dBaseGrav5 y dBaseGrav10.
+   * 
+   * @return String dTBasGraIVA calculado
+   */
+  public function calcDTBasGraIVA(): String
+  {
+    $this->dTBasGraIVA = bcadd($this->dBaseGrav5 ?? '0', $this->dBaseGrav10 ?? '0', 8);
+    return $this->dTBasGraIVA;
   }
 }

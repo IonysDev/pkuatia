@@ -117,7 +117,7 @@ class RDE
    */
   public static function FromSimpleXMLElement($xml): self
   {
-    if(strcmp($xml->getName(), 'rDe') != 0)
+    if(strcmp($xml->getName(), 'rDE') != 0)
       throw new \Exception('Invalid XML Node Name: ' . $xml->getName());
     
     $res = new RDE();

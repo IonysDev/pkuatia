@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://ekuatia.set.gov.py/sifen/xsd" elementFormDefault="qualified" targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+           targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
     <xs:annotation>
         <xs:documentation>
             CODIFICACION DE UNIDADES DE MEDIDA (DNCP)

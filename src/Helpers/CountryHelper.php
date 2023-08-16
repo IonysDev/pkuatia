@@ -29,9 +29,9 @@ class CountryHelper
    * getCountryDesc
    *
    * @param  mixed $country
-   * @return string|null
+   * @return string
    */
-  public static function getCountryDesc($code): string | null
+  public static function getCountryDesc($code): string
   {
     $country = strtoupper($code);
     $array = self::getArray();

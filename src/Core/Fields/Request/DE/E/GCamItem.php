@@ -3,7 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\DE\E;
 
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
-use Abiliomp\Pkuatia\Helpers\UMHelper;
+use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
 use DOMElement;
 
 use function PHPSTORM_META\type;
@@ -387,7 +387,7 @@ class GCamItem
    */
   public function getDDesUniMed(): string | null
   {
-    return UMHelper::getUMDesc(strval($this->cUniMed));
+    return UnidadMedidaMapping::GetDesc(strval($this->cUniMed));
   }
 
   /**
