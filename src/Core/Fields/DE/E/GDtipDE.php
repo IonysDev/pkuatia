@@ -307,58 +307,54 @@ class GDtipDE
 
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GDtipDE();
-    if (isset($response->gCamFE)) {
-      $res->setGCamFE(GCamFE::fromResponse($response->gCamFE));
+    if (isset($object->gCamFE)) {
+      $res->setGCamFE(GCamFE::FromSifenResponseObject($object->gCamFE));
     }
-    if (isset($response->gCamAE)) {
-      $res->setGCamAE(GCamAE::fromResponse($response->gCamAE));
-    }
-
-    if (isset($response->gCamNCDE)) {
-      $res->setGCamNCDE(GCamNCDE::fromResponse($response->gCamNCDE));
+    if (isset($object->gCamAE)) {
+      $res->setGCamAE(GCamAE::FromSifenResponseObject($object->gCamAE));
     }
 
-    if (isset($response->gCamNRE)) {
-      $res->setGCamNRE(GCamNRE::fromResponse($response->gCamNRE));
+    if (isset($object->gCamNCDE)) {
+      $res->setGCamNCDE(GCamNCDE::FromSifenResponseObject($object->gCamNCDE));
     }
 
-    if (isset($response->gCamCond)) {
-      $res->setGCamCond(GCamCond::fromResponse($response->gCamCond));
+    if (isset($object->gCamNRE)) {
+      $res->setGCamNRE(GCamNRE::FromSifenResponseObject($object->gCamNRE));
     }
 
-
-    if (isset($response->gCamItem)) {
+    if (isset($object->gCamCond)) {
+      $res->setGCamCond(GCamCond::FromSifenResponseObject($object->gCamCond));
+    }
+    if (isset($object->gCamItem)) {
       ///BANDERA PARA SABER SI ES MAS DE UN ITEM
       //convert the object to array
-      $aux = (array)$response;
+      $aux = (array)$object;
       ///dependE del tipo de response
       if (gettype($aux['gCamItem']) == 'array') { ///mas de un objeto viene en arrays
-        $count = count($response->gCamItem);
+        $count = count($object->gCamItem);
         for ($i = 0; $i < $count; $i++) {
           ///se deuelve el objeto en el array
-          $res->gCamItem[] = GCamItem::fromResponse($response->gCamItem[$i]);
+          $res->gCamItem[] = GCamItem::FromSifenResponseObject($object->gCamItem[$i]);
         }
       } else if (gettype($aux['gCamItem']) == 'object') {  ///1 objeto, viene en objeto
         ///se deuelve el objeto en el array
-        $res->gCamItem[] = GCamItem::fromResponse($response->gCamItem);
+        $res->gCamItem[] = GCamItem::FromSifenResponseObject($object->gCamItem);
       }
     }
-
-
-    if (isset($response->gCamEsp)) {
-      $res->setGCamEsp(GCamEsp::fromResponse($response->gCamEsp));
+    if (isset($object->gCamEsp)) {
+      $res->setGCamEsp(GCamEsp::FromSifenResponseObject($object->gCamEsp));
     }
 
-    if (isset($response->gTransp)) {
-      $res->setGTransp(GTransp::fromResponse($response->gTransp));
+    if (isset($object->gTransp)) {
+      $res->setGTransp(GTransp::FromSifenResponseObject($object->gTransp));
     }
     return $res;
   }

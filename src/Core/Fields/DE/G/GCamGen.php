@@ -188,29 +188,29 @@ class GCamGen
   }  
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamGen();
-    if(isset($response->dOrdCompra))
+    if(isset($object->dOrdCompra))
     {
-      $res->setDOrdCompra($response->dOrdCompra);
+      $res->setDOrdCompra($object->dOrdCompra);
     }
-    if(isset($response->dOrdVta))
+    if(isset($object->dOrdVta))
     {
-      $res->setDOrdVta($response->dOrdVta);
+      $res->setDOrdVta($object->dOrdVta);
     }
-    if(isset($response->dAsiento))
+    if(isset($object->dAsiento))
     {
-      $res->setDAsiento($response->dAsiento);
+      $res->setDAsiento($object->dAsiento);
     }
     //CHOILDREN
-    if (isset($response->gCamCarg)) {
-      $res->setGCamCarg(GCamCarg::fromResponse($response->gCamCarg));
+    if (isset($object->gCamCarg)) {
+      $res->setGCamCarg(GCamCarg::FromSifenResponseObject($object->gCamCarg));
     }
     return $res;
   }

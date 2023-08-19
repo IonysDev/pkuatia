@@ -403,45 +403,45 @@ class GPagTarCD
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GPagTarCD();
-    if(isset($response->iDenTarj))
+    if(isset($object->iDenTarj))
     {
-      $res->setIDenTarj(intval($response->iDenTarj));
+      $res->setIDenTarj(intval($object->iDenTarj));
     }
-    if(isset($response->dRSProTar))
+    if(isset($object->dRSProTar))
     {
-      $res->setDRSProTar($response->dRSProTar);
+      $res->setDRSProTar($object->dRSProTar);
     }
-    if(isset($response->dRUCProTar))
+    if(isset($object->dRUCProTar))
     {
-      $res->setDRUCProTar($response->dRUCProTar);
+      $res->setDRUCProTar($object->dRUCProTar);
     }
-    if(isset($response->dDVProTar))
+    if(isset($object->dDVProTar))
     {
-      $res->setDDVProTar(intval($response->dDVProTar));
+      $res->setDDVProTar(intval($object->dDVProTar));
     }
-    if(isset($response->iForProPa))
+    if(isset($object->iForProPa))
     {
-      $res->setIForProPa(intval($response->iForProPa));
+      $res->setIForProPa(intval($object->iForProPa));
     }
-    if(isset($response->dCodAuOpe))
+    if(isset($object->dCodAuOpe))
     {
-      $res->setDCodAuOpe(intval($response->dCodAuOpe));
+      $res->setDCodAuOpe(intval($object->dCodAuOpe));
     }
-    if(isset($response->dNomTit))
+    if(isset($object->dNomTit))
     {
-      $res->setDNomTit($response->dNomTit);
+      $res->setDNomTit($object->dNomTit);
     }
-    if(isset($response->dNumTarj))
+    if(isset($object->dNumTarj))
     {
-      $res->setDNumTarj(intval($response->dNumTarj));
+      $res->setDNumTarj(intval($object->dNumTarj));
     }
     return $res;
   }

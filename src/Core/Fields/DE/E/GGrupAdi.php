@@ -201,43 +201,43 @@ class GGrupAdi
   }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GGrupAdi();
 
-    if(isset($response->ciclo))
+    if(isset($object->ciclo))
     {
-      $res->setCiclo($response->ciclo);
+      $res->setCiclo($object->ciclo);
     }
 
-    if(isset($response->dFecIniC))
+    if(isset($object->dFecIniC))
     {
-      $res->setDFecIniC($response->dFecIniC);
+      $res->setDFecIniC($object->dFecIniC);
     }
 
-    if(isset($response->dFecFinC))
+    if(isset($object->dFecFinC))
     {
-      $res->setDFecFinC($response->dFecFinC);
+      $res->setDFecFinC($object->dFecFinC);
     }
 
-    if(isset($response->dVencPag))
+    if(isset($object->dVencPag))
     {
-      $res->setDVencPag($response->dVencPag);
+      $res->setDVencPag($object->dVencPag);
     }
 
-    if(isset($response->dContrato))
+    if(isset($object->dContrato))
     {
-      $res->setDContrato($response->dContrato);
+      $res->setDContrato($object->dContrato);
     }
 
-    if(isset($response->dSaltAnt))
+    if(isset($object->dSaltAnt))
     {
-      $res->setDSaltAnt($response->dSaltAnt);
+      $res->setDSaltAnt($object->dSaltAnt);
     }
 
     return $res;

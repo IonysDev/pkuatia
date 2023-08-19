@@ -121,16 +121,16 @@ class GGrupSeg
     return $this;
   }
 
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GGrupSeg();
-    if(isset($response->dCodEmpSeg))
+    if(isset($object->dCodEmpSeg))
     {
-      $res->setDCodEmpSeg($response->dCodEmpSeg);
+      $res->setDCodEmpSeg($object->dCodEmpSeg);
     }
  
-    if(isset($response->gGrupoPolSeg)){
-      $res->setGGrupoPolSeg(GGrupPolSeg::fromResponse($response->gGrupoPolSeg));
+    if(isset($object->gGrupoPolSeg)){
+      $res->setGGrupoPolSeg(GGrupPolSeg::FromSifenResponseObject($object->gGrupoPolSeg));
     }
     return $res;
   }

@@ -320,37 +320,37 @@ class GCamSal
   // }
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamSal();
-    if(isset($response->dDirLocSal)){
-      $res->setDDirLocSal($response->dDirLocSal);
+    if(isset($object->dDirLocSal)){
+      $res->setDDirLocSal($object->dDirLocSal);
     }
-    if(isset($response->dNumCasSal)){
-      $res->setDNumCasSal($response->dNumCasSal);
+    if(isset($object->dNumCasSal)){
+      $res->setDNumCasSal($object->dNumCasSal);
     }
-    if(isset($response->dComp1Sal)){
-      $res->setDComp1Sal($response->dComp1Sal);
+    if(isset($object->dComp1Sal)){
+      $res->setDComp1Sal($object->dComp1Sal);
     }
-    if(isset($response->dComp2Sal)){
-      $res->setDComp2Sal($response->dComp2Sal);
+    if(isset($object->dComp2Sal)){
+      $res->setDComp2Sal($object->dComp2Sal);
     }
-    if(isset($response->cDepSal)){
-      $res->setCDepSal($response->cDepSal);
+    if(isset($object->cDepSal)){
+      $res->setCDepSal($object->cDepSal);
     }
-    if(isset($response->cDisSal)){
-      $res->setCDisSal($response->cDisSal);
+    if(isset($object->cDisSal)){
+      $res->setCDisSal($object->cDisSal);
     }
-    if(isset($response->cCiuSal)){
-      $res->setCCiuSal($response->cCiuSal);
+    if(isset($object->cCiuSal)){
+      $res->setCCiuSal($object->cCiuSal);
     }
-    if(isset($response->dTelSal)){
-      $res->setDTelSal($response->dTelSal);
+    if(isset($object->dTelSal)){
+      $res->setDTelSal($object->dTelSal);
     }
     
     return $res;

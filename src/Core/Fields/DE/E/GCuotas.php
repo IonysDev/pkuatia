@@ -190,25 +190,25 @@ class GCuotas
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GCuotas();
-    if(isset($response->cMoneCuo))
+    if(isset($object->cMoneCuo))
     {
-      $res->setCMoneCuo($response->cMoneCuo);
+      $res->setCMoneCuo($object->cMoneCuo);
     }
-    if(isset($response->dMonCuota))
+    if(isset($object->dMonCuota))
     {
-      $res->setDMonCuota($response->dMonCuota);
+      $res->setDMonCuota($object->dMonCuota);
     }
-    if(isset($response->dVencCuo))
+    if(isset($object->dVencCuo))
     {
-      $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $response->dVencCuo));
+      $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $object->dVencCuo));
     }
 
     return $res;

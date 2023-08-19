@@ -8,6 +8,7 @@ use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
 use DOMElement;
 use SimpleXMLElement;
+use stdClass;
 
 /** 
  * Nodo Id:     AA001
@@ -18,10 +19,11 @@ use SimpleXMLElement;
 
 class RDE
 {
-  public ?int $dVerFor  = null;         // AA002 Versión del formato
-  public ?DE $dE = null;               // Campos firmados del  DE
-  public ?Signature $signature = null; // Firma Digital del DTE
-  public ?GCamFuFD $gCamFuFD = null;   // Campos fuera de la firma digital
+                               // Id - Longitud - Ocurrencia - Descripción 
+  public int $dVerFor;         // AA002 - 3 - 1-1 - Versión del formato
+  public DE $DE;               // A001  -   - 1-1 - Campos firmados del  DE
+  public Signature $Signature; // I001  -   - 1-1 - Firma Digital del DTE
+  public GCamFuFD $gCamFuFD;   // J001  -   - 1-1 - Campos fuera de la firma digital
 
   /**
    * Constructor
@@ -30,27 +32,67 @@ class RDE
    */
   public function __construct()
   {
-    ///General
-    $this->dE = new DE();
     $this->setDVerFor(Constants::SIFEN_VERSION);
-    $this->signature = new Signature();
-    $this->gCamFuFD = new GCamFuFD();
+
+    $this->DE        = new DE();
+    $this->Signature = new Signature();
+    $this->gCamFuFD  = new GCamFuFD();
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dVerFor
+   * Establece el valor de dVerFor (Versión del formato)
    *
-   * @param int $dVerFor
+   * @param int $dVerFor Versión del formato
    *
    * @return self
    */
   public function setDVerFor(int $dVerFor): self
   {
     $this->dVerFor = $dVerFor;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de DE (Campos firmados del DE)
+   *
+   * @param DE $DE
+   *
+   * @return self
+   */
+  public function setDE(DE $DE): self
+  {
+    $this->DE = $DE;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gCamFuFD (Campos fuera de la firma digital)
+   *
+   * @param GCamFuFD $gCamFuFD
+   *
+   * @return self
+   */
+  public function setGCamFuFD(GCamFuFD $gCamFuFD): self
+  {
+    $this->gCamFuFD = $gCamFuFD;
+    return $this;
+  }
+
+  
+  /**
+   * Establece el valor de Signature (Firma Digital del DTE)
+   *
+   * @param Signature $Signature
+   *
+   * @return self
+   */
+  public function setSignature(Signature $Signature): self
+  {
+    $this->Signature = $Signature;
 
     return $this;
   }
@@ -60,7 +102,7 @@ class RDE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dVerFor
+   * Devuelve el valor de dVerFor (Versión del formato)
    *
    * @return int
    */
@@ -69,8 +111,38 @@ class RDE
     return $this->dVerFor;
   }
 
+  /**
+   * Devuelve el valor de DE (Campos firmados del DE)
+   *
+   * @return DE
+   */
+  public function getDE(): DE
+  {
+    return $this->DE;
+  }
+
+  /**
+   * Devuelve el valor de gCamFuFD (Campos fuera de la firma digital)
+   *
+   * @return GCamFuFD
+   */
+  public function getGCamFuFD(): GCamFuFD
+  {
+    return $this->gCamFuFD;
+  }
+
+  /**
+   * Devuelve el valor de Signature (Firma Digital del DTE)
+   *
+   * @return Signature
+   */
+  public function getSignature(): Signature
+  {
+    return $this->Signature;
+  }
+
   ///////////////////////////////////////////////////////////////////////
-  // XML Element
+  // Instanciadores y Conversores
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -85,7 +157,7 @@ class RDE
     if(strcmp($node->getName(), 'rDE') != 0)
       throw new \Exception('[RDE] Invalid XML Node Name: ' . $node->getName());
     $res = new RDE();
-    $res->setDVerFor((int)$node->dVerFor);
+    $res->setDVerFor((int) $node->dVerFor);
     $res->setDE(DE::FromSimpleXMLElement($node->DE));
     $res->setGCamFuFD(GCamFuFD::FromSimpleXMLElement($node->gCamFuFD));
     $res->setSignature(Signature::FromSimpleXMLElement($node->Signature));
@@ -93,118 +165,65 @@ class RDE
   }
 
   /**
-   * toDOMElement
+   * Instancia un objeto RDE a partir de objeto tipo stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
-   * @return DOMElement
-   */
-  public function toDOMElement(): DOMElement
-  {
-    $res = new DOMElement('rDe');
-    $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
-    ///Children
-    $res->appendChild($this->dE->toDOMElement());
-    // $res->appendChild(new DOMElement('signature',$this->signature->toDOMElement()));
-    $res->appendChild($this->gCamFuFD->toDOMElement());
-    return $res;
-  }
-
-  
-  
-  /**
-   * fromResponse
-   *
-   * @param  mixed $response
+   * @param stdClass $object
+   * 
    * @return self
    */
-  public static function fromResponse($response) : self
+  public static function FromSifenResponseObject($object) : self
   {
     $res = new RDE();
-    if(isset($response->DE))
+    if(isset($object->DE))
     {
-      $res->setDE(DE::fromResponse($response->DE));
+      $res->setDE(DE::FromSifenResponseObject($object->DE));
     }
  
-    if(isset($response->gCamFuFD))
+    if(isset($object->gCamFuFD))
     {
-      $res->setGCamFuFD(GCamFuFD::fromResponse($response->gCamFuFD));
+      $res->setGCamFuFD(GCamFuFD::FromSifenResponseObject($object->gCamFuFD));
     }
     return $res;
   }   
 
   ///////////////////////////////////////////////////////////////////////
-  // Others
+  // Conversores
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dE
+   * Convertir el objeto RDE a un DOMElement
    *
-   * @return DE
+   * @return DOMElement
    */
-  public function getDE(): DE | null
+  public function toDOMElement(): DOMElement
   {
-    return $this->dE;
+    // Validaciones
+    if(!isset($this->dVerFor))
+      throw new \Exception('[RDE] El campo dVerFor no puede ser nulo.');
+    if(!isset($this->DE))
+      throw new \Exception('[RDE] El campo DE no puede ser nulo.');
+    if(!isset($this->gCamFuFD))
+      throw new \Exception('[RDE] El campo gCamFuFD no puede ser nulo.');
+    // Conversión
+    $res = new DOMElement('rDE');
+    $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
+    $res->appendChild($this->DE->toDOMElement());
+    $res->appendChild($this->gCamFuFD->toDOMElement());
+    return $res;
   }
 
   /**
-   * Set the value of dE
+   * Convierte el objeto RDE a un string XML
    *
-   * @param DE $dE
-   *
-   * @return self
+   * @return String
    */
-  public function setDE(DE $dE): self
+  public function toXMLString(): String
   {
-    $this->dE = $dE;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of gCamFuFD
-   *
-   * @return GCamFuFD
-   */
-  public function getGCamFuFD(): GCamFuFD | null
-  {
-    return $this->gCamFuFD;
-  }
-
-  /**
-   * Set the value of gCamFuFD
-   *
-   * @param GCamFuFD $gCamFuFD
-   *
-   * @return self
-   */
-  public function setGCamFuFD(GCamFuFD $gCamFuFD): self
-  {
-    $this->gCamFuFD = $gCamFuFD;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of signature
-   *
-   * @return ?Signature
-   */
-  public function getSignature(): Signature | null
-  {
-    return $this->signature;
-  }
-
-  /**
-   * Set the value of signature
-   *
-   * @param ?Signature $signature
-   *
-   * @return self
-   */
-  public function setSignature( Signature $signature): self
-  {
-    $this->signature = $signature;
-
-    return $this;
+    $domElement = $this->toDOMElement();
+    $xmlString = $domElement->ownerDocument->saveXML($domElement);
+    if(!$xmlString)
+      throw new \Exception('[RDE] Error al convertir el objeto a XML.');
+    return $xmlString;
   }
   
 }

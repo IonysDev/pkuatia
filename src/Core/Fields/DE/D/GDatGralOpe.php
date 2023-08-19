@@ -7,19 +7,19 @@ use DOMElement;
 use SimpleXMLElement;
 
 /**
- * Nodo Id: D001
+ * Nodo Id:     D001
+ * Nombre:      dDatGralOpe
  * Descripción: Campos generales del DE
- * Nodo Padre: A001 - Campos firmados del DE
+ * Nodo Padre:  A001 - DE - Campos firmados del DE
  */
 
 class GDatGralOpe
 {
 
-  public ?DateTime $dFeEmiDE = null; // D002 - Fecha y hora de emisión del DE (D002) AAAA-MM-DDThh:mm:ss
-  public ?GOpeCom $gOpeCom = null;   // Campos inherentes a la operación comercial (D010)
-  public ?GEmis $gEmis = null;       // Grupo de campos que identifican al emisor (D100)
-  public ?GDatRec $gDatRec = null;   // Grupo de campos que identifican al receptor (D200)
-
+  public DateTime $dFeEmiDE; // D002 - Fecha y hora de emisión del DE (D002) AAAA-MM-DDThh:mm:ss
+  public GOpeCom $gOpeCom;   // Campos inherentes a la operación comercial (D010)
+  public GEmis $gEmis;       // Grupo de campos que identifican al emisor (D100)
+  public GDatRec $gDatRec;   // Grupo de campos que identifican al receptor (D200)
 
   ///////////////////////////////////////////////////////////////////////
   ///Constructor
@@ -35,7 +35,7 @@ class GDatGralOpe
 
 
   ///////////////////////////////////////////////////////////////////////
-  ///Setters
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -99,7 +99,7 @@ class GDatGralOpe
 
 
   ///////////////////////////////////////////////////////////////////////
-  ///Getters
+  // Getters
   ///////////////////////////////////////////////////////////////////////
 
 
@@ -144,25 +144,29 @@ class GDatGralOpe
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element
+  // XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Instancia la clase a partir de un SimpleXMLElement
+   * Instancia un objeto GDatGralOpe a partir de un SimpleXMLElement
+   * 
+   * @param  SimpleXMLElement $node
+   * 
+   * @return self
    */
-  public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($xml->getName(), 'gDatGralOpe') != 0)
+    if(strcmp($node->getName(), 'gDatGralOpe') != 0)
     {
-      throw new \Exception("Invalid XML Element: $xml->getName()");
+      throw new \Exception("Invalid XML Element: $node->getName()");
       return null;
     }
     $res = new GDatGralOpe();
-    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->dFeEmiDE));
-    if(isset($xml->gOpeCom))
-      $res->setGOpeCom(GOpeCom::FromSimpleXMLElement($xml->gOpeCom));
-    $res->gEmis = GEmis::FromSimpleXMLElement($xml->gEmis);
-    $res->gDatRec = GDatRec::FromSimpleXMLElement($xml->gDatRec);
+    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFeEmiDE));
+    if(isset($node->gOpeCom))
+      $res->setGOpeCom(GOpeCom::FromSimpleXMLElement($node->gOpeCom));
+    $res->gEmis = GEmis::FromSimpleXMLElement($node->gEmis);
+    $res->gDatRec = GDatRec::FromSimpleXMLElement($node->gDatRec);
     return $res;
   }
 
@@ -182,54 +186,32 @@ class GDatGralOpe
     $res->appendChild($this->gDatRec->toDOMElement());
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GDatGralOpe
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GDatGralOpe
-  // {
-  //   if (strcmp($xml->tagName, 'dDatGralOpe') == 0 && $xml->childElementCount == 4) {
-  //     $res = new GDatGralOpe();
-  //     $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFeEmiDE')->item(0)->nodeValue));
-  //     ///children
-  //     $res->setGOpeCom($res->gOpeCom->fromDOMElement($xml->getElementsByTagName('gOpeCom')->item(0)->nodeValue));
-  //     $res->setGEmis($res->gEmis->fromDOMElement($xml->getElementsByTagName('gEmis')->item(0)->nodeValue));
-  //     $res->setGDatRec($res->gDatRec->fromDOMElement($xml->getElementsByTagName('gDatRec')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GDatGralOpe();
-    if(isset($response->dFeEmiDE))
+    if(isset($object->dFeEmiDE))
     {
-      $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFeEmiDE));
+      $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFeEmiDE));
     }
     ///children
-    if(isset($response->gOpeCom))
+    if(isset($object->gOpeCom))
     {
-      $res->setGOpeCom(GOpeCom::fromResponse($response->gOpeCom));
+      $res->setGOpeCom(GOpeCom::FromSifenResponseObject($object->gOpeCom));
     }
-    if(isset($response->gEmis))
+    if(isset($object->gEmis))
     {
-      $res->setGEmis(GEmis::fromResponse($response->gEmis));
+      $res->setGEmis(GEmis::FromSifenResponseObject($object->gEmis));
     }
-    if(isset($response->gDatRec))
+    if(isset($object->gDatRec))
     {
-      $res->setGDatRec(GDatRec::fromResponse($response->gDatRec));
+      $res->setGDatRec(GDatRec::FromSifenResponseObject($object->gDatRec));
     }
     return $res;
   }

@@ -260,36 +260,36 @@ class GVehTras
     }
 
     /**
-     * fromResponse
+     * FromSifenResponseObject
      *
-     * @param  mixed $response
+     * @param  mixed $object
      * @return self
      */
-    public static function fromResponse($response): self
+    public static function FromSifenResponseObject($object): self
     {
         $res = new GVehTras();
-        if (isset($response->dTiVehTras)) {
-            $res->setDTiVehTras($response->dTiVehTras);
+        if (isset($object->dTiVehTras)) {
+            $res->setDTiVehTras($object->dTiVehTras);
         }
-        if (isset($response->dMarVeh)) {
-            $res->setDMarVeh($response->dMarVeh);
+        if (isset($object->dMarVeh)) {
+            $res->setDMarVeh($object->dMarVeh);
         }
 
-        if (isset($response->dTipIdenVeh)) {
+        if (isset($object->dTipIdenVeh)) {
 
-            $res->setDTipIdenVeh($response->dTipIdenVeh);
+            $res->setDTipIdenVeh($object->dTipIdenVeh);
         }
-        if (isset($response->dNroIDVeh)) {
-            $res->setDNroIDVeh($response->dNroIDVeh);
+        if (isset($object->dNroIDVeh)) {
+            $res->setDNroIDVeh($object->dNroIDVeh);
         }
-        if (isset($response->dAdicVeh)) {
-            $res->setDAdicVeh($response->dAdicVeh);
+        if (isset($object->dAdicVeh)) {
+            $res->setDAdicVeh($object->dAdicVeh);
         }
-        if (isset($response->dNroMatVeh)) {
-            $res->setDNroMatVeh($response->dNroMatVeh);
+        if (isset($object->dNroMatVeh)) {
+            $res->setDNroMatVeh($object->dNroMatVeh);
         }
-        if (isset($response->dNroVuelo)) {
-            $res->setDNroVuelo($response->dNroVuelo);
+        if (isset($object->dNroVuelo)) {
+            $res->setDNroVuelo($object->dNroVuelo);
         }
         return $res;
     }

@@ -196,24 +196,24 @@ class GCamCond
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new self();
-    if (isset($response->iCondOpe)) {
-      $res->setICondOpe(intval($response->iCondOpe));
+    if (isset($object->iCondOpe)) {
+      $res->setICondOpe(intval($object->iCondOpe));
     }
     ///children
-    if (isset($response->gPaConEIni)) {
-      $res->setGPaConEIni(GPaConEIni::fromResponse($response->gPaConEIni));
+    if (isset($object->gPaConEIni)) {
+      $res->setGPaConEIni(GPaConEIni::FromSifenResponseObject($object->gPaConEIni));
     }
     ///children
-    if (isset($response->gPagCred)) {
-      $res->setGPagCred(GPagCred::fromResponse($response->gPagCred));
+    if (isset($object->gPagCred)) {
+      $res->setGPagCred(GPagCred::FromSifenResponseObject($object->gPagCred));
     }
     return $res;
   }

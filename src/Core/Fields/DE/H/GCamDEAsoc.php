@@ -649,65 +649,65 @@ class GCamDEAsoc
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamDEAsoc();
-    if(isset($response->iTipDocAso))
+    if(isset($object->iTipDocAso))
     {
-      $res->setITipDocAso(intval($response->iTipDocAso));
+      $res->setITipDocAso(intval($object->iTipDocAso));
     }
-    if(isset($response->dCdCDERef))
+    if(isset($object->dCdCDERef))
     {
-      $res->setDCdCDERef($response->dCdCDERef);
+      $res->setDCdCDERef($object->dCdCDERef);
     }
-    if(isset($response->dNTimDI))
+    if(isset($object->dNTimDI))
     {
-      $res->setDNTimDI(intval($response->dNTimDI));
+      $res->setDNTimDI(intval($object->dNTimDI));
     }
-    if(isset($response->dEstDocAso))
+    if(isset($object->dEstDocAso))
     {
-      $res->setDEstDocAso($response->dEstDocAso);
+      $res->setDEstDocAso($object->dEstDocAso);
     }
-    if(isset($response->dPExpDocAso))
+    if(isset($object->dPExpDocAso))
     {
-      $res->setDPExpDocAso($response->dPExpDocAso);
+      $res->setDPExpDocAso($object->dPExpDocAso);
     }
-    if(isset($response->dNumDocAso))
+    if(isset($object->dNumDocAso))
     {
-      $res->setDNumDocAso(intval($response->dNumDocAso));
+      $res->setDNumDocAso(intval($object->dNumDocAso));
     }
-    if(isset($response->iTipDocAso))
+    if(isset($object->iTipDocAso))
     {
-      $res->setITipDocAso(intval($response->iTipDocAso));
+      $res->setITipDocAso(intval($object->iTipDocAso));
     }
-    if(isset($response->dFecEmiDI))
+    if(isset($object->dFecEmiDI))
     {
-      $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $response->dFecEmiDI));
+      $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $object->dFecEmiDI));
     }
-    if(isset($response->dNumComRet))
+    if(isset($object->dNumComRet))
     {
-      $res->setDNumComRet($response->dNumComRet);
+      $res->setDNumComRet($object->dNumComRet);
     }
-    if(isset($response->dNumResCF))
+    if(isset($object->dNumResCF))
     {
-      $res->setDNumResCF($response->dNumResCF);
+      $res->setDNumResCF($object->dNumResCF);
     }
-    if(isset($response->iTipCons))
+    if(isset($object->iTipCons))
     {
-      $res->setITipCons(intval($response->iTipCons));
+      $res->setITipCons(intval($object->iTipCons));
     }
-    if(isset($response->dNumCons))
+    if(isset($object->dNumCons))
     {
-      $res->setDNumCons(intval($response->dNumCons));
+      $res->setDNumCons(intval($object->dNumCons));
     }
-    if(isset($response->dNumControl))
+    if(isset($object->dNumControl))
     {
-      $res->setDNumControl($response->dNumControl);
+      $res->setDNumControl($object->dNumControl);
     }
     
     return $res;

@@ -121,17 +121,17 @@ class GCamNCDE
   // }
   
   /**
-   * fromResponse
+   * FromSimpleXMLElement
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamNCDE();
-    if(isset($response->iMotEmi))
+    if(isset($object->iMotEmi))
     {
-      $res->setIMotEmi(intval($response->iMotEmi));
+      $res->setIMotEmi(intval($object->iMotEmi));
     }
     return $res;
   }

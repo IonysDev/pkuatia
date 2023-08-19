@@ -98,29 +98,29 @@ class RespuestaConsultaLoteDE
   //From Response
   ///////////////////////////////////////////////////////////////////////
 
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
-    echo "RespuestaConsultaLoteDE::fromResponse" . PHP_EOL;
+    echo "RespuestaConsultaLoteDE::FromSifenResponseObject" . PHP_EOL;
 
     ///is is null
-    if (is_null($response)) {
+    if (is_null($object)) {
       throw new \Exception("Error Processing Request: null", 1);
       return null;
     }
 
     ///check response codes
-    if ($response->dCodResLot != "0362") {
+    if ($object->dCodResLot != "0362") {
       ///retorna el objeto
       $res = new RespuestaConsultaLoteDE();
-      $res->setDFecProd($response->dFecProc);
-      $res->setDCodResLot($response->dCodResLot);
-      $res->setDMsgResLot($response->dMsgResLot);
+      $res->setDFecProd($object->dFecProc);
+      $res->setDCodResLot($object->dCodResLot);
+      $res->setDMsgResLot($object->dMsgResLot);
     } else {
       ///retorna el objeto
       $res = new RespuestaConsultaLoteDE();
-      $res->setDFecProd($response->dFecProc);
-      $res->setDCodResLot($response->dCodResLot);
-      $res->setDMsgResLot($response->dMsgResLot);
+      $res->setDFecProd($object->dFecProc);
+      $res->setDCodResLot($object->dCodResLot);
+      $res->setDMsgResLot($object->dMsgResLot);
       ///Acá la logica al obtener el lote
     }
 

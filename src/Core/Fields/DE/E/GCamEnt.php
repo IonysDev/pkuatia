@@ -320,45 +320,45 @@ class GCamEnt
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GCamEnt();
-    if(isset($response->dDirLocEnt))
+    if(isset($object->dDirLocEnt))
     {
-      $res->setDDirLocEnt($response->dDirLocEnt);
+      $res->setDDirLocEnt($object->dDirLocEnt);
     }
-    if(isset($response->dNumCasEnt))
+    if(isset($object->dNumCasEnt))
     {
-      $res->setDNumCasEnt($response->dNumCasEnt);
+      $res->setDNumCasEnt($object->dNumCasEnt);
     }
-    if(isset($response->dComp1Ent))
+    if(isset($object->dComp1Ent))
     {
-      $res->setDComp1Ent($response->dComp1Ent);
+      $res->setDComp1Ent($object->dComp1Ent);
     }
-    if(isset($response->dComp2Ent))
+    if(isset($object->dComp2Ent))
     {
-      $res->setDComp2Ent($response->dComp2Ent);
+      $res->setDComp2Ent($object->dComp2Ent);
     }
-    if(isset($response->cDepEnt))
+    if(isset($object->cDepEnt))
     {
-      $res->setCDepEnt($response->cDepEnt);
+      $res->setCDepEnt($object->cDepEnt);
     }
-    if(isset($response->cDisEnt))
+    if(isset($object->cDisEnt))
     {
-      $res->setCDisEnt($response->cDisEnt);
+      $res->setCDisEnt($object->cDisEnt);
     }
-    if(isset($response->cCiuEnt))
+    if(isset($object->cCiuEnt))
     {
-      $res->setCCiuEnt($response->cCiuEnt);
+      $res->setCCiuEnt($object->cCiuEnt);
     }
-    if(isset($response->dTelEnt))
+    if(isset($object->dTelEnt))
     {
-      $res->setDTelEnt($response->dTelEnt);
+      $res->setDTelEnt($object->dTelEnt);
     }
     
     return $res;

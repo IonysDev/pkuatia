@@ -10,10 +10,10 @@ use DOMElement;
  */
 class GCamNRE
 {
-  public ?int $iMotEmiNR  = null; ///ID:E501 Motivo de emisión PADRE:E500 
-  public ?int $iRespEmiNR  = null; ///ID:E503 Responsable de la emisión de la Nota Remisión Electrónica Padre:E500 
-  public ?int $dKmR  = null; ///E505 Kilómetros estimados de recorrido E500 
-  public ?DateTime $dFecEm  = null; //ID:E506 Fecha futura de emisión de la factura PADRE:E500
+  public int $iMotEmiNR; ///ID:E501 Motivo de emisión PADRE:E500 
+  public int $iRespEmiNR; ///ID:E503 Responsable de la emisión de la Nota Remisión Electrónica Padre:E500 
+  public int $dKmR; ///E505 Kilómetros estimados de recorrido E500 
+  public DateTime $dFecEm; //ID:E506 Fecha futura de emisión de la factura PADRE:E500
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -87,7 +87,7 @@ class GCamNRE
    *
    * @return int
    */
-  public function getIMotEmiNR(): int | null
+  public function getIMotEmiNR(): int 
   {
     return $this->iMotEmiNR;
   }
@@ -97,7 +97,7 @@ class GCamNRE
    *
    * @return string
    */
-  public function getDDesMotEmiNR(): string | null
+  public function getDDesMotEmiNR(): string 
   {
     switch ($this->iMotEmiNR) {
       case 1:
@@ -157,7 +157,7 @@ class GCamNRE
    *
    * @return int
    */
-  public function getIRespEmiNR(): int | null
+  public function getIRespEmiNR(): int 
   {
     return $this->iRespEmiNR;
   }
@@ -167,7 +167,7 @@ class GCamNRE
    *
    * @return string
    */
-  public function getDDesRespEmiNR(): string | null
+  public function getDDesRespEmiNR(): string 
   {
     switch ($this->iRespEmiNR) {
       case 1:
@@ -197,7 +197,7 @@ class GCamNRE
    *
    * @return int
    */
-  public function getDKmR(): int | null
+  public function getDKmR(): int 
   {
     return $this->dKmR;
   }
@@ -207,7 +207,7 @@ class GCamNRE
    *
    * @return DateTime
    */
-  public function getDFecEm(): DateTime | null
+  public function getDFecEm(): DateTime 
   {
     return $this->dFecEm;
   }
@@ -234,50 +234,28 @@ class GCamNRE
 
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamNRE
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamNRE
-  // {
-  //   if (strcmp($xml->tagName, "gCamNRE") == 0 && $xml->childElementCount == 6) {
-  //     $res = new GCamNRE();
-
-  //     $res->setIMotEmiNR(intval($xml->getElementsByTagName('iMotEmiNR')->item(0)->nodeValue));
-  //     $res->setIRespEmiNR(intval($xml->getElementsByTagName('iRespEmiNR')->item(0)->nodeValue));
-  //     $res->setdkmR(intval($xml->getElementsByTagName('dkmR')->item(0)->nodeValue));
-  //     $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEm')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamNRE();
 
-    if(isset($response->iMotEmiNR)){
-      $res->setIMotEmiNR(intval($response->iMotEmiNR));
+    if(isset($object->iMotEmiNR)){
+      $res->setIMotEmiNR(intval($object->iMotEmiNR));
     }
-    if(isset($response->iRespEmiNR)){
-      $res->setIRespEmiNR(intval($response->iRespEmiNR));
+    if(isset($object->iRespEmiNR)){
+      $res->setIRespEmiNR(intval($object->iRespEmiNR));
     }
-    if(isset($response->dKmR)){
-      $res->setDKmR(intval($response->dKmR));
+    if(isset($object->dKmR)){
+      $res->setDKmR(intval($object->dKmR));
     }
-    if(isset($response->dFecEm)){
-      $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $response->dFecEm));
+    if(isset($object->dFecEm)){
+      $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $object->dFecEm));
     }
     
     return $res;

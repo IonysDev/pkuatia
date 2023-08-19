@@ -3,21 +3,30 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
 use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
+use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMElement;
 use SimpleXMLElement;
 
 /**
- * ID:D010  Campos inherentes a la operación comercial PADRE:D001 
+ * Nodo Id:     D010
+ * Nombre:      gOpeCom
+ * Descripción: Campos inherentes a la operación comercial.
+ * Nodo Padre:  D001 - dDatGralOpe - Campos generales del DE
  */
+
 class GOpeCom
 {
 
-    public ?int $iTipTra = null;     // D011 - Tipo de transacción
-    public ?int $iTImp = null;       // D013 - Tipo de impuesto afectado
-    public ?String $cMoneOpe = null; // D015 - Moneda de la operación
-    public ?int $dCondTiCam = null;  // D017 - Condición del tipo de cambio
-    public ?int $dTiCam = null;      // D018 - Tipo de cambio de la operación
-    public ?int $iCondAnt = null;    // D019 - Condición del Anticipo
+    public int    $iTipTra;     // D011 - 1-2       - 0-1 - Tipo de transacción
+    public String $dDesTipTra;  // D012 - 5-36      - 0-1 - Descripción del tipo de transacción
+    public int    $iTImp;       // D013 - 1         - 1-1 - Tipo de impuesto afectado
+    public String $dDesTImp;    // D014 - 3-11      - 1-1 - Descripción del tipo de impuesto afectado
+    public String $cMoneOpe;    // D015 - 3         - 1-1 - Moneda de la operación
+    public String $dDesMoneOpe; // D016 - 3-20      - 1-1 - Descripción de la moneda de la operación
+    public int    $dCondTiCam;  // D017 - 1         - 0-1 - Condición del tipo de cambio
+    public String $dTiCam;      // D018 - 1-5p(0-4) - 0-1 - Tipo de cambio de la operación (decimal BCMath)
+    public int    $iCondAnt;    // D019 - 1         - 0-1 - Condición del Anticipo
+    public String $dDesCondAnt; // D020 - 15-17     - 0-1 - Descripción de la condición del anticipo
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -26,38 +35,220 @@ class GOpeCom
     public function setITipTra(int $iTipTra): void
     {
         $this->iTipTra = $iTipTra;
+        switch ($iTipTra) {
+            case 1:
+                $this->dDesTipTra = 'Venta de mercadería';
+                break;
+            case 2:
+                $this->dDesTipTra = 'Prestación de servicios';
+                break;
+            case 3:
+                $this->dDesTipTra = 'Mixto (Venta de mercadería y servicios)';
+                break;
+            case 4:
+                $this->dDesTipTra = 'Venta de activo fijo';
+                break;
+            case 5:
+                $this->dDesTipTra = 'Venta de divisas';
+                break;
+            case 6:
+                $this->dDesTipTra = 'Compra de divisas';
+                break;
+            case 7:
+                $this->dDesTipTra = 'Promoción o entrega de muestras';
+                break;
+            case 8:
+                $this->dDesTipTra = 'Donación';
+                break;
+            case 9:
+                $this->dDesTipTra = 'Anticipo';
+                break;
+            case 10:
+                $this->dDesTipTra = 'Compra de productos';
+                break;
+            case 11:
+                $this->dDesTipTra = 'Compra de servicios';
+                break;
+            case 12:
+                $this->dDesTipTra = 'Venta de crédito fiscal';
+                break;
+            case 13:
+                $this->dDesTipTra = 'Muestras médicas (Art. 3 RG 24/2014)';
+                break;
+            default:
+                unset($this->iTipTra);
+                throw new \InvalidArgumentException("[GOpeCom] El valor del campo iTipTra no es válido: " . $iTipTra);
+                break;
+        }
+    }
+
+    public function setDDesTipTra(String $dDesTipTra): void
+    {
+        if(is_null($this->iTipTra) || strlen($dDesTipTra) == 0)
+        {
+            $this->dDesTipTra = null;
+        }
+        else 
+        {
+            $this->dDesTipTra = substr($dDesTipTra, 0, 36);
+        }
     }
 
     public function setITImp(int $iTImp): void
     {
         $this->iTImp = $iTImp;
+        switch ($iTImp) {
+            case 1:
+                $this->dDesTImp = 'IVA';
+                break;
+            case 2:
+                $this->dDesTImp = 'ISC';
+                break;
+            case 3:
+                $this->dDesTImp = 'Renta';
+                break;
+            case 4:
+                $this->dDesTImp = 'Ninguno';
+                break;
+            case 5:
+                $this->dDesTImp = 'IVA - Renta';
+                break;
+            default:
+                unset($this->iTImp);
+                throw new \InvalidArgumentException("[GOpenCom] El valor del campo iTImp no es válido: " . $iTImp);
+                break;
+        }
     }
 
-    public function setCMoneOpe(string $cMoneOpe): void
+    public function setDDesTImp(String $dDesTImp): void
+    {
+        if(is_null($this->iTImp) || strlen($dDesTImp) == 0)
+        {
+            $this->dDesTImp = null;
+        }
+        else 
+        {
+            $this->dDesTImp = substr($dDesTImp, 0, 11);
+        }
+    }
+
+    public function setCMoneOpe(String $cMoneOpe): void
     {
         $this->cMoneOpe = $cMoneOpe;
+        $this->dDesMoneOpe = MonedaMapping::GetDescription($this->cMoneOpe);
+        if(is_null($this->dDesMoneOpe))
+        {
+            unset($this->cMoneOpe);
+            throw new \InvalidArgumentException("[GOpeCom] El valor del campo cMoneOpe no es válido: " . $cMoneOpe);
+        }
     }
 
+    public function setDDesMoneOpe(String $dDesMoneOpe): void
+    {
+        if(is_null($this->cMoneOpe) || strlen($dDesMoneOpe) == 0)
+        {
+            $this->dDesMoneOpe = null;
+        }
+        else 
+        {
+            $this->dDesMoneOpe = substr($dDesMoneOpe, 0, 20);
+        }
+    }
+
+    /**
+     * Establece la condición del tipo de cambio
+     * 
+     * @param int $dCondTiCam Valores permitidos: 1 (Global), 2 (Por ítem)
+     * 
+     * @return void
+     */
     public function setDCondTiCam(int $dCondTiCam): void
     {
-        $this->dCondTiCam = $dCondTiCam;
+        if($dCondTiCam != 1 && $dCondTiCam != 2)
+        {
+            unset($this->dCondTiCam);
+            throw new \InvalidArgumentException("[GOpeCom] El valor del campo dCondTiCam no es válido: " . $dCondTiCam);
+        }
+        else
+        {
+            $this->dCondTiCam = $dCondTiCam;
+        }
     }
 
-    public function setDTiCam(int $dTiCam): void
+    /**
+     * Establece el tipo de cambio de la operación.
+     * 
+     * @param String $dTiCam Valor de la tasa de cambio expresada en cadena decimal.
+     * 
+     * @return void
+     */
+    public function setDTiCam(String $dTiCam): void
     {
-        $this->dTiCam = $dTiCam;
+        if(ValueValidations::isValidStringDecimal($dTiCam, 5, 0))
+        {
+            $this->dTiCam = $dTiCam;
+        }
+        else
+        {
+            unset($this->dTiCam);
+            throw new \InvalidArgumentException("[GOpeCom] El valor del campo dTiCam no es válido: " . $dTiCam);
+        }
     }
 
+    /**
+     * Establece la condición del anticipo.
+     * 
+     * @param int $iCondAnt Valores permitidos: 1 (Anticipo Global), 2 (Anticipo por Ítem)
+     * 
+     * @return void
+     */
     public function setICondAnt(int $iCondAnt): void
     {
         $this->iCondAnt = $iCondAnt;
+        switch ($this->iCondAnt) {
+            case 1:
+                $this->dDesCondAnt = 'Anticipo Global';
+                break;
+            case 2:
+                $this->dDesCondAnt = 'Anticipo por Ítem';
+                break;
+            default:
+                unset($this->iCondAnt);
+                unset($this->dDesCondAnt);
+                throw new \InvalidArgumentException("[GOpeCom] El valor del campo iCondAnt no es válido: " . $iCondAnt);
+                break;
+        }
+    }
+
+    /**
+     * Establece la descripción de la condición del anticipo.
+     * 
+     * @param String $dDesCondAnt
+     * 
+     * @return void
+     */
+    public function setDDesCondAnt(String $dDesCondAnt): void
+    {
+        if(is_null($this->iCondAnt) || strlen($dDesCondAnt) == 0)
+        {
+            $this->dDesCondAnt = null;
+        }
+        else 
+        {
+            $this->dDesCondAnt = substr($dDesCondAnt, 0, 17);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getITipTra(): int | null
+    /**
+     * Devuelve el tipo de transacción
+     * 
+     * @return int
+     */
+    public function getITipTra(): int
     {
         return $this->iTipTra;
     }
@@ -65,56 +256,19 @@ class GOpeCom
     /**
      * Devuelve la descripción del tipo de transacción
      * 
-     * @return string
+     * @return String
      */
-    public function getDDesTipTra(): string | null
+    public function getDDesTipTra(): String
     {
-        switch ($this->iTipTra) {
-            case 1:
-                return 'Venta de mercadería';
-                break;
-            case 2:
-                return 'Prestación de servicios';
-                break;
-            case 3:
-                return 'Mixto (Venta de mercadería y servicios)';
-                break;
-            case 4:
-                return 'Venta de activo fijo';
-                break;
-            case 5:
-                return 'Venta de divisas';
-                break;
-            case 6:
-                return 'Compra de divisas';
-                break;
-            case 7:
-                return 'Promoción o entrega de muestras';
-                break;
-            case 8:
-                return 'Donación';
-                break;
-            case 9:
-                return 'Anticipo';
-                break;
-            case 10:
-                return 'Compra de productos';
-                break;
-            case 11:
-                return 'Compra de servicios';
-                break;
-            case 12:
-                return 'Venta de crédito fiscal';
-                break;
-            case 13:
-                return 'Muestras médicas (Art. 3 RG 24/2014)';
-                break;
-            default:
-                return null;
-        }
+       return $this->dDesTipTra;
     }
 
-    public function getITImp(): int | null
+    /**
+     * Devuelve el tipo de impuesto afectado
+     * 
+     * @return int
+     */
+    public function getITImp(): int
     {
         return $this->iTImp;
     }
@@ -122,79 +276,71 @@ class GOpeCom
     /**
      * Devuelve la descripción del tipo de impuesto afectado
      * 
-     * @return string
+     * @return String
      */
-    public function getDDesTImp(): string | null
+    public function getDDesTImp(): String
     {
-        switch ($this->iTImp) {
-            case 1:
-                return 'IVA';
-                break;
-            case 2:
-                return 'ISC';
-                break;
-            case 3:
-                return 'Renta';
-                break;
-            case 4:
-                return 'Ninguno';
-                break;
-            case 5:
-                return 'IVA - Renta';
-                break;
-            default:
-                return null;
-        }
+        return $this->dDesTImp;
     }
 
-    public function getCMoneOpe(): string | null
+    /**
+     * Devuelve la moneda de la operación
+     * 
+     * @return String
+     */
+    public function getCMoneOpe(): String
     {
         return $this->cMoneOpe;
     }
 
     /**
-     *  D016 Descripción de la moneda de la operación
-
+     *  Devuelve la descripción de la moneda de la operación
      *
-     * @return string
+     * @return String
      */
-    public function getDDesMoneOpe() : string | null
+    public function getDDesMoneOpe() : String
     {
-        return MonedaMapping::GetDescription($this->cMoneOpe);
+        return $this->dDesMoneOpe;
     }
 
-    public function getDCondTiCam(): string | null
+    /**
+     * Devuelve la condición del tipo de cambio
+     * 
+     * @return int
+     */
+    public function getDCondTiCam(): String
     {
         return $this->dCondTiCam;
     }
 
-    public function getDTiCam(): string | null
+    /**
+     * Devuelve el tipo de cambio de la operación
+     * 
+     * @return String
+     */
+    public function getDTiCam(): String
     {
         return $this->dTiCam;
     }
 
-    public function getICondAnt(): int | null
+    /**
+     * Devuelve la condición del anticipo
+     * 
+     * @return int
+     */
+    public function getICondAnt(): int
     {
         return $this->iCondAnt;
     }
 
     /**
-     * D020 - Devuelve la descripción de la condición del anticipo
+     * Devuelve la descripción de la condición del anticipo
      * 
-     * @return string
+     * @return String
      */
-    public function getDDesCondAnt(): string | null
+    public function getDDesCondAnt(): String
     {
-        switch ($this->iCondAnt) {
-            case 1:
-                return 'Anticipo Global';
-                break;
-            case 2:
-                return 'Anticipo por Ítem';
-                break;
-            default:
-                return null;
-        }
+        return $this->dDesCondAnt;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -214,14 +360,22 @@ class GOpeCom
             throw new \InvalidArgumentException("El nombre del elemento debe ser 'gOpeCom'.");
         }
         $res = new GOpeCom();
-        if(isset($node->iTipTra)){
+        if(isset($node->iTipTra))
             $res->setITipTra(intval($node->iTipTra));
-        }
+        if(isset($node->dDesTipTra))
+            $res->setDDesTipTra((String)$node->dDesTipTra);
         $res->setITImp(intval($node->iTImp));
+        $res->setDDesTImp((String)$node->dDesTImp);
         $res->setCMoneOpe((String)$node->cMoneOpe);
-        $res->setDCondTiCam(intval($node->dCondTiCam));
-        $res->setDTiCam(intval($node->dTiCam));
-        $res->setICondAnt(intval($node->iCondAnt));
+        $res->setDDesMoneOpe((String)$node->dDesMoneOpe);
+        if(isset($node->dCondTiCam))
+            $res->setDCondTiCam(intval($node->dCondTiCam));
+        if(isset($node->dTiCam))
+            $res->setDTiCam((String)$node->dTiCam);
+        if(isset($node->iCondAnt))
+            $res->setICondAnt(intval($node->iCondAnt));
+        if(isset($node->dDesCondAnt))
+            $res->setDDesCondAnt((String)$node->dDesCondAnt);
         return $res;
     }
 
@@ -285,36 +439,36 @@ class GOpeCom
     // }
 
     /**
-     * fromResponse
+     * FromSifenResponseObject
      *
-     * @param  mixed $response
+     * @param  mixed $object
      * @return self
      */
-    public static function fromResponse($response): self
+    public static function FromSifenResponseObject($object): self
     {
         $res = new GOpeCom();
-        if (isset($response->iTipTra)) {
-            $res->setITipTra(intval($response->iTipTra));
+        if (isset($object->iTipTra)) {
+            $res->setITipTra(intval($object->iTipTra));
         }
 
-        if (isset($response->iTImp)) {
-            $res->setITImp(intval($response->iTImp));
+        if (isset($object->iTImp)) {
+            $res->setITImp(intval($object->iTImp));
         }
 
-        if (isset($response->cMoneOpe)) {
-            $res->setCMoneOpe($response->cMoneOpe);
+        if (isset($object->cMoneOpe)) {
+            $res->setCMoneOpe($object->cMoneOpe);
         }
 
-        if (isset($response->dCondTiCam)) {
-            $res->setDCondTiCam(intval($response->dCondTiCam));
+        if (isset($object->dCondTiCam)) {
+            $res->setDCondTiCam(intval($object->dCondTiCam));
         }
 
-        if (isset($response->dTiCam)) {
-            $res->setDTiCam(intval($response->dTiCam));
+        if (isset($object->dTiCam)) {
+            $res->setDTiCam(intval($object->dTiCam));
         }
 
-        if (isset($response->iCondAnt)) {
-            $res->setICondAnt(intval($response->iCondAnt));
+        if (isset($object->iCondAnt)) {
+            $res->setICondAnt(intval($object->iCondAnt));
         }
 
         return $res;

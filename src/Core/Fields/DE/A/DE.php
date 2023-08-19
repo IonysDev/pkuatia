@@ -382,49 +382,50 @@ class DE
   }
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
-    $array = json_decode(json_encode($response), true);
+    $array = json_decode(json_encode($object), true);
     $de = new DE();
     if (isset($array['@attributes']['Id'])) {
       $de->setID($array['@attributes']['Id']);
     }
-    if (isset($response->dDVId)) {
-      $de->setDDVId(intval($response->dDVId));
+    if (isset($object->dDVId)) {
+      $de->setDDVId(intval($object->dDVId));
     }
-    if (isset($response->dFecFirma)) {
-      $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFirma));
+    if (isset($object->dFecFirma)) {
+      $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecFirma));
     }
-    if (isset($response->dSisFact)) {
-      $de->setDSisFact($response->dSisFact);
+    if (isset($object->dSisFact)) {
+      $de->setDSisFact($object->dSisFact);
     }
-    ///Children
-    if (isset($response->gOpeDE)) {
-      $de->setGOpeDe(GOpeDE::fromResponse($response->gOpeDE));
+    if (isset($object->gOpeDE)) {
+      $de->setGOpeDe(GOpeDE::FromSifenResponseObject($object->gOpeDE));
     }
-    if (isset($response->gTimb)) {
-      $de->setGTimb(GTimb::fromResponse($response->gTimb));
+    if (isset($object->gTimb)) {
+      $de->setGTimb(GTimb::FromSifenResponseObject($object->gTimb));
     }
-    if (isset($response->gDatGralOpe)) {
-      $de->setGDatGralOpe(GDatGralOpe::fromResponse($response->gDatGralOpe));
+    if (isset($object->gDatGralOpe)) {
+      $de->setGDatGralOpe(GDatGralOpe::FromSifenResponseObject($object->gDatGralOpe));
     }
-    if (isset($response->gDtipDE)) {
-      $de->setGDtipDe(GDtipDE::fromResponse($response->gDtipDE));
+    if (isset($object->gDtipDE)) {
+      $de->setGDtipDe(GDtipDE::FromSifenResponseObject($object->gDtipDE));
     }
-    if (isset($response->gTotSub)) {
-      $de->setGTotSub(GTotSub::fromResponse($response->gTotSub));
+    if (isset($object->gTotSub)) {
+      $de->setGTotSub(GTotSub::FromSifenResponseObject($object->gTotSub));
     }
-    if (isset($response->gCamGen)) {
-      $de->setGCamGen(GCamGen::fromResponse($response->gCamGen));
+    if (isset($object->gCamGen)) {
+      $de->setGCamGen(GCamGen::FromSifenResponseObject($object->gCamGen));
     }
-    if (isset($response->gCamDEAsoc)) {
-      $de->setGCamDEAsoc(GCamDEAsoc::fromResponse($response->gCamDEAsoc));
+    if (isset($object->gCamDEAsoc) && count($object->gCamDEAsoc) > 0) {
+      foreach ($object->gCamDEAsoc as $g) {
+        $de->gCamDEAsoc[] = GCamDEAsoc::FromSifenResponseObject($g);
+      }
     }
     return $de;
   }

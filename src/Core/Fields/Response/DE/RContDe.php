@@ -125,41 +125,18 @@ class RContDe
   }
 
   /**
-   * fromStdClassObject
+   * Crea una nueva instancia de RContDe a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
-   * @param  mixed $xml
+   * @param stdClass $object
+   * 
    * @return self
    */
-  public static function fromStdClassObject($object) : self
+  public static function FromSifenResponseObject($object) : self
   {
     $res = new self();
     if (isset($object->dProtAut)) {
       $res->setDProtAut($object->dProtAut);
     }
-    /*///add the  <rContDe>  before <rDE>
-    $xml = str_replace('<rDE ', '<rContDe><rDE ', $xml);
-    //close the document with </rContDe>
-    $xml = $xml . '</rContDe>';
-
-    ///load the xml
-    $xml = simplexml_load_string($xml);
-    ///convert to json
-    $json = json_encode($xml);
-    ///convert to object
-    $object = json_decode($json);
-    ///create the object to return
-    $txContenDE = new TxContenDE();
-    ///set rDE
-    if (isset($object->rDE)) {
-      $txContenDE->setRDe(RDE::fromResponse($object->rDE));
-    }
-    ///set dProtAut
-    if (isset($object->dProtAut)) {
-      $txContenDE->setDProtAut($object->dProtAut);
-    }
-
-    return $txContenDE;*/
-
     return $res;
   }
 }

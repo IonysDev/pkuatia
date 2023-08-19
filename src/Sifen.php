@@ -10,6 +10,7 @@ use Abiliomp\Pkuatia\Core\Responses\RResEnviConsRUC;
 use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use Abiliomp\Pkuatia\Core\Requests\REnviDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
+use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
 use SoapClient;
 
 class Sifen
@@ -18,7 +19,16 @@ class Sifen
     private static Config $config;
     private static $options;
 
-    public static function Init(Config $config) {    
+    /**
+     * Inicializa la clase Sifen con la configuración necesaria para realizar las peticiones.
+     * Es obligatorio que se llame a este método antes de realizar cualquier petición.
+     * 
+     * @param Config $config
+     * 
+     * @return void
+     */
+    public static function Init(Config $config)
+    {    
         if(!file_exists($config->certificateFilePath)) {
             throw new \Exception("Certificate file not found in path: " . $config->certificateFilePath . ".");
         }
@@ -43,22 +53,45 @@ class Sifen
         ];
     }
     
-    public static function ConsultarRUC(String $ruc): RResEnviConsRUC {
+    /**
+     * Realiza la consulta de un RUC en el SIFEN.
+     * 
+     * @param String $ruc RUC a consultar.
+     * 
+     * @return RResEnviConsRUC
+     */
+    public static function ConsultarRUC(String $ruc): RResEnviConsRUC 
+    {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl", self::$options);
-        $response = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
-        return RResEnviConsRUC::fromStdClassObject($response);
+        $object = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
+        return RResEnviConsRUC::fromStdClassObject($object);
     }
 
+    /**
+     * Realiza la consulta de un Documento Electrónico en el SIFEN.
+     * 
+     * @param String $cdc Código de Control del Documento Electrónico a consultar.
+     * 
+     * @return RResEnviConsDe
+     */
     public static function ConsultarDE(String $cdc): RResEnviConsDe {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl", self::$options);
-        $response = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
-        return RResEnviConsDe::fromSifenResponseObject($response);
+        $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
+        return RResEnviConsDe::FromSifenResponseObject($object);
     }
 
+    /**
+     * Realiza el envío de un Documento Electrónico al SIFEN.
+     * 
+     * @param DocumentoElectronico $de Documento Electrónico a enviar.
+     * 
+     * @return RRetEnviDe
+     */
     public static function EnviarDE(DocumentoElectronico $de) {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
-        $response = self::$client->SiRecepDE(new REnviDe(self::GetDId(), $de));
-        return Res::fromResponse($response);
+        $xDE = $de->ToXMLString();
+        $object = self::$client->SiRecepDE(new REnviDe(self::GetDId(), $xDE));
+        return RRetEnviDe::FromSifenResponseObject($object);
     }
 
     private static function GetSifenUrlBase() : string {

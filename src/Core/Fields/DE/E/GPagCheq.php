@@ -110,21 +110,21 @@ class GPagCheq
   }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GPagCheq();
-    if(isset($response->dNumCheq))
+    if(isset($object->dNumCheq))
     {
-      $res->setDNumCheq($response->dNumCheq);
+      $res->setDNumCheq($object->dNumCheq);
     }
-    if(isset($response->dBcoEmi))
+    if(isset($object->dBcoEmi))
     {
-      $res->setDBcoEmi($response->dBcoEmi);
+      $res->setDBcoEmi($object->dBcoEmi);
     }
     return $res;
   }

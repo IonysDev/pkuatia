@@ -508,55 +508,55 @@ class GVehNuevo
   // }
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new self();
-    if (isset($response->iTipOpVN)) {
-      $res->setITipOpVN(intval($response->iTipOpVN));
+    if (isset($object->iTipOpVN)) {
+      $res->setITipOpVN(intval($object->iTipOpVN));
     }
-    if (isset($response->dChasis)) {
-      $res->setDChasis($response->dChasis);
+    if (isset($object->dChasis)) {
+      $res->setDChasis($object->dChasis);
     }
-    if (isset($response->dColor)) {
-      $res->setDColor($response->dColor);
+    if (isset($object->dColor)) {
+      $res->setDColor($object->dColor);
     }
-    if (isset($response->dPotencia)) {
-      $res->setDPotencia(intval($response->dPotencia));
+    if (isset($object->dPotencia)) {
+      $res->setDPotencia(intval($object->dPotencia));
     }
-    if (isset($response->dCapMot)) {
-      $res->setDCapMot(intval($response->dCapMot));
+    if (isset($object->dCapMot)) {
+      $res->setDCapMot(intval($object->dCapMot));
     }
-    if (isset($response->dPNet)) {
-      $res->setDPNet(intval($response->dPNet));
+    if (isset($object->dPNet)) {
+      $res->setDPNet(intval($object->dPNet));
     }
-    if (isset($response->dPBruto)) {
-      $res->setDPBruto(intval($response->dPBruto));
+    if (isset($object->dPBruto)) {
+      $res->setDPBruto(intval($object->dPBruto));
     }
-    if (isset($response->iTipCom)) {
-      $res->setITipCom(intval($response->iTipCom));
+    if (isset($object->iTipCom)) {
+      $res->setITipCom(intval($object->iTipCom));
     }
-    if (isset($response->dNroMotor)) {
-      $res->setDNroMotor($response->dNroMotor);
+    if (isset($object->dNroMotor)) {
+      $res->setDNroMotor($object->dNroMotor);
     }
-    if (isset($response->dCapTracc)) {
-      $res->setDCapTracc(intval($response->dCapTracc));
+    if (isset($object->dCapTracc)) {
+      $res->setDCapTracc(intval($object->dCapTracc));
     }
-    if (isset($response->dAnoFab)) {
-      $res->setDAnoFab(intval($response->dAnoFab));
+    if (isset($object->dAnoFab)) {
+      $res->setDAnoFab(intval($object->dAnoFab));
     }
-    if (isset($response->cTipVeh)) {
-      $res->setCTipVeh($response->cTipVeh);
+    if (isset($object->cTipVeh)) {
+      $res->setCTipVeh($object->cTipVeh);
     }
-    if (isset($response->dCapac)) {
-      $res->setDCapac(intval($response->dCapac));
+    if (isset($object->dCapac)) {
+      $res->setDCapac(intval($object->dCapac));
     }
-    if (isset($response->dCilin)) {
-      $res->setDCilin($response->dCilin);
+    if (isset($object->dCilin)) {
+      $res->setDCilin($object->dCilin);
     }
     return $res;
   }

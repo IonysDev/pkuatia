@@ -45,7 +45,7 @@ class GCamFuFD
    */
   public function setDInfAdic(String $dInfAdic): self
   {
-    $this->dInfAdic = $dInfAdic;
+    $this->dInfAdic = substr($dInfAdic, 0, 5000);
     return $this;
   }
 
@@ -74,7 +74,7 @@ class GCamFuFD
   }
 
   ///////////////////////////////////////////////////////////////////////
-  // XML Element
+  // Instanciadores
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -84,19 +84,40 @@ class GCamFuFD
    * 
    * @return self
    */
-  public static function fromSimpleXMLElement(SimpleXMLElement $xml): self
+  public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
     if(strcmp($xml->getName(), 'gCamFuFD') != 0)
     {
       throw new \Exception('[GCamFuFD] Nodo XML con nombre inválido: ' . $xml->getName());
     }
     $res = new GCamFuFD();
-    if(isset($xml->dCarQR))
-      $res->setDCarQR((string)$xml->dCarQR);
+    $res->setDCarQR((string)$xml->dCarQR);
     if(isset($xml->dInfAdic))
       $res->setDInfAdic((string)$xml->dInfAdic);
     return $res;
   }
+
+  /**
+   * Instancia un objeto GCamFuFD a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
+   *
+   * @param  mixed $object
+   * 
+   * @return self
+   */
+  public static function FromSifenResponseObject($object): self
+  {
+    $res = new GCamFuFD();
+    $res->setDCarQR($object->dCarQR);
+    if(isset($object->dInfAdic))
+    {
+      $res->setDInfAdic($object->dInfAdic);
+    }
+    return $res;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * toDOMElement
@@ -105,31 +126,25 @@ class GCamFuFD
    */
   public function toDOMElement(): DOMElement
   {
+    // Validaciones
+    if(!isset($this->dCarQR) || empty($this->dCarQR))
+    {
+      throw new \Exception('[GCamFuFD] dCarQR no puede estar vacío.');
+    }
+    else if(strlen($this->dCarQR) < 100 || strlen($this->dCarQR) > 600)
+    {
+      throw new \Exception('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres.');
+    }
+    if(isset($this->dInfAdic) && strlen($this->dInfAdic) > 5000)
+    {
+      throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
+    }
+    // Conversión
     $res = new DOMElement('gCamFuFD');
     $res->appendChild(new DOMElement('dCarQR', $this->getDCarQR()));
+    if(isset($this->dInfAdic))
+      $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
     return $res;
   }
   
-  /**
-   * fromResponse
-   *
-   * @param  mixed $response
-   * @return self
-   */
-  public static function fromResponse($response): self
-  {
-    $res = new GCamFuFD();
-
-    if(isset($response->dCarQR))
-    {
-      $res->setDCarQR($response->dCarQR);
-    }
-
-    if(isset($response->dInfAdic))
-    {
-      $res->setDInfAdic($response->dInfAdic);
-    }
-
-    return $res;
-  }
 }

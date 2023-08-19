@@ -387,38 +387,38 @@ class GPaConEIni
   }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GPaConEIni();
-    if(isset($response->iTiPago))
+    if(isset($object->iTiPago))
     {
-      $res->setITiPago(intval($response->iTiPago));
+      $res->setITiPago(intval($object->iTiPago));
     }
-    if(isset($response->dMonTiPag))
+    if(isset($object->dMonTiPag))
     {
-      $res->setDMonTiPag(intval($response->dMonTiPag));
+      $res->setDMonTiPag(intval($object->dMonTiPag));
     }
-    if(isset($response->cMoneTiPag))
+    if(isset($object->cMoneTiPag))
     {
-      $res->setCMoneTiPag($response->cMoneTiPag);
+      $res->setCMoneTiPag($object->cMoneTiPag);
     }
-    if(isset($response->dTiCamTiPag))
+    if(isset($object->dTiCamTiPag))
     {
-      $res->setDTiCamTiPag($response->dTiCamTiPag);
+      $res->setDTiCamTiPag($object->dTiCamTiPag);
     }
     //Children
-    if(isset($response->gPagTarCD))
+    if(isset($object->gPagTarCD))
     {
-      $res->setGPagTarCD(GPagTarCD::fromResponse($response->gPagTarCD));
+      $res->setGPagTarCD(GPagTarCD::FromSifenResponseObject($object->gPagTarCD));
     }
-    if(isset($response->gPagCheq))
+    if(isset($object->gPagCheq))
     {
-      $res->setGPagCheq(GPagCheq::fromResponse($response->gPagCheq));
+      $res->setGPagCheq(GPagCheq::FromSifenResponseObject($object->gPagCheq));
     } 
 
     return $res;

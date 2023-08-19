@@ -215,29 +215,29 @@ class GRespDE {
     // }
     
     /**
-     * fromResponse
+     * FromSifenResponseObject
      *
-     * @param  mixed $response
+     * @param  mixed $object
      * @return self
      */
-    public static function fromResponse($response): self
+    public static function FromSifenResponseObject($object): self
     {
         $res = new GRespDE();
-        if(isset($response->iTipIDRespDE))
+        if(isset($object->iTipIDRespDE))
         {
-            $res->setITipIDRespDE(intval($response->iTipIDRespDE));
+            $res->setITipIDRespDE(intval($object->iTipIDRespDE));
         }
-        if(isset($response->dNumIDRespDE))
+        if(isset($object->dNumIDRespDE))
         {
-            $res->setDNumIDRespDE($response->dNumIDRespDE);
+            $res->setDNumIDRespDE($object->dNumIDRespDE);
         }
-        if(isset($response->dNomRespDE))
+        if(isset($object->dNomRespDE))
         {
-            $res->setDNomRespDE($response->dNomRespDE);
+            $res->setDNomRespDE($object->dNomRespDE);
         }
-        if(isset($response->dCarRespDE))
+        if(isset($object->dCarRespDE))
         {
-            $res->setDCarRespDE($response->dCarRespDE);
+            $res->setDCarRespDE($object->dCarRespDE);
         }
         
 

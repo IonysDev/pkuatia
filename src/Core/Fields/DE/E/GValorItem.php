@@ -192,30 +192,30 @@ class GValorItem
   
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GValorItem();
-    if(isset($response->dPUniProSer))
+    if(isset($object->dPUniProSer))
     {
-      $res->setDPUniProSer(strval($response->dPUniProSer));
+      $res->setDPUniProSer(strval($object->dPUniProSer));
     }
-    if(isset($response->dTiCamIt))
+    if(isset($object->dTiCamIt))
     {
-      $res->setDTiCamIt(strval($response->dTiCamIt));
+      $res->setDTiCamIt(strval($object->dTiCamIt));
     }
-    if(isset($response->dTotBruOpeItem))
+    if(isset($object->dTotBruOpeItem))
     {
-      $res->setDTotBruOpeItem(strval($response->dTotBruOpeItem));
+      $res->setDTotBruOpeItem(strval($object->dTotBruOpeItem));
     }
     ///children
-    if(isset($response->gValorRestaItem))
+    if(isset($object->gValorRestaItem))
     {
-      $res->setGValorRestaItem(GValorRestaItem::fromResponse($response->gValorRestaItem));
+      $res->setGValorRestaItem(GValorRestaItem::FromSifenResponseObject($object->gValorRestaItem));
     }
     return $res;
   }

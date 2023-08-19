@@ -2,14 +2,17 @@
 
 namespace Abiliomp\Pkuatia\Core\Requests;
 
+/**
+ * Nodo Id:    ASch01
+ * Nombre:     rEnviDe
+ * Decripción: Clase que conforma la solitud de envio de documento electrónico.
+ * Nodo Padre: Es raíz.
+ */
+
 class REnviDe {
-
-    /**
-     * ID ASch01: solitud de envio de documento electronico
-     */
-
-    public int $dId;    // ASch02 - Identificador  de control de envío 
-    public String $xDe; // ASch03 - XML  del  DE transmitido 
+                        // Id - Longitud - Ocurrencia - Descripción    
+    public int $dId;    // ASch02 - 1-15 - 1-1 - Identificador  de control de envío 
+    public String $xDe; // ASch03 - XML  - 1-1 - XML del DE transmitido 
 
     public function __construct(int $dId, String $xDe)
     {
@@ -63,11 +66,15 @@ class REnviDe {
 
     /**
      * Obtiene el valor XML xDe de la solicitud.
+     * 
+     * @return String
      */
     public function getXDe(): String
     {
         return $this->xDe;
     }
+
+
 
 }
 

@@ -31,7 +31,7 @@ try {
   // echo 'request' . PHP_EOL;
   // echo SoapSSLClient::$client->__getLastRequest();
   echo 'Response:' . PHP_EOL;
-  $res = RespuestaConsultaLoteDE::fromResponse($responseXML);
+  $res = RespuestaConsultaLoteDE::FromSifenResponseObject($responseXML);
   echo $res->printData();
 } catch (SoapFault $e) {
   echo $e->getMessage();

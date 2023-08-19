@@ -153,32 +153,32 @@ class GCamEsp
 
    
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GCamEsp();
-    if(isset($response->gGrupoEner))
+    if(isset($object->gGrupoEner))
     {
-      $res->setGGrupoEner(GGrupEner::fromResponse($response->gGrupoEner));
+      $res->setGGrupoEner(GGrupEner::FromSifenResponseObject($object->gGrupoEner));
     }
 
-    if(isset($response->gGrupoSeg))
+    if(isset($object->gGrupoSeg))
     {
-      $res->setGGrupoSeg(GGrupSeg::fromResponse($response->gGrupoSeg));
+      $res->setGGrupoSeg(GGrupSeg::FromSifenResponseObject($object->gGrupoSeg));
     }
 
-    if(isset($response->gGrupoSup))
+    if(isset($object->gGrupoSup))
     {
-      $res->setGGrupSup(GGrupSup::fromResponse($response->gGrupoSup));
+      $res->setGGrupSup(GGrupSup::FromSifenResponseObject($object->gGrupoSup));
     }
 
-    if(isset($response->gGrupAdi))
+    if(isset($object->gGrupAdi))
     {
-      $res->setGGrupAdi(GGrupAdi::fromResponse($response->gGrupAdi));
+      $res->setGGrupAdi(GGrupAdi::FromSifenResponseObject($object->gGrupAdi));
     }
 
     return $res;

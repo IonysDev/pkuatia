@@ -545,64 +545,60 @@ class GCamAE
   // }
 
   /**
-   * fromResponse
+   * FromSimpleXMLElement
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamAE();
-    if (isset($response->iNatVen)) {
-      $res->setINatVen(intval($response->iNatVen));
+    if (isset($object->iNatVen)) {
+      $res->setINatVen(intval($object->iNatVen));
     }
 
-    if (isset($response->iTipIDVen)) {
-      $res->setITipIDVen(intval($response->iTipIDVen));
+    if (isset($object->iTipIDVen)) {
+      $res->setITipIDVen(intval($object->iTipIDVen));
     }
 
-    if (isset($response->dNumIDVen)) {
-      $res->setDNumIDVen($response->dNumIDVen);
+    if (isset($object->dNumIDVen)) {
+      $res->setDNumIDVen($object->dNumIDVen);
     }
-    if (isset($response->dNomVen)) {
-      $res->setDNomVen($response->dNomVen);
+    if (isset($object->dNomVen)) {
+      $res->setDNomVen($object->dNomVen);
     }
-    if (isset($response->dDirVen)) {
-      $res->setDDirVen($response->dDirVen);
+    if (isset($object->dDirVen)) {
+      $res->setDDirVen($object->dDirVen);
     }
-    if (isset($response->dNumCasVen)) {
-      $res->setDNumCasVen(intval($response->dNumCasVen));
+    if (isset($object->dNumCasVen)) {
+      $res->setDNumCasVen(intval($object->dNumCasVen));
     }
-    if (isset($response->cDepVen)) {
-      $res->setCDepVen(intval($response->cDepVen));
-    }
-
-    if (isset($response->cDisVen)) {
-      $res->setCDisVen(intval($response->cDisVen));
+    if (isset($object->cDepVen)) {
+      $res->setCDepVen(intval($object->cDepVen));
     }
 
-    if (isset($response->cCiuVen)) {
-      $res->setCCiuVen(intval($response->cCiuVen));
+    if (isset($object->cDisVen)) {
+      $res->setCDisVen(intval($object->cDisVen));
     }
 
-    if (isset($response->dDirProv)) {
-      $res->setDDirProv($response->dDirProv);
-    }
-    if (isset($response->cDepProv)) {
-      $res->setCDepProv(intval($response->cDepProv));
+    if (isset($object->cCiuVen)) {
+      $res->setCCiuVen(intval($object->cCiuVen));
     }
 
-    if (isset($response->cDisProv)) {
-      $res->setCDisProv(intval($response->cDisProv));
+    if (isset($object->dDirProv)) {
+      $res->setDDirProv($object->dDirProv);
+    }
+    if (isset($object->cDepProv)) {
+      $res->setCDepProv(intval($object->cDepProv));
     }
 
-    if (isset($response->cCiuProv)) {
-      $res->setCCiuProv(intval($response->cCiuProv));
+    if (isset($object->cDisProv)) {
+      $res->setCDisProv(intval($object->cDisProv));
     }
 
-    
-
-
+    if (isset($object->cCiuProv)) {
+      $res->setCCiuProv(intval($object->cCiuProv));
+    }
     return $res;
   }
 }

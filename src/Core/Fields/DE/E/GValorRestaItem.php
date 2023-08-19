@@ -319,45 +319,45 @@ class GValorRestaItem
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GValorRestaItem();
-    if( isset($response->dDescItem))
+    if( isset($object->dDescItem))
     {
-      $res->setDDescItem(strval($response->dDescItem));
+      $res->setDDescItem(strval($object->dDescItem));
     }
-    if( isset($response->dPorcDesIt))
+    if( isset($object->dPorcDesIt))
     {
-      $res->setDPorcDesIt(strval($response->dPorcDesIt));
+      $res->setDPorcDesIt(strval($object->dPorcDesIt));
     }
-    if( isset($response->dDescGloItem))
+    if( isset($object->dDescGloItem))
     {
-      $res->setDDescGloItem(strval($response->dDescGloItem));
-    }
-
-    if( isset($response->dAntPreUniIt))
-    {
-      $res->setDAntPreUniIt(strval($response->dAntPreUniIt));
+      $res->setDDescGloItem(strval($object->dDescGloItem));
     }
 
-    if( isset($response->dAntGloPreUniIt))
+    if( isset($object->dAntPreUniIt))
     {
-      $res->setDAntGloPreUniIt(strval($response->dAntGloPreUniIt));
+      $res->setDAntPreUniIt(strval($object->dAntPreUniIt));
     }
 
-    if( isset($response->dTotOpeItem))
+    if( isset($object->dAntGloPreUniIt))
     {
-      $res->setDTotOpeItem(strval($response->dTotOpeItem));
+      $res->setDAntGloPreUniIt(strval($object->dAntGloPreUniIt));
     }
 
-    if( isset($response->dTotOpeGs))
+    if( isset($object->dTotOpeItem))
     {
-      $res->setDTotOpeGs(strval($response->dTotOpeGs));
+      $res->setDTotOpeItem(strval($object->dTotOpeItem));
+    }
+
+    if( isset($object->dTotOpeGs))
+    {
+      $res->setDTotOpeGs(strval($object->dTotOpeGs));
     }
     
     return $res;

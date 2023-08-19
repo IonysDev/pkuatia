@@ -785,74 +785,74 @@ class GCamItem
   }
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamItem();
-    if (isset($response->dCodInt)) {
-      $res->setDCodInt($response->dCodInt);
+    if (isset($object->dCodInt)) {
+      $res->setDCodInt($object->dCodInt);
     }
-    if (isset($response->dParAranc)) {
-      $res->setDParAranc($response->dParAranc);
+    if (isset($object->dParAranc)) {
+      $res->setDParAranc($object->dParAranc);
     }
-    if (isset($response->dNCM)) {
-      $res->setDNCM($response->dNCM);
+    if (isset($object->dNCM)) {
+      $res->setDNCM($object->dNCM);
     }
-    if (isset($response->dDDncpG)) {
-      $res->setDDncpG($response->dDDncpG);
+    if (isset($object->dDDncpG)) {
+      $res->setDDncpG($object->dDDncpG);
     }
-    if (isset($response->dDDncpE)) {
-      $res->setDDncpE($response->dDDncpE);
+    if (isset($object->dDDncpE)) {
+      $res->setDDncpE($object->dDDncpE);
     }
-    if (isset($response->dGtin)) {
-      $res->setDGtin($response->dGtin);
+    if (isset($object->dGtin)) {
+      $res->setDGtin($object->dGtin);
     }
-    if (isset($response->dGtinPq)) {
-      $res->setDGtinPq($response->dGtinPq);
+    if (isset($object->dGtinPq)) {
+      $res->setDGtinPq($object->dGtinPq);
     }
-    if (isset($response->dDesProSer)) {
-      $res->setDDesProSer($response->dDesProSer);
+    if (isset($object->dDesProSer)) {
+      $res->setDDesProSer($object->dDesProSer);
     }
-    if (isset($response->cUniMed)) {
-      $res->setCUniMed($response->cUniMed);
+    if (isset($object->cUniMed)) {
+      $res->setCUniMed($object->cUniMed);
     }
-    if (isset($response->dCantProSer)) {
-      $res->setDCantProSer($response->dCantProSer);
+    if (isset($object->dCantProSer)) {
+      $res->setDCantProSer($object->dCantProSer);
     }
-    if (isset($response->cPaisOrig)) {
-      $res->setCPaisOrig($response->cPaisOrig);
+    if (isset($object->cPaisOrig)) {
+      $res->setCPaisOrig($object->cPaisOrig);
     }
-    if (isset($response->dInfItem)) {
-      $res->setDInfItem($response->dInfItem);
+    if (isset($object->dInfItem)) {
+      $res->setDInfItem($object->dInfItem);
     }
-    if (isset($response->dRelMerc)) {
-      $res->setCRelMerc($response->dRelMerc);
+    if (isset($object->dRelMerc)) {
+      $res->setCRelMerc($object->dRelMerc);
     }
-    if (isset($response->dCanQuiMer)) {
-      $res->setDCanQuiMer($response->dCanQuiMer);
+    if (isset($object->dCanQuiMer)) {
+      $res->setDCanQuiMer($object->dCanQuiMer);
     }
-    if (isset($response->dPorQuiMer)) {
-      $res->setDPorQuiMer($response->dPorQuiMer);
+    if (isset($object->dPorQuiMer)) {
+      $res->setDPorQuiMer($object->dPorQuiMer);
     }
-    if (isset($response->dCDCAnticipo)) {
-      $res->setDCDCAnticipo($response->dCDCAnticipo);
+    if (isset($object->dCDCAnticipo)) {
+      $res->setDCDCAnticipo($object->dCDCAnticipo);
     }
     // //CHILDREN
-    if (isset($response->gValorItem)) {
-      $res->setGValorItem(GValorItem::fromResponse($response->gValorItem));
+    if (isset($object->gValorItem)) {
+      $res->setGValorItem(GValorItem::FromSifenResponseObject($object->gValorItem));
     }
-    if (isset($response->gCamIVA)) {
-      $res->setGCamIVa(GCamIVA::fromResponse($response->gCamIVA));
+    if (isset($object->gCamIVA)) {
+      $res->setGCamIVa(GCamIVA::FromSifenResponseObject($object->gCamIVA));
     }
-    if (isset($response->gRasMerc)) {
-      $res->setGRasMerc(GRasMerc::fromResponse($response->gRasMerc));
+    if (isset($object->gRasMerc)) {
+      $res->setGRasMerc(GRasMerc::FromSifenResponseObject($object->gRasMerc));
     }
-    if (isset($response->gVehNuevo)) {
-      $res->setGVehNuevo(GVehNuevo::fromResponse($response->gVehNuevo));
+    if (isset($object->gVehNuevo)) {
+      $res->setGVehNuevo(GVehNuevo::FromSifenResponseObject($object->gVehNuevo));
     }
     return $res;
   }

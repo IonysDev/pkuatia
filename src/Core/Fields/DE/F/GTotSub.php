@@ -856,91 +856,91 @@ class GTotSub
   }
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GTotSub();
-    if (isset($response->dSubExe)) {
-      $res->setDSubExe($response->dSubExe);
+    if (isset($object->dSubExe)) {
+      $res->setDSubExe($object->dSubExe);
     }
-    if (isset($response->dSubEx)) {
-      $res->setDSubExo($response->dSubEx);
+    if (isset($object->dSubEx)) {
+      $res->setDSubExo($object->dSubEx);
     }
-    if (isset($response->dSub5)) {
-      $res->setDSub5($response->dSub5);
+    if (isset($object->dSub5)) {
+      $res->setDSub5($object->dSub5);
     }
-    if (isset($response->dSub10)) {
-      $res->setDSub10($response->dSub10);
+    if (isset($object->dSub10)) {
+      $res->setDSub10($object->dSub10);
     }
-    if (isset($response->dTotOpe)) {
-      $res->setDTotOpe($response->dTotOpe);
+    if (isset($object->dTotOpe)) {
+      $res->setDTotOpe($object->dTotOpe);
     }
-    if (isset($response->dTotDesc)) {
-      $res->setDTotDesc($response->dTotDesc);
+    if (isset($object->dTotDesc)) {
+      $res->setDTotDesc($object->dTotDesc);
     }
-    if (isset($response->dTotDescGlotem)) {
-      $res->setDTotDescGlotem($response->dTotDescGlotem);
+    if (isset($object->dTotDescGlotem)) {
+      $res->setDTotDescGlotem($object->dTotDescGlotem);
     }
-    if (isset($response->dTotAntItem)) {
-      $res->setDTotAntItem($response->dTotAntItem);
+    if (isset($object->dTotAntItem)) {
+      $res->setDTotAntItem($object->dTotAntItem);
     }
-    if (isset($response->dTotAnt)) {
-      $res->setDTotAnt($response->dTotAnt);
+    if (isset($object->dTotAnt)) {
+      $res->setDTotAnt($object->dTotAnt);
     }
-    if (isset($response->dPorcDescTotal)) {
-      $res->setDPorcDescTotal($response->dPorcDescTotal);
+    if (isset($object->dPorcDescTotal)) {
+      $res->setDPorcDescTotal($object->dPorcDescTotal);
     }
-    if (isset($response->dPorcDesc)) {
-      $res->setDPorcDescTotal($response->dPorcDesc);
+    if (isset($object->dPorcDesc)) {
+      $res->setDPorcDescTotal($object->dPorcDesc);
     }
-    if (isset($response->dDesc)) {
-      $res->setDDescTotal($response->dDesc);
+    if (isset($object->dDesc)) {
+      $res->setDDescTotal($object->dDesc);
     }
-    if (isset($response->dAnticipo)) {
-      $res->setDAnticipo($response->dAnticipo);
+    if (isset($object->dAnticipo)) {
+      $res->setDAnticipo($object->dAnticipo);
     }
-    if (isset($response->dRedon)) {
-      $res->setDRedon($response->dRedon);
+    if (isset($object->dRedon)) {
+      $res->setDRedon($object->dRedon);
     }
-    if (isset($response->dComi)) {
-      $res->setDComi($response->dComi);
+    if (isset($object->dComi)) {
+      $res->setDComi($object->dComi);
     }
-    if (isset($response->dTotGralOpe)) {
-      $res->setDTotGralOpe($response->dTotGralOpe);
+    if (isset($object->dTotGralOpe)) {
+      $res->setDTotGralOpe($object->dTotGralOpe);
     }
-    if (isset($response->dIVA5)) {
-      $res->setDIVA5($response->dIVA5);
+    if (isset($object->dIVA5)) {
+      $res->setDIVA5($object->dIVA5);
     }
-    if (isset($response->dIVA10)) {
-      $res->setDIVA10($response->dIVA10);
+    if (isset($object->dIVA10)) {
+      $res->setDIVA10($object->dIVA10);
     }
-    if (isset($response->dLiqTotIVA5)) {
-      $res->setDLiqTotIVA5($response->dLiqTotIVA5);
+    if (isset($object->dLiqTotIVA5)) {
+      $res->setDLiqTotIVA5($object->dLiqTotIVA5);
     }
-    if (isset($response->dLiqTotIVA10)) {
-      $res->setDLiqTotIVA10($response->dLiqTotIVA10);
+    if (isset($object->dLiqTotIVA10)) {
+      $res->setDLiqTotIVA10($object->dLiqTotIVA10);
     }
-    if (isset($response->dIVAComi)) {
-      $res->setDIVAComi($response->dIVAComi);
+    if (isset($object->dIVAComi)) {
+      $res->setDIVAComi($object->dIVAComi);
     }
-    if (isset($response->dTotIVA)) {
-      $res->setDTotIVA($response->dTotIVA);
+    if (isset($object->dTotIVA)) {
+      $res->setDTotIVA($object->dTotIVA);
     }
-    if (isset($response->dBaseGrav5)) {
-      $res->setDBaseGrav5($response->dBaseGrav5);
+    if (isset($object->dBaseGrav5)) {
+      $res->setDBaseGrav5($object->dBaseGrav5);
     }
-    if (isset($response->dBaseGrav10)) {
-      $res->setDBaseGrav10($response->dBaseGrav10);
+    if (isset($object->dBaseGrav10)) {
+      $res->setDBaseGrav10($object->dBaseGrav10);
     }
-    if (isset($response->dTBaseGraIVA)) {
-      $res->setDTbasGraIVA($response->dTBaseGraIVA);
+    if (isset($object->dTBaseGraIVA)) {
+      $res->setDTbasGraIVA($object->dTBaseGraIVA);
     }
-    if (isset($response->dTotalGs)) {
-      $res->setDTotalGs($response->dTotalGs);
+    if (isset($object->dTotalGs)) {
+      $res->setDTotalGs($object->dTotalGs);
     }    
     return $res;
   }

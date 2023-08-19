@@ -190,7 +190,7 @@ class GDatRec
     /**
      * Get the value of iNatRec
      */
-    public function getINatRec(): int | null
+    public function getINatRec(): int
     {
         return $this->iNatRec;
     }
@@ -198,7 +198,7 @@ class GDatRec
     /**
      * Get the value of iTiOpe
      */
-    public function getITiOpe() : int | null
+    public function getITiOpe() : int
     {
         return $this->iTiOpe;
     }
@@ -208,7 +208,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getCPaisRec(): string | null
+    public function getCPaisRec(): string
     {
         return $this->cPaisRec;
     }
@@ -218,7 +218,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesPaisRe(): string | null
+    public function getDDesPaisRe(): string
     {
         // return CountryHelper::getCountryDesc($this->cPaisRec);
         return $this->dDesPaisRe;
@@ -228,7 +228,7 @@ class GDatRec
     /**
      * Get the value of iTiContRec
      */
-    public function getITiContRec() : int | null
+    public function getITiContRec() : int
     {
         return $this->iTiContRec;
     }
@@ -238,7 +238,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDRucRec(): string | null
+    public function getDRucRec(): string
     {
         return $this->dRucRec;
     }
@@ -248,7 +248,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getDDVRec(): int | null
+    public function getDDVRec(): int
     {
         return $this->dDVRec;
     }
@@ -256,7 +256,7 @@ class GDatRec
     /**
      * Get the value of iTipIDRec
      */
-    public function getITipIDRec() : int | null
+    public function getITipIDRec() : int
     {
         return $this->iTipIDRec;
     }
@@ -266,7 +266,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDTipIDRec(): string | null
+    public function getDDTipIDRec(): string
     {
         switch ($this->iTipIDRec) {
             case 1:
@@ -301,7 +301,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDNumIDRec(): string | null
+    public function getDNumIDRec(): string
     {
         return $this->dNumIDRec;
     }
@@ -311,7 +311,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDNomRec(): string | null
+    public function getDNomRec(): string
     {
         return $this->dNomRec;
     }
@@ -321,7 +321,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDNomFanRec(): string | null
+    public function getDNomFanRec(): string
     {
         return $this->dNomFanRec;
     }
@@ -331,7 +331,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDirRec(): string | null
+    public function getDDirRec(): string
     {
         return $this->dDirRec;
     }
@@ -341,7 +341,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDTelRec(): string | null
+    public function getDTelRec(): string
     {
         return $this->dTelRec;
     }
@@ -351,7 +351,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDCelRec(): string | null
+    public function getDCelRec(): string
     {
         return $this->dCelRec;
     }
@@ -361,7 +361,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDEmailRec(): string | null
+    public function getDEmailRec(): string
     {
         return $this->dEmailRec;
     }
@@ -371,7 +371,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDCodCliente(): string | null
+    public function getDCodCliente(): string
     {
         return $this->dCodCliente;
     }
@@ -381,7 +381,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getDNumCasRec(): int | null
+    public function getDNumCasRec(): int
     {
         return $this->dNumCasRec;
     }
@@ -391,7 +391,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getCDepRec(): int | null
+    public function getCDepRec(): int
     {
         return $this->cDepRec;
     }
@@ -401,7 +401,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesDepRec(): string | null
+    public function getDDesDepRec(): string
     {
         return DepartamentoHelper::getDepName(strval($this->cDepRec));
     }
@@ -411,7 +411,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getCDisRec(): int | null
+    public function getCDisRec(): int
     {
         return $this->cDisRec;
     }
@@ -421,7 +421,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesDisRec(): string | null
+    public function getDDesDisRec(): string
     {
         return GeoRefCodesHelper::getDistName(strval($this->cDisRec));
     }
@@ -432,7 +432,7 @@ class GDatRec
      *
      * @return int
      */
-    public function getCCiuRec(): int | null
+    public function getCCiuRec(): int
     {
         return $this->cCiuRec;
     }
@@ -442,7 +442,7 @@ class GDatRec
      *
      * @return string
      */
-    public function getDDesCiuRec(): string | null
+    public function getDDesCiuRec(): string
     {
         return GeoRefCodesHelper::getCiudName(strval($this->cCiuRec));
     }
@@ -565,70 +565,70 @@ class GDatRec
     
     
     /**
-     * fromResponse
+     * FromSifenResponseObject
      *
-     * @param  mixed $response
+     * @param  mixed $object
      * @return self
      */
-    public static function fromResponse($response): self
+    public static function FromSifenResponseObject($object): self
     {
         $res = new GDatRec();
-        if(isset($response->iNatRec)){
-            $res->setINatRec(intval($response->iNatRec));
+        if(isset($object->iNatRec)){
+            $res->setINatRec(intval($object->iNatRec));
         }
-        if (isset($response->iTiOpe)) {
-            $res->setITiOpe(intval($response->iTiOpe));
+        if (isset($object->iTiOpe)) {
+            $res->setITiOpe(intval($object->iTiOpe));
         }
-        if (isset($response->cPaisRec)) {
-            $res->setCPaisRec($response->cPaisRec);
+        if (isset($object->cPaisRec)) {
+            $res->setCPaisRec($object->cPaisRec);
         }
-        if (isset($response->iTiContRec)) {
-            $res->setITiContRec(intval($response->iTiContRec));
+        if (isset($object->iTiContRec)) {
+            $res->setITiContRec(intval($object->iTiContRec));
         }
-        if (isset($response->dRucRec)) {
-            $res->setDRucRec($response->dRucRec);
+        if (isset($object->dRucRec)) {
+            $res->setDRucRec($object->dRucRec);
         }
-        if (isset($response->dDVRec)) {
-            $res->setDDVRec(intval($response->dDVRec));
+        if (isset($object->dDVRec)) {
+            $res->setDDVRec(intval($object->dDVRec));
         }
-        if (isset($response->iTipIDRec)) {
-            $res->setITipIDRec(intval($response->iTipIDRec));
+        if (isset($object->iTipIDRec)) {
+            $res->setITipIDRec(intval($object->iTipIDRec));
         }
-        if (isset($response->dNumIDRec)) {
-            $res->setDNumIDRec($response->dNumIDRec);
+        if (isset($object->dNumIDRec)) {
+            $res->setDNumIDRec($object->dNumIDRec);
         }
-        if (isset($response->dNomRec)) {
-            $res->setDNomRec($response->dNomRec);
+        if (isset($object->dNomRec)) {
+            $res->setDNomRec($object->dNomRec);
         }
-        if (isset($response->dNomFanRec)) {
-            $res->setDNomFanRec($response->dNomFanRec);
+        if (isset($object->dNomFanRec)) {
+            $res->setDNomFanRec($object->dNomFanRec);
         }
-        if (isset($response->dDirRec)) {
-            $res->setDDirRec($response->dDirRec);
+        if (isset($object->dDirRec)) {
+            $res->setDDirRec($object->dDirRec);
         }
-        if (isset($response->dNumCasRec)) {
-            $res->setDNumCasRec(intval($response->dNumCasRec));
+        if (isset($object->dNumCasRec)) {
+            $res->setDNumCasRec(intval($object->dNumCasRec));
         }
-        if (isset($response->cDepRec)) {
-            $res->setCDepRec(intval($response->cDepRec));
+        if (isset($object->cDepRec)) {
+            $res->setCDepRec(intval($object->cDepRec));
         }
-        if (isset($response->cDisRec)) {
-            $res->setCDisRec(intval($response->cDisRec));
+        if (isset($object->cDisRec)) {
+            $res->setCDisRec(intval($object->cDisRec));
         }
-        if (isset($response->cCiuRec)) {
-            $res->setCCiuRec(intval($response->cCiuRec));
+        if (isset($object->cCiuRec)) {
+            $res->setCCiuRec(intval($object->cCiuRec));
         }
-        if (isset($response->dTelRec)) {
-            $res->setDTelRec($response->dTelRec);
+        if (isset($object->dTelRec)) {
+            $res->setDTelRec($object->dTelRec);
         }
-        if (isset($response->dCelRec)) {
-            $res->setDCelRec($response->dCelRec);
+        if (isset($object->dCelRec)) {
+            $res->setDCelRec($object->dCelRec);
         }
-        if (isset($response->dEmailRec)) {
-            $res->setDEmailRec($response->dEmailRec);
+        if (isset($object->dEmailRec)) {
+            $res->setDEmailRec($object->dEmailRec);
         }
-        if (isset($response->dCodCliente)) {
-            $res->setDCodCliente($response->dCodCliente);
+        if (isset($object->dCodCliente)) {
+            $res->setDCodCliente($object->dCodCliente);
         }
         return $res;
     }

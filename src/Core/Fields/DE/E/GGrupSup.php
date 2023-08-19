@@ -194,28 +194,28 @@ class GGrupSup
   // }
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GGrupSup();
-    if (isset($response->dNomCaj)) {
-      $res->setDNomCaj($response->dNomCaj);
+    if (isset($object->dNomCaj)) {
+      $res->setDNomCaj($object->dNomCaj);
     }
-    if (isset($response->dEfectivo)) {
-      $res->setDEfectivo($response->dEfectivo);
+    if (isset($object->dEfectivo)) {
+      $res->setDEfectivo($object->dEfectivo);
     }
-    if (isset($response->dVuelto)) {
-      $res->setDVuelto($response->dVuelto);
+    if (isset($object->dVuelto)) {
+      $res->setDVuelto($object->dVuelto);
     }
-    if (isset($response->dDonac)) {
-      $res->setDDonac($response->dDonac);
+    if (isset($object->dDonac)) {
+      $res->setDDonac($object->dDonac);
     }
-    if (isset($response->dDesDonac)) {
-      $res->setDDesDonac($response->dDesDonac);
+    if (isset($object->dDesDonac)) {
+      $res->setDDesDonac($object->dDesDonac);
     }
     return $res;
   }

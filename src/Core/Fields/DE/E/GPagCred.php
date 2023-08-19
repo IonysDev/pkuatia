@@ -259,38 +259,38 @@ class GPagCred
 
     
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GPagCred();
 
-    if(isset($response->iCondCred))
+    if(isset($object->iCondCred))
     {
-      $res->setICondCred(intval($response->iCondCred));
+      $res->setICondCred(intval($object->iCondCred));
     }
 
-    if(isset($response->dPlazoCre))
+    if(isset($object->dPlazoCre))
     {
-      $res->setDPlazoCre($response->dPlazoCre);
+      $res->setDPlazoCre($object->dPlazoCre);
     }
 
-    if(isset($response->dCuotas))
+    if(isset($object->dCuotas))
     {
-      $res->setDCuotas(intval($response->dCuotas));
+      $res->setDCuotas(intval($object->dCuotas));
     }
 
-    if(isset($response->dMonEnt))
+    if(isset($object->dMonEnt))
     {
-      $res->setDMonEnt(intval($response->dMonEnt));
+      $res->setDMonEnt(intval($object->dMonEnt));
     }
     //children
-    if(isset($response->gCuotas))
+    if(isset($object->gCuotas))
     {
-      $res->setGCuotas(GCuotas::fromResponse($response->gCuotas));
+      $res->setGCuotas(GCuotas::FromSifenResponseObject($object->gCuotas));
     }
     return $res;
   }

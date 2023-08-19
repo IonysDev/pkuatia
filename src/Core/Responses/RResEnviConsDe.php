@@ -141,7 +141,7 @@ class RResEnviConsDe
    * 
    * @return self
    */
-  public static function fromSifenResponseObject($object)
+  public static function FromSifenResponseObject($object)
   {
     if (is_null($object)) {
       throw new \Exception("Error Processing Request: null", 1);
@@ -159,15 +159,14 @@ class RResEnviConsDe
         $xml = $xml . '</rContDe>';
         file_put_contents("xContenDE.xml", $xml);
         $res->setRContDe(RContDe::FromSimpleXMLElement(simplexml_load_string($xml)));
-        
       }
       else{
         // DRSch05 - rContDe se denomina xContenDE en la respuesta de consulta SOAP.
-        $res->setRContDe(RContDe::fromStdClassObject($object->xContenDE));
+        $res->setRContDe(RContDe::FromSifenResponseObject($object->xContenDE));
       }
     }
     else if (isset($object->rContDe)) {
-      $res->setRContDe(RContDe::fromStdClassObject($object->rContDe));
+      $res->setRContDe(RContDe::FromSifenResponseObject($object->rContDe));
     }    
     return $res;
   }

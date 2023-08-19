@@ -534,58 +534,58 @@ class GCamTrans
 
     
    /**
-    * fromResponse
+    * FromSifenResponseObject
     *
-    * @param  mixed $response
+    * @param  mixed $object
     * @return self
     */
-   public static function fromResponse($response):self
+   public static function FromSifenResponseObject($object):self
    {
       $res = new GCamTrans();
-      if(isset($response->iNatTrans)){
-         $res->setINatTrans(intval($response->iNatTrans));
+      if(isset($object->iNatTrans)){
+         $res->setINatTrans(intval($object->iNatTrans));
       }
-      if(isset($response->dNomTrans)){
-         $res->setDNomTrans($response->dNomTrans);
+      if(isset($object->dNomTrans)){
+         $res->setDNomTrans($object->dNomTrans);
       }
-      if(isset($response->dRucTrans)){
-         $res->setDRucTrans($response->dRucTrans);
+      if(isset($object->dRucTrans)){
+         $res->setDRucTrans($object->dRucTrans);
       }
-      if(isset($response->dDVTrans)){
-         $res->setDDVTrans(intval($response->dDVTrans));
+      if(isset($object->dDVTrans)){
+         $res->setDDVTrans(intval($object->dDVTrans));
       }
-      if(isset($response->iTipIDTrans)){
-         $res->setITipIDTrans(intval($response->iTipIDTrans));
+      if(isset($object->iTipIDTrans)){
+         $res->setITipIDTrans(intval($object->iTipIDTrans));
       }
-      if(isset($response->dNumIDTrans)){
-         $res->setDNumIDTrans($response->dNumIDTrans);
+      if(isset($object->dNumIDTrans)){
+         $res->setDNumIDTrans($object->dNumIDTrans);
       }
-      if(isset($response->cNacTrans)){
-         $res->setCNacTrans($response->cNacTrans);
+      if(isset($object->cNacTrans)){
+         $res->setCNacTrans($object->cNacTrans);
       }
-      if(isset($response->dNumIDChof)){
-         $res->setDNumIDChof($response->dNumIDChof);
+      if(isset($object->dNumIDChof)){
+         $res->setDNumIDChof($object->dNumIDChof);
       }
-      if(isset($response->dNomChof)){
-         $res->setDNomChof($response->dNomChof);
+      if(isset($object->dNomChof)){
+         $res->setDNomChof($object->dNomChof);
       }
-      if(isset($response->dDomFisc)){
-         $res->setDDomFisc($response->dDomFisc);
+      if(isset($object->dDomFisc)){
+         $res->setDDomFisc($object->dDomFisc);
       }
-      if(isset($response->dDirChof)){
-         $res->setDDirChof($response->dDirChof);
+      if(isset($object->dDirChof)){
+         $res->setDDirChof($object->dDirChof);
       }
-      if(isset($response->dNombAg)){
-         $res->setDNombAg($response->dNombAg);
+      if(isset($object->dNombAg)){
+         $res->setDNombAg($object->dNombAg);
       }
-      if(isset($response->dRucAg)){
-         $res->setDRucAg($response->dRucAg);
+      if(isset($object->dRucAg)){
+         $res->setDRucAg($object->dRucAg);
       }
-      if(isset($response->dDVAg)){
-         $res->setDDVAg(intval($response->dDVAg));
+      if(isset($object->dDVAg)){
+         $res->setDDVAg(intval($object->dDVAg));
       }
-      if(isset($response->dDirAge)){
-         $res->setDDirAge($response->dDirAge);
+      if(isset($object->dDirAge)){
+         $res->setDDirAge($object->dDirAge);
       }
       
 

@@ -333,53 +333,53 @@ class GRasMerc
 
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GRasMerc();
-    if(isset($response->dNumLote))
+    if(isset($object->dNumLote))
     {
-      $res->setDNumLote($response->dNumLote);
+      $res->setDNumLote($object->dNumLote);
     }
-    if(isset($response->dVencMerc))
+    if(isset($object->dVencMerc))
     {
-      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $response->dVencMerc));
+      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $object->dVencMerc));
     }
-    if(isset($response->dNSerie))
+    if(isset($object->dNSerie))
     {
-      $res->setDNSerie($response->dNSerie);
+      $res->setDNSerie($object->dNSerie);
     }
-    if(isset($response->dNumPedi))
+    if(isset($object->dNumPedi))
     {
-      $res->setDNumPedi($response->dNumPedi);
+      $res->setDNumPedi($object->dNumPedi);
     }
-    if(isset($response->dNumSegui))
+    if(isset($object->dNumSegui))
     {
-      $res->setDNumSegui($response->dNumSegui);
+      $res->setDNumSegui($object->dNumSegui);
     }
-    if(isset($response->dNomImp))
+    if(isset($object->dNomImp))
     {
-      $res->setDNomImp($response->dNomImp);
+      $res->setDNomImp($object->dNomImp);
     }
-    if(isset($response->dDirImp))
+    if(isset($object->dDirImp))
     {
-      $res->setDDirImp($response->dDirImp);
+      $res->setDDirImp($object->dDirImp);
     }
-    if(isset($response->dNumFir))
+    if(isset($object->dNumFir))
     {
-      $res->setDNumFir($response->dNumFir);
+      $res->setDNumFir($object->dNumFir);
     }
-    if(isset($response->dNumReg))
+    if(isset($object->dNumReg))
     {
-      $res->setDNumReg($response->dNumReg);
+      $res->setDNumReg($object->dNumReg);
     }
-    if(isset($response->dNumRegEntCom))
+    if(isset($object->dNumRegEntCom))
     {
-      $res->setDNumRegEntCom($response->dNumRegEntCom);
+      $res->setDNumRegEntCom($object->dNumRegEntCom);
     }
     return $res;
   }

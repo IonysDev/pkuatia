@@ -5,12 +5,16 @@ namespace Abiliomp\Pkuatia\Core\Responses;
 use Abiliomp\Pkuatia\Core\Fields\Response\RProtDe;
 
 /**
- * ID ARSch01 - Clase que representa la respuesta de la recepcion de documentos electronicos.
+ * Nodo Id:     ARSch01
+ * Nombre:      rRetEnviDe
+ * Descripción: Clase que representa la respuesta de la recepcion de documentos electronicos.
+ * Nodo Padre:  Es raíz.
  */
 
 class RRetEnviDe {
 
-    public String $xProtDe; // ARSch02 - XML de protocolo de procesamiento de documento electrónico.
+                             // Id - Longitud - Ocurrencia - Descripción
+    public String  $xProtDe; // ARSch02 - - 1-1 - XML de protocolo de procesamiento de documento electrónico.
     public RProtDe $rProtDe; // Valor convertido a objeto del XML de protocolo de procesamiento de documento electrónico.
 
     /**
@@ -18,7 +22,7 @@ class RRetEnviDe {
      */
     public function __construct($xProtDe) {
         $this->xProtDe = $xProtDe;
-        $this->rProtDe = new RProtDe($xProtDe);
+        $this->rProtDe = RProtDe::FromXMLString($xProtDe);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -50,6 +54,26 @@ class RRetEnviDe {
     public function getXProtDe(): String
     {
         return $this->xProtDe;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Instanciadores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Crea una nueva instancia de RRetEnviDe a partir de un objeto stdClass.
+     * Pensado para castear la respuesta a una llamada SOAP al SIFEN.
+     * 
+     * @param stdClass $object
+     * 
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        if(!isset($object->xProtDe)) {
+            throw new \Exception("[RRetEnviDe] El objeto recibido no tiene el atributo xProtDe.");
+        }
+        return new self($object->xProtDe);
     }
 
 }

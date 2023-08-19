@@ -33,9 +33,10 @@ class MonedaMapping
    * Devuelve la descripción de la moneda a partir del código ISO 4217.
    *
    * @param  mixed $code
-   * @return string
+   * 
+   * @return String | null
    */
-  public static function GetDescription($code): string | null
+  public static function GetDescription($code): String
   {
     $country = strtoupper($code);
     $array = self::getArray();

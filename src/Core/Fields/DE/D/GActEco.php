@@ -6,9 +6,10 @@ use DOMElement;
 use SimpleXMLElement;
 
 /**
- * Nodo Id: D130 
+ * Nodo Id:     D130
+ * Nombre:      gActEco
  * Descripción: Grupo de campos que describen la actividad económica del emisor.
- * Nodo Padre: D100 - Grupo de campos que identifican al emisor 
+ * Nodo Padre:  D100 - gEmis - Grupo de campos que identifican al emisor 
  */
 
 class GActEco
@@ -107,21 +108,21 @@ class GActEco
     }
     
     /**
-     * fromResponse
+     * FromSifenResponseObject
      *
-     * @param  mixed $response
+     * @param  mixed $object
      * @return self
      */
-    public static function fromResponse($response):self
+    public static function FromSifenResponseObject($object):self
     {
         $res = new GActEco();
-        if(isset($response->cActEco))
+        if(isset($object->cActEco))
         {
-            $res->setCActEco($response->cActEco);
+            $res->setCActEco($object->cActEco);
         }
-        if(isset($response->dDesActEco))
+        if(isset($object->dDesActEco))
         {
-            $res->setDDesActEco($response->dDesActEco);
+            $res->setDDesActEco($object->dDesActEco);
         }
 
         return $res; 

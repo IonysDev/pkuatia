@@ -212,7 +212,7 @@ class RContRUC
 
   ///create a objet from a objectClass  
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return RContRuc

@@ -209,33 +209,33 @@ class GCompPub
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GCompPub();
-    if(isset($response->dModCont))
+    if(isset($object->dModCont))
     {
-      $res->setDModCont($response->dModCont);
+      $res->setDModCont($object->dModCont);
     }
-    if(isset($response->dEntCont))
+    if(isset($object->dEntCont))
     {
-      $res->setDEntCont($response->dEntCont);
+      $res->setDEntCont($object->dEntCont);
     }
-    if(isset($response->dAnoCont))
+    if(isset($object->dAnoCont))
     {
-      $res->setDAnoCont($response->dAnoCont);
+      $res->setDAnoCont($object->dAnoCont);
     }
-    if(isset($response->dSecCont))
+    if(isset($object->dSecCont))
     {
-      $res->setDSecCont($response->dSecCont);
+      $res->setDSecCont($object->dSecCont);
     }
-    if(isset($response->dFeCodCont))
+    if(isset($object->dFeCodCont))
     {
-      $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $response->dFeCodCont));
+      $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $object->dFeCodCont));
     }
     
     return $res;

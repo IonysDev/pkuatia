@@ -532,67 +532,64 @@ class GTransp
   }
 
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GTransp();
-    if(isset($response->iModTrans))
+    if(isset($object->iModTrans))
     {
-      $res->setIModTrans(intval($response->iModTrans));
+      $res->setIModTrans(intval($object->iModTrans));
     }
-    if(isset($response->iTipTrans))
+    if(isset($object->iTipTrans))
     {
-      $res->setITipTrans(intval($response->iTipTrans));
+      $res->setITipTrans(intval($object->iTipTrans));
     }
-    if(isset($response->iRespFlete))
+    if(isset($object->iRespFlete))
     {
-      $res->setIRespFlete(intval($response->iRespFlete));
+      $res->setIRespFlete(intval($object->iRespFlete));
     }
-    if(isset($response->cCondNeg))
+    if(isset($object->cCondNeg))
     {
-      $res->setCCondNeg($response->cCondNeg);
+      $res->setCCondNeg($object->cCondNeg);
     }
-    if(isset($response->dNuManif))
+    if(isset($object->dNuManif))
     {
-      $res->setDNuManif($response->dNuManif);
+      $res->setDNuManif($object->dNuManif);
     }
-    if(isset($response->dNuDespImp))
+    if(isset($object->dNuDespImp))
     {
-      $res->setDNuDespImp($response->dNuDespImp);
+      $res->setDNuDespImp($object->dNuDespImp);
     }
-    if(isset($response->dIniTras))
+    if(isset($object->dIniTras))
     {
-      $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $response->dIniTras));
+      $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $object->dIniTras));
     }
-    if(isset($response->dFinTras))
+    if(isset($object->dFinTras))
     {
-      $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $response->dFinTras));
+      $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $object->dFinTras));
     }
-    if(isset($response->cPaisDest))
+    if(isset($object->cPaisDest))
     {
-      $res->setCPaisDest($response->cPaisDest);
+      $res->setCPaisDest($object->cPaisDest);
     }
-    
-
-    //Children
-    if (isset($response->gCamSal)) {
-      $res->setGCamSal(GCamSal::fromResponse($response->gCamSal));
+    if (isset($object->gCamSal)) {
+      $res->setGCamSal(GCamSal::FromSifenResponseObject($object->gCamSal));
     }
 
-    if (isset($response->gCamEnt)) {
-      $res->setGCamEnt(GCamEnt::fromResponse($response->gCamEnt));
+    if (isset($object->gCamEnt)) {
+      $res->setGCamEnt(GCamEnt::FromSifenResponseObject($object->gCamEnt));
     }
 
-    if (isset($response->gVehTras)) {
-      $res->setGVehTras(GVehTras::fromResponse($response->gVehTras));
+    if (isset($object->gVehTras)) {
+      $res->setGVehTras(GVehTras::FromSifenResponseObject($object->gVehTras));
     }
 
-    if (isset($response->gCamTrans)) {
-      $res->setGCamTrans(GCamTrans::fromResponse($response->gCamTrans));
+    if (isset($object->gCamTrans)) {
+      $res->setGCamTrans(GCamTrans::FromSifenResponseObject($object->gCamTrans));
     }
 
     return $res;

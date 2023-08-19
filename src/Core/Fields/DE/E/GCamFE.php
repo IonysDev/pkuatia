@@ -192,27 +192,27 @@ class GCamFE
   }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamFE();
-    if(isset($response->iIndPres))
+    if(isset($object->iIndPres))
     {
-      $res->setIIndPres(intval($response->iIndPres));
+      $res->setIIndPres(intval($object->iIndPres));
     }
  
-    if(isset($response->dFecEmNR))
+    if(isset($object->dFecEmNR))
     {
-      $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $response->dFecEmNR));
+      $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $object->dFecEmNR));
     }
     //Children
-    if(isset($response->gComPub))
+    if(isset($object->gComPub))
     {
-      $res->setGComPub(GCompPub::fromResponse($response->gComPub));
+      $res->setGComPub(GCompPub::FromSifenResponseObject($object->gComPub));
     }
     return $res;
   }

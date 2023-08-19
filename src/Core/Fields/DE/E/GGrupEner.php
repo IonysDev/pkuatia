@@ -222,37 +222,37 @@ class GGrupEner
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GGrupEner();
-    if(isset($response->dNroMed))
+    if(isset($object->dNroMed))
     {
-      $res->setDNroMed($response->dNroMed);
+      $res->setDNroMed($object->dNroMed);
     }
-    if(isset($response->dActiv))
+    if(isset($object->dActiv))
     {
-      $res->setDActiv($response->dActiv);
+      $res->setDActiv($object->dActiv);
     }
-    if(isset($response->dCateg))
+    if(isset($object->dCateg))
     {
-      $res->setDCateg($response->dCateg);
+      $res->setDCateg($object->dCateg);
     }
-    if(isset($response->dLecAnt))
+    if(isset($object->dLecAnt))
     {
-      $res->setDLecAnt($response->dLecAnt);
+      $res->setDLecAnt($object->dLecAnt);
     }
-    if(isset($response->dLecAct))
+    if(isset($object->dLecAct))
     {
-      $res->setDLecAct($response->dLecAct);
+      $res->setDLecAct($object->dLecAct);
     }
-    if(isset($response->dConKwh))
+    if(isset($object->dConKwh))
     {
-      $res->setDConKwh($response->dConKwh);
+      $res->setDConKwh($object->dConKwh);
     }
     
     return $res;

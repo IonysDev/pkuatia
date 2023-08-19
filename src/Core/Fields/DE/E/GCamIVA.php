@@ -243,12 +243,12 @@ class GCamIVA
 
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
    * @param  mixed $resposne
    * @return self
    */
-  public static function fromResponse($resposne): self
+  public static function FromSifenResponseObject($resposne): self
   {
 
     $res = new GCamIVA();

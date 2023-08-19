@@ -329,33 +329,33 @@ class GCamCarg
   }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response):self
+  public static function FromSifenResponseObject($object):self
   {
     $res = new GCamCarg();
-    if(isset($response->cUniMedTotVol))
+    if(isset($object->cUniMedTotVol))
     {
-      $res->setCUniMedTotVol(intval($response->cUniMedTotVol));
+      $res->setCUniMedTotVol(intval($object->cUniMedTotVol));
     }
-    if(isset($response->dTotVolMerc))
+    if(isset($object->dTotVolMerc))
     {
-      $res->setDTotVolMerc(intval($response->dTotVolMerc));
+      $res->setDTotVolMerc(intval($object->dTotVolMerc));
     }
-    if(isset($response->cUniMedTotPes))
+    if(isset($object->cUniMedTotPes))
     {
-      $res->setCUniMedTotPes(intval($response->cUniMedTotPes));
+      $res->setCUniMedTotPes(intval($object->cUniMedTotPes));
     }
-    if(isset($response->dTotPesMerc))
+    if(isset($object->dTotPesMerc))
     {
-      $res->setDTotPesMerc(intval($response->dTotPesMerc));
+      $res->setDTotPesMerc(intval($object->dTotPesMerc));
     }
-    if(isset($response->iCarCarga))
+    if(isset($object->iCarCarga))
     {
-      $res->setICarCarga(intval($response->iCarCarga));
+      $res->setICarCarga(intval($object->iCarCarga));
     }
     
     return $res;

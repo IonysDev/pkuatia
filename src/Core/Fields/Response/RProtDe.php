@@ -203,7 +203,7 @@ class RProtDe
    * @param  mixed $xml
    * @return RProtDe
    */
-  public static function fromDOMElement(DOMElement $xml): RProtDe
+  public static function FromDOMElement(DOMElement $xml): RProtDe
   {
     if (strcmp($xml->tagName, 'rProtDe') == 0 && $xml->childElementCount == 6) {
       $res = new RProtDe();
@@ -228,7 +228,7 @@ class RProtDe
    * @param string $xml
    * @return RProtDe
    */
-  public static function fromXMLString(string $xmlString): RProtDe
+  public static function FromXMLString(string $xmlString): RProtDe
   {
     $xml = simplexml_load_string($xmlString);
     $res = self::fromSimpleXMLElement($xml);
@@ -242,7 +242,7 @@ class RProtDe
    * 
    * @return RProtDe
    */
-  public static function fromSimpleXMLElement(SimpleXMLElement $xml): RProtDe
+  public static function FromSimpleXMLElement(SimpleXMLElement $xml): RProtDe
   {
     if(strcmp($xml->getName(),'rProtDe') != 0) {
       throw new \Exception("Invalid XML Element: $xml->getName()");

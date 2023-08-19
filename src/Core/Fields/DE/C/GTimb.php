@@ -205,43 +205,42 @@ class GTimb
     // }
     
     /**
-     * fromResponse
+     * FromSifenResponseObject
      *
-     * @param  mixed $response
+     * @param  mixed $object
      * @return self
      */
-    public static function fromResponse($response): self
+    public static function FromSifenResponseObject($object): self
     {
         $res = new GTimb();
-        if(isset($response->iTiDE))
+        if(isset($object->iTiDE))
         {
-            $res->setITiDE(intval($response->iTiDE));
+            $res->setITiDE(intval($object->iTiDE));
         }
-        if(isset($response->dNumTim))
+        if(isset($object->dNumTim))
         {
-            $res->setDNumTim(intval($response->dNumTim));
+            $res->setDNumTim(intval($object->dNumTim));
         }
-        if(isset($response->dEst))
+        if(isset($object->dEst))
         {
-            $res->setDEst($response->dEst);
+            $res->setDEst($object->dEst);
         }
-        if(isset($response->dPunExp))
+        if(isset($object->dPunExp))
         {
-            $res->setDPunExp($response->dPunExp);
+            $res->setDPunExp($object->dPunExp);
         }
-        if(isset($response->dNumDoc))
+        if(isset($object->dNumDoc))
         {
-            $res->setDNumDoc($response->dNumDoc);
+            $res->setDNumDoc($object->dNumDoc);
         }
-        if(isset($response->dSerieNum))
+        if(isset($object->dSerieNum))
         {
-            $res->setDSerieNum($response->dSerieNum);
+            $res->setDSerieNum($object->dSerieNum);
         }
-        if(isset($response->dFeIniT))
+        if(isset($object->dFeIniT))
         {
-            $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $response->dFeIniT));
+            $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $object->dFeIniT));
         }
-        
         return $res;
     }
 }

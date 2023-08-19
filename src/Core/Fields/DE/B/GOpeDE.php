@@ -142,27 +142,25 @@ class GOpeDE
         return $res;
     }
 
-    public static function fromResponse($response): self
+    public static function FromSifenResponseObject($object): self
     {
         $res = new GOpeDE();
-        if(isset($response->iTipEmi))
+        if(isset($object->iTipEmi))
         {
-            $res->setITipEmi(intval($response->iTipEmi));
+            $res->setITipEmi(intval($object->iTipEmi));
         }
-        if(isset($response->dCodSeg))
+        if(isset($object->dCodSeg))
         {
-            $res->setDCodSeg(intval($response->dCodSeg));
+            $res->setDCodSeg(intval($object->dCodSeg));
         }
-        if(isset($response->dInfoEmi))
+        if(isset($object->dInfoEmi))
         {
-            $res->setDInfoEmi($response->dInfoEmi);
+            $res->setDInfoEmi($object->dInfoEmi);
         }
-        if(isset($response->dInfoFisc))
+        if(isset($object->dInfoFisc))
         {
-            $res->setDInfoFisc($response->dInfoFisc);
+            $res->setDInfoFisc($object->dInfoFisc);
         }
-        
-
         return $res;
     }
 }

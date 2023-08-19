@@ -397,77 +397,77 @@ class GEmis
     }
 
     /**
-     * fromResponse
+     * FromSifenResponseObject
      *
-     * @param  mixed $response
+     * @param  mixed $object
      * @return self
      */
-    public static function fromResponse($response): self
+    public static function FromSifenResponseObject($object): self
     {
         $gEmis = new GEmis();
-        if (isset($response->dRucEm)) {
-            $gEmis->setDRucEm($response->dRucEm);
+        if (isset($object->dRucEm)) {
+            $gEmis->setDRucEm($object->dRucEm);
         }
-        if (isset($response->dDVEmi)) {
-            $gEmis->setDDVEmi($response->dDVEmi);
+        if (isset($object->dDVEmi)) {
+            $gEmis->setDDVEmi($object->dDVEmi);
         }
-        if (isset($response->iTipCont)) {
-            $gEmis->setITipCont($response->iTipCont);
+        if (isset($object->iTipCont)) {
+            $gEmis->setITipCont($object->iTipCont);
         }
-        if (isset($response->cTipReg)) {
-            $gEmis->setCTipReg($response->cTipReg);
+        if (isset($object->cTipReg)) {
+            $gEmis->setCTipReg($object->cTipReg);
         }
-        if (isset($response->dNomEmi)) {
-            $gEmis->setDNomEmi($response->dNomEmi);
+        if (isset($object->dNomEmi)) {
+            $gEmis->setDNomEmi($object->dNomEmi);
         }
-        if (isset($response->dNomFanEmi)) {
-            $gEmis->setDNomFanEmi($response->dNomFanEmi);
+        if (isset($object->dNomFanEmi)) {
+            $gEmis->setDNomFanEmi($object->dNomFanEmi);
         }
-        if (isset($response->dDirEmi)) {
-            $gEmis->setDDirEmi($response->dDirEmi);
+        if (isset($object->dDirEmi)) {
+            $gEmis->setDDirEmi($object->dDirEmi);
         }
-        if (isset($response->dNumCas)) {
-            $gEmis->setDNumCas($response->dNumCas);
-        }
-
-        if (isset($response->dCompDir1)) {
-            $gEmis->setDCompDir1($response->dCompDir1);
-        }
-        if (isset($response->dCompDir2)) {
-            $gEmis->setDCompDir2($response->dCompDir2);
-        }
-        if (isset($response->cDepEmi)) {
-            $gEmis->setCDepEmi($response->cDepEmi);
-        }
-        if (isset($response->cDisEmi)) {
-            $gEmis->setCDisEmi($response->cDisEmi);
-        }
-        if (isset($response->cCiuEmi)) {
-            $gEmis->setCCiuEmi($response->cCiuEmi);
+        if (isset($object->dNumCas)) {
+            $gEmis->setDNumCas($object->dNumCas);
         }
 
-        if (isset($response->dTelEmi)) {
-            $gEmis->setDTelEmi($response->dTelEmi);
+        if (isset($object->dCompDir1)) {
+            $gEmis->setDCompDir1($object->dCompDir1);
         }
-        if (isset($response->dEmailE)) {
-            $gEmis->setDEmailE($response->dEmailE);
+        if (isset($object->dCompDir2)) {
+            $gEmis->setDCompDir2($object->dCompDir2);
         }
-        if (isset($response->dDenSuc)) {
-            $gEmis->setDDenSuc($response->dDenSuc);
+        if (isset($object->cDepEmi)) {
+            $gEmis->setCDepEmi($object->cDepEmi);
+        }
+        if (isset($object->cDisEmi)) {
+            $gEmis->setCDisEmi($object->cDisEmi);
+        }
+        if (isset($object->cCiuEmi)) {
+            $gEmis->setCCiuEmi($object->cCiuEmi);
+        }
+
+        if (isset($object->dTelEmi)) {
+            $gEmis->setDTelEmi($object->dTelEmi);
+        }
+        if (isset($object->dEmailE)) {
+            $gEmis->setDEmailE($object->dEmailE);
+        }
+        if (isset($object->dDenSuc)) {
+            $gEmis->setDDenSuc($object->dDenSuc);
         }
         //Children
-        if (isset($response->gActEco)) {
-            if(is_array($response->gActEco)) {
-                foreach($response->gActEco as $g) {
-                    $gEmis->gActEco[] = GActEco::fromResponse($g);
+        if (isset($object->gActEco)) {
+            if(is_array($object->gActEco)) {
+                foreach($object->gActEco as $g) {
+                    $gEmis->gActEco[] = GActEco::FromSifenResponseObject($g);
                 }
             }
             else {
-                $gEmis->gActEco[] = GActEco::fromResponse($response->gActEco);
+                $gEmis->gActEco[] = GActEco::FromSifenResponseObject($object->gActEco);
             }
         }
-        if (isset($response->gRespDE)) {
-            $gEmis->setGRespDE(GRespDE::fromResponse($response->gRespDE));
+        if (isset($object->gRespDE)) {
+            $gEmis->setGRespDE(GRespDE::FromSifenResponseObject($object->gRespDE));
         }
         return $gEmis;
     }

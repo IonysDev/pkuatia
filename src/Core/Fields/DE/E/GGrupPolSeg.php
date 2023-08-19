@@ -252,41 +252,41 @@ class GGrupPolSeg
   // }
   
   /**
-   * fromResponse
+   * FromSifenResponseObject
    *
-   * @param  mixed $response
+   * @param  mixed $object
    * @return self
    */
-  public static function fromResponse($response): self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GGrupPolSeg();
-    if(isset($response->dPoliza))
+    if(isset($object->dPoliza))
     {
-      $res->setDPoliza($response->dPoliza);
+      $res->setDPoliza($object->dPoliza);
     }
-    if(isset($response->dUnidVig))
+    if(isset($object->dUnidVig))
     {
-      $res->setDUnidVig($response->dUnidVig);
+      $res->setDUnidVig($object->dUnidVig);
     }
-    if(isset($response->dVigencia))
+    if(isset($object->dVigencia))
     {
-      $res->setDVigencia($response->dVigencia);
+      $res->setDVigencia($object->dVigencia);
     }
-    if(isset($response->dNumPoliza))
+    if(isset($object->dNumPoliza))
     {
-      $res->setDNumPoliza($response->dNumPoliza);
+      $res->setDNumPoliza($object->dNumPoliza);
     }
-    if(isset($response->dFecIniVig))
+    if(isset($object->dFecIniVig))
     {
-      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecIniVig));
+      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecIniVig));
     }
-    if(isset($response->dFecFinVig))
+    if(isset($object->dFecFinVig))
     {
-      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $response->dFecFinVig));
+      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecFinVig));
     }
-    if(isset($response->dCodInt))
+    if(isset($object->dCodInt))
     {
-      $res->setDCodInt($response->dCodInt);
+      $res->setDCodInt($object->dCodInt);
     }
     
     return $res;
