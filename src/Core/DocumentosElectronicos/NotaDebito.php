@@ -4,10 +4,10 @@ namespace Abiliomp\Pkuatia\Core;
 
 use Abiliomp\Pkuatia\Config;
 use Abiliomp\Pkuatia\Core\Constants;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamNCDE;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\F\GTotSub;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\H\GCamDEAsoc;
+use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamNCDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
+use Abiliomp\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
 use Abiliomp\Pkuatia\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;

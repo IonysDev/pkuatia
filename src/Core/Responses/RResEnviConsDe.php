@@ -3,19 +3,23 @@
 namespace Abiliomp\Pkuatia\Core\Responses;
 
 use Abiliomp\Pkuatia\Core\Fields\Response\DE\RContDe;
-use DatePeriod;
 use DateTime;
 use stdClass;
 
 /**
- * ID DRSch01  - Clase que representa la respuesta a la consulta de un DE mediante su CDC.
+ * Nodo Id:     DRSch01
+ * Nombre:      rResEnviConsDe
+ * Descripción: Clase que representa la respuesta a la consulta de un DE mediante su CDC.
+ * Nodo Padre:  Es nodo raiz.
  */
+
 class RResEnviConsDe 
 {
-  public DateTime $dFecProc; // DRSch02 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
-  public string $dCodRes; // DRSch03 - Código del resultado de procesamiento 
-  public string $dMsgRes; // DRSch04 - Mensaje del resultado de procesamiento
-  public RContDe $rContDe; // DRSch05 - Objeto del DE consultado
+                             // Id - Longitud - Ocurrencia - Descripción
+  public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
+  public string   $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento 
+  public string   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
+  public RContDe  $rContDe;  // ContDE01 - XML   - 0-1 - Objeto del DE consultado
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS

@@ -14,7 +14,7 @@ class UnidadMedidaMapping
   public static function GetArray(): array
   {
     $xml = new DOMDocument();
-    $xml->load(__DIR__ . 'Sources/Unidades_Medida_v141.xml');
+    $xml->load(__DIR__ . '/Sources/Unidades_Medida_v141.xsd');
     $xml->preserveWhiteSpace = true;
     $parseObj = str_replace($xml->lastChild->prefix.':',"", $xml->saveXML($xml->lastChild));
     $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);

@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;;
 
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\AA\RDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use SimpleXMLElement;
 
 /**

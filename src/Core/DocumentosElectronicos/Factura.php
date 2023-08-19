@@ -8,21 +8,21 @@ use Abiliomp\Pkuatia\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
 use Abiliomp\Pkuatia\Config;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\D\GOpeCom;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamCond;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamFE;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamSal;;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCamTrans;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCompPub;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GCuotas;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPaConEIni;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPagCheq;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPagCred;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GPagTarCD;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\E\GTransp;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\F\GTotSub;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\G\GCamCarg;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\H\GCamDEAsoc;
+use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamCond;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamFE;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamSal;;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamTrans;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCompPub;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCuotas;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GPaConEIni;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GPagCheq;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GPagCred;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GPagTarCD;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GTransp;
+use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
+use Abiliomp\Pkuatia\Core\Fields\DE\G\GCamCarg;
+use Abiliomp\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
 
 /**
  * TIPO SIFEN NRO 1

@@ -27,7 +27,7 @@ try {
     echo "Consultando DE con CDC " . $testCDC . "...\n";
     $res = Sifen::ConsultarDE($testCDC);
     echo "Resultado: \n";
-    var_dump($res->getXContEv()->getRDe()); ///getRDe() returns a RDE object
+    var_dump($res->getRContDe()->getRDe());
 
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors

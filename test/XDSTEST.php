@@ -1,7 +1,7 @@
 <?php
 
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
-use Abiliomp\Pkuatia\Helpers\CurrencyHelper;
+use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
 use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
 use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
 use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
@@ -13,7 +13,7 @@ $country = CountryHelper::getCountryDesc('PRY');
 echo $country . PHP_EOL;
 $medidad = UnidadMedidaMapping::GetDesc('79');
 echo $medidad . PHP_EOL;
-$moneda = CurrencyHelper::getCurrDesc('usd');
+$moneda = MonedaMapping::GetDescription('usd');
 echo $moneda . PHP_EOL;
 $depto = DepartamentoHelper::getDepName('1');
 echo $depto . PHP_EOL;

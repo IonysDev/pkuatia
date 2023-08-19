@@ -1,7 +1,7 @@
 <?php
 
 namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
-use Abiliomp\Pkuatia\Core\Fields\Request\DE\AA\RDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 
 /**
  * Clase que contiene la estructura básica de un DE, en todos los casos posibles de éste

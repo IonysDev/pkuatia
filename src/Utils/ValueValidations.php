@@ -14,7 +14,7 @@ class ValueValidations
      * 
      * @return bool True if the string is a valid decimal number, false otherwise.
      */
-    public static function isValidStringDecimal(String $value, int $intPartLenght, int $decPartMinPrecision, int $decPartMaxPrecision)
+    public static function isValidStringDecimal(String $value, int $intPartLenght, int $decPartMinPrecision, int $decPartMaxPrecision = 99)
     {
         if($decPartMinPrecision > $decPartMaxPrecision)
             throw new \Exception("The minimum precision cannot be greater than the maximum precision.");
