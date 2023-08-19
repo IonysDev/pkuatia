@@ -78,7 +78,7 @@ class GPagTarCD
     $this->dDesDenTarj = $dDesDenTarj;
     if(is_null($dDesDenTarj) || strlen($dDesDenTarj) == 0)
     {
-      $this->dDesDenTarj = null;
+      $this->dDesDenTarj;
     }
     else
     {
@@ -100,7 +100,7 @@ class GPagTarCD
     $this->dRSProTar = $dRSProTar;
     if(is_null($dRSProTar) || strlen($dRSProTar) == 0)
     {
-      $this->dRSProTar = null;
+      $this->dRSProTar;
     }
     else
     {
@@ -122,7 +122,7 @@ class GPagTarCD
     $this->dRUCProTar = $dRUCProTar;
     if(is_null($dRUCProTar) || strlen($dRUCProTar) == 0)
     {
-      $this->dRUCProTar = null;
+      $this->dRUCProTar;
     }
     else
     {
@@ -189,7 +189,7 @@ class GPagTarCD
     $this->dNomTit = $dNomTit;
     if(is_null($dNomTit) || strlen($dNomTit) == 0)
     {
-      $this->dNomTit = null;
+      $this->dNomTit;
     }
     else
     {
@@ -221,7 +221,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getIDenTarj(): int | null
+  public function getIDenTarj(): int
   {
     return $this->iDenTarj;
   }
@@ -232,7 +232,7 @@ class GPagTarCD
    *
    * @return String
    */
-  public function getDDesDenTarj(): String | null
+  public function getDDesDenTarj(): String
   {
     return $this->dDesDenTarj;
   }
@@ -242,7 +242,7 @@ class GPagTarCD
    *
    * @return String
    */
-  public function getDRSProTar(): String | null
+  public function getDRSProTar(): String
   { 
     return $this->dRSProTar;
   }
@@ -252,7 +252,7 @@ class GPagTarCD
    *
    * @return String
    */
-  public function getDRUCProTar(): String | null
+  public function getDRUCProTar(): String
   {
     return $this->dRUCProTar;
   }
@@ -262,7 +262,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getDDVProTar(): int | null
+  public function getDDVProTar(): int
   {
     return $this->dDVProTar;
   }
@@ -272,7 +272,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getIForProPa(): int | null
+  public function getIForProPa(): int
   {
     return $this->iForProPa;
   }
@@ -282,7 +282,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getDCodAuOpe(): int | null
+  public function getDCodAuOpe(): int
   {
     return $this->dCodAuOpe;
   }
@@ -292,7 +292,7 @@ class GPagTarCD
    *
    * @return String
    */
-  public function getDNomTit(): String | null
+  public function getDNomTit(): String
   {
     return $this->dNomTit;
   }
@@ -302,7 +302,7 @@ class GPagTarCD
    *
    * @return int
    */
-  public function getDNumTarj(): int | null
+  public function getDNumTarj(): int
   {
     return $this->dNumTarj;
   }

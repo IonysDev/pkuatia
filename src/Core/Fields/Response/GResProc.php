@@ -10,8 +10,8 @@ use SimpleXMLElement;
  */
 class GResProc
 {
-  public string $dCodRes;   // PP052 - Código del resultado de procesamiento 
-  public string $dMsgRes; // PP053 - Mensaje del resultado de procesamiento
+  public String $dCodRes;   // PP052 - Código del resultado de procesamiento 
+  public String $dMsgRes; // PP053 - Mensaje del resultado de procesamiento
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -24,7 +24,7 @@ class GResProc
    *
    * @return self
    */
-  public function setDCodRes(string $dCodRes): self
+  public function setDCodRes(String $dCodRes): self
   {
     $this->dCodRes = $dCodRes;
 
@@ -35,11 +35,11 @@ class GResProc
   /**
    * Set the value of dMsgRes
    *
-   * @param string $dMsgRes
+   * @param String $dMsgRes
    *
    * @return self
    */
-  public function setDMsgRes(string $dMsgRes): self
+  public function setDMsgRes(String $dMsgRes): self
   {
     $this->dMsgRes = $dMsgRes;
 
@@ -55,7 +55,7 @@ class GResProc
    *
    * @return int
    */
-  public function getDCodRes(): string
+  public function getDCodRes(): String
   {
     return $this->dCodRes;
   }
@@ -63,9 +63,9 @@ class GResProc
   /**
    * Get the value of dMsgRes
    *
-   * @return string
+   * @return String
    */
-  public function getDMsgRes(): string
+  public function getDMsgRes(): String
   {
     return $this->dMsgRes;
   }

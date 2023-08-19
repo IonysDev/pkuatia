@@ -10,13 +10,13 @@ use DOMElement;
  */
 class GVehTras
 {
-    public ?string $dTiVehTras = null; //E961Tipo de vehículo
-    public ?string $dMarVeh = null; //E962 Marca
-    public ?int $dTipIdenVeh = null; ///E967 Tipo de identificación del vehículo 
-    public ?string $dNroIDVeh = null; /// E963 Número de identificación del vehículo
-    public ?string $dAdicVeh = null; ///E964 Datos adicionales del vehículo
-    public ?string $dNroMatVeh = null; // E965 Número de matrícula del vehículo
-    public ?string $dNroVuelo = null; //E966 Número de vuelo
+    public String $dTiVehTras; //E961Tipo de vehículo
+    public String $dMarVeh; //E962 Marca
+    public ?int $dTipIdenVeh; ///E967 Tipo de identificación del vehículo 
+    public String $dNroIDVeh; /// E963 Número de identificación del vehículo
+    public String $dAdicVeh; ///E964 Datos adicionales del vehículo
+    public String $dNroMatVeh; // E965 Número de matrícula del vehículo
+    public String $dNroVuelo; //E966 Número de vuelo
 
     ///////////////////////////////////////////////////////////////////////
     ///Setters
@@ -25,11 +25,11 @@ class GVehTras
     /**
      * Set the value of dTiVehTras
      *
-     * @param string $dTiVehTras
+     * @param String $dTiVehTras
      *
      * @return self
      */
-    public function setDTiVehTras(string $dTiVehTras): self
+    public function setDTiVehTras(String $dTiVehTras): self
     {
         $this->dTiVehTras = $dTiVehTras;
 
@@ -39,11 +39,11 @@ class GVehTras
     /**
      * Set the value of dMarVeh
      *
-     * @param string $dMarVeh
+     * @param String $dMarVeh
      *
      * @return self
      */
-    public function setDMarVeh(string $dMarVeh): self
+    public function setDMarVeh(String $dMarVeh): self
     {
         $this->dMarVeh = $dMarVeh;
 
@@ -69,11 +69,11 @@ class GVehTras
     /**
      * Set the value of dNroIDVeh
      *
-     * @param string $dNroIDVeh
+     * @param String $dNroIDVeh
      *
      * @return self
      */
-    public function setDNroIDVeh(string $dNroIDVeh): self
+    public function setDNroIDVeh(String $dNroIDVeh): self
     {
         $this->dNroIDVeh = $dNroIDVeh;
 
@@ -84,11 +84,11 @@ class GVehTras
     /**
      * Set the value of dNroMatVeh
      *
-     * @param string $dNroMatVeh
+     * @param String $dNroMatVeh
      *
      * @return self
      */
-    public function setDNroMatVeh(string $dNroMatVeh): self
+    public function setDNroMatVeh(String $dNroMatVeh): self
     {
         $this->dNroMatVeh = $dNroMatVeh;
 
@@ -99,11 +99,11 @@ class GVehTras
     /**
      * Set the value of dNroVuelo
      *
-     * @param string $dNroVuelo
+     * @param String $dNroVuelo
      *
      * @return self
      */
-    public function setDNroVuelo(string $dNroVuelo): self
+    public function setDNroVuelo(String $dNroVuelo): self
     {
         $this->dNroVuelo = $dNroVuelo;
 
@@ -118,9 +118,9 @@ class GVehTras
     /**
      * Get the value of dTiVehTras
      *
-     * @return string
+     * @return String
      */
-    public function getDTiVehTras(): string | null
+    public function getDTiVehTras(): String
     {
         return $this->dTiVehTras;
     }
@@ -128,9 +128,9 @@ class GVehTras
     /**
      * Get the value of dMarVeh
      *
-     * @return string
+     * @return String
      */
-    public function getDMarVeh(): string | null
+    public function getDMarVeh(): String
     {
         return $this->dMarVeh;
     }
@@ -140,7 +140,7 @@ class GVehTras
      *
      * @return int
      */
-    public function getDTipIdenVeh(): int | null
+    public function getDTipIdenVeh(): int
     {
         return $this->dTipIdenVeh;
     }
@@ -148,9 +148,9 @@ class GVehTras
     /**
      * Get the value of dNroIDVeh
      *
-     * @return string
+     * @return String
      */
-    public function getDNroIDVeh(): string | null
+    public function getDNroIDVeh(): String
     {
         return $this->dNroIDVeh;
     }
@@ -158,9 +158,9 @@ class GVehTras
     /**
      * Get the value of dAdicVeh
      *
-     * @return string
+     * @return String
      */
-    public function getDAdicVeh(): string | null
+    public function getDAdicVeh(): String
     {
         return $this->dAdicVeh;
     }
@@ -168,9 +168,9 @@ class GVehTras
     /**
      * Get the value of dNroMatVeh
      *
-     * @return string
+     * @return String
      */
-    public function getDNroMatVeh(): string | null
+    public function getDNroMatVeh(): String
     {
         return $this->dNroMatVeh;
     }
@@ -178,9 +178,9 @@ class GVehTras
     /**
      * Get the value of dNroVuelo
      *
-     * @return string
+     * @return String
      */
-    public function getDNroVuelo(): string | null
+    public function getDNroVuelo(): String
     {
         return $this->dNroVuelo;
     }
@@ -248,11 +248,11 @@ class GVehTras
     /**
      * Set the value of dAdicVeh
      *
-     * @param string $dAdicVeh
+     * @param String $dAdicVeh
      *
      * @return self
      */
-    public function setDAdicVeh(string $dAdicVeh): self
+    public function setDAdicVeh(String $dAdicVeh): self
     {
         $this->dAdicVeh = $dAdicVeh;
 

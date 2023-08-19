@@ -28,11 +28,11 @@ class GCompPub
   /**
    * Set the value of dModCont
    *
-   * @param string $dModCont
+   * @param String $dModCont
    *
    * @return self
    */
-  public function setDModCont(string $dModCont): self
+  public function setDModCont(String $dModCont): self
   {
     $this->dModCont = $dModCont;
 
@@ -107,7 +107,7 @@ class GCompPub
   /**
    * Get the value of dModCont
    */
-  public function getDModCont(): string | null
+  public function getDModCont(): String
   {
     return $this->dModCont;
   }
@@ -115,7 +115,7 @@ class GCompPub
   /**
    * Get the value of dEntCont
    */
-  public function getDEntCont(): int | null
+  public function getDEntCont(): int
   {
     return $this->dEntCont;
   }
@@ -123,7 +123,7 @@ class GCompPub
   /**
    * Get the value of dAnoCont
    */
-  public function getDAnoCont(): int | null
+  public function getDAnoCont(): int
   {
     return $this->dAnoCont;
   }
@@ -131,7 +131,7 @@ class GCompPub
   /**
    * Get the value of dSecCont
    */
-  public function getDSecCont(): int | null
+  public function getDSecCont(): int
   {
     return $this->dSecCont;
   }
@@ -139,7 +139,7 @@ class GCompPub
   /**
    * Get the value of dFeCodCont
    */
-  public function getDFeCodCont(): DateTime | null
+  public function getDFeCodCont(): DateTime
   {
     return $this->dFeCodCont;
   }

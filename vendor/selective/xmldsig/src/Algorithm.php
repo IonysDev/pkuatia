@@ -42,21 +42,21 @@ final class Algorithm
 
     private int $signatureSslAlgorithm = 0;
 
-    private string $signatureAlgorithmName = '';
+    private String $signatureAlgorithmName = '';
 
-    private string $signatureAlgorithmUrl = '';
+    private String $signatureAlgorithmUrl = '';
 
-    private string $digestAlgorithmName = '';
+    private String $digestAlgorithmName = '';
 
-    private string $digestAlgorithmUrl = '';
+    private String $digestAlgorithmUrl = '';
 
     /**
      * The constructor.
      *
-     * @param string $signatureMethodAlgorithm
-     * @param string|null $digestMethodAlgorithm
+     * @param String $signatureMethodAlgorithm
+     * @param String|null $digestMethodAlgorithm
      */
-    public function __construct(string $signatureMethodAlgorithm, string $digestMethodAlgorithm = null)
+    public function __construct(String $signatureMethodAlgorithm, String $digestMethodAlgorithm = null)
     {
         $this->setSignatureMethodAlgorithm($signatureMethodAlgorithm);
         $this->setDigestMethodAlgorithm($digestMethodAlgorithm ?? $signatureMethodAlgorithm);
@@ -65,9 +65,9 @@ final class Algorithm
     /**
      * Set signature and digest algorithm.
      *
-     * @param string $algorithm For example: sha1, sha224, sha256, sha384, sha512
+     * @param String $algorithm For example: sha1, sha224, sha256, sha384, sha512
      */
-    private function setSignatureMethodAlgorithm(string $algorithm): void
+    private function setSignatureMethodAlgorithm(String $algorithm): void
     {
         switch ($algorithm) {
             case self::METHOD_SHA1:
@@ -104,9 +104,9 @@ final class Algorithm
     /**
      * Set signature and digest algorithm.
      *
-     * @param string $algorithm For example: sha1, sha224, sha256, sha384, sha512
+     * @param String $algorithm For example: sha1, sha224, sha256, sha384, sha512
      */
-    private function setDigestMethodAlgorithm(string $algorithm): void
+    private function setDigestMethodAlgorithm(String $algorithm): void
     {
         switch ($algorithm) {
             case self::METHOD_SHA1:
@@ -134,12 +134,12 @@ final class Algorithm
         $this->digestAlgorithmName = $algorithm;
     }
 
-    public function getSignatureAlgorithmUrl(): string
+    public function getSignatureAlgorithmUrl(): String
     {
         return $this->signatureAlgorithmUrl;
     }
 
-    public function getDigestAlgorithmUrl(): string
+    public function getDigestAlgorithmUrl(): String
     {
         return $this->digestAlgorithmUrl;
     }
@@ -149,12 +149,12 @@ final class Algorithm
         return $this->signatureSslAlgorithm;
     }
 
-    public function getSignatureAlgorithmName(): string
+    public function getSignatureAlgorithmName(): String
     {
         return $this->signatureAlgorithmName;
     }
 
-    public function getDigestAlgorithmName(): string
+    public function getDigestAlgorithmName(): String
     {
         return $this->digestAlgorithmName;
     }

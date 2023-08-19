@@ -41,11 +41,11 @@ class GRespDE {
     /**
      * Establece el valor dNumIDRespDE que corresponde al número de documento de identidad del responsable de la generación del DE
      * 
-     * @param string $dNumIDRespDE
+     * @param String $dNumIDRespDE
      * 
      * @return self
      */
-    public function setDNumIDRespDE(string $dNumIDRespDE): self
+    public function setDNumIDRespDE(String $dNumIDRespDE): self
     {
         $this->dNumIDRespDE = $dNumIDRespDE;
         return $this;
@@ -54,11 +54,11 @@ class GRespDE {
     /**
      * Establece el valor dNomRespDE que corresponde al nombre o razón social del responsable de la generación del DE
      * 
-     * @param string $dNomRespDE
+     * @param String $dNomRespDE
      * 
      * @return self
      */
-    public function setDNomRespDE(string $dNomRespDE): self
+    public function setDNomRespDE(String $dNomRespDE): self
     {
         $this->dNomRespDE = $dNomRespDE;
         return $this;
@@ -67,11 +67,11 @@ class GRespDE {
     /**
      * Establece el valor de dCarRespDE que corresponde al cargo del responsable de la generación del DE
      * 
-     * @param string $dCarRespDE
+     * @param String $dCarRespDE
      * 
      * @return self
      */
-    public function setDCarRespDE(string $dCarRespDE): self
+    public function setDCarRespDE(String $dCarRespDE): self
     {
         $this->dCarRespDE = $dCarRespDE;
         return $this;
@@ -94,9 +94,9 @@ class GRespDE {
     /**
      * Devuelve la descripción del documento de identidad del responsable de la generación del DE
      * 
-     * @return string
+     * @return String
      */
-    public function getDDTipIDRespDE(): string
+    public function getDDTipIDRespDE(): String
     {
         switch($this->iTipIDRespDE) {
             case 1:

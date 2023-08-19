@@ -11,12 +11,12 @@ use DOMElement;
 class TrGeVeInu
 {
   public int    $dNumTim; // GEI002 - Número del Timbrado
-  public string $dEst;    // GEI003 - Establecimiento
-  public string $dPunExp; // GEI004 - Punto de expedición
-  public string $dNumIn;  // GEI005 - Número Inicio del rango del documento
-  public string $dNumFin; // GEI006 - Número Final del rango del documento
+  public String $dEst;    // GEI003 - Establecimiento
+  public String $dPunExp; // GEI004 - Punto de expedición
+  public String $dNumIn;  // GEI005 - Número Inicio del rango del documento
+  public String $dNumFin; // GEI006 - Número Final del rango del documento
   public int    $iTiDE;   // GEI007 - Tipo de Documento Electrónico
-  public string $mOtEve;  // GEI008 - Motivo del Evento
+  public String $mOtEve;  // GEI008 - Motivo del Evento
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -38,11 +38,11 @@ class TrGeVeInu
   /**
    * Establece el valor de dEst - Establecimiento
    *
-   * @param string $dEst
+   * @param String $dEst
    *
    * @return self
    */
-  public function setDEst(string $dEst): self
+  public function setDEst(String $dEst): self
   {
     $this->dEst = $dEst;
     return $this;
@@ -51,11 +51,11 @@ class TrGeVeInu
   /**
    * Establece el valor de dPunExp - Punto de expedición
    *
-   * @param string $dPunExp
+   * @param String $dPunExp
    *
    * @return self
    */
-  public function setDPunExp(string $dPunExp): self
+  public function setDPunExp(String $dPunExp): self
   {
     $this->dPunExp = $dPunExp;
     return $this;
@@ -64,11 +64,11 @@ class TrGeVeInu
   /**
    * Establece el valor de dNumIn - Número Inicio del rango del documento
    *
-   * @param string $dNumIn
+   * @param String $dNumIn
    *
    * @return self
    */
-  public function setDNumIn(string $dNumIn): self
+  public function setDNumIn(String $dNumIn): self
   {
     $this->dNumIn = $dNumIn;
     return $this;
@@ -77,11 +77,11 @@ class TrGeVeInu
   /**
    * Establece el valor de dNumFin - Número Final del rango del documento
    *
-   * @param string $dNumFin
+   * @param String $dNumFin
    *
    * @return self
    */
-  public function setDNumFin(string $dNumFin): self
+  public function setDNumFin(String $dNumFin): self
   {
     $this->dNumFin = $dNumFin;
     return $this;
@@ -103,11 +103,11 @@ class TrGeVeInu
   /**
    * Establece el valor de mOtEve - Motivo del Evento
    *
-   * @param string $mOtEve
+   * @param String $mOtEve
    *
    * @return self
    */
-  public function setMOtEve(string $mOtEve): self
+  public function setMOtEve(String $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
     return $this;
@@ -131,9 +131,9 @@ class TrGeVeInu
   /**
    * Obtiene el valor de dEst - Establecimiento
    *
-   * @return string
+   * @return String
    */
-  public function getDEst(): string
+  public function getDEst(): String
   {
     return $this->dEst;
   }
@@ -141,9 +141,9 @@ class TrGeVeInu
   /**
    * Obtiene el valor de dPunExp - Punto de expedición
    *
-   * @return string
+   * @return String
    */
-  public function getDPunExp(): string
+  public function getDPunExp(): String
   {
     return $this->dPunExp;
   }
@@ -151,9 +151,9 @@ class TrGeVeInu
   /**
    * Obtiene el valor de dNumIn - Número Inicio del rango del documento
    *
-   * @return string
+   * @return String
    */
-  public function getDNumIn(): string
+  public function getDNumIn(): String
   {
     return $this->dNumIn;
   }
@@ -161,9 +161,9 @@ class TrGeVeInu
   /**
    * Obtiene el valor de dNumFin - Número Final del rango del documento
    *
-   * @return string
+   * @return String
    */
-  public function getDNumFin(): string
+  public function getDNumFin(): String
   {
     return $this->dNumFin;
   }
@@ -181,9 +181,9 @@ class TrGeVeInu
   /**
    * Obtiene el valor de mOtEve - Motivo del Evento
    *
-   * @return string
+   * @return String
    */
-  public function getMOtEve(): string
+  public function getMOtEve(): String
   {
     return $this->mOtEve;
   }

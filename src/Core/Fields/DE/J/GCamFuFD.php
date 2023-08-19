@@ -91,9 +91,9 @@ class GCamFuFD
       throw new \Exception('[GCamFuFD] Nodo XML con nombre inválido: ' . $xml->getName());
     }
     $res = new GCamFuFD();
-    $res->setDCarQR((string)$xml->dCarQR);
+    $res->setDCarQR((String)$xml->dCarQR);
     if(isset($xml->dInfAdic))
-      $res->setDInfAdic((string)$xml->dInfAdic);
+      $res->setDInfAdic((String)$xml->dInfAdic);
     return $res;
   }
 

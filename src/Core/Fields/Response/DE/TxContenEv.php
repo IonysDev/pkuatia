@@ -6,7 +6,7 @@ use DOMElement;
 
 class TxContenEv
 {
-  public ?RContEv $rContEv = null;
+  public ?RContEv $rContEv;
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS

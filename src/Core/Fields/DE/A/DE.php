@@ -203,7 +203,7 @@ class DE
   /**
    * Get the value of iD
    *
-   * @return string
+   * @return String
    */
   public function getId(): String
   {

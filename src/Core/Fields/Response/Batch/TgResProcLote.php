@@ -10,9 +10,9 @@ use DOMElement;
  */
 class TgResProcLote
 {
-  public string $id;           // CRSch050 - CDC del DE
-  public string $dEstRes;     // CRSch051 - Estado del resultado
-  public string $dProtAut;   // CRSch052 - Número de transacción 
+  public String $id;           // CRSch050 - CDC del DE
+  public String $dEstRes;     // CRSch051 - Estado del resultado
+  public String $dProtAut;   // CRSch052 - Número de transacción 
   public TgResProc $gResProc; // CRSch053 - Grupo Mensaje de Resultado
 
   ///////////////////////////////////////////////////////////////////////
@@ -22,11 +22,11 @@ class TgResProcLote
   /**
    * Set the value of id
    *
-   * @param string $id
+   * @param String $id
    *
    * @return self
    */
-  public function setId(string $id): self
+  public function setId(String $id): self
   {
     $this->id = $id;
 
@@ -37,11 +37,11 @@ class TgResProcLote
   /**
    * Set the value of dEstRes
    *
-   * @param string $dEstRes
+   * @param String $dEstRes
    *
    * @return self
    */
-  public function setDEstRes(string $dEstRes): self
+  public function setDEstRes(String $dEstRes): self
   {
     $this->dEstRes = $dEstRes;
 
@@ -52,11 +52,11 @@ class TgResProcLote
   /**
    * Set the value of dProtAut
    *
-   * @param string $dProtAut
+   * @param String $dProtAut
    *
    * @return self
    */
-  public function setDProtAut(string $dProtAut): self
+  public function setDProtAut(String $dProtAut): self
   {
     $this->dProtAut = $dProtAut;
 
@@ -85,9 +85,9 @@ class TgResProcLote
   /**
    * Get the value of id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->id;
   }
@@ -95,9 +95,9 @@ class TgResProcLote
   /**
    * Get the value of dEstRes
    *
-   * @return string
+   * @return String
    */
-  public function getDEstRes(): string
+  public function getDEstRes(): String
   {
     return $this->dEstRes;
   }
@@ -105,9 +105,9 @@ class TgResProcLote
   /**
    * Get the value of dProtAut
    *
-   * @return string
+   * @return String
    */
-  public function getDProtAut(): string
+  public function getDProtAut(): String
   {
     return $this->dProtAut;
   }

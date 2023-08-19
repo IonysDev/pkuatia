@@ -10,16 +10,16 @@ use DOMElement;
  */
 class TrGeVeDescon
 {
-  public string $Id; //GED002 CDC del DE/DTE
+  public String $Id; //GED002 CDC del DE/DTE
   public DateTime $dFecEmi; //GED003 Fecha de emisión del DE/DTE
   public DateTime $dFecRecep; //GED004 Fecha Recepción DE
   public int $iTipRec; //GED005 Tipo de Receptor
-  public string $dNomRec; //GED006 Nombre o Razón Social del Receptor del DE/DTE
-  public string $dRucRec; //GED007 Ruc del Receptor
+  public String $dNomRec; //GED006 Nombre o Razón Social del Receptor del DE/DTE
+  public String $dRucRec; //GED007 Ruc del Receptor
   public int $dDVRec; //GED008 Dígito verificador del  RUC del contribuyente  receptor
   public int $dTipIDRec; //GED009 Tipo de documento de identidad del receptor
-  public string $dNumID; ///GED010 Número de documento de identidad
-  public string $mOtEve; //GED011 Motivo del Evento
+  public String $dNumID; ///GED010 Número de documento de identidad
+  public String $mOtEve; //GED011 Motivo del Evento
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -28,11 +28,11 @@ class TrGeVeDescon
   /**
    * Set the value of Id
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
 
@@ -88,11 +88,11 @@ class TrGeVeDescon
   /**
    * Set the value of dNomRec
    *
-   * @param string $dNomRec
+   * @param String $dNomRec
    *
    * @return self
    */
-  public function setDNomRec(string $dNomRec): self
+  public function setDNomRec(String $dNomRec): self
   {
     $this->dNomRec = $dNomRec;
 
@@ -103,11 +103,11 @@ class TrGeVeDescon
   /**
    * Set the value of dRucRec
    *
-   * @param string $dRucRec
+   * @param String $dRucRec
    *
    * @return self
    */
-  public function setDRucRec(string $dRucRec): self
+  public function setDRucRec(String $dRucRec): self
   {
     $this->dRucRec = $dRucRec;
 
@@ -148,11 +148,11 @@ class TrGeVeDescon
   /**
    * Set the value of dNumID
    *
-   * @param string $dNumID
+   * @param String $dNumID
    *
    * @return self
    */
-  public function setDNumID(string $dNumID): self
+  public function setDNumID(String $dNumID): self
   {
     $this->dNumID = $dNumID;
 
@@ -163,11 +163,11 @@ class TrGeVeDescon
   /**
    * Set the value of mOtEve
    *
-   * @param string $mOtEve
+   * @param String $mOtEve
    *
    * @return self
    */
-  public function setMOtEve(string $mOtEve): self
+  public function setMOtEve(String $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
 
@@ -182,9 +182,9 @@ class TrGeVeDescon
   /**
    * Get the value of Id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -222,9 +222,9 @@ class TrGeVeDescon
   /**
    * Get the value of dNomRec
    *
-   * @return string
+   * @return String
    */
-  public function getDNomRec(): string
+  public function getDNomRec(): String
   {
     return $this->dNomRec;
   }
@@ -232,9 +232,9 @@ class TrGeVeDescon
   /**
    * Get the value of dRucRec
    *
-   * @return string
+   * @return String
    */
-  public function getDRucRec(): string
+  public function getDRucRec(): String
   {
     return $this->dRucRec;
   }
@@ -262,9 +262,9 @@ class TrGeVeDescon
   /**
    * Get the value of dNumID
    *
-   * @return string
+   * @return String
    */
-  public function getDNumID(): string
+  public function getDNumID(): String
   {
     return $this->dNumID;
   }
@@ -272,9 +272,9 @@ class TrGeVeDescon
   /**
    * Get the value of mOtEve
    *
-   * @return string
+   * @return String
    */
-  public function getMOtEve(): string
+  public function getMOtEve(): String
   {
     return $this->mOtEve;
   }

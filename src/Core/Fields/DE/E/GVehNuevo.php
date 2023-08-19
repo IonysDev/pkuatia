@@ -9,20 +9,20 @@ use DOMElement;
  */
 class GVehNuevo
 {
-  public ?int $iTipOpVN = null; // E771 iTipOpVN Tipo de operación de venta de vehículos
-  public ?string $dChasis = null; /// E773 Chasis del vehículo;
-  public ?string $dColor = null; // E774 Color del vehículo
-  public ?int $dPotencia = null; ///E775 Potencia del motor (CV)
-  public ?int $dCapMot = null; ///E776 Capacidad del motor
-  public ?int $dPNet = null; ///E777 Peso Neto 
-  public ?int $dPBruto = null; ///E778 Peso Bruto
-  public ?int $iTipCom = null; ///E779 Tipo de combustible
-  public ?string $dNroMotor = null; ///E780 Descripción del tipo de combustible
-  public ?int $dCapTracc = null; ///E782 Capacidad máxima de  tracción 
-  public ?int $dAnoFab = null; ///E783 Año de fabricación
-  public ?string $cTipVeh = null; ///E784 Tipo de vehículo
-  public ?int $dCapac = null; ///E785 Capacidad máxima de pasajeros 
-  public ?string $dCilin = null; ///E786  Cilindradas del motor
+  public ?int $iTipOpVN; // E771 iTipOpVN Tipo de operación de venta de vehículos
+  public String $dChasis; /// E773 Chasis del vehículo;
+  public String $dColor; // E774 Color del vehículo
+  public ?int $dPotencia; ///E775 Potencia del motor (CV)
+  public ?int $dCapMot; ///E776 Capacidad del motor
+  public ?int $dPNet; ///E777 Peso Neto 
+  public ?int $dPBruto; ///E778 Peso Bruto
+  public ?int $iTipCom; ///E779 Tipo de combustible
+  public String $dNroMotor; ///E780 Descripción del tipo de combustible
+  public ?int $dCapTracc; ///E782 Capacidad máxima de  tracción 
+  public ?int $dAnoFab; ///E783 Año de fabricación
+  public String $cTipVeh; ///E784 Tipo de vehículo
+  public ?int $dCapac; ///E785 Capacidad máxima de pasajeros 
+  public String $dCilin; ///E786  Cilindradas del motor
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -46,11 +46,11 @@ class GVehNuevo
   /**
    * Set the value of dChasis
    *
-   * @param string $dChasis
+   * @param String $dChasis
    *
    * @return self
    */
-  public function setDChasis(string $dChasis): self
+  public function setDChasis(String $dChasis): self
   {
     $this->dChasis = $dChasis;
 
@@ -61,11 +61,11 @@ class GVehNuevo
   /**
    * Set the value of dColor
    *
-   * @param string $dColor
+   * @param String $dColor
    *
    * @return self
    */
-  public function setDColor(string $dColor): self
+  public function setDColor(String $dColor): self
   {
     $this->dColor = $dColor;
 
@@ -151,11 +151,11 @@ class GVehNuevo
   /**
    * Set the value of dNroMotor
    *
-   * @param string $dNroMotor
+   * @param String $dNroMotor
    *
    * @return self
    */
-  public function setDNroMotor(string $dNroMotor): self
+  public function setDNroMotor(String $dNroMotor): self
   {
     $this->dNroMotor = $dNroMotor;
 
@@ -196,11 +196,11 @@ class GVehNuevo
   /**
    * Set the value of cTipVeh
    *
-   * @param string $cTipVeh
+   * @param String $cTipVeh
    *
    * @return self
    */
-  public function setCTipVeh(string $cTipVeh): self
+  public function setCTipVeh(String $cTipVeh): self
   {
     $this->cTipVeh = $cTipVeh;
 
@@ -226,11 +226,11 @@ class GVehNuevo
   /**
    * Set the value of dCilin
    *
-   * @param string $dCilin
+   * @param String $dCilin
    *
    * @return self
    */
-  public function setDCilin(string $dCilin): self
+  public function setDCilin(String $dCilin): self
   {
     $this->dCilin = $dCilin;
 
@@ -246,7 +246,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getITipOpVN(): int | null
+  public function getITipOpVN(): int
   {
     return $this->iTipOpVN;
   }
@@ -255,9 +255,9 @@ class GVehNuevo
    * E772 
    *Descripción del tipo de operación de venta de vehículos
    *
-   * @return string
+   * @return String
    */
-  public function getDDesTipOpVN(): string | null
+  public function getDDesTipOpVN(): String
   {
     switch ($this->iTipOpVN) {
       case 1:
@@ -283,9 +283,9 @@ class GVehNuevo
   /**
    * Get the value of dChasis
    *
-   * @return string
+   * @return String
    */
-  public function getDChasis(): string | null
+  public function getDChasis(): String
   {
     return $this->dChasis;
   }
@@ -293,9 +293,9 @@ class GVehNuevo
   /**
    * Get the value of dColor
    *
-   * @return string
+   * @return String
    */
-  public function getDColor(): string | null
+  public function getDColor(): String
   {
     return $this->dColor;
   }
@@ -305,7 +305,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDPotencia(): int | null
+  public function getDPotencia(): int
   {
     return $this->dPotencia;
   }
@@ -315,7 +315,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDCapMot(): int | null
+  public function getDCapMot(): int
   {
     return $this->dCapMot;
   }
@@ -325,7 +325,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDPNet(): int | null
+  public function getDPNet(): int
   {
     return $this->dPNet;
   }
@@ -335,7 +335,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDPBruto(): int | null
+  public function getDPBruto(): int
   {
     return $this->dPBruto;
   }
@@ -345,7 +345,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getITipCom(): int | null
+  public function getITipCom(): int
   {
     return $this->iTipCom;
   }
@@ -353,9 +353,9 @@ class GVehNuevo
   /**
    * E780 Descripción del tipo de combustible
    *
-   * @return string
+   * @return String
    */
-  public function getDDesTipCom(): string | null
+  public function getDDesTipCom(): String
   {
     switch ($this->iTipCom) {
       case 1:
@@ -386,9 +386,9 @@ class GVehNuevo
   /**
    * Get the value of dNroMotor
    *
-   * @return string
+   * @return String
    */
-  public function getDNroMotor(): string | null
+  public function getDNroMotor(): String
   {
     return $this->dNroMotor;
   }
@@ -398,7 +398,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDCapTracc(): int | null
+  public function getDCapTracc(): int
   {
     return $this->dCapTracc;
   }
@@ -408,7 +408,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDAnoFab(): int | null
+  public function getDAnoFab(): int
   {
     return $this->dAnoFab;
   }
@@ -416,9 +416,9 @@ class GVehNuevo
   /**
    * Get the value of cTipVeh
    *
-   * @return string
+   * @return String
    */
-  public function getCTipVeh(): string | null
+  public function getCTipVeh(): String
   {
     return $this->cTipVeh;
   }
@@ -428,7 +428,7 @@ class GVehNuevo
    *
    * @return int
    */
-  public function getDCapac(): int | null
+  public function getDCapac(): int
   {
     return $this->dCapac;
   }
@@ -436,9 +436,9 @@ class GVehNuevo
   /**
    * Get the value of dCilin
    *
-   * @return string
+   * @return String
    */
-  public function getDCilin(): string | null
+  public function getDCilin(): String
   {
     return $this->dCilin;
   }

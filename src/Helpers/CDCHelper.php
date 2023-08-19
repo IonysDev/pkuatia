@@ -12,7 +12,7 @@ class CDCHelper
   {
   }
 
-  public static function CDCMaker(DE $dE): string
+  public static function CDCMaker(DE $dE): String
   {
     $cDC = "";
     ///Tipo de documento electrónico

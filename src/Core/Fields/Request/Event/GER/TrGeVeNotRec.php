@@ -12,15 +12,15 @@ use DOMElement;
 class TrGeVeNotRec
 {
 
-  public string   $Id;        // GEN002 - Identificador del DE/DTE
+  public String   $Id;        // GEN002 - Identificador del DE/DTE
   public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE
   public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 
   public int      $iTipRec;   // GEN005 - Tipo de Receptor
-  public string   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE
-  public string   $dRucRec;   // GEN007 - RUC del Receptor 
+  public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE
+  public String   $dRucRec;   // GEN007 - RUC del Receptor 
   public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor
   public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor
-  public string   $dNumID;    // GEN010 - Número de documento de identidad 
+  public String   $dNumID;    // GEN010 - Número de documento de identidad 
   public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes
 
 
@@ -31,11 +31,11 @@ class TrGeVeNotRec
   /**
    * Establece el valor de Id - Identificador del DE/DTE
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
     return $this;
@@ -86,11 +86,11 @@ class TrGeVeNotRec
   /**
    * Establece el valor de dNomRec - Nombre o Razón Social del Receptor del DE/DTE
    *
-   * @param string $dNomRec
+   * @param String $dNomRec
    *
    * @return self
    */
-  public function setDNomRec(string $dNomRec): self
+  public function setDNomRec(String $dNomRec): self
   {
     $this->dNomRec = $dNomRec;
 
@@ -100,11 +100,11 @@ class TrGeVeNotRec
   /**
    * Establece el valor de dRucRec - RUC del Receptor 
    *
-   * @param string $dRucRec
+   * @param String $dRucRec
    *
    * @return self
    */
-  public function setDRucRec(string $dRucRec): self
+  public function setDRucRec(String $dRucRec): self
   {
     $this->dRucRec = $dRucRec;
 
@@ -142,11 +142,11 @@ class TrGeVeNotRec
   /**
    * Establece el valor de dNumID - Número de documento de identidad 
    *
-   * @param string $dNumID
+   * @param String $dNumID
    *
    * @return self
    */
-  public function setDNumID(string $dNumID): self
+  public function setDNumID(String $dNumID): self
   {
     $this->dNumID = $dNumID;
 
@@ -175,9 +175,9 @@ class TrGeVeNotRec
   /**
    * Obtiene el valor de Id - Identificador del DE/DTE
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -215,9 +215,9 @@ class TrGeVeNotRec
   /**
    * Obtiene el valor de dNomRec - Nombre o Razón Social del Receptor del DE/DTE
    *
-   * @return string
+   * @return String
    */
-  public function getDNomRec(): string
+  public function getDNomRec(): String
   {
     return $this->dNomRec;
   }
@@ -225,9 +225,9 @@ class TrGeVeNotRec
   /**
    * Obtiene el valor de dRucRec - RUC del Receptor
    *
-   * @return string
+   * @return String
    */
-  public function getDRucRec(): string
+  public function getDRucRec(): String
   {
     return $this->dRucRec;
   }
@@ -255,9 +255,9 @@ class TrGeVeNotRec
   /**
    * Obtiene el valor de dNumID - Número de documento de identidad
    *
-   * @return string
+   * @return String
    */
-  public function getDNumID(): string
+  public function getDNumID(): String
   {
     return $this->dNumID;
   }

@@ -10,16 +10,16 @@ use DOMElement;
  */
 class GRasMerc
 {
-  public ?int $dNumLote = null; //E751 Número de lote 
-  public ?DateTime $dVencMerc = null; ///E752 Fecha de vencimiento  de la mercadería
-  public ?string $dNSerie = null; //E753  Número de serie
-  public ?string $dNumPedi = null; //E754 Número de pedido
-  public ?string $dNumSegui = null; //E755 Número de  seguimiento del envío
-  public ?string $dNomImp = null; //E756 Nombre del Importador
-  public ?string $dDirImp = null; //E757 Dirección de Importador
-  public ?string $dNumFir = null; //E758 Número de registro de la firma del importador
-  public ?string $dNumReg = null; //E759 Número de registro del  producto otorgado por  el SENAVE
-  public ?string $dNumRegEntCom = null; //E760  Número de registro de  entidad comercial otorgado por el SENAVE
+  public ?int $dNumLote; //E751 Número de lote 
+  public ?DateTime $dVencMerc; ///E752 Fecha de vencimiento  de la mercadería
+  public String $dNSerie; //E753  Número de serie
+  public String $dNumPedi; //E754 Número de pedido
+  public String $dNumSegui; //E755 Número de  seguimiento del envío
+  public String $dNomImp; //E756 Nombre del Importador
+  public String $dDirImp; //E757 Dirección de Importador
+  public String $dNumFir; //E758 Número de registro de la firma del importador
+  public String $dNumReg; //E759 Número de registro del  producto otorgado por  el SENAVE
+  public String $dNumRegEntCom; //E760  Número de registro de  entidad comercial otorgado por el SENAVE
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -58,11 +58,11 @@ class GRasMerc
   /**
    * Set the value of dNSerie
    *
-   * @param string $dNSerie
+   * @param String $dNSerie
    *
    * @return self
    */
-  public function setDNSerie(string $dNSerie): self
+  public function setDNSerie(String $dNSerie): self
   {
     $this->dNSerie = $dNSerie;
 
@@ -73,11 +73,11 @@ class GRasMerc
   /**
    * Set the value of dNumPedi
    *
-   * @param string $dNumPedi
+   * @param String $dNumPedi
    *
    * @return self
    */
-  public function setDNumPedi(string $dNumPedi): self
+  public function setDNumPedi(String $dNumPedi): self
   {
     $this->dNumPedi = $dNumPedi;
 
@@ -88,11 +88,11 @@ class GRasMerc
   /**
    * Set the value of dNumSegui
    *
-   * @param string $dNumSegui
+   * @param String $dNumSegui
    *
    * @return self
    */
-  public function setDNumSegui(string $dNumSegui): self
+  public function setDNumSegui(String $dNumSegui): self
   {
     $this->dNumSegui = $dNumSegui;
 
@@ -103,11 +103,11 @@ class GRasMerc
   /**
    * Set the value of dNomImp
    *
-   * @param string $dNomImp
+   * @param String $dNomImp
    *
    * @return self
    */
-  public function setDNomImp(string $dNomImp): self
+  public function setDNomImp(String $dNomImp): self
   {
     $this->dNomImp = $dNomImp;
 
@@ -118,11 +118,11 @@ class GRasMerc
   /**
    * Set the value of dDirImp
    *
-   * @param string $dDirImp
+   * @param String $dDirImp
    *
    * @return self
    */
-  public function setDDirImp(string $dDirImp): self
+  public function setDDirImp(String $dDirImp): self
   {
     $this->dDirImp = $dDirImp;
 
@@ -133,11 +133,11 @@ class GRasMerc
   /**
    * Set the value of dNumFir
    *
-   * @param string $dNumFir
+   * @param String $dNumFir
    *
    * @return self
    */
-  public function setDNumFir(string $dNumFir): self
+  public function setDNumFir(String $dNumFir): self
   {
     $this->dNumFir = $dNumFir;
 
@@ -148,11 +148,11 @@ class GRasMerc
   /**
    * Set the value of dNumReg
    *
-   * @param string $dNumReg
+   * @param String $dNumReg
    *
    * @return self
    */
-  public function setDNumReg(string $dNumReg): self
+  public function setDNumReg(String $dNumReg): self
   {
     $this->dNumReg = $dNumReg;
 
@@ -163,11 +163,11 @@ class GRasMerc
   /**
    * Set the value of dNumRegEntCom
    *
-   * @param string $dNumRegEntCom
+   * @param String $dNumRegEntCom
    *
    * @return self
    */
-  public function setDNumRegEntCom(string $dNumRegEntCom): self
+  public function setDNumRegEntCom(String $dNumRegEntCom): self
   {
     $this->dNumRegEntCom = $dNumRegEntCom;
 
@@ -183,7 +183,7 @@ class GRasMerc
    *
    * @return int
    */
-  public function getDNumLote(): int | null
+  public function getDNumLote(): int
   {
     return $this->dNumLote;
   }
@@ -193,7 +193,7 @@ class GRasMerc
    *
    * @return DateTime
    */
-  public function getDVencMerc(): DateTime | null
+  public function getDVencMerc(): DateTime
   {
     return $this->dVencMerc;
   }
@@ -201,9 +201,9 @@ class GRasMerc
   /**
    * Get the value of dNSerie
    *
-   * @return string
+   * @return String
    */
-  public function getDNSerie(): string | null
+  public function getDNSerie(): String
   {
     return $this->dNSerie;
   }
@@ -211,9 +211,9 @@ class GRasMerc
   /**
    * Get the value of dNumPedi
    *
-   * @return string
+   * @return String
    */
-  public function getDNumPedi(): string | null
+  public function getDNumPedi(): String
   {
     return $this->dNumPedi;
   }
@@ -221,9 +221,9 @@ class GRasMerc
   /**
    * Get the value of dNumSegui
    *
-   * @return string
+   * @return String
    */
-  public function getDNumSegui(): string | null
+  public function getDNumSegui(): String
   {
     return $this->dNumSegui;
   }
@@ -231,9 +231,9 @@ class GRasMerc
   /**
    * Get the value of dNomImp
    *
-   * @return string
+   * @return String
    */
-  public function getDNomImp(): string | null
+  public function getDNomImp(): String
   {
     return $this->dNomImp;
   }
@@ -241,9 +241,9 @@ class GRasMerc
   /**
    * Get the value of dDirImp
    *
-   * @return string
+   * @return String
    */
-  public function getDDirImp(): string | null
+  public function getDDirImp(): String
   { 
     return $this->dDirImp;
   }
@@ -251,9 +251,9 @@ class GRasMerc
   /**
    * Get the value of dNumFir
    *
-   * @return string
+   * @return String
    */
-  public function getDNumFir(): string | null
+  public function getDNumFir(): String
   {
     return $this->dNumFir;
   }
@@ -261,9 +261,9 @@ class GRasMerc
   /**
    * Get the value of dNumReg
    *
-   * @return string
+   * @return String
    */
-  public function getDNumReg(): string | null
+  public function getDNumReg(): String
   {
     return $this->dNumReg;
   }
@@ -271,9 +271,9 @@ class GRasMerc
   /**
    * Get the value of dNumRegEntCom
    *
-   * @return string
+   * @return String
    */
-  public function getDNumRegEntCom(): string | null
+  public function getDNumRegEntCom(): String
   {
     return $this->dNumRegEntCom;
   }

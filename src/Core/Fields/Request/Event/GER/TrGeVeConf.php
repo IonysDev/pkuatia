@@ -11,7 +11,7 @@ use DOMElement;
  */
 class TrGeVeConf
 {
-  public string   $Id;        // GCO002 CDC del DTE 
+  public String   $Id;        // GCO002 CDC del DTE 
   public int      $iTipConf;  // GCO003 Tipo de Conformidad: 1 - Total | 2 - Parcial
   public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción
 
@@ -23,11 +23,11 @@ class TrGeVeConf
   /**
    * Establece el valor de Id - CDC del DTE 
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
     return $this;
@@ -67,9 +67,9 @@ class TrGeVeConf
   /**
    * Obtiene el valor de Id - CDC del DTE 
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }

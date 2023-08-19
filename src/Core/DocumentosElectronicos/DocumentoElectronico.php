@@ -52,7 +52,7 @@ class DocumentoElectronico {
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Convierte el objeto a un string XML
+   * Convierte el objeto a un String XML
    *
    * @return String
    */

@@ -25,7 +25,7 @@ class GCamGen
   /**
    * Set the value of dOrdCompra
    *
-   * @param string $dOrdCompra
+   * @param String $dOrdCompra
    *
    * @return self
    */
@@ -33,7 +33,7 @@ class GCamGen
   {
     if(is_null($dOrdCompra) || strlen($dOrdCompra) == 0)
     {
-      $this->dOrdCompra = null;
+      $this->dOrdCompra;
     }
     else
     {
@@ -46,15 +46,15 @@ class GCamGen
   /**
    * Set the value of dOrdVta
    *
-   * @param string $dOrdVta
+   * @param String $dOrdVta
    *
    * @return self
    */
-  public function setDOrdVta(string $dOrdVta): self
+  public function setDOrdVta(String $dOrdVta): self
   {
     if(is_null($dOrdVta) || strlen($dOrdVta) == 0)
     {
-      $this->dOrdVta = null;
+      $this->dOrdVta;
     }
     else
     {
@@ -67,15 +67,15 @@ class GCamGen
   /**
    * Set the value of dAsiento
    *
-   * @param string $dAsiento
+   * @param String $dAsiento
    *
    * @return self
    */
-  public function setDAsiento(string $dAsiento): self
+  public function setDAsiento(String $dAsiento): self
   {
     if(is_null($dAsiento) || strlen($dAsiento) == 0)
     {
-      $this->dAsiento = null;
+      $this->dAsiento;
     }
     else
     {
@@ -97,7 +97,7 @@ class GCamGen
   /**
    * Get the value of dOrdCompra
    *
-   * @return string
+   * @return String
    */
   public function getDOrdCompra(): String
   {
@@ -107,7 +107,7 @@ class GCamGen
   /**
    * Get the value of dOrdVta
    *
-   * @return string
+   * @return String
    */
   public function getDOrdVta(): String
   {
@@ -117,7 +117,7 @@ class GCamGen
   /**
    * Get the value of dAsiento
    *
-   * @return string
+   * @return String
    */
   public function getDAsiento(): String
   {

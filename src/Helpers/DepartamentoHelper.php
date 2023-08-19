@@ -22,7 +22,7 @@ class DepartamentoHelper
     return $array['simpleType'][0]['restriction']['enumeration'];
   }
 
-  public static function getDepName($code): string | null
+  public static function getDepName($code): String
   {
     $country = strtoupper($code);
     $array = self::getArray();

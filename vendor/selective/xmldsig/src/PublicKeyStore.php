@@ -43,14 +43,14 @@ final class PublicKeyStore
     /**
      * Load public key from a PKCS#12 certificate (PFX) certificate.
      *
-     * @param string $pkcs12 The certificate data
-     * @param string $password The encryption password for unlocking the PKCS12 certificate
+     * @param String $pkcs12 The certificate data
+     * @param String $password The encryption password for unlocking the PKCS12 certificate
      *
      * @throws CertificateException
      *
      * @return void
      */
-    public function loadFromPkcs12(string $pkcs12, string $password): void
+    public function loadFromPkcs12(String $pkcs12, String $password): void
     {
         $status = openssl_pkcs12_read($pkcs12, $certificates, $password);
 
@@ -90,13 +90,13 @@ final class PublicKeyStore
     /**
      * Load the public key content.
      *
-     * @param string $pem A PEM formatted public key
+     * @param String $pem A PEM formatted public key
      *
      * @throws CertificateException
      *
      * @return void
      */
-    public function loadFromPem(string $pem): void
+    public function loadFromPem(String $pem): void
     {
         $publicKey = openssl_pkey_get_public($pem);
 

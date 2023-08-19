@@ -34,7 +34,7 @@ class MonedaMapping
    *
    * @param  mixed $code
    * 
-   * @return String | null
+   * @return String
    */
   public static function GetDescription($code): String
   {

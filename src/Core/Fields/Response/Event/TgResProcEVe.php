@@ -10,7 +10,7 @@ use DOMElement;
  */
 class TgResProcEVe
 {
-  public string $dEstRes;    // GRSch030 - Estado del resultado
+  public String $dEstRes;    // GRSch030 - Estado del resultado
   public int $dProtAut;      // GRSch031 - Número de transacción
   public int $id;            // GRSch032 -Identificador del evento
   public TgResProc $gResProc; // GRSch033 Grupo Resultado de Procesamiento 
@@ -23,11 +23,11 @@ class TgResProcEVe
   /**
    * Set the value of dEstRes
    *
-   * @param string $dEstRes
+   * @param String $dEstRes
    *
    * @return self
    */
-  public function setDEstRes(string $dEstRes): self
+  public function setDEstRes(String $dEstRes): self
   {
     $this->dEstRes = $dEstRes;
 
@@ -88,9 +88,9 @@ class TgResProcEVe
   /**
    * Get the value of dEstRes
    *
-   * @return string
+   * @return String
    */
-  public function getDEstRes(): string
+  public function getDEstRes(): String
   {
     return $this->dEstRes;
   }

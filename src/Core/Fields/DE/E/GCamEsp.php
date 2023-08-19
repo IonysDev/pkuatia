@@ -12,10 +12,10 @@ use DOMElement;
  */
 class GCamEsp
 {
-  public ?GGrupEner $gGrupoEner = null;
-  public ?GGrupSeg $gGrupoSeg  = null;
-  public ?GGrupSup $gGrupSup  = null;
-  public ?GGrupAdi $gGrupAdi = null;
+  public ?GGrupEner $gGrupoEner;
+  public ?GGrupSeg $gGrupoSeg;
+  public ?GGrupSup $gGrupSup;
+  public ?GGrupAdi $gGrupAdi;
 
   public function __construct()
   {
@@ -35,7 +35,7 @@ class GCamEsp
    *
    * @return GGrupEner
    */
-  public function getGGrupoEner(): GGrupEner | null
+  public function getGGrupoEner(): GGrupEner
   {
     return $this->gGrupoEner;
   }
@@ -59,7 +59,7 @@ class GCamEsp
    *
    * @return GGrupSeg
    */
-  public function getGGrupoSeg(): GGrupSeg | null
+  public function getGGrupoSeg(): GGrupSeg
   {
     return $this->gGrupoSeg;
   }
@@ -83,7 +83,7 @@ class GCamEsp
    *
    * @return GGrupSup
    */
-  public function getGGrupSup(): GGrupSup | null
+  public function getGGrupSup(): GGrupSup
   {
     return $this->gGrupSup;
   }

@@ -115,15 +115,15 @@ class GPaConEIni
   /**
    * Establece la descripción del tipo de pago
    * 
-   * @param string $dDesTiPag
+   * @param String $dDesTiPag
    * 
    * @return self
    */
-  public function setDDesTiPag(string $dDesTiPag): self
+  public function setDDesTiPag(String $dDesTiPag): self
   {
     if(is_null($dDesTiPag) || strlen($dDesTiPag) == 0)
     {
-      $this->$dDesTiPag = null;
+      $this->$dDesTiPag;
     }
     else
     {
@@ -156,11 +156,11 @@ class GPaConEIni
   /**
    * Set the value of cMoneTiPag
    *
-   * @param string $cMoneTiPag
+   * @param String $cMoneTiPag
    *
    * @return self
    */
-  public function setCMoneTiPag(string $cMoneTiPag): self
+  public function setCMoneTiPag(String $cMoneTiPag): self
   {
     $this->cMoneTiPag = $cMoneTiPag;
     $this->dDMoneTiPag = MonedaMapping::GetDescription($cMoneTiPag);
@@ -172,15 +172,15 @@ class GPaConEIni
    * Este valor debería establecerse automáticamente mediante setCMoneTiPag.
    * Se recomienda no usar esta función.
    * 
-   * @param string $dDMoneTiPag
+   * @param String $dDMoneTiPag
    * 
    * @return self
    */
-  public function setDDMoneTiPag(string $dDMoneTiPag): self
+  public function setDDMoneTiPag(String $dDMoneTiPag): self
   {
     if(is_null($dDMoneTiPag) || strlen($dDMoneTiPag) == 0)
     {
-      $this->$dDMoneTiPag = null;
+      $this->$dDMoneTiPag;
     }
     else
     {
@@ -247,7 +247,7 @@ class GPaConEIni
    *
    * @return int
    */
-  public function getITiPago(): int | null
+  public function getITiPago(): int
   {
     return $this->iTiPago;
   }
@@ -255,9 +255,9 @@ class GPaConEIni
   /**
    * E607 Descripción del tipo de pago
    *
-   * @return string
+   * @return String
    */
-  public function getDDesTiPag(): string | null
+  public function getDDesTiPag(): String
   {
     return $this->dDesTiPag;
   }
@@ -276,7 +276,7 @@ class GPaConEIni
   /**
    * Get the value of cMoneTiPag
    *
-   * @return string
+   * @return String
    */
   public function getCMoneTiPag(): String
   {
@@ -309,7 +309,7 @@ class GPaConEIni
    *
    * @return GPagTarCD
    */
-  public function getGPagTarCD(): GPagTarCD | null
+  public function getGPagTarCD(): GPagTarCD
   {
     return $this->gPagTarCD;
   }
@@ -319,7 +319,7 @@ class GPaConEIni
    *
    * @return GPagCheq
    */
-  public function getGPagCheq(): GPagCheq | null
+  public function getGPagCheq(): GPagCheq
   {
     return $this->gPagCheq;
   }
@@ -392,7 +392,7 @@ class GPaConEIni
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GPaConEIni();
     if(isset($object->iTiPago))

@@ -68,11 +68,11 @@ class GCamAE
   /**
    * Set the value of dNumIDVen
    *
-   * @param string $dNumIDVen
+   * @param String $dNumIDVen
    *
    * @return self
    */
-  public function setDNumIDVen(string $dNumIDVen): self
+  public function setDNumIDVen(String $dNumIDVen): self
   {
     $this->dNumIDVen = $dNumIDVen;
 
@@ -83,11 +83,11 @@ class GCamAE
   /**
    * Set the value of dNomVen
    *
-   * @param string $dNomVen
+   * @param String $dNomVen
    *
    * @return self
    */
-  public function setDNomVen(string $dNomVen): self
+  public function setDNomVen(String $dNomVen): self
   {
     $this->dNomVen = $dNomVen;
 
@@ -98,11 +98,11 @@ class GCamAE
   /**
    * Set the value of dDirVen
    *
-   * @param string $dDirVen
+   * @param String $dDirVen
    *
    * @return self
    */
-  public function setDDirVen(string $dDirVen): self
+  public function setDDirVen(String $dDirVen): self
   {
     $this->dDirVen = $dDirVen;
 
@@ -172,11 +172,11 @@ class GCamAE
   /**
    * Set the value of dDirProv
    *
-   * @param string $dDirProv
+   * @param String $dDirProv
    *
    * @return self
    */
-  public function setDDirProv(string $dDirProv): self
+  public function setDDirProv(String $dDirProv): self
   {
     $this->dDirProv = $dDirProv;
 
@@ -235,7 +235,7 @@ class GCamAE
   /**
    * Get the value of iNatVen
    */
-  public function getINatVen(): int | null
+  public function getINatVen(): int
   {
     return $this->iNatVen;
   }
@@ -243,9 +243,9 @@ class GCamAE
   /**
    * E302 dDesNatVen Descripción de la naturaleza del vendedor
    *
-   * @return string
+   * @return String
    */
-  public function getDDesNatVen(): string | null
+  public function getDDesNatVen(): String
   {
     switch ($this->iNatVen) {
       case 1:
@@ -266,7 +266,7 @@ class GCamAE
   /**
    * Get the value of iTipIDVen
    */
-  public function getITipIDVen(): int | null
+  public function getITipIDVen(): int
   {
     return $this->iTipIDVen;
   }
@@ -275,9 +275,9 @@ class GCamAE
   /**
    * E305 Descripción del tipo de documento de identidad del vendedor
    *
-   * @return string
+   * @return String
    */
-  public function getDDTipIDVen(): string | null
+  public function getDDTipIDVen(): String
   {
     switch ($this->iTipIDVen) {
       case 1:
@@ -306,7 +306,7 @@ class GCamAE
   /**
    * Get the value of dNumIDVen
    */
-  public function getDNumIDVen(): string | null
+  public function getDNumIDVen(): String
   {
     return $this->dNumIDVen;
   }
@@ -314,7 +314,7 @@ class GCamAE
   /**
    * Get the value of dNomVen
    */
-  public function getDNomVen(): string | null
+  public function getDNomVen(): String
   {
     return $this->dNomVen;
   }
@@ -324,7 +324,7 @@ class GCamAE
   /**
    * Get the value of dDirVen
    */
-  public function getDDirVen(): string | null
+  public function getDDirVen(): String
   {
     return $this->dDirVen;
   }
@@ -332,7 +332,7 @@ class GCamAE
   /**
    * Get the value of dNumCasVen
    */
-  public function getDNumCasVen(): int | null
+  public function getDNumCasVen(): int
   {
     return $this->dNumCasVen;
   }
@@ -340,7 +340,7 @@ class GCamAE
   /**
    * Get the value of cDepVen
    */
-  public function getCDepVen(): int | null
+  public function getCDepVen(): int
   {
     return $this->cDepVen;
   }
@@ -348,9 +348,9 @@ class GCamAE
   /**
    * E311 Descripción del departamento del vendedor
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDepVen(): string | null
+  public function getDDesDepVen(): String
   {
     return DepartamentoHelper::getDepName(strval($this->cDepVen));
   }
@@ -361,7 +361,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCDisVen(): int | null
+  public function getCDisVen(): int
   {
     return $this->cDisVen;
   }
@@ -369,9 +369,9 @@ class GCamAE
   /**
    * E313 Descripción del distrito del vendedor
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDisVen(): string | null
+  public function getDDesDisVen(): String
   {
     return GeoRefCodesHelper::getDistName(strval($this->cDisVen));
   }
@@ -381,7 +381,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCCiuVen(): int | null
+  public function getCCiuVen(): int
   {
     return $this->cCiuVen;
   }
@@ -389,9 +389,9 @@ class GCamAE
   /**
    * E315  Descripción de la ciudad del vendedor 
    *
-   * @return string
+   * @return String
    */
-  public function getDDesCiuVen(): string | null
+  public function getDDesCiuVen(): String
   {
     return GeoRefCodesHelper::getCiudName(strval($this->cCiuVen));
   }
@@ -400,9 +400,9 @@ class GCamAE
   /**
    * Get the value of dDirProv
    *
-   * @return string
+   * @return String
    */
-  public function getDDirProv(): string | null
+  public function getDDirProv(): String
   {
     return $this->dDirProv;
   }
@@ -412,7 +412,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCDepProv(): int | null
+  public function getCDepProv(): int
   {
     return $this->cDepProv;
   }
@@ -420,9 +420,9 @@ class GCamAE
   /**
    * E318 Descripción del departamento donde se realiza la transacción
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDepProv(): string | null
+  public function getDDesDepProv(): String
   {
     return DepartamentoHelper::getDepName(strval($this->cDepProv));
   }
@@ -433,7 +433,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCDisProv(): int | null
+  public function getCDisProv(): int
   {
     return $this->cDisProv;
   }
@@ -441,9 +441,9 @@ class GCamAE
   /**
    * E320 Descripción del distrito donde se realiza la transacción
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDisProv(): string | null
+  public function getDDesDisProv(): String
   {
     return GeoRefCodesHelper::getDistName(strval($this->cDisProv));
   }
@@ -453,7 +453,7 @@ class GCamAE
    *
    * @return int
    */
-  public function getCCiuProv(): int | null
+  public function getCCiuProv(): int
   {
     return $this->cCiuProv;
   }
@@ -461,9 +461,9 @@ class GCamAE
   /**
    * E322 Descripción de la ciudad donde se realiza la transacción
    *
-   * @return string
+   * @return String
    */
-  public function getDDesCiuProv(): string | null
+  public function getDDesCiuProv(): String
   {
     return GeoRefCodesHelper::getCiudName(strval($this->cCiuProv));
   }

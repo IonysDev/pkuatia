@@ -10,12 +10,12 @@ use DOMElement;
  */
 class TrGeVeRetAnu
 {
-  public string $Id; /// GERA002CDC del DE/DTE
+  public String $Id; /// GERA002CDC del DE/DTE
   public int $dNumTimRet; ///GERA003 Número de timbrado del documento de retención
-  public string $dEstRet; ///GERA004 Establecimiento del documento de retención
-  public string $dPunExpRet; //// GERA005 Punto de expedición  del documento de  retención
-  public string $dNumDocRet; /// GERA006 Número del documento de la retención
-  public string $dCodConRet; ///GERA007 Identificador de la retención 
+  public String $dEstRet; ///GERA004 Establecimiento del documento de retención
+  public String $dPunExpRet; //// GERA005 Punto de expedición  del documento de  retención
+  public String $dNumDocRet; /// GERA006 Número del documento de la retención
+  public String $dCodConRet; ///GERA007 Identificador de la retención 
   public DateTime $dFeEmiRet; //GERA008 Fecha de emisión de la retención
   public DateTime $dFecAnRet; ///GERA009 Fecha de anulación  de la retención 
 
@@ -26,11 +26,11 @@ class TrGeVeRetAnu
   /**
    * Set the value of Id
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
 
@@ -56,11 +56,11 @@ class TrGeVeRetAnu
   /**
    * Set the value of dEstRet
    *
-   * @param string $dEstRet
+   * @param String $dEstRet
    *
    * @return self
    */
-  public function setDEstRet(string $dEstRet): self
+  public function setDEstRet(String $dEstRet): self
   {
     $this->dEstRet = $dEstRet;
 
@@ -71,11 +71,11 @@ class TrGeVeRetAnu
   /**
    * Set the value of dPunExpRet
    *
-   * @param string $dPunExpRet
+   * @param String $dPunExpRet
    *
    * @return self
    */
-  public function setDPunExpRet(string $dPunExpRet): self
+  public function setDPunExpRet(String $dPunExpRet): self
   {
     $this->dPunExpRet = $dPunExpRet;
 
@@ -86,11 +86,11 @@ class TrGeVeRetAnu
   /**
    * Set the value of dNumDocRet
    *
-   * @param string $dNumDocRet
+   * @param String $dNumDocRet
    *
    * @return self
    */
-  public function setDNumDocRet(string $dNumDocRet): self
+  public function setDNumDocRet(String $dNumDocRet): self
   {
     $this->dNumDocRet = $dNumDocRet;
 
@@ -100,11 +100,11 @@ class TrGeVeRetAnu
   /**
    * Set the value of dCodConRet
    *
-   * @param string $dCodConRet
+   * @param String $dCodConRet
    *
    * @return self
    */
-  public function setDCodConRet(string $dCodConRet): self
+  public function setDCodConRet(String $dCodConRet): self
   {
     $this->dCodConRet = $dCodConRet;
 
@@ -149,9 +149,9 @@ class TrGeVeRetAnu
   /**
    * Get the value of Id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -169,9 +169,9 @@ class TrGeVeRetAnu
   /**
    * Get the value of dEstRet
    *
-   * @return string
+   * @return String
    */
-  public function getDEstRet(): string
+  public function getDEstRet(): String
   {
     return $this->dEstRet;
   }
@@ -179,9 +179,9 @@ class TrGeVeRetAnu
   /**
    * Get the value of dPunExpRet
    *
-   * @return string
+   * @return String
    */
-  public function getDPunExpRet(): string
+  public function getDPunExpRet(): String
   {
     return $this->dPunExpRet;
   }
@@ -189,9 +189,9 @@ class TrGeVeRetAnu
   /**
    * Get the value of dNumDocRet
    *
-   * @return string
+   * @return String
    */
-  public function getDNumDocRet(): string
+  public function getDNumDocRet(): String
   {
     return $this->dNumDocRet;
   }
@@ -199,9 +199,9 @@ class TrGeVeRetAnu
   /**
    * Get the value of dCodConRet
    *
-   * @return string
+   * @return String
    */
-  public function getDCodConRet(): string
+  public function getDCodConRet(): String
   {
     return $this->dCodConRet;
   }

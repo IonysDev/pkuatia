@@ -25,9 +25,9 @@ class GeoRefCodesHelper
    * getDistName
    *
    * @param  mixed $code
-   * @return string
+   * @return String
    */
-  public static function getDistName($code): string | null
+  public static function getDistName($code): String
   {
     $array = self::getArray();
     ///iterate the array
@@ -44,9 +44,9 @@ class GeoRefCodesHelper
    * getDistName
    *
    * @param  mixed $code
-   * @return string
+   * @return String
    */
-  public static function getCiudName($code): string | null
+  public static function getCiudName($code): String
   {
     $array = self::getArray();
     ///iterate the array
@@ -63,9 +63,9 @@ class GeoRefCodesHelper
    * por el momento sin suo
    *
    * @param  mixed $code
-   * @return string
+   * @return String
    */
-  public static function getBarrName($code): string | null
+  public static function getBarrName($code): String
   {
     $array = self::getArray();
     ///iterate the array

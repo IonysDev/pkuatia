@@ -11,7 +11,7 @@ use DOMElement;
  */
 class GCamNCDE
 {
-  public ?int $iMotEmi  = null; //ID:E401  Motivo de emisión PADRE:E400
+  public ?int $iMotEmi; //ID:E401  Motivo de emisión PADRE:E400
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -40,7 +40,7 @@ class GCamNCDE
    *
    * @return int
    */
-  public function getIMotEmi(): int | null
+  public function getIMotEmi(): int
   {
     return $this->iMotEmi;
   }
@@ -48,9 +48,9 @@ class GCamNCDE
   /**
    * E402 Descripción del motivo de emisión 
    *
-   * @return string
+   * @return String
    */
-  public function getDDesMotEmi(): string | null
+  public function getDDesMotEmi(): String
   {
     switch ($this->iMotEmi) {
       case 1:

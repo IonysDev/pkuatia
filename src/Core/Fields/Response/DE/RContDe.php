@@ -10,9 +10,9 @@ use SimpleXMLElement;
  */
 class RContDe
 {
-  public ?RDE $rDe = null; //ContDE02 - Archivo XML del DE ContDE01 
-  public ?string $dProtAut = null; //ContDE03 - Número De Transacción 
-  public ?RContEv $rContEv = null; //ContDE04 - Contenedor de Evento
+  public ?RDE $rDe; //ContDE02 - Archivo XML del DE ContDE01 
+  public String $dProtAut; //ContDE03 - Número De Transacción 
+  public ?RContEv $rContEv; //ContDE04 - Contenedor de Evento
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -36,11 +36,11 @@ class RContDe
   /**
    * Set the value of dProtAut
    *
-   * @param string $dProtAut
+   * @param String $dProtAut
    *
    * @return self
    */
-  public function setDProtAut(string $dProtAut): self
+  public function setDProtAut(String $dProtAut): self
   {
     $this->dProtAut = $dProtAut;
 
@@ -81,7 +81,7 @@ class RContDe
   /**
    * Get the value of dProtAut
    *
-   * @return string
+   * @return String
    */
   public function getDProtAut(): String
   {
@@ -113,7 +113,7 @@ class RContDe
     }
     $res = new self();
     if (isset($xml->dProtAut)) {
-      $res->setDProtAut((string) $xml->dProtAut);
+      $res->setDProtAut((String) $xml->dProtAut);
     }
     if (isset($xml->rDE)) {
       $res->setRDe(RDE::FromSimpleXMLElement($xml->rDE));

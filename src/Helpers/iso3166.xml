@@ -7,7 +7,7 @@
         </xs:documentation>
     </xs:annotation>
     <xs:simpleType name="paisType">
-        <xs:restriction base="xs:string">
+        <xs:restriction base="xs:String">
         	<xs:enumeration value="MKD">
                 <xs:annotation>
                     <xs:documentation>Macedonia del Norte</xs:documentation>

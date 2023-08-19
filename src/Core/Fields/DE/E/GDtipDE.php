@@ -12,14 +12,14 @@ use DOMElement;
 class GDtipDE
 {
 
-  public ?GCamFE $gCamFE = null;      //Campos que componen la FE
-  public ?GCamAE $gCamAE = null;      //Campos que componen la Autofactura Electrónica
-  public ?GCamNCDE $gCamNCDE = null;  //Campos que componen la Nota de Crédito Electrónica
-  public ?GCamNRE $gCamNRE = null;    //Campos que componen la Nota de Remisión Electrónica
-  public ?GCamCond $gCamCond = null;  //Campos que describen la condición de la operación
-  public ?array $gCamItem = null;     //Campos que describen los ítems de la operación
-  public ?GCamEsp $gCamEsp = null;    //complementarios comerciales de uso específico
-  public ?GTransp $gTransp = null;    //Campos que describen  el transporte de mercaderías
+  public ?GCamFE $gCamFE;      //Campos que componen la FE
+  public ?GCamAE $gCamAE;      //Campos que componen la Autofactura Electrónica
+  public ?GCamNCDE $gCamNCDE;  //Campos que componen la Nota de Crédito Electrónica
+  public ?GCamNRE $gCamNRE;    //Campos que componen la Nota de Remisión Electrónica
+  public ?GCamCond $gCamCond;  //Campos que describen la condición de la operación
+  public ?array $gCamItem;     //Campos que describen los ítems de la operación
+  public ?GCamEsp $gCamEsp;    //complementarios comerciales de uso específico
+  public ?GTransp $gTransp;    //Campos que describen  el transporte de mercaderías
 
   /**
    * Constructor
@@ -40,7 +40,7 @@ class GDtipDE
    *
    * @return GCamFE
    */
-  public function getGCamFE(): GCamFE | null
+  public function getGCamFE(): GCamFE
   {
     return $this->gCamFE;
   }
@@ -64,7 +64,7 @@ class GDtipDE
    *
    * @return GCamAE
    */
-  public function getGCamAE(): GCamAE | null
+  public function getGCamAE(): GCamAE
   {
     return $this->gCamAE;
   }
@@ -88,7 +88,7 @@ class GDtipDE
    *
    * @return GCamNCDE
    */
-  public function getGCamNCDE(): GCamNCDE | null
+  public function getGCamNCDE(): GCamNCDE
   {
     return $this->gCamNCDE;
   }
@@ -112,7 +112,7 @@ class GDtipDE
    *
    * @return GCamNRE
    */
-  public function getGCamNRE(): GCamNRE | null
+  public function getGCamNRE(): GCamNRE
   {
     return $this->gCamNRE;
   }
@@ -136,7 +136,7 @@ class GDtipDE
    *
    * @return GCamCond
    */
-  public function getGCamCond(): GCamCond | null
+  public function getGCamCond(): GCamCond
   {
     return $this->gCamCond;
   }
@@ -176,7 +176,7 @@ class GDtipDE
    *
    * @return GCamEsp
    */
-  public function getGCamEsp(): GCamEsp | null
+  public function getGCamEsp(): GCamEsp
   {
     return $this->gCamEsp;
   }
@@ -216,27 +216,27 @@ class GDtipDE
     if(isset($xml->gCamFE))
       $res->gCamFE = GCamFE::FromSimpleXMLElement($xml->gCamFE);
     else
-      $res->gCamFE = null;
+      $res->gCamFE;
 
     if(isset($xml->gCamAE))
       $res->gCamAE = GCamAE::FromSimpleXMLElement($xml->gCamAE);
     else
-      $res->gCamAE = null;
+      $res->gCamAE;
     
     if(isset($xml->gCamNCDE))
       $res->gCamNCDE = GCamNCDE::FromSimpleXMLElement($xml->gCamNCDE);
     else
-      $res->gCamNCDE = null;
+      $res->gCamNCDE;
 
     if(isset($xml->gCamNRE))
       $res->gCamNRE = GCamNRE::FromSimpleXMLElement($xml->gCamNRE);
     else
-      $res->gCamNRE = null;
+      $res->gCamNRE;
 
     if(isset($xml->gCamCond))
       $res->gCamCond = GCamCond::FromSimpleXMLElement($xml->gCamCond);
     else
-      $res->gCamCond = null;
+      $res->gCamCond;
 
     if(isset($xml->gCamItem) && count($xml->gCamItem) > 0) {
       $res->gCamItem = [];
@@ -244,17 +244,17 @@ class GDtipDE
         $res->gCamItem[] = GCamItem::FromSimpleXMLElement($gCamItem);
     }
     else
-      $res->gCamItem = null;
+      $res->gCamItem;
 
     if(isset($xml->gCamEsp))
       $res->gCamEsp = GCamEsp::FromSimpleXMLElement($xml->gCamEsp);
     else
-      $res->gCamEsp = null;
+      $res->gCamEsp;
     
     if(isset($xml->gTransp))
       $res->gTransp = GTransp::FromSimpleXMLElement($xml->gTransp);
     else
-      $res->gTransp = null;
+      $res->gTransp;
     
     return $res;    
   }
@@ -366,7 +366,7 @@ class GDtipDE
    *
    * @return array
    */
-  public function getGCamItem(): array | null
+  public function getGCamItem(): array
   {
     return $this->gCamItem;
   }
@@ -376,7 +376,7 @@ class GDtipDE
    *
    * @return GTransp
    */
-  public function getGTransp(): GTransp | null
+  public function getGTransp(): GTransp
   {
     return $this->gTransp;
   }

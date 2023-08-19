@@ -9,8 +9,8 @@ use DOMElement;
  */
 class TrGeVeDisconf
 {
-  public string $Id; // GDI002 CDC del DTE
-  public string $mOtEve; ///GDI004 Motivo del Evento
+  public String $Id; // GDI002 CDC del DTE
+  public String $mOtEve; ///GDI004 Motivo del Evento
 
   ///////////////////////////////////////////////////////////////////////
   //SETTERS
@@ -20,11 +20,11 @@ class TrGeVeDisconf
   /**
    * Set the value of Id
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
 
@@ -35,11 +35,11 @@ class TrGeVeDisconf
   /**
    * Set the value of mOtEve
    *
-   * @param string $mOtEve
+   * @param String $mOtEve
    *
    * @return self
    */
-  public function setMOtEve(string $mOtEve): self
+  public function setMOtEve(String $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
 
@@ -55,9 +55,9 @@ class TrGeVeDisconf
   /**
    * Get the value of Id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -65,9 +65,9 @@ class TrGeVeDisconf
   /**
    * Get the value of mOtEve
    *
-   * @return string
+   * @return String
    */
-  public function getMOtEve(): string
+  public function getMOtEve(): String
   {
     return $this->mOtEve;
   }

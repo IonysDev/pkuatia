@@ -14,7 +14,7 @@ use UnexpectedValueException;
  */
 final class XmlSigner
 {
-    private string $referenceUri = '';
+    private String $referenceUri = '';
 
     private XmlReader $xmlReader;
 
@@ -30,13 +30,13 @@ final class XmlSigner
      * Sign an XML file and save the signature in a new file.
      * This method does not save the public key within the XML file.
      *
-     * @param string $data The XML content to sign
+     * @param String $data The XML content to sign
      *
      * @throws XmlSignerException
      *
-     * @return string The signed XML content
+     * @return String The signed XML content
      */
-    public function signXml(string $data): string
+    public function signXml(String $data): String
     {
         // Read the xml file content
         $xml = new DOMDocument();
@@ -61,9 +61,9 @@ final class XmlSigner
      * @param DOMDocument $document The document
      * @param DOMElement|null $element The element of the document to sign
      *
-     * @return string The signed XML as string
+     * @return String The signed XML as String
      */
-    public function signDocument(DOMDocument $document, DOMElement $element = null): string
+    public function signDocument(DOMDocument $document, DOMElement $element = null): String
     {
         $element = $element ?? $document->documentElement;
 
@@ -92,13 +92,13 @@ final class XmlSigner
      * Create the XML representation of the signature.
      *
      * @param DOMDocument $xml The xml document
-     * @param string $digestValue The digest value
+     * @param String $digestValue The digest value
      *
      * @throws UnexpectedValueException
      *
      * @return void The DOM document
      */
-    private function appendSignature(DOMDocument $xml, string $digestValue): void
+    private function appendSignature(DOMDocument $xml, String $digestValue): void
     {
         $signatureElement = $xml->createElement('Signature');
         $signatureElement->setAttribute('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
@@ -211,11 +211,11 @@ final class XmlSigner
     /**
      * Set reference URI.
      *
-     * @param string $referenceUri The reference URI
+     * @param String $referenceUri The reference URI
      *
      * @return void
      */
-    public function setReferenceUri(string $referenceUri): void
+    public function setReferenceUri(String $referenceUri): void
     {
         $this->referenceUri = $referenceUri;
     }

@@ -61,11 +61,11 @@ class GCamCond
   /**
    * Establece el valor dDCondOpe que es la descripción de la condición de operación
    * 
-   * @param string $dDCondOpe
+   * @param String $dDCondOpe
    * 
    * @return self
    */
-  public function setDDCondOpe(string $dDCondOpe): self
+  public function setDDCondOpe(String $dDCondOpe): self
   {
     $this->dDCondOpe = $dDCondOpe;
     return $this;
@@ -108,7 +108,7 @@ class GCamCond
    *
    * @return int
    */
-  public function getICondOpe(): int | null
+  public function getICondOpe(): int
   {
     return $this->iCondOpe;
   }
@@ -116,7 +116,7 @@ class GCamCond
   /**
    * E602  Descripción de la condición de operación
    *
-   * @return string
+   * @return String
    */
   public function getDDCondOpe(): String
   {
@@ -128,7 +128,7 @@ class GCamCond
    *
    * @return array
    */
-  public function getGPaConEIni(): array | null
+  public function getGPaConEIni(): array
   {
     return $this->gPaConEIni;
   }
@@ -138,7 +138,7 @@ class GCamCond
    *
    * @return GPagCred
    */
-  public function getGPagCred(): GPagCred | null
+  public function getGPagCred(): GPagCred
   {
     return $this->gPagCred;
   }
@@ -184,9 +184,11 @@ class GCamCond
 
     $res->appendChild(new DOMElement('iCondOpe', $this->getICondOpe()));
     $res->appendChild(new DOMElement('dDCondOpe', $this->getDDCondOpe()));
-
-    ///Children
-    $res->appendChild($this->getGPaConEIni()->toDOMElement());
+    if(count($this->getGPaConEIni()) > 0){
+      foreach ($this->getGPaConEIni() as $g) {
+        $res->appendChild($g->toDOMElement());
+      }
+    }
     $res->appendChild($this->gPagCred->toDOMElement());
     return $res;
   }
@@ -207,11 +209,11 @@ class GCamCond
     if (isset($object->iCondOpe)) {
       $res->setICondOpe(intval($object->iCondOpe));
     }
-    ///children
-    if (isset($object->gPaConEIni)) {
-      $res->setGPaConEIni(GPaConEIni::FromSifenResponseObject($object->gPaConEIni));
+    if (isset($object->gPaConEIni) && count($object->gPaConEIni) > 0) {
+      foreach ($object->gPaConEIni as $g) {
+        $res->gPaConEIni[] = GPaConEIni::FromSifenResponseObject($g);
+      }
     }
-    ///children
     if (isset($object->gPagCred)) {
       $res->setGPagCred(GPagCred::FromSifenResponseObject($object->gPagCred));
     }

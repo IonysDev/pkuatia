@@ -10,11 +10,11 @@ use DOMElement;
  */
 class GGrupSup
 {
-  public ?string $dNomCaj = null; ///E811 Nombre del cajero
-  public ?int $dEfectivo = null; /// E812 Efectivo
-  public ?int $dVuelto = null; //E813 Vuelto
-  public ?int $dDonac = null; ///E814 Monto de la donación
-  public ?string $dDesDonac = null; ///E815 Descripción de la donación
+  public String $dNomCaj; ///E811 Nombre del cajero
+  public int $dEfectivo; /// E812 Efectivo
+  public int $dVuelto; //E813 Vuelto
+  public int $dDonac; ///E814 Monto de la donación
+  public String $dDesDonac; ///E815 Descripción de la donación
 
   ///////////////////////////////////////////////////////////////////////
   ////Setters
@@ -23,11 +23,11 @@ class GGrupSup
   /**
    * Set the value of dNomCaj
    *
-   * @param string $dNomCaj
+   * @param String $dNomCaj
    *
    * @return self
    */
-  public function setDNomCaj(string $dNomCaj): self
+  public function setDNomCaj(String $dNomCaj): self
   {
     $this->dNomCaj = $dNomCaj;
 
@@ -83,11 +83,11 @@ class GGrupSup
   /**
    * Set the value of dDesDonac
    *
-   * @param string $dDesDonac
+   * @param String $dDesDonac
    *
    * @return self
    */
-  public function setDDesDonac(string $dDesDonac): self
+  public function setDDesDonac(String $dDesDonac): self
   {
     $this->dDesDonac = $dDesDonac;
 
@@ -101,9 +101,9 @@ class GGrupSup
   /**
    * Get the value of dNomCaj
    *
-   * @return string
+   * @return String
    */
-  public function getDNomCaj(): string | null
+  public function getDNomCaj(): String
   {
     return $this->dNomCaj;
   }
@@ -113,7 +113,7 @@ class GGrupSup
    *
    * @return int
    */
-  public function getDEfectivo(): int | null
+  public function getDEfectivo(): int
   {
     return $this->dEfectivo;
   }
@@ -123,7 +123,7 @@ class GGrupSup
    *
    * @return int
    */
-  public function getDVuelto(): int | null
+  public function getDVuelto(): int
   {
     return $this->dVuelto;
   }
@@ -133,7 +133,7 @@ class GGrupSup
    *
    * @return int
    */
-  public function getDDonac(): int | null
+  public function getDDonac(): int
   {
     return $this->dDonac;
   }
@@ -141,9 +141,9 @@ class GGrupSup
   /**
    * Get the value of dDesDonac
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDonac(): string | null
+  public function getDDesDonac(): String
   {
     return $this->dDesDonac;
   }

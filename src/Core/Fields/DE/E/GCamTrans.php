@@ -11,21 +11,21 @@ use DOMElement;
  */
 class GCamTrans
 {
-   public ?int $iNatTrans  = null; // E981 - Naturaleza del transportista
-   public ?string $dNomTrans  = null; // E982 - Nombre o razón social del transportista 
-   public ?string $dRucTrans  = null; // E983 - RUC del transportista 
-   public ?int $dDVTrans  = null; //E984 - Dígito verificador del RUC del transportista 
-   public ?int $iTipIDTrans  = null; // E985 - Tipo de documento de identidad del transportista
-   public ?string $dNumIDTrans  = null; // E987 - Número de documento de identidad del transportista
-   public ?string $cNacTrans  = null; // E988 - Nacionalidad del transportista 
-   public ?string $dNumIDChof  = null; // E990 - Número de documento de identidad del chofer
-   public ?string $dNomChof  = null; // E991 - Nombre y apellido del chofer
-   public ?string $dDomFisc  = null; // E992 - Domicilio fiscal del transportista
-   public ?string $dDirChof  = null; // E993 - Dirección del chofer
-   public ?string $dNombAg  = null; // E994 - Nombre o razón social del agente 
-   public ?string $dRucAg  = null; // E995 - RUC del agente
-   public ?string $dDVAg  = null; // E996 - Dígito verificador del  RUC del agente
-   public ?string $dDirAge  = null; // E997 - Dirección del agente
+   public int $iNatTrans; // E981 - Naturaleza del transportista
+   public String $dNomTrans; // E982 - Nombre o razón social del transportista 
+   public String $dRucTrans; // E983 - RUC del transportista 
+   public int $dDVTrans; //E984 - Dígito verificador del RUC del transportista 
+   public int $iTipIDTrans; // E985 - Tipo de documento de identidad del transportista
+   public String $dNumIDTrans; // E987 - Número de documento de identidad del transportista
+   public String $cNacTrans; // E988 - Nacionalidad del transportista 
+   public String $dNumIDChof; // E990 - Número de documento de identidad del chofer
+   public String $dNomChof; // E991 - Nombre y apellido del chofer
+   public String $dDomFisc; // E992 - Domicilio fiscal del transportista
+   public String $dDirChof; // E993 - Dirección del chofer
+   public String $dNombAg; // E994 - Nombre o razón social del agente 
+   public String $dRucAg; // E995 - RUC del agente
+   public String $dDVAg; // E996 - Dígito verificador del  RUC del agente
+   public String $dDirAge; // E997 - Dirección del agente
 
    ///////////////////////////////////////////////////////////////////////
    ////SETTERS
@@ -49,11 +49,11 @@ class GCamTrans
    /**
     * Set the value of dNomTrans
     *
-    * @param string $dNomTrans
+    * @param String $dNomTrans
     *
     * @return self
     */
-   public function setDNomTrans(string $dNomTrans): self
+   public function setDNomTrans(String $dNomTrans): self
    {
       $this->dNomTrans = $dNomTrans;
 
@@ -64,11 +64,11 @@ class GCamTrans
    /**
     * Set the value of dRucTrans
     *
-    * @param string $dRucTrans
+    * @param String $dRucTrans
     *
     * @return self
     */
-   public function setDRucTrans(string $dRucTrans): self
+   public function setDRucTrans(String $dRucTrans): self
    {
       $this->dRucTrans = $dRucTrans;
 
@@ -109,11 +109,11 @@ class GCamTrans
    /**
     * Set the value of dNumIDTrans
     *
-    * @param string $dNumIDTrans
+    * @param String $dNumIDTrans
     *
     * @return self
     */
-   public function setDNumIDTrans(string $dNumIDTrans): self
+   public function setDNumIDTrans(String $dNumIDTrans): self
    {
       $this->dNumIDTrans = $dNumIDTrans;
 
@@ -124,11 +124,11 @@ class GCamTrans
    /**
     * Set the value of cNacTrans
     *
-    * @param string $cNacTrans
+    * @param String $cNacTrans
     *
     * @return self
     */
-   public function setCNacTrans(string $cNacTrans): self
+   public function setCNacTrans(String $cNacTrans): self
    {
       $this->cNacTrans = $cNacTrans;
 
@@ -139,11 +139,11 @@ class GCamTrans
    /**
     * Set the value of dNumIDChof
     *
-    * @param string $dNumIDChof
+    * @param String $dNumIDChof
     *
     * @return self
     */
-   public function setDNumIDChof(string $dNumIDChof): self
+   public function setDNumIDChof(String $dNumIDChof): self
    {
       $this->dNumIDChof = $dNumIDChof;
 
@@ -154,11 +154,11 @@ class GCamTrans
    /**
     * Set the value of dNomChof
     *
-    * @param string $dNomChof
+    * @param String $dNomChof
     *
     * @return self
     */
-   public function setDNomChof(string $dNomChof): self
+   public function setDNomChof(String $dNomChof): self
    {
       $this->dNomChof = $dNomChof;
 
@@ -169,11 +169,11 @@ class GCamTrans
    /**
     * Set the value of dDomFisc
     *
-    * @param string $dDomFisc
+    * @param String $dDomFisc
     *
     * @return self
     */
-   public function setDDomFisc(string $dDomFisc): self
+   public function setDDomFisc(String $dDomFisc): self
    {
       $this->dDomFisc = $dDomFisc;
 
@@ -184,11 +184,11 @@ class GCamTrans
    /**
     * Set the value of dDirChof
     *
-    * @param string $dDirChof
+    * @param String $dDirChof
     *
     * @return self
     */
-   public function setDDirChof(string $dDirChof): self
+   public function setDDirChof(String $dDirChof): self
    {
       $this->dDirChof = $dDirChof;
 
@@ -199,11 +199,11 @@ class GCamTrans
    /**
     * Set the value of dNombAg
     *
-    * @param string $dNombAg
+    * @param String $dNombAg
     *
     * @return self
     */
-   public function setDNombAg(string $dNombAg): self
+   public function setDNombAg(String $dNombAg): self
    {
       $this->dNombAg = $dNombAg;
 
@@ -214,11 +214,11 @@ class GCamTrans
    /**
     * Set the value of dRucAg
     *
-    * @param string $dRucAg
+    * @param String $dRucAg
     *
     * @return self
     */
-   public function setDRucAg(string $dRucAg): self
+   public function setDRucAg(String $dRucAg): self
    {
       $this->dRucAg = $dRucAg;
 
@@ -229,11 +229,11 @@ class GCamTrans
    /**
     * Set the value of dDVAg
     *
-    * @param string $dDVAg
+    * @param String $dDVAg
     *
     * @return self
     */
-   public function setDDVAg(string $dDVAg): self
+   public function setDDVAg(String $dDVAg): self
    {
       $this->dDVAg = $dDVAg;
 
@@ -243,11 +243,11 @@ class GCamTrans
    /**
     * Set the value of dDirAge
     *
-    * @param string $dDirAge
+    * @param String $dDirAge
     *
     * @return self
     */
-   public function setDDirAge(string $dDirAge): self
+   public function setDDirAge(String $dDirAge): self
    {
       $this->dDirAge = $dDirAge;
 
@@ -263,7 +263,7 @@ class GCamTrans
     *
     * @return int
     */
-   public function getINatTrans(): int | null
+   public function getINatTrans(): int
    {
       return $this->iNatTrans;
    }
@@ -271,9 +271,9 @@ class GCamTrans
    /**
     * Get the value of dNomTrans
     *
-    * @return string
+    * @return String
     */
-   public function getDNomTrans(): string | null
+   public function getDNomTrans(): String
    {
       return $this->dNomTrans;
    }
@@ -281,9 +281,9 @@ class GCamTrans
    /**
     * Get the value of dRucTrans
     *
-    * @return string
+    * @return String
     */
-   public function getDRucTrans(): string | null
+   public function getDRucTrans(): String
    {
       return $this->dRucTrans;
    }
@@ -293,7 +293,7 @@ class GCamTrans
     *
     * @return int
     */
-   public function getDDVTrans(): int | null
+   public function getDDVTrans(): int
    {
       return $this->dDVTrans;
    }
@@ -303,7 +303,7 @@ class GCamTrans
     *
     * @return int
     */
-   public function getITipIDTrans(): int | null
+   public function getITipIDTrans(): int
    {
       return $this->iTipIDTrans;
    }
@@ -311,9 +311,9 @@ class GCamTrans
    /**
     * E986 Descripción del tipo de documento de identidad del transportista
     *
-    * @return string
+    * @return String
     */
-   public function getDDTipIDTrans(): string | null
+   public function getDDTipIDTrans(): String
    {
       switch ($this->iTipIDTrans) {
          case 1:
@@ -340,9 +340,9 @@ class GCamTrans
    /**
     * Get the value of dNumIDTrans
     *
-    * @return string
+    * @return String
     */
-   public function getDNumIDTrans(): string | null
+   public function getDNumIDTrans(): String
    {
       return $this->dNumIDTrans;
    }
@@ -350,9 +350,9 @@ class GCamTrans
    /**
     * Get the value of cNacTrans
     *
-    * @return string
+    * @return String
     */
-   public function getCNacTrans(): string | null
+   public function getCNacTrans(): String
    {
       return $this->cNacTrans;
    }
@@ -360,9 +360,9 @@ class GCamTrans
    /**
     * E989 Descripción de la nacionalidad del transportista
     *
-    * @return string
+    * @return String
     */
-   public function getDDesNacTrans(): string | null
+   public function getDDesNacTrans(): String
    {
       return CountryHelper::getCountryDesc($this->cNacTrans);
    }
@@ -370,9 +370,9 @@ class GCamTrans
    /**
     * Get the value of dNumIDChof
     *
-    * @return string
+    * @return String
     */
-   public function getDNumIDChof(): string | null
+   public function getDNumIDChof(): String
    {
       return $this->dNumIDChof;
    }
@@ -380,9 +380,9 @@ class GCamTrans
    /**
     * Get the value of dNomChof
     *
-    * @return string
+    * @return String
     */
-   public function getDNomChof(): string | null
+   public function getDNomChof(): String
    {
       return $this->dNomChof;
    }
@@ -390,9 +390,9 @@ class GCamTrans
    /**
     * Get the value of dDomFisc
     *
-    * @return string
+    * @return String
     */
-   public function getDDomFisc(): string | null
+   public function getDDomFisc(): String
    {
       return $this->dDomFisc;
    }
@@ -400,9 +400,9 @@ class GCamTrans
    /**
     * Get the value of dDirChof
     *
-    * @return string
+    * @return String
     */
-   public function getDDirChof(): string | null
+   public function getDDirChof(): String
    {
       return $this->dDirChof;
    }
@@ -410,9 +410,9 @@ class GCamTrans
    /**
     * Get the value of dNombAg
     *
-    * @return string
+    * @return String
     */
-   public function getDNombAg(): string | null
+   public function getDNombAg(): String
    {
       return $this->dNombAg;
    }
@@ -420,9 +420,9 @@ class GCamTrans
    /**
     * Get the value of dRucAg
     *
-    * @return string
+    * @return String
     */
-   public function getDRucAg(): string | null
+   public function getDRucAg(): String
    {
       return $this->dRucAg;
    }
@@ -430,9 +430,9 @@ class GCamTrans
    /**
     * Get the value of dDVAg
     *
-    * @return string
+    * @return String
     */
-   public function getDDVAg(): string | null
+   public function getDDVAg(): String
    {
       return $this->dDVAg;
    }
@@ -440,9 +440,9 @@ class GCamTrans
    /**
     * Get the value of dDirAge
     *
-    * @return string
+    * @return String
     */
-   public function getDDirAge(): string | null
+   public function getDDirAge(): String
    {
       return $this->dDirAge;
    }

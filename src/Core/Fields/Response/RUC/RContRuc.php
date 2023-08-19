@@ -24,11 +24,11 @@ class RContRUC
   /**
    * Set the value of dRUCCons
    *
-   * @param string $dRUCCons
+   * @param String $dRUCCons
    *
    * @return self
    */
-  public function setDRUCCons(string $dRUCCons): self
+  public function setDRUCCons(String $dRUCCons): self
   {
     $this->dRUCCons = $dRUCCons;
 
@@ -39,11 +39,11 @@ class RContRUC
   /**
    * Set the value of dRazCons
    *
-   * @param string $dRazCons
+   * @param String $dRazCons
    *
    * @return self
    */
-  public function setDRazCons(string $dRazCons): self
+  public function setDRazCons(String $dRazCons): self
   {
     $this->dRazCons = $dRazCons;
 
@@ -54,11 +54,11 @@ class RContRUC
   /**
    * Set the value of dCodEstCons
    *
-   * @param string $dCodEstCons
+   * @param String $dCodEstCons
    *
    * @return self
    */
-  public function setDCodEstCons(string $dCodEstCons): self
+  public function setDCodEstCons(String $dCodEstCons): self
   {
     $this->dCodEstCons = $dCodEstCons;
 
@@ -68,11 +68,11 @@ class RContRUC
   /**
    * Set the value of dDesEstCons
    *
-   * @param string $dDesEstCons
+   * @param String $dDesEstCons
    *
    * @return self
    */
-  public function setDDesEstCons(string $dDesEstCons): self
+  public function setDDesEstCons(String $dDesEstCons): self
   {
     $this->dDesEstCons = $dDesEstCons;
 
@@ -83,11 +83,11 @@ class RContRUC
   /**
    * Set the value of dRUCFactElec
    *
-   * @param string $dRUCFactElec
+   * @param String $dRUCFactElec
    *
    * @return self
    */
-  public function setDRUCFactElec(string $dRUCFactElec): self
+  public function setDRUCFactElec(String $dRUCFactElec): self
   {
     $this->dRUCFactElec = $dRUCFactElec;
 
@@ -250,19 +250,19 @@ class RContRUC
     }
     $res = new RContRuc();
     if(isset($xml->dRUCCons)){
-      $res->setDRUCCons((string)$xml->dRUCCons);
+      $res->setDRUCCons((String)$xml->dRUCCons);
     }
     if(isset($xml->dRazCons)){
-      $res->setDRazCons((string)$xml->dRazCons);
+      $res->setDRazCons((String)$xml->dRazCons);
     }
     if(isset($xml->dCodEstCons)){
-      $res->setDCodEstCons((string)$xml->dCodEstCons);
+      $res->setDCodEstCons((String)$xml->dCodEstCons);
     }
     if(isset($xml->dDesEstCons)){
-      $res->setDRUCFactElec((string)$xml->dDesEstCons);
+      $res->setDRUCFactElec((String)$xml->dDesEstCons);
     }
     if(isset($xml->dRUCFactElec)){
-      $res->setDRUCFactElec((string)$xml->dRUCFactElec);
+      $res->setDRUCFactElec((String)$xml->dRUCFactElec);
     }
     return $res;
   }

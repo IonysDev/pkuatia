@@ -75,7 +75,7 @@ class GCamFE
   {
     if(is_null($dDesIndPres) || strlen($dDesIndPres) == 0)
     {
-      $this->dDesIndPres = null;
+      $this->dDesIndPres;
     }
     else
     {
@@ -119,7 +119,7 @@ class GCamFE
   /**
    * Get the value of iIndPres
    */
-  public function getIIndPres(): int | null
+  public function getIIndPres(): int
   {
     return $this->iIndPres;
   }
@@ -127,7 +127,7 @@ class GCamFE
   /**
    * E012 dDesIndPres Descripción del indicador de presencia
    *
-   * @return string
+   * @return String
    */
   public function getDDesIndPres(): String
   {
@@ -137,7 +137,7 @@ class GCamFE
   /**
    * Get the value of dFecEmNR
    */
-  public function getDFecEmNR(): DateTime | null
+  public function getDFecEmNR(): DateTime
   {
     return $this->dFecEmNR;
   }

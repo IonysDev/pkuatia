@@ -13,19 +13,19 @@ use DOMElement;
  */
 class GTransp
 {
-  public ?int $iTipTrans = null;     // E901 - Tipo de transporte
-  public ?int $iModTrans = null;     // E903 - Modalidad de transporte
-  public ?int $iRespFlete = null;    // E905 - Responsable del costo del flete
-  public ?string $cCondNeg = null;   // E906 - Condición de la negociación 
-  public ?string $dNuManif = null;   // E907 - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
-  public ?string $dNuDespImp = null; // E908 - Número de despacho de importación
-  public ?DateTime $dIniTras = null; // E909 - Fecha estimada de inicio de traslado
-  public ?DateTime $dFinTras = null; // E910 - Fecha estimada de fin  de traslado
-  public ?string $cPaisDest = null;  // E911 - Código del país de destino
-  public ?GCamSal $gCamSal = null;   // Campos que identifican el local de salida de las mercaderías 
-  public ?GCamEnt $gCamEnt = null;   // Campos que identifican el local de la entrega de las mercaderías
-  public ?GVehTras $gVehTras = null; // Campos que identifican al vehículo del traslado de mercaderías
-  public ?GCamTrans $gCamTrans = null; // Campos que identifican al transportista
+  public ?int $iTipTrans;     // E901 - Tipo de transporte
+  public ?int $iModTrans;     // E903 - Modalidad de transporte
+  public ?int $iRespFlete;    // E905 - Responsable del costo del flete
+  public String $cCondNeg;   // E906 - Condición de la negociación 
+  public String $dNuManif;   // E907 - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
+  public String $dNuDespImp; // E908 - Número de despacho de importación
+  public ?DateTime $dIniTras; // E909 - Fecha estimada de inicio de traslado
+  public ?DateTime $dFinTras; // E910 - Fecha estimada de fin  de traslado
+  public String $cPaisDest;  // E911 - Código del país de destino
+  public ?GCamSal $gCamSal;   // Campos que identifican el local de salida de las mercaderías 
+  public ?GCamEnt $gCamEnt;   // Campos que identifican el local de la entrega de las mercaderías
+  public ?GVehTras $gVehTras; // Campos que identifican al vehículo del traslado de mercaderías
+  public ?GCamTrans $gCamTrans; // Campos que identifican al transportista
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -79,11 +79,11 @@ class GTransp
   /**
    * Set the value of cCondNeg
    *
-   * @param string $cCondNeg
+   * @param String $cCondNeg
    *
    * @return self
    */
-  public function setCCondNeg(string $cCondNeg): self
+  public function setCCondNeg(String $cCondNeg): self
   {
     $this->cCondNeg = $cCondNeg;
 
@@ -94,11 +94,11 @@ class GTransp
   /**
    * Set the value of dNuManif
    *
-   * @param string $dNuManif
+   * @param String $dNuManif
    *
    * @return self
    */
-  public function setDNuManif(string $dNuManif): self
+  public function setDNuManif(String $dNuManif): self
   {
     $this->dNuManif = $dNuManif;
 
@@ -109,11 +109,11 @@ class GTransp
   /**
    * Set the value of dNuDespImp
    *
-   * @param string $dNuDespImp
+   * @param String $dNuDespImp
    *
    * @return self
    */
-  public function setDNuDespImp(string $dNuDespImp): self
+  public function setDNuDespImp(String $dNuDespImp): self
   {
     $this->dNuDespImp = $dNuDespImp;
 
@@ -154,11 +154,11 @@ class GTransp
   /**
    * Set the value of cPaisDest
    *
-   * @param string $cPaisDest
+   * @param String $cPaisDest
    *
    * @return self
    */
-  public function setCPaisDest(string $cPaisDest): self
+  public function setCPaisDest(String $cPaisDest): self
   {
     $this->cPaisDest = $cPaisDest;
 
@@ -175,7 +175,7 @@ class GTransp
    *
    * @return int
    */
-  public function getITipTrans(): int | null
+  public function getITipTrans(): int
   {
     return $this->iTipTrans;
   }
@@ -183,9 +183,9 @@ class GTransp
   /**
    * E902 Descripción del tipo de transporte 
    *
-   * @return string
+   * @return String
    */
-  public function getDDesTipTrans(): string | null
+  public function getDDesTipTrans(): String
   {
     switch ($this->iTipTrans) {
       case 1:
@@ -207,7 +207,7 @@ class GTransp
    *
    * @return int
    */
-  public function getIModTrans(): int | null
+  public function getIModTrans(): int
   {
     return $this->iModTrans;
   }
@@ -215,9 +215,9 @@ class GTransp
   /**
    * E904 Descripción de la modalidad del transporte
    *
-   * @return string
+   * @return String
    */
-  public function getDDesModTrans(): string | null
+  public function getDDesModTrans(): String
   {
     switch ($this->iModTrans) {
       case 1:
@@ -249,7 +249,7 @@ class GTransp
    *
    * @return int
    */
-  public function getIRespFlete(): int | null
+  public function getIRespFlete(): int
   {
     return $this->iRespFlete;
   }
@@ -257,9 +257,9 @@ class GTransp
   /**
    * Get the value of cCondNeg
    *
-   * @return string
+   * @return String
    */
-  public function getCCondNeg(): string | null
+  public function getCCondNeg(): String
   {
     switch ($this->cCondNeg) {
       case 'CFR':
@@ -305,9 +305,9 @@ class GTransp
   /**
    * Get the value of dNuManif
    *
-   * @return string
+   * @return String
    */
-  public function getDNuManif(): string | null
+  public function getDNuManif(): String
   {
     return $this->dNuManif;
   }
@@ -315,9 +315,9 @@ class GTransp
   /**
    * Get the value of dNuDespImp
    *
-   * @return string
+   * @return String
    */
-  public function getDNuDespImp(): string | null
+  public function getDNuDespImp(): String
   {
     return $this->dNuDespImp;
   }
@@ -327,7 +327,7 @@ class GTransp
    *
    * @return DateTime
    */
-  public function getDIniTras(): DateTime | null
+  public function getDIniTras(): DateTime
   {
     return $this->dIniTras;
   }
@@ -337,7 +337,7 @@ class GTransp
    *
    * @return DateTime
    */
-  public function getDFinTras(): DateTime | null
+  public function getDFinTras(): DateTime
   {
     return $this->dFinTras;
   }
@@ -345,9 +345,9 @@ class GTransp
   /**
    * Get the value of cPaisDest
    *
-   * @return string
+   * @return String
    */
-  public function getCPaisDest(): string | null
+  public function getCPaisDest(): String
   {
     return $this->cPaisDest;
   }
@@ -355,9 +355,9 @@ class GTransp
   /**
    * E912 Descripción del país de destino
    *
-   * @return string
+   * @return String
    */
-  public function getDDesPaisDest(): string | null
+  public function getDDesPaisDest(): String
   {
     return CountryHelper::getCountryDesc($this->cPaisDest);
   }
@@ -440,7 +440,7 @@ class GTransp
    *
    * @return GCamSal
    */
-  public function getGCamSal(): GCamSal | null
+  public function getGCamSal(): GCamSal
   {
     return $this->gCamSal;
   }
@@ -464,7 +464,7 @@ class GTransp
    *
    * @return GVehTras
    */
-  public function getGVehTras(): GVehTras | null
+  public function getGVehTras(): GVehTras
   {
     return $this->gVehTras;
   }
@@ -488,7 +488,7 @@ class GTransp
    *
    * @return GCamTrans
    */
-  public function getGCamTrans(): GCamTrans | null
+  public function getGCamTrans(): GCamTrans
   {
     return $this->gCamTrans;
   }
@@ -512,7 +512,7 @@ class GTransp
    *
    * @return GCamEnt
    */
-  public function getGCamEnt(): GCamEnt | null
+  public function getGCamEnt(): GCamEnt
   {
     return $this->gCamEnt;
   }

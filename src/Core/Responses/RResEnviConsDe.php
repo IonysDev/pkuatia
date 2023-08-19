@@ -17,8 +17,8 @@ class RResEnviConsDe
 {
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
-  public string   $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento 
-  public string   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
+  public String   $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento 
+  public String   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
   public RContDe  $rContDe;  // ContDE01 - XML   - 0-1 - Objeto del DE consultado
 
   ///////////////////////////////////////////////////////////////////////
@@ -43,11 +43,11 @@ class RResEnviConsDe
   /**
    * Set the value of dCodRes
    *
-   * @param string $dCodRes
+   * @param String $dCodRes
    *
    * @return self
    */
-  public function setDCodRes(string $dCodRes): self
+  public function setDCodRes(String $dCodRes): self
   {
     $this->dCodRes = $dCodRes;
 
@@ -58,11 +58,11 @@ class RResEnviConsDe
   /**
    * Set the value of dMsgRes
    *
-   * @param string $dMsgRes
+   * @param String $dMsgRes
    *
    * @return self
    */
-  public function setDMsgRes(string $dMsgRes): self
+  public function setDMsgRes(String $dMsgRes): self
   {
     $this->dMsgRes = $dMsgRes;
 
@@ -102,9 +102,9 @@ class RResEnviConsDe
   /**
    * Get the value of dCodRes
    *
-   * @return string
+   * @return String
    */
-  public function getDCodRes(): string
+  public function getDCodRes(): String
   {
     return $this->dCodRes;
   }
@@ -112,9 +112,9 @@ class RResEnviConsDe
   /**
    * Get the value of dMsgRes
    *
-   * @return string
+   * @return String
    */
-  public function getDMsgRes(): string
+  public function getDMsgRes(): String
   {
     return $this->dMsgRes;
   }

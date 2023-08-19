@@ -191,7 +191,7 @@
     </xs:annotation>
 
     <xs:simpleType name="tdDesUniMed">
-        <xs:restriction base="xs:string"> 
+        <xs:restriction base="xs:String"> 
         	<xs:minLength value="1"/>
 			<xs:maxLength value="10"/>           
             <xs:enumeration value="m">

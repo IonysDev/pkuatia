@@ -86,7 +86,7 @@ class GOpeCom
     {
         if(is_null($this->iTipTra) || strlen($dDesTipTra) == 0)
         {
-            $this->dDesTipTra = null;
+            $this->dDesTipTra;
         }
         else 
         {
@@ -124,7 +124,7 @@ class GOpeCom
     {
         if(is_null($this->iTImp) || strlen($dDesTImp) == 0)
         {
-            $this->dDesTImp = null;
+            $this->dDesTImp;
         }
         else 
         {
@@ -147,7 +147,7 @@ class GOpeCom
     {
         if(is_null($this->cMoneOpe) || strlen($dDesMoneOpe) == 0)
         {
-            $this->dDesMoneOpe = null;
+            $this->dDesMoneOpe;
         }
         else 
         {
@@ -231,7 +231,7 @@ class GOpeCom
     {
         if(is_null($this->iCondAnt) || strlen($dDesCondAnt) == 0)
         {
-            $this->dDesCondAnt = null;
+            $this->dDesCondAnt;
         }
         else 
         {

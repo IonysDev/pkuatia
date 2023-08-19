@@ -9,7 +9,7 @@ use DOMElement;
  */
 class TrGeVeRem
 {
-  public string $Id;///GERE002 CDC del DTE asociado
+  public String $Id;///GERE002 CDC del DTE asociado
 
    ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -19,11 +19,11 @@ class TrGeVeRem
   /**
    * Set the value of Id
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
 
@@ -37,9 +37,9 @@ class TrGeVeRem
   /**
    * Get the value of Id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }

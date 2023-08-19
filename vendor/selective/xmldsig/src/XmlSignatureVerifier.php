@@ -33,17 +33,17 @@ final class XmlSignatureVerifier
     }
 
     /**
-     * Verify an XML string.
+     * Verify an XML String.
      *
      * https://www.xml.com/pub/a/2001/08/08/xmldsig.html#verify
      *
-     * @param string $data The xml content
+     * @param String $data The xml content
      *
      * @throws XmlSignatureValidatorException
      *
      * @return bool Success
      */
-    public function verifyXml(string $data): bool
+    public function verifyXml(String $data): bool
     {
         // Read the xml file content
         $xml = new DOMDocument();
@@ -106,11 +106,11 @@ final class XmlSignatureVerifier
      *
      * @param DOMDocument $xml The xml document
      * @param DOMXPath $xpath The xpath
-     * @param string $algorithm The digest algorithm url
+     * @param String $algorithm The digest algorithm url
      *
      * @return bool The status
      */
-    private function checkDigest(DOMDocument $xml, DOMXPath $xpath, string $algorithm): bool
+    private function checkDigest(DOMDocument $xml, DOMXPath $xpath, String $algorithm): bool
     {
         $digestValue = $this->getDigestValue($xml);
 
@@ -136,13 +136,13 @@ final class XmlSignatureVerifier
      * Detect digest algorithm.
      *
      * @param DOMDocument $xml The xml document
-     * @param string $expression
+     * @param String $expression
      *
      * @throws XmlSignatureValidatorException
      *
-     * @return string The algorithm url
+     * @return String The algorithm url
      */
-    private function getDocumentAlgorithm(DOMDocument $xml, string $expression): string
+    private function getDocumentAlgorithm(DOMDocument $xml, String $expression): String
     {
         $xpath = new DOMXPath($xml);
         $xpath->registerNamespace('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
@@ -181,9 +181,9 @@ final class XmlSignatureVerifier
      *
      * @throws XmlSignatureValidatorException
      *
-     * @return string The signature value
+     * @return String The signature value
      */
-    private function getSignatureValue(DOMDocument $xml): string
+    private function getSignatureValue(DOMDocument $xml): String
     {
         $xpath = new DOMXPath($xml);
         $xpath->registerNamespace('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
@@ -211,13 +211,13 @@ final class XmlSignatureVerifier
             );
         }
 
-        $result = base64_decode((string)$domNode->nodeValue, true);
+        $result = base64_decode((String)$domNode->nodeValue, true);
 
         if ($result === false) {
             throw new XmlSignatureValidatorException('Verification failed: Invalid base64 data.');
         }
 
-        return (string)$result;
+        return (String)$result;
     }
 
     /**
@@ -227,9 +227,9 @@ final class XmlSignatureVerifier
      *
      * @throws XmlSignatureValidatorException
      *
-     * @return string The signature value
+     * @return String The signature value
      */
-    private function getDigestValue(DOMDocument $xml): string
+    private function getDigestValue(DOMDocument $xml): String
     {
         $xpath = new DOMXPath($xml);
         $xpath->registerNamespace('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
@@ -257,7 +257,7 @@ final class XmlSignatureVerifier
             );
         }
 
-        $result = base64_decode((string)$domNode->nodeValue, true);
+        $result = base64_decode((String)$domNode->nodeValue, true);
 
         if ($result === false) {
             throw new XmlSignatureValidatorException('Verification failed: Invalid base64 data.');

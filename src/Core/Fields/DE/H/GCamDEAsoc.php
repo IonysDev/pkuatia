@@ -66,15 +66,15 @@ class GCamDEAsoc
   /**
    * Set the value of dDesTipDocAso
    * 
-   * @param string $dDesTipDocAso
+   * @param String $dDesTipDocAso
    * 
    * @return self
    */
-  public function setDDesTipDocAso(string $dDesTipDocAso): self
+  public function setDDesTipDocAso(String $dDesTipDocAso): self
   {
     if(is_null($dDesTipDocAso) || strlen($dDesTipDocAso) == 0)
     {
-      $this->dDesTipDocAso = null;
+      $this->dDesTipDocAso;
     }
     else
     {
@@ -87,11 +87,11 @@ class GCamDEAsoc
   /**
    * Set the value of dCdCDERef
    *
-   * @param string $dCdCDERef
+   * @param String $dCdCDERef
    *
    * @return self
    */
-  public function setDCdCDERef(string $dCdCDERef): self
+  public function setDCdCDERef(String $dCdCDERef): self
   {
     $this->dCdCDERef = $dCdCDERef;
 
@@ -117,11 +117,11 @@ class GCamDEAsoc
   /**
    * Set the value of dEstDocAso
    *
-   * @param string $dEstDocAso
+   * @param String $dEstDocAso
    *
    * @return self
    */
-  public function setDEstDocAso(string $dEstDocAso): self
+  public function setDEstDocAso(String $dEstDocAso): self
   {
     $this->dEstDocAso = $dEstDocAso;
 
@@ -132,11 +132,11 @@ class GCamDEAsoc
   /**
    * Set the value of dPExpDocAso
    *
-   * @param string $dPExpDocAso
+   * @param String $dPExpDocAso
    *
    * @return self
    */
-  public function setDPExpDocAso(string $dPExpDocAso): self
+  public function setDPExpDocAso(String $dPExpDocAso): self
   {
     $this->dPExpDocAso = $dPExpDocAso;
 
@@ -147,11 +147,11 @@ class GCamDEAsoc
   /**
    * Set the value of dNumDocAso
    *
-   * @param string $dNumDocAso
+   * @param String $dNumDocAso
    *
    * @return self
    */
-  public function setDNumDocAso(string $dNumDocAso): self
+  public function setDNumDocAso(String $dNumDocAso): self
   {
     $this->dNumDocAso = $dNumDocAso;
 
@@ -195,15 +195,15 @@ class GCamDEAsoc
   /**
    * Set the value of dDTipoDocAso
    * 
-   * @param string $dDTipoDocAso
+   * @param String $dDTipoDocAso
    * 
    * @return self
    */
-  public function setDDTipoDocAso(string $dDTipoDocAso): self
+  public function setDDTipoDocAso(String $dDTipoDocAso): self
   {
     if(is_null($dDTipoDocAso) || strlen($dDTipoDocAso) == 0)
     {
-      $this->dDesTipDocAso = null;
+      $this->dDesTipDocAso;
     }
     else
     {
@@ -231,11 +231,11 @@ class GCamDEAsoc
   /**
    * Set the value of dNumComRet
    *
-   * @param string $dNumComRet
+   * @param String $dNumComRet
    *
    * @return self
    */
-  public function setDNumComRet(string $dNumComRet): self
+  public function setDNumComRet(String $dNumComRet): self
   {
     $this->dNumComRet = $dNumComRet;
 
@@ -246,11 +246,11 @@ class GCamDEAsoc
   /**
    * Set the value of dNumResCF
    *
-   * @param string $dNumResCF
+   * @param String $dNumResCF
    *
    * @return self
    */
-  public function setDNumResCF(string $dNumResCF): self
+  public function setDNumResCF(String $dNumResCF): self
   {
     $this->dNumResCF = $dNumResCF;
 
@@ -284,15 +284,15 @@ class GCamDEAsoc
   /**
    * Set the value of dDesTipCons
    * 
-   * @param string $dDesTipCons
+   * @param String $dDesTipCons
    * 
    * @return self
    */
-  public function setDDesTipCons(string $dDesTipCons): self
+  public function setDDesTipCons(String $dDesTipCons): self
   {
     if(is_null($dDesTipCons) || strlen($dDesTipCons) == 0)
     {
-      $this->dDesTipCons = null;
+      $this->dDesTipCons;
     }
     else
     {
@@ -320,11 +320,11 @@ class GCamDEAsoc
   /**
    * Set the value of dNumControl
    *
-   * @param string $dNumControl
+   * @param String $dNumControl
    *
    * @return self
    */
-  public function setDNumControl(string $dNumControl): self
+  public function setDNumControl(String $dNumControl): self
   {
     $this->dNumControl = $dNumControl;
 
@@ -348,9 +348,9 @@ class GCamDEAsoc
   /**
    * Get the value of dDesTipDocAso
    *
-   * @return string
+   * @return String
    */
-  public function getDDesTipDocAso(): string
+  public function getDDesTipDocAso(): String
   {
     return $this->dDesTipDocAso;
   }
@@ -358,9 +358,9 @@ class GCamDEAsoc
   /**
    * Get the value of dCdCDERef
    *
-   * @return string
+   * @return String
    */
-  public function getDCdCDERef(): string
+  public function getDCdCDERef(): String
   {
     return $this->dCdCDERef;
   }
@@ -378,9 +378,9 @@ class GCamDEAsoc
   /**
    * Get the value of dEstDocAso
    *
-   * @return string
+   * @return String
    */
-  public function getDEstDocAso(): string
+  public function getDEstDocAso(): String
   {
     return $this->dEstDocAso;
   }
@@ -388,9 +388,9 @@ class GCamDEAsoc
   /**
    * Get the value of dPExpDocAso
    *
-   * @return string
+   * @return String
    */
-  public function getDPExpDocAso(): string
+  public function getDPExpDocAso(): String
   {
     return $this->dPExpDocAso;
   }
@@ -398,9 +398,9 @@ class GCamDEAsoc
   /**
    * Get the value of dNumDocAso
    *
-   * @return string
+   * @return String
    */
-  public function getDNumDocAso(): string
+  public function getDNumDocAso(): String
   {
     return $this->dNumDocAso;
   }
@@ -418,9 +418,9 @@ class GCamDEAsoc
   /**
    * Get the value of dDTipoDocAso
    * 
-   * @return string
+   * @return String
    */
-  public function getDDTipoDocAso(): string
+  public function getDDTipoDocAso(): String
   {
     return $this->dDTipoDocAso;
   }
@@ -438,9 +438,9 @@ class GCamDEAsoc
   /**
    * Get the value of dNumComRet
    *
-   * @return string
+   * @return String
    */
-  public function getDNumComRet(): string
+  public function getDNumComRet(): String
   {
     return $this->dNumComRet;
   }
@@ -448,9 +448,9 @@ class GCamDEAsoc
   /**
    * Get the value of dNumResCF
    *
-   * @return string
+   * @return String
    */
-  public function getDNumResCF(): string
+  public function getDNumResCF(): String
   {
     return $this->dNumResCF;
   }
@@ -468,9 +468,9 @@ class GCamDEAsoc
   /**
    * Get the value of dDesTipCons
    *
-   * @return string
+   * @return String
    */
-  public function getDDesTipCons(): string
+  public function getDDesTipCons(): String
   {
     return $this->dDesTipCons;
   }
@@ -488,9 +488,9 @@ class GCamDEAsoc
   /**
    * Get the value of dNumControl
    *
-   * @return string
+   * @return String
    */
-  public function getDNumControl(): string
+  public function getDNumControl(): String
   {
     return $this->dNumControl;
   }

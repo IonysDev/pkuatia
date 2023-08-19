@@ -44,15 +44,15 @@ class GCamCarg
   /**
    * Set the value of dDesUniMedTotVol
    * 
-   * @param string $dDesUniMedTotVol
+   * @param String $dDesUniMedTotVol
    * 
    * @return self
    */
-  public function setDDesUniMedTotVol(string $dDesUniMedTotVol): self
+  public function setDDesUniMedTotVol(String $dDesUniMedTotVol): self
   {
     if(is_null($dDesUniMedTotVol) || strlen($dDesUniMedTotVol) == 0)
     {
-      $this->dDesUniMedTotVol = null;
+      $this->dDesUniMedTotVol;
     }
     else
     {
@@ -93,15 +93,15 @@ class GCamCarg
   /**
    * Set the value of dDesUniMedTotPes
    *
-   * @param string $dDesUniMedTotPes
+   * @param String $dDesUniMedTotPes
    *
    * @return self
    */
-  public function setDDesUniMedTotPes(string $dDesUniMedTotPes): self
+  public function setDDesUniMedTotPes(String $dDesUniMedTotPes): self
   {
     if(is_null($dDesUniMedTotPes) || strlen($dDesUniMedTotPes) == 0)
     {
-      $this->dDesUniMedTotPes = null;
+      $this->dDesUniMedTotPes;
     }
     else
     {
@@ -149,15 +149,15 @@ class GCamCarg
   /**
    * Set the value of dDesCarCarga
    * 
-   * @param string $dDesCarCarga
+   * @param String $dDesCarCarga
    * 
    * @return self
    */
-  public function setDDesCarCarga(string $dDesCarCarga): self
+  public function setDDesCarCarga(String $dDesCarCarga): self
   {
     if(is_null($dDesCarCarga) || strlen($dDesCarCarga) == 0)
     {
-      $this->dDesCarCarga = null;
+      $this->dDesCarCarga;
     }
     else
     {
@@ -184,9 +184,9 @@ class GCamCarg
   /**
    * G052 Descripción de la unidad de medida del total de volumen de la mercadería
    *
-   * @return string
+   * @return String
    */
-  public function getDDesUniMedTotVol(): string
+  public function getDDesUniMedTotVol(): String
   {
     return $this->dDesUniMedTotVol;
   }
@@ -216,9 +216,9 @@ class GCamCarg
   /**
    * G055 Descripción de la unidad de medida del peso total de la mercadería
    *
-   * @return string
+   * @return String
    */
-  public function getdDesUniMedTotPes(): string
+  public function getdDesUniMedTotPes(): String
   {
     return $this->dDesUniMedTotPes;
     
@@ -247,9 +247,9 @@ class GCamCarg
   /**
    * G058 Descripción de las características de la carga
    *
-   * @return string
+   * @return String
    */
-  public function getDDesCarCarga(): string
+  public function getDDesCarCarga(): String
   {
     return $this->dDesCarCarga;
   }

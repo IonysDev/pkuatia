@@ -13,14 +13,14 @@ use DOMElement;
  */
 class GCamSal
 {
-  public ?string $dDirLocSal  = null; //E921 Dirección del local de salida
-  public ?int $dNumCasSal  = null; //E922 Número de casa de salida
-  public ?string $dComp1Sal  = null; //E923 Complemento de dirección 1 salida
-  public ?string $dComp2Sal  = null; //E924 Complemento de dirección 2 salida
-  public ?int $cDepSal  = null; ///E925 Código del departamento del local de salida
-  public ?int $cDisSal  = null; //E927 Código del distrito del local de salida
-  public ?int $cCiuSal  = null; //E929 Código de la ciudad del local de salida
-  public ?string $dTelSal  = null; /// E931 Teléfono de contacto del local de salida
+  public String $dDirLocSal; //E921 Dirección del local de salida
+  public ?int $dNumCasSal; //E922 Número de casa de salida
+  public String $dComp1Sal; //E923 Complemento de dirección 1 salida
+  public String $dComp2Sal; //E924 Complemento de dirección 2 salida
+  public ?int $cDepSal; ///E925 Código del departamento del local de salida
+  public ?int $cDisSal; //E927 Código del distrito del local de salida
+  public ?int $cCiuSal; //E929 Código de la ciudad del local de salida
+  public String $dTelSal; /// E931 Teléfono de contacto del local de salida
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -28,11 +28,11 @@ class GCamSal
   /**
    * Set the value of dDirLocSal
    *
-   * @param string $dDirLocSal
+   * @param String $dDirLocSal
    *
    * @return self
    */
-  public function setDDirLocSal(string $dDirLocSal): self
+  public function setDDirLocSal(String $dDirLocSal): self
   {
     $this->dDirLocSal = $dDirLocSal;
 
@@ -58,11 +58,11 @@ class GCamSal
   /**
    * Set the value of dComp1Sal
    *
-   * @param string $dComp1Sal
+   * @param String $dComp1Sal
    *
    * @return self
    */
-  public function setDComp1Sal(string $dComp1Sal): self
+  public function setDComp1Sal(String $dComp1Sal): self
   {
     $this->dComp1Sal = $dComp1Sal;
 
@@ -73,11 +73,11 @@ class GCamSal
   /**
    * Set the value of dComp2Sal
    *
-   * @param string $dComp2Sal
+   * @param String $dComp2Sal
    *
    * @return self
    */
-  public function setDComp2Sal(string $dComp2Sal): self
+  public function setDComp2Sal(String $dComp2Sal): self
   {
     $this->dComp2Sal = $dComp2Sal;
 
@@ -133,11 +133,11 @@ class GCamSal
   /**
    * Set the value of dTelSal
    *
-   * @param string $dTelSal
+   * @param String $dTelSal
    *
    * @return self
    */
-  public function setDTelSal(string $dTelSal): self
+  public function setDTelSal(String $dTelSal): self
   {
     $this->dTelSal = $dTelSal;
 
@@ -151,9 +151,9 @@ class GCamSal
   /**
    * Get the value of dDirLocSal
    *
-   * @return string
+   * @return String
    */
-  public function getDDirLocSal(): string | null
+  public function getDDirLocSal(): String
   {
     return $this->dDirLocSal;
   }
@@ -163,7 +163,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getDNumCasSal(): int | null
+  public function getDNumCasSal(): int
   {
     return $this->dNumCasSal;
   }
@@ -171,9 +171,9 @@ class GCamSal
   /**
    * Get the value of dComp1Sal
    *
-   * @return string
+   * @return String
    */
-  public function getDComp1Sal(): string | null
+  public function getDComp1Sal(): String
   {
     return $this->dComp1Sal;
   }
@@ -181,9 +181,9 @@ class GCamSal
   /**
    * Get the value of dComp2Sal
    *
-   * @return string
+   * @return String
    */
-  public function getDComp2Sal(): string | null
+  public function getDComp2Sal(): String
   {
     return $this->dComp2Sal;
   }
@@ -193,7 +193,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getCDepSal(): int | null
+  public function getCDepSal(): int
   {
     return $this->cDepSal;
   }
@@ -202,9 +202,9 @@ class GCamSal
    * E926 
    *Descripción del departamento del local de salida
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDepSal(): string | null
+  public function getDDesDepSal(): String
   {
     return DepartamentoHelper::getDepName(strval($this->cDepSal));
   }
@@ -214,7 +214,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getCDisSal(): int | null
+  public function getCDisSal(): int
   {
     return $this->cDisSal;
   }
@@ -222,9 +222,9 @@ class GCamSal
   /**
    * E928 Descripción de distrito del local de salida
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDisSal(): string | null
+  public function getDDesDisSal(): String
   {
     return GeoRefCodesHelper::getDistName(strval($this->cDisSal));
   }
@@ -234,7 +234,7 @@ class GCamSal
    *
    * @return int
    */
-  public function getCCiuSal(): int | null
+  public function getCCiuSal(): int
   {
     return $this->cCiuSal;
   }
@@ -243,9 +243,9 @@ class GCamSal
   /**
    * E930 Descripción de ciudad del local de salida
    *
-   * @return string
+   * @return String
    */
-  public function getDDesCiuSal(): string | null
+  public function getDDesCiuSal(): String
   {
     return GeoRefCodesHelper::getCiudName(strval($this->cCiuSal));
   }
@@ -253,9 +253,9 @@ class GCamSal
   /**
    * Get the value of dTelSal
    *
-   * @return string
+   * @return String
    */
-  public function getDTelSal(): string | null
+  public function getDTelSal(): String
   {
     return $this->dTelSal;
   }

@@ -69,9 +69,9 @@ class RResEnviConsRUC
   /**
    * Obtiene el valor de dCodRes
    *
-   * @return string
+   * @return String
    */
-  public function getDCodRes(): string
+  public function getDCodRes(): String
   {
     return $this->dCodRes;
   }
@@ -79,9 +79,9 @@ class RResEnviConsRUC
   /**
    * Obtiene el valor de dMsgRes
    *
-   * @return string
+   * @return String
    */
-  public function getDMsgRes(): string
+  public function getDMsgRes(): String
   {
     return $this->dMsgRes;
   }

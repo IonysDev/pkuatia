@@ -10,8 +10,8 @@ use DOMElement;
  */
 class TrGeVeCCFF
 {
-  public string $Id; // GECF002 CDC del DE/DTE
-  public string $dNumTraCCFF; ///GECF003 Número de  transferencia de  créditos fiscales
+  public String $Id; // GECF002 CDC del DE/DTE
+  public String $dNumTraCCFF; ///GECF003 Número de  transferencia de  créditos fiscales
   public DateTime $dFeAceTraCCFF; //GECF004 Fecha de aceptación del crédito fiscal
 
   ///////////////////////////////////////////////////////////////////////
@@ -21,11 +21,11 @@ class TrGeVeCCFF
   /**
    * Set the value of Id
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
 
@@ -36,11 +36,11 @@ class TrGeVeCCFF
   /**
    * Set the value of dNumTraCCFF
    *
-   * @param string $dNumTraCCFF
+   * @param String $dNumTraCCFF
    *
    * @return self
    */
-  public function setDNumTraCCFF(string $dNumTraCCFF): self
+  public function setDNumTraCCFF(String $dNumTraCCFF): self
   {
     $this->dNumTraCCFF = $dNumTraCCFF;
 
@@ -69,9 +69,9 @@ class TrGeVeCCFF
   /**
    * Get the value of Id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -79,9 +79,9 @@ class TrGeVeCCFF
   /**
    * Get the value of dNumTraCCFF
    *
-   * @return string
+   * @return String
    */
-  public function getDNumTraCCFF(): string
+  public function getDNumTraCCFF(): String
   {
     return $this->dNumTraCCFF;
   }

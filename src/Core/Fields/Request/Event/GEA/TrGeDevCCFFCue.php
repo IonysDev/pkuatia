@@ -10,10 +10,10 @@ use DOMElement;
  */
 class TrGeDevCCFFCue
 {
-  public string $Id; //GEDF002 CDC del DE/DTE
-  public string $dNumDevSol; //GEDF003 Número DIR
-  public string $dNumDevInf; //GEDF004 Número de informe 
-  public string $dNumDevRes; //GEDF005 Número de resolución de la devolución
+  public String $Id; //GEDF002 CDC del DE/DTE
+  public String $dNumDevSol; //GEDF003 Número DIR
+  public String $dNumDevInf; //GEDF004 Número de informe 
+  public String $dNumDevRes; //GEDF005 Número de resolución de la devolución
   public DateTime $dFeEmiSol; //GEDF006 Fecha de emisión de DIR
   public DateTime $dFeEmiInf; //GEDF007 Fecha de emisión del informe
   public DateTime $dFeEmiRes; //GEDF008 Fecha de emisión de la resolución
@@ -25,11 +25,11 @@ class TrGeDevCCFFCue
   /**
    * Set the value of Id
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
 
@@ -40,11 +40,11 @@ class TrGeDevCCFFCue
   /**
    * Set the value of dNumDevSol
    *
-   * @param string $dNumDevSol
+   * @param String $dNumDevSol
    *
    * @return self
    */
-  public function setDNumDevSol(string $dNumDevSol): self
+  public function setDNumDevSol(String $dNumDevSol): self
   {
     $this->dNumDevSol = $dNumDevSol;
 
@@ -55,11 +55,11 @@ class TrGeDevCCFFCue
   /**
    * Set the value of dNumDevInf
    *
-   * @param string $dNumDevInf
+   * @param String $dNumDevInf
    *
    * @return self
    */
-  public function setDNumDevInf(string $dNumDevInf): self
+  public function setDNumDevInf(String $dNumDevInf): self
   {
     $this->dNumDevInf = $dNumDevInf;
 
@@ -70,11 +70,11 @@ class TrGeDevCCFFCue
   /**
    * Set the value of dNumDevRes
    *
-   * @param string $dNumDevRes
+   * @param String $dNumDevRes
    *
    * @return self
    */
-  public function setDNumDevRes(string $dNumDevRes): self
+  public function setDNumDevRes(String $dNumDevRes): self
   {
     $this->dNumDevRes = $dNumDevRes;
 
@@ -134,9 +134,9 @@ class TrGeDevCCFFCue
   /**
    * Get the value of Id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -144,9 +144,9 @@ class TrGeDevCCFFCue
   /**
    * Get the value of dNumDevSol
    *
-   * @return string
+   * @return String
    */
-  public function getDNumDevSol(): string
+  public function getDNumDevSol(): String
   {
     return $this->dNumDevSol;
   }
@@ -154,9 +154,9 @@ class TrGeDevCCFFCue
   /**
    * Get the value of dNumDevInf
    *
-   * @return string
+   * @return String
    */
-  public function getDNumDevInf(): string
+  public function getDNumDevInf(): String
   {
     return $this->dNumDevInf;
   }
@@ -164,9 +164,9 @@ class TrGeDevCCFFCue
   /**
    * Get the value of dNumDevRes
    *
-   * @return string
+   * @return String
    */
-  public function getDNumDevRes(): string
+  public function getDNumDevRes(): String
   {
     return $this->dNumDevRes;
   }

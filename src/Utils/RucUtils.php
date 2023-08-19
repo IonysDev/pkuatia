@@ -13,11 +13,11 @@ class RucUtils {
 	/**
 	 * Función para calcular el dígito verificador de un RUC.
 	 * 
-	 * @param string $value RUC
+	 * @param String $value RUC
 	 * 
 	 * @return int DV
 	 */
-	public static function CalcDV(string $value){
+	public static function CalcDV(String $value){
 		$ruc_al = "";
 		for($i = 0; $i < strlen($value); $i++){
 			$c = $value[$i];

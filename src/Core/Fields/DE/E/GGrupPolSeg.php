@@ -11,26 +11,26 @@ use DOMElement;
  */
 class GGrupPolSeg
 {
-  public ?string $dPoliza = null; /// EA791 Código de la póliza
-  public ?string $dUnidVig = null; //EA792 Descripción de la unidad de tiempo de vigencia
-  public ?int $dVigencia = null; ///EA793 Vigencia de la póliza
-  public ?string $dNumPoliza = null; /// EA794 Número de la póliza
-  public ?DateTime $dFecIniVig = null; ///EA795 Fecha de inicio de vigencia
-  public ?DateTime $dFecFinVig = null; //EA796 Fecha de fin de vigencia
-  public ?string $dCodInt = null; ///EA797 Código interno del ítem
+  public String $dPoliza; /// EA791 Código de la póliza
+  public String $dUnidVig; //EA792 Descripción de la unidad de tiempo de vigencia
+  public int $dVigencia; ///EA793 Vigencia de la póliza
+  public String $dNumPoliza; /// EA794 Número de la póliza
+  public DateTime $dFecIniVig; ///EA795 Fecha de inicio de vigencia
+  public DateTime $dFecFinVig; //EA796 Fecha de fin de vigencia
+  public String $dCodInt; ///EA797 Código interno del ítem
 
   ///////////////////////////////////////////////////////////////////////
-  //SETTERS
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
    * Set the value of dPoliza
    *
-   * @param string $dPoliza
+   * @param String $dPoliza
    *
    * @return self
    */
-  public function setDPoliza(string $dPoliza): self
+  public function setDPoliza(String $dPoliza): self
   {
     $this->dPoliza = $dPoliza;
 
@@ -41,11 +41,11 @@ class GGrupPolSeg
   /**
    * Set the value of dUnidVig
    *
-   * @param string $dUnidVig
+   * @param String $dUnidVig
    *
    * @return self
    */
-  public function setDUnidVig(string $dUnidVig): self
+  public function setDUnidVig(String $dUnidVig): self
   {
     $this->dUnidVig = $dUnidVig;
 
@@ -71,11 +71,11 @@ class GGrupPolSeg
   /**
    * Set the value of dNumPoliza
    *
-   * @param string $dNumPoliza
+   * @param String $dNumPoliza
    *
    * @return self
    */
-  public function setDNumPoliza(string $dNumPoliza): self
+  public function setDNumPoliza(String $dNumPoliza): self
   {
     $this->dNumPoliza = $dNumPoliza;
 
@@ -116,11 +116,11 @@ class GGrupPolSeg
   /**
    * Set the value of dCodInt
    *
-   * @param string $dCodInt
+   * @param String $dCodInt
    *
    * @return self
    */
-  public function setDCodInt(string $dCodInt): self
+  public function setDCodInt(String $dCodInt): self
   {
     $this->dCodInt = $dCodInt;
 
@@ -132,13 +132,12 @@ class GGrupPolSeg
   ///Getters
   ///////////////////////////////////////////////////////////////////////
 
-
   /**
    * Get the value of dPoliza
    *
-   * @return string
+   * @return String
    */
-  public function getDPoliza(): string | null
+  public function getDPoliza(): String
   {
     return $this->dPoliza;
   }
@@ -146,9 +145,9 @@ class GGrupPolSeg
   /**
    * Get the value of dUnidVig
    *
-   * @return string
+   * @return String
    */
-  public function getDUnidVig(): string | null
+  public function getDUnidVig(): String
   {
     return $this->dUnidVig;
   }
@@ -158,7 +157,7 @@ class GGrupPolSeg
    *
    * @return int
    */
-  public function getDVigencia(): int | null
+  public function getDVigencia(): int
   {
     return $this->dVigencia;
   }
@@ -166,9 +165,9 @@ class GGrupPolSeg
   /**
    * Get the value of dNumPoliza
    *
-   * @return string
+   * @return String
    */
-  public function getDNumPoliza(): string | null
+  public function getDNumPoliza(): String
   {
     return $this->dNumPoliza;
   }
@@ -178,7 +177,7 @@ class GGrupPolSeg
    *
    * @return DateTime
    */
-  public function getDFecIniVig(): DateTime | null
+  public function getDFecIniVig(): DateTime
   {
     return $this->dFecIniVig;
   }
@@ -188,7 +187,7 @@ class GGrupPolSeg
    *
    * @return DateTime
    */
-  public function getDFecFinVig(): DateTime | null
+  public function getDFecFinVig(): DateTime
   {
     return $this->dFecFinVig;
   }
@@ -196,9 +195,9 @@ class GGrupPolSeg
   /**
    * Get the value of dCodInt
    *
-   * @return string
+   * @return String
    */
-  public function getDCodInt(): string | null
+  public function getDCodInt(): String
   {
     return $this->dCodInt;
   }
@@ -226,30 +225,6 @@ class GGrupPolSeg
 
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GGrupPolSeg
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GGrupPolSeg
-  // {
-  //   if (strcmp($xml->tagName, 'gGrupPolSeg') === 0 && $xml->childElementCount == 7) {
-  //     $res = new GGrupPolSeg();
-  //     $res->setDPoliza($xml->getElementsByTagName('dDPoliza')->item(0)->nodeValue);
-  //     $res->setDUnidVig($xml->getElementsByTagName('dUnidVig')->item(0)->nodeValue);
-  //     $res->setDVigencia(intval($xml->getElementsByTagName('dVigencia')->item(0)->nodeValue));
-  //     $res->setDNumPoliza($xml->getElementsByTagName('dNumPoliza')->item(0)->nodeValue);
-  //     $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dfecIniVig')->item(0)->nodeValue));
-  //     $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecFinVig')->item(0)->nodeValue));
-  //     $res->setDCodInt($xml->getElementsByTagName('gGrupoPolSeg')->item(0)->nodeValue);
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
    * FromSifenResponseObject

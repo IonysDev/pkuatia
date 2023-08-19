@@ -95,9 +95,9 @@ class GCamNRE
   /**
    * E502 Descripción del motivo de emisión E500
    *
-   * @return string
+   * @return String
    */
-  public function getDDesMotEmiNR(): string 
+  public function getDDesMotEmiNR(): String 
   {
     switch ($this->iMotEmiNR) {
       case 1:
@@ -165,9 +165,9 @@ class GCamNRE
   /**
    * E504 Descripción del responsable de la emisión de la Nota de Remisión Electrónica  
    *
-   * @return string
+   * @return String
    */
-  public function getDDesRespEmiNR(): string 
+  public function getDDesRespEmiNR(): String 
   {
     switch ($this->iRespEmiNR) {
       case 1:

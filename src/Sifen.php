@@ -94,7 +94,7 @@ class Sifen
         return RRetEnviDe::FromSifenResponseObject($object);
     }
 
-    private static function GetSifenUrlBase() : string {
+    private static function GetSifenUrlBase() : String {
         if (strtolower(self::$config->env) == "prod") {
             return Constants::SIFEN_URL_BASE_PROD;
         } else {

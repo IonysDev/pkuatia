@@ -18,7 +18,7 @@ class SignHelper
     public static CryptoSigner $cryptoSigner;
     public static XmlSigner $xmlSigner;
 
-    public static function init(string $privateKey, string $password, KeyFormat $format = KeyFormat::P12, $pemCertificate = null)
+    public static function init(String $privateKey, String $password, KeyFormat $format = KeyFormat::P12, $pemCertificate = null)
     {
         self::$privateKeyStore = new PrivateKeyStore();
 
@@ -36,7 +36,7 @@ class SignHelper
         self::$xmlSigner = new XmlSigner(self::$cryptoSigner);
     }
 
-    public static function initFromFile(string $keyPath, string $password, string $pemCertificateFile = null)
+    public static function initFromFile(String $keyPath, String $password, String $pemCertificateFile = null)
     {
         if(!file_exists($keyPath))
             throw new \Exception("Private key file not found.");
@@ -76,7 +76,7 @@ class SignHelper
             throw new \Exception("File extension not supported.");
     }
 
-    public static function sign(string $xml, string $referenceUri = null)
+    public static function sign(String $xml, String $referenceUri = null)
     {
         if(!isset(self::$xmlSigner))
             throw new \Exception("SignHelper not initialized.");

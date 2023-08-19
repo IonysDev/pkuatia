@@ -11,12 +11,12 @@ use DOMElement;
  */
 class GGrupEner
 {
-  public ?string $dNroMed = null; //E792 Número de medidor
-  public ?int $dActiv = null; ///E793 Código de actividad
-  public ?string $dCateg = null; ///E794 Código de categoría
-  public ?int $dLecAnt = null; ///E795 Lectura anterior
-  public ?int $dLecAct = null; ///E796 Lectura actual
-  public ?int $dConKwh = null; /// 797 dConKwh Consumo
+  public String $dNroMed; //E792 Número de medidor
+  public int $dActiv; ///E793 Código de actividad
+  public String $dCateg; ///E794 Código de categoría
+  public int $dLecAnt; ///E795 Lectura anterior
+  public int $dLecAct; ///E796 Lectura actual
+  public int $dConKwh; /// 797 dConKwh Consumo
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTETS
@@ -25,11 +25,11 @@ class GGrupEner
   /**
    * Set the value of dNroMed
    *
-   * @param string $dNroMed
+   * @param String $dNroMed
    *
    * @return self
    */
-  public function setDNroMed(string $dNroMed): self
+  public function setDNroMed(String $dNroMed): self
   {
     $this->dNroMed = $dNroMed;
 
@@ -55,11 +55,11 @@ class GGrupEner
   /**
    * Set the value of dCateg
    *
-   * @param string $dCateg
+   * @param String $dCateg
    *
    * @return self
    */
-  public function setDCateg(string $dCateg): self
+  public function setDCateg(String $dCateg): self
   {
     $this->dCateg = $dCateg;
 
@@ -118,9 +118,9 @@ class GGrupEner
   /**
    * Get the value of dNroMed
    *
-   * @return string
+   * @return String
    */
-  public function getDNroMed(): string | null
+  public function getDNroMed(): String
   {
     return $this->dNroMed;
   }
@@ -130,7 +130,7 @@ class GGrupEner
    *
    * @return int
    */
-  public function getDActiv(): int | null
+  public function getDActiv(): int
   {
     return $this->dActiv;
   }
@@ -138,9 +138,9 @@ class GGrupEner
   /**
    * Get the value of dCateg
    *
-   * @return string
+   * @return String
    */
-  public function getDCateg(): string | null
+  public function getDCateg(): String
   {
     return $this->dCateg;
   }
@@ -150,7 +150,7 @@ class GGrupEner
    *
    * @return int
    */
-  public function getDLecAnt(): int | null
+  public function getDLecAnt(): int
   {
     return $this->dLecAnt;
   }
@@ -160,7 +160,7 @@ class GGrupEner
    *
    * @return int
    */
-  public function getDLecAct(): int | null
+  public function getDLecAct(): int
   {
     return $this->dLecAct;
   }
@@ -170,7 +170,7 @@ class GGrupEner
    *
    * @return int
    */
-  public function getDConKwh(): int | null
+  public function getDConKwh(): int
   {
     return $this->dLecAct - $this->dLecAct;
   }
@@ -197,29 +197,6 @@ class GGrupEner
 
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GGrupEner
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GGrupEner
-  // {
-  //   if (strcmp($xml->tagName, 'gGrupEner') == 0 && $xml->childElementCount == 6) {
-  //     $res = new GGrupEner();
-  //     $res->setDNroMed($xml->getElementsByTagName('dNroMed')->item(0)->nodeValue);
-  //     $res->setDActiv(intval($xml->getElementsByTagName('dActiv')->item(0)->nodeValue));
-  //     $res->setDCateg($xml->getElementsByTagName('dCateg')->item(0)->item(0)->nodeValue);
-  //     $res->setDLecAnt(intval($xml->getElementsByTagName('dLecAnt')->item(0)->nodeValue));
-  //     $res->setDLecAct(intval($xml->getElementsByTagName('dLecAct')->item(0)->nodeValue));
-  //     $res->setDConKwh(intval($xml->getElementsByTagName('dConKwh')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
    * FromSifenResponseObject

@@ -124,7 +124,7 @@
 				Descripción del departamento donde se realiza la transacción
 			</xs:documentation>
 		</xs:annotation>
-        <xs:restriction base="xs:string">
+        <xs:restriction base="xs:String">
             <xs:enumeration value="CAPITAL"/>
             <xs:enumeration value="CONCEPCION"/>
             <xs:enumeration value="SAN PEDRO"/>

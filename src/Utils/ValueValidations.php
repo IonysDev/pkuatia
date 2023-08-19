@@ -5,14 +5,14 @@ namespace Abiliomp\Pkuatia\Utils;
 class ValueValidations
 {
     /**
-     * Check if a string represents a valid decimal number with the specified precision and integer part lenght.
+     * Check if a String represents a valid decimal number with the specified precision and integer part lenght.
      * 
-     * @param String $value The string to check.
+     * @param String $value The String to check.
      * @param int $intPartLenght The integer part lenght.
      * @param int $decPartMinPrecision The minimum decimal part precision.
      * @param int $decPartMaxPrecision The maximum decimal part precision.
      * 
-     * @return bool True if the string is a valid decimal number, false otherwise.
+     * @return bool True if the String is a valid decimal number, false otherwise.
      */
     public static function isValidStringDecimal(String $value, int $intPartLenght, int $decPartMinPrecision, int $decPartMaxPrecision = 99)
     {

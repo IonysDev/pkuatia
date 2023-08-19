@@ -10,12 +10,12 @@ use DOMElement;
  */
 class GGrupAdi
 {
-  public ?string $ciclo = null;     //E821 Ciclo 
-  public ?DateTime $dFecIniC = null; //E822 Fecha de inicio de ciclo
-  public ?DateTime $dFecFinC = null; //E823 Fecha de fin de ciclo
-  public ?DateTime $dVencPag = null; //E824 Fecha de vencimiento de pago
-  public ?string $dContrato = null; //E825 Número de contrato
-  public ?float $dSaltAnt = null;   //E826 Saldo anterior
+  public String $ciclo;     //E821 Ciclo 
+  public ?DateTime $dFecIniC; //E822 Fecha de inicio de ciclo
+  public ?DateTime $dFecFinC; //E823 Fecha de fin de ciclo
+  public ?DateTime $dVencPag; //E824 Fecha de vencimiento de pago
+  public String $dContrato; //E825 Número de contrato
+  public ?float $dSaltAnt;   //E826 Saldo anterior
 
 
   /////////////////////////////////////////////
@@ -26,11 +26,11 @@ class GGrupAdi
   /**
    * Set the value of ciclo
    *
-   * @param ?string $ciclo
+   * @param String $ciclo
    *
    * @return self
    */
-  public function setCiclo(?string $ciclo): self
+  public function setCiclo(String $ciclo): self
   {
     $this->ciclo = $ciclo;
 
@@ -88,11 +88,11 @@ class GGrupAdi
   /**
    * Set the value of dContrato
    *
-   * @param ?string $dContrato
+   * @param String $dContrato
    *
    * @return self
    */
-  public function setDContrato(?string $dContrato): self
+  public function setDContrato(String $dContrato): self
   {
     $this->dContrato = $dContrato;
 
@@ -122,9 +122,9 @@ class GGrupAdi
   /**
    * Get the value of ciclo
    *
-   * @return ?string
+   * @return String
    */
-  public function getCiclo(): ?string
+  public function getCiclo(): String
   {
     return $this->ciclo;
   }
@@ -162,9 +162,9 @@ class GGrupAdi
   /**
    * Get the value of dContrato
    *
-   * @return ?string
+   * @return String
    */
-  public function getDContrato(): ?string
+  public function getDContrato(): String
   {
     return $this->dContrato;
   }

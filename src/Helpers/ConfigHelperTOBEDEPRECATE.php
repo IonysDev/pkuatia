@@ -42,24 +42,24 @@ class SignatureHelper
    * Dependiendo de esto se definen las urls a utilizar*/
   private TipoAmbiente $ambiente;
 
-  /*  $urlBase (string): URL a la que se hará la petición.
+  /*  $urlBase (String): URL a la que se hará la petición.
    *  Hay una para cada tipo de ambiente. Se puede sobreescribir.
    */
-  private string $urlBase;
-  private string $urlBaseLocal;
-  private string $urlConsultaQr;
+  private String $urlBase;
+  private String $urlBaseLocal;
+  private String $urlConsultaQr;
 
   /* pathRecibe, pathRecibeLote, pathEvento, 
    * pathConsultaLote, pathConsultaRUC, patchConsulta (String):
    * path para las peticiones específicas. 
    * Tienen valores por defecto (obtenidos del MT), pero pueden ser sobreescritas.
    */
-  private string $pathRecibe;
-  private string $pathRecibeLote;
-  private string $pathEvento;
-  private string $pathConsultaLote;
-  private string $pathConsultaRUC;
-  private string $pathConsulta;
+  private String $pathRecibe;
+  private String $pathRecibeLote;
+  private String $pathEvento;
+  private String $pathConsultaLote;
+  private String $pathConsultaRUC;
+  private String $pathConsulta;
 
   /* usarCertificadoCliente (bool): 
    * Define si se utiliza o no el certificado proporcionado para la
@@ -75,15 +75,15 @@ class SignatureHelper
 
   /* certificadoCliente, contrasenaCertificadoCliente (String): Certificado a utilizar (ruta del archivo o
    *  archivo codificado en Base64), junto a la contraseña. */
-  private string $certificadoCliente;
-  private string $contrasenaCertificadoCliente;
+  private String $certificadoCliente;
+  private String $contrasenaCertificadoCliente;
 
-  private string $idCSC;
-  private string $CSC;
+  private String $idCSC;
+  private String $CSC;
 
   private int $httpConnectTimeout;
   private int $httpReadTimeout;
-  private string $userAgent;
+  private String $userAgent;
 
   //////////////////////////////////////////////////////////////////
   ///Constructores
@@ -114,8 +114,8 @@ class SignatureHelper
   public function __construct2(
     TipoAmbiente $tipoAmbiente,
     TipoCertificadoCliente $tipoCertificadoCliente,
-    string $certificadoCliente,
-    string $contraseñaCliente
+    String $certificadoCliente,
+    String $contraseñaCliente
   ) {
     $this->__construct();
     $this->setAmbiente($tipoAmbiente);
@@ -128,11 +128,11 @@ class SignatureHelper
 
   public function __construct3(
     TipoAmbiente $tipoAmbiente,
-    string $idCSC,
-    string $CSC,
+    String $idCSC,
+    String $CSC,
     TipoCertificadoCliente $tipoCertificadoCliente,
-    string $certificadoCliente,
-    string $contraseCertificadoCliente
+    String $certificadoCliente,
+    String $contraseCertificadoCliente
   ) {
     $this->__construct2($tipoAmbiente, $tipoCertificadoCliente, $certificadoCliente, $contraseCertificadoCliente);
     $this->setIdCSC($idCSC);
@@ -169,11 +169,11 @@ class SignatureHelper
   /**
    * Set the value of urlBase
    *
-   * @param string $urlBase
+   * @param String $urlBase
    *
    * @return self
    */
-  public function setUrlBase(string $urlBase): self
+  public function setUrlBase(String $urlBase): self
   {
     $this->urlBase = $urlBase;
 
@@ -184,11 +184,11 @@ class SignatureHelper
   /**
    * Set the value of urlBaseLocal
    *
-   * @param string $urlBaseLocal
+   * @param String $urlBaseLocal
    *
    * @return self
    */
-  public function setUrlBaseLocal(string $urlBaseLocal): self
+  public function setUrlBaseLocal(String $urlBaseLocal): self
   {
     $this->urlBaseLocal = $urlBaseLocal;
 
@@ -199,11 +199,11 @@ class SignatureHelper
   /**
    * Set the value of urlConsultaQr
    *
-   * @param string $urlConsultaQr
+   * @param String $urlConsultaQr
    *
    * @return self
    */
-  public function setUrlConsultaQr(string $urlConsultaQr): self
+  public function setUrlConsultaQr(String $urlConsultaQr): self
   {
     $this->urlConsultaQr = $urlConsultaQr;
 
@@ -214,11 +214,11 @@ class SignatureHelper
   /**
    * Set the value of pathRecibe
    *
-   * @param string $pathRecibe
+   * @param String $pathRecibe
    *
    * @return self
    */
-  public function setPathRecibe(string $pathRecibe): self
+  public function setPathRecibe(String $pathRecibe): self
   {
     $this->pathRecibe = $pathRecibe;
 
@@ -229,11 +229,11 @@ class SignatureHelper
   /**
    * Set the value of pathRecibeLote
    *
-   * @param string $pathRecibeLote
+   * @param String $pathRecibeLote
    *
    * @return self
    */
-  public function setPathRecibeLote(string $pathRecibeLote): self
+  public function setPathRecibeLote(String $pathRecibeLote): self
   {
     $this->pathRecibeLote = $pathRecibeLote;
 
@@ -244,11 +244,11 @@ class SignatureHelper
   /**
    * Set the value of pathEvento
    *
-   * @param string $pathEvento
+   * @param String $pathEvento
    *
    * @return self
    */
-  public function setPathEvento(string $pathEvento): self
+  public function setPathEvento(String $pathEvento): self
   {
     $this->pathEvento = $pathEvento;
 
@@ -259,11 +259,11 @@ class SignatureHelper
   /**
    * Set the value of pathConsultaLote
    *
-   * @param string $pathConsultaLote
+   * @param String $pathConsultaLote
    *
    * @return self
    */
-  public function setPathConsultaLote(string $pathConsultaLote): self
+  public function setPathConsultaLote(String $pathConsultaLote): self
   {
     $this->pathConsultaLote = $pathConsultaLote;
 
@@ -274,11 +274,11 @@ class SignatureHelper
   /**
    * Set the value of pathConsultaRUC
    *
-   * @param string $pathConsultaRUC
+   * @param String $pathConsultaRUC
    *
    * @return self
    */
-  public function setPathConsultaRUC(string $pathConsultaRUC): self
+  public function setPathConsultaRUC(String $pathConsultaRUC): self
   {
     $this->pathConsultaRUC = $pathConsultaRUC;
 
@@ -289,11 +289,11 @@ class SignatureHelper
   /**
    * Set the value of pathConsulta
    *
-   * @param string $pathConsulta
+   * @param String $pathConsulta
    *
    * @return self
    */
-  public function setPathConsulta(string $pathConsulta): self
+  public function setPathConsulta(String $pathConsulta): self
   {
     $this->pathConsulta = $pathConsulta;
 
@@ -334,11 +334,11 @@ class SignatureHelper
   /**
    * Set the value of contrasenaCertificadoCliente
    *
-   * @param string $contrasenaCertificadoCliente
+   * @param String $contrasenaCertificadoCliente
    *
    * @return self
    */
-  public function setContrasenaCertificadoCliente(string $contrasenaCertificadoCliente): self
+  public function setContrasenaCertificadoCliente(String $contrasenaCertificadoCliente): self
   {
     $this->contrasenaCertificadoCliente = $contrasenaCertificadoCliente;
 
@@ -349,11 +349,11 @@ class SignatureHelper
   /**
    * Set the value of idCSC
    *
-   * @param string $idCSC
+   * @param String $idCSC
    *
    * @return self
    */
-  public function setIdCSC(string $idCSC): self
+  public function setIdCSC(String $idCSC): self
   {
     $this->idCSC = str_pad($idCSC, '0', 4, STR_PAD_LEFT);
 
@@ -364,11 +364,11 @@ class SignatureHelper
   /**
    * Set the value of CSC
    *
-   * @param string $CSC
+   * @param String $CSC
    *
    * @return self
    */
-  public function setCSC(string $CSC): self
+  public function setCSC(String $CSC): self
   {
     $this->CSC = $CSC;
 
@@ -409,11 +409,11 @@ class SignatureHelper
   /**
    * Set the value of userAgent
    *
-   * @param string $userAgent
+   * @param String $userAgent
    *
    * @return self
    */
-  public function setUserAgent(string $userAgent): self
+  public function setUserAgent(String $userAgent): self
   {
     $this->userAgent = $userAgent;
 
@@ -424,11 +424,11 @@ class SignatureHelper
   /**
    * Set the value of certificadoCliente
    *
-   * @param string $certificadoCliente
+   * @param String $certificadoCliente
    *
    * @return self
    */
-  public function setCertificadoCliente(string $certificadoCliente): self
+  public function setCertificadoCliente(String $certificadoCliente): self
   {
     $this->certificadoCliente = $certificadoCliente;
 
@@ -452,9 +452,9 @@ class SignatureHelper
   /**
    * Get the value of urlBase
    *
-   * @return string
+   * @return String
    */
-  public function getUrlBase(): string
+  public function getUrlBase(): String
   {
     return $this->urlBase;
   }
@@ -462,9 +462,9 @@ class SignatureHelper
   /**
    * Get the value of urlBaseLocal
    *
-   * @return string
+   * @return String
    */
-  public function getUrlBaseLocal(): string
+  public function getUrlBaseLocal(): String
   {
     return $this->urlBaseLocal;
   }
@@ -472,9 +472,9 @@ class SignatureHelper
   /**
    * Get the value of urlConsultaQr
    *
-   * @return string
+   * @return String
    */
-  public function getUrlConsultaQr(): string
+  public function getUrlConsultaQr(): String
   {
     return $this->urlConsultaQr;
   }
@@ -482,9 +482,9 @@ class SignatureHelper
   /**
    * Get the value of pathRecibe
    *
-   * @return string
+   * @return String
    */
-  public function getPathRecibe(): string
+  public function getPathRecibe(): String
   {
     return $this->pathRecibe;
   }
@@ -492,9 +492,9 @@ class SignatureHelper
   /**
    * Get the value of pathRecibeLote
    *
-   * @return string
+   * @return String
    */
-  public function getPathRecibeLote(): string
+  public function getPathRecibeLote(): String
   {
     return $this->pathRecibeLote;
   }
@@ -502,9 +502,9 @@ class SignatureHelper
   /**
    * Get the value of pathEvento
    *
-   * @return string
+   * @return String
    */
-  public function getPathEvento(): string
+  public function getPathEvento(): String
   {
     return $this->pathEvento;
   }
@@ -512,9 +512,9 @@ class SignatureHelper
   /**
    * Get the value of pathConsultaLote
    *
-   * @return string
+   * @return String
    */
-  public function getPathConsultaLote(): string
+  public function getPathConsultaLote(): String
   {
     return $this->pathConsultaLote;
   }
@@ -522,9 +522,9 @@ class SignatureHelper
   /**
    * Get the value of pathConsultaRUC
    *
-   * @return string
+   * @return String
    */
-  public function getPathConsultaRUC(): string
+  public function getPathConsultaRUC(): String
   {
     return $this->pathConsultaRUC;
   }
@@ -532,9 +532,9 @@ class SignatureHelper
   /**
    * Get the value of pathConsulta
    *
-   * @return string
+   * @return String
    */
-  public function getPathConsulta(): string
+  public function getPathConsulta(): String
   {
     return $this->pathConsulta;
   }
@@ -562,9 +562,9 @@ class SignatureHelper
   /**
    * Get the value of contrasenaCertificadoCliente
    *
-   * @return string
+   * @return String
    */
-  public function getContrasenaCertificadoCliente(): string
+  public function getContrasenaCertificadoCliente(): String
   {
     return $this->contrasenaCertificadoCliente;
   }
@@ -572,9 +572,9 @@ class SignatureHelper
   /**
    * Get the value of idCSC
    *
-   * @return string
+   * @return String
    */
-  public function getIdCSC(): string
+  public function getIdCSC(): String
   {
     return $this->idCSC;
   }
@@ -582,9 +582,9 @@ class SignatureHelper
   /**
    * Get the value of CSC
    *
-   * @return string
+   * @return String
    */
-  public function getCSC(): string
+  public function getCSC(): String
   {
     return $this->CSC;
   }
@@ -612,9 +612,9 @@ class SignatureHelper
   /**
    * Get the value of userAgent
    *
-   * @return string
+   * @return String
    */
-  public function getUserAgent(): string
+  public function getUserAgent(): String
   {
     return $this->userAgent;
   }
@@ -622,9 +622,9 @@ class SignatureHelper
   /**
    * Get the value of certificadoCliente
    *
-   * @return string
+   * @return String
    */
-  public function getCertificadoCliente(): string
+  public function getCertificadoCliente(): String
   {
     return $this->certificadoCliente;
   }
@@ -639,7 +639,7 @@ class SignatureHelper
    * @param  mixed $ruta
    * @return SignatureHelper
    */
-  public static function cargarConf(string $ruta): SignatureHelper
+  public static function cargarConf(String $ruta): SignatureHelper
   {
     $ruta = realpath($ruta);
 
@@ -694,9 +694,9 @@ class SignatureHelper
   /**
    * toString
    *
-   * @return string
+   * @return String
    */
-  public function toString(): string
+  public function toString(): String
   {
     return "SignatureHelper{" .
       "ambiente=" . $this->ambiente .

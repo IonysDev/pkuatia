@@ -11,8 +11,8 @@ use DOMException;
  */
 class GGrupSeg
 {
-  public ?string $dCodEmpSeg = null; //E801 Código de la empresa de seguros en la Superintendencia de Seguros
-  public ?GGrupPolSeg $gGrupoPolSeg = null;
+  public ?String $dCodEmpSeg; //E801 Código de la empresa de seguros en la Superintendencia de Seguros
+  public ?GGrupPolSeg $gGrupoPolSeg;
 
 
   /////////////////////////////////////////////////
@@ -30,11 +30,11 @@ class GGrupSeg
   /**
    * Set the value of dCodEmpSeg
    *
-   * @param string $dCodEmpSeg
+   * @param String $dCodEmpSeg
    *
    * @return self
    */
-  public function setDCodEmpSeg(string $dCodEmpSeg): self
+  public function setDCodEmpSeg(String $dCodEmpSeg): self
   {
     $this->dCodEmpSeg = $dCodEmpSeg;
 
@@ -48,9 +48,9 @@ class GGrupSeg
   /**
    * Get the value of dCodEmpSeg
    *
-   * @return string
+   * @return String
    */
-  public function getDCodEmpSeg(): string | null
+  public function getDCodEmpSeg(): String
   {
     return $this->dCodEmpSeg;
   }
@@ -73,26 +73,6 @@ class GGrupSeg
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GGrupSeg
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GGrupSeg
-  // {
-  //   if (strcmp($xml->tagName, 'GGrupSeg' == 0) && $xml->childElementCount == 2) {
-  //     $res = new GGrupSeg();
-  //     $res->setDCodEmpSeg($xml->getElementsByTagName('dCodEmpSeg')->item(0)->nodeValue);
-  //     ///children
-  //     $res->setGGrupoPolSeg($res->gGrupoPolSeg->fromDOMElement($xml->getElementsByTagName('GGrupoPolSeg')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
   ///////////////////////////////////////////////////////////////////////
   //Others
   ///////////////////////////////////////////////////////////////////////
@@ -102,7 +82,7 @@ class GGrupSeg
    *
    * @return GGrupPolSeg
    */
-  public function getGGrupoPolSeg(): GGrupPolSeg | null
+  public function getGGrupoPolSeg(): GGrupPolSeg
   {
     return $this->gGrupoPolSeg;
   }

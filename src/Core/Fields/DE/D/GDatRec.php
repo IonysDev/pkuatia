@@ -17,30 +17,30 @@ use SimpleXMLElement;
 class GDatRec
 {
 
-    public ?int $iNatRec = null; // Naturaleza del receptor (D201): 1 = contribuyente | 2 = no contribuyente
-    public ?int $iTiOpe = null; // Tipo de operación (D202): 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
-    public ?string $cPaisRec = null; // Código de país del receptor (D203)
-    public ?string $dDesPaisRe = null; // Descripción del país del receptor (D204)
-    public ?int $iTiContRec = null; // Tipo de contribuyente receptor (D205): 1 = Persona Física | 2 = Persona Jurídica
-    public ?string $dRucRec = null; // RUC del receptor (D206)
-    public ?int $dDVRec = null; // Dígito verificador del RUC del receptor (D207)
-    public ?int $iTipIDRec = null; // Tipo de documento de identidad del receptor (D208): 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
-    public ?String $dDTipIDRec = null; // Descripción del tipo de documento de identidad del receptor (D209)
-    public ?string $dNumIDRec = null; // Número de documento de identidad (D210)
-    public ?string $dNomRec = null; // Nombre o razón social del receptor del DE (D211)
-    public ?string $dNomFanRec = null; // Nombre de fantasía (D212)
-    public ?string $dDirRec = null; // Dirección del receptor (D213)
-    public ?int $dNumCasRec = null; // Número de casa del receptor (D218)
-    public ?int $cDepRec = null; // Código del departamento del receptor (D219)
-    public ?String $dDesDepRec = null; // Descripción del departamento del receptor (D220)
-    public ?int $cDisRec = null; // Código del distrito del receptor (D221)
-    public ?String $dDesDisRec = null; // Descripción del distrito del receptor (D222)
-    public ?int $cCiuRec = null; // Código del ciudad del receptor (D223)
-    public ?String $dDesCiuRec = null; // Descripción del ciudad del receptor (D224)
-    public ?string $dTelRec = null; // Número de teléfono del receptor (D214)
-    public ?string $dCelRec = null; // Número de celular del receptor (D215)
-    public ?string $dEmailRec = null; // Correo electrónico de receptor (D216)
-    public ?string $dCodCliente = null; // Código del cliente (D217)
+    public ?int $iNatRec; // Naturaleza del receptor (D201): 1 = contribuyente | 2 = no contribuyente
+    public ?int $iTiOpe; // Tipo de operación (D202): 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
+    public String $cPaisRec; // Código de país del receptor (D203)
+    public String $dDesPaisRe; // Descripción del país del receptor (D204)
+    public ?int $iTiContRec; // Tipo de contribuyente receptor (D205): 1 = Persona Física | 2 = Persona Jurídica
+    public String $dRucRec; // RUC del receptor (D206)
+    public ?int $dDVRec; // Dígito verificador del RUC del receptor (D207)
+    public ?int $iTipIDRec; // Tipo de documento de identidad del receptor (D208): 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
+    public ?String $dDTipIDRec; // Descripción del tipo de documento de identidad del receptor (D209)
+    public String $dNumIDRec; // Número de documento de identidad (D210)
+    public String $dNomRec; // Nombre o razón social del receptor del DE (D211)
+    public String $dNomFanRec; // Nombre de fantasía (D212)
+    public String $dDirRec; // Dirección del receptor (D213)
+    public ?int $dNumCasRec; // Número de casa del receptor (D218)
+    public ?int $cDepRec; // Código del departamento del receptor (D219)
+    public ?String $dDesDepRec; // Descripción del departamento del receptor (D220)
+    public ?int $cDisRec; // Código del distrito del receptor (D221)
+    public ?String $dDesDisRec; // Descripción del distrito del receptor (D222)
+    public ?int $cCiuRec; // Código del ciudad del receptor (D223)
+    public ?String $dDesCiuRec; // Descripción del ciudad del receptor (D224)
+    public String $dTelRec; // Número de teléfono del receptor (D214)
+    public String $dCelRec; // Número de celular del receptor (D215)
+    public String $dEmailRec; // Correo electrónico de receptor (D216)
+    public String $dCodCliente; // Código del cliente (D217)
 
     /**
      * GDatRec constructor.
@@ -65,12 +65,12 @@ class GDatRec
         $this->iTiOpe = $iTiOpe;
     }
 
-    public function setCPaisRec(string $cPaisRec): void
+    public function setCPaisRec(String $cPaisRec): void
     {
         $this->cPaisRec = $cPaisRec;
     }
 
-    public function setDDesPaisRe(string $dDesPaisRe): void
+    public function setDDesPaisRe(String $dDesPaisRe): void
     {
         $this->dDesPaisRe = $dDesPaisRe;
     }
@@ -80,7 +80,7 @@ class GDatRec
         $this->iTiContRec = $iTiContRec;
     }
 
-    public function setDRucRec(string $dRucRec): void
+    public function setDRucRec(String $dRucRec): void
     {
         $this->dRucRec = $dRucRec;
     }
@@ -95,47 +95,47 @@ class GDatRec
         $this->iTipIDRec = $iTipIDRec;
     }
 
-    public function setDDTipIDRec(string $dDTipIDRec): void
+    public function setDDTipIDRec(String $dDTipIDRec): void
     {
         $this->dDTipIDRec = $dDTipIDRec;
     }
 
-    public function setDNumIDRec(string $dNumIDRec): void
+    public function setDNumIDRec(String $dNumIDRec): void
     {
         $this->dNumIDRec = $dNumIDRec;
     }
 
-    public function setDNomRec(string $dNomRec): void
+    public function setDNomRec(String $dNomRec): void
     {
         $this->dNomRec = $dNomRec;
     }
 
-    public function setDNomFanRec(string $dNomFanRec): void
+    public function setDNomFanRec(String $dNomFanRec): void
     {
         $this->dNomFanRec = $dNomFanRec;
     }
 
-    public function setDDirRec(string $dDirRec): void
+    public function setDDirRec(String $dDirRec): void
     {
         $this->dDirRec = $dDirRec;
     }
 
-    public function setDTelRec(string $dTelRec): void
+    public function setDTelRec(String $dTelRec): void
     {
         $this->dTelRec = $dTelRec;
     }
 
-    public function setDCelRec(string $dCelRec): void
+    public function setDCelRec(String $dCelRec): void
     {
         $this->dCelRec = $dCelRec;
     }
 
-    public function setDEmailRec(string $dEmailRec): void
+    public function setDEmailRec(String $dEmailRec): void
     {
         $this->dEmailRec = $dEmailRec;
     }
 
-    public function setDCodCliente(string $dCodCliente): void
+    public function setDCodCliente(String $dCodCliente): void
     {
         $this->dCodCliente = $dCodCliente;
     }
@@ -150,7 +150,7 @@ class GDatRec
         $this->cDepRec = $cDepRec;
     }
 
-    public function setDDesDepRec(string $dDesDepRec): self
+    public function setDDesDepRec(String $dDesDepRec): self
     {
         $this->dDesDepRec = $dDesDepRec;
         return $this;
@@ -163,7 +163,7 @@ class GDatRec
         return $this;
     }
 
-    public function setDDesDisRec(string $dDesDisRec): self
+    public function setDDesDisRec(String $dDesDisRec): self
     {
         $this->dDesDisRec = $dDesDisRec;
 
@@ -177,7 +177,7 @@ class GDatRec
         return $this;
     }
 
-    public function setDDesCiuRec(string $dDesCiuRec): self
+    public function setDDesCiuRec(String $dDesCiuRec): self
     {
         $this->dDesCiuRec = $dDesCiuRec;
 
@@ -206,9 +206,9 @@ class GDatRec
     /**
      * Get the value of cPaisRec
      *
-     * @return string
+     * @return String
      */
-    public function getCPaisRec(): string
+    public function getCPaisRec(): String
     {
         return $this->cPaisRec;
     }
@@ -216,9 +216,9 @@ class GDatRec
     /**
      * D204 dDesPaisRe Descripción del país receptor
      *
-     * @return string
+     * @return String
      */
-    public function getDDesPaisRe(): string
+    public function getDDesPaisRe(): String
     {
         // return CountryHelper::getCountryDesc($this->cPaisRec);
         return $this->dDesPaisRe;
@@ -236,9 +236,9 @@ class GDatRec
     /**
      * Get the value of dRucRec
      *
-     * @return string
+     * @return String
      */
-    public function getDRucRec(): string
+    public function getDRucRec(): String
     {
         return $this->dRucRec;
     }
@@ -264,9 +264,9 @@ class GDatRec
     /**
      * getDDTipIDRec
      *
-     * @return string
+     * @return String
      */
-    public function getDDTipIDRec(): string
+    public function getDDTipIDRec(): String
     {
         switch ($this->iTipIDRec) {
             case 1:
@@ -299,9 +299,9 @@ class GDatRec
     /**
      * Get the value of dNumIDRec
      *
-     * @return string
+     * @return String
      */
-    public function getDNumIDRec(): string
+    public function getDNumIDRec(): String
     {
         return $this->dNumIDRec;
     }
@@ -309,9 +309,9 @@ class GDatRec
     /**
      * Get the value of dNomRec
      *
-     * @return string
+     * @return String
      */
-    public function getDNomRec(): string
+    public function getDNomRec(): String
     {
         return $this->dNomRec;
     }
@@ -319,9 +319,9 @@ class GDatRec
     /**
      * Get the value of dNomFanRec
      *
-     * @return string
+     * @return String
      */
-    public function getDNomFanRec(): string
+    public function getDNomFanRec(): String
     {
         return $this->dNomFanRec;
     }
@@ -329,9 +329,9 @@ class GDatRec
     /**
      * Get the value of dDirRec 
      *
-     * @return string
+     * @return String
      */
-    public function getDDirRec(): string
+    public function getDDirRec(): String
     {
         return $this->dDirRec;
     }
@@ -339,9 +339,9 @@ class GDatRec
     /**
      * Get the value of dTelRec
      *
-     * @return string
+     * @return String
      */
-    public function getDTelRec(): string
+    public function getDTelRec(): String
     {
         return $this->dTelRec;
     }
@@ -349,9 +349,9 @@ class GDatRec
     /**
      * Get the value of dCelRec
      *
-     * @return string
+     * @return String
      */
-    public function getDCelRec(): string
+    public function getDCelRec(): String
     {
         return $this->dCelRec;
     }
@@ -359,9 +359,9 @@ class GDatRec
     /**
      * Get the value of dEmailRec
      *
-     * @return string
+     * @return String
      */
-    public function getDEmailRec(): string
+    public function getDEmailRec(): String
     {
         return $this->dEmailRec;
     }
@@ -369,9 +369,9 @@ class GDatRec
     /**
      * Get the value of dCodCliente
      *
-     * @return string
+     * @return String
      */
-    public function getDCodCliente(): string
+    public function getDCodCliente(): String
     {
         return $this->dCodCliente;
     }
@@ -399,9 +399,9 @@ class GDatRec
     /**
      * getDDesDepRec
      *
-     * @return string
+     * @return String
      */
-    public function getDDesDepRec(): string
+    public function getDDesDepRec(): String
     {
         return DepartamentoHelper::getDepName(strval($this->cDepRec));
     }
@@ -419,9 +419,9 @@ class GDatRec
     /**
      * getDDesDisRec
      *
-     * @return string
+     * @return String
      */
-    public function getDDesDisRec(): string
+    public function getDDesDisRec(): String
     {
         return GeoRefCodesHelper::getDistName(strval($this->cDisRec));
     }
@@ -440,9 +440,9 @@ class GDatRec
     /**
      * getDDesCiuRec
      *
-     * @return string
+     * @return String
      */
-    public function getDDesCiuRec(): string
+    public function getDDesCiuRec(): String
     {
         return GeoRefCodesHelper::getCiudName(strval($this->cCiuRec));
     }

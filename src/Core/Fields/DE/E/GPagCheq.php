@@ -12,8 +12,8 @@ use SimpleXMLElement;
  */
 class GPagCheq
 {
-  public ?string $dNumCheq = null; //E631 Número de cheque  
-  public ?string $dBcoEmi = null; //E632  Banco emisor
+  public String $dNumCheq; //E631 Número de cheque  
+  public String $dBcoEmi; //E632  Banco emisor
 
   ///////////////////////////////////////////////////////////////////////
   ///Settets
@@ -23,11 +23,11 @@ class GPagCheq
   /**
    * Set the value of dNumCheq
    *
-   * @param string $dNumCheq
+   * @param String $dNumCheq
    *
    * @return self
    */
-  public function setDNumCheq(string $dNumCheq): self
+  public function setDNumCheq(String $dNumCheq): self
   {
     $this->dNumCheq = $dNumCheq;
 
@@ -38,11 +38,11 @@ class GPagCheq
   /**
    * Set the value of dBcoEmi
    *
-   * @param string $dBcoEmi
+   * @param String $dBcoEmi
    *
    * @return self
    */
-  public function setDBcoEmi(string $dBcoEmi): self
+  public function setDBcoEmi(String $dBcoEmi): self
   {
     $this->dBcoEmi = $dBcoEmi;
 
@@ -57,9 +57,9 @@ class GPagCheq
   /**
    * Get the value of dNumCheq
    *
-   * @return string
+   * @return String
    */
-  public function getDNumCheq(): string | null
+  public function getDNumCheq(): String
   {
     return $this->dNumCheq;
   }
@@ -67,9 +67,9 @@ class GPagCheq
   /**
    * Get the value of dBcoEmi
    *
-   * @return string
+   * @return String
    */
-  public function getDBcoEmi(): string | null
+  public function getDBcoEmi(): String
   {
     return $this->dBcoEmi;
   }

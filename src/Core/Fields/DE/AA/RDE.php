@@ -213,7 +213,7 @@ class RDE
   }
 
   /**
-   * Convierte el objeto RDE a un string XML
+   * Convierte el objeto RDE a un String XML
    *
    * @return String
    */

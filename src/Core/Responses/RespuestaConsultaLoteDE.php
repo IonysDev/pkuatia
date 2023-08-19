@@ -7,9 +7,9 @@ namespace Abiliomp\Pkuatia\Core\Responses;
  */
 class RespuestaConsultaLoteDE
 {
-  public string $dFecProd; //fecha de la consulta
-  public string $dCodResLot; //codigo de respuesta del lote
-  public string $dMsgResLot; //descripcion del codigo de respuesta del lote
+  public String $dFecProd; //fecha de la consulta
+  public String $dCodResLot; //codigo de respuesta del lote
+  public String $dMsgResLot; //descripcion del codigo de respuesta del lote
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -17,11 +17,11 @@ class RespuestaConsultaLoteDE
   /**
    * Set the value of dFecProd
    *
-   * @param string $dFecProd
+   * @param String $dFecProd
    *
    * @return self
    */
-  public function setDFecProd(string $dFecProd): self
+  public function setDFecProd(String $dFecProd): self
   {
     $this->dFecProd = $dFecProd;
 
@@ -32,11 +32,11 @@ class RespuestaConsultaLoteDE
   /**
    * Set the value of dCodResLot
    *
-   * @param string $dCodResLot
+   * @param String $dCodResLot
    *
    * @return self
    */
-  public function setDCodResLot(string $dCodResLot): self
+  public function setDCodResLot(String $dCodResLot): self
   {
     $this->dCodResLot = $dCodResLot;
 
@@ -47,11 +47,11 @@ class RespuestaConsultaLoteDE
   /**
    * Set the value of dMsgResLot
    *
-   * @param string $dMsgResLot
+   * @param String $dMsgResLot
    *
    * @return self
    */
-  public function setDMsgResLot(string $dMsgResLot): self
+  public function setDMsgResLot(String $dMsgResLot): self
   {
     $this->dMsgResLot = $dMsgResLot;
 
@@ -67,9 +67,9 @@ class RespuestaConsultaLoteDE
   /**
    * Get the value of dFecProd
    *
-   * @return string
+   * @return String
    */
-  public function getDFecProd(): string
+  public function getDFecProd(): String
   {
     return $this->dFecProd;
   }
@@ -77,9 +77,9 @@ class RespuestaConsultaLoteDE
   /**
    * Get the value of dCodResLot
    *
-   * @return string
+   * @return String
    */
-  public function getDCodResLot(): string
+  public function getDCodResLot(): String
   {
     return $this->dCodResLot;
   }
@@ -87,9 +87,9 @@ class RespuestaConsultaLoteDE
   /**
    * Get the value of dMsgResLot
    *
-   * @return string
+   * @return String
    */
-  public function getDMsgResLot(): string
+  public function getDMsgResLot(): String
   {
     return $this->dMsgResLot;
   }

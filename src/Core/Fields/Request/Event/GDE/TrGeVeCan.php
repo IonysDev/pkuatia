@@ -11,8 +11,8 @@ use DOMElement;
 class TrGeVeCan
 {
 
-  public string $Id;     // GEC002 - Identificador del DTE
-  public string $mOtEve; // GEC003 - Motivo del Evento
+  public String $Id;     // GEC002 - Identificador del DTE
+  public String $mOtEve; // GEC003 - Motivo del Evento
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -21,11 +21,11 @@ class TrGeVeCan
   /**
    * Establece el valor Id - Identificador del DTE
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
     return $this;
@@ -35,11 +35,11 @@ class TrGeVeCan
   /**
    * Establece el valor mOtEve - Motivo del Evento
    *
-   * @param string $mOtEve
+   * @param String $mOtEve
    *
    * @return self
    */
-  public function setMOtEve(string $mOtEve): self
+  public function setMOtEve(String $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
     return $this;
@@ -52,9 +52,9 @@ class TrGeVeCan
   /**
    * Obtiene el valor Id - Identificador del DTE
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -62,9 +62,9 @@ class TrGeVeCan
   /**
    * Obtiene el valor mOtEve - Motivo del Evento
    *
-   * @return string
+   * @return String
    */
-  public function getMOtEve(): string
+  public function getMOtEve(): String
   {
     return $this->mOtEve;
   }

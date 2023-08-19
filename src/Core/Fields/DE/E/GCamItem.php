@@ -52,11 +52,11 @@ class GCamItem
   /**
    * Set the value of dCodInt
    *
-   * @param string $dCodInt
+   * @param String $dCodInt
    *
    * @return self
    */
-  public function setDCodInt(string $dCodInt): self
+  public function setDCodInt(String $dCodInt): self
   {
     $this->dCodInt = $dCodInt;
 
@@ -97,11 +97,11 @@ class GCamItem
   /**
    * Set the value of dDncpG
    *
-   * @param string $dDncpG
+   * @param String $dDncpG
    *
    * @return self
    */
-  public function setDDncpG(string $dDncpG): self
+  public function setDDncpG(String $dDncpG): self
   {
     $this->dDncpG = $dDncpG;
 
@@ -112,11 +112,11 @@ class GCamItem
   /**
    * Set the value of dDncpE
    *
-   * @param string $dDncpE
+   * @param String $dDncpE
    *
    * @return self
    */
-  public function setDDncpE(string $dDncpE): self
+  public function setDDncpE(String $dDncpE): self
   {
     $this->dDncpE = $dDncpE;
 
@@ -157,11 +157,11 @@ class GCamItem
   /**
    * Set the value of dDesProSer
    *
-   * @param string $dDesProSer
+   * @param String $dDesProSer
    *
    * @return self
    */
-  public function setDDesProSer(string $dDesProSer): self
+  public function setDDesProSer(String $dDesProSer): self
   {
     $this->dDesProSer = $dDesProSer;
 
@@ -186,15 +186,15 @@ class GCamItem
   /**
    * Set the value of dDesUniMed
    * 
-   * @param string $dDesUniMed
+   * @param String $dDesUniMed
    * 
    * @return self
    */
-  public function setDDesUniMed(string $dDesUniMed): self
+  public function setDDesUniMed(String $dDesUniMed): self
   {
     if(is_null($dDesUniMed) || strlen($dDesUniMed) == 0)
     {
-      $this->dDesUniMed = null;
+      $this->dDesUniMed;
     }
     else
     {
@@ -222,11 +222,11 @@ class GCamItem
   /**
    * Set the value of cPaisOrig
    *
-   * @param string $cPaisOrig
+   * @param String $cPaisOrig
    *
    * @return self
    */
-  public function setCPaisOrig(string $cPaisOrig): self
+  public function setCPaisOrig(String $cPaisOrig): self
   {
     $this->cPaisOrig = $cPaisOrig;
     $this->setDDesPaisOrig(CountryHelper::getCountryDesc($cPaisOrig));
@@ -236,15 +236,15 @@ class GCamItem
   /**
    * Set the value of dDesPaisOrig
    * 
-   * @param string $dDesPaisOrig
+   * @param String $dDesPaisOrig
    * 
    * @return self
    */
-  public function setDDesPaisOrig(string $dDesPaisOrig): self
+  public function setDDesPaisOrig(String $dDesPaisOrig): self
   {
     if(is_null($dDesPaisOrig) || strlen($dDesPaisOrig) == 0)
     {
-      $this->dDesPaisOrig = null;
+      $this->dDesPaisOrig;
     }
     else
     {
@@ -257,11 +257,11 @@ class GCamItem
   /**
    * Set the value of dInfItem
    *
-   * @param string $dInfItem
+   * @param String $dInfItem
    *
    * @return self
    */
-  public function setDInfItem(string $dInfItem): self
+  public function setDInfItem(String $dInfItem): self
   {
     $this->dInfItem = $dInfItem;
 
@@ -296,15 +296,15 @@ class GCamItem
   /**
    * Set the value of dDesRelMerc
    * 
-   * @param string $dDesRelMerc
+   * @param String $dDesRelMerc
    * 
    * @return self
    */
-  public function setDDesRelMerc(string $dDesRelMerc): self
+  public function setDDesRelMerc(String $dDesRelMerc): self
   {
     if(is_null($dDesRelMerc) || strlen($dDesRelMerc) == 0)
     {
-      $this->dDesRelMerc = null;
+      $this->dDesRelMerc;
     }
     else
     {
@@ -417,9 +417,9 @@ class GCamItem
   /**
    * Get the value of dCodInt
    *
-   * @return string
+   * @return String
    */
-  public function getDCodInt(): string
+  public function getDCodInt(): String
   {
     return $this->dCodInt;
   }
@@ -447,9 +447,9 @@ class GCamItem
   /**
    * Get the value of dDncpG
    *
-   * @return string
+   * @return String
    */
-  public function getDDncpG(): string
+  public function getDDncpG(): String
   {
     return $this->dDncpG;
   }
@@ -457,9 +457,9 @@ class GCamItem
   /**
    * Get the value of dDncpE
    *
-   * @return string
+   * @return String
    */
-  public function getDDncpE(): string
+  public function getDDncpE(): String
   {
     return $this->dDncpE;
   }
@@ -487,9 +487,9 @@ class GCamItem
   /**
    * Get the value of dDesProSer
    *
-   * @return string
+   * @return String
    */
-  public function getDDesProSer(): string
+  public function getDDesProSer(): String
   {
     return $this->dDesProSer;
   }
@@ -507,9 +507,9 @@ class GCamItem
   /**
    * Devuelve la descripción de la unidad de medida
    *
-   * @return string
+   * @return String
    */
-  public function getDDesUniMed(): string
+  public function getDDesUniMed(): String
   {
     return $this->dDesUniMed;
   }
@@ -527,9 +527,9 @@ class GCamItem
   /**
    * Get the value of cPaisOrig
    *
-   * @return string
+   * @return String
    */
-  public function getCPaisOrig(): string
+  public function getCPaisOrig(): String
   {
     return $this->cPaisOrig;
   }
@@ -537,9 +537,9 @@ class GCamItem
   /**
    * E713 Descripción del país de origen del producto
    *
-   * @return string
+   * @return String
    */
-  public function getDDesPaisOrig(): string
+  public function getDDesPaisOrig(): String
   {
     return $this->dDesPaisOrig;
   }
@@ -548,9 +548,9 @@ class GCamItem
   /**
    * Get the value of dInfItem
    *
-   * @return string
+   * @return String
    */
-  public function getDInfItem(): string
+  public function getDInfItem(): String
   {
     return $this->dInfItem;
   }
@@ -568,7 +568,7 @@ class GCamItem
   /**
    * E716 Descripción del código de datos de relevancia de las mercaderías
    *
-   * @return string
+   * @return String
    */
   public function getDDesRelMerc(): String
   {

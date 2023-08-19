@@ -11,29 +11,29 @@ use DOMElement;
  */
 class TrGeVeTr
 {
-  public string $Id;          // GET002 - CDC del DTE 
+  public String $Id;          // GET002 - CDC del DTE 
   public int    $dMotEv;      // GET003 - Motivo del evento
   public int    $cDepEnt;     // GET004 - Código del departamento del local de la entrega
   public int    $cDisEnt;     // GET006 - Código del distrito del  local de la entrega  
   public int    $cCiuEnt;     // GET008 - Código de la ciudad del local de la entrega 
-  public string $dDirEnt;     // GET010 - Dirección del local de la entrega
+  public String $dDirEnt;     // GET010 - Dirección del local de la entrega
   public int    $dNumCas;     // GET011 - Número de casa del local de la entrega
-  public string $dCompDir1;   // GET012 - Complemento de dirección del local de  la entrega
-  public string $dNomChof;    // GET013 - Nombre y apellido del chofer
-  public string $dNumIDChof;  // GET014 - Número de documento  de identidad del chofer
+  public String $dCompDir1;   // GET012 - Complemento de dirección del local de  la entrega
+  public String $dNomChof;    // GET013 - Nombre y apellido del chofer
+  public String $dNumIDChof;  // GET014 - Número de documento  de identidad del chofer
   public int    $iNatTrans;   // GET015 - Naturaleza del transportista
-  public string $dRucTrans;   // GET016 - RUC del transportista
+  public String $dRucTrans;   // GET016 - RUC del transportista
   public int    $dDVTrans;    // GET017 - Dígito verificador del RUC del transportista
-  public string $dNomTrans;   // GET018 - Nombre o razón social del transportista
+  public String $dNomTrans;   // GET018 - Nombre o razón social del transportista
   public int    $iTipIDTrans; // GET019 - Tipo de documento de  identidad del  transportista
-  public string $dNumIDTrans; // GET021 - Número de documento de identidad del transportista
+  public String $dNumIDTrans; // GET021 - Número de documento de identidad del transportista
   public int    $iTipTrans;   // GET022 - Tipo de transporte
   public int    $iModTrans;   // GET024 - Modalidad del transporte
-  public string $dTiVehTras;  // GET026 - Tipo de vehículo
-  public string $dMarVeh;     // GET027 - Marca del vehículo 
+  public String $dTiVehTras;  // GET026 - Tipo de vehículo
+  public String $dMarVeh;     // GET027 - Marca del vehículo 
   public int    $dTipIdenVeh; // GET028 - Tipo de identificación del vehículo
-  public string $dNroIDVeh;   // GET029 - Número de identificación del vehículo
-  public string $dNroMatVeh;  // GET030 - Número de matrícula  del vehículo
+  public String $dNroIDVeh;   // GET029 - Número de identificación del vehículo
+  public String $dNroMatVeh;  // GET030 - Número de matrícula  del vehículo
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -43,11 +43,11 @@ class TrGeVeTr
   /**
    * Set the value of Id
    *
-   * @param string $Id
+   * @param String $Id
    *
    * @return self
    */
-  public function setId(string $Id): self
+  public function setId(String $Id): self
   {
     $this->Id = $Id;
 
@@ -118,11 +118,11 @@ class TrGeVeTr
   /**
    * Set the value of dDirEnt
    *
-   * @param string $dDirEnt
+   * @param String $dDirEnt
    *
    * @return self
    */
-  public function setDDirEnt(string $dDirEnt): self
+  public function setDDirEnt(String $dDirEnt): self
   {
     $this->dDirEnt = $dDirEnt;
 
@@ -148,11 +148,11 @@ class TrGeVeTr
   /**
    * Set the value of dCompDir1
    *
-   * @param string $dCompDir1
+   * @param String $dCompDir1
    *
    * @return self
    */
-  public function setDCompDir1(string $dCompDir1): self
+  public function setDCompDir1(String $dCompDir1): self
   {
     $this->dCompDir1 = $dCompDir1;
 
@@ -162,11 +162,11 @@ class TrGeVeTr
   /**
    * Set the value of dNomChof
    *
-   * @param string $dNomChof
+   * @param String $dNomChof
    *
    * @return self
    */
-  public function setDNomChof(string $dNomChof): self
+  public function setDNomChof(String $dNomChof): self
   {
     $this->dNomChof = $dNomChof;
 
@@ -176,11 +176,11 @@ class TrGeVeTr
   /**
    * Set the value of dNumIDChof
    *
-   * @param string $dNumIDChof
+   * @param String $dNumIDChof
    *
    * @return self
    */
-  public function setDNumIDChof(string $dNumIDChof): self
+  public function setDNumIDChof(String $dNumIDChof): self
   {
     $this->dNumIDChof = $dNumIDChof;
 
@@ -206,11 +206,11 @@ class TrGeVeTr
   /**
    * Set the value of dRucTrans
    *
-   * @param string $dRucTrans
+   * @param String $dRucTrans
    *
    * @return self
    */
-  public function setDRucTrans(string $dRucTrans): self
+  public function setDRucTrans(String $dRucTrans): self
   {
     $this->dRucTrans = $dRucTrans;
 
@@ -236,11 +236,11 @@ class TrGeVeTr
   /**
    * Set the value of dNomTrans
    *
-   * @param string $dNomTrans
+   * @param String $dNomTrans
    *
    * @return self
    */
-  public function setDNomTrans(string $dNomTrans): self
+  public function setDNomTrans(String $dNomTrans): self
   {
     $this->dNomTrans = $dNomTrans;
 
@@ -266,11 +266,11 @@ class TrGeVeTr
   /**
    * Set the value of dNumIDTrans
    *
-   * @param string $dNumIDTrans
+   * @param String $dNumIDTrans
    *
    * @return self
    */
-  public function setDNumIDTrans(string $dNumIDTrans): self
+  public function setDNumIDTrans(String $dNumIDTrans): self
   {
     $this->dNumIDTrans = $dNumIDTrans;
 
@@ -311,11 +311,11 @@ class TrGeVeTr
   /**
    * Set the value of dMarVeh
    *
-   * @param string $dMarVeh
+   * @param String $dMarVeh
    *
    * @return self
    */
-  public function setDMarVeh(string $dMarVeh): self
+  public function setDMarVeh(String $dMarVeh): self
   {
     $this->dMarVeh = $dMarVeh;
 
@@ -341,11 +341,11 @@ class TrGeVeTr
   /**
    * Set the value of dNroIDVeh
    *
-   * @param string $dNroIDVeh
+   * @param String $dNroIDVeh
    *
    * @return self
    */
-  public function setDNroIDVeh(string $dNroIDVeh): self
+  public function setDNroIDVeh(String $dNroIDVeh): self
   {
     $this->dNroIDVeh = $dNroIDVeh;
 
@@ -356,11 +356,11 @@ class TrGeVeTr
   /**
    * Set the value of dNroMatVeh
    *
-   * @param string $dNroMatVeh
+   * @param String $dNroMatVeh
    *
    * @return self
    */
-  public function setDNroMatVeh(string $dNroMatVeh): self
+  public function setDNroMatVeh(String $dNroMatVeh): self
   {
     $this->dNroMatVeh = $dNroMatVeh;
 
@@ -371,11 +371,11 @@ class TrGeVeTr
   /**
    * Set the value of dTiVehTras
    *
-   * @param string $dTiVehTras
+   * @param String $dTiVehTras
    *
    * @return self
    */
-  public function setDTiVehTras(string $dTiVehTras): self
+  public function setDTiVehTras(String $dTiVehTras): self
   {
     $this->dTiVehTras = $dTiVehTras;
 
@@ -390,9 +390,9 @@ class TrGeVeTr
   /**
    * Get the value of Id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->Id;
   }
@@ -420,9 +420,9 @@ class TrGeVeTr
   /**
    *  GET005 Descripción del departamento del local de la entrega
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDepEnt(): string
+  public function getDDesDepEnt(): String
   {
     return CountryHelper::getCountryDesc(strval($this->cDepEnt));
   }
@@ -442,9 +442,9 @@ class TrGeVeTr
    * GET007  Descripción de distrito del local de la entrega
 
    *
-   * @return string
+   * @return String
    */
-  public function getDDesDisEnt(): string
+  public function getDDesDisEnt(): String
   {
     return CountryHelper::getCountryDesc(strval($this->cDisEnt));
   }
@@ -464,9 +464,9 @@ class TrGeVeTr
   /**
    *  GET009  Descripción de ciudad del local de la entrega
    *
-   * @return string
+   * @return String
    */
-  public function getDDesCiuEnt(): string
+  public function getDDesCiuEnt(): String
   {
     return CountryHelper::getCountryDesc(strval($this->cCiuEnt));
   }
@@ -476,9 +476,9 @@ class TrGeVeTr
   /**
    * Get the value of dDirEnt
    *
-   * @return string
+   * @return String
    */
-  public function getDDirEnt(): string
+  public function getDDirEnt(): String
   {
     return $this->dDirEnt;
   }
@@ -496,9 +496,9 @@ class TrGeVeTr
   /**
    * Get the value of dCompDir1
    *
-   * @return string
+   * @return String
    */
-  public function getDCompDir1(): string
+  public function getDCompDir1(): String
   {
     return $this->dCompDir1;
   }
@@ -506,9 +506,9 @@ class TrGeVeTr
   /**
    * Get the value of dNomChof
    *
-   * @return string
+   * @return String
    */
-  public function getDNomChof(): string
+  public function getDNomChof(): String
   {
     return $this->dNomChof;
   }
@@ -516,9 +516,9 @@ class TrGeVeTr
   /**
    * Get the value of dNumIDChof
    *
-   * @return string
+   * @return String
    */
-  public function getDNumIDChof(): string
+  public function getDNumIDChof(): String
   {
     return $this->dNumIDChof;
   }
@@ -536,9 +536,9 @@ class TrGeVeTr
   /**
    * Get the value of dRucTrans
    *
-   * @return string
+   * @return String
    */
-  public function getDRucTrans(): string
+  public function getDRucTrans(): String
   {
     return $this->dRucTrans;
   }
@@ -556,9 +556,9 @@ class TrGeVeTr
   /**
    * Get the value of dNomTrans
    *
-   * @return string
+   * @return String
    */
-  public function getDNomTrans(): string
+  public function getDNomTrans(): String
   {
     return $this->dNomTrans;
   }
@@ -576,9 +576,9 @@ class TrGeVeTr
   /**
    *  GET020 Descripción del tipo de documento de identidad del transportista
    *
-   * @return string
+   * @return String
    */
-  public function getdDTipIDTrans(): string
+  public function getdDTipIDTrans(): String
   {
     switch ($this->iTipIDTrans) {
       case 1:
@@ -606,9 +606,9 @@ class TrGeVeTr
   /**
    * Get the value of dNumIDTrans
    *
-   * @return string
+   * @return String
    */
-  public function getDNumIDTrans(): string
+  public function getDNumIDTrans(): String
   {
     return $this->dNumIDTrans;
   }
@@ -626,9 +626,9 @@ class TrGeVeTr
   /**
    * GET023 Descripción del tipo de transporte
    *
-   * @return string
+   * @return String
    */
-  public function getDDesTipTrans(): string
+  public function getDDesTipTrans(): String
   {
     switch ($this->iTipTrans) {
       case 1:
@@ -657,9 +657,9 @@ class TrGeVeTr
   /**
    * GET025 Descripción de la modalidad del transporte
    *
-   * @return string
+   * @return String
    */
-  public function getDDesModTrans(): string
+  public function getDDesModTrans(): String
   {
     switch ($this->iModTrans) {
       case 1:
@@ -686,9 +686,9 @@ class TrGeVeTr
   /**
    * Get the value of dTiVehTras
    *
-   * @return string
+   * @return String
    */
-  public function getDTiVehTras(): string
+  public function getDTiVehTras(): String
   {
     return $this->dTiVehTras;
   }
@@ -696,9 +696,9 @@ class TrGeVeTr
   /**
    * Get the value of dMarVeh
    *
-   * @return string
+   * @return String
    */
-  public function getDMarVeh(): string
+  public function getDMarVeh(): String
   {
     return $this->dMarVeh;
   }
@@ -716,9 +716,9 @@ class TrGeVeTr
   /**
    * Get the value of dNroIDVeh
    *
-   * @return string
+   * @return String
    */
-  public function getDNroIDVeh(): string
+  public function getDNroIDVeh(): String
   {
     return $this->dNroIDVeh;
   }
@@ -726,9 +726,9 @@ class TrGeVeTr
   /**
    * Get the value of dNroMatVeh
    *
-   * @return string
+   * @return String
    */
-  public function getDNroMatVeh(): string
+  public function getDNroMatVeh(): String
   {
     return $this->dNroMatVeh;
   }

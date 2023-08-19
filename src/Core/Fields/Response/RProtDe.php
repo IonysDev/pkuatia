@@ -11,11 +11,11 @@ use SimpleXMLElement;
  */
 class RProtDe
 {
-  public string $id;          // PP02 - CDC del DE Procesado
+  public String $id;          // PP02 - CDC del DE Procesado
   public DateTime $dFecProc;  // PP03 - Fecha y hora del procesamiento 
-  public string $dDigVal;     // PP04 - DigestValue del DE procesado
-  public string $dEstRes;     // PP050 - Estado del resultado
-  public string $dProtAut;    // PP051 - Número de Transacción
+  public String $dDigVal;     // PP04 - DigestValue del DE procesado
+  public String $dEstRes;     // PP050 - Estado del resultado
+  public String $dProtAut;    // PP051 - Número de Transacción
   public GResProc $gResProc; // PP05 - Grupo Resultado de Procesamiento 
 
   ///////////////////////////////////////////////////////////////////////
@@ -25,11 +25,11 @@ class RProtDe
   /**
    * Set the value of id
    *
-   * @param string $id
+   * @param String $id
    *
    * @return self
    */
-  public function setId(string $id): self
+  public function setId(String $id): self
   {
     $this->id = $id;
 
@@ -55,11 +55,11 @@ class RProtDe
   /**
    * Set the value of dDigVal
    *
-   * @param string $dDigVal
+   * @param String $dDigVal
    *
    * @return self
    */
-  public function setDDigVal(string $dDigVal): self
+  public function setDDigVal(String $dDigVal): self
   {
     $this->dDigVal = $dDigVal;
 
@@ -70,11 +70,11 @@ class RProtDe
   /**
    * Set the value of dEstRes
    *
-   * @param string $dEstRes
+   * @param String $dEstRes
    *
    * @return self
    */
-  public function setDEstRes(string $dEstRes): self
+  public function setDEstRes(String $dEstRes): self
   {
     $this->dEstRes = $dEstRes;
 
@@ -85,7 +85,7 @@ class RProtDe
   /**
    * Set the value of dProtAut
    *
-   * @param string $dProtAut
+   * @param String $dProtAut
    *
    * @return self
    */
@@ -119,9 +119,9 @@ class RProtDe
   /**
    * Get the value of id
    *
-   * @return string
+   * @return String
    */
-  public function getId(): string
+  public function getId(): String
   {
     return $this->id;
   }
@@ -139,9 +139,9 @@ class RProtDe
   /**
    * Get the value of dDigVal
    *
-   * @return string
+   * @return String
    */
-  public function getDDigVal(): string
+  public function getDDigVal(): String
   {
     return $this->dDigVal;
   }
@@ -149,9 +149,9 @@ class RProtDe
   /**
    * Get the value of dEstRes
    *
-   * @return string
+   * @return String
    */
-  public function getDEstRes(): string
+  public function getDEstRes(): String
   {
     return $this->dEstRes;
   }
@@ -159,9 +159,9 @@ class RProtDe
   /**
    * Get the value of dProtAut
    *
-   * @return string
+   * @return String
    */
-  public function getDProtAut(): string
+  public function getDProtAut(): String
   {
     return $this->dProtAut;
   }
@@ -223,12 +223,12 @@ class RProtDe
   }
 
   /**
-   * Converts XML string representation to object
+   * Converts XML String representation to object
    * 
-   * @param string $xml
+   * @param String $xml
    * @return RProtDe
    */
-  public static function FromXMLString(string $xmlString): RProtDe
+  public static function FromXMLString(String $xmlString): RProtDe
   {
     $xml = simplexml_load_string($xmlString);
     $res = self::fromSimpleXMLElement($xml);
