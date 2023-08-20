@@ -2,32 +2,82 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
-
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- *ID:E790 
- *Campos complementarios comerciales de uso específico
- *PADRE:E001 
+ * Nodo Id:     E790 
+ * Nombre:      gCamEsp
+ * Descripción: Campos complementarios comerciales de uso específico
+ * Nodo Padre:  E001 
  */
-class GCamEsp
+class GCamEsp extends BaseSifenField
 {
-  public ?GGrupEner $gGrupoEner;
-  public ?GGrupSeg $gGrupoSeg;
-  public ?GGrupSup $gGrupSup;
-  public ?GGrupAdi $gGrupAdi;
+                                // Id - Longitud - Ocurrencia - Descripción
+  public GGrupEner $gGrupoEner; // E791 - - 0-1 - Campos del sector de energía eléctrica
+  public GGrupSeg  $gGrupoSeg;  // E800 - - 0-1 - Campos del sector de seguros
+  public GGrupSup  $gGrupSup;   // E810 - - 0-1 - Campos del sector de supermercados
+  public GGrupAdi  $gGrupAdi;   // E820 - - 0-1 - Grupo  de  datos adicionales de uso comercial 
 
-  public function __construct()
+  ///////////////////////////////////////////////////////////////////////
+  // Setters
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Establece el valor de gGrupoEner (Campos del sector de energía eléctrica)
+   *
+   * @param GGrupEner $gGrupoEner
+   *
+   * @return self
+   */
+  public function setGGrupoEner(GGrupEner $gGrupoEner): self
   {
-    //General
-    $this->gGrupoEner = new GGrupEner();
-    $this->gGrupoSeg  = new GGrupSeg();
-    $this->gGrupSup  = new GGrupSup();
-    $this->gGrupAdi = new GGrupAdi();
+    $this->gGrupoEner = $gGrupoEner;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gGrupoSeg (Campos del sector de seguros)
+   *
+   * @param GGrupSeg $gGrupoSeg
+   *
+   * @return self
+   */
+  public function setGGrupoSeg(GGrupSeg $gGrupoSeg): self
+  {
+    $this->gGrupoSeg = $gGrupoSeg;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gGrupSup (Campos del sector de supermercados)
+   *
+   * @param GGrupSup $gGrupSup
+   *
+   * @return self
+   */
+  public function setGGrupSup(GGrupSup $gGrupSup): self
+  {
+    $this->gGrupSup = $gGrupSup;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gGrupAdi (Grupo  de  datos adicionales de uso comercial)
+   *
+   * @param GGrupAdi $gGrupAdi
+   *
+   * @return self
+   */
+  public function setGGrupAdi(GGrupAdi $gGrupAdi): self
+  {
+    $this->gGrupAdi = $gGrupAdi;
+    return $this;
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///Others
+  // Getters
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -41,20 +91,6 @@ class GCamEsp
   }
 
   /**
-   * Set the value of gGrupoEner
-   *
-   * @param GGrupEner $gGrupoEner
-   *
-   * @return self
-   */
-  public function setGGrupoEner(GGrupEner $gGrupoEner): self
-  {
-    $this->gGrupoEner = $gGrupoEner;
-
-    return $this;
-  }
-
-  /**
    * Get the value of gGrupoSeg
    *
    * @return GGrupSeg
@@ -62,20 +98,6 @@ class GCamEsp
   public function getGGrupoSeg(): GGrupSeg
   {
     return $this->gGrupoSeg;
-  }
-
-  /**
-   * Set the value of gGrupoSeg
-   *
-   * @param GGrupSeg $gGrupoSeg
-   *
-   * @return self
-   */
-  public function setGGrupoSeg(GGrupSeg $gGrupoSeg): self
-  {
-    $this->gGrupoSeg = $gGrupoSeg;
-
-    return $this;
   }
 
   /**
@@ -89,76 +111,58 @@ class GCamEsp
   }
 
   /**
-   * Set the value of gGrupSup
+   * Get the value of gGrupAdi
    *
-   * @param GGrupSup $gGrupSup
-   *
-   * @return self
+   * @return GGrupAdi
    */
-  public function setGGrupSup(GGrupSup $gGrupSup): self
+  public function getGGrupAdi(): GGrupAdi
   {
-    $this->gGrupSup = $gGrupSup;
-
-    return $this;
+    return $this->gGrupAdi;
   }
 
-  //XML Element  
+  ///////////////////////////////////////////////////////////////////////
+  // Instanciadores
+  ///////////////////////////////////////////////////////////////////////
+
   /**
-   * toDomElement
-   *
-   * @return DOMElement
+   * Instancia un objeto GCamEsp a partir de un SimpleXMLElement
+   * 
+   * @param  SimpleXMLElement $node
+   * 
+   * @return self
    */
-  public function toDomElement(): DOMElement
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    $res = new DOMElement('gCamEsp');
-    if (isset($this->gGrupoEner)) {
-      $res->appendChild($this->gGrupoEner->toDomElement());
+    if(strcmp($node->getName(), 'gCamEsp') != 0)
+      throw new \Exception('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->getName(), 1);
+    $res = new GCamEsp();
+    if(isset($node->gGrupoEner))
+    {
+      $res->setGGrupoEner(GGrupEner::FromSimpleXMLElement($node->gGrupoEner));
     }
-
-    if (isset($this->gGrupSup)) {
-      $res->appendChild($this->gGrupSup->toDomElement());
+    if(isset($node->gGrupoSeg))
+    {
+      $res->setGGrupoSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupoSeg));
     }
-
-    if (isset($this->gGrupoSeg)) {
-      $res->appendChild($this->gGrupSup->toDomElement());
+    if(isset($node->gGrupSup))
+    {
+      $res->setGGrupSup(GGrupSup::FromSimpleXMLElement($node->gGrupSup));
     }
-
-    if (isset($this->gGrupAdi)) {
-      $res->appendChild($this->gGrupAdi->toDomElement());
+    if(isset($node->gGrupAdi))
+    {
+      $res->setGGrupAdi(GGrupAdi::FromSimpleXMLElement($node->gGrupAdi));
     }
-
     return $res;
   }
 
-  
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamEsp
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamEsp
-  // {
-  //   if (strcmp($xml->tagName, 'gCamEsp') == 0 && $xml->childElementCount >= 1) {
-  //     $res = new GCamEsp();
-  //     $res->setGGrupoEner($res->gGrupoEner->fromDOMElement($xml->getElementsByTagName('gGrupoEner')->item(0)->nodeValue));
-  //     $res->setGGrupSup($res->gGrupSup->fromDOMElement($xml->getElementsByTagName('gGrupoSup')->item(0)->nodeValue));
-  //     $res->setGGrupoSeg($res->gGrupoSeg->fromDOMElement($xml->getElementsByTagName('gGrupoSeg')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
-   
   /**
-   * FromSifenResponseObject
+   * Instancia un objeto GCamEsp a partir de un objeto stdClass que contiene datos de la respuesta del Sifen
    *
-   * @param  mixed $object
+   * @param  stdClass $object
+   * 
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamEsp();
     if(isset($object->gGrupoEner))
@@ -180,31 +184,33 @@ class GCamEsp
     {
       $res->setGGrupAdi(GGrupAdi::FromSifenResponseObject($object->gGrupAdi));
     }
-
     return $res;
   }
 
-  /**
-   * Get the value of gGrupAdi
-   *
-   * @return ?GGrupAdi
-   */
-  public function getGGrupAdi(): ?GGrupAdi
-  {
-    return $this->gGrupAdi;
-  }
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of gGrupAdi
+   * Convierte este GCamEsp en un DOMElement
    *
-   * @param ?GGrupAdi $gGrupAdi
-   *
-   * @return self
+   * @return DOMElement
    */
-  public function setGGrupAdi(?GGrupAdi $gGrupAdi): self
+  public function toDOMElement(): DOMElement
   {
-    $this->gGrupAdi = $gGrupAdi;
-
-    return $this;
+    $res = new DOMElement('gCamEsp');
+    if (isset($this->gGrupoEner)) {
+      $res->appendChild($this->gGrupoEner->toDOMElement());
+    }
+    if (isset($this->gGrupSup)) {
+      $res->appendChild($this->gGrupSup->toDOMElement());
+    }
+    if (isset($this->gGrupoSeg)) {
+      $res->appendChild($this->gGrupSup->toDOMElement());
+    }
+    if (isset($this->gGrupAdi)) {
+      $res->appendChild($this->gGrupAdi->toDOMElement());
+    }
+    return $res;
   }
 }

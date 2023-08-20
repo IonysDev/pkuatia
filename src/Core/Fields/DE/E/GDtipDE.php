@@ -12,23 +12,21 @@ use DOMElement;
 class GDtipDE
 {
 
-  public ?GCamFE $gCamFE;      //Campos que componen la FE
-  public ?GCamAE $gCamAE;      //Campos que componen la Autofactura Electrónica
-  public ?GCamNCDE $gCamNCDE;  //Campos que componen la Nota de Crédito Electrónica
-  public ?GCamNRE $gCamNRE;    //Campos que componen la Nota de Remisión Electrónica
-  public ?GCamCond $gCamCond;  //Campos que describen la condición de la operación
-  public ?array $gCamItem;     //Campos que describen los ítems de la operación
-  public ?GCamEsp $gCamEsp;    //complementarios comerciales de uso específico
-  public ?GTransp $gTransp;    //Campos que describen  el transporte de mercaderías
+  public GCamFE   $gCamFE;   // E010 - - 0-1   - Campos que componen la Factura Electrónica
+  public GCamAE   $gCamAE;   // E300 - - 0-1   - Campos que componen la Autofactura Electrónica
+  public GCamNCDE $gCamNCDE; // E400 - - 0-1   - Campos que componen la Nota de Crédito o Débito Electrónica
+  public GCamNRE  $gCamNRE;  // E500 - - 0-1   - Campos que componen la Nota de Remisión Electrónica
+  public GCamCond $gCamCond; // E600 - - 0-1   - Campos que describen la condición de la operación
+  public array    $gCamItem; // E700 - - 1-999 - Campos que describen los ítems de la operación
+  public GCamEsp  $gCamEsp;  // E790 - - 0-1   - Campos complementarios comerciales de uso específico
+  public GTransp  $gTransp;  // E900 - - 0-1   - Campos que describen  el transporte de mercaderías
 
   /**
    * Constructor
    */
   public function __construct()
   {
-    //Genral
     $this->gCamItem = [];
-    $this->gCamEsp = new GCamEsp();
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -215,46 +213,30 @@ class GDtipDE
     
     if(isset($xml->gCamFE))
       $res->gCamFE = GCamFE::FromSimpleXMLElement($xml->gCamFE);
-    else
-      $res->gCamFE;
-
+    
     if(isset($xml->gCamAE))
       $res->gCamAE = GCamAE::FromSimpleXMLElement($xml->gCamAE);
-    else
-      $res->gCamAE;
     
     if(isset($xml->gCamNCDE))
       $res->gCamNCDE = GCamNCDE::FromSimpleXMLElement($xml->gCamNCDE);
-    else
-      $res->gCamNCDE;
-
+    
     if(isset($xml->gCamNRE))
       $res->gCamNRE = GCamNRE::FromSimpleXMLElement($xml->gCamNRE);
-    else
-      $res->gCamNRE;
-
+    
     if(isset($xml->gCamCond))
       $res->gCamCond = GCamCond::FromSimpleXMLElement($xml->gCamCond);
-    else
-      $res->gCamCond;
-
+    
     if(isset($xml->gCamItem) && count($xml->gCamItem) > 0) {
       $res->gCamItem = [];
       foreach($xml->gCamItem as $gCamItem)
         $res->gCamItem[] = GCamItem::FromSimpleXMLElement($gCamItem);
     }
-    else
-      $res->gCamItem;
 
     if(isset($xml->gCamEsp))
       $res->gCamEsp = GCamEsp::FromSimpleXMLElement($xml->gCamEsp);
-    else
-      $res->gCamEsp;
     
     if(isset($xml->gTransp))
       $res->gTransp = GTransp::FromSimpleXMLElement($xml->gTransp);
-    else
-      $res->gTransp;
     
     return $res;    
   }

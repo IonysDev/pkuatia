@@ -2,29 +2,35 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
- * ID:EA790 gGrupPolSeg Grupo de póliza de seguros
- *PADRE:E800
+ * Nodo Id:     EA790   
+ * Nombre:      gGrupPolSeg   
+ * Descripción: Grupo de póliza de seguros  
+ * Nodo Padre:  E800  
  */
-class GGrupPolSeg
+
+class GGrupPolSeg extends BaseSifenField
 {
-  public String $dPoliza; /// EA791 Código de la póliza
-  public String $dUnidVig; //EA792 Descripción de la unidad de tiempo de vigencia
-  public int $dVigencia; ///EA793 Vigencia de la póliza
-  public String $dNumPoliza; /// EA794 Número de la póliza
-  public DateTime $dFecIniVig; ///EA795 Fecha de inicio de vigencia
-  public DateTime $dFecFinVig; //EA796 Fecha de fin de vigencia
-  public String $dCodInt; ///EA797 Código interno del ítem
+                               // Id - Longitud - Ocurrencia - Descripción
+  public String   $dPoliza;    // EA791 - 1-20  - 1-1 - Código de la póliza
+  public String   $dUnidVig;   // EA792 - 3-15  - 1-1 - Descripción de la unidad de tiempo de vigencia
+  public String   $dVigencia;  // EA793 - 1-5p1 - 1-1 - Vigencia de la póliza (decimal BCMath)
+  public String   $dNumPoliza; // EA794 - 1-25  - 1-1 - Número de la póliza
+  public DateTime $dFecIniVig; // EA795 - 19    - 0-1 - Fecha de inicio de vigencia en formato AAAA-MM-DDThh:mm:ss
+  public DateTime $dFecFinVig; // EA796 - 19    - 0-1 - Fecha de fin de vigencia en formato AAAA-MM-DDThh:mm:ss
+  public String   $dCodInt;    // EA797 - 1-20  - 0-1 - Código interno de referencia a un ítem
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dPoliza
+   * Establece el valor de dPoliza (Código de la póliza)
    *
    * @param String $dPoliza
    *
@@ -39,7 +45,7 @@ class GGrupPolSeg
 
 
   /**
-   * Set the value of dUnidVig
+   * Establece el valor de dUnidVig (Descripción de la unidad de tiempo de vigencia)
    *
    * @param String $dUnidVig
    *
@@ -54,13 +60,13 @@ class GGrupPolSeg
 
 
   /**
-   * Set the value of dVigencia
+   * Establece el valor de dVigencia (Vigencia de la póliza)
    *
-   * @param int $dVigencia
+   * @param String $dVigencia
    *
    * @return self
    */
-  public function setDVigencia(int $dVigencia): self
+  public function setDVigencia(String $dVigencia): self
   {
     $this->dVigencia = $dVigencia;
 
@@ -69,7 +75,7 @@ class GGrupPolSeg
 
 
   /**
-   * Set the value of dNumPoliza
+   * Establece el valor de dNumPoliza (Número de la póliza)
    *
    * @param String $dNumPoliza
    *
@@ -84,7 +90,7 @@ class GGrupPolSeg
 
 
   /**
-   * Set the value of dFecIniVig
+   * Establece el valor de dFecIniVig (Fecha/hora de inicio de vigencia)  
    *
    * @param DateTime $dFecIniVig
    *
@@ -99,7 +105,7 @@ class GGrupPolSeg
 
 
   /**
-   * Set the value of dFecFinVig
+   * Establece el valor de dFecFinVig (Fecha/hora de fin de vigencia)
    *
    * @param DateTime $dFecFinVig
    *
@@ -114,7 +120,7 @@ class GGrupPolSeg
 
 
   /**
-   * Set the value of dCodInt
+   * Establece el valor de dCodInt (Código interno de referencia a un ítem)
    *
    * @param String $dCodInt
    *
@@ -129,11 +135,11 @@ class GGrupPolSeg
 
 
   ///////////////////////////////////////////////////////////////////////
-  ///Getters
+  // Getters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dPoliza
+   * Devuelve el valor de dPoliza (Código de la póliza)
    *
    * @return String
    */
@@ -143,7 +149,7 @@ class GGrupPolSeg
   }
 
   /**
-   * Get the value of dUnidVig
+   * Devuelve el valor de dUnidVig (Descripción de la unidad de tiempo de vigencia)
    *
    * @return String
    */
@@ -153,17 +159,17 @@ class GGrupPolSeg
   }
 
   /**
-   * Get the value of dVigencia
+   * Devuelve el valor de dVigencia (Vigencia de la póliza)
    *
-   * @return int
+   * @return String
    */
-  public function getDVigencia(): int
+  public function getDVigencia(): String
   {
     return $this->dVigencia;
   }
 
   /**
-   * Get the value of dNumPoliza
+   * Devuelve el valor de dNumPoliza (Número de la póliza)
    *
    * @return String
    */
@@ -173,7 +179,7 @@ class GGrupPolSeg
   }
 
   /**
-   * Get the value of dFecIniVig
+   * Devuelve el valor de dFecIniVig (Fecha/hora de inicio de vigencia)
    *
    * @return DateTime
    */
@@ -183,7 +189,7 @@ class GGrupPolSeg
   }
 
   /**
-   * Get the value of dFecFinVig
+   * Devuelve el valor de dFecFinVig (Fecha/hora de fin de vigencia)
    *
    * @return DateTime
    */
@@ -193,7 +199,7 @@ class GGrupPolSeg
   }
 
   /**
-   * Get the value of dCodInt
+   * Devuelve el valor de dCodInt (Código interno de referencia a un ítem)
    *
    * @return String
    */
@@ -202,68 +208,80 @@ class GGrupPolSeg
     return $this->dCodInt;
   }
 
-
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element
+  // Instanciadores
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDomElement
+   * Instancia un GGrupPolSeg a partir de un objeto SimpleXMLElement
+   * 
+   * @param  SimpleXMLElement $node
+   * 
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    if(strcmp($node->getName(), 'gGrupPolSeg') != 0)
+      throw new \Exception('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->getName(), 1);
+    $res = new GGrupPolSeg();
+    $res->setDPoliza($node->dPoliza)
+        ->setDUnidVig($node->dUnidVig)
+        ->setDVigencia($node->dVigencia)
+        ->setDNumPoliza($node->dNumPoliza);
+    if(isset($node->dFecIniVig))
+      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecIniVig));
+    if(isset($node->dFecFinVig))
+      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecFinVig));
+    if(isset($node->dCodInt))
+      $res->setDCodInt($node->dCodInt);
+    return $res;
+  }
+
+  /**
+   * Instancia un GGrupPolSeg a partir de un objeto stdClass correspondiente a la respuesta del SIFEN a una consulta SOAP.
+   *
+   * @param  mixed $object
+   * 
+   * @return self
+   */
+  public static function FromSifenResponseObject($object): self
+  {
+    $res = new GGrupPolSeg();
+    $res->setDPoliza($object->dPoliza);
+    $res->setDUnidVig($object->dUnidVig);
+    $res->setDVigencia($object->dVigencia);
+    $res->setDNumPoliza($object->dNumPoliza);
+    if(isset($object->dFecIniVig))
+      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecIniVig));
+    if(isset($object->dFecFinVig))
+      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecFinVig));
+    if(isset($object->dCodInt))
+      $res->setDCodInt($object->dCodInt);
+    return $res;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Convierte el GGrupPolSeg a un DOMElement
    *
    * @return DOMElement
    */
-  public function toDomElement(): DOMElement
+  public function toDOMElement(): DOMElement
   {
     $res = new DOMElement('gGrupPolSeg');
     $res->appendChild(new DOMElement('dPoliza', $this->getDPoliza()));
     $res->appendChild(new DOMElement('dUnidVig', $this->getDUnidVig()));
     $res->appendChild(new DOMElement('dVigencia', $this->getDVigencia()));
     $res->appendChild(new DOMElement('dNumPoliza', $this->getDNumPoliza()));
-    $res->appendChild(new DOMElement('dFecIniVig', $this->getDFecIniVig()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('dFecFinVig', $this->getDFecFinVig()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
-
-    return $res;
-  }
-  
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $res = new GGrupPolSeg();
-    if(isset($object->dPoliza))
-    {
-      $res->setDPoliza($object->dPoliza);
-    }
-    if(isset($object->dUnidVig))
-    {
-      $res->setDUnidVig($object->dUnidVig);
-    }
-    if(isset($object->dVigencia))
-    {
-      $res->setDVigencia($object->dVigencia);
-    }
-    if(isset($object->dNumPoliza))
-    {
-      $res->setDNumPoliza($object->dNumPoliza);
-    }
-    if(isset($object->dFecIniVig))
-    {
-      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecIniVig));
-    }
-    if(isset($object->dFecFinVig))
-    {
-      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecFinVig));
-    }
-    if(isset($object->dCodInt))
-    {
-      $res->setDCodInt($object->dCodInt);
-    }
-    
+    if($this->getDFecIniVig() != null)
+      $res->appendChild(new DOMElement('dFecIniVig', $this->getDFecIniVig()->format('Y-m-d\TH:i:s')));
+    if($this->getDFecFinVig() != null)
+      $res->appendChild(new DOMElement('dFecFinVig', $this->getDFecFinVig()->format('Y-m-d\TH:i:s')));
+    if($this->getDCodInt() != null)
+      $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
     return $res;
   }
 }

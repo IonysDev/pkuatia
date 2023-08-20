@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMElement;
 use SimpleXMLElement;
@@ -13,26 +14,13 @@ use SimpleXMLElement;
  * Nodo Padre:  A001 - DE - Campos firmados del DE
  */
 
-class GDatGralOpe
+class GDatGralOpe extends BaseSifenField
 {
 
-  public DateTime $dFeEmiDE; // D002 - Fecha y hora de emisión del DE (D002) AAAA-MM-DDThh:mm:ss
-  public GOpeCom $gOpeCom;   // Campos inherentes a la operación comercial (D010)
-  public GEmis $gEmis;       // Grupo de campos que identifican al emisor (D100)
-  public GDatRec $gDatRec;   // Grupo de campos que identifican al receptor (D200)
-
-  ///////////////////////////////////////////////////////////////////////
-  ///Constructor
-  ///////////////////////////////////////////////////////////////////////
-  public function __construct()
-  {
-    ///General
-    $this->gEmis = new GEmis();
-    $this->gDatRec = new GDatRec();
-    ///FOR TEST ONLY
-    $this->dFeEmiDE = new DateTime();
-  }
-
+  public DateTime $dFeEmiDE; // D002 - 19 - 1-1 - Fecha y hora de emisión del DE formato AAAA-MM-DDThh:mm:ss
+  public GOpeCom  $gOpeCom;  // D010 -    - 0-1 - Campos inherentes a la operación comercial (obligatorio si C002 != 7)
+  public GEmis    $gEmis;    // D100 -    - 1-1 - Grupo de campos que identifican al emisor (D100)
+  public GDatRec  $gDatRec;  // D200 -    - 1-1 - Grupo de campos que identifican al receptor (D200)
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -144,7 +132,7 @@ class GDatGralOpe
   }
 
   ///////////////////////////////////////////////////////////////////////
-  // XML Element
+  // Instanciadores
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -170,23 +158,6 @@ class GDatGralOpe
     return $res;
   }
 
-
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(): DOMElement
-  {
-    $res = new DOMElement('dDatGralOpe');
-    $res->appendChild(new DOMElement('dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
-    ///children
-    $res->appendChild($this->gOpeCom->toDOMElement());
-    $res->appendChild($this->gEmis->toDOMElement());
-    $res->appendChild($this->gDatRec->toDOMElement());
-    return $res;
-  }
-  
   /**
    * FromSifenResponseObject
    *
@@ -215,4 +186,41 @@ class GDatGralOpe
     }
     return $res;
   }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * toDOMElement
+   *
+   * @return DOMElement
+   */
+  public function toDOMElement(): DOMElement
+  {
+    // Validaciones
+    if(!isset($this->dFeEmiDE))
+    {
+      throw new \Exception('[GDatGralOpe] El campo dFeEmiDE no puede ser nulo');
+    }
+    if(!isset($this->gEmis))
+    {
+      throw new \Exception('[GDatGralOpe] El campo gEmis no puede ser nulo');
+    }
+    if(!isset($this->gDatRec))
+    {
+      throw new \Exception('[GDatGralOpe] El campo gDatRec no puede ser nulo');
+    }
+    // Crear nodo
+    $res = new DOMElement('dDatGralOpe');
+    $res->appendChild(new DOMElement('dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
+    if(isset($this->gOpeCom))
+      $res->appendChild($this->gOpeCom->toDOMElement());
+    $res->appendChild($this->gOpeCom->toDOMElement());
+    $res->appendChild($this->gEmis->toDOMElement());
+    $res->appendChild($this->gDatRec->toDOMElement());
+    return $res;
+  }
+  
+  
 }

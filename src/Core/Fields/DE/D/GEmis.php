@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
 use Abiliomp\Pkuatia\Config;
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
 use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
@@ -10,22 +11,23 @@ use DOMElement;
 use SimpleXMLElement;
 
 /**
- * Nodo Id: D100
- * Descripción: Grupo de campos que identifican al emisor gEmis
- * Nodo Padre: gDatGralOpe (D001)
+ * Nodo Id:     D100        
+ * Nombre:      gEmis       
+ * Descripción: Grupo de campos que identifican al emisor gEmis     
+ * Nodo Padre:  D001 - gDatGralOpe - Campos generales del DE    
  */
 
-class GEmis
+class GEmis extends BaseSifenField
 {
-
-    public String  $dRucEm;     // RUC del contribuyente emisor (D101)
-    public int     $dDVEmi;     // Dígito verificador del RUC del contribuyente emisor (D102)
-    public int     $iTipCont;   // Tipo de contribuyente (D103): 1 = Persona Física | 2 = Persona Jurídica
-    public int     $cTipReg;    // Tipo de régimen (D104): 1 = Régimen de Turismo | 2 = Importador | 3 = Exportador | 4 = Maquila | 5 = Ley N° 60/90 | 6 = Régimen del Pequeño Productor | 7 = Régimen del Mediano Productor | 8 = Régimen Contable
-    public String  $dNomEmi;    // Nombre o razón social del emisor del DE (D105)
-    public String  $dNomFanEmi; // Nombre de fantasía (D106)
-    public String  $dDirEmi;    // Dirección del local donde se emite el DE (D107)
-    public int     $dNumCas;    // Número de casa (D108)
+                                // Id - Longitud - Ocurrencia - Descripción
+    public String  $dRucEm;     // D101 - 3-8   - 1-1 - RUC del contribuyente emisor
+    public int     $dDVEmi;     // D102 - 1     - 1-1 - Dígito verificador del RUC del contribuyente emisor
+    public int     $iTipCont;   // D103 - 1     - 1-1 - Tipo de contribuyente: 1 = Persona Física | 2 = Persona Jurídica
+    public int     $cTipReg;    // D104 - 1-2   - 0-1 - Tipo de régimen: 1 = Régimen de Turismo | 2 = Importador | 3 = Exportador | 4 = Maquila | 5 = Ley N° 60/90 | 6 = Régimen del Pequeño Productor | 7 = Régimen del Mediano Productor | 8 = Régimen Contable
+    public String  $dNomEmi;    // D105 - 4-255 - 1-1 - Nombre o razón social del emisor del DE
+    public String  $dNomFanEmi; // D106 - 4-255 - 0-1 - Nombre de fantasía
+    public String  $dDirEmi;    // D107 - 1-255 - 1-1 - Dirección del local donde se emite el DE
+    public int     $dNumCas;    // D108 - 1-6   - 1-1 - Número de casa
     public String  $dCompDir1;  // Complemento de dirección 1 (D109)
     public String  $dCompDir2;  // Complemento de dirección 2 (D110)
     public int     $cDepEmi;    // Código del departamento de emisión (D111)

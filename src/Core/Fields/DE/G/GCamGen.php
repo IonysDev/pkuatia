@@ -13,10 +13,10 @@ use SimpleXMLElement;
 
 class GCamGen
 {
-  public String $dOrdCompra; // G002 - 1-15 - 0-1 - Número de orden de compra
-  public String $dOrdVta;    // G003 - 1-15 - 0-1 - Número de orden de venta 
-  public String $dAsiento;   // G004 - 1-10 - 0-1 - Número de asiento contable
-  public GCamCarg $gCamCarg; // G050 -      - 0-1 - Campos generales de la carga
+  public String   $dOrdCompra; // G002 - 1-15 - 0-1 - Número de orden de compra
+  public String   $dOrdVta;    // G003 - 1-15 - 0-1 - Número de orden de venta 
+  public String   $dAsiento;   // G004 - 1-10 - 0-1 - Número de asiento contable
+  public GCamCarg $gCamCarg;   // G050 -      - 0-1 - Campos generales de la carga
 
   ///////////////////////////////////////////////////////////////////////
   // Setters

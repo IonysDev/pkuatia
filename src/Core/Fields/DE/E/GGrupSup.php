@@ -170,29 +170,6 @@ class GGrupSup
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GGrupSup
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GGrupSup
-  // {
-  //   if (strcmp($xml->tagName, 'gGrupSup') === 0 && $xml->childElementCount == 5) {
-  //     $res = new GGrupSup();
-  //     $res->setDNomCaj($xml->getElementsByTagName('dNomCaj')->item(0)->nodeValue);
-  //     $res->setDEfectivo(intval($xml->getElementsByTagName('dEfectivo')->item(0)->nodeValue));
-  //     $res->setDVuelto(intval($xml->getElementsByTagName('dVuelto')->item(0)->nodeValue));
-  //     $res->setDDonac(intval($xml->getElementsByTagName('dDonac')->item(0)->nodeValue));
-  //     $res->setDDesDonac(strval($xml->getElementsByTagName('dDesDonac')->item(0)->nodeValue));
-
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
   /**
    * FromSifenResponseObject
    *
