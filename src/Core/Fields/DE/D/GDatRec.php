@@ -16,37 +16,65 @@ use SimpleXMLElement;
 
 class GDatRec
 {
+    public const NATURALEZA_CONTRIBUYENTE = 1;
+    public const NATURALEZA_NO_CONTRIBUYENTE = 2;
 
-    public ?int $iNatRec; // Naturaleza del receptor (D201): 1 = contribuyente | 2 = no contribuyente
-    public ?int $iTiOpe; // Tipo de operación (D202): 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
-    public String $cPaisRec; // Código de país del receptor (D203)
-    public String $dDesPaisRe; // Descripción del país del receptor (D204)
-    public ?int $iTiContRec; // Tipo de contribuyente receptor (D205): 1 = Persona Física | 2 = Persona Jurídica
-    public String $dRucRec; // RUC del receptor (D206)
-    public ?int $dDVRec; // Dígito verificador del RUC del receptor (D207)
-    public ?int $iTipIDRec; // Tipo de documento de identidad del receptor (D208): 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
-    public ?String $dDTipIDRec; // Descripción del tipo de documento de identidad del receptor (D209)
-    public String $dNumIDRec; // Número de documento de identidad (D210)
-    public String $dNomRec; // Nombre o razón social del receptor del DE (D211)
-    public String $dNomFanRec; // Nombre de fantasía (D212)
-    public String $dDirRec; // Dirección del receptor (D213)
-    public ?int $dNumCasRec; // Número de casa del receptor (D218)
-    public ?int $cDepRec; // Código del departamento del receptor (D219)
-    public ?String $dDesDepRec; // Descripción del departamento del receptor (D220)
-    public ?int $cDisRec; // Código del distrito del receptor (D221)
-    public ?String $dDesDisRec; // Descripción del distrito del receptor (D222)
-    public ?int $cCiuRec; // Código del ciudad del receptor (D223)
-    public ?String $dDesCiuRec; // Descripción del ciudad del receptor (D224)
-    public String $dTelRec; // Número de teléfono del receptor (D214)
-    public String $dCelRec; // Número de celular del receptor (D215)
-    public String $dEmailRec; // Correo electrónico de receptor (D216)
-    public String $dCodCliente; // Código del cliente (D217)
+    public const TIPO_OPERACION_B2B = 1;
+    public const TIPO_OPERACION_B2C = 2;
+    public const TIPO_OPERACION_B2G = 3;
+    public const TIPO_OPERACION_B2F = 4;
+
+    public const TIPO_CONTRIBUYENTE_PERSONA_FISICA = 1;
+    public const TIPO_CONTRIBUYENTE_PERSONA_JURIDICA = 2;
+
+    public const TIPO_DOCUMENTO_IDENTIDAD_CEDULA_PARAGUAYA = 1;
+    public const TIPO_DOCUMENTO_IDENTIDAD_PASAPORTE = 2;
+    public const TIPO_DOCUMENTO_IDENTIDAD_CEDULA_EXTRANJERA = 3;
+    public const TIPO_DOCUMENTO_IDENTIDAD_CARNET_RESIDENCIA = 4;
+    public const TIPO_DOCUMENTO_IDENTIDAD_INNOMINADO = 5;
+    public const TIPO_DOCUMENTO_IDENTIDAD_TARJETA_DIPLOMATICA = 6;
+    public const TIPO_DOCUMENTO_IDENTIDAD_OTRO = 9;
+
+    public int    $iNatRec;     // D201 - 1     - 1-1 - Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
+    public int    $iTiOpe;      // D202 - 1     - 1-1 - Tipo de operación: 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
+    public String $cPaisRec;    // D203 - 3     - 1-1 - Código de país del receptor
+    public String $dDesPaisRe;  // D204 - 4-30  - 1-1 - Descripción del país del receptor
+    public int    $iTiContRec;  // D205 - 1     - 0-1 - Tipo de contribuyente receptor: 1 = Persona Física | 2 = Persona Jurídica
+    public String $dRucRec;     // D206 - 3-8   - 0-1 - RUC del receptor
+    public int    $dDVRec;      // D207 - 1     - 0-1 - Dígito verificador del RUC del receptor
+    public int    $iTipIDRec;   // D208 - 1     - 0-1 - Tipo de documento de identidad del receptor: 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
+    public String $dDTipIDRec;  // D209 - 9-41  - 0-1 - Descripción del tipo de documento de identidad del receptor
+    public String $dNumIDRec;   // D210 - 1-20  - 0-1 - Número de documento de identidad
+    public String $dNomRec;     // D211 - 4-255 - 1-1 - Nombre o razón social del receptor del DE
+    public String $dNomFanRec;  // D212 - 4-255 - 0-1 - Nombre de fantasía
+    public String $dDirRec;     // D213 - 1-255 - 0-1 - Dirección del receptor
+    public int    $dNumCasRec;  // D218 - 1-6   - 0-1 - Número de casa del receptor
+    public int    $cDepRec;     // D219 - 1-2   - 0-1 - Código del departamento del receptor
+    public String $dDesDepRec;  // D220 - 6-16  - 0-1 - Descripción del departamento del receptor
+    public int    $cDisRec;     // D221 - 1-4   - 0-1 - Código del distrito del receptor
+    public String $dDesDisRec;  // D222 - 1-30  - 0-1 - Descripción del distrito del receptor
+    public int    $cCiuRec;     // D223 - 1-5   - 0-1 - Código del ciudad del receptor
+    public String $dDesCiuRec;  // D224 - 1-30  - 0-1 - Descripción del ciudad del receptor
+    public String $dTelRec;     // D214 - 6-15  - 0-1 - Número de teléfono del receptor
+    public String $dCelRec;     // D215 - 10-20 - 0-1 - Número de celular del receptor
+    public String $dEmailRec;   // D216 - 3-80  - 0-1 - Correo electrónico de receptor
+    public String $dCodCliente; // D217 - 3-15  - 0-1 - Código del cliente
 
     /**
-     * GDatRec constructor.
+     * Constructor de la clase  
+     * Inicializa los valores por defecto       
+     *      > iNatRec = No contribuyente        
+     *      > iTiOpe = B2C      
+     *      > cPaisRec = PRY        
+     *      > dDesPaisRe = Paraguay     
+     *      > dNomRec = Sin Nombre      
      */
     public function __construct()
     {
+        $this->iNatRec = self::NATURALEZA_NO_CONTRIBUYENTE;
+        $this->iTiOpe = self::TIPO_OPERACION_B2C;
+        $this->cPaisRec = 'PRY';
+        $this->dDesPaisRe = 'Paraguay';
         $this->dNomRec = 'Sin Nombre';
     }
 
@@ -54,6 +82,9 @@ class GDatRec
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
+    /**
+     * Establece el valor de iNatRec
+     */
     public function setINatRec(int $iNatRec): self
     {
         $this->iNatRec = $iNatRec;

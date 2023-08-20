@@ -15,18 +15,33 @@ use SimpleXMLElement;
 
 class GCamFE
 {
+  public const INDICADOR_PRESENCIA_OPERACION_PRESENCIAL = 1;
+  public const INDICADOR_PRESENCIA_OPERACION_ELECTRONICA = 2;
+  public const INDICADOR_PRESENCIA_OPERACION_TELEMARKETING = 3;
+  public const INDICADOR_PRESENCIA_VENTA_A_DOMICILIO = 4;
+  public const INDICADOR_PRESENCIA_OPERACION_BANCARIA = 5;
+  public const INDICADOR_PRESENCIA_OPERACION_CICLICA = 6;
+  public const INDICADOR_PRESENCIA_OTRO = 9;
+
                                 // Id - Longitud - Ocurrencia - Descripción
   public int      $iIndPres;    // E011 - 1     - 1-1 - Indicador de presencia
   public String   $dDesIndPres; // E012 - 10-30 - 1-1 - Descripción del indicador de presencia
   public DateTime $dFecEmNR;    // E013 - 10    - 0-1 - Fecha en el formato: AAAA-MM-DD Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda. RG 41/14
   public GCompPub $gComPub;     // E020 -       - 0-1 - Campos que describen las informaciones de compras públicas
 
+  /**
+   * Constructor
+   * Establece los valores por defecto:
+   *    > iIndPres = 1
+   *    > dDesIndPres = "Operación presencial"
+   */
+
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iIndPres
+   * establece el valor de iIndPres (código indicador de presencia)
    *
    * @param int $iIndPres
    *

@@ -5,9 +5,12 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GTransp;
 use DOMElement;
 
-// Nodo Id:E001
-// Descripción: Campos específicos por tipo de Documento Electrónico (E001-E009)
-// Nodo Padre:A001
+/**
+ * Nodo Id:     E001    
+ * Nombre:      gDtipDE   
+ * Descripción: Campos específicos por tipo de Documento Electrónico (E001-E009)    
+ * Nodo Padre:  A001 - DE - Campos firmados del DE    
+ */
 
 class GDtipDE
 {
@@ -17,7 +20,7 @@ class GDtipDE
   public GCamNCDE $gCamNCDE; // E400 - - 0-1   - Campos que componen la Nota de Crédito o Débito Electrónica
   public GCamNRE  $gCamNRE;  // E500 - - 0-1   - Campos que componen la Nota de Remisión Electrónica
   public GCamCond $gCamCond; // E600 - - 0-1   - Campos que describen la condición de la operación
-  public array    $gCamItem; // E700 - - 1-999 - Campos que describen los ítems de la operación
+  public array    $gCamItem; // E700 - - 1-999 - Campos que describen los ítems de la operación (GCamItem[])
   public GCamEsp  $gCamEsp;  // E790 - - 0-1   - Campos complementarios comerciales de uso específico
   public GTransp  $gTransp;  // E900 - - 0-1   - Campos que describen  el transporte de mercaderías
 

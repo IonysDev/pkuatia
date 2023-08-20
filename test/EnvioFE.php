@@ -7,8 +7,13 @@ use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
+use Abiliomp\Pkuatia\Core\Fields\DE\D\GActEco;
+use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatGralOpe;
+use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatRec;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GEmis;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamFE;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamItem;
 use Abiliomp\Pkuatia\Sifen;
 
 error_reporting(E_ALL);
@@ -45,6 +50,59 @@ $gOpeCom->setITImp(Constants::TIPO_IMPUESTO_IVA);
 $gOpeCom->setCMoneOpe('PYG');
 
 $gEmis = new GEmis();
+$gEmis->setDRucEm('80121930');
+$gEmis->setDDVEmi('2');
+$gEmis->setITipCont(Constants::TIPO_CONTRIBUYENTE_PERSONA_JURIDICA);
+$gEmis->setDNomEmi('DE generado en ambiente de prueba - sin valor comercial ni fiscal');
+$gEmis->setDDirEmi('Tte. Felix Cañete');
+$gEmis->setDNumCas('1622');
+$gEmis->setCDepEmi(1);
+$gEmis->setDDesDepEmi('CAPITAL');
+$gEmis->setCCiuEmi(1);
+$gEmis->setDDesCiuEmi('ASUNCION (DISTRITO)');
+$gEmis->setDTelEmi('021 295550');
+$gEmis->setDEmailE('abiliomp@gmail.com');
+$gActEco = new GActEco();
+$gActEco->setCActEco(47411);
+$gActEco->setDDesActEco('COMERCIO AL POR MENOR DE EQUIPOS INFORMÁTICOS Y SOFTWARE');
+$gEmis->gActEco[] = $gActEco;
+$gActEco = new GActEco();
+$gActEco->setCActEco(69208 );
+$gActEco->setDDesActEco('OTROS SERVICIOS AUTORIZADOS');
+$gEmis->gActEco[] = $gActEco;
+$gActEco = new GActEco();
+$gActEco->setCActEco(62020);
+$gActEco->setDDesActEco('ACTIVIDADES DE CONSULTORÍA Y GESTIÓN DE SERVICIOS INFORMÁTICOS');
+$gEmis->gActEco[] = $gActEco;
+$gActEco = new GActEco();
+$gActEco->setCActEco(46510);
+$gActEco->setDDesActEco('COMERCIO AL POR MAYOR DE EQUIPOS INFORMÁTICOS Y SOFTWARE');
+$gEmis->gActEco[] = $gActEco;
+
+$gDatRec = new GDatRec();
+
+$gDatGralOpe = new GDatGralOpe();
+$gDatGralOpe->setDFeEmiDE(new DateTime());
+$gDatGralOpe->setGOpeCom($gOpeCom);
+$gDatGralOpe->setGEmis($gEmis);
+$gDatGralOpe->setGDatRec($gDatRec);
+
+//////////////////////////////////////////////////////////////////
+
+$gCamFE = new GCamFE();
+
+$gCamItem = new GCamItem();
+$gCamItem->setDCodInt('SERV001');
+$gCamItem->setDDesProSer('Servicio de desarrollo de software');
+$gCamItem->setCUniMed(77);
+$gCamItem->setDCantProSer("1");
+
+
+
+
+
+
+
 
 
 

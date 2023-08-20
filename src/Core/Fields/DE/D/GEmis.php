@@ -28,19 +28,19 @@ class GEmis extends BaseSifenField
     public String  $dNomFanEmi; // D106 - 4-255 - 0-1 - Nombre de fantasía
     public String  $dDirEmi;    // D107 - 1-255 - 1-1 - Dirección del local donde se emite el DE
     public int     $dNumCas;    // D108 - 1-6   - 1-1 - Número de casa
-    public String  $dCompDir1;  // Complemento de dirección 1 (D109)
-    public String  $dCompDir2;  // Complemento de dirección 2 (D110)
-    public int     $cDepEmi;    // Código del departamento de emisión (D111)
-    public String  $dDesDepEmi; // Descripción del departamento de emisión (D112)
-    public int     $cDisEmi;    // Código de la distrito de emisión (D113)
-    public String  $dDesDisEmi; // Descripción de la distrito de emisión (D114)
-    public int     $cCiuEmi;    // Código de la ciudad de emisión (D115)
-    public String  $dDesCiuEmi; // Descripción de la ciudad de emisión (D116)
-    public String  $dTelEmi;    // Teléfono local de emisión de DE (D117)
-    public String  $dEmailE;    // Correo electrónico del emisor (D118)
-    public String  $dDenSuc;    // Denominación comercial de la sucursal (D119)
-    public array   $gActEco;    // Grupo de campos que describen la actividad económica del emisor del tipo GActEco (D130)
-    public GRespDE $gRespDE;    // Grupo de campos que identifican al responsable de la generación del DE
+    public String  $dCompDir1;  // D109 - 1-255 - 0-1 - Complemento de dirección 1
+    public String  $dCompDir2;  // D110 - 1-255 - 0-1 - Complemento de dirección 2
+    public int     $cDepEmi;    // D111 - 1-2   - 1-1 - Código del departamento de emisión
+    public String  $dDesDepEmi; // D112 - 6-16  - 1-1 - Descripción del departamento de emisión
+    public int     $cDisEmi;    // D113 - 1-4   - 0-1 - Código de la distrito de emisión
+    public String  $dDesDisEmi; // D114 - 1-30  - 0-1 - Descripción de la distrito de emisión
+    public int     $cCiuEmi;    // D115 - 1-5   - 1-1 - Código de la ciudad de emisión
+    public String  $dDesCiuEmi; // D116 - 1-30  - 1-1 - Descripción de la ciudad de emisión
+    public String  $dTelEmi;    // D117 - 6-15  - 1-1 - Teléfono local de emisión de DE 
+    public String  $dEmailE;    // D118 - 3-80  - 1-1 - Correo electrónico del emisor
+    public String  $dDenSuc;    // D119 - 1-30  - 0-1 - Denominación comercial de la sucursal
+    public array   $gActEco;    // D130 -       - 1-9 - Grupo de campos que describen la actividad económica del emisor del tipo GActEco (D130)
+    public GRespDE $gRespDE;    // D140 -       - 0-1 - Grupo de campos que identifican al responsable de la generación del DE
     
     ///////////////////////////////////////////////////////////////////////
     ///Constructor
