@@ -33,10 +33,6 @@ class RDE
   public function __construct()
   {
     $this->setDVerFor(Constants::SIFEN_VERSION);
-
-    $this->DE        = new DE();
-    $this->Signature = new Signature();
-    $this->gCamFuFD  = new GCamFuFD();
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -157,10 +153,14 @@ class RDE
     if(strcmp($node->getName(), 'rDE') != 0)
       throw new \Exception('[RDE] Invalid XML Node Name: ' . $node->getName());
     $res = new RDE();
-    $res->setDVerFor((int) $node->dVerFor);
-    $res->setDE(DE::FromSimpleXMLElement($node->DE));
-    $res->setGCamFuFD(GCamFuFD::FromSimpleXMLElement($node->gCamFuFD));
-    $res->setSignature(Signature::FromSimpleXMLElement($node->Signature));
+    if(isset($node->dVerFor))
+      $res->setDVerFor(intval($node->dVerFor));
+    if(isset($node->DE))
+      $res->setDE(DE::FromSimpleXMLElement($node->DE));
+    if(isset($node->Signature))
+      $res->setSignature(Signature::FromSimpleXMLElement($node->Signature));
+    if(isset($node->gCamFuFD))
+      $res->setGCamFuFD(GCamFuFD::FromSimpleXMLElement($node->gCamFuFD));
     return $res;
   }
 

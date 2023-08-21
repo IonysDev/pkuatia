@@ -73,9 +73,11 @@ class GDatRec
     {
         $this->iNatRec = self::NATURALEZA_NO_CONTRIBUYENTE;
         $this->iTiOpe = self::TIPO_OPERACION_B2C;
+        $this->iTipIDRec = self::TIPO_DOCUMENTO_IDENTIDAD_INNOMINADO;
+        $this->dNumIDRec = 0;
+        $this->dNomRec = 'Sin Nombre';
         $this->cPaisRec = 'PRY';
         $this->dDesPaisRe = 'Paraguay';
-        $this->dNomRec = 'Sin Nombre';
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -265,13 +267,16 @@ class GDatRec
     }
 
     /**
-     * Get the value of dRucRec
+     * Devuelve el valor de dRucRec (D206 - RUC del receptor)
      *
      * @return String
      */
     public function getDRucRec(): String
     {
-        return $this->dRucRec;
+        if(isset($this->dRucRec))
+            return $this->dRucRec;
+        else
+            return null;
     }
 
     /**
@@ -334,7 +339,10 @@ class GDatRec
      */
     public function getDNumIDRec(): String
     {
-        return $this->dNumIDRec;
+        if(isset($this->dNumIDRec))
+            return $this->dNumIDRec;
+        else
+            return null;
     }
 
     /**
@@ -549,7 +557,8 @@ class GDatRec
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('gDatRec');
+        $doc = new \DOMDocument();
+        $res = $doc->createElement('gDatRec');
         $res->appendChild(new DOMElement('iNatRec', $this->getINatRec()));
         $res->appendChild(new DOMElement('iTiOpe', $this->getITiOpe()));
         $res->appendChild(new DOMElement('cPaisRec', $this->getCPaisRec()));
@@ -569,28 +578,32 @@ class GDatRec
             $res->appendChild(new DOMElement('dNumIDRec', $this->getDNumIDRec()));
         }
         $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
-        $res->appendChild(new DOMElement('dNomFanRec', $this->getDNomFanRec()));
-
-        if ($this->iTiOpe == 2) {
+        if(isset($this->dNomFanRec))
+            $res->appendChild(new DOMElement('dNomFanRec', $this->getDNomFanRec()));
+        if(isset($this->dDirRec))
             $res->appendChild(new DOMElement('dDirRec', $this->getDDirRec()));
+        if(isset($this->dNumCasRec))
             $res->appendChild(new DOMElement('dNumCasRec', $this->getDNumCasRec()));
-        }
-
-        $res->appendChild(new DOMElement('cDepRec', $this->getCDepRec()));
-        $res->appendChild(new DOMElement('dDesDepRec', $this->getDDesDepRec()));
-        $res->appendChild(new DOMElement('cDisRec', $this->getCDisRec()));
-        $res->appendChild(new DOMElement('dDesDisRec', $this->getDDesDisRec()));
-        $res->appendChild(new DOMElement('cCiuRec', $this->getCCiuRec()));
-        $res->appendChild(new DOMElement('dDesCiuRec', $this->getDDesCiuRec()));
-        if ($this->cPaisRec == "PRY") {
-            ////Debe incluir el prefijo de la ciudad si D203 = PRY
+        if(isset($this->cDepRec))
+            $res->appendChild(new DOMElement('cDepRec', $this->getCDepRec()));
+        if(isset($this->dDesDepRec))
+            $res->appendChild(new DOMElement('dDesDepRec', $this->getDDesDepRec()));
+        if(isset($this->cDisRec))
+            $res->appendChild(new DOMElement('cDisRec', $this->getCDisRec()));
+        if(isset($this->dDesDisRec))
+            $res->appendChild(new DOMElement('dDesDisRec', $this->getDDesDisRec()));
+        if(isset($this->cCiuRec))
+            $res->appendChild(new DOMElement('cCiuRec', $this->getCCiuRec()));
+        if(isset($this->dDesCiuRec))
+            $res->appendChild(new DOMElement('dDesCiuRec', $this->getDDesCiuRec()));
+        if(isset($this->dTelRec))
             $res->appendChild(new DOMElement('dTelRec', $this->getDTelRec()));
-        } else {
-            $res->appendChild(new DOMElement('dTelRec', $this->getDTelRec()));
-        }
-        $res->appendChild(new DOMElement('dCelRec', $this->getDCelRec()));
-        $res->appendChild(new DOMElement('dEmailRec', $this->getDEmailRec()));
-        $res->appendChild(new DOMElement('dCodCliente', $this->getDCodCliente()));
+        if(isset($this->dCelRec))
+            $res->appendChild(new DOMElement('dCelRec', $this->getDCelRec()));
+        if(isset($this->dEmailRec))
+            $res->appendChild(new DOMElement('dEmailRec', $this->getDEmailRec()));
+        if(isset($this->dCodCliente))
+            $res->appendChild(new DOMElement('dCodCliente', $this->getDCodCliente()));
         return $res;
     }
     

@@ -255,14 +255,42 @@ class GDtipDE
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gDtipDE');
-    $res->appendChild($this->gCamFE->toDOMElement());
-    $res->appendChild($this->gCamAE->toDOMElement());
-    $res->appendChild($this->gCamNCDE->toDOMElement());
-    $res->appendChild($this->gCamNRE->toDOMElement());
-    $res->appendChild($this->gCamCond->toDOMElement());
-    $res->appendChild($this->gCamEsp->toDOMElement());
-    $res->appendChild($this->gTransp->toDOMElement());
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gDtipDE');
+    if(isset($this->gCamFE)){
+      $importNode = $doc->importNode($this->gCamFE->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gCamAE)){
+      $importNode = $doc->importNode($this->gCamAE->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gCamNCDE)){
+      $importNode = $doc->importNode($this->gCamNCDE->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gCamNRE)){
+      $importNode = $doc->importNode($this->gCamNRE->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gCamCond)){
+      $importNode = $doc->importNode($this->gCamCond->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gCamItem)){
+      foreach($this->gCamItem as $gCamItem){
+        $importNode = $doc->importNode($gCamItem->toDOMElement(), true);
+        $res->appendChild($importNode);
+      }
+    }
+    if(isset($this->gCamEsp)){
+      $importNode = $doc->importNode($this->gCamEsp->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gTransp)){
+      $importNode = $doc->importNode($this->gTransp->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
     return $res;
   }
 

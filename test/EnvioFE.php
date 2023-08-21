@@ -4,6 +4,8 @@ require '../vendor/autoload.php'; // Include the Composer autoloader
 
 use Abiliomp\Pkuatia\Core\Config;
 use Abiliomp\Pkuatia\Core\Constants;
+use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
+use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
@@ -14,7 +16,18 @@ use Abiliomp\Pkuatia\Core\Fields\DE\D\GEmis;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamFE;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamItem;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamIVA;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GDtipDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorItem;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
+use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
+use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
+use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
+use Abiliomp\Pkuatia\Helpers\CDCHelper;
+use Abiliomp\Pkuatia\Helpers\QRHelper;
+use Abiliomp\Pkuatia\Helpers\SignHelper;
 use Abiliomp\Pkuatia\Sifen;
+use Abiliomp\Pkuatia\Utils\RucUtils;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -97,28 +110,89 @@ $gCamItem->setDDesProSer('Servicio de desarrollo de software');
 $gCamItem->setCUniMed(77);
 $gCamItem->setDCantProSer("1");
 
+$gValorRestaItem = new GValorRestaItem();
+$gValorRestaItem->setDTotOpeItem("100000");
 
+$gValorItem = new GValorItem();
+$gValorItem->setDPUniProSer("100000");
+$gValorItem->setDTotBruOpeItem("100000");
+$gValorItem->setGValorRestaItem($gValorRestaItem);
 
+$gCamItem->setGValorItem($gValorItem);
 
+$gCamIVA = new GCamIVA();
+$gCamIVA->setIAfecIVA(GCamIVA::AFECTACION_IVA_GRAVADO);
+$gCamIVA->setDPropIVA("100");
+$gCamIVA->setDTasaIVA(10);
+$gCamIVA->setDBasGravIVA(bcdiv($gValorItem->getDTotBruOpeItem(), "1.1", 8));
+$gCamIVA->setDLiqIVAItem(bcdiv($gValorItem->getDTotBruOpeItem(), "11", 8));
 
+$gCamItem->gCamIVA = $gCamIVA;
 
+$gDtipDE = new GDtipDE();
+$gDtipDE->setGCamFE($gCamFE);
+$gDtipDE->gCamItem[] = $gCamItem;
 
+//////////////////////////////////////////////////////////////////
 
+$gTotSub = new GTotSub();
+$gTotSub->setDTotOpe("100000");
+$gTotSub->setDTotGralOpe("100000");
 
+//////////////////////////////////////////////////////////////////
 
+$de = new DE();
+$de->setGOpeDE($gOpeDe);
+$de->setGTimb($gTimb);
+$de->setGDatGralOpe($gDatGralOpe);
+$de->setGDtipDE($gDtipDE);
+$de->setGTotSub($gTotSub);
 
+$cdc = CDCHelper::CDCMaker($de);
 
+$de->setId($cdc);
+$de->setDDVId(RucUtils::calcDV($cdc));
+$de->setDFecFirma(new DateTime());
+//////////////////////////////////////////////////////////////////
 
-try {
-    echo "Prueba de Consulta de RUC\n";
+SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
+$signedXml = SignHelper::Sign($de->toXMLString(), $cdc);
+
+//////////////////////////////////////////////////////////////////
+
+$signedSimpleXMLElement = simplexml_load_string($signedXml);
+$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
+
+//////////////////////////////////////////////////////////////////
+
+$gCamFuFD = new GCamFuFD();
+$gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
+
+//////////////////////////////////////////////////////////////////
+
+$rde = new RDE();
+$rde->setDE($de);
+$rde->setSignature($Signature);
+$rde->setGCamFuFD($gCamFuFD);
+
+//////////////////////////////////////////////////////////////////
+
+$documentoElectronico = new DocumentoElectronico();
+$documentoElectronico->setRDE($rde);
+
+//////////////////////////////////////////////////////////////////
+
+try{
+    echo "Prueba de Envío de Documento Electrónico\n";
     echo "Inicializando Sifen... ";
     Sifen::Init($config);
     echo "OK\n";
-    echo "Consultando RUC " . $testRuc . "...\n";
-    $res = Sifen::ConsultarRUC($testRuc);
+    echo "Enviando Documento Electrónico...\n";
+    $res = Sifen::EnviarDE($documentoElectronico);
     echo "Resultado: \n";
-    echo json_encode($res, JSON_PRETTY_PRINT);
-} catch (SoapFault $e) {
+    echo var_dump($res);
+}
+catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();
 } catch (Exception $e) {

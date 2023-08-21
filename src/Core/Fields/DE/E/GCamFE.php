@@ -35,6 +35,11 @@ class GCamFE
    *    > iIndPres = 1
    *    > dDesIndPres = "Operación presencial"
    */
+  public function __construct()
+  {
+    $this->iIndPres = self::INDICADOR_PRESENCIA_OPERACION_PRESENCIAL;
+    $this->dDesIndPres = "Operación presencial";
+  }
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -197,12 +202,17 @@ class GCamFE
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gCamFE');
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gCamFE');
     $res->appendChild(new DOMElement('iIndPres', $this->iIndPres));
     $res->appendChild(new DOMElement('dDesIndPres', $this->getDDesIndPres()));
-    $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
-    //children
-    $res->appendChild($this->gComPub->toDOMElement());
+    if(isset($this->dFecEmNR))
+      $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
+    if(isset($this->gComPub))
+    {
+      $importNode = $doc->importNode($this->gComPub->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
     return $res;
   }
   

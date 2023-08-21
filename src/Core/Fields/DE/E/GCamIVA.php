@@ -15,9 +15,14 @@ use SimpleXMLElement;
 class GCamIVA
 {
 
+  public const AFECTACION_IVA_GRAVADO = 1;
+  public const AFECTACION_IVA_EXONERADO = 2;
+  public const AFECTACION_IVA_EXENTO = 3;
+  public const AFECTACION_IVA_GRAVADO_PARCIAL = 4;
+
   public int    $iAfecIVA;    // E731 - 1          - 1-1 - Forma de afectación tributaria del IVA: 1 - Gravado | 2 - Exonerado (Art. 83- Ley 125/91) | 3 - Exento | 4 - Gravado parcial (Grav-Exento)
   public String $dDesAfecIVA; // E732 - 6-15       - 1-1 - Descripción de la forma de afectación tributaria del IVA
-  public int    $dPropIVA;    // E733 - 1-3p(0-8)  - 1-1 - Proporción gravada de IVA
+  public String $dPropIVA;    // E733 - 1-3p(0-8)  - 1-1 - Proporción gravada de IVA
   public int    $dTasaIVA;    // E734 - 1-2        - 1-1 - Tasa del IVA (% en número entero)
   public String $dBasGravIVA; // E735 - 1-15p(0-8) - 1-1 - Base gravada del IVA por ítem 
   public String $dLiqIVAItem; // E736 - 1-15p(0-8) - 1-1 - Liquidación del IVA por ítem
@@ -73,11 +78,11 @@ class GCamIVA
   /**
    * Set the value of dPropIVA
    *
-   * @param int $dPropIVA
+   * @param String $dPropIVA
    *
    * @return self
    */
-  public function setDPropIVA(int $dPropIVA): self
+  public function setDPropIVA(String $dPropIVA): self
   {
     $this->dPropIVA = $dPropIVA;
 
@@ -159,9 +164,9 @@ class GCamIVA
   /**
    * Get the value of dPropIVA
    *
-   * @return int
+   * @return String
    */
-  public function getDPropIVA(): int
+  public function getDPropIVA(): String
   {
     return $this->dPropIVA;
   }
@@ -214,7 +219,7 @@ class GCamIVA
     $res = new GCamIVA();
     $res->iAfecIVA    = intval($node->iAfecIVA);
     $res->dDesAfecIVA = strval($node->dDesAfecIVA);
-    $res->dPropIVA    = intval($node->dPropIVA);
+    $res->dPropIVA    = strval($node->dPropIVA);
     $res->dTasaIVA    = intval($node->dTasaIVA);
     $res->dBasGravIVA = strval($node->dBasGravIVA);
     $res->dLiqIVAItem = strval($node->dLiqIVAItem);
@@ -258,7 +263,7 @@ class GCamIVA
     }
     if(isset($resposne->dPropIVA))
     {
-      $res->setDPropIVA(intval($resposne->dPropIVA));
+      $res->setDPropIVA(strval($resposne->dPropIVA));
     }
     if(isset($resposne->dTasaIVA))
     {

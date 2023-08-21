@@ -191,6 +191,40 @@ class Config
 
         return $this;
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Getters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Devuelve el valor de IdCDC
+     * 
+     * @return String
+     */
+    public function getIdCsc(): String
+    {
+        return $this->idCsc;
+    }
+
+    /**
+     * Devuelve el valor de env (entorno)
+     * 
+     * @return String
+     */
+    public function getEnv(): String
+    {
+        return $this->env;
+    }
+
+    /**
+     * Devuelve el valor del CSC (clave secreta de comunicación)
+     * 
+     * @return String
+     */
+    public function getCsc(): String
+    {
+        return $this->csc;
+    }
     
 
 }

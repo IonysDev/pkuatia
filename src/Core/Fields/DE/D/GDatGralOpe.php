@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -212,13 +213,21 @@ class GDatGralOpe extends BaseSifenField
       throw new \Exception('[GDatGralOpe] El campo gDatRec no puede ser nulo');
     }
     // Crear nodo
-    $res = new DOMElement('dDatGralOpe');
+    $doc = new DOMDocument();
+    $res = $doc->createElement('gDatGralOpe');
     $res->appendChild(new DOMElement('dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
-    if(isset($this->gOpeCom))
-      $res->appendChild($this->gOpeCom->toDOMElement());
-    $res->appendChild($this->gOpeCom->toDOMElement());
-    $res->appendChild($this->gEmis->toDOMElement());
-    $res->appendChild($this->gDatRec->toDOMElement());
+    if(isset($this->gOpeCom)) 
+    {
+      $importNode = $doc->importNode($this->gOpeCom->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    
+    $importNode = $doc->importNode($this->gEmis->toDOMElement(), true);
+    $res->appendChild($importNode);
+
+    $importNode = $doc->importNode($this->gDatRec->toDOMElement(), true);
+    $res->appendChild($importNode);
+    
     return $res;
   }
   

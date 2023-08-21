@@ -678,7 +678,7 @@ class GTotSub
   }
 
   /**
-   * Get the value of dTotIVA
+   * Devuelve el valor dTotIVA (F017 - Liquidación total del IVA)
    *
    * @return String
    */
@@ -808,7 +808,8 @@ class GTotSub
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gTotSub');
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gTotSub');
     $res->appendChild(new DOMElement('dSubExe', $this->getDSubExe()));
     $res->appendChild(new DOMElement('dSubExo', $this->getDSubExo()));
     $res->appendChild(new DOMElement('dSub5', $this->getDSub5()));

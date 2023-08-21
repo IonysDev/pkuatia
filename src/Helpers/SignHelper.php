@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Helpers;
 
+use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Selective\XmlDSig\PrivateKeyStore;
 use Selective\XmlDSig\Algorithm;
 use Selective\XmlDSig\CryptoSigner;
@@ -58,25 +59,9 @@ class SignHelper
         }
         else
             $pemCertificate = null;
-        
-        // Verificar la extensión del archivo
-        $extension = pathinfo($keyPath, PATHINFO_EXTENSION);        
-        if($extension === "p12")
-        {
-            // Si se trata de un archivo PKCS12
-            self::init($fileContents, $password, KeyFormat::P12, $pemCertificate);
-        }
-        else if($extension === "pem")
-        {
-            // Si se trata de un archivo PEM
-            self::init($fileContents, $password, KeyFormat::PEM, $pemCertificate);
-        }
-        else
-            // Si no es ninguno de los dos
-            throw new \Exception("File extension not supported.");
     }
 
-    public static function sign(String $xml, String $referenceUri = null)
+    public static function Sign(String $xml, String $referenceUri = null)
     {
         if(!isset(self::$xmlSigner))
             throw new \Exception("SignHelper not initialized.");

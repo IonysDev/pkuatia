@@ -6,23 +6,26 @@ use DateTime;
 use DOMElement;
 
 /**
- * ID:E750 Grupo de rastreo de la mercadería PADRE:E700
+ * Nodo Id:     E750    
+ * Nombre:      gRasMerc    
+ * Descripción: Grupo de rastreo de la mercadería     
+ * Nodo Padre:  E700 - gCamItem - Campos que describen los ítems de la operación
  */
 class GRasMerc
 {
-  public ?int $dNumLote; //E751 Número de lote 
-  public ?DateTime $dVencMerc; ///E752 Fecha de vencimiento  de la mercadería
-  public String $dNSerie; //E753  Número de serie
-  public String $dNumPedi; //E754 Número de pedido
-  public String $dNumSegui; //E755 Número de  seguimiento del envío
-  public String $dNomImp; //E756 Nombre del Importador
-  public String $dDirImp; //E757 Dirección de Importador
-  public String $dNumFir; //E758 Número de registro de la firma del importador
-  public String $dNumReg; //E759 Número de registro del  producto otorgado por  el SENAVE
-  public String $dNumRegEntCom; //E760  Número de registro de  entidad comercial otorgado por el SENAVE
+  public int      $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote 
+  public DateTime $dVencMerc;     // E752 - 10    - 0-1 - Fecha de vencimiento  de la mercadería
+  public String   $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
+  public String   $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
+  public String   $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
+  public String   $dNomImp;       // E756 - 4-60  - 0-1 - Nombre del Importador
+  public String   $dDirImp;       // E757 - 1-255 - 0-1 - Dirección de Importador
+  public String   $dNumFir;       // E758 - 20    - 0-1 - Número de registro de la firma del importador
+  public String   $dNumReg;       // E759 - 20    - 0-1 - Número de registro del  producto otorgado por  el SENAVE
+  public String   $dNumRegEntCom; // E760 - 20    - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
 
   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**

@@ -35,7 +35,7 @@ class GCamItem
   public String     $dPorQuiMer;   // E718 - 1-3p(0-8)  - 0-1 - Porcentaje de quiebra o merma (decimal BCMath)
   public String     $dCDCAnticipo; // E719 - 44         - 0-1 - CDC del anticipo
   public GValorItem $gValorItem;   // E720 -            - 0-1 - Campos que describen los precios, descuentos y valor total por ítem 
-  public GCamIVA    $gCamIVa;      // E730 -            - 0-1 - Campos que describen el IVA de la operación
+  public GCamIVA    $gCamIVA;      // E730 -            - 0-1 - Campos que describen el IVA de la operación
   public GRasMerc   $gRasMerc;     // E750 -            - 0-1 - Grupo de rastreo de la mercadería
   public GVehNuevo  $gVehNuevo;    // E770 -            - 0-1 - Grupo de detalle de vehículos nuevos
 
@@ -374,13 +374,13 @@ class GCamItem
   /**
    * Set the value of gCamIVa
    * 
-   * @param GCamIVA $gCamIVa
+   * @param GCamIVA $gCamIVA
    * 
    * @return self
    */
-  public function setGCamIVa(GCamIVA $gCamIVa): self
+  public function setGCamIVa(GCamIVA $gCamIVA): self
   {
-    $this->gCamIVa = $gCamIVa;
+    $this->gCamIVA = $gCamIVA;
     return $this;
   }
 
@@ -622,7 +622,7 @@ class GCamItem
    */
   public function getGCamIVa(): GCamIVA
   {
-    return $this->gCamIVa;
+    return $this->gCamIVA;
   }
 
   /**
@@ -750,7 +750,8 @@ class GCamItem
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement("gCamItem");
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gCamItem');
 
     $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
     $res->appendChild(new DOMElement('dParAranc', $this->getDParAranc()));
@@ -776,9 +777,9 @@ class GCamItem
     $res->appendChild(new DOMElement('dPorQuiMer', $this->getDPorQuiMer()));
     $res->appendChild(new DOMElement('dCDCAnticipo', $this->getDCDCAnticipo()));
 
-    //children
+    
     $res->appendChild($this->gValorItem->toDOMElement());
-    $res->appendChild($this->gCamIVa->toDOMElement());
+    $res->appendChild($this->gCamIVA->toDOMElement());
     $res->appendChild($this->gRasMerc->toDOMElement());
     $res->appendChild($this->gVehNuevo->toDOMElement());
     return $res;

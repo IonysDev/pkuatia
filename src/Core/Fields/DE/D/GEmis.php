@@ -365,35 +365,44 @@ class GEmis extends BaseSifenField
 
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('gEmis');
+        $doc = new \DOMDocument();
+        $res = $doc->createElement('gEmis');
         $res->appendChild(new DOMElement('dRucEm', $this->dRucEm));
         $res->appendChild(new DOMElement('dDVEmi', $this->dDVEmi));
         $res->appendChild(new DOMElement('iTipCont', $this->iTipCont));
-        $res->appendChild(new DOMElement('cTipReg', $this->cTipReg));
+        if(isset($this->cTipReg))
+            $res->appendChild(new DOMElement('cTipReg', $this->cTipReg));
         $res->appendChild(new DOMElement('dNomEmi', $this->dNomEmi));
-        $res->appendChild(new DOMElement('dNomFanEmi', $this->dNomFanEmi));
+        if(isset($this->dNomFanEmi))
+            $res->appendChild(new DOMElement('dNomFanEmi', $this->dNomFanEmi));
         $res->appendChild(new DOMElement('dDirEmi', $this->dDirEmi));
         $res->appendChild(new DOMElement('dNumCas', $this->dNumCas));
-        $res->appendChild(new DOMElement('dCompDir1', $this->dCompDir1));
-        $res->appendChild(new DOMElement('dCompDir2', $this->dCompDir2));
+        if(isset($this->dCompDir1))
+            $res->appendChild(new DOMElement('dCompDir1', $this->dCompDir1));
+        if(isset($this->dCompDir2))
+            $res->appendChild(new DOMElement('dCompDir2', $this->dCompDir2));
         $res->appendChild(new DOMElement('cDepEmi', $this->cDepEmi));
         $res->appendChild(new DOMElement('dDesDepEmi', $this->getDDesDepEmi()));
-        $res->appendChild(new DOMElement('cDisEmi', $this->cDisEmi));
-        $res->appendChild(new DOMElement('dDesDisEmi', $this->getDDesDisEmi()));
+        if(isset($this->cDisEmi))
+            $res->appendChild(new DOMElement('cDisEmi', $this->cDisEmi));
+        if(isset($this->dDesDisEmi))
+            $res->appendChild(new DOMElement('dDesDisEmi', $this->getDDesDisEmi()));
         $res->appendChild(new DOMElement('cCiuEmi', $this->cCiuEmi));
         $res->appendChild(new DOMElement('dDesCiuEmi', $this->getDDesCiuEmi()));
         $res->appendChild(new DOMElement('dTelEmi', $this->dTelEmi));
         $res->appendChild(new DOMElement('dEmailE', $this->dEmailE));
-        $res->appendChild(new DOMElement('dDenSuc', $this->dDenSuc));
-        ///Children
+        if(isset($this->dDenSuc))
+            $res->appendChild(new DOMElement('dDenSuc', $this->dDenSuc));
         if(isset($this->gActEco))
         {
             foreach ($this->gActEco as $g) {
-                $res->appendChild($g->toDOMElement());
+                $importNode = $doc->importNode($g->toDOMElement(), true);
+                $res->appendChild($importNode);
             }
         }
         if (isset($this->gRespDE)) {
-            $res->appendChild($this->gRespDE->toDOMElement());
+            $importNode = $doc->importNode($this->gRespDE->toDOMElement(), true);
+            $res->appendChild($importNode);
         }
         return $res;
     }

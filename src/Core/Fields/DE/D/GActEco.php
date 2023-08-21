@@ -101,7 +101,8 @@ class GActEco
     
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('gActEco');
+        $doc = new \DOMDocument();
+        $res = $doc->createElement('gActEco');
         $res->appendChild(new DOMElement('cActEco', $this->cActEco));
         $res->appendChild(new DOMElement('dDesActEco', $this->getDDesActEco()));
         return $res;

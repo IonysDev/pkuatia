@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\A;
 
 use Abiliomp\Pkuatia\Core\Constants;
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Core\Fields\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatGralOpe;
@@ -11,6 +12,7 @@ use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
 use Abiliomp\Pkuatia\Core\Fields\DE\G\GCamGen;
 use Abiliomp\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -20,7 +22,7 @@ use DOMElement;
  * Nodo Padre:  AA001 - rDE - Documento Electrónico elemento raíz
  */
 
-class DE
+class DE extends BaseSifenField
 {
                               // Id - Longitud - Ocurrencia - Descripción
   public String   $id;        // A002 - 44 - 1-1 - Identificador del DE ubicado en el atributo de <DE>
@@ -39,10 +41,6 @@ class DE
   public function __construct()
   {
     $this->dSisFact = Constants::SISTEMA_FACTURACION_CONTRIBUYENTE;
-    $this->gOpeDe = new GOpeDE();
-    $this->gTimb = new GTimb();
-    $this->gDatGralOpe = new GDatGralOpe();
-    $this->gDtipDe = new GDtipDE();
     $this->gCamDEAsoc = [];
   }
 
@@ -225,9 +223,12 @@ class DE
    *
    * @return DateTime
    */
-  public function getDFecFirma(): DateTime
+  public function getDFecFirma(): DateTime | null
   {
-    return $this->dFecFirma;
+    if(isset($this->dFecFirma))
+      return $this->dFecFirma;
+    else
+      return null;
   }
 
   /**
@@ -287,7 +288,10 @@ class DE
    */
   public function getGTotSub(): GTotSub
   {
-    return $this->gTotSub;
+    if(isset($this->gTotSub))
+      return $this->gTotSub;
+    else
+      return null;
   }
 
   /**
@@ -311,39 +315,63 @@ class DE
   }
   
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element
+  // Conversores
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
+   * Convierte el objeto DE a un DOMElement de XML
    *
    * @return DOMElement
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('DE');
+    $doc = new DOMDocument();
+    $res = $doc->createElement('DE');
 
     $res->setAttribute('Id', $this->getId());
     $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
     $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
-    ///children
-    $res->appendChild($this->gOpeDe->toDOMElement());
-    $res->appendChild($this->gTimb->toDOMElement());
-    $res->appendChild($this->gDatGralOpe->toDOMElement());
-    $res->appendChild($this->gDtipDe->toDOMElement());
-    $res->appendChild($this->gTotSub->toDOMElement());
-    $res->appendChild($this->gCamGen->toDOMElement());
+    
+    $importedNode = $doc->importNode($this->gOpeDe->toDOMElement(), true);
+    $res->appendChild($importedNode);
+
+    $importedNode = $doc->importNode($this->gTimb->toDOMElement(), true);
+    $res->appendChild($importedNode);
+
+    $importedNode = $doc->importNode($this->gDatGralOpe->toDOMElement(), true);
+    $res->appendChild($importedNode);
+
+    $importedNode = $doc->importNode($this->gDtipDe->toDOMElement(), true);
+    $res->appendChild($importedNode);
+    
+    if(isset($this->gTotSub))
+    {
+      $importedNode = $doc->importNode($this->gTotSub->toDOMElement(), true);
+      $res->appendChild($importedNode);
+    }
+
+    if(isset($this->gCamGen))
+    {
+      $importedNode = $doc->importNode($this->gCamGen->toDOMElement(), true);
+      $res->appendChild($importedNode);
+    }
+
     if(count($this->gCamDEAsoc) > 0)
     {
       foreach($this->gCamDEAsoc as $g)
       {
-        $res->appendChild($g->toDOMElement());
+        $importedNode = $doc->importNode($g->toDOMElement(), true);
+        $res->appendChild($importedNode);
       }
     }
 
     return $res;
   }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Instanciadores
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Devuelve un objeto DE a partir de un SimpleXMLElement

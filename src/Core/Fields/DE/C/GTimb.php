@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\C;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -286,7 +287,8 @@ class GTimb extends BaseSifenField
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('gTimb');
+        $doc = new DOMDocument();
+        $res = $doc->createElement('gTimb');
         $res->appendChild(new DOMElement('iTiDE', $this->iTiDE));
         $res->appendChild(new DOMElement('dDesTiDE', $this->getDDesTiDE()));
         $res->appendChild(new DOMElement('dNumTim', str_pad(($this->dNumTim % 100000000), 8, "0", STR_PAD_LEFT)));

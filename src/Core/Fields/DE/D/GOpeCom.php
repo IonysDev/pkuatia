@@ -386,7 +386,8 @@ class GOpeCom
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('gOpeCom');
+        $doc = new \DOMDocument();
+        $res = $doc->createElement('gOpeCom');
 
         if (isset($this->iTipTra)) {
             $res->appendChild(new DOMElement('iTipTra', $this->getITipTra()));
@@ -402,7 +403,7 @@ class GOpeCom
             $res->appendChild(new DOMElement('dCondTiCam', $this->getDCondTiCam()));
         }
 
-        if ($this->dCondTiCam != 2 && strcmp($this->cMoneOpe, "PYG") != 0) {
+        if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2) {
             $res->appendChild(new DOMElement('dTiCam', $this->getDTiCam()));
         }
 
@@ -415,28 +416,6 @@ class GOpeCom
         return $res;
     }
 
-    // /**
-    //  * fromDOMElement
-    //  *
-    //  * @param  mixed $xml
-    //  * @return GOpeCom
-    //  */
-    // public static function fromDOMElement(DOMElement $xml): GOpeCom
-    // {
-    //     if (strcmp($xml->tagName, 'gOpeCom') == 0 && $xml->childElementCount >= 4) {
-    //         $res = new GOpeCom();
-    //         $res->setITipTra(intval($xml->getElementsByTagName('iTipTra')->item(0)->nodeValue));
-    //         $res->setITImp(intval($xml->getElementsByTagName('iTImp')->item(0)->nodeValue));
-    //         $res->setCMoneOpe($xml->getElementsByTagName('cMoneOpe')->item(0)->nodeValue);
-    //         $res->setDCondTiCam(intval($xml->getElementsByTagName('dCondTiCam')->item(0)->nodeValue));
-    //         $res->setDTiCam(intval($xml->getElementsByTagName('dTiCam')->item(0)->nodeValue));
-    //         $res->setICondAnt(intval($xml->getElementsByTagName('iCondAnt')->item(0)->nodeValue));
-    //         return $res;
-    //     } else {
-    //         throw new \Exception("Invalid XML Element: $xml->tagName");
-    //         return null;
-    //     }
-    // }
 
     /**
      * FromSifenResponseObject

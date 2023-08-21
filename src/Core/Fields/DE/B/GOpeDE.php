@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\B;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\RNG;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -16,7 +17,7 @@ use DOMElement;
 class GOpeDE extends BaseSifenField
 {
     public int    $iTipEmi;    // B002 - 1      - 1-1 - Tipo de emisión: 1 - Normal, 2 - Contingencia
-    public int    $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
+    public String $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
     public String $dCodSeg;    // B004 - 9      - 1-1 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
     public String $dInfoEmi;   // B005 - 1-3000 - 0-1 - Información de interés del emisor respecto al DE
     public String $dInfoFisc;  // B006 - 1-3000 - 0-1 - Información de interés del fisco respecto al DE
@@ -188,13 +189,14 @@ class GOpeDE extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Convierte el objeto en un DOMElement
+     * Convierte el objeto en un DOMNode
      * 
      * @return DOMElement
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('gOpeDE');
+        $doc = new DOMDocument();
+        $res = $doc->createElement('gOpeDE');
         $res->appendChild(new DOMElement('iTipEmi', $this->iTipEmi));
         $res->appendChild(new DOMElement('dDesTipEmi', $this->dDesTipEmi));
         $res->appendChild(new DOMElement('dCodSeg', $this->dCodSeg));
@@ -202,6 +204,7 @@ class GOpeDE extends BaseSifenField
             $res->appendChild(new DOMElement('dInfoEmi', $this->dInfoEmi));
         if(isset($this->dInfoFisc))
             $res->appendChild(new DOMElement('dInfoFisc', $this->dInfoFisc));
+        $doc->appendChild($res);
         return $res;
     }
 

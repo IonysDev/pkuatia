@@ -8,9 +8,7 @@ use Abiliomp\Pkuatia\Utils\RucUtils;
 
 class CDCHelper
 {
-  public function __construct()
-  {
-  }
+  private function __construct(){}
 
   public static function CDCMaker(DE $dE): String
   {
@@ -22,13 +20,13 @@ class CDCHelper
       $iTide = str_pad($iTide, 2, "0", STR_PAD_LEFT);
     }
     //Ruc del emisor
-    $dRucEm = $dE->getDDatGralOpe()->getGEmis()->getDRucEm();
+    $dRucEm = $dE->getGDatGralOpe()->getGEmis()->getDRucEm();
     //validation
     if (strlen($dRucEm) < 8) {
       $dRucEm = str_pad($dRucEm, 8, "0", STR_PAD_LEFT);
     }
     //DV del RUC del emisor
-    $dDvRucEm = strval($dE->getDDatGralOpe()->getGEmis()->getDDVEmi());
+    $dDvRucEm = strval($dE->getGDatGralOpe()->getGEmis()->getDDVEmi());
     //Establecimiento
     $dEst = strval($dE->getGTimb()->getDEst());
     //validation
@@ -48,9 +46,9 @@ class CDCHelper
       $dNumDoc = str_pad($dNumDoc, 7, "0", STR_PAD_LEFT);
     }
     //Tipo de contribuyente
-    $iTipCont =  strval($dE->getDDatGralOpe()->getGEmis()->getITipCont());
+    $iTipCont =  strval($dE->getGDatGralOpe()->getGEmis()->getITipCont());
     //Fecha de Emisión
-    $dFeEmiDE = date_format($dE->getDDatGralOpe()->getDFeEmiDE(), "Ymd");
+    $dFeEmiDE = date_format($dE->getGDatGralOpe()->getDFeEmiDE(), "Ymd");
     //tipo de emision
     $iTipEmi = strval($dE->getGOpeDe()->getITipEmi());
     //codigo de seguridad
