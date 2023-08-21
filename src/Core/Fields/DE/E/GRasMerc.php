@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use DateTime;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo Id:     E750    
@@ -338,51 +339,55 @@ class GRasMerc
   /**
    * FromSifenResponseObject
    *
-   * @param  mixed $object
+   * @param  mixed $node
    * @return self
    */
-  public static function FromSifenResponseObject($object): self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
+
+    if(strcmp($node->getName(), 'gRasMerc') != 0)
+      throw new \Exception("Invalid gRasMerc XML Node Name: " . $node->getName());
+
     $res = new GRasMerc();
-    if(isset($object->dNumLote))
+    if(isset($node->dNumLote))
     {
-      $res->setDNumLote($object->dNumLote);
+      $res->setDNumLote($node->dNumLote);
     }
-    if(isset($object->dVencMerc))
+    if(isset($node->dVencMerc))
     {
-      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $object->dVencMerc));
+      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $node->dVencMerc));
     }
-    if(isset($object->dNSerie))
+    if(isset($node->dNSerie))
     {
-      $res->setDNSerie($object->dNSerie);
+      $res->setDNSerie($node->dNSerie);
     }
-    if(isset($object->dNumPedi))
+    if(isset($node->dNumPedi))
     {
-      $res->setDNumPedi($object->dNumPedi);
+      $res->setDNumPedi($node->dNumPedi);
     }
-    if(isset($object->dNumSegui))
+    if(isset($node->dNumSegui))
     {
-      $res->setDNumSegui($object->dNumSegui);
+      $res->setDNumSegui($node->dNumSegui);
     }
-    if(isset($object->dNomImp))
+    if(isset($node->dNomImp))
     {
-      $res->setDNomImp($object->dNomImp);
+      $res->setDNomImp($node->dNomImp);
     }
-    if(isset($object->dDirImp))
+    if(isset($node->dDirImp))
     {
-      $res->setDDirImp($object->dDirImp);
+      $res->setDDirImp($node->dDirImp);
     }
-    if(isset($object->dNumFir))
+    if(isset($node->dNumFir))
     {
-      $res->setDNumFir($object->dNumFir);
+      $res->setDNumFir($node->dNumFir);
     }
-    if(isset($object->dNumReg))
+    if(isset($node->dNumReg))
     {
-      $res->setDNumReg($object->dNumReg);
+      $res->setDNumReg($node->dNumReg);
     }
-    if(isset($object->dNumRegEntCom))
+    if(isset($node->dNumRegEntCom))
     {
-      $res->setDNumRegEntCom($object->dNumRegEntCom);
+      $res->setDNumRegEntCom($node->dNumRegEntCom);
     }
     return $res;
   }

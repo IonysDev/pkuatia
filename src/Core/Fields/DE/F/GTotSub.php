@@ -480,9 +480,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDSubExe(): String
+  public function getDSubExe(): String | null
   {
-    return $this->dSubExe;
+    if(isset($this->dSubExe))
+      return $this->dSubExe;
+    else
+      return null;
   }
 
   /**
@@ -490,9 +493,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDSubExo(): String
+  public function getDSubExo(): String | null
   {
-    return $this->dSubExo;
+    if(isset($this->dSubExo))
+      return $this->dSubExo;
+    else
+      return null;
   }
 
   /**
@@ -500,19 +506,26 @@ class GTotSub
    *
    * @return String
    */
-  public function getDSub5(): String
+  public function getDSub5(): String | null
   {
-    return $this->dSub5;
+    if(isset($this->dSub5))
+      return $this->dSub5;
+    else
+      return null;
   }
+ 
 
   /**
    * Get the value of dSub10
    *
    * @return String
    */
-  public function getDSub10(): String
+  public function getDSub10(): String | null
   {
-    return $this->dSub10;
+   if(isset($this->dSub10))
+      return $this->dSub10;
+    else
+      return null;
   }
 
   /**
@@ -612,9 +625,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDComi(): String
+  public function getDComi(): String | null
   {
-    return $this->dComi;
+   if(isset($this->dComi))
+      return $this->dComi;
+    else
+      return null;
   }
 
   /**
@@ -632,19 +648,26 @@ class GTotSub
    *
    * @return String
    */
-  public function getDIVA5(): String
+  public function getDIVA5(): String | null
   {
-    return $this->dIVA5;
+    if(isset($this->dIVA5))
+      return $this->dIVA5;
+    else
+      return null;
   }
+  
 
   /**
    * Get the value of dIVA10
    *
    * @return String
    */
-  public function getDIVA10(): String
+  public function getDIVA10(): String | null  
   {
-    return $this->dIVA10;
+    if(isset($this->dIVA10))
+      return $this->dIVA10;
+    else
+      return null;
   }
 
   /**
@@ -652,9 +675,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDLiqTotIVA5(): String
+  public function getDLiqTotIVA5(): String | null
   {
-    return $this->dLiqTotIVA5;
+    if(isset($this->dLiqTotIVA5))
+      return $this->dLiqTotIVA5;
+    else
+      return null;
   }
 
   /**
@@ -662,9 +688,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDLiqTotIVA10(): String
+  public function getDLiqTotIVA10(): String | null
   {
-    return $this->dLiqTotIVA10;
+    if(isset($this->dLiqTotIVA10))
+      return $this->dLiqTotIVA10;
+    else
+      return null;
   }
 
   /**
@@ -672,9 +701,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDIVAComi(): String
+  public function getDIVAComi(): String | null
   {
-    return $this->dIVAComi;
+    if(isset($this->dIVAComi))
+      return $this->dIVAComi;
+    else
+      return null;
   }
 
   /**
@@ -682,9 +714,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDTotIVA(): String
+  public function getDTotIVA(): String | null
   {
-    return $this->dTotIVA;
+    if(isset($this->dTotIVA))
+      return $this->dTotIVA;
+    else
+      return null;
   }
 
   /**
@@ -692,9 +727,12 @@ class GTotSub
    *
    * @return String
    */
-  public function getDBaseGrav5(): String
+  public function getDBaseGrav5(): String | null
   {
-    return $this->dBaseGrav5;
+    if(isset($this->dBaseGrav5))
+      return $this->dBaseGrav5;
+    else
+      return null;
   }
 
   /**
@@ -810,35 +848,46 @@ class GTotSub
   {
     $doc = new \DOMDocument();
     $res = $doc->createElement('gTotSub');
+    if(isset($this->dSubExe))
     $res->appendChild(new DOMElement('dSubExe', $this->getDSubExe()));
+    if(isset($this->dSubExo))
     $res->appendChild(new DOMElement('dSubExo', $this->getDSubExo()));
+    if(isset($this->dSub5))
     $res->appendChild(new DOMElement('dSub5', $this->getDSub5()));
+    if(isset($this->dSub10))
     $res->appendChild(new DOMElement('dSub10', $this->getDSub10()));
     $res->appendChild(new DOMElement('dTotOpe', $this->getDTotOpe()));
     $res->appendChild(new DOMElement('dTotDesc', $this->getDTotDesc()));
     $res->appendChild(new DOMElement('dTotDescGlotem', $this->getDTotDescGlotem()));
     $res->appendChild(new DOMElement('dTotAntItem', $this->getDTotAntItem()));
     $res->appendChild(new DOMElement('dTotAnt', $this->getDTotAnt()));
-    if (isset($this->dPorcDescTotal)) {
-      $res->appendChild(new DOMElement('dPorcDescTotal', $this->getDPorcDescTotal()));
-    } else {
-      $res->appendChild(new DOMElement('dPorcDescTotal', 0));
-    }
+    $res->appendChild(new DOMElement('dPorcDescTotal', $this->getDPorcDescTotal()));
     $res->appendChild(new DOMElement('dDescTotal', $this->getDDescTotal()));
     $res->appendChild(new DOMElement('dAnticipo', $this->getDAnticipo()));
-    $res->appendChild(new DOMElement('dRedon', $this->getDRedon())); ///SE Debe redondear dTotOpe con la logica que pide pdf
+    $res->appendChild(new DOMElement('dRedon', $this->getDRedon()));
+    if(isset($this->dComi))
     $res->appendChild(new DOMElement('dComi', $this->getDComi()));
     $res->appendChild(new DOMElement('dTotGralOpe', $this->getDTotGralOpe()));
+    if(isset($this->dIVA5))
     $res->appendChild(new DOMElement('dIVA5', $this->getDIVA5()));
+    if(isset($this->dIVA10))
     $res->appendChild(new DOMElement('dIVA10', $this->getDIVA10()));
+    if(isset($this->dLiqTotIVA5))
     $res->appendChild(new DOMElement('dLiqTotIVA5', $this->getDLiqTotIVA5()));
+    if(isset($this->dLiqTotIVA10))
     $res->appendChild(new DOMElement('dLiqTotIVA10', $this->getDLiqTotIVA10()));
+    if(isset($this->dIVAComi))
     $res->appendChild(new DOMElement('dIVAComi', $this->getDIVAComi()));
+    if(isset($this->dTotIVA))
     $res->appendChild(new DOMElement('dTotIVA', $this->getDTotIVA()));
+    if(isset($this->dBaseGrav5))
     $res->appendChild(new DOMElement('dBaseGrav5', $this->dBaseGrav5));
+    if(isset($this->dBaseGrav10))
     $res->appendChild(new DOMElement('dBaseGrav10', $this->getDBaseGrav10()));
+    if(isset($this->dTBasGraIVA))
     $res->appendChild(new DOMElement('dTBasGraIVA', $this->getDTBasGraIVA()));
-    $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs())); //////leer la logica del pdf de Mordor
+    if(isset($this->dTotalGs))
+    $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
     return $res;
   }
 

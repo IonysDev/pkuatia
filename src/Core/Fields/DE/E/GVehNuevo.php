@@ -503,60 +503,64 @@ class GVehNuevo
   //     return $res;
   //   } else {
   //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
+  //     return null;node
   //   }
   // }
 
   /**
    * FromSifenResponseObject
    *
-   * @param  mixed $object
+   * @param  mixed $node
    * @return self
    */
-  public static function FromSifenResponseObject($object): self
+  public static function FromSimpleXMLElement($node): self
   {
+    if ($node->getName() != 'gVehNuevo') {
+      throw new \Exception("Invalid XML Element: $node->getName()");
+    }
+
     $res = new self();
-    if (isset($object->iTipOpVN)) {
-      $res->setITipOpVN(intval($object->iTipOpVN));
+    if (isset($node->iTipOpVN)) {
+      $res->setITipOpVN(intval($node->iTipOpVN));
     }
-    if (isset($object->dChasis)) {
-      $res->setDChasis($object->dChasis);
+    if (isset($node->dChasis)) {
+      $res->setDChasis($node->dChasis);
     }
-    if (isset($object->dColor)) {
-      $res->setDColor($object->dColor);
+    if (isset($node->dColor)) {
+      $res->setDColor($node->dColor);
     }
-    if (isset($object->dPotencia)) {
-      $res->setDPotencia(intval($object->dPotencia));
+    if (isset($node->dPotencia)) {
+      $res->setDPotencia(intval($node->dPotencia));
     }
-    if (isset($object->dCapMot)) {
-      $res->setDCapMot(intval($object->dCapMot));
+    if (isset($node->dCapMot)) {
+      $res->setDCapMot(intval($node->dCapMot));
     }
-    if (isset($object->dPNet)) {
-      $res->setDPNet(intval($object->dPNet));
+    if (isset($node->dPNet)) {
+      $res->setDPNet(intval($node->dPNet));
     }
-    if (isset($object->dPBruto)) {
-      $res->setDPBruto(intval($object->dPBruto));
+    if (isset($node->dPBruto)) {
+      $res->setDPBruto(intval($node->dPBruto));
     }
-    if (isset($object->iTipCom)) {
-      $res->setITipCom(intval($object->iTipCom));
+    if (isset($node->iTipCom)) {
+      $res->setITipCom(intval($node->iTipCom));
     }
-    if (isset($object->dNroMotor)) {
-      $res->setDNroMotor($object->dNroMotor);
+    if (isset($node->dNroMotor)) {
+      $res->setDNroMotor($node->dNroMotor);
     }
-    if (isset($object->dCapTracc)) {
-      $res->setDCapTracc(intval($object->dCapTracc));
+    if (isset($node->dCapTracc)) {
+      $res->setDCapTracc(intval($node->dCapTracc));
     }
-    if (isset($object->dAnoFab)) {
-      $res->setDAnoFab(intval($object->dAnoFab));
+    if (isset($node->dAnoFab)) {
+      $res->setDAnoFab(intval($node->dAnoFab));
     }
-    if (isset($object->cTipVeh)) {
-      $res->setCTipVeh($object->cTipVeh);
+    if (isset($node->cTipVeh)) {
+      $res->setCTipVeh($node->cTipVeh);
     }
-    if (isset($object->dCapac)) {
-      $res->setDCapac(intval($object->dCapac));
+    if (isset($node->dCapac)) {
+      $res->setDCapac(intval($node->dCapac));
     }
-    if (isset($object->dCilin)) {
-      $res->setDCilin($object->dCilin);
+    if (isset($node->dCilin)) {
+      $res->setDCilin($node->dCilin);
     }
     return $res;
   }

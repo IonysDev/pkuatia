@@ -12,7 +12,7 @@ class GVehTras
 {
     public String $dTiVehTras; //E961Tipo de vehículo
     public String $dMarVeh; //E962 Marca
-    public ?int $dTipIdenVeh; ///E967 Tipo de identificación del vehículo 
+    public int $dTipIdenVeh; ///E967 Tipo de identificación del vehículo 
     public String $dNroIDVeh; /// E963 Número de identificación del vehículo
     public String $dAdicVeh; ///E964 Datos adicionales del vehículo
     public String $dNroMatVeh; // E965 Número de matrícula del vehículo
