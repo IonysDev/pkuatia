@@ -429,9 +429,12 @@ class GCamItem
    *
    * @return int
    */
-  public function getDParAranc(): int
+  public function getDParAranc(): int | null
   {
-    return $this->dParAranc;
+    if(isset($this->dParAranc))
+      return $this->dParAranc;
+    else
+      return null;
   }
 
   /**
@@ -439,9 +442,12 @@ class GCamItem
    *
    * @return int
    */
-  public function getDNCM(): int
+  public function getDNCM(): int | null
   {
-    return $this->dNCM;
+    if(isset($this->dNCM))
+      return $this->dNCM;
+    else
+      return null;
   }
 
   /**
@@ -752,36 +758,61 @@ class GCamItem
   {
     $doc = new \DOMDocument();
     $res = $doc->createElement('gCamItem');
-
     $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
-    $res->appendChild(new DOMElement('dParAranc', $this->getDParAranc()));
-    $res->appendChild(new DOMElement('dNCM', $this->getDNCM()));
-    $res->appendChild(new DOMElement('dDncpG', str_pad($this->dDncpG, 8, '0', STR_PAD_RIGHT)));
-
-    if (isset($this->dDncpG)) {
+    if(isset($this->dParAranc))
+      $res->appendChild(new DOMElement('dParAranc', $this->getDParAranc()));
+    if(isset($this->dNCM))
+      $res->appendChild(new DOMElement('dNCM', $this->getDNCM()));
+    if(isset($this->dDncpG))
+      $res->appendChild(new DOMElement('dDncpG', str_pad($this->dDncpG, 8, '0', STR_PAD_RIGHT)));
+    if(isset($this->dDncpE))
       $res->appendChild(new DOMElement('dDncpE', $this->getDDncpE()));
-    }
-
-    $res->appendChild(new DOMElement('dGtin', $this->getDGtin()));
-    $res->appendChild(new DOMElement('dGtinPq', $this->getDGtinPq()));
+    if(isset($this->dGtin))
+      $res->appendChild(new DOMElement('dGtin', $this->getDGtin()));
+    if(isset($this->dGtinPq))
+      $res->appendChild(new DOMElement('dGtinPq', $this->getDGtinPq()));
     $res->appendChild(new DOMElement('dDesProSer', $this->getDDesProSer()));
     $res->appendChild(new DOMElement('cUniMed', $this->getCUniMed()));
     $res->appendChild(new DOMElement('dDesUniMed', $this->getDDesUniMed()));
     $res->appendChild(new DOMElement('dCantProSer', $this->getDCantProSer()));
-    $res->appendChild(new DOMElement('cPaisOrig', $this->getCPaisOrig()));
-    $res->appendChild(new DOMElement('dDesPaisOrig', $this->getDDesPaisOrig()));
-    $res->appendChild(new DOMElement('dInfItem', $this->getDInfItem()));
-    $res->appendChild(new DOMElement('cRelMerc', $this->cRelMerc));
-    $res->appendChild(new DOMElement('dDesRelMerc', $this->getDDesRelMerc()));
-    $res->appendChild(new DOMElement('dCanQuiMer', $this->getDCanQuiMer()));
-    $res->appendChild(new DOMElement('dPorQuiMer', $this->getDPorQuiMer()));
-    $res->appendChild(new DOMElement('dCDCAnticipo', $this->getDCDCAnticipo()));
-
+    if(isset($this->cPaisOrig))
+      $res->appendChild(new DOMElement('cPaisOrig', $this->getCPaisOrig()));
+    if(isset($this->dDesPaisOrig))
+      $res->appendChild(new DOMElement('dDesPaisOrig', $this->getDDesPaisOrig()));
+    if(isset($this->dInfItem))
+      $res->appendChild(new DOMElement('dInfItem', $this->getDInfItem()));
+    if(isset($this->cRelMerc))
+      $res->appendChild(new DOMElement('cRelMerc', $this->cRelMerc));
+    if(isset($this->dDesRelMerc))
+      $res->appendChild(new DOMElement('dDesRelMerc', $this->getDDesRelMerc()));
+    if(isset($this->dCanQuiMer))
+      $res->appendChild(new DOMElement('dCanQuiMer', $this->getDCanQuiMer()));
+    if(isset($this->dPorQuiMer))
+      $res->appendChild(new DOMElement('dPorQuiMer', $this->getDPorQuiMer()));
+    if(isset($this->dCDCAnticipo))
+      $res->appendChild(new DOMElement('dCDCAnticipo', $this->getDCDCAnticipo()));
     
-    $res->appendChild($this->gValorItem->toDOMElement());
-    $res->appendChild($this->gCamIVA->toDOMElement());
-    $res->appendChild($this->gRasMerc->toDOMElement());
-    $res->appendChild($this->gVehNuevo->toDOMElement());
+    if(isset($this->gValorItem))
+    { 
+      $importNode = $doc->importNode($this->gValorItem->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gCamIVA))
+    {
+      $importNode = $doc->importNode($this->gCamIVA->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gRasMerc))
+    {
+      $importNode = $doc->importNode($this->gRasMerc->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+    if(isset($this->gVehNuevo))
+    {
+      $importNode = $doc->importNode($this->gVehNuevo->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
+
     return $res;
   }
 

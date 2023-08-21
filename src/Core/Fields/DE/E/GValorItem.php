@@ -174,14 +174,17 @@ class GValorItem
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gValorItem');
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gValorItem');
 
     $res->appendChild(new DOMElement('dPUniProSer', $this->getDPUniProSer()));
-    $res->appendChild(new DOMElement('dTiCamIt', $this->getDTiCamIt()));
+    if(isset($this->dTiCamIt))
+      $res->appendChild(new DOMElement('dTiCamIt', $this->getDTiCamIt()));
     $res->appendChild(new DOMElement('dTotBruOpeItem', $this->getDTotBruOpeItem())); ////Corresponde a la multiplicación del precio por ítem (E721) y la cantidad por ítem (E711)
 
-    ///Children
-    $res->appendChild($this->gValorRestaItem->toDOMElement());
+    $importNode = $doc->importNode($this->gValorRestaItem->toDOMElement(), true);
+    $res->appendChild($importNode);
+
     return $res;
   }
 

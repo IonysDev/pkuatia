@@ -234,15 +234,14 @@ class GCamIVA
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gCamIVA');
-
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gCamIVA');
     $res->appendChild(new DOMElement('iAfecIVA', $this->getIAfecIVA()));
     $res->appendChild(new DOMElement('dDesAfecIVA', $this->getDDesAfecIVA()));
     $res->appendChild(new DOMElement('dPropIVA', $this->getDPropIVA()));
     $res->appendChild(new DOMElement('dTasaIVA', $this->getDTasaIVA()));
     $res->appendChild(new DOMElement('dBasGravIVA', $this->getDBasGravIVA()));
     $res->appendChild(new DOMElement('dLiqIVAItem', $this->getDLiqIVAItem()));
-
     return $res;
   }
 

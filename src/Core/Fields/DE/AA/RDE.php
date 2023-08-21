@@ -204,8 +204,10 @@ class RDE
       throw new \Exception('[RDE] El campo DE no puede ser nulo.');
     if(!isset($this->gCamFuFD))
       throw new \Exception('[RDE] El campo gCamFuFD no puede ser nulo.');
+
     // Conversión
-    $res = new DOMElement('rDE');
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('rDE');
     $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
     $res->appendChild($this->DE->toDOMElement());
     $res->appendChild($this->gCamFuFD->toDOMElement());

@@ -277,18 +277,21 @@ class GValorRestaItem
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gValorRestaItem');
-    $res->appendChild(new DOMElement('dDescItem', $this->getDDescItem()));
-
-    if ($this->dDescItem > 0) {
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gValorRestaItem');
+    if(isset($this->dDescItem))
+      $res->appendChild(new DOMElement('dDescItem', $this->dDescItem));
+    if(isset($this->dPorcDesIt))
       $res->appendChild(new DOMElement('dPorcDesIt', $this->getDPorcDesIt()));
-    }
-    $res->appendChild(new DOMElement('dDescGloItem', $this->getDDescGloItem()));
-    $res->appendChild(new DOMElement('dAntPreUniIt', $this->getDAntPreUniIt()));
-    $res->appendChild(new DOMElement('dAntGloPreUniIt', $this->getDAntGloPreUniIt()));
-    $res->appendChild(new DOMElement('dTotOpeItem', $this->getDTotOpeItem())); ///Leer en el documento es largo Mordor;
-    $res->appendChild(new DOMElement('dTotOpeGs', $this->getdTotOpeGs())); ///leer
-
+    if(isset($this->dDescGloItem))
+      $res->appendChild(new DOMElement('dDescGloItem', $this->getDDescGloItem()));
+    if(isset($this->dAntPreUniIt))
+      $res->appendChild(new DOMElement('dAntPreUniIt', $this->getDAntPreUniIt()));
+    if(isset($this->dAntGloPreUniIt))
+      $res->appendChild(new DOMElement('dAntGloPreUniIt', $this->getDAntGloPreUniIt()));
+    $res->appendChild(new DOMElement('dTotOpeItem', $this->getDTotOpeItem()));
+    if(isset($this->dTotOpeGs))
+      $res->appendChild(new DOMElement('dTotOpeGs', $this->getDTotOpeGs()));
     return $res;
   }
   
