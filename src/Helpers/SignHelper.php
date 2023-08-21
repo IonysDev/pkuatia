@@ -23,14 +23,14 @@ class SignHelper
     {
         self::$privateKeyStore = new PrivateKeyStore();
 
-        if($format === KeyFormat::P12)
+        if ($format === KeyFormat::P12)
             self::$privateKeyStore->loadFromPkcs12($privateKey, $password);
-        else if($format === KeyFormat::PEM)
+        else if ($format === KeyFormat::PEM)
             self::$privateKeyStore->loadFromPem($privateKey, $password);
         else
             throw new \Exception("Key format not supported.");
 
-        if(isset($pemCertificate))
+        if (isset($pemCertificate))
             self::$privateKeyStore->addCertificatesFromX509Pem($pemCertificate);
         self::$algorithm = new Algorithm(Algorithm::METHOD_SHA256);
         self::$cryptoSigner = new CryptoSigner(self::$privateKeyStore, self::$algorithm);
@@ -39,33 +39,45 @@ class SignHelper
 
     public static function initFromFile(String $keyPath, String $password, String $pemCertificateFile = null)
     {
-        if(!file_exists($keyPath))
+        if (!file_exists($keyPath))
             throw new \Exception("Private key file not found.");
-            
+
         $fileContents = file_get_contents($keyPath);
 
-        if($fileContents === false)
+        if ($fileContents === false)
             throw new \Exception("Private key file could not be read.");
 
-        if(isset($pemCertificateFile))
-        {
-            if(!file_exists($pemCertificateFile))
+        if (isset($pemCertificateFile)) {
+            if (!file_exists($pemCertificateFile))
                 throw new \Exception("Certificate file not found.");
-                
+
             $pemCertificate = file_get_contents($pemCertificateFile);
-    
-            if($pemCertificate === false)
+
+            if ($pemCertificate === false)
                 throw new \Exception("Certificate file could not be read.");
-        }
-        else
+        } else
             $pemCertificate = null;
+
+
+        // Verificar la extensión del archivo
+        $extension = pathinfo($keyPath, PATHINFO_EXTENSION);
+
+        if ($extension === "p12") {
+            // Si se trata de un archivo PKCS12
+            self::init($fileContents, $password, KeyFormat::P12, $pemCertificate);
+        } else if ($extension === "pem") {
+            // Si se trata de un archivo PEM
+            self::init($fileContents, $password, KeyFormat::PEM, $pemCertificate);
+        } else
+            // Si no es ninguno de los dos
+            throw new \Exception("File extension not supported.");
     }
 
     public static function Sign(String $xml, String $referenceUri = null)
     {
-        if(!isset(self::$xmlSigner))
+        if (!isset(self::$xmlSigner))
             throw new \Exception("SignHelper not initialized.");
-        if(isset($referenceUri))
+        if (isset($referenceUri))
             self::$xmlSigner->setReferenceUri($referenceUri);
         $signedXml = self::$xmlSigner->signXml($xml);
         // Quitar KeyValue del campo KeyInfo
@@ -79,7 +91,6 @@ class SignHelper
         $canonicalXml = $dom->C14N(false, false, null, null);
         return $canonicalXml;
     }
-
 }
 
 enum KeyFormat
@@ -87,5 +98,3 @@ enum KeyFormat
     case P12;
     case PEM;
 }
-
-?>
