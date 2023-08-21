@@ -271,7 +271,7 @@ class GDatRec
      *
      * @return String
      */
-    public function getDRucRec(): String
+    public function getDRucRec(): String | null
     {
         if(isset($this->dRucRec))
             return $this->dRucRec;
