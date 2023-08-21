@@ -65,7 +65,7 @@ class SignHelper
         if ($extension === "p12") {
             // Si se trata de un archivo PKCS12
             self::init($fileContents, $password, KeyFormat::P12, $pemCertificate);
-        } else if ($extension === "crt" || $extension === "pem" || $extension === "key") {
+        } else if ($extension === "pem" || $extension === "key") {
             // Si se trata de un archivo PEM
             self::init($fileContents, $password, KeyFormat::PEM, $pemCertificate);
         } else
