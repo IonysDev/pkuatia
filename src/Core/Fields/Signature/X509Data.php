@@ -60,6 +60,20 @@ class X509Data
         $res->setX509Certificate($object->X509Certificate);
         return $res;
     }
+
+    /**
+     * Convierte el objeto a un DOMElement
+     * 
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $dom = new \DOMDocument();
+        $X509Data = $dom->createElement('X509Data');
+        $X509Certificate = $dom->createElement('X509Certificate', $this->getX509Certificate());
+        $X509Data->appendChild($X509Certificate);
+        return $X509Data;
+    }
     
 }
 

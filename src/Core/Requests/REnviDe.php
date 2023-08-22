@@ -12,12 +12,12 @@ namespace Abiliomp\Pkuatia\Core\Requests;
 class REnviDe {
                         // Id - Longitud - Ocurrencia - Descripción    
     public int $dId;    // ASch02 - 1-15 - 1-1 - Identificador  de control de envío 
-    public String $xDe; // ASch03 - XML  - 1-1 - XML del DE transmitido 
+    public String $xDE; // ASch03 - XML  - 1-1 - XML del DE transmitido 
 
-    public function __construct(int $dId, String $xDe)
+    public function __construct(int $dId, String $xDE)
     {
         $this->dId = $dId;
-        $this->xDe = $xDe;
+        $this->xDE = $xDE;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -44,9 +44,9 @@ class REnviDe {
      * 
      * @return self
      */
-    public function setXDe(String $xDe): self
+    public function setXDe(String $xDE): self
     {
-        $this->xDe = $xDe;
+        $this->xDE = $xDE;
         return $this;
     }
 
@@ -69,9 +69,9 @@ class REnviDe {
      * 
      * @return String
      */
-    public function getXDe(): String
+    public function getXDE(): String
     {
-        return $this->xDe;
+        return $this->xDE;
     }
 
 

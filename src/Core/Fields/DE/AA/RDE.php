@@ -208,9 +208,19 @@ class RDE
     // Conversión
     $doc = new \DOMDocument();
     $res = $doc->createElement('rDE');
+    $res->setAttribute('xmlns', Constants::SIFEN_NS_URI);
+    $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_XSI);
+    $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_DE);
     $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
-    $res->appendChild($this->DE->toDOMElement());
-    $res->appendChild($this->gCamFuFD->toDOMElement());
+
+    $importNode = $doc->importNode($this->DE->toDOMElement(), true);
+    $res->appendChild($importNode);
+
+    $importNode = $doc->importNode($this->Signature->toDOMElement(), true);
+    $res->appendChild($importNode);
+
+    $importNode = $doc->importNode($this->gCamFuFD->toDOMElement(), true);
+    $res->appendChild($importNode);
     return $res;
   }
 

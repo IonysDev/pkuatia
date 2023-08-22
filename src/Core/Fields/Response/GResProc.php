@@ -129,4 +129,19 @@ class GResProc
     return $res;
   }
 
+  /**
+   * Instancia un GResProc a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
+   * 
+   * @param stdClass $object
+   * 
+   * @return GResProc
+   */
+  public static function FromSifenResponseObject($object): GResProc
+  {
+    $res = new GResProc();
+    $res->setDCodRes($object->dCodRes);
+    $res->setDMsgRes($object->dMsgRes);
+    return $res;
+  }
+
 }

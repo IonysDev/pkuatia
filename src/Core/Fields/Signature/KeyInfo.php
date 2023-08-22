@@ -47,6 +47,22 @@ class KeyInfo
         return $res;
     }
     
+    /**
+     * Convierte el objeto a un DOMElement
+     * 
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $dom = new \DOMDocument();
+        $KeyInfo = $dom->createElement('KeyInfo');
+        $KeyInfo->setAttribute('xmlns:ds', 'http://www.w3.org/2000/09/xmldsig#');
+
+        $importNode = $dom->importNode($this->getX509Data()->toDOMElement(), true);
+        $KeyInfo->appendChild($importNode);
+
+        return $KeyInfo;
+    }
 }
 
 ?>

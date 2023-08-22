@@ -140,8 +140,9 @@ class GCamFuFD
       throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
     }
     // Conversión
-    $res = new DOMElement('gCamFuFD');
-    $res->appendChild(new DOMElement('dCarQR', $this->getDCarQR()));
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('gCamFuFD');
+    $res->appendChild(new DOMElement('dCarQR', htmlspecialchars($this->getDCarQR())));
     if(isset($this->dInfAdic))
       $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
     return $res;

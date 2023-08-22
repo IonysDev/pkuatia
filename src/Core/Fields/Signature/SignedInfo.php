@@ -104,6 +104,33 @@ class SignedInfo
         $SignedInfo->setReference(Reference::FromSimpleXMLElement($node->Reference));
         return $SignedInfo;
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte el objeto a un DOMElement
+     *
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $doc = new \DOMDocument();
+        $res = $doc->createElement('SignedInfo');
+
+        $importNode = $doc->importNode($this->CanonicalizationMethod->toDOMElement(), true);
+        $res->appendChild($importNode);
+
+        $importNode = $doc->importNode($this->SignatureMethod->toDOMElement(), true);
+        $res->appendChild($importNode);
+
+
+        $importNode = $doc->importNode($this->Reference->toDOMElement(), true);
+        $res->appendChild($importNode);
+
+        return $res;
+    }
 }
 
 ?>

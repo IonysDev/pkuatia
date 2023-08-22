@@ -90,7 +90,13 @@ class Sifen
     public static function EnviarDE(DocumentoElectronico $de) {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
         $xDE = $de->ToXMLString();
-        $object = self::$client->SiRecepDE(new REnviDe(self::GetDId(), $xDE));
+        file_put_contents("deFE.xml", $xDE);
+        $rEnviDe = new REnviDe(self::GetDId(), "hola");
+        var_dump($rEnviDe);
+
+        $object = self::$client->rEnviDe($rEnviDe);
+        $lastRequest = self::$client->__getLastRequest();
+        file_put_contents("lastRequest.xml", $lastRequest);
         return RRetEnviDe::FromSifenResponseObject($object);
     }
 

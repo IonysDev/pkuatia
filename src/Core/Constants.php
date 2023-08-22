@@ -14,9 +14,10 @@ class Constants
 
     // Namespaces
     const RSA_SHA256 = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
+    const SIFEN_NS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
     const SIFEN_NS_URI = "http://ekuatia.set.gov.py/sifen/xsd";
-    const SIFEN_NS_URI_RECEP_DE = self::SIFEN_NS_URI + " siRecepDE_v150.xsd";
-    const SIFEN_NS_URI_RECEP_EVENTO = self::SIFEN_NS_URI + " siRecepEvento_v150.xsd";
+    const SIFEN_NS_URI_RECEP_DE = self::SIFEN_NS_URI . " siRecepDE_v150.xsd";
+    const SIFEN_NS_URI_RECEP_EVENTO = self::SIFEN_NS_URI . " siRecepEvento_v150.xsd";
 
     // URLs Base
     const SIFEN_URL_BASE_DEV = "https://sifen-test.set.gov.py";

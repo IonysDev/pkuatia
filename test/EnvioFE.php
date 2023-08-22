@@ -136,8 +136,13 @@ $gDtipDE->gCamItem[] = $gCamItem;
 //////////////////////////////////////////////////////////////////
 
 $gTotSub = new GTotSub();
+$gTotSub->setDSub10("100000");
 $gTotSub->setDTotOpe("100000");
 $gTotSub->setDTotGralOpe("100000");
+$gTotSub->setDIVA10(bcdiv("100000", "1.1", 8));
+$gTotSub->setDTotIVA($gTotSub->getDIVA10());
+$gTotSub->setDBaseGrav10(bcdiv("100000", "11", 8));
+$gTotSub->setDTBasGraIVA($gTotSub->getDBaseGrav10());
 
 //////////////////////////////////////////////////////////////////
 
@@ -156,11 +161,13 @@ $de->setDFecFirma(new DateTime());
 //////////////////////////////////////////////////////////////////
 
 SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
-$signedXml = SignHelper::Sign($de->toXMLString(), $cdc);
+$signedXml = SignHelper::Sign($de->toXMLString(), '#' . $cdc);
+file_put_contents("deFESigned.xml", $signedXml);
 
 //////////////////////////////////////////////////////////////////
 
 $signedSimpleXMLElement = simplexml_load_string($signedXml);
+var_dump($signedSimpleXMLElement->Signature->attributes());
 $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
 
 //////////////////////////////////////////////////////////////////

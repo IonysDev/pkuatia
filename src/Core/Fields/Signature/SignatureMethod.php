@@ -47,6 +47,19 @@ class SignatureMethod
         $SignatureMethod->setAlgorithm($node->attributes()->Algorithm);
         return $SignatureMethod;
     }
+
+    /**
+     * Convierte el objeto a un DOMElement
+     * 
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $dom = new \DOMDocument();
+        $SignatureMethod = $dom->createElement('SignatureMethod');
+        $SignatureMethod->setAttribute('Algorithm', $this->getAlgorithm());
+        return $SignatureMethod;
+    }
     
 }
 

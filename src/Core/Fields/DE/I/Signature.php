@@ -4,7 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\I;
 
 use Abiliomp\Pkuatia\Core\Fields\Signature\KeyInfo;
 use Abiliomp\Pkuatia\Core\Fields\Signature\SignedInfo;
-
+use DOMElement;
 
 /**
  * ID I001 - Firma Digital del DTE  PADRE:AA001
@@ -93,6 +93,7 @@ class Signature
       return $this->KeyInfo;
   }
 
+  
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
   ///////////////////////////////////////////////////////////////////////
@@ -112,6 +113,32 @@ class Signature
     $res->setSignedInfo(SignedInfo::FromSimpleXMLElement($node->SignedInfo));
     $res->setSignatureValue($node->SignatureValue);
     $res->setKeyInfo(KeyInfo::FromSimpleXMLElement($node->KeyInfo));
+    return $res;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Convierte el objeto a un DOMElement
+   *
+   * @return \DOMElement 
+   */
+  public function toDOMElement(): \DOMElement
+  {
+    $doc = new \DOMDocument();
+    $res = $doc->createElement('Signature');
+    $res->setAttribute('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
+    
+    $importNode = $doc->importNode($this->SignedInfo->toDOMElement(), true);
+    $res->appendChild($importNode);
+
+    $res->appendChild(new DOMElement('SignatureValue', $this->SignatureValue));
+
+    $importNode = $doc->importNode($this->KeyInfo->toDOMElement(), true);
+    $res->appendChild($importNode);
+
     return $res;
   }
 }

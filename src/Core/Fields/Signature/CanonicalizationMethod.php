@@ -47,6 +47,23 @@ class CanonicalizationMethod
         $CanonicalizationMethod->setAlgorithm($node->attributes()->Algorithm);
         return $CanonicalizationMethod;
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte el objeto a un DOMElement
+     * 
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $dom = new \DOMDocument();
+        $CanonicalizationMethod = $dom->createElement('CanonicalizationMethod');
+        $CanonicalizationMethod->setAttribute('Algorithm', $this->getAlgorithm());
+        return $CanonicalizationMethod;
+    }
     
     
 }

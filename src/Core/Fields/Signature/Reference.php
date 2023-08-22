@@ -144,6 +144,38 @@ class Reference
         return $res;
     }
 
+    /**
+     * Convierte el objeto a un DOMElement
+     * 
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $doc = new \DOMDocument();
+        $res = $doc->createElement('Reference');
+        $res->setAttribute('URI', $this->getURI());
+        if(count($this->getTransforms()) > 0)
+        {
+            $transforms = $doc->createElement('Transforms');
+            foreach($this->getTransforms() as $t)
+            {
+                $importNode = $doc->importNode($t->toDOMElement(), true);
+                $transforms->appendChild($importNode);
+            }
+            $trf = new Transform();
+            $trf->setAlgorithm('http://www.w3.org/2001/10/xml-exc-c14n#');
+            $importNode = $doc->importNode($trf->toDOMElement(), true);
+            $transforms->appendChild($importNode);
+            
+            $res->appendChild($transforms);
+        }
+        
+        $importNode = $doc->importNode($this->getDigestMethod()->toDOMElement(), true);
+        $res->appendChild($importNode);
+
+        $res->appendChild($doc->createElement('DigestValue', $this->getDigestValue()));
+        return $res;
+    }
 
 }
 

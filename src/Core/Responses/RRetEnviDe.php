@@ -13,17 +13,7 @@ use Abiliomp\Pkuatia\Core\Fields\Response\RProtDe;
 
 class RRetEnviDe {
 
-                             // Id - Longitud - Ocurrencia - Descripción
-    public String  $xProtDe; // ARSch02 - - 1-1 - XML de protocolo de procesamiento de documento electrónico.
     public RProtDe $rProtDe; // Valor convertido a objeto del XML de protocolo de procesamiento de documento electrónico.
-
-    /**
-     * Constructor de la clase
-     */
-    public function __construct($xProtDe) {
-        $this->xProtDe = $xProtDe;
-        $this->rProtDe = RProtDe::FromXMLString($xProtDe);
-    }
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -32,13 +22,13 @@ class RRetEnviDe {
     /**
      * Establece el valor en XML del xProtDe de la respuesta.
      * 
-     * @param String $xProtDe
+     * @param RProtDe $rProtDe
      * 
      * @return self
      */
-    public function setXProtDe(String $xProtDe): self
+    public function setRProtDe(RProtDe $rProtDe): self
     {
-        $this->xProtDe = $xProtDe;
+        $this->rProtDe = $rProtDe;
         return $this;
     }
 
@@ -49,11 +39,11 @@ class RRetEnviDe {
     /**
      * Obtiene el valor en XML del xProtDe de la respuesta.
      * 
-     * @return String
+     * @return RProtDe
      */
-    public function getXProtDe(): String
+    public function getRProtDe(): RProtDe
     {
-        return $this->xProtDe;
+        return $this->rProtDe;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -70,10 +60,9 @@ class RRetEnviDe {
      */
     public static function FromSifenResponseObject($object): self
     {
-        if(!isset($object->xProtDe)) {
-            throw new \Exception("[RRetEnviDe] El objeto recibido no tiene el atributo xProtDe.");
-        }
-        return new self($object->xProtDe);
+        $res = new RRetEnviDe();
+        $res->setRProtDe(RProtDe::FromSifenResponseObject($object->rProtDe));
+        return $res;
     }
 
 }

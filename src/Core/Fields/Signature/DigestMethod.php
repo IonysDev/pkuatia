@@ -51,6 +51,19 @@ class DigestMethod
         return $DigestMethod;
     }
 
+    /**
+     * Convierte el objeto a un DOMElement
+     * 
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $dom = new \DOMDocument();
+        $DigestMethod = $dom->createElement('DigestMethod');
+        $DigestMethod->setAttribute('Algorithm', $this->getAlgorithm());
+        return $DigestMethod;
+    }
+
 }
 
 ?>

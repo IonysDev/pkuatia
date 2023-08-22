@@ -51,6 +51,19 @@ class Transform
         $Transform->setAlgorithm($node->attributes()->Algorithm);
         return $Transform;
     }
+
+    /**
+     * Convierte el objeto a un DOMElement
+     * 
+     * @return \DOMElement
+     */
+    public function toDOMElement(): \DOMElement
+    {
+        $dom = new \DOMDocument();
+        $Transform = $dom->createElement('Transform');
+        $Transform->setAttribute('Algorithm', $this->getAlgorithm());
+        return $Transform;
+    }
     
 }
 
