@@ -99,7 +99,6 @@ class Sifen
             XSD_ANYXML
         ));
         $object = self::$client->rEnviDe($rEnviDe);
-        file_put_contents("lastRequest.xml", self::$client->__getLastRequest());
         return RRetEnviDe::FromSifenResponseObject($object);
     }
 
