@@ -160,11 +160,17 @@ $cdc = CDCHelper::CDCMaker($de);
 $de->setId($cdc);
 $de->setDDVId(RucUtils::calcDV($cdc));
 $de->setDFecFirma(new DateTime());
+
+//////////////////////////////////////////////////////////////////
+
+$rde = new RDE();
+$rde->setDE($de);
+
 //////////////////////////////////////////////////////////////////
 
 SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
-$signedXml = SignHelper::Sign($de->toXMLString(), '#' . $cdc);
-file_put_contents("deFESigned.xml", $signedXml);
+$signedXml = SignHelper::Sign($rde->toXMLString(), '#' . $cdc);
+file_put_contents("rdeFESigned.xml", $signedXml);
 
 //////////////////////////////////////////////////////////////////
 
@@ -176,10 +182,7 @@ $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature)
 $gCamFuFD = new GCamFuFD();
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
 
-//////////////////////////////////////////////////////////////////
 
-$rde = new RDE();
-$rde->setDE($de);
 $rde->setSignature($Signature);
 $rde->setGCamFuFD($gCamFuFD);
 

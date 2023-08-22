@@ -162,10 +162,10 @@ class Reference
                 $importNode = $doc->importNode($t->toDOMElement(), true);
                 $transforms->appendChild($importNode);
             }
-            $trf = new Transform();
+            /*$trf = new Transform();
             $trf->setAlgorithm('http://www.w3.org/2001/10/xml-exc-c14n#');
             $importNode = $doc->importNode($trf->toDOMElement(), true);
-            $transforms->appendChild($importNode);
+            $transforms->appendChild($importNode);*/
             
             $res->appendChild($transforms);
         }
