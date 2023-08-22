@@ -126,6 +126,7 @@ $gCamIVA->setDPropIVA("100");
 $gCamIVA->setDTasaIVA(10);
 $gCamIVA->setDBasGravIVA(bcdiv($gValorItem->getDTotBruOpeItem(), "1.1", 8));
 $gCamIVA->setDLiqIVAItem(bcdiv($gValorItem->getDTotBruOpeItem(), "11", 8));
+$gCamIVA->setDBasExe("0");
 
 $gCamItem->gCamIVA = $gCamIVA;
 

@@ -26,6 +26,7 @@ class GCamIVA
   public int    $dTasaIVA;    // E734 - 1-2        - 1-1 - Tasa del IVA (% en número entero)
   public String $dBasGravIVA; // E735 - 1-15p(0-8) - 1-1 - Base gravada del IVA por ítem 
   public String $dLiqIVAItem; // E736 - 1-15p(0-8) - 1-1 - Liquidación del IVA por ítem
+  public String $dBasExe;      // E730 - 1-15p(0-8) - 1-1 - Base Exenta por ítem 
 
   ///////////////////////////////////////////////////////////////////////
   //Setters
@@ -242,6 +243,7 @@ class GCamIVA
     $res->appendChild(new DOMElement('dTasaIVA', $this->getDTasaIVA()));
     $res->appendChild(new DOMElement('dBasGravIVA', $this->getDBasGravIVA()));
     $res->appendChild(new DOMElement('dLiqIVAItem', $this->getDLiqIVAItem()));
+    $res->appendChild(new DOMElement('dBasExe', $this->getDBasExe()));
     return $res;
   }
 
@@ -276,8 +278,38 @@ class GCamIVA
     {
       $res->setDLiqIVAItem(Stringval($resposne->dLiqIVAItem));
     }
-    
+    if(isset($resposne->dBasExe))
+    {
+      $res->setDBasExe(Stringval($resposne->dBasExe));
+    }    
      
     return $res;
+  }
+
+  /**
+   * Get the value of dBasExe
+   *
+   * @return String
+   */
+  public function getDBasExe(): String | null
+  {
+    if(isset($this->dBasExe))
+    return $this->dBasExe;
+    else
+    return null;
+  }
+
+  /**
+   * Set the value of dBasExe
+   *
+   * @param String $dBasExe
+   *
+   * @return self
+   */
+  public function setDBasExe(String $dBasExe): self
+  {
+    $this->dBasExe = $dBasExe;
+
+    return $this;
   }
 }
