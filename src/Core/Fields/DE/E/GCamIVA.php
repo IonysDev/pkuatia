@@ -224,7 +224,6 @@ class GCamIVA
     $res->dTasaIVA    = intval($node->dTasaIVA);
     $res->dBasGravIVA = strval($node->dBasGravIVA);
     $res->dLiqIVAItem = strval($node->dLiqIVAItem);
-    $res->dBasExe     = strval($node->dBasExe);
     return $res;
   }
 
@@ -273,15 +272,15 @@ class GCamIVA
     }
     if(isset($resposne->dBasGravIVA))
     {
-      $res->setDBasGravIVA(strval($resposne->dBasGravIVA));
+      $res->setDBasGravIVA(Stringval($resposne->dBasGravIVA));
     }
     if(isset($resposne->dLiqIVAItem))
     {
-      $res->setDLiqIVAItem(strval($resposne->dLiqIVAItem));
+      $res->setDLiqIVAItem(Stringval($resposne->dLiqIVAItem));
     }
     if(isset($resposne->dBasExe))
     {
-      $res->setDBasExe(strval($resposne->dBasExe));
+      $res->setDBasExe(Stringval($resposne->dBasExe));
     }    
      
     return $res;
