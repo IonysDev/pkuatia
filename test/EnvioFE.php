@@ -169,8 +169,7 @@ $rde->setDE($de);
 //////////////////////////////////////////////////////////////////
 
 SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
-$signedXml = SignHelper::Sign($rde->toXMLString(), '#' . $cdc);
-file_put_contents("rdeFESigned.xml", $signedXml);
+$signedXml = SignHelper::Sign($de->toXMLString(), '#' . $cdc);
 
 //////////////////////////////////////////////////////////////////
 
