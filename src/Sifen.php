@@ -8,10 +8,13 @@ use Abiliomp\Pkuatia\Core\Requests\REnviConsRUC;
 use Abiliomp\Pkuatia\Core\Requests\REnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsRUC;
 use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
+use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Requests\REnviDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
+use SimpleXMLElement;
 use SoapClient;
+use SoapVar;
 
 class Sifen
 {
@@ -28,11 +31,11 @@ class Sifen
      * @return void
      */
     public static function Init(Config $config)
-    {    
-        if(!file_exists($config->certificateFilePath)) {
+    {
+        if (!file_exists($config->certificateFilePath)) {
             throw new \Exception("Certificate file not found in path: " . $config->certificateFilePath . ".");
         }
-        if(!file_exists($config->privateKeyFilePath)) {
+        if (!file_exists($config->privateKeyFilePath)) {
             throw new \Exception("Private key file not found in path: " . $config->privateKeyFilePath . ".");
         }
         self::$config = $config;
@@ -47,12 +50,12 @@ class Sifen
                     'local_pk' => $config->privateKeyFilePath,
                     'passphrase' => $config->privateKeyPassphrase,
                     'verify_peer' => true,
-                    'verify_peer_name' => true,                  
+                    'verify_peer_name' => true,
                 ]
             ])
         ];
     }
-    
+
     /**
      * Realiza la consulta de un RUC en el SIFEN.
      * 
@@ -60,7 +63,7 @@ class Sifen
      * 
      * @return RResEnviConsRUC
      */
-    public static function ConsultarRUC(String $ruc): RResEnviConsRUC 
+    public static function ConsultarRUC(String $ruc): RResEnviConsRUC
     {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl", self::$options);
         $object = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
@@ -74,7 +77,8 @@ class Sifen
      * 
      * @return RResEnviConsDe
      */
-    public static function ConsultarDE(String $cdc): RResEnviConsDe {
+    public static function ConsultarDE(String $cdc): RResEnviConsDe
+    {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl", self::$options);
         $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
         return RResEnviConsDe::FromSifenResponseObject($object);
@@ -87,20 +91,20 @@ class Sifen
      * 
      * @return RRetEnviDe
      */
-    public static function EnviarDE(DocumentoElectronico $de) {
+    public static function EnviarDE(DocumentoElectronico $de)
+    {
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
-        $xDE = $de->ToXMLString();
-        file_put_contents("deFE.xml", $xDE);
-        $rEnviDe = new REnviDe(self::GetDId(), "hola");
-        var_dump($rEnviDe);
-
+        $rEnviDe = new REnviDe(self::GetDId(), new SoapVar(
+            '<ns1:xDE>' . $de->toXMLString() . '</ns1:xDE>',
+            XSD_ANYXML
+        ));
         $object = self::$client->rEnviDe($rEnviDe);
-        $lastRequest = self::$client->__getLastRequest();
-        file_put_contents("lastRequest.xml", $lastRequest);
+        file_put_contents("lastRequest.xml", self::$client->__getLastRequest());
         return RRetEnviDe::FromSifenResponseObject($object);
     }
 
-    private static function GetSifenUrlBase() : String {
+    private static function GetSifenUrlBase(): String
+    {
         if (strtolower(self::$config->env) == "prod") {
             return Constants::SIFEN_URL_BASE_PROD;
         } else {
@@ -108,24 +112,23 @@ class Sifen
         }
     }
 
-    private static function GetDId() : int {
+    private static function GetDId(): int
+    {
         $dId = 1;
-        if(file_exists(self::$config->dIdFilePath)) {
+        if (file_exists(self::$config->dIdFilePath)) {
             $json = file_get_contents(self::$config->dIdFilePath);
             $data = json_decode($json);
             $dId = $data->dId;
-            if($dId == Constants::MAX_DID)
+            if ($dId == Constants::MAX_DID)
                 $dId = 1;
             else
                 $dId++;
-        } 
+        }
         $data = array(
             'dId' => $dId
         );
         $json = json_encode($data);
-        file_put_contents(self::$config->dIdFilePath, $json);        
+        file_put_contents(self::$config->dIdFilePath, $json);
         return $dId;
     }
 }
-
-?>

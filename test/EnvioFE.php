@@ -167,7 +167,6 @@ file_put_contents("deFESigned.xml", $signedXml);
 //////////////////////////////////////////////////////////////////
 
 $signedSimpleXMLElement = simplexml_load_string($signedXml);
-var_dump($signedSimpleXMLElement->Signature->attributes());
 $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
 
 //////////////////////////////////////////////////////////////////

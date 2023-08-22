@@ -2,6 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Requests;
 
+use SimpleXMLElement;
+use SoapVar;
+
 /**
  * Nodo Id:    ASch01
  * Nombre:     rEnviDe
@@ -12,9 +15,9 @@ namespace Abiliomp\Pkuatia\Core\Requests;
 class REnviDe {
                         // Id - Longitud - Ocurrencia - Descripción    
     public int $dId;    // ASch02 - 1-15 - 1-1 - Identificador  de control de envío 
-    public String $xDE; // ASch03 - XML  - 1-1 - XML del DE transmitido 
+    public SoapVar $xDE; // ASch03 - XML  - 1-1 - XML del DE transmitido 
 
-    public function __construct(int $dId, String $xDE)
+    public function __construct(int $dId, SoapVar $xDE)
     {
         $this->dId = $dId;
         $this->xDE = $xDE;
@@ -69,7 +72,7 @@ class REnviDe {
      * 
      * @return String
      */
-    public function getXDE(): String
+    public function getXDE(): SoapVar
     {
         return $this->xDE;
     }
