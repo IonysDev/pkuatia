@@ -10,7 +10,7 @@ use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 
-/** 
+/**
  * Nodo Id:     AA001
  * Nombre:      rDE
  * Descripción: Campos que identifican el formato electrónico XML (AA001-AA009)
@@ -19,7 +19,7 @@ use stdClass;
 
 class RDE
 {
-                               // Id - Longitud - Ocurrencia - Descripción 
+                               // Id - Longitud - Ocurrencia - Descripción
   public int $dVerFor;         // AA002 - 3 - 1-1 - Versión del formato
   public DE $DE;               // A001  -   - 1-1 - Campos firmados del  DE
   public Signature $Signature; // I001  -   - 1-1 - Firma Digital del DTE
@@ -27,7 +27,7 @@ class RDE
 
   /**
    * Constructor
-   * 
+   *
    * @return self
    */
   public function __construct()
@@ -78,7 +78,7 @@ class RDE
     return $this;
   }
 
-  
+
   /**
    * Establece el valor de Signature (Firma Digital del DTE)
    *
@@ -143,9 +143,9 @@ class RDE
 
   /**
    * Instancia un objeto RDE a partir de un SimpleXMLElement
-   * 
+   *
    * @param  mixed $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -168,7 +168,7 @@ class RDE
    * Instancia un objeto RDE a partir de objeto tipo stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
    * @param stdClass $object
-   * 
+   *
    * @return self
    */
   public static function FromSifenResponseObject($object) : self
@@ -178,13 +178,13 @@ class RDE
     {
       $res->setDE(DE::FromSifenResponseObject($object->DE));
     }
- 
+
     if(isset($object->gCamFuFD))
     {
       $res->setGCamFuFD(GCamFuFD::FromSifenResponseObject($object->gCamFuFD));
     }
     return $res;
-  }   
+  }
 
   ///////////////////////////////////////////////////////////////////////
   // Conversores
@@ -202,8 +202,7 @@ class RDE
       throw new \Exception('[RDE] El campo dVerFor no puede ser nulo.');
     if(!isset($this->DE))
       throw new \Exception('[RDE] El campo DE no puede ser nulo.');
-    if(!isset($this->gCamFuFD))
-      throw new \Exception('[RDE] El campo gCamFuFD no puede ser nulo.');
+
 
     // Conversión
     $doc = new \DOMDocument();
@@ -216,11 +215,18 @@ class RDE
     $importNode = $doc->importNode($this->DE->toDOMElement(), true);
     $res->appendChild($importNode);
 
-    $importNode = $doc->importNode($this->Signature->toDOMElement(), true);
-    $res->appendChild($importNode);
 
-    $importNode = $doc->importNode($this->gCamFuFD->toDOMElement(), true);
-    $res->appendChild($importNode);
+    // $Signature = new Signature();
+    // $this->setSignature($Signature);
+
+    // $gCamFuFD = new GCamFuFD();
+    // $this->setGCamFuFD($gCamFuFD);
+
+    // $importNode = $doc->importNode($this->Signature->toDOMElement(true), true);
+    // $res->appendChild($importNode);
+
+    // $importNode = $doc->importNode($this->gCamFuFD->toDOMElement(true), true);
+    // $res->appendChild($importNode);
     return $res;
   }
 
@@ -235,7 +241,7 @@ class RDE
     $xmlString = $domElement->ownerDocument->saveXML($domElement);
     if(!$xmlString)
       throw new \Exception('[RDE] Error al convertir el objeto a XML.');
-    return html_entity_decode($xmlString);
+    return $xmlString;
   }
-  
+
 }

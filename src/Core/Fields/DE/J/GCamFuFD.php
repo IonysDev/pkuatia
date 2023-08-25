@@ -124,27 +124,33 @@ class GCamFuFD
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement($headeronly): DOMElement
   {
-    // Validaciones
-    if(!isset($this->dCarQR) || empty($this->dCarQR))
-    {
-      throw new \Exception('[GCamFuFD] dCarQR no puede estar vacío.');
-    }
-    else if(strlen($this->dCarQR) < 100 || strlen($this->dCarQR) > 600)
-    {
-      throw new \Exception('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres.');
-    }
-    if(isset($this->dInfAdic) && strlen($this->dInfAdic) > 5000)
-    {
-      throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
-    }
+    // // Validaciones
+    // if(!isset($this->dCarQR) || empty($this->dCarQR))
+    // {
+    //   throw new \Exception('[GCamFuFD] dCarQR no puede estar vacío.');
+    // }
+    // else if(strlen($this->dCarQR) < 100 || strlen($this->dCarQR) > 600)
+    // {
+    //   throw new \Exception('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres.');
+    // }
+    // if(isset($this->dInfAdic) && strlen($this->dInfAdic) > 5000)
+    // {
+    //   throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
+    // }
     // Conversión
     $doc = new \DOMDocument();
     $res = $doc->createElement('gCamFuFD');
-    $res->appendChild(new DOMElement('dCarQR', htmlspecialchars($this->getDCarQR())));
-    if(isset($this->dInfAdic))
-      $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
+
+    if(!$headeronly)
+    {
+      $res->appendChild(new DOMElement('dCarQR', htmlspecialchars($this->getDCarQR())));
+      if(isset($this->dInfAdic))
+        $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
+    }
+    $res->appendChild(new DOMElement('dCarQR'));
+  
     return $res;
   }
   

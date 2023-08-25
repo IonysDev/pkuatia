@@ -125,20 +125,25 @@ class Signature
    *
    * @return \DOMElement 
    */
-  public function toDOMElement(): \DOMElement
+  public function toDOMElement($headeronly): \DOMElement
   {
     $doc = new \DOMDocument();
     $res = $doc->createElement('Signature');
     $res->setAttribute('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
+
+    if(!$headeronly)
+    {
+      $importNode = $doc->importNode($this->SignedInfo->toDOMElement(), true);
+      $res->appendChild($importNode);
+  
+      $res->appendChild(new DOMElement('SignatureValue', $this->SignatureValue));
+  
+      $importNode = $doc->importNode($this->KeyInfo->toDOMElement(), true);
+      $res->appendChild($importNode);
+  
+    }
     
-    $importNode = $doc->importNode($this->SignedInfo->toDOMElement(), true);
-    $res->appendChild($importNode);
-
-    $res->appendChild(new DOMElement('SignatureValue', $this->SignatureValue));
-
-    $importNode = $doc->importNode($this->KeyInfo->toDOMElement(), true);
-    $res->appendChild($importNode);
-
+ 
     return $res;
   }
 }
