@@ -208,7 +208,7 @@ $gCamFuFD = new GCamFuFD();
 
 
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
-$gCamFuFD->setDCarQR(str_replace('&', '&amp;', $gCamFuFD->getDCarQR()));
+
 
 $domelemengcamfud = $gCamFuFD->toDOMElement(false);
 

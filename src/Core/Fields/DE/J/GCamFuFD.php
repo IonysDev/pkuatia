@@ -14,7 +14,7 @@ use SimpleXMLElement;
 
 class GCamFuFD
 {
-                           // Id - Longitud - Ocurrencia - Descripción
+  // Id - Longitud - Ocurrencia - Descripción
   public String $dCarQR;   // J002 - 100-600 - 1-1 - Caracteres correspondientes al código QR
   public String $dInfAdic; // J003 - 1-5000  - 0-1 - Información adicional de interés para el emisor
 
@@ -86,14 +86,13 @@ class GCamFuFD
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
-    if(strcmp($xml->getName(), 'gCamFuFD') != 0)
-    {
+    if (strcmp($xml->getName(), 'gCamFuFD') != 0) {
       throw new \Exception('[GCamFuFD] Nodo XML con nombre inválido: ' . $xml->getName());
     }
     $res = new GCamFuFD();
-    $res->setDCarQR((String)$xml->dCarQR);
-    if(isset($xml->dInfAdic))
-      $res->setDInfAdic((String)$xml->dInfAdic);
+    $res->setDCarQR((string)$xml->dCarQR);
+    if (isset($xml->dInfAdic))
+      $res->setDInfAdic((string)$xml->dInfAdic);
     return $res;
   }
 
@@ -108,8 +107,7 @@ class GCamFuFD
   {
     $res = new GCamFuFD();
     $res->setDCarQR($object->dCarQR);
-    if(isset($object->dInfAdic))
-    {
+    if (isset($object->dInfAdic)) {
       $res->setDInfAdic($object->dInfAdic);
     }
     return $res;
@@ -124,7 +122,7 @@ class GCamFuFD
    *
    * @return DOMElement
    */
-  public function toDOMElement($headeronly): DOMElement
+  public function toDOMElement(): DOMElement
   {
     // // Validaciones
     // if(!isset($this->dCarQR) || empty($this->dCarQR))
@@ -143,15 +141,13 @@ class GCamFuFD
     $doc = new \DOMDocument();
     $res = $doc->createElement('gCamFuFD');
 
-    if(!$headeronly)
-    {
-      $res->appendChild(new DOMElement('dCarQR', htmlspecialchars($this->getDCarQR())));
-      if(isset($this->dInfAdic))
-        $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
-    }
-    $res->appendChild(new DOMElement('dCarQR'));
-  
+
+    $res->appendChild(new DOMElement('dCarQR', htmlspecialchars($this->getDCarQR())));
+    if (isset($this->dInfAdic))
+      $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
+
+
+
     return $res;
   }
-  
 }

@@ -93,6 +93,7 @@ class Sifen
      */
     public static function EnviarDE(string $de)
     {
+
         self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
         $rEnviDe = new REnviDe(self::GetDId(), new SoapVar(
             '<ns1:xDE>' . $de . '</ns1:xDE>',
