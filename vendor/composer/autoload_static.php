@@ -11,6 +11,10 @@ class ComposerStaticInit316c7e8e1193bc4fdb458fc4c57dac7c
         array (
             'Selective\\XmlDSig\\' => 18,
         ),
+        'R' => 
+        array (
+            'RobRichards\\XMLSecLibs\\' => 23,
+        ),
         'A' => 
         array (
             'Abiliomp\\Pkuatia\\' => 17,
@@ -21,6 +25,10 @@ class ComposerStaticInit316c7e8e1193bc4fdb458fc4c57dac7c
         'Selective\\XmlDSig\\' => 
         array (
             0 => __DIR__ . '/..' . '/selective/xmldsig/src',
+        ),
+        'RobRichards\\XMLSecLibs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/robrichards/xmlseclibs/src',
         ),
         'Abiliomp\\Pkuatia\\' => 
         array (

@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Selective\\XmlDSig\\' => array($vendorDir . '/selective/xmldsig/src'),
+    'RobRichards\\XMLSecLibs\\' => array($vendorDir . '/robrichards/xmlseclibs/src'),
     'Abiliomp\\Pkuatia\\' => array($baseDir . '/src'),
 );
