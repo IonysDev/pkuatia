@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -369,20 +370,20 @@ class GPaConEIni
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gPaConEIni');
-
+    $doc = new DOMDocument('1.0', 'utf-8');
+    $res = $doc->createElement('gPaConEIni');
     $res->appendChild(new DOMElement('iTiPago', $this->getITiPago()));
     $res->appendChild(new DOMElement('dDesTiPag', $this->getDDesTiPag()));
     $res->appendChild(new DOMElement('dMonTiPag', $this->getDMonTiPag()));
     $res->appendChild(new DOMElement('cMoneTiPag', $this->getCMoneTiPag()));
-    $res->appendChild(new DOMElement('dDMoneTiPag', $this->getDMonTiPag()));
+    $res->appendChild(new DOMElement('dDMoneTiPag', $this->getDDMoneTiPag()));
     if ($this->cMoneTiPag != 'PYG') {
       $res->appendChild(new DOMElement('dTiCamTiPag', $this->getDTiCamTiPag()));
     }
-    ///children
-    $res->appendChild($this->gPagTarCD->toDOMElement());
-    $res->appendChild($this->gPagCheq->toDOMElement());
-
+    if(isset($this->gPagTarCD))
+      $res->appendChild($this->gPagTarCD->toDOMElement());
+    if(isset($this->gPagCheq))
+      $res->appendChild($this->gPagCheq->toDOMElement());
     return $res;
   }
   

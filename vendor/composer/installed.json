@@ -1,6 +1,71 @@
 {
     "packages": [
         {
+            "name": "krowinski/bcmath-extended",
+            "version": "7.0.0",
+            "version_normalized": "7.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krowinski/bcmath-extended.git",
+                "reference": "e961cb1a7b15b02cf00bbf91ec1a13b48253cfaf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krowinski/bcmath-extended/zipball/e961cb1a7b15b02cf00bbf91ec1a13b48253cfaf",
+                "reference": "e961cb1a7b15b02cf00bbf91ec1a13b48253cfaf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9.0",
+                "symplify/easy-coding-standard": "^11.1"
+            },
+            "time": "2023-01-25T21:31:14+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "BCMathExtended\\": "src/BCMathExtended/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kacper Rowiński",
+                    "email": "kacper.rowinski@gmail.com"
+                }
+            ],
+            "description": "Extends php BCMath lib for missing functions like floor, ceil, round, abs, min, max, rand for big numbers. Also wraps existing BCMath functions. (more http://php.net/manual/en/book.bc.php) Supports scientific notations",
+            "keywords": [
+                "Arbitrary-precision",
+                "abs",
+                "bc",
+                "bcmath",
+                "bignumber",
+                "ceil",
+                "complex-numbers",
+                "floor",
+                "math",
+                "php",
+                "precision",
+                "rand",
+                "round",
+                "scientific-notation"
+            ],
+            "support": {
+                "issues": "https://github.com/krowinski/bcmath-extended/issues",
+                "source": "https://github.com/krowinski/bcmath-extended/tree/7.0.0"
+            },
+            "install-path": "../krowinski/bcmath-extended"
+        },
+        {
             "name": "robrichards/xmlseclibs",
             "version": "3.1.1",
             "version_normalized": "3.1.1.0",

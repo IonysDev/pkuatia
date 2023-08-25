@@ -14,10 +14,12 @@ use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatRec;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GEmis;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamCond;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamFE;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamIVA;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GDtipDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GPaConEIni;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
@@ -30,6 +32,7 @@ use Abiliomp\Pkuatia\Sifen;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
+use BCMathExtended\BC;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -97,7 +100,7 @@ $gEmis->gActEco[] = $gActEco;
 $gDatRec = new GDatRec();
 
 $gDatGralOpe = new GDatGralOpe();
-$gDatGralOpe->setDFeEmiDE(new DateTime());
+$gDatGralOpe->setDFeEmiDE(new DateTime('now', new DateTimeZone('America/Asuncion')));
 $gDatGralOpe->setGOpeCom($gOpeCom);
 $gDatGralOpe->setGEmis($gEmis);
 $gDatGralOpe->setGDatRec($gDatRec);
@@ -106,6 +109,15 @@ $gDatGralOpe->setGDatRec($gDatRec);
 
 $gCamFE = new GCamFE();
 
+$gCamCond = new GCamCond();
+$gCamCond->setICondOpe(Constants::CONDICION_OPERACION_CONTADO);
+$gPaConEIni = new GPaConEIni();
+$gPaConEIni->setITiPago(Constants::PAGO_EFECTIVO);
+$gPaConEIni->setDMonTiPag("110000");
+$gPaConEIni->setCMoneTiPag("PYG");
+$gCamCond->gPaConEIni[] = $gPaConEIni;
+
+
 $gCamItem = new GCamItem();
 $gCamItem->setDCodInt('SERV001');
 $gCamItem->setDDesProSer('Servicio de desarrollo de software');
@@ -113,11 +125,11 @@ $gCamItem->setCUniMed(77);
 $gCamItem->setDCantProSer("1");
 
 $gValorRestaItem = new GValorRestaItem();
-$gValorRestaItem->setDTotOpeItem("100000");
+$gValorRestaItem->setDTotOpeItem("110000");
 
 $gValorItem = new GValorItem();
-$gValorItem->setDPUniProSer("100000");
-$gValorItem->setDTotBruOpeItem("100000");
+$gValorItem->setDPUniProSer("110000");
+$gValorItem->setDTotBruOpeItem("110000");
 $gValorItem->setGValorRestaItem($gValorRestaItem);
 
 $gCamItem->setGValorItem($gValorItem);
@@ -126,25 +138,28 @@ $gCamIVA = new GCamIVA();
 $gCamIVA->setIAfecIVA(GCamIVA::AFECTACION_IVA_GRAVADO);
 $gCamIVA->setDPropIVA("100");
 $gCamIVA->setDTasaIVA(10);
-$gCamIVA->setDBasGravIVA(bcdiv($gValorItem->getDTotBruOpeItem(), "1.1", 8));
-$gCamIVA->setDLiqIVAItem(bcdiv($gValorItem->getDTotBruOpeItem(), "11", 8));
+$gCamIVA->setDBasGravIVA(BC::round(bcdiv($gValorItem->getDTotBruOpeItem(), "1.1", 8)));
+$gCamIVA->setDLiqIVAItem(BC::round(bcdiv($gValorItem->getDTotBruOpeItem(), "11", 8)));
 $gCamIVA->setDBasExe("0");
 
 $gCamItem->gCamIVA = $gCamIVA;
 
 $gDtipDE = new GDtipDE();
+$gDtipDE->setGCamCond($gCamCond);
 $gDtipDE->setGCamFE($gCamFE);
 $gDtipDE->gCamItem[] = $gCamItem;
 
 //////////////////////////////////////////////////////////////////
 
 $gTotSub = new GTotSub();
-$gTotSub->setDSub10("100000");
-$gTotSub->setDTotOpe("100000");
-$gTotSub->setDTotGralOpe("100000");
-$gTotSub->setDIVA10(bcdiv("100000", "1.1", 8));
+$gTotSub->setDSub10("110000");
+$gTotSub->setDTotOpe("110000");
+$gTotSub->setDTotGralOpe("110000");
+$gTotSub->setDIVA5("0");
+$gTotSub->setDIVA10(BC::round(bcdiv("110000", "1.1", 8)));
 $gTotSub->setDTotIVA($gTotSub->getDIVA10());
-$gTotSub->setDBaseGrav10(bcdiv("100000", "11", 8));
+$gTotSub->setDBaseGrav5("0");
+$gTotSub->setDBaseGrav10(BC::round(bcdiv("110000", "11", 8)));
 $gTotSub->setDTBasGraIVA($gTotSub->getDBaseGrav10());
 
 //////////////////////////////////////////////////////////////////
@@ -160,7 +175,7 @@ $cdc = CDCHelper::CDCMaker($de);
 
 $de->setId($cdc);
 $de->setDDVId($cdc[43]);
-$de->setDFecFirma(new DateTime());
+$de->setDFecFirma(new DateTime('now', new DateTimeZone('America/Asuncion')));
 
 //////////////////////////////////////////////////////////////////
 
@@ -168,7 +183,6 @@ $rde = new RDE();
 $rde->setDE($de);
 
 $xml = $rde->toXMLString();
-
 
 $xmlDocument = new DOMDocument();
 $xmlDocument->formatOutput = false;
