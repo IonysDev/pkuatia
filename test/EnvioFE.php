@@ -194,7 +194,6 @@ $objDSig->appendSignature($doc->documentElement);
 
 $signedXml = $doc->saveXML();
 
-echo $signedXml;
 
 // //////////////////////////////////////////////////////////////////
 
@@ -203,39 +202,41 @@ echo $signedXml;
 
 // //////////////////////////////////////////////////////////////////
 
-// $signedSimpleXMLElement = simplexml_load_string($signedXml);
-// $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
+$signedSimpleXMLElement = simplexml_load_string($signedXml);
+$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
 
-// //////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// $gCamFuFD = new GCamFuFD();
-// $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
+$gCamFuFD = new GCamFuFD();
+$gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
+//change & values to &amp
+$gCamFuFD->setDCarQR(str_replace('&', '&amp;', $gCamFuFD->getDCarQR()));
 
 
-// $rde->setSignature($Signature);
-// $rde->setGCamFuFD($gCamFuFD);
+$rde->setSignature($Signature);
+$rde->setGCamFuFD($gCamFuFD);
 
-// //////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// $documentoElectronico = new DocumentoElectronico();
-// $documentoElectronico->setRDE($rde);
+$documentoElectronico = new DocumentoElectronico();
+$documentoElectronico->setRDE($rde);
 
-// //////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// try{
-//     echo "Prueba de Envío de Documento Electrónico\n";
-//     echo "Inicializando Sifen... ";
-//     Sifen::Init($config);
-//     echo "OK\n";
-//     echo "Enviando Documento Electrónico...\n";
-//     $res = Sifen::EnviarDE($documentoElectronico);
-//     echo "Resultado: \n";
-//     echo var_dump($res);
-// }
-// catch (SoapFault $e) {
-//     // Handle SOAP faults/errors
-//     echo 'SOAP Error: ' . $e->getMessage();
-// } catch (Exception $e) {
-//     // Handle general exceptions
-//     echo 'Error: ' . $e->getMessage();
-// }
+try{
+    echo "Prueba de Envío de Documento Electrónico\n";
+    echo "Inicializando Sifen... ";
+    Sifen::Init($config);
+    echo "OK\n";
+    echo "Enviando Documento Electrónico...\n";
+    $res = Sifen::EnviarDE($documentoElectronico);
+    echo "Resultado: \n";
+    echo var_dump($res);
+}
+catch (SoapFault $e) {
+    // Handle SOAP faults/errors
+    echo 'SOAP Error: ' . $e->getMessage();
+} catch (Exception $e) {
+    // Handle general exceptions
+    echo 'Error: ' . $e->getMessage();
+}

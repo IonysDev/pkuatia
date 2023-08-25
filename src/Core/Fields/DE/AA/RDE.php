@@ -235,7 +235,7 @@ class RDE
     $xmlString = $domElement->ownerDocument->saveXML($domElement);
     if(!$xmlString)
       throw new \Exception('[RDE] Error al convertir el objeto a XML.');
-    return $xmlString;
+    return html_entity_decode($xmlString);
   }
   
 }
