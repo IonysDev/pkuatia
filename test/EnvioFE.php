@@ -204,19 +204,18 @@ $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature)
 
 
 
-$cosaqr = str_replace('&', '&amp;', QRHelper::GenerateQRContent($config, $de, $Signature));
+$gCamFuFD = new GCamFuFD();
 
-$doc = new \DOMDocument();
-$res = $doc->createElement('gCamFuFD');
-$res->appendChild(new DOMElement('dCarQR', $cosaqr));
-$res->appendChild(new DOMElement('dCarQR'));
 
-$importNode = $xmlDocument->importNode($res, true);
+$gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
+$gCamFuFD->setDCarQR(str_replace('&', '&amp;', $gCamFuFD->getDCarQR()));
+
+$domelemengcamfud = $gCamFuFD->toDOMElement(false);
+
+$importNode = $xmlDocument->importNode($domelemengcamfud, true);
 $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($importNode);
 
 $signed2 = $xmlDocument->saveXML($xmlDocument->documentElement);
-
-
 
 
 
