@@ -28,6 +28,8 @@ use Abiliomp\Pkuatia\Helpers\QRHelper;
 use Abiliomp\Pkuatia\Helpers\SignHelper;
 use Abiliomp\Pkuatia\Sifen;
 use Abiliomp\Pkuatia\Utils\RucUtils;
+use RobRichards\XMLSecLibs\XMLSecurityDSig;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -165,46 +167,75 @@ $de->setDFecFirma(new DateTime());
 $rde = new RDE();
 $rde->setDE($de);
 
-//////////////////////////////////////////////////////////////////
+$doc = new \DOMDocument();
+$doc->loadXML($de->toXMLString(), LIBXML_NOENT);
+$element = $doc->getElementsByTagName('DE');
 
-SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
-$signedXml = SignHelper::Sign($de->toXMLString(), '#' . $cdc);
+$objDSig = new XMLSecurityDSig("");
 
-//////////////////////////////////////////////////////////////////
+$objDSig->setCanonicalMethod(XMLSecurityDSig::C14N);
 
-$signedSimpleXMLElement = simplexml_load_string($signedXml);
-$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
+$objDSig->addReference(
+    $element[0],
+    XMLSecurityDSig::SHA256,
+    null,
+    [
+        'id_name' => $cdc,
+        'overwrite' => true,
+    ]
+);
 
-//////////////////////////////////////////////////////////////////
+$objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
+$objKey->passphrase = $keyPassphrase;
+$objKey->loadKey($keyFile, true);
+$objDSig->sign($objKey);
+$objDSig->add509Cert(file_get_contents($certFile));
+$objDSig->appendSignature($doc->documentElement);
 
-$gCamFuFD = new GCamFuFD();
-$gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
+$signedXml = $doc->saveXML();
+
+echo $signedXml;
+
+// //////////////////////////////////////////////////////////////////
+
+// SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
+// $signedXml = SignHelper::Sign($de->toXMLString(), '#' . $cdc);
+
+// //////////////////////////////////////////////////////////////////
+
+// $signedSimpleXMLElement = simplexml_load_string($signedXml);
+// $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
+
+// //////////////////////////////////////////////////////////////////
+
+// $gCamFuFD = new GCamFuFD();
+// $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
 
 
-$rde->setSignature($Signature);
-$rde->setGCamFuFD($gCamFuFD);
+// $rde->setSignature($Signature);
+// $rde->setGCamFuFD($gCamFuFD);
 
-//////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////
 
-$documentoElectronico = new DocumentoElectronico();
-$documentoElectronico->setRDE($rde);
+// $documentoElectronico = new DocumentoElectronico();
+// $documentoElectronico->setRDE($rde);
 
-//////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////
 
-try{
-    echo "Prueba de Envío de Documento Electrónico\n";
-    echo "Inicializando Sifen... ";
-    Sifen::Init($config);
-    echo "OK\n";
-    echo "Enviando Documento Electrónico...\n";
-    $res = Sifen::EnviarDE($documentoElectronico);
-    echo "Resultado: \n";
-    echo var_dump($res);
-}
-catch (SoapFault $e) {
-    // Handle SOAP faults/errors
-    echo 'SOAP Error: ' . $e->getMessage();
-} catch (Exception $e) {
-    // Handle general exceptions
-    echo 'Error: ' . $e->getMessage();
-}
+// try{
+//     echo "Prueba de Envío de Documento Electrónico\n";
+//     echo "Inicializando Sifen... ";
+//     Sifen::Init($config);
+//     echo "OK\n";
+//     echo "Enviando Documento Electrónico...\n";
+//     $res = Sifen::EnviarDE($documentoElectronico);
+//     echo "Resultado: \n";
+//     echo var_dump($res);
+// }
+// catch (SoapFault $e) {
+//     // Handle SOAP faults/errors
+//     echo 'SOAP Error: ' . $e->getMessage();
+// } catch (Exception $e) {
+//     // Handle general exceptions
+//     echo 'Error: ' . $e->getMessage();
+// }
