@@ -157,7 +157,7 @@ $de->setGTotSub($gTotSub);
 $cdc = CDCHelper::CDCMaker($de);
 
 $de->setId($cdc);
-$de->setDDVId(RucUtils::calcDV($cdc));
+$de->setDDVId($cdc[43]);
 $de->setDFecFirma(new DateTime());
 
 //////////////////////////////////////////////////////////////////
