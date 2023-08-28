@@ -267,6 +267,7 @@ try{
     Sifen::Init($config);
     echo "OK\n";
     echo "Enviando Documento Electrónico...\n";
+    echo "CDC: " . $cdc . "\n";
     $res = Sifen::EnviarDE($signed2);
     echo "Resultado: \n";
     echo var_dump($res);
