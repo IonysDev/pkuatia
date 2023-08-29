@@ -184,82 +184,43 @@ $rde->setDE($de);
 
 $xml = $rde->toXMLString();
 
-$xmlDocument = new DOMDocument();
+$xmlDocument = new DOMDocument('1.0', 'UTF-8');
 $xmlDocument->formatOutput = false;
 $xmlDocument->preserveWhiteSpace = false;
 $xmlDocument->loadXML($xml);
 
 
-$serviceresponse_node = $xmlDocument->getElementsByTagName("DE")->item(0);
+$dENode = $xmlDocument->getElementsByTagName("DE")->item(0);
 $objDSig = new XMLSecurityDSig('');
-$objDSig->setCanonicalMethod(XMLSecurityDSig::C14N); // relaxed about SignedInfo
+$objDSig->setCanonicalMethod(XMLSecurityDSig::C14N);
 
 $objDSig->addReference(
-    $serviceresponse_node,
-    XMLSecurityDSig::SHA256, // 'http://www.w3.org/2000/09/xmldsig#sha1',
+    $dENode,
+    XMLSecurityDSig::SHA256,
     ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
     ['id_name' => $cdc, 'overwrite' => true],
 );
 
 $objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
 $objKey->passphrase = $keyPassphrase;
-$objKey->loadKey($keyFile, TRUE);
+$objKey->loadKey($keyFile, true);
 
 $objDSig->sign($objKey, $xmlDocument->documentElement);
 $objDSig->add509Cert(file_get_contents($certFile));
 
-$signatures_node = $xmlDocument->getElementsByTagName("rDE")->item(0);
-$objDSig->appendSignature($signatures_node);
+$rDENode = $xmlDocument->getElementsByTagName("rDE")->item(0);
+$objDSig->appendSignature($rDENode);
 $signedXML = $xmlDocument->saveXML($xmlDocument->documentElement);
-
 
 $signedSimpleXMLElement = simplexml_load_string($signedXML);
 $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
 
-
-
 $gCamFuFD = new GCamFuFD();
-
-
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
-
-
 $domelemengcamfud = $gCamFuFD->toDOMElement(false);
-
 $importNode = $xmlDocument->importNode($domelemengcamfud, true);
 $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($importNode);
-
 $signed2 = $xmlDocument->saveXML($xmlDocument->documentElement);
-
-
-
-// // //////////////////////////////////////////////////////////////////
-
-// // SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
-// // $signedXml = SignHelper::Sign($de->toXMLString(), '#' . $cdc);
-
-// // //////////////////////////////////////////////////////////////////
-
-// $signedSimpleXMLElement = simplexml_load_string($signedXml);
-// $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
-
-// //////////////////////////////////////////////////////////////////
-
-// $gCamFuFD = new GCamFuFD();
-// $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
-// //change & values to &amp
-// $gCamFuFD->setDCarQR(str_replace('&', '&amp;', $gCamFuFD->getDCarQR()));
-
-
-// $rde->setSignature($Signature);
-// $rde->setGCamFuFD($gCamFuFD);
-
-// //////////////////////////////////////////////////////////////////
-
-// $documentoElectronico = new DocumentoElectronico();
-// $documentoElectronico->setRDE($rde);
-
-// //////////////////////////////////////////////////////////////////
 
 try{
     echo "Prueba de Envío de Documento Electrónico\n";
