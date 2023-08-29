@@ -192,7 +192,7 @@ $xmlDocument->loadXML($xml);
 
 $dENode = $xmlDocument->getElementsByTagName("DE")->item(0);
 $objDSig = new XMLSecurityDSig('');
-$objDSig->setCanonicalMethod(XMLSecurityDSig::C14N);
+$objDSig->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
 
 $objDSig->addReference(
     $dENode,
