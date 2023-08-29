@@ -141,7 +141,10 @@ class GCamFuFD
     $doc = new \DOMDocument();
     $res = $doc->createElement('gCamFuFD');
 
-    $res->appendChild(new DOMElement('dCarQR', htmlspecialchars($this->getDCarQR())));
+    $qr = new DOMElement('dCarQR');
+    $qr->textContent = $this->getDCarQR();
+    
+    $res->appendChild($qr);
     if (isset($this->dInfAdic))
       $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
 

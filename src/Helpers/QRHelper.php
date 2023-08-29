@@ -52,9 +52,9 @@ class QRHelper
     $IdCSC = str_pad($config->getIdCsc(), 4, '0', STR_PAD_LEFT);
 
     if ($dRucRec != null) {
-      $step1 = 'nVersion=' . $nVersion . '&' . 'Id=' . $id . '&' . 'dFeEmiDE=' . $dFeEmiDE . '&' . 'dRucRec=' . $dRucRec . '&' . 'dTotGralOpe=' . $dTotGralOpe . '&' . 'dTotIVA=' . $dTotIVA . '&' . 'cItems=' . $cItems . '&' . 'DigestValue=' . $DigestValue . '&' . 'idCSC=' . $IdCSC;
+      $step1 = 'nVersion=' . $nVersion . '&Id=' . $id . '&dFeEmiDE=' . $dFeEmiDE . '&dRucRec=' . $dRucRec . '&dTotGralOpe=' . $dTotGralOpe . '&dTotIVA=' . $dTotIVA . '&cItems=' . $cItems . '&DigestValue=' . $DigestValue . '&IdCSC=' . $IdCSC;
     } else {
-      $step1 = 'nVersion=' . $nVersion . '&' . 'Id=' . $id . '&' . 'dFeEmiDE=' . $dFeEmiDE . '&' . 'dNumIDRec=' . $dNumIDRec . '&' . 'dTotGralOpe=' . $dTotGralOpe . '&' . 'dTotIVA=' . $dTotIVA . '&' . 'cItems=' . $cItems . '&' . 'DigestValue=' . $DigestValue . '&' . 'idCSC=' . $IdCSC;
+      $step1 = 'nVersion=' . $nVersion . '&Id=' . $id . '&dFeEmiDE=' . $dFeEmiDE . '&dNumIDRec=' . $dNumIDRec . '&dTotGralOpe=' . $dTotGralOpe . '&dTotIVA=' . $dTotIVA . '&cItems=' . $cItems . '&DigestValue=' . $DigestValue . '&IdCSC=' . $IdCSC;
     }
 
     $step2 = $step1 . $config->getCsc();
