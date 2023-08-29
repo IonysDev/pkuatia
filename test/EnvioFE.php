@@ -227,7 +227,6 @@ $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement);
 ///create QR content
 $gCamFuFD = new GCamFuFD();
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
-$gCamFuFD->setDInfAdic('DE generado en ambiente de prueba - sin valor comercial ni fiscal');
 $gCamFuDFNode = $gCamFuFD->toDOMElement();
 $importNode = $xmlDocument->importNode($gCamFuDFNode, true);
 
