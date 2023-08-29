@@ -179,21 +179,27 @@ $de->setDFecFirma(new DateTime('now', new DateTimeZone('America/Asuncion')));
 
 //////////////////////////////////////////////////////////////////
 
+///rDE TO XMLSTRING
 $rde = new RDE();
 $rde->setDE($de);
-
 $xml = $rde->toXMLString();
 
+///Create new DOMDocument and lod XML
 $xmlDocument = new DOMDocument('1.0', 'UTF-8');
 $xmlDocument->formatOutput = false;
 $xmlDocument->preserveWhiteSpace = false;
 $xmlDocument->loadXML($xml);
 
-
+///get DE node for sign
 $dENode = $xmlDocument->getElementsByTagName("DE")->item(0);
+//get rDE node for append
+$rDENode = $xmlDocument->getElementsByTagName("rDE")->item(0);
+
+//create object for sign with exc c14n algorithm
 $objDSig = new XMLSecurityDSig('');
 $objDSig->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
 
+//add reference to sign
 $objDSig->addReference(
     $dENode,
     XMLSecurityDSig::SHA256,
@@ -201,26 +207,34 @@ $objDSig->addReference(
     ['id_name' => $cdc, 'overwrite' => true],
 );
 
+//create key object
 $objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
 $objKey->passphrase = $keyPassphrase;
 $objKey->loadKey($keyFile, true);
 
+//add key to sign and add cert
 $objDSig->sign($objKey, $xmlDocument->documentElement);
 $objDSig->add509Cert(file_get_contents($certFile));
 
-$rDENode = $xmlDocument->getElementsByTagName("rDE")->item(0);
+///appebd signature to rDE node and then get Signature node in XMLString
 $objDSig->appendSignature($rDENode);
 $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("Signature")->item(0));
 
+///load signed XML to SimpleXMLElement
 $signedSimpleXMLElement = simplexml_load_string($signedXML);
 $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement);
 
+///create QR content
 $gCamFuFD = new GCamFuFD();
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
 $gCamFuFD->setDInfAdic('DE generado en ambiente de prueba - sin valor comercial ni fiscal');
-$domelemengcamfud = $gCamFuFD->toDOMElement();
-$importNode = $xmlDocument->importNode($domelemengcamfud, true);
+$gCamFuDFNode = $gCamFuFD->toDOMElement();
+$importNode = $xmlDocument->importNode($gCamFuDFNode, true);
+
+///append QR node to rDE node
 $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($importNode);
+
+///get signed XML
 $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
 
 try {
