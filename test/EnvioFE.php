@@ -222,7 +222,7 @@ $importNode = $xmlDocument->importNode($domelemengcamfud, true);
 $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($importNode);
 $signed2 = $xmlDocument->saveXML($xmlDocument->documentElement);
 
-try{
+try {
     echo "Prueba de Envío de Documento Electrónico\n";
     echo "Inicializando Sifen... ";
     Sifen::Init($config);
@@ -232,8 +232,7 @@ try{
     $res = Sifen::EnviarDE($signed2);
     echo "Resultado: \n";
     echo var_dump($res);
-}
-catch (SoapFault $e) {
+} catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();
 } catch (Exception $e) {
