@@ -210,17 +210,18 @@ $objDSig->add509Cert(file_get_contents($certFile));
 
 $rDENode = $xmlDocument->getElementsByTagName("rDE")->item(0);
 $objDSig->appendSignature($rDENode);
-$signedXML = $xmlDocument->saveXML($xmlDocument->documentElement);
+$signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("Signature")->item(0));
 
 $signedSimpleXMLElement = simplexml_load_string($signedXML);
-$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
+$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement);
 
 $gCamFuFD = new GCamFuFD();
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
+$gCamFuFD->setDInfAdic('DE generado en ambiente de prueba - sin valor comercial ni fiscal');
 $domelemengcamfud = $gCamFuFD->toDOMElement();
 $importNode = $xmlDocument->importNode($domelemengcamfud, true);
 $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($importNode);
-$signed2 = $xmlDocument->saveXML($xmlDocument->documentElement);
+$signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
 
 try {
     echo "Prueba de Envío de Documento Electrónico\n";
@@ -229,7 +230,7 @@ try {
     echo "OK\n";
     echo "Enviando Documento Electrónico...\n";
     echo "CDC: " . $cdc . "\n";
-    $res = Sifen::EnviarDE($signed2);
+    $res = Sifen::EnviarDE($signedXML);
     echo "Resultado: \n";
     echo var_dump($res);
 } catch (SoapFault $e) {
