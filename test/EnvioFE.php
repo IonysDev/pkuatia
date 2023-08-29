@@ -217,7 +217,7 @@ $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature)
 
 $gCamFuFD = new GCamFuFD();
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
-$domelemengcamfud = $gCamFuFD->toDOMElement(false);
+$domelemengcamfud = $gCamFuFD->toDOMElement();
 $importNode = $xmlDocument->importNode($domelemengcamfud, true);
 $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($importNode);
 $signed2 = $xmlDocument->saveXML($xmlDocument->documentElement);
