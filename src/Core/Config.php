@@ -17,7 +17,7 @@ class Config
     public String $privateKeyPassphrase;        // Contraseña de la clave privada.
 
     // Parámetros de autenticación ante el SIFEN
-    public String $idCsc = '1'; // Identificador de la CSC entregado por el SIFEN.
+    public String $idCsc = '0001'; // Identificador de la CSC entregado por el SIFEN.
     public String $csc = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
 
     // Lugar donde se almacena el archivo JSON que contiene el registro del último valor del dId utilizado.

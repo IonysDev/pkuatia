@@ -113,7 +113,7 @@ $gCamCond = new GCamCond();
 $gCamCond->setICondOpe(Constants::CONDICION_OPERACION_CONTADO);
 $gPaConEIni = new GPaConEIni();
 $gPaConEIni->setITiPago(Constants::PAGO_EFECTIVO);
-$gPaConEIni->setDMonTiPag("110000");
+$gPaConEIni->setDMonTiPag("100000");
 $gPaConEIni->setCMoneTiPag("PYG");
 $gCamCond->gPaConEIni[] = $gPaConEIni;
 
@@ -125,11 +125,11 @@ $gCamItem->setCUniMed(77);
 $gCamItem->setDCantProSer("1");
 
 $gValorRestaItem = new GValorRestaItem();
-$gValorRestaItem->setDTotOpeItem("110000");
+$gValorRestaItem->setDTotOpeItem("100000");
 
 $gValorItem = new GValorItem();
-$gValorItem->setDPUniProSer("110000");
-$gValorItem->setDTotBruOpeItem("110000");
+$gValorItem->setDPUniProSer("100000");
+$gValorItem->setDTotBruOpeItem("100000");
 $gValorItem->setGValorRestaItem($gValorRestaItem);
 
 $gCamItem->setGValorItem($gValorItem);
@@ -138,8 +138,8 @@ $gCamIVA = new GCamIVA();
 $gCamIVA->setIAfecIVA(GCamIVA::AFECTACION_IVA_GRAVADO);
 $gCamIVA->setDPropIVA("100");
 $gCamIVA->setDTasaIVA(10);
-$gCamIVA->setDBasGravIVA(BC::round(bcdiv($gValorItem->getDTotBruOpeItem(), "1.1", 8)));
-$gCamIVA->setDLiqIVAItem(BC::round(bcdiv($gValorItem->getDTotBruOpeItem(), "11", 8)));
+$gCamIVA->setDBasGravIVA('90909');
+$gCamIVA->setDLiqIVAItem('9091');
 $gCamIVA->setDBasExe("0");
 
 $gCamItem->gCamIVA = $gCamIVA;
@@ -152,14 +152,14 @@ $gDtipDE->gCamItem[] = $gCamItem;
 //////////////////////////////////////////////////////////////////
 
 $gTotSub = new GTotSub();
-$gTotSub->setDSub10("110000");
-$gTotSub->setDTotOpe("110000");
-$gTotSub->setDTotGralOpe("110000");
+$gTotSub->setDSub10("100000");
+$gTotSub->setDTotOpe("100000");
+$gTotSub->setDTotGralOpe("100000");
 $gTotSub->setDIVA5("0");
-$gTotSub->setDIVA10(BC::round(bcdiv("110000", "1.1", 8)));
+$gTotSub->setDIVA10("9091");
 $gTotSub->setDTotIVA($gTotSub->getDIVA10());
 $gTotSub->setDBaseGrav5("0");
-$gTotSub->setDBaseGrav10(BC::round(bcdiv("110000", "11", 8)));
+$gTotSub->setDBaseGrav10("90909");
 $gTotSub->setDTBasGraIVA($gTotSub->getDBaseGrav10());
 
 //////////////////////////////////////////////////////////////////

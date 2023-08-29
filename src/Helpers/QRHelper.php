@@ -46,9 +46,9 @@ class QRHelper
         
         $DigestValue = bin2hex($signature->getSignedInfo()->getReference()->getDigestValue());
 
-        $IdCSC = $config->getIdCsc();
+        $IdCSC = str_pad($config->getIdCsc(),4,'0',STR_PAD_LEFT);
 
-        $step1 = 'nVersion=' . $nVersion . '&' . 'Id=' . $id . '&' . 'dFeEmiDE=' . $dFeEmiDE . '&' . 'dRucRec=' . $dRucRec . '&' . 'dTotGralOpe=' . $dTotGralOpe . '&' . 'dTotIVA=' . $dTotIVA . '&' . 'cItems=' . $cItems . '&' . 'DigestValue=' . $DigestValue;
+        $step1 = 'nVersion=' . $nVersion . '&' . 'Id=' . $id . '&' . 'dFeEmiDE=' . $dFeEmiDE . '&' . 'dNumIDRec=' . $dRucRec . '&' . 'dTotGralOpe=' . $dTotGralOpe . '&' . 'dTotIVA=' . $dTotIVA . '&' . 'cItems=' . $cItems . '&' . 'DigestValue=' . $DigestValue .'&' .'idCSC=' . $IdCSC;
 
         $step2 = $step1 . $config->getCsc();
 

@@ -22,7 +22,7 @@ class Constants
     // URLs Base
     const SIFEN_URL_BASE_DEV = "https://sifen-test.set.gov.py";
     const SIFEN_URL_BASE_PROD = "https://sifen.set.gov.py";
-    const SIFEN_URL_CONSULTA_QR_DEV = "https://ekuatia.set.gov.py/consultas-test/qr?";
+    const SIFEN_URL_CONSULTA_QR_DEV = " https://ekuatia.set.gov.py/consultas-test/qr?";
     const SIFEN_URL_CONSULTA_QR_PROD = "https://ekuatia.set.gov.py/consultas/qr?";
 
     // Paths
