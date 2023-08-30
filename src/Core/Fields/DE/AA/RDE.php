@@ -6,6 +6,7 @@ use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
@@ -195,7 +196,7 @@ class RDE
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
     // Validaciones
     if(!isset($this->dVerFor))
@@ -203,30 +204,13 @@ class RDE
     if(!isset($this->DE))
       throw new \Exception('[RDE] El campo DE no puede ser nulo.');
 
-
     // Conversión
-    $doc = new \DOMDocument();
     $res = $doc->createElement('rDE');
     $res->setAttribute('xmlns', Constants::SIFEN_NS_URI);
     $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_XSI);
     $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_DE);
     $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
-
-    $importNode = $doc->importNode($this->DE->toDOMElement(), true);
-    $res->appendChild($importNode);
-
-
-    // $Signature = new Signature();
-    // $this->setSignature($Signature);
-
-    // $gCamFuFD = new GCamFuFD();
-    // $this->setGCamFuFD($gCamFuFD);
-
-    // $importNode = $doc->importNode($this->Signature->toDOMElement(true), true);
-    // $res->appendChild($importNode);
-
-    // $importNode = $doc->importNode($this->gCamFuFD->toDOMElement(true), true);
-    // $res->appendChild($importNode);
+    $res->appendChild($this->DE->toDOMElement($doc));
     return $res;
   }
 
@@ -237,8 +221,9 @@ class RDE
    */
   public function toXMLString(): String
   {
-    $domElement = $this->toDOMElement();
-    $xmlString = $domElement->ownerDocument->saveXML($domElement);
+    $doc = new DOMDocument('1.0', 'UTF-8');
+    $domElement = $this->toDOMElement($doc);
+    $xmlString = $doc->saveXML($domElement);
     if(!$xmlString)
       throw new \Exception('[RDE] Error al convertir el objeto a XML.');
     return $xmlString;

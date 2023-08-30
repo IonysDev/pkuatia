@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -12,7 +14,7 @@ use SimpleXMLElement;
  * Descripción: Campos que describen el IVA de la operación
  * Nodo Padre:  E700
  */
-class GCamIVA
+class GCamIVA extends BaseSifenField
 {
 
   public const AFECTACION_IVA_GRAVADO = 1;
@@ -227,15 +229,15 @@ class GCamIVA
     return $res;
   }
 
-
   /**
-   * toDOMElement
-   *
-   * @return DOMElement
+   * Convierte este GCamIVA en un DOMElement que puede ser insertado en el DOMDocument especificado.
+   * 
+   * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
+   * 
+   * @return DOMElement El DOMElement creado.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gCamIVA');
     $res->appendChild(new DOMElement('iAfecIVA', $this->getIAfecIVA()));
     $res->appendChild(new DOMElement('dDesAfecIVA', $this->getDDesAfecIVA()));
@@ -272,15 +274,15 @@ class GCamIVA
     }
     if(isset($resposne->dBasGravIVA))
     {
-      $res->setDBasGravIVA(Stringval($resposne->dBasGravIVA));
+      $res->setDBasGravIVA(strval($resposne->dBasGravIVA));
     }
     if(isset($resposne->dLiqIVAItem))
     {
-      $res->setDLiqIVAItem(Stringval($resposne->dLiqIVAItem));
+      $res->setDLiqIVAItem(strval($resposne->dLiqIVAItem));
     }
     if(isset($resposne->dBasExe))
     {
-      $res->setDBasExe(Stringval($resposne->dBasExe));
+      $res->setDBasExe(strval($resposne->dBasExe));
     }    
      
     return $res;

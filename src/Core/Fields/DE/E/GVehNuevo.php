@@ -2,12 +2,15 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
+use stdClass;
 
 /**
  * ID:E770 Grupo de detalle de vehículos nuevos
  */
-class GVehNuevo
+class GVehNuevo extends BaseSifenField
 {
   public ?int $iTipOpVN; // E771 iTipOpVN Tipo de operación de venta de vehículos
   public String $dChasis; /// E773 Chasis del vehículo;
@@ -448,14 +451,15 @@ class GVehNuevo
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
-   *
-   * @return DOMElement
+   * Convierte este GVehNuevo en un DOMElement que puede insertarse en el DOMDocument especificado.
+   * 
+   * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
+   * 
+   * @return DOMElement El DOMElement creado.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gVehNuevo');
-
+    $res = $doc->createElement('gVehNuevo');
     $res->appendChild(new DOMElement('iTipOpVN', $this->getDDesTipOpVN()));
     $res->appendChild(new DOMElement('dDesTipOpVN', $this->getDDesTipOpVN()));
     $res->appendChild(new DOMElement('dChasis', $this->getDChasis()));
@@ -472,40 +476,15 @@ class GVehNuevo
     $res->appendChild(new DOMElement('cTipVeh', $this->getCTipVeh()));
     $res->appendChild(new DOMElement('dCapac', $this->getDCapac()));
     $res->appendChild(new DOMElement('dCilin', $this->getDCilin()));
-
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GVehNuevo
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GVehNuevo
-  // {
-  //   if (strcmp($xml->tagName, 'gVehNuevo') === 0 && $xml->childElementCount == 14) {
-  //     $res = new GVehNuevo();
-  //     $res->setITipOpVN(intval($xml->getElementsByTagName('iTipOpVN')->item(0)->nodeValue));
-  //     $res->setDChasis($xml->getElementsByTagName('dChasis')->item(0)->nodeValue);
-  //     $res->setDColor($xml->getElementsByTagName('dColor')->item(0)->nodeValue);
-  //     $res->setDPotencia(intval($xml->getElementsByTagName('dPotencia')->item(0)->nodeValue));
-  //     $res->setDCapMot(intval($xml->getElementsByTagName('dCapMot')->item(0)->nodeValue));
-  //     $res->setDPNet(intval($xml->getElementsByTagName('dPnet')->item(0)->nodeValue));
-  //     $res->setDPBruto(intval($xml->getElementsByTagName('dPBruto')->item(0)->nodeValue));
-  //     $res->setITipCom(intval($xml->getElementsByTagName('iTipCom')->item(0)->nodeValue));
-  //     $res->setDNroMotor($xml->getElementsByTagName('dNroMotor')->item(0)->nodeValue);
-  //     $res->setDCapTracc(intval($xml->getElementsByTagName('dCapTracc')->item(0)->nodeValue));
-  //     $res->setDAnoFab(intval($xml->getElementsByTagName('dAnoFab')->item(0)->nodeValue));
-  //     $res->setCTipVeh($xml->getElementsByTagName('ctipVeh')->item(0)->nodeValue);
-  //     $res->setDCapac(intval($xml->getElementsByTagName('dCapac')->item(0)->nodeValue));
-  //     $res->setDCilin($xml->getElementsByTagName('dCilin')->item(0)->nodeValue);
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;node
-  //   }
-  // }
+  public static function FromSifenResponseObject(stdClass $object): self
+  {
+    throw new \Exception("Not implemented");
+    $res = new self();
+    return $res;
+  }
 
   /**
    * FromSifenResponseObject

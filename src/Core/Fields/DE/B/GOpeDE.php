@@ -189,22 +189,22 @@ class GOpeDE extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Convierte el objeto en un DOMNode
+     * Convierte el objeto GOpeDE en un DOMElement
      * 
-     * @return DOMElement
+     * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
+     *  
+     * @return DOMElement Nodo DOM creado pero no insertado.
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $doc = new DOMDocument();
         $res = $doc->createElement('gOpeDE');
-        $res->appendChild(new DOMElement('iTipEmi', $this->iTipEmi));
-        $res->appendChild(new DOMElement('dDesTipEmi', $this->dDesTipEmi));
-        $res->appendChild(new DOMElement('dCodSeg', $this->dCodSeg));
+        $res->appendChild(new DOMElement('iTipEmi', $this->getITipEmi()));
+        $res->appendChild(new DOMElement('dDesTipEmi', $this->getDDesTipEmi()));
+        $res->appendChild(new DOMElement('dCodSeg', $this->getDCodSeg()));
         if(isset($this->dInfoEmi))
-            $res->appendChild(new DOMElement('dInfoEmi', $this->dInfoEmi));
+            $res->appendChild(new DOMElement('dInfoEmi', $this->getDInfoEmi()));
         if(isset($this->dInfoFisc))
-            $res->appendChild(new DOMElement('dInfoFisc', $this->dInfoFisc));
-        $doc->appendChild($res);
+            $res->appendChild(new DOMElement('dInfoFisc', $this->getDInfoFisc()));
         return $res;
     }
 

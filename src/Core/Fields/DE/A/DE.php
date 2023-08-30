@@ -323,28 +323,17 @@ class DE extends BaseSifenField
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new DOMDocument();
     $res = $doc->createElement('DE');
-
     $res->setAttribute('Id', $this->getId());
     $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
     $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
-    
-    $importedNode = $doc->importNode($this->gOpeDe->toDOMElement(), true);
-    $res->appendChild($importedNode);
-
-    $importedNode = $doc->importNode($this->gTimb->toDOMElement(), true);
-    $res->appendChild($importedNode);
-
-    $importedNode = $doc->importNode($this->gDatGralOpe->toDOMElement(), true);
-    $res->appendChild($importedNode);
-
-    $importedNode = $doc->importNode($this->gDtipDe->toDOMElement(), true);
-    $res->appendChild($importedNode);
-    
+    $res->appendChild($this->gOpeDe->toDOMElement($doc));
+    $res->appendChild($this->gTimb->toDOMElement($doc));
+    $res->appendChild($this->gDatGralOpe->toDOMElement($doc));
+    $res->appendChild($this->gDtipDe->toDOMElement($doc));
     if(isset($this->gTotSub))
     {
       $importedNode = $doc->importNode($this->gTotSub->toDOMElement(), true);

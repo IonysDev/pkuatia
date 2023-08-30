@@ -7,6 +7,7 @@ use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
 use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -362,10 +363,15 @@ class GEmis extends BaseSifenField
         return $res;
     } 
 
-
-    public function toDOMElement(): DOMElement
+    /**
+     * Convierte este GEmis en un DOMElement que puede ser insertado en un DOMDocument.
+     * 
+     * @param DOMDocument $doc Documento DOM donde se creará el DOMElement sin insertarse.
+     * 
+     * @return DOMElement El DOMElement que representa a este GEmis.
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $doc = new \DOMDocument();
         $res = $doc->createElement('gEmis');
         $res->appendChild(new DOMElement('dRucEm', $this->dRucEm));
         $res->appendChild(new DOMElement('dDVEmi', $this->dDVEmi));
@@ -393,17 +399,12 @@ class GEmis extends BaseSifenField
         $res->appendChild(new DOMElement('dEmailE', $this->dEmailE));
         if(isset($this->dDenSuc))
             $res->appendChild(new DOMElement('dDenSuc', $this->dDenSuc));
-        if(isset($this->gActEco))
-        {
-            foreach ($this->gActEco as $g) {
-                $importNode = $doc->importNode($g->toDOMElement(), true);
-                $res->appendChild($importNode);
-            }
+        if(isset($this->gActEco)) {
+            foreach ($this->gActEco as $g)
+                $res->appendChild($g->toDOMElement($doc));
         }
-        if (isset($this->gRespDE)) {
-            $importNode = $doc->importNode($this->gRespDE->toDOMElement(), true);
-            $res->appendChild($importNode);
-        }
+        if (isset($this->gRespDE))
+            $res->appendChild($this->gRespDE->toDOMElement($doc));
         return $res;
     }
 

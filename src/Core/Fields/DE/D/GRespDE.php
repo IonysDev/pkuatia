@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -14,12 +16,15 @@ use SimpleXMLElement;
 /**
  * GRespDE
  */
-class GRespDE {
+class GRespDE extends BaseSifenField
+{
     
-    public int    $iTipIDRespDE; // D141 - Tipo de documento de identidad del responsable de la generación del DE
-    public String $dNumIDRespDE; // D143 - Número de documento de identidad del responsable de la generación del DE
-    public String $dNomRespDE;   // D144 - Nombre o razón social del responsable de la generación del DE
-    public String $dCarRespDE;   // D145 - Cargo del responsable de la generación del DE 
+                                  // Id - Longitud - Ocurrencia - Descripción
+    public int    $iTipIDRespDE;  // D141 - 1     - 1-1 - Tipo de documento de identidad del responsable de la generación del DE
+    public String $dDTipIDRespDE; // D142 - 9-41  - 1-1 - Descripción del tipo de documento de identidad del responsable de la generación del DE
+    public String $dNumIDRespDE;  // D143 - 1-20  - 1-1 - Número de documento de identidad del responsable de la generación del DE
+    public String $dNomRespDE;    // D144 - 4-255 - 1-1 - Nombre o razón social del responsable de la generación del DE
+    public String $dCarRespDE;    // D145 - 4-100 - 1-1 - Cargo del responsable de la generación del DE 
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -35,6 +40,40 @@ class GRespDE {
     public function setITipIDRespDE(int $iTipIDRespDE): self
     {
         $this->iTipIDRespDE = $iTipIDRespDE;
+        switch($this->iTipIDRespDE) {
+            case 1:
+                $this->dDTipIDRespDE = 'Cédula paraguaya';
+                break;
+            case 2:
+                $this->dDTipIDRespDE = 'Pasaporte';
+                break;
+            case 3:
+                $this->dDTipIDRespDE = 'Cédula extranjera';
+                break;
+            case 4:
+                $this->dDTipIDRespDE = 'Carnet de residencia';
+                break;
+            case 9:
+                $this->dDTipIDRespDE = null;
+                break;
+            default:
+                unset($this->iTipIDRespDE);
+                throw new \Exception('[GRespDE] El valor de iTipIDRespDE no es válido: ' . $this->iTipIDRespDE);
+        }
+        return $this;
+    }
+
+    /**
+     * Establece el valor dDTipIDRespDE que corresponde a la descripción del tipo de documento de identidad del responsable de la generación del DE.   
+     * Se recomienda usar este método SOLO para <iTipIDRespDE> tipo de documento de identidad 9 (Otro).
+     * 
+     * @param String $dDTipIDRespDE
+     * 
+     * @return self
+     */
+    public function setDDTipIDRespDE(String $dDTipIDRespDE): self
+    {
+        $this->dDTipIDRespDE = $dDTipIDRespDE;
         return $this;
     }
 
@@ -98,25 +137,7 @@ class GRespDE {
      */
     public function getDDTipIDRespDE(): String
     {
-        switch($this->iTipIDRespDE) {
-            case 1:
-                return 'Cédula paraguaya';
-                break;
-            case 2:
-                return 'Pasaporte';
-                break;
-            case 3:
-                return 'Cédula extranjera';
-                break;
-            case 4:
-                return 'Carnet de residencia';
-                break;
-            case 9:
-                return 'Otro';
-                break;
-            default:
-                return "null";
-        }
+        return $this->dDTipIDRespDE;
     }
 
     /**
@@ -175,44 +196,22 @@ class GRespDE {
     }
 
     /**
-     * toDOMElement
+     * Convierte este GRespDE en un DOMElement
+     * 
+     * @param DOMDocument $doc Documento DOM donde se creará el nodo SIN insertarse.
      *
-     * @return DOMElement
+     * @return DOMElement Nodo DOM creado pero no insertado.
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $res = new DOMElement('gRespDE');
+        $res = $doc->createElement('gRespDE');
         $res->appendChild(new DOMElement('iTipIDRespDE', $this->iTipIDRespDE));
         $res->appendChild(new DOMElement('dDTipIDRespDE', $this->getDDTipIDRespDE()));
-        $res->appendChild(new DOMElement('dNumIDRespDE', $this->dNumIDRespDE));
-        $res->appendChild(new DOMElement('dNomRespDE', $this->dNomRespDE));
-        $res->appendChild(new DOMElement('dCarRespDE', $this->dCarRespDE));
+        $res->appendChild(new DOMElement('dNumIDRespDE', substr($this->dNumIDRespDE, 0, 20)));
+        $res->appendChild(new DOMElement('dNomRespDE', substr($this->dNomRespDE, 0, 255)));
+        $res->appendChild(new DOMElement('dCarRespDE', substr($this->dCarRespDE, 0, 100)));
         return $res;
     }
-    
-    // /**
-    //  * fromDOMElement
-    //  *
-    //  * @param  mixed $xml
-    //  * @return GRespDE
-    //  */
-    // public static function fromDOMElement(DOMElement $xml): GRespDE
-    // {
-    //     if(strcmp($xml->tagName,'gRespDE') == 0 && $xml->childElementCount ==5)
-    //     {
-    //         $res = new GRespDE();
-    //         $res->setITipIDRespDE(intval($xml->getElementsByTagName('iTipIDRespDE')->item(0)->nodeValue));
-    //         $res->setDNumIDRespDE($xml->getElementsByTagName('dNumIDRespDE')->item(0)->nodeValue);
-    //         $res->setDNomRespDE($xml->getElementsByTagName('dNomRespDE')->item(0)->nodeValue);
-    //         $res->setDCarRespDE($xml->getElementsByTagName('dCarRespDE')->item(0)->nodeValue);
-
-    //         return $res;
-    //     }
-    //     else {
-    //         throw new \Exception("Invalid XML Element: $xml->tagName");
-    //         return null;
-    //       }
-    // }
     
     /**
      * FromSifenResponseObject
@@ -224,23 +223,13 @@ class GRespDE {
     {
         $res = new GRespDE();
         if(isset($object->iTipIDRespDE))
-        {
             $res->setITipIDRespDE(intval($object->iTipIDRespDE));
-        }
         if(isset($object->dNumIDRespDE))
-        {
             $res->setDNumIDRespDE($object->dNumIDRespDE);
-        }
         if(isset($object->dNomRespDE))
-        {
             $res->setDNomRespDE($object->dNomRespDE);
-        }
         if(isset($object->dCarRespDE))
-        {
             $res->setDCarRespDE($object->dCarRespDE);
-        }
-        
-
         return $res;
     }
 

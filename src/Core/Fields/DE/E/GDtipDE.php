@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GTransp;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -12,7 +14,7 @@ use DOMElement;
  * Nodo Padre:  A001 - DE - Campos firmados del DE    
  */
 
-class GDtipDE
+class GDtipDE extends BaseSifenField
 {
 
   public GCamFE   $gCamFE;   // E010 - - 0-1   - Campos que componen la Factura Electrónica
@@ -244,23 +246,18 @@ class GDtipDE
     return $res;    
   }
 
-
-
-
-
   /**
-   * toDOMElement
+   * Convierte este GDtipDE a un DOMElement que puede ser insertado en el DOMDocument especificado.
+   * 
+   * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
-   * @return DOMElement
+   * @return DOMElement El DOMElement creado.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gDtipDE');
-    if(isset($this->gCamFE)){
-      $importNode = $doc->importNode($this->gCamFE->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
+    if(isset($this->gCamFE))
+      $res->appendChild($this->gCamFE->toDOMElement($doc));
     if(isset($this->gCamAE)){
       $importNode = $doc->importNode($this->gCamAE->toDOMElement(), true);
       $res->appendChild($importNode);
@@ -278,10 +275,8 @@ class GDtipDE
       $res->appendChild($importNode);
     }
     if(isset($this->gCamItem)){
-      foreach($this->gCamItem as $gCamItem){
-        $importNode = $doc->importNode($gCamItem->toDOMElement(), true);
-        $res->appendChild($importNode);
-      }
+      foreach($this->gCamItem as $gCamItem)
+        $res->appendChild($gCamItem->toDOMElement($doc));
     }
     if(isset($this->gCamEsp)){
       $importNode = $doc->importNode($this->gCamEsp->toDOMElement(), true);
@@ -293,31 +288,6 @@ class GDtipDE
     }
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GDtipDE
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GDtipDE
-  // {
-  //   if (strcmp($xml->tagName, 'gDtipDE') == 0 && $xml->childElementCount == 7) {
-  //     $res = new GDtipDE();
-  //     $res->setGCamFE($res->gCamFE->fromDOMElement($xml->getElementsByTagName('gDtipFE')->item(0)->nodeValue));
-  //     $res->setGCamAE($res->gCamAE->fromDOMElement($xml->getElementsByTagName('gCamAE')->item(0)->nodeValue));
-  //     $res->setGCamNCDE($res->gCamNCDE->fromDOMElement($xml->getElementsByTagName('gCamNCDE')->item(0)->nodeValue));
-  //     $res->setGCamNRE($res->gCamNRE->fromDOMElement($xml->getElementsByTagName('gCamNRE')->item(0)->nodeValue));
-  //     $res->setGCamCond($res->gCamCond->fromDOMElement($xml->getElementsByTagName('gCamCond')->item(0)->nodeValue));
-  //     $res->setGCamEsp($res->gCamEsp->fromDOMElement($xml->getElementsByTagName('gCamEsp')->item(0)->nodeValue));
-
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
 
   /**
    * FromSifenResponseObject

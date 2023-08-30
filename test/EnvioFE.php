@@ -57,7 +57,7 @@ $gTimb->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA);
 $gTimb->setDNumTim(12560814);
 $gTimb->setDEst('001');
 $gTimb->setDPunExp('001');
-$gTimb->setDNumDoc('0000001');
+$gTimb->setDNumDoc('0000023');
 $gTimb->setDFeIniT(new DateTime('2023-04-14'));
 
 //////////////////////////////////////////////////////////////////
@@ -227,11 +227,10 @@ $Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement);
 ///create QR content
 $gCamFuFD = new GCamFuFD();
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
-$gCamFuDFNode = $gCamFuFD->toDOMElement();
-$importNode = $xmlDocument->importNode($gCamFuDFNode, true);
+$gCamFuDFNode = $gCamFuFD->toDOMElement($xmlDocument);
 
 ///append QR node to rDE node
-$xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($importNode);
+$xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuDFNode);
 
 ///get signed XML
 $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
