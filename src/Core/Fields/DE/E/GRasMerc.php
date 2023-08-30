@@ -2,9 +2,12 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * Nodo Id:     E750    
@@ -12,7 +15,7 @@ use SimpleXMLElement;
  * Descripción: Grupo de rastreo de la mercadería     
  * Nodo Padre:  E700 - gCamItem - Campos que describen los ítems de la operación
  */
-class GRasMerc
+class GRasMerc extends BaseSifenField
 {
   public int      $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote 
   public DateTime $dVencMerc;     // E752 - 10    - 0-1 - Fecha de vencimiento  de la mercadería
@@ -287,14 +290,15 @@ class GRasMerc
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
+   * Convierte este GRasMerc en un DOMElement que puede ser insertado en el DOMDocument especificado.
+   * 
+   * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
-   * @return DOMElement
+   * @return DOMElement El DOMElement creado.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gRasMerc');
-
+    $res = $doc->createElement('gRasMerc');
     $res->appendChild(new DOMElement('dNumLote', $this->getDNumLote()));
     $res->appendChild(new DOMElement('dVencMerc', $this->getDVencMerc()->format('Y-m-d')));
     $res->appendChild(new DOMElement('dNSerie', $this->getDNSerie()));
@@ -308,36 +312,15 @@ class GRasMerc
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GRasMerc
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GRasMerc
-  // {
-  //   if (strcmp($xml->tagName, 'gRasMerc') === 0 && $xml->childElementCount == 10) {
-  //     $res = new GRasMerc();
-  //     $res->setDNumLote($xml->getElementsByTagName('dNumLote')->item(0)->nodeValue);
-  //     $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dVencMerc')->item(0)->nodeValue));
-  //     $res->setDNSerie($xml->getElementsByTagName('dNSerie')->item(0)->nodeValue);
-  //     $res->setDNumPedi($xml->getElementsByTagName('dNumPedi')->item(0)->nodeValue);
-  //     $res->setDNumSegui($xml->getElementsByTagName('dNumSegui')->item(0)->nodeValue);
-  //     $res->setDNomImp($xml->getElementsByTagName('dNomImp')->item(0)->nodeValue);
-  //     $res->setDDirImp($xml->getElementsByTagName('dDirImp')->item(0)->nodeValue);
-  //     $res->setDNumFir($xml->getElementsByTagName('dNumFir')->item(0)->nodeValue);
-  //     $res->setDNumReg($xml->getElementsByTagName('dNumReg')->item(0)->nodeValue);
-  //     $res->setDNumRegEntCom($xml->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue);
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
+  public static function FromSifenResponseObject(stdClass $object): self
+  {
+    throw new \Exception("Not implemented");
+    $res = new self();
+    return $res;
+  }
   
   /**
-   * FromSifenResponseObject
+   * FromSimpleXMLElement
    *
    * @param  mixed $node
    * @return self

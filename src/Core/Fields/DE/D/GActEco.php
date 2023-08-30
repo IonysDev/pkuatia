@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -12,7 +14,7 @@ use SimpleXMLElement;
  * Nodo Padre:  D100 - gEmis - Grupo de campos que identifican al emisor 
  */
 
-class GActEco
+class GActEco extends BaseSifenField
 {
 
     public String $cActEco;    // D131 - Código de la actividad económica del emisor 
@@ -97,13 +99,17 @@ class GActEco
         return $res;
     }
 
-
-    
-    public function toDOMElement(): DOMElement
+    /**
+     * Convierte el objeto GActEco a un DOMElement
+     * 
+     * @param  DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será agregado.
+     * 
+     * @return DOMElement Nodo DOM que representa el objeto
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $doc = new \DOMDocument();
         $res = $doc->createElement('gActEco');
-        $res->appendChild(new DOMElement('cActEco', $this->cActEco));
+        $res->appendChild(new DOMElement('cActEco', $this->getCActEco()));
         $res->appendChild(new DOMElement('dDesActEco', $this->getDDesActEco()));
         return $res;
     }

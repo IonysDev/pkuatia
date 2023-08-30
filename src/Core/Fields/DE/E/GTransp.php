@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use DateTime;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID:E900 
@@ -592,6 +593,13 @@ class GTransp
       $res->setGCamTrans(GCamTrans::FromSifenResponseObject($object->gCamTrans));
     }
 
+    return $res;
+  }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    throw new \Exception("[GTransp] Function FromSimpleXMLElement Not implemented");
+    $res = new self();
     return $res;
   }
 }

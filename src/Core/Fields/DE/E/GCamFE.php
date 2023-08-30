@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -13,7 +15,7 @@ use SimpleXMLElement;
  * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico 
  */
 
-class GCamFE
+class GCamFE extends BaseSifenField
 {
   public const INDICADOR_PRESENCIA_OPERACION_PRESENCIAL = 1;
   public const INDICADOR_PRESENCIA_OPERACION_ELECTRONICA = 2;
@@ -200,19 +202,15 @@ class GCamFE
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gCamFE');
     $res->appendChild(new DOMElement('iIndPres', $this->iIndPres));
     $res->appendChild(new DOMElement('dDesIndPres', $this->getDDesIndPres()));
     if(isset($this->dFecEmNR))
       $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
     if(isset($this->gComPub))
-    {
-      $importNode = $doc->importNode($this->gComPub->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
+      $res->appendChild($this->gComPub->toDOMElement($doc));
     return $res;
   }
   

@@ -6,6 +6,7 @@ use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use Exception;
 use SimpleXMLElement;
 
 /**
@@ -17,7 +18,7 @@ use SimpleXMLElement;
 
 class GDatGralOpe extends BaseSifenField
 {
-
+                             // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFeEmiDE; // D002 - 19 - 1-1 - Fecha y hora de emisión del DE formato AAAA-MM-DDThh:mm:ss
   public GOpeCom  $gOpeCom;  // D010 -    - 0-1 - Campos inherentes a la operación comercial (obligatorio si C002 != 7)
   public GEmis    $gEmis;    // D100 -    - 1-1 - Grupo de campos que identifican al emisor (D100)
@@ -147,7 +148,7 @@ class GDatGralOpe extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gDatGralOpe') != 0)
     {
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new Exception("Invalid XML Element: $node->getName()");
       return null;
     }
     $res = new GDatGralOpe();
@@ -193,41 +194,26 @@ class GDatGralOpe extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
+   * Convierte este GDatGralOpe a un DOMElement
+   * 
+   * @param  DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será agregado.
    *
-   * @return DOMElement
+   * @return DOMElement Nodo DOM que representa el objeto
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    // Validaciones
     if(!isset($this->dFeEmiDE))
-    {
-      throw new \Exception('[GDatGralOpe] El campo dFeEmiDE no puede ser nulo');
-    }
+      throw new Exception('[GDatGralOpe] El campo dFeEmiDE no puede ser nulo');
     if(!isset($this->gEmis))
-    {
-      throw new \Exception('[GDatGralOpe] El campo gEmis no puede ser nulo');
-    }
+      throw new Exception('[GDatGralOpe] El campo gEmis no puede ser nulo');
     if(!isset($this->gDatRec))
-    {
-      throw new \Exception('[GDatGralOpe] El campo gDatRec no puede ser nulo');
-    }
-    // Crear nodo
-    $doc = new DOMDocument();
+      throw new Exception('[GDatGralOpe] El campo gDatRec no puede ser nulo');
     $res = $doc->createElement('gDatGralOpe');
     $res->appendChild(new DOMElement('dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
     if(isset($this->gOpeCom)) 
-    {
-      $importNode = $doc->importNode($this->gOpeCom->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
-    
-    $importNode = $doc->importNode($this->gEmis->toDOMElement(), true);
-    $res->appendChild($importNode);
-
-    $importNode = $doc->importNode($this->gDatRec->toDOMElement(), true);
-    $res->appendChild($importNode);
-    
+      $res->appendChild($this->gOpeCom->toDOMElement($doc));
+    $res->appendChild($this->gEmis->toDOMElement($doc));
+    $res->appendChild($this->gDatRec->toDOMElement($doc));
     return $res;
   }
   

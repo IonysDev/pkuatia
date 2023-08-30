@@ -2,8 +2,10 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -14,9 +16,9 @@ use SimpleXMLElement;
  * Nodo Padre:  D001 - dDatGralOpe - Campos generales del DE
  */
 
-class GOpeCom
+class GOpeCom extends BaseSifenField
 {
-
+                                // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipTra;     // D011 - 1-2       - 0-1 - Tipo de transacción
     public String $dDesTipTra;  // D012 - 5-36      - 0-1 - Descripción del tipo de transacción
     public int    $iTImp;       // D013 - 1         - 1-1 - Tipo de impuesto afectado
@@ -380,39 +382,31 @@ class GOpeCom
     }
 
     /**
-     * toDOMElement
+     * Convierte este GOpeCom a un DOM Element.
+     * 
+     * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
      *
-     * @return DOMElement
+     * @return DOMElement Nodo DOM creado pero no insertado.
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $doc = new \DOMDocument();
         $res = $doc->createElement('gOpeCom');
-
         if (isset($this->iTipTra)) {
             $res->appendChild(new DOMElement('iTipTra', $this->getITipTra()));
             $res->appendChild(new DOMElement('dDesTipTra', $this->getDDesTipTra()));
         }
-
         $res->appendChild(new DOMElement('iTImp', $this->getITImp()));
         $res->appendChild(new DOMElement('dDesTImp', $this->getDDesTImp()));
         $res->appendChild(new DOMElement('cMoneOpe', $this->getCMoneOpe()));
         $res->appendChild(new DOMElement('dDesMoneOpe', $this->getDDesMoneOpe()));
-
-        if (strcmp($this->cMoneOpe, "PYG") != 0) {
+        if (strcmp($this->cMoneOpe, "PYG") != 0)
             $res->appendChild(new DOMElement('dCondTiCam', $this->getDCondTiCam()));
-        }
-
-        if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2) {
+        if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2)
             $res->appendChild(new DOMElement('dTiCam', $this->getDTiCam()));
-        }
-
         if ($this->iTipTra == 9) {
-            // Anticipo
             $res->appendChild(new DOMElement('iCondAnt', $this->getICondAnt()));
             $res->appendChild(new DOMElement('dDesCondAnt', $this->getDDesCondAnt()));
         }
-
         return $res;
     }
 

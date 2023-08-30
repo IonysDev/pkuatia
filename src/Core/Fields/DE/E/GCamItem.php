@@ -2,8 +2,10 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -13,7 +15,7 @@ use SimpleXMLElement;
  * Descripción: Campos que describen los ítems de la operación
  * Nodo Padre: E001
  */
-class GCamItem
+class GCamItem extends BaseSifenField
 {
   public String     $dCodInt;      // E701 - 1-20       - 1-1 - Código interno
   public int        $dParAranc;    // E702 - 4          - 0-1 - Partida arancelaria
@@ -754,9 +756,8 @@ class GCamItem
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gCamItem');
     $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
     if(isset($this->dParAranc))
@@ -793,26 +794,13 @@ class GCamItem
       $res->appendChild(new DOMElement('dCDCAnticipo', $this->getDCDCAnticipo()));
     
     if(isset($this->gValorItem))
-    { 
-      $importNode = $doc->importNode($this->gValorItem->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
+      $res->appendChild($this->gValorItem->toDOMElement($doc));
     if(isset($this->gCamIVA))
-    {
-      $importNode = $doc->importNode($this->gCamIVA->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
+      $res->appendChild($this->gCamIVA->toDOMElement($doc));
     if(isset($this->gRasMerc))
-    {
-      $importNode = $doc->importNode($this->gRasMerc->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
+      $res->appendChild($this->gRasMerc->toDOMElement($doc));
     if(isset($this->gVehNuevo))
-    {
-      $importNode = $doc->importNode($this->gVehNuevo->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
-
+      $res->appendChild($this->gVehNuevo->toDOMElement($doc));
     return $res;
   }
 

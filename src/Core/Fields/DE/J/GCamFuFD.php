@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\J;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -12,7 +14,7 @@ use SimpleXMLElement;
  * Nodo Padre:  AA001 - rDE - Documento Electrónico elemento raíz
  */
 
-class GCamFuFD
+class GCamFuFD extends BaseSifenField
 {
   // Id - Longitud - Ocurrencia - Descripción
   public String $dCarQR;   // J002 - 100-600 - 1-1 - Caracteres correspondientes al código QR
@@ -118,11 +120,13 @@ class GCamFuFD
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
+   * Convierte el objeto GCamFuFD a un DOMElement
+   * 
+   * @param DOMDocument $doc Documento DOM donde se agregará el nodo
    *
-   * @return DOMElement
+   * @return DOMElement Nodo DOM que representa el objeto
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
     // Validaciones
     if(!isset($this->dCarQR) || empty($this->dCarQR))
@@ -138,9 +142,8 @@ class GCamFuFD
       throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
     }
     // Conversión
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gCamFuFD');
-
+    
     $qr = new DOMElement('dCarQR');
     $qr->textContent = $this->getDCarQR();
     
