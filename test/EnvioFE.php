@@ -14,10 +14,12 @@ use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatRec;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GEmis;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamCond;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamFE;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamIVA;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GDtipDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GPaConEIni;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
@@ -28,6 +30,9 @@ use Abiliomp\Pkuatia\Helpers\QRHelper;
 use Abiliomp\Pkuatia\Helpers\SignHelper;
 use Abiliomp\Pkuatia\Sifen;
 use Abiliomp\Pkuatia\Utils\RucUtils;
+use RobRichards\XMLSecLibs\XMLSecurityDSig;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
+use BCMathExtended\BC;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -52,7 +57,7 @@ $gTimb->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA);
 $gTimb->setDNumTim(12560814);
 $gTimb->setDEst('001');
 $gTimb->setDPunExp('001');
-$gTimb->setDNumDoc('0000001');
+$gTimb->setDNumDoc('0000023');
 $gTimb->setDFeIniT(new DateTime('2023-04-14'));
 
 //////////////////////////////////////////////////////////////////
@@ -80,7 +85,7 @@ $gActEco->setCActEco(47411);
 $gActEco->setDDesActEco('COMERCIO AL POR MENOR DE EQUIPOS INFORMÁTICOS Y SOFTWARE');
 $gEmis->gActEco[] = $gActEco;
 $gActEco = new GActEco();
-$gActEco->setCActEco(69208 );
+$gActEco->setCActEco(69208);
 $gActEco->setDDesActEco('OTROS SERVICIOS AUTORIZADOS');
 $gEmis->gActEco[] = $gActEco;
 $gActEco = new GActEco();
@@ -95,7 +100,7 @@ $gEmis->gActEco[] = $gActEco;
 $gDatRec = new GDatRec();
 
 $gDatGralOpe = new GDatGralOpe();
-$gDatGralOpe->setDFeEmiDE(new DateTime());
+$gDatGralOpe->setDFeEmiDE(new DateTime('now', new DateTimeZone('America/Asuncion')));
 $gDatGralOpe->setGOpeCom($gOpeCom);
 $gDatGralOpe->setGEmis($gEmis);
 $gDatGralOpe->setGDatRec($gDatRec);
@@ -103,6 +108,15 @@ $gDatGralOpe->setGDatRec($gDatRec);
 //////////////////////////////////////////////////////////////////
 
 $gCamFE = new GCamFE();
+
+$gCamCond = new GCamCond();
+$gCamCond->setICondOpe(Constants::CONDICION_OPERACION_CONTADO);
+$gPaConEIni = new GPaConEIni();
+$gPaConEIni->setITiPago(Constants::PAGO_EFECTIVO);
+$gPaConEIni->setDMonTiPag("100000");
+$gPaConEIni->setCMoneTiPag("PYG");
+$gCamCond->gPaConEIni[] = $gPaConEIni;
+
 
 $gCamItem = new GCamItem();
 $gCamItem->setDCodInt('SERV001');
@@ -124,13 +138,14 @@ $gCamIVA = new GCamIVA();
 $gCamIVA->setIAfecIVA(GCamIVA::AFECTACION_IVA_GRAVADO);
 $gCamIVA->setDPropIVA("100");
 $gCamIVA->setDTasaIVA(10);
-$gCamIVA->setDBasGravIVA(bcdiv($gValorItem->getDTotBruOpeItem(), "1.1", 8));
-$gCamIVA->setDLiqIVAItem(bcdiv($gValorItem->getDTotBruOpeItem(), "11", 8));
+$gCamIVA->setDBasGravIVA('90909');
+$gCamIVA->setDLiqIVAItem('9091');
 $gCamIVA->setDBasExe("0");
 
 $gCamItem->gCamIVA = $gCamIVA;
 
 $gDtipDE = new GDtipDE();
+$gDtipDE->setGCamCond($gCamCond);
 $gDtipDE->setGCamFE($gCamFE);
 $gDtipDE->gCamItem[] = $gCamItem;
 
@@ -140,9 +155,11 @@ $gTotSub = new GTotSub();
 $gTotSub->setDSub10("100000");
 $gTotSub->setDTotOpe("100000");
 $gTotSub->setDTotGralOpe("100000");
-$gTotSub->setDIVA10(bcdiv("100000", "1.1", 8));
+$gTotSub->setDIVA5("0");
+$gTotSub->setDIVA10("9091");
 $gTotSub->setDTotIVA($gTotSub->getDIVA10());
-$gTotSub->setDBaseGrav10(bcdiv("100000", "11", 8));
+$gTotSub->setDBaseGrav5("0");
+$gTotSub->setDBaseGrav10("90909");
 $gTotSub->setDTBasGraIVA($gTotSub->getDBaseGrav10());
 
 //////////////////////////////////////////////////////////////////
@@ -158,50 +175,77 @@ $cdc = CDCHelper::CDCMaker($de);
 
 $de->setId($cdc);
 $de->setDDVId($cdc[43]);
-$de->setDFecFirma(new DateTime());
+$de->setDFecFirma(new DateTime('now', new DateTimeZone('America/Asuncion')));
 
 //////////////////////////////////////////////////////////////////
 
+///rDE TO XMLSTRING
 $rde = new RDE();
 $rde->setDE($de);
+$xml = $rde->toXMLString();
 
-//////////////////////////////////////////////////////////////////
+///Create new DOMDocument and lod XML
+$xmlDocument = new DOMDocument('1.0', 'UTF-8');
+$xmlDocument->formatOutput = false;
+$xmlDocument->preserveWhiteSpace = false;
+$xmlDocument->loadXML($xml);
 
-SignHelper::initFromFile($keyFile, $keyPassphrase, $certFile);
-$signedXml = SignHelper::Sign($de->toXMLString(), '#' . $cdc);
+///get DE node for sign
+$dENode = $xmlDocument->getElementsByTagName("DE")->item(0);
+//get rDE node for append
+$rDENode = $xmlDocument->getElementsByTagName("rDE")->item(0);
 
-//////////////////////////////////////////////////////////////////
+//create object for sign with exc c14n algorithm
+$objDSig = new XMLSecurityDSig('');
+$objDSig->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
 
-$signedSimpleXMLElement = simplexml_load_string($signedXml);
-$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement->Signature);
+//add reference to sign
+$objDSig->addReference(
+    $dENode,
+    XMLSecurityDSig::SHA256,
+    ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
+    ['id_name' => $cdc, 'overwrite' => true],
+);
 
-//////////////////////////////////////////////////////////////////
+//create key object
+$objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
+$objKey->passphrase = $keyPassphrase;
+$objKey->loadKey($keyFile, true);
 
+//add key to sign and add cert
+$objDSig->sign($objKey, $xmlDocument->documentElement);
+$objDSig->add509Cert(file_get_contents($certFile));
+
+///appebd signature to rDE node and then get Signature node in XMLString
+$objDSig->appendSignature($rDENode);
+$signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("Signature")->item(0));
+
+///load signed XML to SimpleXMLElement
+$signedSimpleXMLElement = simplexml_load_string($signedXML);
+$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement);
+
+///create QR content
 $gCamFuFD = new GCamFuFD();
 $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
+$gCamFuDFNode = $gCamFuFD->toDOMElement($xmlDocument);
 
+///append QR node to rDE node
+$xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuDFNode);
 
-$rde->setSignature($Signature);
-$rde->setGCamFuFD($gCamFuFD);
+///get signed XML
+$signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
 
-//////////////////////////////////////////////////////////////////
-
-$documentoElectronico = new DocumentoElectronico();
-$documentoElectronico->setRDE($rde);
-
-//////////////////////////////////////////////////////////////////
-
-try{
+try {
     echo "Prueba de Envío de Documento Electrónico\n";
     echo "Inicializando Sifen... ";
     Sifen::Init($config);
     echo "OK\n";
     echo "Enviando Documento Electrónico...\n";
-    $res = Sifen::EnviarDE($documentoElectronico);
+    echo "CDC: " . $cdc . "\n";
+    $res = Sifen::EnviarDE($signedXML);
     echo "Resultado: \n";
     echo var_dump($res);
-}
-catch (SoapFault $e) {
+} catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();
 } catch (Exception $e) {

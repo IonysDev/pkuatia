@@ -11,6 +11,14 @@ class ComposerStaticInit316c7e8e1193bc4fdb458fc4c57dac7c
         array (
             'Selective\\XmlDSig\\' => 18,
         ),
+        'R' => 
+        array (
+            'RobRichards\\XMLSecLibs\\' => 23,
+        ),
+        'B' => 
+        array (
+            'BCMathExtended\\' => 15,
+        ),
         'A' => 
         array (
             'Abiliomp\\Pkuatia\\' => 17,
@@ -21,6 +29,14 @@ class ComposerStaticInit316c7e8e1193bc4fdb458fc4c57dac7c
         'Selective\\XmlDSig\\' => 
         array (
             0 => __DIR__ . '/..' . '/selective/xmldsig/src',
+        ),
+        'RobRichards\\XMLSecLibs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/robrichards/xmlseclibs/src',
+        ),
+        'BCMathExtended\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/krowinski/bcmath-extended/src/BCMathExtended',
         ),
         'Abiliomp\\Pkuatia\\' => 
         array (

@@ -2,9 +2,11 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Helpers\CountryHelper;
 use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
 use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -14,7 +16,7 @@ use SimpleXMLElement;
  * Nodo Padre: gDatGralOpe (D001)
  */
 
-class GDatRec
+class GDatRec extends BaseSifenField
 {
     public const NATURALEZA_CONTRIBUYENTE = 1;
     public const NATURALEZA_NO_CONTRIBUYENTE = 2;
@@ -551,13 +553,14 @@ class GDatRec
     }
 
     /**
-     * toDOMElement
+     * Convierte este GDatRec en un DOMElement que puede ser insertado en el DOMDocument especificado.
+     * 
+     * @param DOMDocument $doc  Documento DOM con el que se creará el nodo sin insertarse en él.
      *
-     * @return DOMElement
+     * @return DOMElement Nodo DOM que representa el objeto
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $doc = new \DOMDocument();
         $res = $doc->createElement('gDatRec');
         $res->appendChild(new DOMElement('iNatRec', $this->getINatRec()));
         $res->appendChild(new DOMElement('iTiOpe', $this->getITiOpe()));

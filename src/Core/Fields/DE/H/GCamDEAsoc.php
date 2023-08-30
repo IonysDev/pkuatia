@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\H;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -12,7 +14,7 @@ use SimpleXMLElement;
  * Nodo Padre: A001 - Campos firmados del DE
  */
 
-class GCamDEAsoc
+class GCamDEAsoc extends BaseSifenField
 {
 
   public int      $iTipDocAso;    // H002 - 1     - 1-1 - Tipo de documento asociado
@@ -575,20 +577,23 @@ class GCamDEAsoc
   }
 
   /**
-   * toDOMElement
+   * Convierte el objeto GCamDEAsoc a un DOMElement
+   * 
+   * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO se insertará.
    *
-   * @return DOMElement
+   * @return DOMElement Nodo DOM creado NO insertado en el documento.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gCamDEAsoc');
+    $res = $doc->createElement('gCamDEAsoc');
+
     $res->appendChild(new DOMElement('iTipDocAso', $this->getITipDocAso()));
     $res->appendChild(new DOMElement('dDesTipDocAso', $this->getDDesTipDocAso()));
+
     if ($this->iTipDocAso == 1) {
       $res->appendChild(new DOMElement('dCdCDERef', $this->getDCdCDERef()));
     }
-
-    if ($this->iTipDocAso == 2) {
+    else if ($this->iTipDocAso == 2) {
       $res->appendChild(new DOMElement('dNTimDI', $this->getDNTimDI()));
       $res->appendChild(new DOMElement('dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(new DOMElement('dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
@@ -601,10 +606,13 @@ class GCamDEAsoc
       $res->appendChild(new DOMElement('dFecEmiDI', $this->getDFecEmiDI()->format('Y-m-d')));
     }
 
-    $res->appendChild(new DOMElement('dNumComRet', $this->getDNumComRet()));
-    $res->appendChild(new DOMElement('dNumResCF', $this->getDNumResCF()));
+    if(isset($this->dNumComRet))
+      $res->appendChild(new DOMElement('dNumComRet', $this->getDNumComRet()));
+    
+    if(isset($this->dNumResCF))
+      $res->appendChild(new DOMElement('dNumResCF', $this->getDNumResCF()));
 
-    if ($this->iTipDocAso == 3) {
+    if($this->iTipDocAso == 3) {
       $res->appendChild(new DOMElement('iTipCons', $this->getITipCons()));
       $res->appendChild(new DOMElement('dDesTipCons', $this->getDDesTipCons()));
     }
@@ -617,37 +625,7 @@ class GCamDEAsoc
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamDEAsoc
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamDEAsoc
-  // {
-  //   if (strcmp($xml->tagName, 'gCamDEAsoc') == 0 && $xml->childElementCount >= 4) {
-  //     $res = new GCamDEAsoc();
-  //     $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
-  //     $res->setDCdCDERef($xml->getElementsByTagName('dCdCDERef')->item(0)->nodeValue);
-  //     $res->setDNTimDI(intval($xml->getElementsByTagName('dNTimDI')->item(0)->nodeValue));
-  //     $res->setDEstDocAso($xml->getElementsByTagName('dStDocAso')->item(0)->nodeValue);
-  //     $res->setDPExpDocAso($xml->getElementsByTagName('dPExpDocAso')->item(0)->nodeValue);
-  //     $res->setDNumDocAso($xml->getElementsByTagName('dNumDocAso')->item(0)->nodeValue);
-  //     $res->setITipDocAso(intval($xml->getElementsByTagName('iTipDocAso')->item(0)->nodeValue));
-  //     $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecEmDi')->item(0)->nodeValue));
-  //     $res->setDNumComRet($xml->getElementsByTagName('dNumComRet')->item(0)->nodeValue);
-  //     $res->setDNumResCF($xml->getElementsByTagName('dNumResCF')->item(0)->nodeValue);
-  //     $res->setITipCons(intval($xml->getElementsByTagName('iTipCons')->item(0)->nodeValue));
-  //     $res->setDNumCons(intval($xml->getElementsByTagName('dNumCons')->item(0)->nodeValue));
-  //     $res->setDNumControl($xml->getElementsByTagName('dNumControl')->item(0)->nodeValue);
-
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-  
+    
   /**
    * FromSifenResponseObject
    *

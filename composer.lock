@@ -4,8 +4,112 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e783248cfab38770b6b05db9038c778d",
+    "content-hash": "6d744215895942ae969bcc64a15bd641",
     "packages": [
+        {
+            "name": "krowinski/bcmath-extended",
+            "version": "7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krowinski/bcmath-extended.git",
+                "reference": "e961cb1a7b15b02cf00bbf91ec1a13b48253cfaf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krowinski/bcmath-extended/zipball/e961cb1a7b15b02cf00bbf91ec1a13b48253cfaf",
+                "reference": "e961cb1a7b15b02cf00bbf91ec1a13b48253cfaf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9.0",
+                "symplify/easy-coding-standard": "^11.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BCMathExtended\\": "src/BCMathExtended/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kacper Rowiński",
+                    "email": "kacper.rowinski@gmail.com"
+                }
+            ],
+            "description": "Extends php BCMath lib for missing functions like floor, ceil, round, abs, min, max, rand for big numbers. Also wraps existing BCMath functions. (more http://php.net/manual/en/book.bc.php) Supports scientific notations",
+            "keywords": [
+                "Arbitrary-precision",
+                "abs",
+                "bc",
+                "bcmath",
+                "bignumber",
+                "ceil",
+                "complex-numbers",
+                "floor",
+                "math",
+                "php",
+                "precision",
+                "rand",
+                "round",
+                "scientific-notation"
+            ],
+            "support": {
+                "issues": "https://github.com/krowinski/bcmath-extended/issues",
+                "source": "https://github.com/krowinski/bcmath-extended/tree/7.0.0"
+            },
+            "time": "2023-01-25T21:31:14+00:00"
+        },
+        {
+            "name": "robrichards/xmlseclibs",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robrichards/xmlseclibs.git",
+                "reference": "f8f19e58f26cdb42c54b214ff8a820760292f8df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robrichards/xmlseclibs/zipball/f8f19e58f26cdb42c54b214ff8a820760292f8df",
+                "reference": "f8f19e58f26cdb42c54b214ff8a820760292f8df",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "php": ">= 5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RobRichards\\XMLSecLibs\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "A PHP library for XML Security",
+            "homepage": "https://github.com/robrichards/xmlseclibs",
+            "keywords": [
+                "security",
+                "signature",
+                "xml",
+                "xmldsig"
+            ],
+            "support": {
+                "issues": "https://github.com/robrichards/xmlseclibs/issues",
+                "source": "https://github.com/robrichards/xmlseclibs/tree/3.1.1"
+            },
+            "time": "2020-09-05T13:00:25+00:00"
+        },
         {
             "name": "selective/xmldsig",
             "version": "3.0.0",
@@ -64,7 +168,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.1.3 || ^8.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }

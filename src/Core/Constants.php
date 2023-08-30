@@ -87,6 +87,7 @@ class Constants
     public const CONDICION_OPERACION_CREDITO = 2;
 
     //tipo de pagos
+    public const PAGO_EFECTIVO = 1;
     public const PAGO_CHEQUE = 2;
     public const PAGO_TARJETA_CREDITO = 3;
     public const PAGO_TARJETA_DEBITO = 4;

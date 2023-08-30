@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -13,7 +15,7 @@ use SimpleXMLElement;
  * Descripción: Campos que describen los precios, descuentos y valor total por ítem.
  * Nodo Padre:  E700
  */
-class GValorItem
+class GValorItem extends BaseSifenField
 {
   public String $dPUniProSer;              // E721  - 1-15p(0-8) - 1-1 - Precio unitario del producto y/o servicio (incluidos impuestos)
   public String $dTiCamIt;                 // E725  - 1-5p(0-4)  - 0-1 - Tipo de cambio por ítem
@@ -168,23 +170,20 @@ class GValorItem
   }
 
   /**
-   * toDOMElement
+   * Convierte este GValorItem en un DOMElement que puede ser insertado en el DOMDocument especificado.
+   * 
+   * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
-   * @return DOMElement
+   * @return DOMElement El DOMElement creado.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gValorItem');
-
     $res->appendChild(new DOMElement('dPUniProSer', $this->getDPUniProSer()));
     if(isset($this->dTiCamIt))
       $res->appendChild(new DOMElement('dTiCamIt', $this->getDTiCamIt()));
-    $res->appendChild(new DOMElement('dTotBruOpeItem', $this->getDTotBruOpeItem())); ////Corresponde a la multiplicación del precio por ítem (E721) y la cantidad por ítem (E711)
-
-    $importNode = $doc->importNode($this->gValorRestaItem->toDOMElement(), true);
-    $res->appendChild($importNode);
-
+    $res->appendChild(new DOMElement('dTotBruOpeItem', $this->getDTotBruOpeItem()));
+    $res->appendChild($this->gValorRestaItem->toDOMElement($doc));
     return $res;
   }
 

@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\J;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -12,9 +14,9 @@ use SimpleXMLElement;
  * Nodo Padre:  AA001 - rDE - Documento Electrónico elemento raíz
  */
 
-class GCamFuFD
+class GCamFuFD extends BaseSifenField
 {
-                           // Id - Longitud - Ocurrencia - Descripción
+  // Id - Longitud - Ocurrencia - Descripción
   public String $dCarQR;   // J002 - 100-600 - 1-1 - Caracteres correspondientes al código QR
   public String $dInfAdic; // J003 - 1-5000  - 0-1 - Información adicional de interés para el emisor
 
@@ -86,14 +88,13 @@ class GCamFuFD
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
-    if(strcmp($xml->getName(), 'gCamFuFD') != 0)
-    {
+    if (strcmp($xml->getName(), 'gCamFuFD') != 0) {
       throw new \Exception('[GCamFuFD] Nodo XML con nombre inválido: ' . $xml->getName());
     }
     $res = new GCamFuFD();
-    $res->setDCarQR((String)$xml->dCarQR);
-    if(isset($xml->dInfAdic))
-      $res->setDInfAdic((String)$xml->dInfAdic);
+    $res->setDCarQR((string)$xml->dCarQR);
+    if (isset($xml->dInfAdic))
+      $res->setDInfAdic((string)$xml->dInfAdic);
     return $res;
   }
 
@@ -108,8 +109,7 @@ class GCamFuFD
   {
     $res = new GCamFuFD();
     $res->setDCarQR($object->dCarQR);
-    if(isset($object->dInfAdic))
-    {
+    if (isset($object->dInfAdic)) {
       $res->setDInfAdic($object->dInfAdic);
     }
     return $res;
@@ -120,11 +120,13 @@ class GCamFuFD
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
+   * Convierte el objeto GCamFuFD a un DOMElement
+   * 
+   * @param DOMDocument $doc Documento DOM donde se agregará el nodo
    *
-   * @return DOMElement
+   * @return DOMElement Nodo DOM que representa el objeto
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
     // Validaciones
     if(!isset($this->dCarQR) || empty($this->dCarQR))
@@ -140,12 +142,15 @@ class GCamFuFD
       throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
     }
     // Conversión
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gCamFuFD');
-    $res->appendChild(new DOMElement('dCarQR', htmlspecialchars($this->getDCarQR())));
-    if(isset($this->dInfAdic))
+    
+    $qr = new DOMElement('dCarQR');
+    $qr->textContent = $this->getDCarQR();
+    
+    $res->appendChild($qr);
+    if (isset($this->dInfAdic))
       $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
+
     return $res;
   }
-  
 }

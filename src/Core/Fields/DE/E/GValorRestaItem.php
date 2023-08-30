@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -13,7 +15,7 @@ use SimpleXMLElement;
  * Nodo Padre:  E720
  */
 
-class GValorRestaItem
+class GValorRestaItem extends BaseSifenField
 {
   public String $dDescItem;       // EA002 - 1-15p(0-8) - 0-1 - Descuento particular sobre el precio unitario por ítem (incluidos impuestos)
   public String $dPorcDesIt;      // EA003 - 1-3p(0-8)  - 0-1 - Porcentaje de descuento particular por ítem
@@ -271,13 +273,14 @@ class GValorRestaItem
   }
 
   /**
-   * toDOMElement
+   * Convierte este GValorRestaItem en un DOMElement que puede ser insertado en el DOMDocument especificado.
+   * 
+   * @param  DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
-   * @return DOMElement
+   * @return DOMElement El DOMElement creado.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gValorRestaItem');
     if(isset($this->dDescItem))
       $res->appendChild(new DOMElement('dDescItem', $this->dDescItem));
@@ -294,32 +297,6 @@ class GValorRestaItem
       $res->appendChild(new DOMElement('dTotOpeGs', $this->getDTotOpeGs()));
     return $res;
   }
-  
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GValorRestaItem
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GValorRestaItem
-  // {
-  //   if(strcmp($xml->tagName, 'gValorRestaItem') == 0 && $xml->childElementCount == 5)
-  //   {
-  //     $res = new GValorRestaItem();
-  //     $res->setDDescItem(strval($xml->getElementsByTagName('dDescItem')->item(0)->nodeValue));
-  //     $res->setDPorcDesIt(strval($xml->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
-  //     $res->setDDescGloItem(strval($xml->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
-  //     $res->setDAntPreUniIt(strval($xml->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
-  //     $res->setDAntGloPreUniIt(strval($xml->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
-  //     $res->setDTotOpeItem(strval($xml->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
-  //     $res->setDTotOpeGs(strval($xml->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
-  //     return $res;
-  //   }
-  //   else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
    * FromSifenResponseObject

@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -180,16 +181,22 @@ class GCamCond
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('gCamCond');
-
-    $res->appendChild(new DOMElement('iCondOpe', $this->getICondOpe()));
-    $res->appendChild(new DOMElement('dDCondOpe', $this->getDDCondOpe()));
-    if(count($this->getGPaConEIni()) > 0){
+    $doc = new DOMDocument('1.0', 'utf-8');
+    $res = $doc->createElement('gCamCond');
+    if(isset($this->iCondOpe))
+      $res->appendChild(new DOMElement('iCondOpe', $this->getICondOpe()));
+    if(isset($this->dDCondOpe))
+      $res->appendChild(new DOMElement('dDCondOpe', $this->getDDCondOpe()));
+    if(isset($this->gPaConEIni) && count($this->getGPaConEIni()) > 0){
       foreach ($this->getGPaConEIni() as $g) {
-        $res->appendChild($g->toDOMElement());
+        $importNode = $doc->importNode($g->toDOMElement(), true);
+        $res->appendChild($importNode);
       }
     }
-    $res->appendChild($this->gPagCred->toDOMElement());
+    if(isset($this->gPagCred)) {
+      $importNode = $doc->importNode($this->gPagCred->toDOMElement(), true);
+      $res->appendChild($importNode);
+    }
     return $res;
   }
 

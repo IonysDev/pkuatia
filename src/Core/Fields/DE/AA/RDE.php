@@ -6,11 +6,12 @@ use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 
-/** 
+/**
  * Nodo Id:     AA001
  * Nombre:      rDE
  * Descripción: Campos que identifican el formato electrónico XML (AA001-AA009)
@@ -19,7 +20,7 @@ use stdClass;
 
 class RDE
 {
-                               // Id - Longitud - Ocurrencia - Descripción 
+                               // Id - Longitud - Ocurrencia - Descripción
   public int $dVerFor;         // AA002 - 3 - 1-1 - Versión del formato
   public DE $DE;               // A001  -   - 1-1 - Campos firmados del  DE
   public Signature $Signature; // I001  -   - 1-1 - Firma Digital del DTE
@@ -27,7 +28,7 @@ class RDE
 
   /**
    * Constructor
-   * 
+   *
    * @return self
    */
   public function __construct()
@@ -78,7 +79,7 @@ class RDE
     return $this;
   }
 
-  
+
   /**
    * Establece el valor de Signature (Firma Digital del DTE)
    *
@@ -143,9 +144,9 @@ class RDE
 
   /**
    * Instancia un objeto RDE a partir de un SimpleXMLElement
-   * 
+   *
    * @param  mixed $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -168,7 +169,7 @@ class RDE
    * Instancia un objeto RDE a partir de objeto tipo stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
    * @param stdClass $object
-   * 
+   *
    * @return self
    */
   public static function FromSifenResponseObject($object) : self
@@ -178,13 +179,13 @@ class RDE
     {
       $res->setDE(DE::FromSifenResponseObject($object->DE));
     }
- 
+
     if(isset($object->gCamFuFD))
     {
       $res->setGCamFuFD(GCamFuFD::FromSifenResponseObject($object->gCamFuFD));
     }
     return $res;
-  }   
+  }
 
   ///////////////////////////////////////////////////////////////////////
   // Conversores
@@ -195,32 +196,21 @@ class RDE
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
     // Validaciones
     if(!isset($this->dVerFor))
       throw new \Exception('[RDE] El campo dVerFor no puede ser nulo.');
     if(!isset($this->DE))
       throw new \Exception('[RDE] El campo DE no puede ser nulo.');
-    if(!isset($this->gCamFuFD))
-      throw new \Exception('[RDE] El campo gCamFuFD no puede ser nulo.');
 
     // Conversión
-    $doc = new \DOMDocument();
     $res = $doc->createElement('rDE');
     $res->setAttribute('xmlns', Constants::SIFEN_NS_URI);
     $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_XSI);
     $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_DE);
     $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
-
-    $importNode = $doc->importNode($this->DE->toDOMElement(), true);
-    $res->appendChild($importNode);
-
-    $importNode = $doc->importNode($this->Signature->toDOMElement(), true);
-    $res->appendChild($importNode);
-
-    $importNode = $doc->importNode($this->gCamFuFD->toDOMElement(), true);
-    $res->appendChild($importNode);
+    $res->appendChild($this->DE->toDOMElement($doc));
     return $res;
   }
 
@@ -231,11 +221,12 @@ class RDE
    */
   public function toXMLString(): String
   {
-    $domElement = $this->toDOMElement();
-    $xmlString = $domElement->ownerDocument->saveXML($domElement);
+    $doc = new DOMDocument('1.0', 'UTF-8');
+    $domElement = $this->toDOMElement($doc);
+    $xmlString = $doc->saveXML($domElement);
     if(!$xmlString)
       throw new \Exception('[RDE] Error al convertir el objeto a XML.');
     return $xmlString;
   }
-  
+
 }

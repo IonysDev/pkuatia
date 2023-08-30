@@ -285,9 +285,8 @@ class GTimb extends BaseSifenField
      *
      * @return DOMElement
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $doc = new DOMDocument();
         $res = $doc->createElement('gTimb');
         $res->appendChild(new DOMElement('iTiDE', $this->iTiDE));
         $res->appendChild(new DOMElement('dDesTiDE', $this->getDDesTiDE()));

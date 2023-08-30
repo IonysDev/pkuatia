@@ -2,14 +2,16 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\I;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Core\Fields\Signature\KeyInfo;
 use Abiliomp\Pkuatia\Core\Fields\Signature\SignedInfo;
+use DOMDocument;
 use DOMElement;
 
 /**
  * ID I001 - Firma Digital del DTE  PADRE:AA001
  */
-class Signature
+class Signature extends BaseSifenField
 {
   public SignedInfo $SignedInfo;
   public String $SignatureValue;
@@ -121,24 +123,35 @@ class Signature
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Convierte el objeto a un DOMElement
-   *
-   * @return \DOMElement 
+   * Convierte el objeto a un DOMElement con solo la cabecera
+   * 
+   * @param DOMDocument $doc Documento DOM donde se agregará el nodo
+   * 
+   * @return \DOMElement Nodo DOM que representa el objeto
    */
-  public function toDOMElement(): \DOMElement
+  public function toHeaderOnlyDOMElement(DOMDocument $doc): \DOMElement
   {
     $doc = new \DOMDocument();
     $res = $doc->createElement('Signature');
     $res->setAttribute('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
-    
-    $importNode = $doc->importNode($this->SignedInfo->toDOMElement(), true);
-    $res->appendChild($importNode);
-
-    $res->appendChild(new DOMElement('SignatureValue', $this->SignatureValue));
-
-    $importNode = $doc->importNode($this->KeyInfo->toDOMElement(), true);
-    $res->appendChild($importNode);
-
     return $res;
   }
+
+  /**
+   * Convierte el objeto a un DOMElement
+   * 
+   * @param DOMDocument $doc Documento DOM donde se agregará el nodo
+   *
+   * @return \DOMElement Nodo DOM que representa el objeto
+   */
+  public function toDOMElement(DOMDocument $doc): \DOMElement
+  {
+    $res = $this->toHeaderOnlyDOMElement($doc);
+    $res->appendChild($this->SignedInfo->toDOMElement());
+    $res->appendChild(new DOMElement('SignatureValue', $this->SignatureValue));
+    $res->appendChild($this->KeyInfo->toDOMElement());
+    return $res;
+  }
+
+  
 }

@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -13,7 +15,7 @@ use SimpleXMLElement;
  * Nodo Padre: E010 - gCamFE - Campos que componen la FE
  */
 
-class GCompPub
+class GCompPub extends BaseSifenField
 {
   public String   $dModCont;   // E021 -  2 - 1-1 - Modalidad, Código emitido por la DNCP
   public int      $dEntCont;   // E022 -  5 - 1-1 - Entidad, Código emitido por la DNCP
@@ -175,9 +177,9 @@ class GCompPub
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gCompPub');
+    $res = $doc->createElement('gCompPub');
     $res->appendChild(new DOMElement('dModCont', $this->dModCont));
     $res->appendChild(new DOMElement('dEntCont', $this->dEntCont));
     $res->appendChild(new DOMElement('dAnoCont', $this->dAnoCont));
@@ -185,28 +187,6 @@ class GCompPub
     $res->appendChild(new DOMElement('dFeCodCont', $this->dFeCodCont->format('Y-m-d')));
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCompPub
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCompPub
-  // {
-  //   if (strcmp($xml->tagName, 'gComPub') == 0 && $xml->childElementCount == 5) {
-  //     $res = new GCompPub();
-  //     $res->setDModCont($xml->getElementsByTagName('gComPub')->item(0)->nodeValue);
-  //     $res->setDEntCont(intval($xml->getElementsByTagName('dEntCont')->item(0)->nodeValue));
-  //     $res->setDAnoCont(intval($xml->getElementsByTagName('dAnoCont')->item(0)->nodeValue));
-  //     $res->setDSecCont(intval($xml->getElementsByTagName('dSecCont')->item(0)->nodeValue));
-  //     $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeCodCont')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
    * FromSifenResponseObject
