@@ -184,6 +184,8 @@ $rde = new RDE();
 $rde->setDE($de);
 $xml = $rde->toXMLString();
 
+file_put_contents("rde.xml", $xml);
+
 ///Create new DOMDocument and lod XML
 $xmlDocument = new DOMDocument('1.0', 'UTF-8');
 $xmlDocument->formatOutput = false;

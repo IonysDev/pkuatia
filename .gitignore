@@ -4,6 +4,7 @@ test/*.crt
 test/*.csr
 test/*.srl
 test/*.xml
+test/*.key
 *.log
 *.log.*
 *.log-*

@@ -30,7 +30,10 @@ try {
     echo "Hora de consulta: " . $requestDate . "\n";
     $res = Sifen::ConsultarDE($testCDC);
     echo "Resultado: \n";
-    var_dump($res->getRContDe()->getRDe());
+    if($res->getRContDe())
+        var_dump($res->getRContDe()->getRDe());
+    else
+        var_dump($res);
 
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors

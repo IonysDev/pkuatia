@@ -124,9 +124,9 @@ class RResEnviConsDe
    *
    * @return RContDe
    */
-  public function getRContDe(): RContDe
+  public function getRContDe(): RContDe | null
   {
-    return $this->rContDe;
+    return isset($this->rContDe) ? $this->rContDe : null;
   }
 
   ///////////////////////////////////////////////////////////////////////

@@ -15,13 +15,13 @@ final class PrivateKeyStore
      */
     private array $certificates = [];
 
-    private ?OpenSSLAsymmetricKey $privateKey;
+    private ?OpenSSLAsymmetricKey $privateKey = null;
 
-    private String $privateKeyPem;
+    private ?string $privateKeyPem = null;
 
-    private String $modulus;
+    private ?string $modulus = null;
 
-    private String $publicExponent;
+    private ?string $publicExponent = null;
 
     /**
      * Add X509 certificate.
@@ -49,11 +49,11 @@ final class PrivateKeyStore
      * Load X509 certificates from PEM.
      * PEM is a base64 format for certificates.
      *
-     * @param String $certificate The certificate bundle
+     * @param string $certificate The certificate bundle
      *
      * @return void
      */
-    public function addCertificatesFromX509Pem(String $certificate): void
+    public function addCertificatesFromX509Pem(string $certificate): void
     {
         $x509Reader = new X509Reader();
         foreach ($x509Reader->fromPem($certificate) as $certificate) {
@@ -64,14 +64,14 @@ final class PrivateKeyStore
     /**
      * Read and load a private key.
      *
-     * @param String $pem The PEM formatted private key
-     * @param String $password The PEM password
+     * @param string $pem The PEM formatted private key
+     * @param string $password The PEM password
      *
      * @throws XmlSignerException
      *
      * @return void
      */
-    public function loadFromPem(String $pem, String $password): void
+    public function loadFromPem(string $pem, string $password): void
     {
         // Read the private key
         $privateKey = openssl_pkey_get_private($pem, $password);
@@ -91,14 +91,14 @@ final class PrivateKeyStore
      *
      * PKCS12 is an encrypted container that contains the public key and private key combined in binary format.
      *
-     * @param String $pkcs12 The content
-     * @param String $password The password
+     * @param string $pkcs12 The content
+     * @param string $password The password
      *
      * @throws CertificateException
      *
      * @return void
      */
-    public function loadFromPkcs12(String $pkcs12, String $password): void
+    public function loadFromPkcs12(string $pkcs12, string $password): void
     {
         if (!$pkcs12) {
             throw new CertificateException('The PKCS12 certificate must not be empty.');
@@ -115,7 +115,7 @@ final class PrivateKeyStore
         }
 
         // Read the private key
-        $this->privateKeyPem = (String)$certInfo['pkey'];
+        $this->privateKeyPem = (string)$certInfo['pkey'];
 
         if (!$this->privateKeyPem) {
             throw new CertificateException('Invalid or missing private key');
@@ -166,9 +166,9 @@ final class PrivateKeyStore
      *
      * @param int $type The type
      *
-     * @return String The array key
+     * @return string The array key
      */
-    private function getPrivateKeyDetailKey(int $type): String
+    private function getPrivateKeyDetailKey(int $type): string
     {
         $key = '';
         $key = $type === OPENSSL_KEYTYPE_RSA ? 'rsa' : $key;
@@ -184,17 +184,17 @@ final class PrivateKeyStore
         return $this->privateKey;
     }
 
-    public function getPrivateKeyAsPem(): String
+    public function getPrivateKeyAsPem(): ?string
     {
         return $this->privateKeyPem;
     }
 
-    public function getModulus(): String
+    public function getModulus(): ?string
     {
         return $this->modulus;
     }
 
-    public function getPublicExponent(): String
+    public function getPublicExponent(): ?string
     {
         return $this->publicExponent;
     }

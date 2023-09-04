@@ -648,22 +648,20 @@ class XMLSecurityDSig
         $refNode = $this->createNewSignNode('Reference');
         $sinfoNode->appendChild($refNode);
 
-        // if (! $node instanceof DOMDocument) {
-        //     $uri = null;
-        //     if (! $overwrite_id) {
-        //         $uri = $prefix_ns ? $node->getAttributeNS($prefix_ns, $id_name) : $node->getAttribute($id_name);
-        //     }
-        //     if (empty($uri)) {
-        //         $uri = self::generateGUID();
-        //         $node->setAttributeNS($prefix_ns, $attname, $uri);
-        //     }
-        //     $refNode->setAttribute("URI", '#'.$uri);
-        // } elseif ($force_uri) {
-        //     $refNode->setAttribute("URI", '');
-        // }
+        if (! $node instanceof DOMDocument) {
+            $uri = null;
+            if (! $overwrite_id) {
+                $uri = $prefix_ns ? $node->getAttributeNS($prefix_ns, $id_name) : $node->getAttribute($id_name);
+            }
+            if (empty($uri)) {
+                $uri = self::generateGUID();
+                $node->setAttributeNS($prefix_ns, $attname, $uri);
+            }
+            $refNode->setAttribute("URI", '#'.$uri);
+        } elseif ($force_uri) {
+            $refNode->setAttribute("URI", '');
+        }
 
-        $refNode->setAttribute("URI", '#'.$id_name);
-        
         $transNodes = $this->createNewSignNode('Transforms');
         $refNode->appendChild($transNodes);
 

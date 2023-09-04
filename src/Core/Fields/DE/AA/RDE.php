@@ -221,12 +221,21 @@ class RDE
    */
   public function toXMLString(): String
   {
-    $doc = new DOMDocument('1.0', 'UTF-8');
-    $domElement = $this->toDOMElement($doc);
-    $xmlString = $doc->saveXML($domElement);
+    $xmlString = $this->toDOMDocument()->saveXML();
     if(!$xmlString)
       throw new \Exception('[RDE] Error al convertir el objeto a XML.');
     return $xmlString;
+  }
+
+  /**
+   * Convierte este RDE a un DOMDocument
+   */
+  public function toDOMDocument(): DOMDocument
+  {
+    $doc = new DOMDocument('1.0', 'UTF-8');
+    $domElement = $this->toDOMElement($doc);
+    $doc->appendChild($domElement);
+    return $doc;
   }
 
 }

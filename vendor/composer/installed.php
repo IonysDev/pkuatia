@@ -3,7 +3,7 @@
         'name' => 'abiliomp/pkuatia',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '645fa02f23e83e0187952c5a024c34ce2d1c3249',
+        'reference' => '8e37c7f262a68af8e74cc4dd3192f322be36da79',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'abiliomp/pkuatia' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '645fa02f23e83e0187952c5a024c34ce2d1c3249',
+            'reference' => '8e37c7f262a68af8e74cc4dd3192f322be36da79',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

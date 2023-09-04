@@ -15,14 +15,14 @@ final class XmlReader
      * Query the first dome node item.
      *
      * @param DOMXPath $xpath The xpath
-     * @param String $expression The xpath expression
+     * @param string $expression The xpath expression
      * @param DOMNode $contextNode The context node
      *
      * @throws UnexpectedValueException
      *
      * @return DOMNode The first item
      */
-    public function queryDomNode(DOMXPath $xpath, String $expression, DOMNode $contextNode): DOMNode
+    public function queryDomNode(DOMXPath $xpath, string $expression, DOMNode $contextNode): DOMNode
     {
         $nodeList = $xpath->query($expression, $contextNode);
 

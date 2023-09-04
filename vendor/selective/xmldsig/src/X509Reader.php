@@ -15,13 +15,13 @@ final class X509Reader
     private const PEM_REGEX_PATTERN = '/' . self::PEM_BEGIN_TAG . '(.+)' . self::PEM_END_TAG . '/Us';
 
     /**
-     * Read one or more certificates from String.
+     * Read one or more certificates from string.
      *
-     * @param String $pem
+     * @param string $pem
      *
      * @return OpenSSLCertificate[]
      */
-    public function fromPem(String $pem): array
+    public function fromPem(string $pem): array
     {
         $certificateIds = [];
 
@@ -42,13 +42,13 @@ final class X509Reader
     }
 
     /**
-     * Read certificate from raw base64 String.
+     * Read certificate from raw base64 string.
      *
-     * @param String $base64
+     * @param string $base64
      *
      * @return OpenSSLCertificate
      */
-    public function fromRawBase64(String $base64): OpenSSLCertificate
+    public function fromRawBase64(string $base64): OpenSSLCertificate
     {
         $certificate = openssl_x509_read(self::PEM_BEGIN_TAG . "\n{$base64}\n" . self::PEM_END_TAG);
 
@@ -64,9 +64,9 @@ final class X509Reader
      *
      * @param OpenSSLCertificate $certificate
      *
-     * @return String
+     * @return string
      */
-    public function toRawBase64(OpenSSLCertificate $certificate): String
+    public function toRawBase64(OpenSSLCertificate $certificate): string
     {
         if (!openssl_x509_export($certificate, $exportedCertificate)) {
             throw new CertificateException('Exporting certificate failed');

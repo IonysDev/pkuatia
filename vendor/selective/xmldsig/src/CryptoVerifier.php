@@ -23,7 +23,7 @@ final class CryptoVerifier implements CryptoVerifierInterface
         $this->publicKeyStore = $publicKeyStore;
     }
 
-    public function verify(String $data, String $signature, String $algorithm): bool
+    public function verify(string $data, string $signature, string $algorithm): bool
     {
         $publicKeys = $this->publicKeyStore->getPublicKeys();
         if (!$publicKeys) {
@@ -48,7 +48,7 @@ final class CryptoVerifier implements CryptoVerifierInterface
         return false;
     }
 
-    private function mapUrlToOpenSslAlgoCode(String $algorithm): int
+    private function mapUrlToOpenSslAlgoCode(string $algorithm): int
     {
         $algorithm = strtolower($algorithm);
 
@@ -74,11 +74,11 @@ final class CryptoVerifier implements CryptoVerifierInterface
     /**
      * Map algo to OpenSSL method name.
      *
-     * @param String $algorithm The url
+     * @param string $algorithm The url
      *
-     * @return String The name of the OpenSSL algorithm
+     * @return string The name of the OpenSSL algorithm
      */
-    private function mapUrlToOpenSslDigestAlgo(String $algorithm): String
+    private function mapUrlToOpenSslDigestAlgo(string $algorithm): string
     {
         $algorithm = strtolower($algorithm);
 
@@ -100,7 +100,7 @@ final class CryptoVerifier implements CryptoVerifierInterface
         throw new XmlSignatureValidatorException(sprintf('Unsupported algorithm: %s', $algorithm));
     }
 
-    public function computeDigest(String $data, String $algorithm): String
+    public function computeDigest(string $data, string $algorithm): string
     {
         $digestAlgo = $this->mapUrlToOpenSslDigestAlgo($algorithm);
         $digest = openssl_digest($data, $digestAlgo, true);
@@ -116,17 +116,17 @@ final class CryptoVerifier implements CryptoVerifierInterface
      * Verify using the Elliptic Curve Digital Signature Algorithm (ECDSA).
      *
      * @param OpenSSLAsymmetricKey[] $publicKeys The public keys
-     * @param String $signature The signature from the xml element
-     * @param String $data The data
+     * @param string $signature The signature from the xml element
+     * @param string $data The data
      *
      * @return bool The status
      */
-    private function verifyEcdsa(array $publicKeys, String $signature, String $data): bool
+    private function verifyEcdsa(array $publicKeys, string $signature, string $data): bool
     {
         foreach ($publicKeys as $publicKey) {
             $signature = Signature::fromDer($signature);
 
-            // Convert OpenSSLAsymmetricKey to PEM String
+            // Convert OpenSSLAsymmetricKey to PEM string
             $details = openssl_pkey_get_details($publicKey);
             $publicKey2 = PublicKey::fromPem($details['key'] ?? '');
 

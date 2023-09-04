@@ -26,7 +26,7 @@ final class CryptoSigner implements CryptoSignerInterface
         $this->algorithm = $algorithm;
     }
 
-    public function computeSignature(String $data): String
+    public function computeSignature(string $data): string
     {
         // ECDSA
         if ($this->algorithm->getSignatureAlgorithmName() === Algorithm::METHOD_ECDSA_SHA256) {
@@ -50,7 +50,7 @@ final class CryptoSigner implements CryptoSignerInterface
         return $signatureValue;
     }
 
-    private function computeSignatureWithEcdsa(String $data): String
+    private function computeSignatureWithEcdsa(string $data): string
     {
         $privateKeyPem = $this->privateKeyStore->getPrivateKeyAsPem();
 
@@ -58,14 +58,14 @@ final class CryptoSigner implements CryptoSignerInterface
             throw new CertificateException('Undefined private key');
         }
 
-        // Generate privateKey from PEM String
+        // Generate privateKey from PEM string
         $privateKey = PrivateKey::fromPem($privateKeyPem);
         $signature = Ecdsa::sign($data, $privateKey);
 
-        return (String)base64_decode($signature->toBase64());
+        return (string)base64_decode($signature->toBase64());
     }
 
-    public function computeDigest(String $data): String
+    public function computeDigest(string $data): string
     {
         // Calculate and encode digest value
         $digestValue = openssl_digest($data, $this->algorithm->getDigestAlgorithmName(), true);

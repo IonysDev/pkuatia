@@ -4,9 +4,9 @@ namespace Selective\XmlDSig;
 
 interface CryptoSignerInterface
 {
-    public function computeSignature(String $data): String;
+    public function computeSignature(string $data): string;
 
-    public function computeDigest(String $data): String;
+    public function computeDigest(string $data): string;
 
     public function getPrivateKeyStore(): PrivateKeyStore;
 
