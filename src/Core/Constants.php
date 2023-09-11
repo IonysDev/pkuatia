@@ -97,6 +97,7 @@ class Constants
 
     // Valor Máximo del DID
     public const MAX_DID = 999999999999999;
+    public const MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE = 50;
 
     
 }

@@ -13,6 +13,7 @@ use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
 use Abiliomp\Pkuatia\Core\Requests\REnviDe;
+use Abiliomp\Pkuatia\Core\Requests\REnvioLote;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
 use Abiliomp\Pkuatia\Helpers\QRHelper;
@@ -138,8 +139,6 @@ class Sifen
       XSD_ANYXML
     ));
     $object = self::$client->rEnviDe($rEnviDe);
-    file_put_contents("request.xml", self::$client->__getLastRequest());
-    file_put_contents("response.xml", self::$client->__getLastResponse());
     return RRetEnviDe::FromSifenResponseObject($object);
   }
 
@@ -151,9 +150,11 @@ class Sifen
    * 
    * @return void
    */
-  public static function EnviarLoteDE(array $lote)
+  public static function EnviarLoteDE(string $zipFilePath)
   {
-    // To Do: Implementar método
+    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
+    $rEnviLoteDe = new REnvioLote(self::GetDId(), file_get_contents($zipFilePath));
+    echo self::$client->__getFunctions();
   }
 
   private static function GetSifenUrlBase(): String
