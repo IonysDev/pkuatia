@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
 
-use Abiliomp\Pkuatia\Helpers\CountryHelper;
+use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use DOMElement;
 
 /**
@@ -424,7 +424,7 @@ class TrGeVeTr
    */
   public function getDDesDepEnt(): String
   {
-    return CountryHelper::getCountryDesc(strval($this->cDepEnt));
+    return CountryMapping::getCountryDesc(strval($this->cDepEnt));
   }
 
 
@@ -446,7 +446,7 @@ class TrGeVeTr
    */
   public function getDDesDisEnt(): String
   {
-    return CountryHelper::getCountryDesc(strval($this->cDisEnt));
+    return CountryMapping::getCountryDesc(strval($this->cDisEnt));
   }
 
 
@@ -468,7 +468,7 @@ class TrGeVeTr
    */
   public function getDDesCiuEnt(): String
   {
-    return CountryHelper::getCountryDesc(strval($this->cCiuEnt));
+    return CountryMapping::getCountryDesc(strval($this->cCiuEnt));
   }
 
 

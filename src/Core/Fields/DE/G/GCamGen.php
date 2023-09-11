@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\G;
 
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -172,18 +173,19 @@ class GCamGen
   }
 
   /**
-   * toDOMElement
+   * Convierte este GCamGen en un DOMElement perteneciente a un DOMDocument
+   * 
+   * @param  DOMDocument $doc Documento DOM en el que se generará el DOMElement, sin insertarlo
    *
-   * @return DOMElement
+   * @return DOMElement El DOMElement que representa a este GCamGen
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gCamGen');
+    $res = $doc->createElement('gCamGen');
     $res->appendChild(new DOMElement('dOrdCompra', $this->getDOrdCompra()));
     $res->appendChild(new DOMElement('dOrdVta', $this->getDOrdVta()));
     $res->appendChild(new DOMElement('dAsiento', $this->getDAsiento()));
-    //Children
-    $res->appendChild($this->gCamCarg->toDOMElement());
+    $res->appendChild($this->gCamCarg->toDOMElement($doc));
     return $res;
   }  
 

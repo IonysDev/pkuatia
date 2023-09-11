@@ -2,6 +2,10 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Signature;
 
+use DOMDocument;
+use DOMElement;
+use SimpleXMLElement;
+
 class SignedInfo 
 {
     public CanonicalizationMethod $CanonicalizationMethod;
@@ -96,7 +100,7 @@ class SignedInfo
      * 
      * @return self
      */
-    public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         $SignedInfo = new self();
         $SignedInfo->setCanonicalizationMethod(CanonicalizationMethod::FromSimpleXMLElement($node->CanonicalizationMethod));
@@ -105,30 +109,39 @@ class SignedInfo
         return $SignedInfo;
     }
 
+    /**
+     * Instancia un objeto SignedInfo a partir de un DOMElement
+     * 
+     * @param DOMElement $node
+     * 
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        $SignedInfo = new self();
+        $SignedInfo->setCanonicalizationMethod(CanonicalizationMethod::FromDOMElement($node->getElementsByTagName("CanonicalizationMethod")->item(0)));
+        $SignedInfo->setSignatureMethod(SignatureMethod::FromDOMElement($node->getElementsByTagName("SignatureMethod")->item(0)));
+        $SignedInfo->setReference(Reference::FromDOMElement($node->getElementsByTagName("Reference")->item(0)));
+        return $SignedInfo;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Conversores
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Convierte el objeto a un DOMElement
+     * Convierte este SignedInfo a un DOMElement para ser usado en un DOMDocument determinado.
      *
-     * @return \DOMElement
+     * @param DOMDocument $doc DOMDocument con el que se generará el elemento.
+     * 
+     * @return DOMElement Elemento DOM que representa este SignedInfo.
      */
-    public function toDOMElement(): \DOMElement
+    public function toDOMElement(DOMDocument $doc): \DOMElement
     {
-        $doc = new \DOMDocument();
         $res = $doc->createElement('SignedInfo');
-
-        $importNode = $doc->importNode($this->CanonicalizationMethod->toDOMElement(), true);
-        $res->appendChild($importNode);
-
-        $importNode = $doc->importNode($this->SignatureMethod->toDOMElement(), true);
-        $res->appendChild($importNode);
-
-
-        $importNode = $doc->importNode($this->Reference->toDOMElement(), true);
-        $res->appendChild($importNode);
-
+        $res->appendChild($this->CanonicalizationMethod->toDOMElement($doc));
+        $res->appendChild($this->SignatureMethod->toDOMElement($doc));
+        $res->appendChild($this->Reference->toDOMElement($doc));
         return $res;
     }
 }

@@ -9,9 +9,14 @@ use Abiliomp\Pkuatia\Core\Requests\REnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsRUC;
 use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
+use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
+use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
 use Abiliomp\Pkuatia\Core\Requests\REnviDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
+use Abiliomp\Pkuatia\Helpers\QRHelper;
+use Abiliomp\Pkuatia\Helpers\SignHelper;
 use SimpleXMLElement;
 use SoapClient;
 use SoapVar;
@@ -32,12 +37,10 @@ class Sifen
    */
   public static function Init(Config $config)
   {
-    if (!file_exists($config->certificateFilePath)) {
-      throw new \Exception("Certificate file not found in path: " . $config->certificateFilePath . ".");
-    }
-    if (!file_exists($config->privateKeyFilePath)) {
-      throw new \Exception("Private key file not found in path: " . $config->privateKeyFilePath . ".");
-    }
+    if (!file_exists($config->certificateFilePath))
+      throw new \Exception("[Sifen] El archivo de certificado no ha sido encontrado en: " . $config->certificateFilePath . ".");
+    if (!file_exists($config->privateKeyFilePath))
+      throw new \Exception("[Sifen] El archivo de clave privada no ha sido encontrado en: " . $config->privateKeyFilePath . ".");
     self::$config = $config;
     self::$options = [
       'soap_version' => SOAP_1_2,
@@ -54,6 +57,7 @@ class Sifen
         ]
       ])
     ];
+    SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFilePath);
   }
 
   /**
@@ -91,17 +95,65 @@ class Sifen
    * 
    * @return RRetEnviDe
    */
-  public static function EnviarDE(string $de)
+  public static function EnviarDE(RDE $rde)
   {
+    // Firma el documento electrónico
+    $xmlDocument = SignHelper::SignRDE($rde);
+    // Extrae la firma del documento electrónico
+    $signatureNode = $xmlDocument->getElementsByTagName("Signature")->item(0);
+    $Signature = Signature::FromDOMElement($signatureNode);
+
+    // Verifica si en los campos fuera de la firma hay datos
+    $gCamFuFD = $rde->getGCamFuFD();
+    if(is_null($gCamFuFD))
+      $gCamFuFD = new GCamFuFD();
+    else
+    {
+      // Eliminar el nodo del gCamFuFD si es que existe del xmlDocument firmado
+      $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
+      for($i = 0; $i < $rdeNode->childNodes->length; $i++)
+      {
+        $node = $rdeNode->childNodes->item($i);
+        if(strcmp($node->nodeName, 'gCamFuFD') == 0)
+        {
+          $rdeNode->removeChild($node);
+        }
+      }
+    }
+
+    // Establece el valor del link para el QR 
+    $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent(self::$config, $rde->getDE(), $Signature));
+    $gCamFuFDNode = $gCamFuFD->toDOMElement($xmlDocument);
+
+    // Agrega el nodo del QR al documento electrónico
+    $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
+
+    // Genera la cadena XML a ser enviada al SIFEN
+    $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
+
+    // Realiza el envío del documento electrónico al SIFEN
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
     $rEnviDe = new REnviDe(self::GetDId(), new SoapVar(
-      '<ns1:xDE>' . $de . '</ns1:xDE>',
+      '<ns1:xDE>' . $signedXML . '</ns1:xDE>',
       XSD_ANYXML
     ));
     $object = self::$client->rEnviDe($rEnviDe);
     file_put_contents("request.xml", self::$client->__getLastRequest());
     file_put_contents("response.xml", self::$client->__getLastResponse());
     return RRetEnviDe::FromSifenResponseObject($object);
+  }
+
+  /**
+   * Realiza el envío de un lote de Documentos Electrónicos al SIFEN.
+   * De acuerdo a la versión 150 del MT, este WS soporta hasta 50 documentos electrónicos por lote.
+   * 
+   * @param array $lote Lote de Documentos Electrónicos a enviar.
+   * 
+   * @return void
+   */
+  public static function EnviarLoteDE(array $lote)
+  {
+    // To Do: Implementar método
   }
 
   private static function GetSifenUrlBase(): String

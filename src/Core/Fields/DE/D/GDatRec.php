@@ -3,9 +3,9 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\Helpers\CountryHelper;
-use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
-use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
+use Abiliomp\Pkuatia\DataMappings\CountryMapping;
+use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
+use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
@@ -255,7 +255,7 @@ class GDatRec extends BaseSifenField
      */
     public function getDDesPaisRe(): String
     {
-        // return CountryHelper::getCountryDesc($this->cPaisRec);
+        // return CountryMapping::getCountryDesc($this->cPaisRec);
         return $this->dDesPaisRe;
     }
 
@@ -444,7 +444,7 @@ class GDatRec extends BaseSifenField
      */
     public function getDDesDepRec(): String
     {
-        return DepartamentoHelper::getDepName(strval($this->cDepRec));
+        return DepartamentoMapping::getDepName(strval($this->cDepRec));
     }
 
     /**
@@ -464,7 +464,7 @@ class GDatRec extends BaseSifenField
      */
     public function getDDesDisRec(): String
     {
-        return GeoRefCodesHelper::getDistName(strval($this->cDisRec));
+        return PyGeoCodesMapping::getDistName(strval($this->cDisRec));
     }
 
 
@@ -485,7 +485,7 @@ class GDatRec extends BaseSifenField
      */
     public function getDDesCiuRec(): String
     {
-        return GeoRefCodesHelper::getCiudName(strval($this->cCiuRec));
+        return PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
     }
 
     ///////////////////////////////////////////////////////////////////////

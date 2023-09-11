@@ -2,8 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
-use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
+use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
+use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMElement;
 
 /**
@@ -206,7 +206,7 @@ class GCamSal
    */
   public function getDDesDepSal(): String
   {
-    return DepartamentoHelper::getDepName(strval($this->cDepSal));
+    return DepartamentoMapping::getDepName(strval($this->cDepSal));
   }
 
   /**
@@ -226,7 +226,7 @@ class GCamSal
    */
   public function getDDesDisSal(): String
   {
-    return GeoRefCodesHelper::getDistName(strval($this->cDisSal));
+    return PyGeoCodesMapping::getDistName(strval($this->cDisSal));
   }
 
   /**
@@ -247,7 +247,7 @@ class GCamSal
    */
   public function getDDesCiuSal(): String
   {
-    return GeoRefCodesHelper::getCiudName(strval($this->cCiuSal));
+    return PyGeoCodesMapping::getCiudName(strval($this->cCiuSal));
   }
 
   /**

@@ -2,8 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
-use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
+use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
+use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -15,88 +16,157 @@ use DOMElement;
 
 class GCamAE
 {
-  public int    $iNatVen;    // E301 - 1     - 1-1 - Naturaleza del vendedor PADRE:E300
-  public String $dDesNatVen; // E305 - 10-16 - 1-1 - Descripción de la naturaleza del vendedor
-  public int    $iTipIDVen;  // E304 - 1     - 1-1 - Tipo de documento de identidad del vendedor
-  public String $dDTipIDVen; // E305 - 9-20  - 1-1 - Descripción del tipo de documento de identidad del vendedor
-  public String $dNumIDVen;  // E306 - 1-20  - 1-1 - Número de documento de identidad del vendedor PADRE:E300
-  public String $dNomVen;    // E307 - 4-60  - 1-1 - Nombre y apellido delvendedor PADRE:E300
-  public String $dDirVen;    // E308 - 1-255 - 1-1 - Dirección del vendedor PADRE:E300
-  public int    $dNumCasVen; // E309 - 1-6   - 1-1 - Número de casa del vendedor PADRE:E300
-  public int    $cDepVen;    // E310 Código del departamento del vendedor PADRE:E300
-  public int    $cDisVen;    // E312 Código del distrito del vendedor PADRE:E300
-  public int    $cCiuVen;    // E314 Código de la ciudad del vendedor PADRE:E300
-  public String $dDirProv;   // E316 dDirProv Lugar de la transacción PADRE:E300
-  public int    $cDepProv;   // E317 Código del departamento  donde se realiza la  transacción
-  public int    $cDisProv;   // E319 cDisProv Código del distrito donde se realiza la transacción
-  public int    $cCiuProv;   // E321 cCiuProv Código de la ciudad  donde se realiza la transacción
+  public int    $iNatVen;     // E301 - 1     - 1-1 - Naturaleza del vendedor
+  public String $dDesNatVen;  // E302 - 10-16 - 1-1 - Descripción de la naturaleza del vendedor
+  public int    $iTipIDVen;   // E304 - 1     - 1-1 - Tipo de documento de identidad del vendedor
+  public String $dDTipIDVen;  // E305 - 9-20  - 1-1 - Descripción del tipo de documento de identidad del vendedor
+  public String $dNumIDVen;   // E306 - 1-20  - 1-1 - Número de documento de identidad del vendedor
+  public String $dNomVen;     // E307 - 4-60  - 1-1 - Nombre y apellido delvendedor
+  public String $dDirVen;     // E308 - 1-255 - 1-1 - Dirección del vendedor
+  public int    $dNumCasVen;  // E309 - 1-6   - 1-1 - Número de casa del vendedor
+  public int    $cDepVen;     // E310 - 1-2   - 1-1 - Código del departamento del vendedor
+  public String $dDesDepVen;  // E311 - 6-16  - 1-1 - Descripción del departamento del vendedor
+  public int    $cDisVen;     // E312 - 1-4   - 0-1 - Código del distrito del vendedor
+  public String $dDesDisVen;  // E313 - 1-30  - 0-1 - Descripción del distrito del vendedor
+  public int    $cCiuVen;     // E314 - 1-5   - 1-1 - Código de la ciudad del vendedor
+  public String $dDesCiuVen;  // E315 - 1-30  - 1-1 - Descripción de la ciudad del vendedor
+  public String $dDirProv;    // E316 - 1-255 - 1-1 - Lugar de la transacción
+  public int    $cDepProv;    // E317 - 1-2   - 1-1 - Código del departamento  donde se realiza la  transacción
+  public String $dDesDepProv; // E318 - 6-16  - 1-1 - Descripción del departamento donde se realiza la transacción
+  public int    $cDisProv;    // E319 - 1-4   - 0-1 - cDisProv Código del distrito donde se realiza la transacción
+  public String $dDesDisProv; // E320 - 1-30  - 0-1 - Descripción del distrito donde se realiza la transacción
+  public int    $cCiuProv;    // E321 - 1-5   - 1-1 - cCiuProv Código de la ciudad  donde se realiza la transacción
+  public String $dDesCiuProv; // E322 - 1-30  - 1-1 - Descripción de la ciudad donde se realiza la transacción
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iNatVen
+   * Establece el valor iNatVen (E301) que representa el código de la naturaleza del vendedor.
    *
-   * @param int $iNatVen
+   * @param int $iNatVen Código de la naturaleza del vendedor.
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setINatVen(int $iNatVen): self
   {
     $this->iNatVen = $iNatVen;
-
+    switch ($iNatVen) {
+      case 1:
+        $this->dDesNatVen = "No contribuyente";
+        break;
+      case 2:
+        $this->dDesNatVen = "Extranjero";
+        break;
+      default:  
+        unset($this->dDesNatVen);
+        throw new \Exception("[GCamAE] iNatVen debe ser 1 o 2, valor dado: $iNatVen");
+        break;
+    }
     return $this;
   }
 
+  /**
+   * Establece el valor de dDesNatVen (E302) que representa la descripción de la naturaleza del vendedor.
+   * No se debería utilizar este método, ya que el valor de dDesNatVen se establece automáticamente.
+   * 
+   * @param String $dDesNatVen Descripción de la naturaleza del vendedor.
+   * 
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   */
+  public function setDDesNatVen(String $dDesNatVen): self
+  {
+    if($dDesNatVen != "No contribuyente" && $dDesNatVen != "Extranjero")
+      throw new \Exception("[GCamAE] dDesNatVen debe ser 'No contribuyente' o 'Extranjero', valor dado: $dDesNatVen");
+    $this->dDesNatVen = $dDesNatVen;
+    return $this;
+  }
 
   /**
-   * Set the value of iTipIDVen
+   * Establece el valor de iTipIDVen (E304) que representa el código del tipo de documento de identidad del vendedor.
    *
-   * @param int $iTipIDVen
+   * @param int $iTipIDVen Código del tipo de documento de identidad del vendedor.
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setITipIDVen(int $iTipIDVen): self
   {
     $this->iTipIDVen = $iTipIDVen;
-
+    switch ($this->iTipIDVen) {
+      case 1:
+        $this->dDTipIDVen = "Cédula paraguaya";
+        break;
+      case 2:
+        $this->dDTipIDVen = "Pasaporte";
+        break;
+      case 3:
+        $this->dDTipIDVen = "Cédula extranjera";
+        break;
+      case 4:
+        $this->dDTipIDVen = "Carnet de residencia";
+        break;
+      default:
+        unset($this->iTipIDVen);
+        unset($this->dDTipIDVen);
+        throw new \Exception("[GCamAE] iTipIDVen debe ser 1, 2, 3 o 4, valor dado: $iTipIDVen");
+        break;
+    }
     return $this;
   }
 
+  /**
+   * Establece el valor de dDTipIDVen (E305) que representa la descripción del tipo de documento de identidad del vendedor.
+   * Este método no debería ser utilizado, ya que el valor de dDTipIDVen se establece automáticamente a partir de setITipIDVen.
+   * 
+   * @param String $dDTipIDVen Descripción del tipo de documento de identidad del vendedor.
+   * 
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   */
+  public function setDDTipIDVen(String $dDTipIDVen): self 
+  {
+    if($dDTipIDVen != "Cédula paraguaya" && $dDTipIDVen != "Pasaporte" && $dDTipIDVen != "Cédula extranjera" && $dDTipIDVen != "Carnet de residencia")
+      throw new \Exception("[GCamAE] dDTipIDVen debe ser 'Cédula paraguaya', 'Pasaporte', 'Cédula extranjera' o 'Carnet de residencia', valor dado: $dDTipIDVen");
+    $this->dDTipIDVen = $dDTipIDVen;
+    return $this;
+  }
 
   /**
-   * Set the value of dNumIDVen
+   * Establece el valor de dNumIDVen (E306) que representa el número de documento de identidad del vendedor.
+   * 
+   * @param String $dNumIDVen Número de documento de identidad del vendedor.
    *
-   * @param String $dNumIDVen
-   *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDNumIDVen(String $dNumIDVen): self
   {
+    if(strlen($dNumIDVen) < 1 || strlen($dNumIDVen) > 20)
+      throw new \Exception("[GCamAE] dNumIDVen debe tener entre 1 y 20 caracteres, valor dado: $dNumIDVen");
     $this->dNumIDVen = $dNumIDVen;
-
     return $this;
   }
 
 
   /**
-   * Set the value of dNomVen
+   * Establece el valor de dNomVen (E307) que representa el nombre y apellido del vendedor.
+   * 
+   * @param String $dNomVen Nombre y apellido del vendedor.
    *
-   * @param String $dNomVen
-   *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDNomVen(String $dNomVen): self
   {
+    if(strlen($dNomVen) < 4 || strlen($dNomVen) > 60)
+      throw new \Exception("[GCamAE] dNomVen debe tener entre 4 y 60 caracteres, valor dado: $dNomVen");
     $this->dNomVen = $dNomVen;
-
     return $this;
   }
 
 
   /**
-   * Set the value of dDirVen
+   * Establece el valor de dDirVen (E308) que representa la dirección del vendedor.
+   * Nombre de la calle principal.
+   * En  caso  de  extranjeros,  colocar  la dirección  en  donde  se  realizó  la transacción.
    *
    * @param String $dDirVen
    *
@@ -104,47 +174,70 @@ class GCamAE
    */
   public function setDDirVen(String $dDirVen): self
   {
+    if(strlen($dDirVen) < 1 || strlen($dDirVen) > 255)
+      throw new \Exception("[GCamAE] dDirVen debe tener entre 1 y 255 caracteres, valor dado: $dDirVen");
     $this->dDirVen = $dDirVen;
-
     return $this;
   }
 
 
   /**
-   * Set the value of dNumCasVen
+   * Establece el valor de dNumCasVen (E309) que representa el número de casa del vendedor.
+   * Si no tiene numeración colocar 0 (cero).
    *
-   * @param int $dNumCasVen
+   * @param int $dNumCasVen Número de casa del vendedor.
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDNumCasVen(int $dNumCasVen): self
   {
+    if($dNumCasVen < 0 || $dNumCasVen > 999999)
+      throw new \Exception("[GCamAE] dNumCasVen debe tener entre 0 y 999999, valor dado: $dNumCasVen");
     $this->dNumCasVen = $dNumCasVen;
-
     return $this;
   }
 
 
   /**
-   * Set the value of cDepVen
+   * Establece el valor de cDepVen (E310) que representa el código del departamento del vendedor.
+   * En  caso  de  extranjeros,  colocar  el departamento  en  donde  se  realizó  la transacción.
+   * 
+   * @param int $cDepVen Código del departamento del vendedor.
    *
-   * @param int $cDepVen
-   *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setCDepVen(int $cDepVen): self
   {
+    $this->dDesDepVen = DepartamentoMapping::getDepName(strval($cDepVen));
+    if(is_null($this->dDesDepVen)) {
+      unset($this->dDesDepVen);
+      throw new \Exception("[GCamAE] cDepVen debe ser un código de departamento válido, valor dado: $cDepVen");
+    }
     $this->cDepVen = $cDepVen;
-
     return $this;
   }
 
   /**
-   * Set the value of cDisVen
+   * Establece el valor de dDesDepVen (E311) que representa la descripción del departamento del vendedor.
+   * Este método no debería ser utilizado, ya que el valor de dDesDepVen se establece automáticamente a partir de setCDepVen.
+   * 
+   * @param String $dDesDepVen Descripción del departamento del vendedor.
+   * 
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   */
+  public function setDDesDepVen(String $dDesDepVen): self
+  {
+    $this->dDesDepVen = $dDesDepVen;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de cDisVen (E312) que representa el código del distrito del vendedor.
+   * En caso de extranjeros, colocar el distrito en donde se realizó la transacción.
+   * 
+   * @param int $cDisVen Código del distrito del vendedor.
    *
-   * @param int $cDisVen
-   *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setCDisVen(int $cDisVen): self
   {
@@ -247,19 +340,7 @@ class GCamAE
    */
   public function getDDesNatVen(): String
   {
-    switch ($this->iNatVen) {
-      case 1:
-        return "No contribuyente";
-        break;
-
-      case 2:
-        return "Extranjero";
-        break;
-
-      default:
-        return null;
-        break;
-    }
+    return $this->dDesNatVen;
   }
 
 
@@ -279,27 +360,7 @@ class GCamAE
    */
   public function getDDTipIDVen(): String
   {
-    switch ($this->iTipIDVen) {
-      case 1:
-        return "Cédula paraguaya";
-        break;
-
-      case 2:
-        return "Pasaporte";
-        break;
-
-      case 3:
-        return "Cédula extranjera";
-        break;
-
-      case 4:
-        return "Carnet de residencia";
-        break;
-
-      default:
-        return null;
-        break;
-    }
+    return $this->dDTipIDVen;
   }
 
 
@@ -352,7 +413,7 @@ class GCamAE
    */
   public function getDDesDepVen(): String
   {
-    return DepartamentoHelper::getDepName(strval($this->cDepVen));
+    return DepartamentoMapping::getDepName(strval($this->cDepVen));
   }
 
 
@@ -373,7 +434,7 @@ class GCamAE
    */
   public function getDDesDisVen(): String
   {
-    return GeoRefCodesHelper::getDistName(strval($this->cDisVen));
+    return PyGeoCodesMapping::getDistName(strval($this->cDisVen));
   }
 
   /**
@@ -393,7 +454,7 @@ class GCamAE
    */
   public function getDDesCiuVen(): String
   {
-    return GeoRefCodesHelper::getCiudName(strval($this->cCiuVen));
+    return PyGeoCodesMapping::getCiudName(strval($this->cCiuVen));
   }
 
 
@@ -424,7 +485,7 @@ class GCamAE
    */
   public function getDDesDepProv(): String
   {
-    return DepartamentoHelper::getDepName(strval($this->cDepProv));
+    return DepartamentoMapping::getDepName(strval($this->cDepProv));
   }
 
 
@@ -445,7 +506,7 @@ class GCamAE
    */
   public function getDDesDisProv(): String
   {
-    return GeoRefCodesHelper::getDistName(strval($this->cDisProv));
+    return PyGeoCodesMapping::getDistName(strval($this->cDisProv));
   }
 
   /**
@@ -465,7 +526,7 @@ class GCamAE
    */
   public function getDDesCiuProv(): String
   {
-    return GeoRefCodesHelper::getCiudName(strval($this->cCiuProv));
+    return PyGeoCodesMapping::getCiudName(strval($this->cCiuProv));
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -473,21 +534,23 @@ class GCamAE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
+   * Convierte este GCamAE a un DOMElement mediante un DOMDocument que lo generará.
+   * 
+   * @param  DOMDocument $doc Documento DOM que generará el DOMElement sin insertarlo.
    *
-   * @return DOMElement
+   * @return DOMElement El DOMElement que representa a este GCamAE en el DOMDocument proporcionado.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement("gCamAE");
+    $res = $doc->createElement("gCamAE");
 
-    $res->appendChild(new DOMElement('iNatVen', $this->getINatVen()));
+    $res->appendChild(new DOMElement('iNatVen',    $this->getINatVen()));
     $res->appendChild(new DOMElement('dDesNatVen', $this->getDDesNatVen()));
-    $res->appendChild(new DOMElement('iTipIDVen', $this->getITipIDVen()));
+    $res->appendChild(new DOMElement('iTipIDVen',  $this->getITipIDVen()));
     $res->appendChild(new DOMElement('dDTipIDVen', $this->getDDTipIDVen()));
-    $res->appendChild(new DOMElement('dNumIDVen', $this->getDNumIDVen()));
-    $res->appendChild(new DOMElement('dNomVen', $this->getDNomVen()));
-    $res->appendChild(new DOMElement('dDirVen', $this->getDDirVen()));
+    $res->appendChild(new DOMElement('dNumIDVen',  $this->getDNumIDVen()));
+    $res->appendChild(new DOMElement('dNomVen',    $this->getDNomVen()));
+    $res->appendChild(new DOMElement('dDirVen',    $this->getDDirVen()));
 
     ///Si no tiene numeración colocar 0 (cero)
     if (isset($this->dNumCasVen)) {
@@ -496,53 +559,22 @@ class GCamAE
       $res->appendChild(new DOMElement('dNumCasVen', 0));
     }
 
-    $res->appendChild(new DOMElement('cDepVen', $this->getCDepVen()));
-    $res->appendChild(new DOMElement('dDesDepVen', $this->getDDesDepVen()));
-    $res->appendChild(new DOMElement('cDisVen', $this->getCDisVen()));
-    $res->appendChild(new DOMElement('dDesDisVen', $this->getDDesDisVen()));
-    $res->appendChild(new DOMElement('cCiuVen', $this->getCCiuVen()));
-    $res->appendChild(new DOMElement('dDesCiuVen', $this->getDDesCiuVen()));
-    $res->appendChild(new DOMElement('dDirProv', $this->getDDirProv()));
-    $res->appendChild(new DOMElement('cDepProv', $this->getCDepProv()));
+    $res->appendChild(new DOMElement('cDepVen',     $this->getCDepVen()));
+    $res->appendChild(new DOMElement('dDesDepVen',  $this->getDDesDepVen()));
+    $res->appendChild(new DOMElement('cDisVen',     $this->getCDisVen()));
+    $res->appendChild(new DOMElement('dDesDisVen',  $this->getDDesDisVen()));
+    $res->appendChild(new DOMElement('cCiuVen',     $this->getCCiuVen()));
+    $res->appendChild(new DOMElement('dDesCiuVen',  $this->getDDesCiuVen()));
+    $res->appendChild(new DOMElement('dDirProv',    $this->getDDirProv()));
+    $res->appendChild(new DOMElement('cDepProv',    $this->getCDepProv()));
     $res->appendChild(new DOMElement('dDesDepProv', $this->getDDesDepProv()));
-    $res->appendChild(new DOMElement('cDisProv', $this->getCDisProv()));
+    $res->appendChild(new DOMElement('cDisProv',    $this->getCDisProv()));
     $res->appendChild(new DOMElement('dDesDisProv', $this->getDDesDisProv()));
-    $res->appendChild(new DOMElement('cCiuProv', $this->getCCiuProv()));
+    $res->appendChild(new DOMElement('cCiuProv',    $this->getCCiuProv()));
     $res->appendChild(new DOMElement('dDesCiuProv', $this->getDDesCiuProv()));
 
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamAE
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamAE
-  // {
-  //   if (strcmp($xml->tagName, 'gcamAE') == 0 && $xml->childElementCount >= 14) {
-  //     $res = new GCamAE();
-  //     $res->setINatVen(intval($xml->getElementsByTagName('iNatVen')->item(0)->nodeValue));
-  //     $res->setITipIDVen(intval($xml->getElementsByTagName('iTipIDVen')->item(0)->nodeValue));
-  //     $res->setDNumIDVen($xml->getElementsByTagName('dNumIDVen')->item(0)->nodeValue);
-  //     $res->setDNomVen($xml->getElementsByTagName('dNomVen')->item(0)->nodeValue);
-  //     $res->setDDirVen($xml->getElementsByTagName('dDirVen')->item(0)->nodeValue);
-  //     $res->setDNumCasVen(intval($xml->getElementsByTagName('dNumCasVen')->item(0)->nodeValue));
-  //     $res->setCDepVen(intval($xml->getElementsByTagName('cDepVen')->item(0)->nodeValue));
-  //     $res->setCDisVen(intval($xml->getElementsByTagName('cDisVen')->item(0)->nodeValue));
-  //     $res->setCCiuVen(intval($xml->getElementsByTagName('cCiuVen')->item(0)->nodeValue));
-  //     $res->setDDirProv($xml->getElementsByTagName('dDirProv')->item(0)->nodeValue);
-  //     $res->setCDepProv(intval($xml->getElementsByTagName('cDepProv')->item(0)->nodeValue));
-  //     $res->setCDisProv(intval($xml->getElementsByTagName('cDisProv')->item(0)->nodeValue));
-  //     $res->setCCiuProv(intval($xml->getElementsByTagName('cCiuProv')->item(0)->nodeValue));
-
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
 
   /**
    * FromSimpleXMLElement

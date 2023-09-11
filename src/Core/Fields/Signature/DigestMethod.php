@@ -2,6 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Signature;
 
+use DOMElement;
+use SimpleXMLElement;
+
 /**
  * Clase que representa el campo DigestMethod de la firma
  */
@@ -40,11 +43,11 @@ class DigestMethod
     /**
      * Instancia un objeto DigestMethod a partir de un SimpleXMLElement
      * 
-     * @param \SimpleXMLElement $node
+     * @param SimpleXMLElement $node
      * 
      * @return self
      */
-    public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         $DigestMethod = new self();
         $DigestMethod->setAlgorithm($node->attributes()->Algorithm);
@@ -52,11 +55,25 @@ class DigestMethod
     }
 
     /**
+     * Instancia un objeto DigestMethod a partir de un DOMElement
+     * 
+     * @param DOMElement $node
+     * 
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        $DigestMethod = new self();
+        $DigestMethod->setAlgorithm($node->getAttribute('Algorithm'));
+        return $DigestMethod;
+    }
+
+    /**
      * Convierte el objeto a un DOMElement
      * 
-     * @return \DOMElement
+     * @return DOMElement
      */
-    public function toDOMElement(): \DOMElement
+    public function toDOMElement(): DOMElement
     {
         $dom = new \DOMDocument();
         $DigestMethod = $dom->createElement('DigestMethod');

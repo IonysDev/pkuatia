@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Helpers\CountryHelper;
+use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use DOMElement;
 
 /**
@@ -364,7 +364,7 @@ class GCamTrans
     */
    public function getDDesNacTrans(): String
    {
-      return CountryHelper::getCountryDesc($this->cNacTrans);
+      return CountryMapping::getCountryDesc($this->cNacTrans);
    }
 
    /**

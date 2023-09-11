@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Helpers\CountryHelper;
+use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use DateTime;
 use DOMElement;
 use SimpleXMLElement;
@@ -360,7 +360,7 @@ class GTransp
    */
   public function getDDesPaisDest(): String
   {
-    return CountryHelper::getCountryDesc($this->cPaisDest);
+    return CountryMapping::getCountryDesc($this->cPaisDest);
   }
 
   ///////////////////////////////////////////////////////////////////////

@@ -3,98 +3,69 @@
 namespace Abiliomp\Pkuatia\Helpers;
 
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
-use Selective\XmlDSig\PrivateKeyStore;
-use Selective\XmlDSig\Algorithm;
-use Selective\XmlDSig\CryptoSigner;
-use Selective\XmlDSig\XmlSigner;
+use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
+use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use DOMDocument;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
 
 /**
  * Clase que contiene los métodos para firmar los documentos XML según MT Sifen.
  */
 class SignHelper
 {
-    public static PrivateKeyStore $privateKeyStore;
-    public static Algorithm $algorithm;
-    public static CryptoSigner $cryptoSigner;
-    public static XmlSigner $xmlSigner;
+    public static XMLSecurityDSig $xmlSigner;
+    public static XMLSecurityKey $xmlKey;
 
-    public static function init(String $privateKey, String $password, KeyFormat $format = KeyFormat::P12, $pemCertificate = null)
+    /**
+     * Inicializa el firmador de XML.
+     * 
+     * @param String $keyFilePath Ruta del archivo de llave privada. 
+     * @param String $passphrase Contraseña de la llave privada.
+     * 
+     * @return void
+     */
+    public static function Init(String $keyFilePath, String $passphrase, String $certFilePath)
     {
-        self::$privateKeyStore = new PrivateKeyStore();
-
-        if ($format === KeyFormat::P12)
-            self::$privateKeyStore->loadFromPkcs12($privateKey, $password);
-        else if ($format === KeyFormat::PEM)
-            self::$privateKeyStore->loadFromPem($privateKey, $password);
-        else
-            throw new \Exception("Key format not supported.");
-
-        if (isset($pemCertificate))
-            self::$privateKeyStore->addCertificatesFromX509Pem($pemCertificate);
-        self::$algorithm = new Algorithm(Algorithm::METHOD_SHA256);
-        self::$cryptoSigner = new CryptoSigner(self::$privateKeyStore, self::$algorithm);
-        self::$xmlSigner = new XmlSigner(self::$cryptoSigner);
+        if(!file_exists($keyFilePath))
+            throw new \Exception("[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
+        if(!file_exists($certFilePath))
+            throw new \Exception("[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
+        self::$xmlSigner = new XMLSecurityDSig('');
+        self::$xmlSigner->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
+        self::$xmlSigner->add509Cert(file_get_contents($certFilePath));
+        self::$xmlKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
+        self::$xmlKey->passphrase = $passphrase;
+        self::$xmlKey->loadKey($keyFilePath, true);
     }
 
-    public static function initFromFile(String $keyPath, String $password, String $pemCertificateFile = null)
-    {
-        if (!file_exists($keyPath))
-            throw new \Exception("Private key file not found.");
 
-        $fileContents = file_get_contents($keyPath);
-
-        if ($fileContents === false)
-            throw new \Exception("Private key file could not be read.");
-
-        if (isset($pemCertificateFile)) {
-            if (!file_exists($pemCertificateFile))
-                throw new \Exception("Certificate file not found.");
-
-            $pemCertificate = file_get_contents($pemCertificateFile);
-
-            if ($pemCertificate === false)
-                throw new \Exception("Certificate file could not be read.");
-        } else
-            $pemCertificate = null;
-
-
-        // Verificar la extensión del archivo
-        $extension = pathinfo($keyPath, PATHINFO_EXTENSION);
-
-        if ($extension === "p12") {
-            // Si se trata de un archivo PKCS12
-            self::init($fileContents, $password, KeyFormat::P12, $pemCertificate);
-        } else if ($extension === "pem" || $extension === "key") {
-            // Si se trata de un archivo PEM
-            self::init($fileContents, $password, KeyFormat::PEM, $pemCertificate);
-        } else
-            // Si no es ninguno de los dos
-            throw new \Exception("File extension not supported.");
-    }
-
-    public static function Sign(String $xml, String $referenceUri = null)
+    /**
+     * Firma un documento DE contenido en un objeto RDE
+     * 
+     * @param RDE $rde Contenedor RDE del documento DE.
+     * 
+     * @return DOMDocument  Documento XML firmado.
+     */
+    public static function SignRDE(RDE $rde): DOMDocument
     {
         if (!isset(self::$xmlSigner))
-            throw new \Exception("SignHelper not initialized.");
-        if (isset($referenceUri))
-            self::$xmlSigner->setReferenceUri($referenceUri);
-        $signedXml = self::$xmlSigner->signXml($xml);
-        // Quitar KeyValue del campo KeyInfo
-        $startPos = strpos($signedXml, "<KeyValue>");
-        $endPos = strpos($signedXml, "</KeyValue>") + strlen("</KeyValue>");
-        $signedXml = substr_replace($signedXml, "", $startPos, $endPos - $startPos);
-        $dom = new DOMDocument();
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = false;
-        $dom->loadXML($signedXml);
-        $canonicalXml = $dom->C14N(false, false, null, null);
-        return $canonicalXml;
-    }
-}
+            throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
 
-enum KeyFormat
-{
-    case P12;
-    case PEM;
+        $xmlDocument = new DOMDocument('1.0', 'UTF-8');
+        $xmlDocument->formatOutput = false;
+        $xmlDocument->preserveWhiteSpace = false;
+        $xmlDocument->loadXML($rde->toXMLString());
+        $deNode = $xmlDocument->getElementsByTagName("DE")->item(0);
+        $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
+        $cdc = $rde->getDE()->getId();
+        self::$xmlSigner->addReference(
+            $deNode,
+            XMLSecurityDSig::SHA256,
+            ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
+            ['id_name' => $cdc, 'overwrite' => true],
+        );
+        self::$xmlSigner->sign(self::$xmlKey, $xmlDocument->documentElement);
+        self::$xmlSigner->appendSignature($rdeNode);
+        return $xmlDocument;
+    }
 }

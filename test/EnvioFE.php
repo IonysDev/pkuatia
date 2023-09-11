@@ -46,6 +46,10 @@ $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
 
+echo "Prueba de Envío de Documento Electrónico\n";
+echo "Inicializando Sifen... ";
+Sifen::Init($config);
+
 //////////////////////////////////////////////////////////////////
 
 $gOpeDe = new GOpeDE();
@@ -171,7 +175,7 @@ $de->setGDatGralOpe($gDatGralOpe);
 $de->setGDtipDE($gDtipDE);
 $de->setGTotSub($gTotSub);
 
-$cdc = CDCHelper::CDCMaker($de);
+$cdc = CDCHelper::Generate($de);
 
 $de->setId($cdc);
 $de->setDDVId($cdc[43]);
@@ -179,72 +183,14 @@ $de->setDFecFirma(new DateTime('now', new DateTimeZone('America/Asuncion')));
 
 //////////////////////////////////////////////////////////////////
 
-///rDE TO XMLSTRING
 $rde = new RDE();
 $rde->setDE($de);
-$xml = $rde->toXMLString();
-
-file_put_contents("rde.xml", $xml);
-
-///Create new DOMDocument and lod XML
-$xmlDocument = new DOMDocument('1.0', 'UTF-8');
-$xmlDocument->formatOutput = false;
-$xmlDocument->preserveWhiteSpace = false;
-$xmlDocument->loadXML($xml);
-
-///get DE node for sign
-$dENode = $xmlDocument->getElementsByTagName("DE")->item(0);
-//get rDE node for append
-$rDENode = $xmlDocument->getElementsByTagName("rDE")->item(0);
-
-//create object for sign with exc c14n algorithm
-$objDSig = new XMLSecurityDSig('');
-$objDSig->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
-
-//add reference to sign
-$objDSig->addReference(
-    $dENode,
-    XMLSecurityDSig::SHA256,
-    ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
-    ['id_name' => $cdc, 'overwrite' => true],
-);
-
-//create key object
-$objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
-$objKey->passphrase = $keyPassphrase;
-$objKey->loadKey($keyFile, true);
-
-//add key to sign and add cert
-$objDSig->sign($objKey, $xmlDocument->documentElement);
-$objDSig->add509Cert(file_get_contents($certFile));
-
-///appebd signature to rDE node and then get Signature node in XMLString
-$objDSig->appendSignature($rDENode);
-$signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("Signature")->item(0));
-
-///load signed XML to SimpleXMLElement
-$signedSimpleXMLElement = simplexml_load_string($signedXML);
-$Signature = Signature::FromSimpleXMLElement($signedSimpleXMLElement);
-
-///create QR content
-$gCamFuFD = new GCamFuFD();
-$gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $de, $Signature));
-$gCamFuDFNode = $gCamFuFD->toDOMElement($xmlDocument);
-
-///append QR node to rDE node
-$xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuDFNode);
-
-///get signed XML
-$signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
 
 try {
-    echo "Prueba de Envío de Documento Electrónico\n";
-    echo "Inicializando Sifen... ";
-    Sifen::Init($config);
     echo "OK\n";
     echo "Enviando Documento Electrónico...\n";
     echo "CDC: " . $cdc . "\n";
-    $res = Sifen::EnviarDE($signedXML);
+    $res = Sifen::EnviarDE($rde);
     echo "Resultado: \n";
     echo var_dump($res);
 } catch (SoapFault $e) {

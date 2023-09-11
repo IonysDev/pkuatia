@@ -2,6 +2,10 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Signature;
 
+use DOMDocument;
+use DOMElement;
+use SimpleXMLElement;
+
 class CanonicalizationMethod 
 {
     public String $Algorithm;
@@ -9,10 +13,12 @@ class CanonicalizationMethod
     /**
      * Devuelve la URI del algoritmo de la canonicalización
      *
-     * @return String
+     * @return String 
      */
-    public function getAlgorithm(): String
+    public function getAlgorithm(): ?String
     {
+        if(!isset($this->Algorithm))
+            return null;
         return $this->Algorithm;
     }
 
@@ -37,14 +43,28 @@ class CanonicalizationMethod
     /**
      * Instancia un objeto CanonicalizationMethod a partir de un SimpleXMLElement
      * 
-     * @param \SimpleXMLElement $node
+     * @param SimpleXMLElement $node Nodo XML que contiene los datos del objeto
      * 
-     * @return self
+     * @return self Objeto instanciado
      */
-    public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         $CanonicalizationMethod = new self();
         $CanonicalizationMethod->setAlgorithm($node->attributes()->Algorithm);
+        return $CanonicalizationMethod;
+    }
+
+    /**
+     * Instancia un objeto CanonicalizationMethod a partir de un DOMElement
+     * 
+     * @param DOMElement $node Nodo DOMElement que contiene los datos del objeto
+     * 
+     * @return self Objeto instanciado
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        $CanonicalizationMethod = new self();
+        $CanonicalizationMethod->setAlgorithm($node->getAttribute('Algorithm'));
         return $CanonicalizationMethod;
     }
 
@@ -53,14 +73,15 @@ class CanonicalizationMethod
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Convierte el objeto a un DOMElement
+     * Convierte este CanonicalizationMethod a un DOMElement para ser usado en un DOMDocument
      * 
-     * @return \DOMElement
+     * @param DOMDocument $doc Documento DOMDocument donde se insertará el DOMElement
+     * 
+     * @return DOMElement Objeto DOMElement que representa el objeto
      */
-    public function toDOMElement(): \DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $dom = new \DOMDocument();
-        $CanonicalizationMethod = $dom->createElement('CanonicalizationMethod');
+        $CanonicalizationMethod = $doc->createElement('CanonicalizationMethod');
         $CanonicalizationMethod->setAttribute('Algorithm', $this->getAlgorithm());
         return $CanonicalizationMethod;
     }

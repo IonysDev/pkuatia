@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\F;
 
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -436,6 +437,22 @@ class GTotSub
     return $this;
   }
 
+  /**
+   * Establece el valor de dBaseGrav10 que representa el total de la base gravada de IVA al 10%.
+   *
+   * @param String $dBaseGrav10 El valor de la base gravada de IVA al 10% expresado en cadena numérica de caracteres.
+   *
+   * @return self Retorna la instancia de esta clase.
+   */
+  public function setDBaseGrav10(String $dBaseGrav10): self
+  {
+    $newVal = trim($dBaseGrav10);
+    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+      throw new \Exception("[GTotSub] Valor no válido para el campo dBaseGrav10: $newVal");
+    $this->dBaseGrav10 = $dBaseGrav10;
+    return $this;
+  }
+
 
   /**
    * Set the value of dTBasGraIVA
@@ -448,7 +465,7 @@ class GTotSub
   {
     $newVal = trim($dTBasGraIVA);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTBasGraIVA: $newVal");
+      throw new \Exception("[GTotSub] Valor no válido para el campo dTBasGraIVA: $newVal");
     $this->dTBasGraIVA = $newVal;
     return $this;
   }
@@ -840,22 +857,23 @@ class GTotSub
   }
 
   /**
-   * toDOMElement
+   * Convierte este GTotSub en un DOMElement perteneciente a un DOMDocument
+   * 
+   * @param DOMDocument $doc El DOMDocument que generará el DOMElement sin insertarlo.
    *
-   * @return DOMElement
+   * @return DOMElement El DOMElement que representa a este GTotSub.
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new \DOMDocument();
     $res = $doc->createElement('gTotSub');
     if(isset($this->dSubExe))
-    $res->appendChild(new DOMElement('dSubExe', $this->getDSubExe()));
+      $res->appendChild(new DOMElement('dSubExe', $this->getDSubExe()));
     if(isset($this->dSubExo))
-    $res->appendChild(new DOMElement('dSubExo', $this->getDSubExo()));
+      $res->appendChild(new DOMElement('dSubExo', $this->getDSubExo()));
     if(isset($this->dSub5))
-    $res->appendChild(new DOMElement('dSub5', $this->getDSub5()));
+      $res->appendChild(new DOMElement('dSub5', $this->getDSub5()));
     if(isset($this->dSub10))
-    $res->appendChild(new DOMElement('dSub10', $this->getDSub10()));
+      $res->appendChild(new DOMElement('dSub10', $this->getDSub10()));
     $res->appendChild(new DOMElement('dTotOpe', $this->getDTotOpe()));
     $res->appendChild(new DOMElement('dTotDesc', $this->getDTotDesc()));
     $res->appendChild(new DOMElement('dTotDescGlotem', $this->getDTotDescGlotem()));
@@ -866,44 +884,32 @@ class GTotSub
     $res->appendChild(new DOMElement('dAnticipo', $this->getDAnticipo()));
     $res->appendChild(new DOMElement('dRedon', $this->getDRedon()));
     if(isset($this->dComi))
-    $res->appendChild(new DOMElement('dComi', $this->getDComi()));
+      $res->appendChild(new DOMElement('dComi', $this->getDComi()));
     $res->appendChild(new DOMElement('dTotGralOpe', $this->getDTotGralOpe()));
     if(isset($this->dIVA5))
-    $res->appendChild(new DOMElement('dIVA5', $this->getDIVA5()));
+      $res->appendChild(new DOMElement('dIVA5', $this->getDIVA5()));
     if(isset($this->dIVA10))
-    $res->appendChild(new DOMElement('dIVA10', $this->getDIVA10()));
+      $res->appendChild(new DOMElement('dIVA10', $this->getDIVA10()));
     if(isset($this->dLiqTotIVA5))
-    $res->appendChild(new DOMElement('dLiqTotIVA5', $this->getDLiqTotIVA5()));
+      $res->appendChild(new DOMElement('dLiqTotIVA5', $this->getDLiqTotIVA5()));
     if(isset($this->dLiqTotIVA10))
-    $res->appendChild(new DOMElement('dLiqTotIVA10', $this->getDLiqTotIVA10()));
+      $res->appendChild(new DOMElement('dLiqTotIVA10', $this->getDLiqTotIVA10()));
     if(isset($this->dIVAComi))
-    $res->appendChild(new DOMElement('dIVAComi', $this->getDIVAComi()));
+      $res->appendChild(new DOMElement('dIVAComi', $this->getDIVAComi()));
     if(isset($this->dTotIVA))
-    $res->appendChild(new DOMElement('dTotIVA', $this->getDTotIVA()));
+      $res->appendChild(new DOMElement('dTotIVA', $this->getDTotIVA()));
     if(isset($this->dBaseGrav5))
-    $res->appendChild(new DOMElement('dBaseGrav5', $this->dBaseGrav5));
+      $res->appendChild(new DOMElement('dBaseGrav5', $this->dBaseGrav5));
     if(isset($this->dBaseGrav10))
-    $res->appendChild(new DOMElement('dBaseGrav10', $this->getDBaseGrav10()));
+      $res->appendChild(new DOMElement('dBaseGrav10', $this->getDBaseGrav10()));
     if(isset($this->dTBasGraIVA))
-    $res->appendChild(new DOMElement('dTBasGraIVA', $this->getDTBasGraIVA()));
+      $res->appendChild(new DOMElement('dTBasGraIVA', $this->getDTBasGraIVA()));
     if(isset($this->dTotalGs))
-    $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
+      $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
     return $res;
   }
 
-  /**
-   * Set the value of dBaseGrav10
-   *
-   * @param String $dBaseGrav10
-   *
-   * @return self
-   */
-  public function setDBaseGrav10(String $dBaseGrav10): self
-  {
-    $this->dBaseGrav10 = $dBaseGrav10;
-
-    return $this;
-  }
+  
 
   /**
    * FromSifenResponseObject

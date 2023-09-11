@@ -1,12 +1,12 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Helpers;
+namespace Abiliomp\Pkuatia\DataMappings;
 
 
 /**
- * GeoRefCodesHelper
+ * PyGeoCodesMapping
  */
-class GeoRefCodesHelper
+class PyGeoCodesMapping
 {
   /**
    * getArray
@@ -15,7 +15,7 @@ class GeoRefCodesHelper
    */
   public static function getArray()
   {
-    $xml = simplexml_load_file(__DIR__ . '/georef.xml');
+    $xml = simplexml_load_file(__DIR__ . '/Sources/PyGeoCodes.xml');
     $json = json_encode($xml);
     $array = json_decode($json, true);
     return $array;

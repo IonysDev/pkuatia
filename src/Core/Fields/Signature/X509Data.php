@@ -48,6 +48,20 @@ class X509Data
     }
 
     /**
+     * Instancia un objeto X509Data a partir de un DOMElement
+     * 
+     * @param \DOMElement $node
+     * 
+     * @return self
+     */
+    public static function FromDOMElement(\DOMElement $node): self
+    {
+        $res = new self();
+        $res->setX509Certificate($node->getElementsByTagName('X509Certificate')->item(0)->nodeValue);
+        return $res;
+    }
+
+    /**
      * Instancia un objeto X509Data a partir de un objeto stdClass de respuesta a una petición SOAP al SIFEN
      * 
      * @param \stdClass $object

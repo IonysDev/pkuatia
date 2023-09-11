@@ -14,6 +14,8 @@ use Abiliomp\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
+use stdClass;
 
 /**
  * Nodo Id:     A001
@@ -38,6 +40,9 @@ class DE extends BaseSifenField
   public GCamGen     $gCamGen;     // G001 - G - 0-1  - Campos de uso general
   public array       $gCamDEAsoc;  // H001 - G - 0-99 - Campos que identifican al DE asociado (GCamDEAsoc)
 
+  /**
+   * Constructor de la clase DE.
+   */
   public function __construct()
   {
     $this->dSisFact = Constants::SISTEMA_FACTURACION_CONTRIBUYENTE;
@@ -49,25 +54,32 @@ class DE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iD
+   * Establece el valor de Id (A002) del documento electrónico (DE).
+   * Este valor es equivalente al CDC y se debe generar con el algoritmo de cálculo de CDC cuando se crea un nuevo DE.
+   * Cuando se recibe un DE de Sifen, este valor se debe tomar del atributo Id del nodo DE.
    *
-   * @param String $iD
+   * @param String $id Valor de Id (A002) del documento electrónico (DE)
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setId(String $id): self
   {
+    if(strlen($id) != 44)
+      throw new \Exception('[DE] Id debe tener 44 caracteres.');
+    else if(!preg_match('/^[0-9]{44}$/', $id))
+      throw new \Exception('[DE] Id debe contener solo números.');
     $this->id = $id;
     return $this;
   }
 
 
   /**
-   * Set the value of dDVId
+   * Establece el valor de dDVId (A003) del documento electrónico (DE) que corresponde al dígito verificador del Id (A002).
+   * Este valor es el útlimo dígito del Id (A002) y se debe generar con el algoritmo de cálculo de CDC cuando se crea un nuevo DE.
    *
-   * @param int $dDVId
+   * @param int $dDVId 
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDDVId(int $dDVId): self
   {
@@ -77,11 +89,11 @@ class DE extends BaseSifenField
 
 
   /**
-   * Set the value of dFecFirma
+   * Establece el valor de dFecFirma (A004) que representa la fecha de firma del documento electrónico (DE).
    *
-   * @param DateTime $dFecFirma
+   * @param DateTime $dFecFirma Fecha de firma del documento electrónico (DE).
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDFecFirma(DateTime $dFecFirma): self
   {
@@ -91,24 +103,27 @@ class DE extends BaseSifenField
 
 
   /**
-   * Set the value of dSisFact
+   * Establece el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
+   * Este método no debe ser llamado directamente, ya que el sistema de facturación es fijo y no debe ser modificado.
    *
-   * @param int $dSisFact
+   * @param int $dSisFact Sistema de facturación del documento electrónico (DE). Solo puede ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET).
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDSisFact(int $dSisFact): self
   {
+    if($dSisFact != Constants::SISTEMA_FACTURACION_CONTRIBUYENTE && $dSisFact != Constants::SISTEMA_FACTURACION_SIFEN_GRATUITO)
+      throw new \Exception('[DE] Valor dSisFact inválido: ' . $dSisFact . '. Debe ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET)');
     $this->dSisFact = $dSisFact;
     return $this;
   }
 
   /**
-   * Establece el valor de gOpeDe
+   * Establece el valor de gOpeDe (B002) que representa los campos inherentes a la operación de DE.
    * 
-   * @param GOpeDE $gOpeDe
+   * @param GOpeDE $gOpeDe Campos inherentes a la operación de DE.
    * 
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGOpeDe(GOpeDE $gOpeDe): self
   {
@@ -117,11 +132,11 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Establece el valor de gTimb
+   * Establece el valor de gTimb (C001) que representa los datos del timbrado.
    * 
-   * @param GTimb $gTimb
+   * @param GTimb $gTimb Datos del timbrado.
    * 
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGTimb(GTimb $gTimb): self
   {
@@ -130,11 +145,11 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Establece el valor de gDatGralOpe
+   * Establece el valor de gDatGralOpe (D001) que representa los campos generales del DE.
    * 
-   * @param GDatGralOpe $gDatGralOpe
+   * @param GDatGralOpe $gDatGralOpe Campos generales del DE.
    * 
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGDatGralOpe(GDatGralOpe $gDatGralOpe): self
   {
@@ -143,11 +158,11 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Establece el valor de gDtipDe
+   * Establece el valor de gDtipDe (E001) que representa los campos específicos por tipo de Documento Electrónico.
    * 
-   * @param GDtipDE $gDtipDe
+   * @param GDtipDE $gDtipDe Campos específicos por tipo de Documento Electrónico.
    * 
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos. 
    */
   public function setGDtipDe(GDtipDE $gDtipDe): self
   {
@@ -156,11 +171,11 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Establece el valor de gTotSub
+   * Establece el valor de gTotSub (F001) que representa los campos de subtotales y totales.
    * 
    * @param GTotSub $gTotSub
    * 
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGTotSub(GTotSub $gTotSub): self
   {
@@ -169,11 +184,11 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Establece el valor de gCamGen
+   * Establece el valor de gCamGen (G001) que representa los campos de uso general.
    * 
-   * @param GCamGen $gCamGen
+   * @param GCamGen $gCamGen Campos de uso general.
    * 
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGCamGen(GCamGen $gCamGen): self
   {
@@ -182,11 +197,11 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Establece el valor de gCamDEAsoc
+   * Establece el valor de gCamDEAsoc (H001) que representa los campos que identifican al DE asociado.
    * 
-   * @param array $gCamDEAsoc Arreglo del tipo GCamDEAsoc
-   * 
-   * @return self
+   * @param array $gCamDEAsoc Arreglo del tipo GCamDEAsoc que representa los campos que identifican al DE asociado.
+   *  
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGCamDEAsoc(array $gCamDEAsoc): self
   {
@@ -199,9 +214,9 @@ class DE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iD
+   * Obtiene el valor de Id (A002) del documento electrónico (DE).
    *
-   * @return String
+   * @return String Id (A002) del documento electrónico (DE).
    */
   public function getId(): String
   {
@@ -209,9 +224,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Get the value of dDVId
+   * Obtiene el valor de dDVId (A003) del documento electrónico (DE) que corresponde al dígito verificador del Id (A002).
    *
-   * @return int
+   * @return int Dígito verificador del Id (A002) del documento electrónico (DE).
    */
   public function getDDVId(): int
   {
@@ -219,11 +234,11 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Get the value of dFecFirma
+   * Obtiene el valor de dFecFirma (A004) que representa la fecha de firma del documento electrónico (DE).
    *
-   * @return DateTime
+   * @return DateTime Fecha de firma del documento electrónico (DE).
    */
-  public function getDFecFirma(): DateTime | null
+  public function getDFecFirma(): DateTime
   {
     if(isset($this->dFecFirma))
       return $this->dFecFirma;
@@ -232,9 +247,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Get the value of dSisFact
+   * Obtiene el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
    *
-   * @return int
+   * @return int Sistema de facturación del documento electrónico (DE). Solo puede ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET).
    */
   public function getDSisFact(): int
   {
@@ -242,9 +257,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Devuelve el valor de gOpeDe
+   * Devuelve el valor de gOpeDe (B002) que representa los campos inherentes a la operación de DE.
    * 
-   * @return GOpeDE
+   * @return GOpeDE Campos inherentes a la operación de DE.
    */
   public function getGOpeDe(): GOpeDE
   {
@@ -252,9 +267,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Devuelve el valor de gTimb
+   * Devuelve el valor de gTimb (C001) que representa los datos del timbrado.
    * 
-   * @return GTimb
+   * @return GTimb Datos del timbrado.
    */
   public function getGTimb(): GTimb
   {
@@ -262,9 +277,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Devuelve el valor de gDatGralOpe
+   * Devuelve el valor de gDatGralOpe (D001) que representa los campos generales del DE.
    * 
-   * @return GDatGralOpe
+   * @return GDatGralOpe Campos generales del DE.
    */
   public function getGDatGralOpe(): GDatGralOpe
   {
@@ -272,9 +287,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Devuelve el valor de gDtipDe
+   * Devuelve el valor de gDtipDe (E001) que representa los campos específicos por tipo de Documento Electrónico.
    * 
-   * @return GDtipDE
+   * @return GDtipDE Campos específicos por tipo de Documento Electrónico.
    */
   public function getGDtipDe(): GDtipDE
   {
@@ -282,9 +297,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Devuelve el valor de gTotSub
+   * Devuelve el valor de gTotSub (F001) que representa los campos de subtotales y totales.
    * 
-   * @return GTotSub
+   * @return GTotSub Campos de subtotales y totales.
    */
   public function getGTotSub(): GTotSub
   {
@@ -295,9 +310,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Devuelve el valor de gCamGen
+   * Devuelve el valor de gCamGen (G001) que representa los campos de uso general.
    * 
-   * @return GCamGen
+   * @return GCamGen Campos de uso general.
    */
   public function getGCamGen(): GCamGen
   {
@@ -305,9 +320,9 @@ class DE extends BaseSifenField
   }
 
   /**
-   * Devuelve el valor de gCamDEAsoc
+   * Devuelve el valor de gCamDEAsoc (H001) que representa los campos que identifican al DE asociado.
    * 
-   * @return array
+   * @return array Arreglo del tipo GCamDEAsoc que representa los campos que identifican al DE asociado.
    */
   public function getGCamDEAsoc(): array
   {
@@ -319,9 +334,11 @@ class DE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Convierte el objeto DE a un DOMElement de XML
+   * Convierte este DE a un DOMElement insertable en el DOMDocument indicado.
+   * 
+   * @param DOMDocument $doc DOMDocument que generará el DOMElement sin insertarlo
    *
-   * @return DOMElement
+   * @return DOMElement DOMElement generado que representa este DE
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
@@ -335,26 +352,14 @@ class DE extends BaseSifenField
     $res->appendChild($this->gDatGralOpe->toDOMElement($doc));
     $res->appendChild($this->gDtipDe->toDOMElement($doc));
     if(isset($this->gTotSub))
-    {
-      $importedNode = $doc->importNode($this->gTotSub->toDOMElement(), true);
-      $res->appendChild($importedNode);
-    }
-
+      $res->appendChild($this->gTotSub->toDOMElement($doc));
     if(isset($this->gCamGen))
-    {
-      $importedNode = $doc->importNode($this->gCamGen->toDOMElement(), true);
-      $res->appendChild($importedNode);
-    }
-
+      $res->appendChild($this->gCamGen->toDOMElement($doc));
     if(count($this->gCamDEAsoc) > 0)
     {
       foreach($this->gCamDEAsoc as $g)
-      {
-        $importedNode = $doc->importNode($g->toDOMElement(), true);
-        $res->appendChild($importedNode);
-      }
+        $res->appendChild($g->toDOMElement($doc));
     }
-
     return $res;
   }
 
@@ -363,23 +368,21 @@ class DE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Devuelve un objeto DE a partir de un SimpleXMLElement
+   * Genera un objeto DE a partir de un nodo SimpleXMLElement.
    * 
-   * @param \SimpleXMLElement $node
+   * @param SimpleXMLElement $node Nodo XML que representa un DE
    * 
-   * @return DE 
+   * @return DE Objeto DE con los datos extraídos del nodo XML
    */
-  public static function FromSimpleXMLElement(\SimpleXMLElement $node)
+  public static function FromSimpleXMLElement(SimpleXMLElement $node)
   {
     if(strcmp($node->getName(), 'DE') != 0)
       throw new \Exception('[DE] Invalid XML Node Name: ' . $node->getName());
-    
     $res = new DE();
     $res->id = $node->attributes()['Id'];
     $res->dDVId = intval($node->dDVId);
     $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecFirma);
     $res->dSisFact = intval($node->dSisFact);
-
     $res->gOpeDe = GOpeDE::FromSimpleXMLElement($node->gOpeDE);
     $res->gTimb = GTimb::FromSimpleXMLElement($node->gTimb);
     $res->gDatGralOpe = GDatGralOpe::FromSimpleXMLElement($node->gDatGralOpe);
@@ -394,17 +397,17 @@ class DE extends BaseSifenField
         $res->gCamDEAsoc[] = GCamDEAsoc::FromSimpleXMLElement($g);
       }
     }
-
     return $res;
   }
 
   /**
-   * FromSifenResponseObject
+   * Genera un objeto DE a partir de un objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.
    *
-   * @param  mixed $object
-   * @return self
+   * @param stdClass $object Objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.
+   * 
+   * @return self Objeto DE con los datos extraídos del objeto stdClass.
    */
-  public static function FromSifenResponseObject($object): self
+  public static function FromSifenResponseObject(stdClass $object): self
   {
     ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
     $array = json_decode(json_encode($object), true);

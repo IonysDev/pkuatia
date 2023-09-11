@@ -27,7 +27,7 @@ class RDE
   public GCamFuFD $gCamFuFD;   // J001  -   - 1-1 - Campos fuera de la firma digital
 
   /**
-   * Constructor
+   * Constructor de la clase RDE
    *
    * @return self
    */
@@ -41,11 +41,11 @@ class RDE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Establece el valor de dVerFor (Versión del formato)
+   * Establece el valor de dVerFor (AA002) que es la versión del formato
    *
    * @param int $dVerFor Versión del formato
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDVerFor(int $dVerFor): self
   {
@@ -54,11 +54,11 @@ class RDE
   }
 
   /**
-   * Establece el valor de DE (Campos firmados del DE)
+   * Establece el valor de DE (A001) que son los campos firmados del DE (Documento Electrónico)
    *
-   * @param DE $DE
+   * @param DE $DE Campos firmados del DE
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDE(DE $DE): self
   {
@@ -67,41 +67,39 @@ class RDE
   }
 
   /**
-   * Establece el valor de gCamFuFD (Campos fuera de la firma digital)
+   * Establece el valor de Signature (I001) que es la firma digital del DTE
    *
-   * @param GCamFuFD $gCamFuFD
+   * @param Signature $Signature Firma Digital del DTE
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   */
+  public function setSignature(Signature $Signature): self
+  {
+    $this->Signature = $Signature;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de gCamFuFD (J001) que son los campos fuera de la firma digital
+   *
+   * @param GCamFuFD $gCamFuFD Campos fuera de la firma digital
+   *
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGCamFuFD(GCamFuFD $gCamFuFD): self
   {
     $this->gCamFuFD = $gCamFuFD;
     return $this;
-  }
-
-
-  /**
-   * Establece el valor de Signature (Firma Digital del DTE)
-   *
-   * @param Signature $Signature
-   *
-   * @return self
-   */
-  public function setSignature(Signature $Signature): self
-  {
-    $this->Signature = $Signature;
-
-    return $this;
-  }
+  }  
 
   ///////////////////////////////////////////////////////////////////////
   // Getters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Devuelve el valor de dVerFor (Versión del formato)
+   * Devuelve el valor de dVerFor (AA002) que es la versión del formato
    *
-   * @return int
+   * @return int Versión del formato
    */
   public function getDVerFor(): int
   {
@@ -109,9 +107,9 @@ class RDE
   }
 
   /**
-   * Devuelve el valor de DE (Campos firmados del DE)
+   * Devuelve el valor de DE (A001) que son los campos firmados del DE (Documento Electrónico)
    *
-   * @return DE
+   * @return DE Campos firmados del DE
    */
   public function getDE(): DE
   {
@@ -119,35 +117,37 @@ class RDE
   }
 
   /**
-   * Devuelve el valor de gCamFuFD (Campos fuera de la firma digital)
+   * Devuelve el valor de Signature (I001) que es la firma digital del DTE
    *
-   * @return GCamFuFD
-   */
-  public function getGCamFuFD(): GCamFuFD
-  {
-    return $this->gCamFuFD;
-  }
-
-  /**
-   * Devuelve el valor de Signature (Firma Digital del DTE)
-   *
-   * @return Signature
+   * @return Signature Firma Digital del DTE
    */
   public function getSignature(): Signature
   {
     return $this->Signature;
   }
 
+  /**
+   * Devuelve el valor de gCamFuFD (J001) que son los campos fuera de la firma digital
+   *
+   * @return GCamFuFD Campos fuera de la firma digital
+   */
+  public function getGCamFuFD() : ?GCamFuFD
+  {
+    if(!isset($this->gCamFuFD))
+      return null;
+    return $this->gCamFuFD;
+  }  
+
   ///////////////////////////////////////////////////////////////////////
-  // Instanciadores y Conversores
+  // Instanciadores
   ///////////////////////////////////////////////////////////////////////
 
   /**
    * Instancia un objeto RDE a partir de un SimpleXMLElement
    *
-   * @param  mixed $node
+   * @param  mixed $node Nodo XML que representa el objeto RDE
    *
-   * @return self
+   * @return self Objeto RDE instanciado
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
@@ -168,9 +168,9 @@ class RDE
   /**
    * Instancia un objeto RDE a partir de objeto tipo stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
-   * @param stdClass $object
+   * @param stdClass $object Objeto stdClass que representa el objeto RDE
    *
-   * @return self
+   * @return self Objeto RDE instanciado
    */
   public static function FromSifenResponseObject($object) : self
   {
@@ -193,8 +193,10 @@ class RDE
 
   /**
    * Convertir el objeto RDE a un DOMElement
+   * 
+   * @param DOMDocument $doc Objeto DOMDocument que representa el documento XML.
    *
-   * @return DOMElement
+   * @return DOMElement Objeto DOMElement que representa el objeto RDE
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
@@ -215,20 +217,9 @@ class RDE
   }
 
   /**
-   * Convierte el objeto RDE a un String XML
-   *
-   * @return String
-   */
-  public function toXMLString(): String
-  {
-    $xmlString = $this->toDOMDocument()->saveXML();
-    if(!$xmlString)
-      throw new \Exception('[RDE] Error al convertir el objeto a XML.');
-    return $xmlString;
-  }
-
-  /**
    * Convierte este RDE a un DOMDocument
+   * 
+   * @return DOMDocument Objeto DOMDocument que representa el objeto RDE
    */
   public function toDOMDocument(): DOMDocument
   {
@@ -238,4 +229,16 @@ class RDE
     return $doc;
   }
 
+  /**
+   * Serializa el objeto RDE a un String XML
+   *
+   * @return String Objeto RDE serializado a XML
+   */
+  public function toXMLString(): String
+  {
+    $xmlString = $this->toDOMDocument()->saveXML();
+    if(!$xmlString)
+      throw new \Exception('[RDE] Error al convertir el objeto a XML.');
+    return $xmlString;
+  }
 }

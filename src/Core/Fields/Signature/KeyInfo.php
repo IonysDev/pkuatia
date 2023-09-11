@@ -48,6 +48,20 @@ class KeyInfo
     }
     
     /**
+     * Instancia un objeto KeyData a partir de un DOMElement
+     * 
+     * @param \DOMElement $node
+     * 
+     * @return self
+     */
+    public static function FromDOMElement(\DOMElement $node): self
+    {
+        $res = new self();
+        $res->setX509Data(X509Data::FromDOMElement($node->getElementsByTagName('X509Data')->item(0)));
+        return $res;
+    }
+
+    /**
      * Convierte el objeto a un DOMElement
      * 
      * @return \DOMElement

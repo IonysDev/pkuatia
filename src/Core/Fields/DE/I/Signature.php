@@ -14,8 +14,8 @@ use DOMElement;
 class Signature extends BaseSifenField
 {
   public SignedInfo $SignedInfo;
-  public String $SignatureValue;
-  public KeyInfo $KeyInfo;
+  public String     $SignatureValue;
+  public KeyInfo    $KeyInfo;
   
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -70,8 +70,10 @@ class Signature extends BaseSifenField
    *
    * @return SignedInfo
    */
-  public function getSignedInfo(): SignedInfo
+  public function getSignedInfo(): ?SignedInfo
   {
+      if(!isset($this->SignedInfo))
+        return null;
       return $this->SignedInfo;
   }
 
@@ -80,8 +82,10 @@ class Signature extends BaseSifenField
    *
    * @return String
    */
-  public function getSignatureValue(): String
+  public function getSignatureValue(): ?String
   {
+      if(!isset($this->SignatureValue))
+        return null;
       return $this->SignatureValue;
   }
 
@@ -90,8 +94,10 @@ class Signature extends BaseSifenField
    *
    * @return KeyInfo
    */
-  public function getKeyInfo(): KeyInfo
+  public function getKeyInfo(): ?KeyInfo
   {
+      if(!isset($this->KeyInfo))
+        return null;
       return $this->KeyInfo;
   }
 
@@ -107,7 +113,7 @@ class Signature extends BaseSifenField
    * 
    * @return self
    */
-  public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'Signature') != 0)
       throw new \Exception("[Signature] Invalid XML Node Name: " . $node->getName());
@@ -115,6 +121,24 @@ class Signature extends BaseSifenField
     $res->setSignedInfo(SignedInfo::FromSimpleXMLElement($node->SignedInfo));
     $res->setSignatureValue($node->SignatureValue);
     $res->setKeyInfo(KeyInfo::FromSimpleXMLElement($node->KeyInfo));
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto Signature a partir de un DOMElement
+   * 
+   * @param DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'Signature') != 0)
+      throw new \Exception("[Signature] Nodo de nombre inválido: " . $node->nodeName);
+    $res = new Signature();
+    $res->setSignedInfo(SignedInfo::FromDOMElement($node->getElementsByTagName('SignedInfo')->item(0)));
+    $res->setSignatureValue($node->getElementsByTagName('SignatureValue')->item(0)->nodeValue);
+    $res->setKeyInfo(KeyInfo::FromDOMElement($node->getElementsByTagName('KeyInfo')->item(0)));
     return $res;
   }
 

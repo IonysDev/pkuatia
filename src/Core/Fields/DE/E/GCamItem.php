@@ -3,7 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\Helpers\CountryHelper;
+use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
 use DOMDocument;
 use DOMElement;
@@ -231,7 +231,7 @@ class GCamItem extends BaseSifenField
   public function setCPaisOrig(String $cPaisOrig): self
   {
     $this->cPaisOrig = $cPaisOrig;
-    $this->setDDesPaisOrig(CountryHelper::getCountryDesc($cPaisOrig));
+    $this->setDDesPaisOrig(CountryMapping::getCountryDesc($cPaisOrig));
     return $this;
   }
 

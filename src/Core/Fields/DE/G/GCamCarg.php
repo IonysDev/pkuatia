@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\G;
 
 use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -14,13 +15,13 @@ use SimpleXMLElement;
 class GCamCarg
 {
                                    // Id - Longitud - Ocurrencia - Descripción
-  public int $cUniMedTotVol;       // G051 - 1-5  - 0-1 - Unidad de medida del total de volumen de la mercadería
+  public int    $cUniMedTotVol;    // G051 - 1-5  - 0-1 - Unidad de medida del total de volumen de la mercadería
   public String $dDesUniMedTotVol; // G052 - 1-10 - 0-1 - Descripción de la unidad de medida del total de volumen de la mercadería
-  public int $dTotVolMerc;         // G053 - 1-20 - 0-1 - Total volumen de la mercadería
-  public int $cUniMedTotPes;       // G054 - 1-5  - 0-1 - Unidad de medida del peso total de la mercadería
+  public int    $dTotVolMerc;      // G053 - 1-20 - 0-1 - Total volumen de la mercadería
+  public int    $cUniMedTotPes;    // G054 - 1-5  - 0-1 - Unidad de medida del peso total de la mercadería
   public String $dDesUniMedTotPes; // G055 - 1-10 - 0-1 - Descripción de la unidad de medida del peso total de la mercadería
-  public int $dTotPesMerc;         // G056 - 1-20 - 0-1 - Total peso de la mercadería;
-  public int $iCarCarga;           // G057 - 1-1  - 0-1 - Características de la  Carga 
+  public int    $dTotPesMerc;      // G056 - 1-20 - 0-1 - Total peso de la mercadería;
+  public int    $iCarCarga;        // G057 - 1-1  - 0-1 - Características de la  Carga 
   public String $dDesCarCarga;     // G058 - 1-50 - 0-1 - Descripción de las características de la carga
 
   ///////////////////////////////////////////////////////////////////////
@@ -308,14 +309,15 @@ class GCamCarg
   }
 
   /**
-   * toDOMElement
+   * Convierte este GCamCarg a un DOMElement
+   * 
+   * @param DOMDocument $doc Documento DOM donde se generará el nodo, sin insertarse
    *
-   * @return DOMElement
+   * @return DOMElement El nodo DOM generado
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gCamCarg');
-
+    $res = $doc->createElement('gCamCarg');
     $res->appendChild(new DOMElement('cUniMedTotVol', $this->getCUniMedTotPes()));
     $res->appendChild(new DOMElement('dDesUniMedTotVol', $this->getDDesUniMedTotVol()));
     $res->appendChild(new DOMElement('dTotVolMerc', $this->getDTotVolMerc()));
@@ -324,7 +326,6 @@ class GCamCarg
     $res->appendChild(new DOMElement('dTotPesMerc', $this->getDTotPesMerc()));
     $res->appendChild(new DOMElement('iCarCarga', $this->getICarCarga()));
     $res->appendChild(new DOMElement('dDesCarCarga', $this->getDDesCarCarga()));
-
     return $res;
   }
   

@@ -52,7 +52,7 @@ class Constants
 
     //Sistema de facturacion
     public const SISTEMA_FACTURACION_CONTRIBUYENTE = 1;
-    public const SIFEN_SOLUCION_GRATUITA = 2;
+    public const SISTEMA_FACTURACION_SIFEN_GRATUITO = 2;
 
     //Tipos de transacciones
     public const TIPO_TRANSACCION_VENTA_MERCADERIA = 1;

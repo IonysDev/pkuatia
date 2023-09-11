@@ -5,8 +5,8 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 use Abiliomp\Pkuatia\Config;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\RucUtils;
-use Abiliomp\Pkuatia\Helpers\DepartamentoHelper;
-use Abiliomp\Pkuatia\Helpers\GeoRefCodesHelper;
+use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
+use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
@@ -247,7 +247,7 @@ class GEmis extends BaseSifenField
      */
     public function getDDesDepEmi(): String
     {
-        // return DepartamentoHelper::getDepName(strval($this->cDepEmi));
+        // return DepartamentoMapping::getDepName(strval($this->cDepEmi));
         return $this->dDesDepEmi;
     }
 
@@ -263,7 +263,7 @@ class GEmis extends BaseSifenField
      */
     public function getDDesDisEmi(): String
     {
-        // return GeoRefCodesHelper::getDistName(strval($this->cDisEmi));
+        // return PyGeoCodesMapping::getDistName(strval($this->cDisEmi));
         return $this->dDesDisEmi;
     }
 
@@ -279,7 +279,7 @@ class GEmis extends BaseSifenField
      */
     public function getDDesCiuEmi(): String
     {
-        // return GeoRefCodesHelper::getCiudName(strval($this->cCiuEmi));
+        // return PyGeoCodesMapping::getCiudName(strval($this->cCiuEmi));
         return $this->dDesCiuEmi;
     }
 

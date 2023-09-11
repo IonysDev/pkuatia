@@ -10,7 +10,7 @@ class CDCHelper
 {
   private function __construct(){}
 
-  public static function CDCMaker(DE $dE): String
+  public static function Generate(DE $dE): String
   {
     $cDC = "";
     ///Tipo de documento electrónico

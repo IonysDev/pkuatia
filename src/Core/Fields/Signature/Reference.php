@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Signature;
 
+use DOMElement;
+
 class Reference 
 {
     public String $URI;
@@ -143,6 +145,33 @@ class Reference
         $res->setDigestValue((String) $Reference->DigestValue);
         return $res;
     }
+
+    /**
+     * Instancia un objeto Reference a partir de un DOMElement
+     * 
+     * @param DOMElement $node
+     * 
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        $res = new self();
+        $res->setURI((String) $node->getAttribute('URI'));
+        if($node->getElementsByTagName("Transforms")->length > 0)
+        {
+            foreach($node->getElementsByTagName("Transforms")->item(0)->childNodes as $t)
+            {
+                $res->Transforms[] = Transform::FromDOMElement($t);
+            }
+        }
+        $res->setDigestMethod(DigestMethod::FromDOMElement($node->getElementsByTagName("DigestMethod")->item(0)));
+        $res->setDigestValue((String) $node->getElementsByTagName("DigestValue")->item(0)->nodeValue);
+        return $res;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversores
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * Convierte el objeto a un DOMElement
