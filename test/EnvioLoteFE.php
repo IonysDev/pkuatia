@@ -57,7 +57,7 @@ echo "Tipo de Documento Electrónico a poner en lote TIPO: " . $tipoDocumento . 
 echo "Maximo de Documentos Electrónicos por lote permitidos por el SIFEN: " . Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE . "\n";
 echo "Creando Documento Electrónicos \n";
 echo "===============================================================\n";
-
+$dNumDOC = 22;
 ///HARDCODEADO
 while (count($rDeArray) < 10) {
   //////////////////////////////////////////////////////////////////
@@ -70,7 +70,11 @@ while (count($rDeArray) < 10) {
   $gTimb->setDNumTim(12560814);
   $gTimb->setDEst('001');
   $gTimb->setDPunExp('001');
-  $gTimb->setDNumDoc('0000023');
+ 
+  $dNumDOC++;
+  $dNumDOC = str_pad($dNumDOC, 7, '0', STR_PAD_LEFT);
+  echo "Numero de Documento: " . $dNumDOC . "\n";
+  $gTimb->setDNumDoc($dNumDOC);
   $gTimb->setDFeIniT(new DateTime('2023-04-14'));
 
   //////////////////////////////////////////////////////////////////
