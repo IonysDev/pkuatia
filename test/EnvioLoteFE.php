@@ -35,8 +35,6 @@ $certFile = '80121930-2.pem.crt';
 $keyFile = '80121930-2.pem.key';
 $keyPassphrase = '171222';
 
-$zipDir = __DIR__ . '/compressMe';
-
 $config = new Config();
 $config->env = 'dev';
 $config->certificateFilePath = $certFile;
@@ -70,10 +68,9 @@ while (count($rDeArray) < 10) {
   $gTimb->setDNumTim(12560814);
   $gTimb->setDEst('001');
   $gTimb->setDPunExp('001');
- 
+
   $dNumDOC++;
   $dNumDOC = str_pad($dNumDOC, 7, '0', STR_PAD_LEFT);
-  echo "Numero de Documento: " . $dNumDOC . "\n";
   $gTimb->setDNumDoc($dNumDOC);
   $gTimb->setDFeIniT(new DateTime('2023-04-14'));
 
@@ -262,35 +259,42 @@ foreach ($rDeArray as $key => $value) {
   echo "Documento Electrónico " . ($key + 1) . " firmado\n";
 
   // Guarda el documento electrónico firmado en un archivo
-  file_put_contents($zipDir . '/rde' . ($key + 1) . '.xml', $signedXML);
+  file_put_contents($value->getDE()->getId() . '.xml', $signedXML);
 
-  echo "Documento Electrónico " . ($key + 1) . " guardado en " . $zipDir . "/rde" . ($key + 1) . ".xml\n";
+  echo "Documento Electrónico guardado como" . $value->getDE()->getId() . ".xml\n";
 }
 ////////////////////////////////////////////////////////////////////
 echo "===============================================================\n";
-echo "Proceso de compresión de Documentos Electrónicos\n";
+echo "Compresión de Documentos Electrónicos\n";
 echo "===============================================================\n";
 $zip = new ZipArchive();
-$zip->open($zipDir . '/rDEs.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
-foreach ($rDeArray as $key => $value) {
-  $zip->addFile($zipDir . '/rde' . ($key + 1) . '.xml', 'rde' . ($key + 1) . '.xml');
+$zipFileName = 'lote.zip';
+if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+  foreach ($rDeArray as $key => $value) {
+    $zip->addFile($value->getDE()->getId() . '.xml', $value->getDE()->getId() . '.xml');
+  }
+  $zip->close();
+  echo "Lote de Documentos Electrónicos comprimido como " . $zipFileName . "\n";
 }
-$zip->close();
-echo "Archivo comprimido guardado en " . $zipDir . "/rde.zip\n";
+////////////////////////////////////////////////////////////////////
+//base64 encode
+echo "===============================================================\n";
+echo "Codificación Base64 del Lote de Documentos Electrónicos\n";
+echo "===============================================================\n";
+$zipFileContent = file_get_contents($zipFileName);
+$zipFileContentBase64 = base64_encode($zipFileContent);
+echo "Lote de Documentos Electrónicos codificado en Base64\n";
 ////////////////////////////////////////////////////////////////////
 echo "===============================================================\n";
-echo "Proceso de envío de Lote de Documentos Electrónicos\n";
+echo "Envío de Lote de Documentos Electrónicos\n";
+echo "===============================================================\n";
 
-//enconde to base64
-$zipFile = base64_encode(file_get_contents($zipDir . '/rDEs.zip'));
-
-
-// Crea el objeto de envío de lote de documentos electrónicos
 try {
-  $envioLote = Sifen::EnviarLoteDE($zipFile);
-} catch(SoapFault $e) {
-  echo 'SOAP Fault: ' . $e->getMessage() . "\n";
-}
-catch(Exception $e) {
-  echo 'Exception: ' . $e->getMessage() . "\n";
+  $res = Sifen::EnviarLoteDE($zipFileContentBase64);
+} catch (SoapFault $e) {
+  // Handle SOAP faults/errors
+  echo 'SOAP Error: ' . $e->getMessage();
+} catch (Exception $e) {
+  // Handle general exceptions
+  echo 'Error: ' . $e->getMessage();
 }
