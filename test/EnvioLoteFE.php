@@ -277,7 +277,9 @@ echo "Archivo comprimido guardado en " . $zipDir . "/rde.zip\n";
 echo "===============================================================\n";
 echo "Proceso de envío de Lote de Documentos Electrónicos\n";
 
-$zipFile = $zipDir . '/rDEs.zip';
+//enconde to base64
+$zipFile = base64_encode(file_get_contents($zipDir . '/rDEs.zip'));
+
 
 // Crea el objeto de envío de lote de documentos electrónicos
 try {
