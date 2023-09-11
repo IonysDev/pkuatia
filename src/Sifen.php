@@ -150,7 +150,7 @@ class Sifen
    * 
    * @return void
    */
-  public static function EnviarLoteDE(string $zipFilePath)
+  public static function EnviarLoteDE(string $zipFileContentBase64)
   {
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
     echo self::$client->__getFunctions();
