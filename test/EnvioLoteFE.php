@@ -218,79 +218,22 @@ foreach ($rDeArray as $key => $value) {
     unset($rDeArray[$key]);
   }
 }
-////////////////////////////////////////////////////////////////////
-echo "===============================================================\n";
-echo "Proceso de firma de Documentos Electrónicos\n";
-echo "===============================================================\n";
 
-foreach ($rDeArray as $key => $value) {
-  echo "Firmando Documento Electrónico " . ($key + 1) . "\n";
-  // Firma el documento electrónico
-  $xmlDocument = SignHelper::SignRDE($value);
-  // Extrae la firma del documento electrónico
-  $signatureNode = $xmlDocument->getElementsByTagName("Signature")->item(0);
-  $signature = Signature::FromDOMElement($signatureNode);
-
-  // Verifica si en los campos fuera de la firma hay datos
-  $gCamFuFD = $rde->getGCamFuFD();
-  if (is_null($gCamFuFD))
-    $gCamFuFD = new GCamFuFD();
-  else {
-    // Eliminar el nodo del gCamFuFD si es que existe del xmlDocument firmado
-    $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
-    for ($i = 0; $i < $rdeNode->childNodes->length; $i++) {
-      $node = $rdeNode->childNodes->item($i);
-      if (strcmp($node->nodeName, 'gCamFuFD') == 0) {
-        $rdeNode->removeChild($node);
-      }
-    }
-  }
-
-  // Establece el valor del link para el QR 
-  $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent($config, $rde->getDE(), $signature));
-  $gCamFuFDNode = $gCamFuFD->toDOMElement($xmlDocument);
-
-  // Agrega el nodo del QR al documento electrónico
-  $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
-
-  // Genera la cadena XML a ser enviada al SIFEN
-  $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
-
-  echo "Documento Electrónico " . ($key + 1) . " firmado\n";
-
-  // Guarda el documento electrónico firmado en un archivo
-  file_put_contents($value->getDE()->getId() . '.xml', $signedXML);
-
-  echo "Documento Electrónico guardado como" . $value->getDE()->getId() . ".xml\n";
+if(count($rDeArray) == 0){
+  echo "No hay documentos electrónicos para enviar\n";
+  exit;
+}else if(count($rDeArray) > Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE && count($rDeArray) < 2){
+  echo "Se supera el maximo de documentos electronicos por lote permitidos por el SIFEN\n";
+  exit;
+}else{
+  echo "===============================================================\n";
+  echo count($rDeArray) . " Documentos Electrónicos a enviar\n";
+  echo "===============================================================\n";
 }
-////////////////////////////////////////////////////////////////////
-echo "===============================================================\n";
-echo "Compresión de Documentos Electrónicos\n";
-echo "===============================================================\n";
-$zip = new ZipArchive();
-$zipFileName = 'lote.zip';
-if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-  foreach ($rDeArray as $key => $value) {
-    $zip->addFile($value->getDE()->getId() . '.xml', $value->getDE()->getId() . '.xml');
-  }
-  $zip->close();
-  echo "Lote de Documentos Electrónicos comprimido como " . $zipFileName . "\n";
-}
-////////////////////////////////////////////////////////////////////
-//base64 encode
-echo "===============================================================\n";
-echo "Codificación Base64 del Lote de Documentos Electrónicos\n";
-echo "===============================================================\n";
-$zipFileContent = file_get_contents($zipFileName);
-$zipFileContentBase64 = base64_encode($zipFileContent);
-echo "Lote de Documentos Electrónicos codificado en Base64\n";
-////////////////////////////////////////////////////////////////////
-echo "===============================================================\n";
-echo "Envío de Lote de Documentos Electrónicos\n";
-echo "===============================================================\n";
+
 
 try {
-  $res = Sifen::EnviarLoteDE($zipFileContentBase64);
+  $res = Sifen::EnviarLoteDE($rDeArray);
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();
