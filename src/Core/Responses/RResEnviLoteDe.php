@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Responses;
 
 use DateTime;
+use stdClass;
 
 // Nodo Id: BRSch01 
 // Nombre: rResEnviLoteDe
@@ -11,21 +12,12 @@ use DateTime;
 
 class RResEnviLoteDe
 {
-                                // Id - Longitud - Ocurrencia - Descripción        
+    // Id - Longitud - Ocurrencia - Descripción        
     public DateTime $dFechProc; // BRSch02 - 19 - 1-1 - Fecha y hora de recepción
     public int $dCodRes;        // BRSch03 - 4  - 1.1 - s Código del resultado de recepción 
     public string $dMsgRes;     // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
-    public int $dProdConsLote;  // BRSch05 - 1-15 - 0-1 - Número de Lote
+    public int $dProtConsLote;  // BRSch05 - 1-15 - 0-1 - Número de Lote
     public int $dTpoProces;     // BRSch06 - 1-5 - 1-1 - Tiempo medio de procesamiento en segundos
-
-    public function __construct(DateTime $dFechProc, int $dCodRes, string $dMsgRes, int $dProdConsLote, int $dTpoProces)
-    {
-        $this->dFechProc = $dFechProc;
-        $this->dCodRes = $dCodRes;
-        $this->dMsgRes = $dMsgRes;
-        $this->dProdConsLote = $dProdConsLote;
-        $this->dTpoProces = $dTpoProces;
-    }
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -40,7 +32,7 @@ class RResEnviLoteDe
      *
      * @return self
      */
-    public function setDFechProc(DateTime $dFechProc): self
+    public function setdFechProc(DateTime $dFechProc): self
     {
         $this->dFechProc = $dFechProc;
 
@@ -79,15 +71,15 @@ class RResEnviLoteDe
 
 
     /**
-     * Set the value of dProdConsLote
+     * Set the value of dProtConsLote
      *
-     * @param int $dProdConsLote
+     * @param int $dProtConsLote
      *
      * @return self
      */
-    public function setDProdConsLote(int $dProdConsLote): self
+    public function setdProtConsLote(int $dProtConsLote): self
     {
-        $this->dProdConsLote = $dProdConsLote;
+        $this->dProtConsLote = $dProtConsLote;
 
         return $this;
     }
@@ -110,14 +102,14 @@ class RResEnviLoteDe
     //////////////////////////////////////////////////////////////////////////
     // Getters
     //////////////////////////////////////////////////////////////////////////
-    
+
 
     /**
      * Get the value of dFechProc
      *
      * @return DateTime
      */
-    public function getDFechProc(): DateTime
+    public function getdFechProc(): DateTime
     {
         return $this->dFechProc;
     }
@@ -143,13 +135,13 @@ class RResEnviLoteDe
     }
 
     /**
-     * Get the value of dProdConsLote
+     * Get the value of dProtConsLote
      *
      * @return int
      */
-    public function getDProdConsLote(): int
+    public function getdProtConsLote(): int
     {
-        return $this->dProdConsLote;
+        return $this->dProtConsLote;
     }
 
     /**
@@ -160,5 +152,31 @@ class RResEnviLoteDe
     public function getDTpoProces(): int
     {
         return $this->dTpoProces;
+    }
+
+  /**
+   * Crea una nueva instancia de RResEnviConsDe a partir de un objeto stdClass.
+   * Pensado para castear la respuesta de una llamada SOAP.
+   * 
+   * @param stdClass $object
+   * 
+   * @return self
+   */
+    public static function FromSifenResponseObject($object)
+    {
+        if (is_null($object)) {
+            throw new \Exception("Error Processing Request: null", 1);
+            return null;
+        }
+
+        $res = new RResEnviLoteDe();
+        $res->setdFechProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+        $res->setDCodRes($object->dCodRes);
+        $res->setDMsgRes($object->dMsgRes);
+        $res->setdProtConsLote($object->dProtConsLote);
+        $res->setDTpoProces($object->dTpoProces);
+
+        return $res;
+
     }
 }

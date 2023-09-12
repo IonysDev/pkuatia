@@ -15,6 +15,7 @@ use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
 use Abiliomp\Pkuatia\Core\Requests\REnviDe;
 use Abiliomp\Pkuatia\Core\Requests\REnvioLote;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
+use Abiliomp\Pkuatia\Core\Responses\RResEnviLoteDe;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
 use Abiliomp\Pkuatia\Helpers\QRHelper;
 use Abiliomp\Pkuatia\Helpers\SignHelper;
@@ -150,13 +151,9 @@ class Sifen
    */
   public static function EnviarLoteDE(array $lote)
   {
-    ////////////////////////////////////////////////////////////////////
-    echo "===============================================================\n";
-    echo "Proceso de firma de Documentos Electrónicos\n";
-    echo "===============================================================\n";
 
     foreach ($lote as $key => $value) {
-      echo "Firmando Documento Electrónico " . ($key + 1) . "\n";
+
       // Firma el documento electrónico
       $xmlDocument = SignHelper::SignRDE($value);
       // Extrae la firma del documento electrónico
@@ -188,17 +185,10 @@ class Sifen
       // Genera la cadena XML a ser enviada al SIFEN
       $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
 
-      echo "Documento Electrónico " . ($key + 1) . " firmado\n";
-
       // Guarda el documento electrónico firmado en un archivo
       file_put_contents($value->getDE()->getId() . '.xml', $signedXML);
-
-      echo "Documento Electrónico guardado como" . $value->getDE()->getId() . ".xml\n";
     }
-    ////////////////////////////////////////////////////////////////////
-    echo "===============================================================\n";
-    echo "Compresión de Documentos Electrónicos\n";
-    echo "===============================================================\n";
+
     $zip = new ZipArchive();
     $zipFileName = 'lote.zip';
     if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
@@ -206,23 +196,13 @@ class Sifen
         $zip->addFile($value->getDE()->getId() . '.xml', $value->getDE()->getId() . '.xml');
       }
       $zip->close();
-      echo "Lote de Documentos Electrónicos comprimido como " . $zipFileName . "\n";
     }
-    ////////////////////////////////////////////////////////////////////
-    //base64 encode
-    echo "===============================================================\n";
-    echo "Codificación Base64 del Lote de Documentos Electrónicos\n";
-    echo "===============================================================\n";
-    $zipFileContent = file_get_contents($zipFileName);
-    $zipFileContentBase64 = base64_encode($zipFileContent);
-    echo "Lote de Documentos Electrónicos codificado en Base64\n";
-    ////////////////////////////////////////////////////////////////////
-    echo "===============================================================\n";
-    echo "Envío de Lote de Documentos Electrónicos\n";
-    echo "===============================================================\n";
-    
+
+    $zip = base64_encode(file_get_contents($zipFileName));
+
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
-    echo self::$client->__getFunctions();
+    $object = self::$client->rEnvioLote(new REnvioLote(self::GetDId(), $zip));
+    return RResEnviLoteDe::FromSifenResponseObject($object);
   }
 
   private static function GetSifenUrlBase(): String

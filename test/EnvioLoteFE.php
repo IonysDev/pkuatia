@@ -40,21 +40,14 @@ $config->env = 'dev';
 $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
-echo "===============================================================\n";
-echo "Prueba de Envío de Lote de Documentos Electrónicos\n";
-echo "Inicializando Sifen... \n";
-echo "===============================================================\n";
+
 Sifen::Init($config);
 
 ////////////////////////////////////////////////////////////////////
 $rDeArray = [];
 $tipoDocumento = Constants::TIPO_DOCUMENTO_FACTURA;
 ////////////////////////////////////////////////////////////////////
-echo "===============================================================\n";
-echo "Tipo de Documento Electrónico a poner en lote TIPO: " . $tipoDocumento . "\n";
-echo "Maximo de Documentos Electrónicos por lote permitidos por el SIFEN: " . Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE . "\n";
-echo "Creando Documento Electrónicos \n";
-echo "===============================================================\n";
+
 $dNumDOC = 22;
 ///HARDCODEADO
 while (count($rDeArray) < 10) {
@@ -199,41 +192,14 @@ while (count($rDeArray) < 10) {
 
   //////////////////////////////////////////////////////////////////////
   $rDeArray[] = $rde;
-
-  echo "Documento Electrónico " . count($rDeArray) . " creado\n";
-}
-////////////////////////////////////////////////////////////////////
-echo "===============================================================\n";
-echo count($rDeArray) . " Documentos Electrónicos creados\n";
-echo "===============================================================\n";
-////////////////////////////////////////////////////////////////////
-
-////recheck tipo de documento
-echo "Revision de tipo de documento electrónico \n";
-echo "===============================================================\n";
-foreach ($rDeArray as $key => $value) {
-  echo "Tipo DE admitido: " . $tipoDocumento . " Tipo DE actual: " . $value->getDE()->getGTimb()->getITiDE() . "\n";
-  if ($value->getDE()->getGTimb()->getITiDE() != $tipoDocumento) {
-    echo "Tipo de Documento Electrónico no admitido\n";
-    unset($rDeArray[$key]);
-  }
 }
 
-if(count($rDeArray) == 0){
-  echo "No hay documentos electrónicos para enviar\n";
-  exit;
-}else if(count($rDeArray) > Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE && count($rDeArray) < 2){
-  echo "Se supera el maximo de documentos electronicos por lote permitidos por el SIFEN\n";
-  exit;
-}else{
-  echo "===============================================================\n";
-  echo count($rDeArray) . " Documentos Electrónicos a enviar\n";
-  echo "===============================================================\n";
-}
 
 
 try {
   $res = Sifen::EnviarLoteDE($rDeArray);
+  echo "Resultado: \n";
+  echo var_dump($res);
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();
