@@ -12,9 +12,11 @@ use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
+use Abiliomp\Pkuatia\Core\Requests\REnviConsLoteDe;
 use Abiliomp\Pkuatia\Core\Requests\REnviDe;
 use Abiliomp\Pkuatia\Core\Requests\REnvioLote;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
+use Abiliomp\Pkuatia\Core\Responses\RResEnviConsLoteDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviLoteDe;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
 use Abiliomp\Pkuatia\Helpers\QRHelper;
@@ -208,11 +210,22 @@ class Sifen
 
     $zipcontent = file_get_contents("rLoteDE.zip");
 
+    //delete zip file
+    unlink("rLoteDE.zip");
+
     //send zip file to Sifen
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
     $rEnvioLote = new REnvioLote(self::GetDId(), $zipcontent);
     $object = self::$client->rEnvioLote($rEnvioLote);
     return RResEnviLoteDe::FromSifenResponseObject($object);
+  }
+
+  public static function consultaLote($nroLote)
+  {
+    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl", self::$options);
+    $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
+    $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
+    return RResEnviConsLoteDe::FromSifenResponseObject($object);
   }
 
   private static function GetSifenUrlBase(): String
