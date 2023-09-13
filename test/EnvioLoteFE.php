@@ -200,6 +200,7 @@ try {
   $res = Sifen::EnviarLoteDE($rDeArray);
   echo "Resultado: \n";
   echo var_dump($res);
+  echo "Numero de Lote: " . $res->dProtConsLote . "\n";
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();

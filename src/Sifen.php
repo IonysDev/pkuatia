@@ -98,7 +98,7 @@ class Sifen
    * 
    * @return RRetEnviDe
    */
-  public static function EnviarDE(RDE $rde)
+  public static function EnviarDE(RDE $rde): RRetEnviDe
   {
     // Firma el documento electrónico
     $xmlDocument = SignHelper::SignRDE($rde);
@@ -147,21 +147,21 @@ class Sifen
    * 
    * @param array $lote Lote de Documentos Electrónicos a enviar.
    * 
-   * @return void
+   * @return RResEnviLoteDe
    */
-  public static function EnviarLoteDE(array $lote)
+  public static function EnviarLoteDE(array $lote): RResEnviLoteDe
   {
-   
+
     //create rLoteDe DomDocument
     $rLoteDe = new \DOMDocument('1.0', 'UTF-8');
     $rLoteDe->formatOutput = true;
     $rLoteDe->preserveWhiteSpace = false;
-    
+
     ///add rLoteDe node
     $rLoteDeNode = $rLoteDe->createElement('rLoteDE');
     $rLoteDeNode = $rLoteDe->appendChild($rLoteDeNode);
 
-    
+
     foreach ($lote as $key => $value) {
       SignHelper::Init(self::$config->privateKeyFilePath, self::$config->privateKeyPassphrase, self::$config->certificateFilePath);
       // Firma el documento electrónico
@@ -213,7 +213,6 @@ class Sifen
     $rEnvioLote = new REnvioLote(self::GetDId(), $zipcontent);
     $object = self::$client->rEnvioLote($rEnvioLote);
     return RResEnviLoteDe::FromSifenResponseObject($object);
-
   }
 
   private static function GetSifenUrlBase(): String
