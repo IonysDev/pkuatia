@@ -151,6 +151,12 @@ class Sifen
    */
   public static function EnviarLoteDE(array $lote)
   {
+    $id = self::GetDId();
+
+    $zip = new ZipArchive();
+    $zipFileName = 'lote' . $id . '.zip';
+    //crea el archivo zip
+    $zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
     foreach ($lote as $key => $value) {
       SignHelper::Init(self::$config->privateKeyFilePath, self::$config->privateKeyPassphrase, self::$config->certificateFilePath);
@@ -185,28 +191,15 @@ class Sifen
       // Genera la cadena XML a ser enviada al SIFEN
       $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
 
-      // // Guarda el documento electrónico firmado en un archivo
-      file_put_contents($value->getDE()->getId() . '.xml', $signedXML);
+      ///add file to zip
+      $zip->addFromString($value->getDE()->getId() . '.xml', $signedXML);
     }
+    $zip->close();
 
-
-
-    $id = self::GetDId();
-
-    $zip = new ZipArchive();
-    $zipFileName = 'lote' . $id . '.zip';
-    if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-      foreach ($lote as $key => $value) {
-        $zip->addFile($value->getDE()->getId() . '.xml', $value->getDE()->getId() . '.xml');
-      }
-      $zip->close();
-    }
-
-    $zip = file_get_contents($zipFileName);
-
+    $zipContent = file_get_contents($zipFileName);
 
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
-    $rEnvioLote = new REnvioLote($id, $zip);
+    $rEnvioLote = new REnvioLote($id, $zipContent);
     $object = self::$client->rEnvioLote($rEnvioLote);
     file_put_contents('response.xml', self::$client->__getLastResponse());
     file_put_contents('request.xml', self::$client->__getLastRequest());
