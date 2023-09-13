@@ -198,10 +198,9 @@ class Sifen
       $zip->close();
     }
 
-    ///base64_enconde
+    ///base64binary
     $zip = file_get_contents($zipFileName);
 
-  
     //delete files
     foreach ($lote as $key => $value) {
       unlink($value->getDE()->getId() . '.xml');
