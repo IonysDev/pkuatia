@@ -138,8 +138,6 @@ class Sifen
       XSD_ANYXML
     ));
     $object = self::$client->rEnviDe($rEnviDe);
-    file_put_contents('request.xml', self::$client->__getLastRequest());
-    file_put_contents('response.xml', self::$client->__getLastResponse());
     return RRetEnviDe::FromSifenResponseObject($object);
   }
 
@@ -200,13 +198,22 @@ class Sifen
       $zip->close();
     }
 
-    $zip = (file_get_contents($zipFileName));
+    ///base64_enconde
+    $zip = file_get_contents($zipFileName);
+
+  
+    //delete files
+    foreach ($lote as $key => $value) {
+      unlink($value->getDE()->getId() . '.xml');
+    }
+    unlink($zipFileName);
 
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
-    $object = self::$client->rEnvioLote(new REnvioLote(self::GetDId(), $zip));
-    file_put_contents('requestlote.xml', self::$client->__getLastRequest());
-    file_put_contents('responselote.xml', self::$client->__getLastResponse());
-    return RResEnviLoteDe::FromSifenResponseObject($object);
+    $rEnvioLote = new REnvioLote(self::GetDId(), $zip);
+    $object = self::$client->rEnvioLote($rEnvioLote);
+    file_put_contents('response.xml', self::$client->__getLastResponse());
+    file_put_contents('request.xml', self::$client->__getLastRequest());
+   
   }
 
   private static function GetSifenUrlBase(): String

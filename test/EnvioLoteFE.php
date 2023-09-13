@@ -198,8 +198,8 @@ while (count($rDeArray) < 10) {
 
 try {
   $res = Sifen::EnviarLoteDE($rDeArray);
-  echo "Resultado: \n";
-  echo var_dump($res);
+  // echo "Resultado: \n";
+  // echo var_dump($res);
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();
