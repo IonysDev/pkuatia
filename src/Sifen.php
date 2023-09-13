@@ -154,14 +154,7 @@ class Sifen
   public static function EnviarLoteDE(array $lote): RResEnviLoteDe
   {
 
-    //create rLoteDe DomDocument
-    $rLoteDe = new \DOMDocument('1.0', 'UTF-8');
-    $rLoteDe->formatOutput = true;
-    $rLoteDe->preserveWhiteSpace = false;
-
-    ///add rLoteDe node
-    $rLoteDeNode = $rLoteDe->createElement('rLoteDE');
-    $rLoteDeNode = $rLoteDe->appendChild($rLoteDeNode);
+    $rLotDe = '<rLoteDE>';
 
 
     foreach ($lote as $key => $value) {
@@ -194,16 +187,22 @@ class Sifen
       // Agrega el nodo del QR al documento electrónico
       $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
 
-      ///append xmlDocument to rLoteDe
-      $rLoteDeNode->appendChild($rLoteDe->importNode($xmlDocument->getElementsByTagName("rDE")->item(0), true));
+      $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
+
+      //concatenar los documentos electrónicos
+      $rLotDe .= $signedXML;
     }
+
+    //cerrar etiqueta rLoteDE
+    $rLotDe .= '</rLoteDE>';
+
 
     ///CREATE ZIP FILE
     $zip = new ZipArchive();
     $zip->open("rLoteDE.zip", ZipArchive::CREATE);
 
     ///ADD rLoteDe.xml to ZIP FILE
-    $zip->addFromString("rLoteDE.xml", $rLoteDe->saveXML());
+    $zip->addFromString("rLoteDE.xml", $rLotDe);
 
     ///CLOSE ZIP FILE
     $zip->close();
