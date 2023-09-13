@@ -187,8 +187,8 @@ class Sifen
       // Genera la cadena XML a ser enviada al SIFEN
       $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
 
-      // Guarda el documento electrónico firmado en un archivo
-      file_put_contents($value->getDE()->getId() . '.xml', $signedXML);
+      // // Guarda el documento electrónico firmado en un archivo
+      // file_put_contents($value->getDE()->getId() . '.xml', $signedXML);
     }
 
     // $zip = new ZipArchive();
@@ -200,9 +200,7 @@ class Sifen
     //   $zip->close();
     // }
 
-    // ///base64binary
     // $zip = file_get_contents($zipFileName);
-
 
 
     // self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);

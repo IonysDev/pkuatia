@@ -51,8 +51,6 @@ class SignHelper
         if (!isset(self::$xmlSigner))
             throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
 
-       
-
         $xmlDocument = new DOMDocument('1.0', 'UTF-8');
         $xmlDocument->formatOutput = false;
         $xmlDocument->preserveWhiteSpace = false;
