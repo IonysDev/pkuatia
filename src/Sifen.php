@@ -151,13 +151,17 @@ class Sifen
    */
   public static function EnviarLoteDE(array $lote)
   {
-    $id = self::GetDId();
+   
+    //create rLoteDe DomDocument
+    $rLoteDe = new \DOMDocument('1.0', 'UTF-8');
+    $rLoteDe->formatOutput = true;
+    $rLoteDe->preserveWhiteSpace = false;
+    
+    ///add rLoteDe node
+    $rLoteDeNode = $rLoteDe->createElement('rLoteDE');
+    $rLoteDeNode = $rLoteDe->appendChild($rLoteDeNode);
 
-    $zip = new ZipArchive();
-    $zipFileName = 'lote' . $id . '.zip';
-    //crea el archivo zip
-    $zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
+    
     foreach ($lote as $key => $value) {
       SignHelper::Init(self::$config->privateKeyFilePath, self::$config->privateKeyPassphrase, self::$config->certificateFilePath);
       // Firma el documento electrónico
@@ -188,23 +192,28 @@ class Sifen
       // Agrega el nodo del QR al documento electrónico
       $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
 
-      // Genera la cadena XML a ser enviada al SIFEN
-      $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
-
-      ///add file to zip
-      $zip->addFromString($value->getDE()->getId() . '.xml', $signedXML);
+      ///append xmlDocument to rLoteDe
+      $rLoteDeNode->appendChild($rLoteDe->importNode($xmlDocument->getElementsByTagName("rDE")->item(0), true));
     }
+
+    ///CREATE ZIP FILE
+    $zip = new ZipArchive();
+    $zip->open("rLoteDE.zip", ZipArchive::CREATE);
+
+    ///ADD rLoteDe.xml to ZIP FILE
+    $zip->addFromString("rLoteDE.xml", $rLoteDe->saveXML());
+
+    ///CLOSE ZIP FILE
     $zip->close();
 
-    ///No hace falta el base64_encode
-    $zipContent = file_get_contents($zipFileName);
+    $zipcontent = file_get_contents("rLoteDE.zip");
 
+    //send zip file to Sifen
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
-    $rEnvioLote = new REnvioLote($id, $zipContent);
+    $rEnvioLote = new REnvioLote(self::GetDId(), $zipcontent);
     $object = self::$client->rEnvioLote($rEnvioLote);
-    file_put_contents('response.xml', self::$client->__getLastResponse());
-    file_put_contents('request.xml', self::$client->__getLastRequest());
     return RResEnviLoteDe::FromSifenResponseObject($object);
+
   }
 
   private static function GetSifenUrlBase(): String
