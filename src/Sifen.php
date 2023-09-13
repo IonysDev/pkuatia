@@ -153,7 +153,6 @@ class Sifen
   {
 
     foreach ($lote as $key => $value) {
-
       // Firma el documento electrónico
       $xmlDocument = SignHelper::SignRDE($value);
       // Extrae la firma del documento electrónico
@@ -163,7 +162,10 @@ class Sifen
       // Verifica si en los campos fuera de la firma hay datos
       $gCamFuFD = $value->getGCamFuFD();
       if (is_null($gCamFuFD))
+      {
         $gCamFuFD = new GCamFuFD();
+      }
+       
       else {
         // Eliminar el nodo del gCamFuFD si es que existe del xmlDocument firmado
         $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
@@ -189,30 +191,26 @@ class Sifen
       file_put_contents($value->getDE()->getId() . '.xml', $signedXML);
     }
 
-    $zip = new ZipArchive();
-    $zipFileName = 'lote.zip';
-    if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-      foreach ($lote as $key => $value) {
-        $zip->addFile($value->getDE()->getId() . '.xml', $value->getDE()->getId() . '.xml');
-      }
-      $zip->close();
-    }
+    // $zip = new ZipArchive();
+    // $zipFileName = 'lote.zip';
+    // if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+    //   foreach ($lote as $key => $value) {
+    //     $zip->addFile($value->getDE()->getId() . '.xml', $value->getDE()->getId() . '.xml');
+    //   }
+    //   $zip->close();
+    // }
 
-    ///base64binary
-    $zip = file_get_contents($zipFileName);
+    // ///base64binary
+    // $zip = file_get_contents($zipFileName);
 
-    //delete files
-    foreach ($lote as $key => $value) {
-      unlink($value->getDE()->getId() . '.xml');
-    }
-    unlink($zipFileName);
 
-    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
-    $rEnvioLote = new REnvioLote(self::GetDId(), $zip);
-    $object = self::$client->rEnvioLote($rEnvioLote);
-    file_put_contents('response.xml', self::$client->__getLastResponse());
-    file_put_contents('request.xml', self::$client->__getLastRequest());
-   
+
+    // self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
+    // $rEnvioLote = new REnvioLote(self::GetDId(), $zip);
+    // $object = self::$client->rEnvioLote($rEnvioLote);
+    // file_put_contents('response.xml', self::$client->__getLastResponse());
+    // file_put_contents('request.xml', self::$client->__getLastRequest());
+
   }
 
   private static function GetSifenUrlBase(): String
