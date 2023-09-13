@@ -196,6 +196,7 @@ class Sifen
     }
     $zip->close();
 
+    ///No hace falta el base64_encode
     $zipContent = file_get_contents($zipFileName);
 
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
