@@ -154,8 +154,8 @@ class Sifen
   public static function EnviarLoteDE(array $lote): RResEnviLoteDe
   {
 
+    //Cabecera del rLoteDE
     $rLotDe = '<rLoteDE>';
-
 
     foreach ($lote as $key => $value) {
       SignHelper::Init(self::$config->privateKeyFilePath, self::$config->privateKeyPassphrase, self::$config->certificateFilePath);
@@ -207,6 +207,7 @@ class Sifen
     ///CLOSE ZIP FILE
     $zip->close();
 
+    ///GET ZIP FILE CONTENT
     $zipcontent = file_get_contents("rLoteDE.zip");
 
     //delete zip file
@@ -218,15 +219,26 @@ class Sifen
     $object = self::$client->rEnvioLote($rEnvioLote);
     return RResEnviLoteDe::FromSifenResponseObject($object);
   }
-
-  public static function consultaLote($nroLote)
+  
+  /**
+   * Realiza la consulta de un lote de Documentos Electrónicos en el SIFEN.
+   *
+   * @param  mixed $nroLote, nro del lote provisto por el SIFEN
+   * @return RResEnviConsLoteDe
+   */
+  public static function consultaLote($nroLote): RResEnviConsLoteDe
   {
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl", self::$options);
     $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
     $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
     return RResEnviConsLoteDe::FromSifenResponseObject($object);
   }
-
+  
+  /**
+   * Maneja los entornos de desarrollo y producción.
+   *
+   * @return String
+   */
   private static function GetSifenUrlBase(): String
   {
     if (strtolower(self::$config->env) == "prod") {
@@ -235,7 +247,12 @@ class Sifen
       return Constants::SIFEN_URL_BASE_DEV;
     }
   }
-
+  
+  /**
+   * Maneja el incremento del dId.
+   *
+   * @return int
+   */
   private static function GetDId(): int
   {
     $dId = 1;
