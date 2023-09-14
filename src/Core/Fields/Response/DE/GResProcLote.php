@@ -2,14 +2,16 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
+
+//ID: CRSch05, Grupo resultado del procesamiento del lote
 
 class GResProcLote
 {
-  public string $id;
-  public string $dEstRes;
-  public string $dProtAut;
-  public array $gResProc;
+                            ///ID - DESC - LONG - OCURRENCIA
+  public string $id;        ///CRSch050 - CDC del DE procesado - 44 - 1-1
+  public string $dEstRes;   ///CRSch051 - Estado del resultado del resultado - 8-30 - 1-1
+  public string $dProtAut;  ///CRSch052 - Número de transacción - 10 - 0-1
+  public array $gResProc;   ///CRSch053 - Grupo Mensaje de resultado - no tiene - 0-100
 
 
   /**

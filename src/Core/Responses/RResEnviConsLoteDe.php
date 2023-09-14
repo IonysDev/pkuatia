@@ -6,12 +6,15 @@ use Abiliomp\Pkuatia\Core\Fields\Response\DE\GResProcLote;
 use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
 use DateTime;
 
+// Id: CRSch01, resultado del procesamiento de la consulta de un lote de DEs
+
 class RResEnviConsLoteDe
 {
-  public DateTime $dFecProc;
-  public int $dCodResLot;
-  public string $dMsgResLot;
-  public array $gResProcLote;
+                              ///ID - DESC - LONG - OCURRENCIA
+  public DateTime $dFecProc;  ///CRSch02 - Fecha y hora del procesamiento del lote - 19 - 1-1
+  public int $dCodResLot;     ///CRSch03 - Código de resultado del procesamiento del lote - 4 - 1-1
+  public string $dMsgResLot;  ///CRSch04 - Comentario del resultado del procesamiento del lote - 1-255 - 1-1
+  public array $gResProcLote; ///CRSch05 - Grupo Resultado del procesamiento del lote - Sin longitud - 0-50
 
   /**
    * Set the value of dFecProc
