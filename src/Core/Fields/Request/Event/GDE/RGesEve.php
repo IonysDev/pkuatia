@@ -9,7 +9,7 @@ use DOMElement;
  * Nodo: GDE001 - rGesEve - Raíz de Gestión de Eventos
  * Padre: GDE000 - gGroupGesEve - Raiz del Grupo de Eventos
  */
-class RrGesEve
+class RGesEve
 {
     public REve $REve; // GDE002 - Grupos de campos generales del evento
     public Signature $signature; // GDE008 - Grupo de la firma digital
@@ -50,17 +50,17 @@ class RrGesEve
     ///////////////////////////////////////////////////////////////////////
     ///XML ELEMENT
     ///////////////////////////////////////////////////////////////////////  
-    
+
     /**
      * fromDOMElement
      *
      * @param  mixed $xml
      * @return RrGesEve
      */
-    public static function fromDOMElement(DOMElement $xml): RrGesEve
+    public static function fromDOMElement(DOMElement $xml): RGesEve
     {
         if (strcmp($xml->tagName, 'rGesEve') == 0 && $xml->childElementCount == 1) {
-            $res = new RrGesEve();
+            $res = new RGesEve();
 
             $aux = new REve();
             $aux->fromDOMElement($xml->getElementsByTagName('REve')->item(0)->nodeValue);

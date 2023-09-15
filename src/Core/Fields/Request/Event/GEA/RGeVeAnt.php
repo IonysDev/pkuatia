@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\events\GEA;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
 use DOMElement;
 

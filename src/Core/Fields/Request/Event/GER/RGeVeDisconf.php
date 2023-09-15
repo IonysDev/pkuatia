@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\events\GER;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 
 use DOMElement;
 

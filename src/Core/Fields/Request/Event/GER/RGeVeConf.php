@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\events\GER;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 
 use DateTime;
 use DOMElement;
@@ -126,7 +126,7 @@ class RGeVeConf
       $res = new RGeVeConf();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setITipConf(intval($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue));
-      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d' ,$xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
+      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");

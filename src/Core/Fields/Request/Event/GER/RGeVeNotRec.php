@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\events\GER;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 
 use DateTime;
 use DOMElement;
@@ -312,7 +312,7 @@ class RGeVeNotRec
    */
   public static function fromDOMElement(DOMElement $xml): RGeVeNotRec
   {
-    if (strcmp($xml->tagName, "rGeVeNotRec") == 0 && $xml->childElementCount >=6) {
+    if (strcmp($xml->tagName, "rGeVeNotRec") == 0 && $xml->childElementCount >= 6) {
       $res = new RGeVeNotRec();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue));

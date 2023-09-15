@@ -4,21 +4,22 @@ use Abiliomp\Pkuatia\Core\Config;
 use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupTiEvt;
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RrGesEve;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\rEve;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeCan;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeInu;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeTr;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\RGeDevCCFFCue;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeDevCCFFDev;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeAnt;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeCCFF;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeRem;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeRetAce;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeConf;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeDescon;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeDisconf;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeNotRec;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA\RGeDevCCFFCue;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA\RGeDevCCFFDev;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA\RGeVeAnt;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA\RGeVeCCFF;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA\RGeVeRem;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA\RGeVeRetAce;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA\RGeVeRetAnu;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeConf;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDescon;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDisconf;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeNotRec;
 use Abiliomp\Pkuatia\Core\Requests\REnviEventoDe;
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
@@ -40,7 +41,7 @@ $evento = new GGroupGesEve();
 ///creamos un array para la raiz de gestion de eventos
 $rGesEve = [];
 ///creamos una raiz de gestion de eventos
-$trGesEve = new RrGesEve();
+$trGesEve = new RGesEve();
 //creamos el grupo de campos generales del evento
 $rEve = new rEve();
 $rEve->setId(1);
@@ -141,10 +142,9 @@ if($trGeVeTra->getDMotEv() == 1)
 {
   ///1 cambio del local de entrega
   $trGeVeTra->setCDepEnt(1); 
-  $trGeVeTra->getCCiuEnt(1);
   $trGeVeTra->setCCiuEnt(1);
   $trGeVeTra->setDDirEnt('Direccion de entrega');
-  $trGeVeTra->setDNumCas('Numero de casa');
+  $trGeVeTra->setDNumCas(2345);
   $trGeVeTra->setDCompDir1('Complemento de direccion 1');
 }
 
@@ -168,14 +168,14 @@ $trGeVeReAce->setDFeEmiRet(new DateTime());
 ///////////////////////////////////////////////////////////////
 //Evento automático por interoperabilidad: Evento asociación de anulación de la Retención
 ///////////////////////////////////////////////////////////////
-$trGeVeReAce = new RGeVeRetAce();
-$trGeVeReAce->setId('00000000000000000000000000000000000000000000000000000000000000000'); ///poner un cdc
-$trGeVeReAce->setDNumTimRet(1); ///////////poner un numero de timbrado
-$trGeVeReAce->setDEstRet('Establecimiento');
-$trGeVeReAce->setDPunExpRet('Punto de expedicion');
-$trGeVeReAce->setDNumDocRet('000000000000'); ///////////poner un numero de documento
-$trGeVeReAce->setDCodConRet('000000000000'); ///////////poner un codigo de control
-$trGeVeReAce->setDFeEmiRet(new DateTime());
+$trGeVeReAnu = new RGeVeRetAnu();
+$trGeVeReAnu->setId('00000000000000000000000000000000000000000000000000000000000000000'); ///poner un cdc
+$trGeVeReAnu->setDNumTimRet(1); ///////////poner un numero de timbrado
+$trGeVeReAnu->setDEstRet('Establecimiento');
+$trGeVeReAnu->setDPunExpRet('Punto de expedicion');
+$trGeVeReAnu->setDNumDocRet('000000000000'); ///////////poner un numero de documento
+$trGeVeReAnu->setDCodConRet('000000000000'); ///////////poner un codigo de control
+$trGeVeReAnu->setDFeEmiRet(new DateTime());
 ///////////////////////////////////////////////////////////////
 //Evento automático por interoperabilidad: Evento transferencia de créditos fiscales
 ///////////////////////////////////////////////////////////////
@@ -234,4 +234,7 @@ $evento->setRGesEve($rGesEve);
 $rEnviEventoDe = new REnviEventoDe();
 $rEnviEventoDe->setDId(1);
 $rEnviEventoDe->setDEvReg("HACER EL XML COMO EN LA PAGINA 32 DEL MANUAL");
+
+
+var_dump($evento->toDOMElement());
 
