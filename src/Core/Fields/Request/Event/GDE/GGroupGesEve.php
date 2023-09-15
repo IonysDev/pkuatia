@@ -10,7 +10,7 @@ use DOMElement;
  */
 class GGroupGesEve
 {
-  public array $rGesEve; // GDE001 - Raíz de Gestión de Eventos
+  public array $rGesEve; // GDE001 - Raíz de Gestión de Eventos - OCURRENCIA 1-15
  
   ///////////////////////////////////////////////////////////////////////
   // Setters
