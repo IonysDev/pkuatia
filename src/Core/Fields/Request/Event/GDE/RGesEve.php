@@ -1,33 +1,35 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
+use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use DOMElement;
 
 /**
  * Nodo: GDE001 - rGesEve - Raíz de Gestión de Eventos
  * Padre: GDE000 - gGroupGesEve - Raiz del Grupo de Eventos
  */
-class TrGesEve
+class RrGesEve
 {
-    public TrEve $rEve; // GDE002 - Grupos de campos generales del evento
+    public REve $REve; // GDE002 - Grupos de campos generales del evento
+    public Signature $signature; // GDE008 - Grupo de la firma digital
 
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getEve(): TrEve
+    public function getEve(): REve
     {
-        return $this->rEve;
+        return $this->REve;
     }
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setEve(TrEve $rEve): self
+    public function setEve(REve $REve): self
     {
-        $this->rEve = $rEve;
+        $this->REve = $REve;
         return $this;
     }
 
@@ -38,8 +40,8 @@ class TrGesEve
      */
     public function toDOMElement(): DOMElement
     {
-        $res = new DOMElement('trGesEve');
-        $res->appendChild($this->rEve->toDOMElement());
+        $res = new DOMElement('rGesEve');
+        $res->appendChild($this->REve->toDOMElement());
         return $res;
     }
 
@@ -53,15 +55,15 @@ class TrGesEve
      * fromDOMElement
      *
      * @param  mixed $xml
-     * @return TrGesEve
+     * @return RrGesEve
      */
-    public static function fromDOMElement(DOMElement $xml): TrGesEve
+    public static function fromDOMElement(DOMElement $xml): RrGesEve
     {
-        if (strcmp($xml->tagName, 'trGesEve') == 0 && $xml->childElementCount == 1) {
-            $res = new TrGesEve();
+        if (strcmp($xml->tagName, 'rGesEve') == 0 && $xml->childElementCount == 1) {
+            $res = new RrGesEve();
 
-            $aux = new TrEve();
-            $aux->fromDOMElement($xml->getElementsByTagName('rEve')->item(0)->nodeValue);
+            $aux = new REve();
+            $aux->fromDOMElement($xml->getElementsByTagName('REve')->item(0)->nodeValue);
             $res->setEve($aux);
 
             return $res;

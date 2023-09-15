@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMElement;
 
@@ -8,7 +8,7 @@ use DOMElement;
  * Nodo: GEI001 - rGeVeInu - Campos generales del DE
  * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class TrGeVeInu
+class RGeVeInu
 {
   public int    $dNumTim; // GEI002 - Número del Timbrado
   public String $dEst;    // GEI003 - Establecimiento
@@ -200,7 +200,7 @@ class TrGeVeInu
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeInu');
+    $res = new DOMElement('RGeVeInu');
     $res->appendChild(new DOMElement('dNumTim', $this->getDNumTim()));
     $res->appendChild(new DOMElement('dEst', str_pad($this->dEst, 3, '0', STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('dPunExp', str_pad($this->dPunExp, 3, '0', STR_PAD_LEFT)));
@@ -216,12 +216,12 @@ class TrGeVeInu
    * fromDOMElement
    *
    * @param  mixed $xml
-   * @return TrGeVeInu
+   * @return RGeVeInu
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeInu
+  public static function fromDOMElement(DOMElement $xml): RGeVeInu
   {
-    if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 8) {
-      $res = new TrGeVeInu();
+    if (strcmp($xml->tagName, 'rGeVeInu') == 0 && $xml->childElementCount == 8) {
+      $res = new RGeVeInu();
       $res->setDNumTim(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
       $res->setDEst($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
       $res->setDPunExp($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);

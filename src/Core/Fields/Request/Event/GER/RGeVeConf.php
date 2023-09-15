@@ -9,7 +9,7 @@ use DOMElement;
  * Nodo: GCO001 - rGeVeConf - Raiz Gestión de Eventos Conformidad
  * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class TrGeVeConf
+class RGeVeConf
 {
   public String   $Id;        // GCO002 CDC del DTE 
   public int      $iTipConf;  // GCO003 Tipo de Conformidad: 1 - Total | 2 - Parcial
@@ -105,7 +105,7 @@ class TrGeVeConf
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeConf');
+    $res = new DOMElement('rGeVeConf');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('iTipConf', $this->getITipConf()));
     if ($this->iTipConf == 2) {
@@ -118,12 +118,12 @@ class TrGeVeConf
    * fromDOMElement
    *
    * @param  mixed $xml
-   * @return TrGeVeConf
+   * @return RGeVeConf
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeConf
+  public static function fromDOMElement(DOMElement $xml): RGeVeConf
   {
-    if (strcmp($xml->tagName, 'trGeVeConf') == 0 && $xml->childElementCount == 3) {
-      $res = new TrGeVeConf();
+    if (strcmp($xml->tagName, 'rGeVeConf') == 0 && $xml->childElementCount == 3) {
+      $res = new RGeVeConf();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setITipConf(intval($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue));
       $res->setDFecRecep(DateTime::createFromFormat('Y-m-d' ,$xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));

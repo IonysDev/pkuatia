@@ -7,7 +7,7 @@ use DOMElement;
 /**
  *  ID:GERE001  Raíz Gestión de Eventos remisión PADRE:GDE007
  */
-class TrGeVeRem
+class RGeVeRem
 {
   public String $Id;///GERE002 CDC del DTE asociado
 
@@ -56,7 +56,7 @@ class TrGeVeRem
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeRem');
+    $res = new DOMElement('rGeVeRem');
     $res->appendChild(new DOMElement('Id',$this->getId()));
 
     return $res;
@@ -68,10 +68,10 @@ class TrGeVeRem
    * @param  mixed $xml
    * @return TrGeVeRetAce
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeRem
+  public static function fromDOMElement(DOMElement $xml): RGeVeRem
   {
     if (strcmp($xml->tagName, "rGeVeRem") == 0 && $xml->childElementCount == 7) {
-      $res = new TrGeVeRem();
+      $res = new RGeVeRem();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       
       return $res;

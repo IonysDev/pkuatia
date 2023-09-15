@@ -8,7 +8,7 @@ use DOMElement;
 /**
  * ID:GECF001 Raíz Gestión de Eventos de créditos fiscales PADRE:GDE007
  */
-class TrGeVeCCFF
+class RGeVeCCFF
 {
   public String $Id; // GECF002 CDC del DE/DTE
   public String $dNumTraCCFF; ///GECF003 Número de  transferencia de  créditos fiscales
@@ -107,7 +107,7 @@ class TrGeVeCCFF
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeCCFF');
+    $res = new DOMElement('rGeVeCCFF');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTraCCFF', $this->getDNumTraCCFF()));
     $res->appendChild(new DOMElement('dFeAceTraCCFF', $this->getDFeAceTraCCFF()->format('Y-m-d')));
@@ -121,10 +121,10 @@ class TrGeVeCCFF
    * @param  mixed $xml
    * @return TrGeVeRetAce
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeCCFF
+  public static function fromDOMElement(DOMElement $xml): RGeVeCCFF
   {
-    if (strcmp($xml->tagName, "trGeVeCCFF") == 0 && $xml->childElementCount == 3) {
-      $res = new TrGeVeCCFF();
+    if (strcmp($xml->tagName, "rGeVeCCFF") == 0 && $xml->childElementCount == 3) {
+      $res = new RGeVeCCFF();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDNumTraCCFF($xml->getElementsByTagName('dNumTraCCFF')->item(0)->nodeValue);
       $res->setDFeAceTraCCFF(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeAceTraCCFF')->item(0)->nodeValue));

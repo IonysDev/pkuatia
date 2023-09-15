@@ -7,7 +7,7 @@ use DOMElement;
 /**
  * ID:GEA001 Raíz Gestión de Eventos anticipo PADRE:GDE007
  */
-class TrGeVeAnt
+class RGeVeAnt
 {
   public String $Id; //GEA002 CDC del DTE asociado
 
@@ -68,10 +68,10 @@ class TrGeVeAnt
    * @param  mixed $xml
    * @return TrGeVeRetAce
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeAnt
+  public static function fromDOMElement(DOMElement $xml): RGeVeAnt
   {
     if (strcmp($xml->tagName, "rGeVeAnt") == 0 && $xml->childElementCount == 7) {
-      $res = new TrGeVeAnt();
+      $res = new RGeVeAnt();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
 
       return $res;

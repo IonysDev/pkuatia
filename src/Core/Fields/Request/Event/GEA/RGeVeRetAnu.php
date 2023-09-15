@@ -6,20 +6,21 @@ use DateTime;
 use DOMElement;
 
 /**
- *  ID:GER001 rGeVeRetAce Raíz Gestión de Eventos de retención PADRE:GDE007
+ *  ID:GERA001 Raíz Gestión de Eventos de retención anulación PADRE:GDE007
  */
-class TrGeVeRetAce
+class RGeVeRetAnu
 {
-  public String $Id; ///GER002 CDC del DE/DTE
-  public int $dNumTimRet; /// GER003 Número de timbrado del documento de retención
-  public String $dEstRet; //GER004 Establecimiento
-  public String $dPunExpRet; ///GER005 Punto de expedición
-  public String $dNumDocRet; ///GER006  Número del documento
-  public String $dCodConRet; /// GER007 Identificador de la retención
-  public DateTime $dFeEmiRet; ///GER008  Fecha de emisión de  la retención
+  public String $Id; /// GERA002CDC del DE/DTE
+  public int $dNumTimRet; ///GERA003 Número de timbrado del documento de retención
+  public String $dEstRet; ///GERA004 Establecimiento del documento de retención
+  public String $dPunExpRet; //// GERA005 Punto de expedición  del documento de  retención
+  public String $dNumDocRet; /// GERA006 Número del documento de la retención
+  public String $dCodConRet; ///GERA007 Identificador de la retención 
+  public DateTime $dFeEmiRet; //GERA008 Fecha de emisión de la retención
+  public DateTime $dFecAnRet; ///GERA009 Fecha de anulación  de la retención 
 
   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
+  //SETTERS
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -96,7 +97,6 @@ class TrGeVeRetAce
     return $this;
   }
 
-
   /**
    * Set the value of dCodConRet
    *
@@ -126,10 +126,24 @@ class TrGeVeRetAce
     return $this;
   }
 
+
+  /**
+   * Set the value of dFecAnRet
+   *
+   * @param DateTime $dFecAnRet
+   *
+   * @return self
+   */
+  public function setDFecAnRet(DateTime $dFecAnRet): self
+  {
+    $this->dFecAnRet = $dFecAnRet;
+
+    return $this;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   ///GETTERS
   ///////////////////////////////////////////////////////////////////////
-
 
 
   /**
@@ -202,8 +216,18 @@ class TrGeVeRetAce
     return $this->dFeEmiRet;
   }
 
+  /**
+   * Get the value of dFecAnRet
+   *
+   * @return DateTime
+   */
+  public function getDFecAnRet(): DateTime
+  {
+    return $this->dFecAnRet;
+  }
+
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  ///XML Element 
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -213,7 +237,7 @@ class TrGeVeRetAce
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeRetAce');
+    $res = new DOMElement('rGeVeRetAnu');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(new DOMElement('dEstRet', $this->getDEstRet()));
@@ -221,8 +245,11 @@ class TrGeVeRetAce
     $res->appendChild(new DOMElement('dNumDocRet', $this->getDNumDocRet()));
     $res->appendChild(new DOMElement('dCodConRet', $this->getDCodConRet()));
     $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d')));
+    $res->appendChild(new DOMElement('dFecAnRet', $this->getDFecAnRet()->format('Y-m-d')));
+
     return $res;
   }
+
 
   /**
    * fromDOMElement
@@ -230,10 +257,10 @@ class TrGeVeRetAce
    * @param  mixed $xml
    * @return TrGeVeRetAce
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeRetAce
+  public static function fromDOMElement(DOMElement $xml): RGeVeRetAnu
   {
-    if (strcmp($xml->tagName, "trGeVeRetAce") == 0 && $xml->childElementCount == 7) {
-      $res = new TrGeVeRetAce();
+    if (strcmp($xml->tagName, "rGeVeRetAnu") == 0 && $xml->childElementCount == 8) {
+      $res = new RGeVeRetAnu();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDNumTimRet(intval($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue));
       $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
@@ -241,7 +268,7 @@ class TrGeVeRetAce
       $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
       $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
       $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue));
-
+      $res->setDFecAnRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecAnRet')->item(0)->nodeValue));
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");

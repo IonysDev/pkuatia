@@ -1,18 +1,17 @@
 <?php
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
-
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeDevCCFFCue;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeDevCCFFDev;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeVeAnt;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeVeCCFF;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeVeRem;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeVeRetAce;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeVeRetAnu;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\TrGeVeConf;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\TrGeVeDescon;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\TrGeVeDisconf;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\TrGeVeNotRec;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\rGeDevCCFFCue;
+use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeDevCCFFDev;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\RGeVeAnt;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\rGeVeCCFF;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\RGeVeRem;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\rGeVeRetAce;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\rGeVeRetAnu;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\RGeVeConf;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\RGeVeDescon;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\RGeVeDisconf;
+use Abiliomp\Pkuatia\Core\Fields\Request\Events\GER\RGeVeNotRec;
 use DOMElement;
 
 /**
@@ -20,28 +19,28 @@ use DOMElement;
  * Padre: GDE002 - rEve - Grupos de campos generales del evento
  */
 
-class TgGroupTiEvt
+class GGroupTiEvt
 {
 
   // Eventos de Emisor
-  public TrGeVeCan  $rGeVeCan; // GEC001 - Raíz Gestión de Eventos Cancelación 
-  public TrGeVeInu  $rGeVeInu; // GEI001 - Raiz Gestión de Eventos Inutilización
-  public TrGeVeTr   $rGeVeTr;  // GET001 - Raíz Gestión de Eventos por actualización de datos del transporte
+  public RGeVeCan  $rGeVeCan; // GEC001 - Raíz Gestión de Eventos Cancelación 
+  public RGeVeInu  $rGeVeInu; // GEI001 - Raiz Gestión de Eventos Inutilización
+  public RGeVeTr   $rGeVeTr;  // GET001 - Raíz Gestión de Eventos por actualización de datos del transporte
 
   // Eventos de Receptor
-  public TrGeVeNotRec   $rGeVeNotRec;  // GEN001 - Raíz Gestión de Eventos Notificación – Recepción DE o DTE
-  public TrGeVeConf     $rGeVeConf;    // GCO001 - Raiz Gestión de Eventos Conformidad
-  public TrGeVeDisconf  $rGeVeDisconf; // GDI001 - Raiz Gestión de Eventos Disconformidad 
-  public TrGeVeDescon   $rGeVeDescon;  // GED001 - Raiz Gestión de Eventos Desconocimiento
+  public RGeVeNotRec   $rGeVeNotRec;  // GEN001 - Raíz Gestión de Eventos Notificación – Recepción DE o DTE
+  public RGeVeConf     $rGeVeConf;    // GCO001 - Raiz Gestión de Eventos Conformidad
+  public RGeVeDisconf  $rGeVeDisconf; // GDI001 - Raiz Gestión de Eventos Disconformidad 
+  public RGeVeDescon   $rGeVeDescon;  // GED001 - Raiz Gestión de Eventos Desconocimiento
 
   // Eventos Automáticos
-  public TrGeVeRetAce   $rGeVeRetAce;  // GER001  - Raíz Gestión de Eventos de retención
-  public TrGeVeRetAnu   $rGeVeRetAnu;  // GERA001 - Gestión de Eventos de retención anulación
-  public TrGeVeCCFF     $rGeVeCCFF;    // GECF001 - Raíz Gestión de Eventos de créditos  fiscales
-  public TrGeDevCCFFCue $rGeDevCCFFCue; // GEDF001 - Raíz Gestión de Eventos de devolución de créditos fiscales - Cuestionado
-  public TrGeDevCCFFDev $rGeDevCCFFDev; // GEDD001 - Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto
-  public TrGeVeAnt      $rGeVeAnt;     // GEA001  - Raíz Gestión de Eventos anticipo
-  public TrGeVeRem      $rGeVeRem;     // GERE001 - Raíz Gestión de Eventos remisión 
+  public RGeVeRetAce   $rGeVeRetAce;  // GER001  - Raíz Gestión de Eventos de retención
+  public RGeVeRetAnu   $rGeVeRetAnu;  // GERA001 - Gestión de Eventos de retención anulación
+  public RGeVeCCFF     $rGeVeCCFF;    // GECF001 - Raíz Gestión de Eventos de créditos  fiscales
+  public RGeDevCCFFCue $rGeDevCCFFCue; // GEDF001 - Raíz Gestión de Eventos de devolución de créditos fiscales - Cuestionado
+  public RGeDevCCFFCue $rGeDevCCFFDev; // GEDD001 - Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto
+  public RGeVeAnt      $rGeVeAnt;     // GEA001  - Raíz Gestión de Eventos anticipo
+  public RGeVeRem      $rGeVeRem;     // GERE001 - Raíz Gestión de Eventos remisión 
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -54,7 +53,7 @@ class TgGroupTiEvt
    *
    * @return self
    */
-  public function setRGeVeCan(TrGeVeCan $rGeVeCan): self
+  public function setRGeVeCan(RGeVeCan $rGeVeCan): self
   {
     $this->rGeVeCan = $rGeVeCan;
 
@@ -65,11 +64,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeInu
    *
-   * @param TrGeVeInu $rGeVeInu
+   * @param RGeVeInu $rGeVeInu
    *
    * @return self
    */
-  public function setRGeVeInu(TrGeVeInu $rGeVeInu): self
+  public function seRGeVeInu(RGeVeInu $rGeVeInu): self
   {
     $this->rGeVeInu = $rGeVeInu;
 
@@ -80,11 +79,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeNotRec
    *
-   * @param TrGeVeNotRec $rGeVeNotRec
+   * @param RGeVeNotRec $rGeVeNotRec
    *
    * @return self
    */
-  public function setRGeVeNotRec(TrGeVeNotRec $rGeVeNotRec): self
+  public function seRGeVeNotRec(RGeVeNotRec $rGeVeNotRec): self
   {
     $this->rGeVeNotRec = $rGeVeNotRec;
 
@@ -95,11 +94,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeConf
    *
-   * @param TrGeVeConf $rGeVeConf
+   * @param RGeVeConf $rGeVeConf
    *
    * @return self
    */
-  public function setRGeVeConf(TrGeVeConf $rGeVeConf): self
+  public function seRGeVeConf(RGeVeConf $rGeVeConf): self
   {
     $this->rGeVeConf = $rGeVeConf;
 
@@ -110,11 +109,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeDisconf
    *
-   * @param TrGeVeDisconf $rGeVeDisconf
+   * @param RGeVeDisconf $rGeVeDisconf
    *
    * @return self
    */
-  public function setRGeVeDisconf(TrGeVeDisconf $rGeVeDisconf): self
+  public function seRGeVeDisconf(RGeVeDisconf $rGeVeDisconf): self
   {
     $this->rGeVeDisconf = $rGeVeDisconf;
 
@@ -125,11 +124,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeDescon
    *
-   * @param TrGeVeDescon $rGeVeDescon
+   * @param RGeVeDescon $rGeVeDescon
    *
    * @return self
    */
-  public function setRGeVeDescon(TrGeVeDescon $rGeVeDescon): self
+  public function seRGeVeDescon(RGeVeDescon $rGeVeDescon): self
   {
     $this->rGeVeDescon = $rGeVeDescon;
 
@@ -140,11 +139,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeTr
    *
-   * @param TrGeVeTr $rGeVeTr
+   * @param RGeVeTr $rGeVeTr
    *
    * @return self
    */
-  public function setRGeVeTr(TrGeVeTr $rGeVeTr): self
+  public function seRGeVeTr(RGeVeTr $rGeVeTr): self
   {
     $this->rGeVeTr = $rGeVeTr;
 
@@ -155,11 +154,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeRetAce
    *
-   * @param TrGeVeRetAce $rGeVeRetAce
+   * @param rGeVeRetAce $rGeVeRetAce
    *
    * @return self
    */
-  public function setRGeVeRetAce(TrGeVeRetAce $rGeVeRetAce): self
+  public function serGeVeRetAce(rGeVeRetAce $rGeVeRetAce): self
   {
     $this->rGeVeRetAce = $rGeVeRetAce;
     return $this;
@@ -169,11 +168,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeRetAnu
    *
-   * @param TrGeVeRetAnu $rGeVeRetAnu
+   * @param rGeVeRetAnu $rGeVeRetAnu
    *
    * @return self
    */
-  public function setRGeVeRetAnu(TrGeVeRetAnu $rGeVeRetAnu): self
+  public function serGeVeRetAnu(rGeVeRetAnu $rGeVeRetAnu): self
   {
     $this->rGeVeRetAnu = $rGeVeRetAnu;
     return $this;
@@ -183,11 +182,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeCCFF
    *
-   * @param TrGeVeCCFF $rGeVeCCFF
+   * @param rGeVeCCFF $rGeVeCCFF
    *
    * @return self
    */
-  public function setRGeVeCCFF(TrGeVeCCFF $rGeVeCCFF): self
+  public function serGeVeCCFF(rGeVeCCFF $rGeVeCCFF): self
   {
     $this->rGeVeCCFF = $rGeVeCCFF;
     return $this;
@@ -197,11 +196,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeDevCCFFCue
    *
-   * @param TrGeDevCCFFCue $rGeDevCCFFCue
+   * @param rGeDevCCFFCue $rGeDevCCFFCue
    *
    * @return self
    */
-  public function setRGeDevCCFFCue(TrGeDevCCFFCue $rGeDevCCFFCue): self
+  public function setGeDevCCFFCue(rGeDevCCFFCue $rGeDevCCFFCue): self
   {
     $this->rGeDevCCFFCue = $rGeDevCCFFCue;
     return $this;
@@ -211,11 +210,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeDevCCFFDev
    *
-   * @param TrGeDevCCFFDev $rGeDevCCFFDev
+   * @param rGeDevCCFFCue $rGeDevCCFFDev
    *
    * @return self
    */
-  public function setRGeDevCCFFDev(TrGeDevCCFFDev $rGeDevCCFFDev): self
+  public function setGeDevCCFFDev(RGeDevCCFFDev $rGeDevCCFFDev): self
   {
     $this->rGeDevCCFFDev = $rGeDevCCFFDev;
     return $this;
@@ -225,11 +224,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeAnt
    *
-   * @param TrGeVeAnt $rGeVeAnt
+   * @param RGeVeAnt $rGeVeAnt
    *
    * @return self
    */
-  public function setRGeVeAnt(TrGeVeAnt $rGeVeAnt): self
+  public function seRGeVeAnt(RGeVeAnt $rGeVeAnt): self
   {
     $this->rGeVeAnt = $rGeVeAnt;
     return $this;
@@ -239,11 +238,11 @@ class TgGroupTiEvt
   /**
    * Set the value of rGeVeRem
    *
-   * @param TrGeVeRem $rGeVeRem
+   * @param RGeVeRem $rGeVeRem
    *
    * @return self
    */
-  public function setRGeVeRem(TrGeVeRem $rGeVeRem): self
+  public function seRGeVeRem(RGeVeRem $rGeVeRem): self
   {
     $this->rGeVeRem = $rGeVeRem;
     return $this;
@@ -259,7 +258,7 @@ class TgGroupTiEvt
    *
    * @return TrGeVeCan
    */
-  public function getRGeVeCan(): TrGeVeCan
+  public function getRGeVeCan(): RGeVeCan
   {
     return $this->rGeVeCan;
   }
@@ -267,9 +266,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeInu
    *
-   * @return TrGeVeInu
+   * @return RGeVeInu
    */
-  public function getRGeVeInu(): TrGeVeInu
+  public function geRGeVeInu(): RGeVeInu
   {
     return $this->rGeVeInu;
   }
@@ -277,9 +276,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeNotRec
    *
-   * @return TrGeVeNotRec
+   * @return RGeVeNotRec
    */
-  public function getRGeVeNotRec(): TrGeVeNotRec
+  public function geRGeVeNotRec(): RGeVeNotRec
   {
     return $this->rGeVeNotRec;
   }
@@ -287,9 +286,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeConf
    *
-   * @return TrGeVeConf
+   * @return RGeVeConf
    */
-  public function getRGeVeConf(): TrGeVeConf
+  public function geRGeVeConf(): RGeVeConf
   {
     return $this->rGeVeConf;
   }
@@ -297,9 +296,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeDisconf
    *
-   * @return TrGeVeDisconf
+   * @return RGeVeDisconf
    */
-  public function getRGeVeDisconf(): TrGeVeDisconf
+  public function geRGeVeDisconf(): RGeVeDisconf
   {
     return $this->rGeVeDisconf;
   }
@@ -307,9 +306,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeDescon
    *
-   * @return TrGeVeDescon
+   * @return RGeVeDescon
    */
-  public function getRGeVeDescon(): TrGeVeDescon
+  public function geRGeVeDescon(): RGeVeDescon
   {
     return $this->rGeVeDescon;
   }
@@ -317,9 +316,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeTr
    *
-   * @return TrGeVeTr
+   * @return RGeVeTr
    */
-  public function getRGeVeTr(): TrGeVeTr
+  public function geRGeVeTr(): RGeVeTr
   {
     return $this->rGeVeTr;
   }
@@ -327,9 +326,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeRetAce
    *
-   * @return TrGeVeRetAce
+   * @return rGeVeRetAce
    */
-  public function getRGeVeRetAce(): TrGeVeRetAce
+  public function gerGeVeRetAce(): rGeVeRetAce
   {
     return $this->rGeVeRetAce;
   }
@@ -337,9 +336,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeRetAnu
    *
-   * @return TrGeVeRetAnu
+   * @return rGeVeRetAnu
    */
-  public function getRGeVeRetAnu(): TrGeVeRetAnu
+  public function gerGeVeRetAnu(): rGeVeRetAnu
   {
     return $this->rGeVeRetAnu;
   }
@@ -347,9 +346,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeCCFF
    *
-   * @return TrGeVeCCFF
+   * @return rGeVeCCFF
    */
-  public function getRGeVeCCFF(): TrGeVeCCFF
+  public function gerGeVeCCFF(): rGeVeCCFF
   {
     return $this->rGeVeCCFF;
   }
@@ -357,9 +356,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeDevCCFFDev
    *
-   * @return TrGeDevCCFFDev
+   * @return rGeDevCCFFCue
    */
-  public function getRGeDevCCFFDev(): TrGeDevCCFFDev
+  public function gerGeDevCCFFCue(): rGeDevCCFFCue
   {
     return $this->rGeDevCCFFDev;
   }
@@ -367,9 +366,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeAnt
    *
-   * @return TrGeVeAnt
+   * @return RGeVeAnt
    */
-  public function getRGeVeAnt(): TrGeVeAnt
+  public function geRGeVeAnt(): RGeVeAnt
   {
     return $this->rGeVeAnt;
   }
@@ -377,9 +376,9 @@ class TgGroupTiEvt
   /**
    * Get the value of rGeVeRem
    *
-   * @return TrGeVeRem
+   * @return RGeVeRem
    */
-  public function getRGeVeRem(): TrGeVeRem
+  public function geRGeVeRem(): RGeVeRem
   {
     return $this->rGeVeRem;
   }
@@ -441,71 +440,71 @@ class TgGroupTiEvt
    * fromDOMElement
    *
    * @param  mixed $xml
-   * @return TgGroupTiEvt
+   * @return GGroupTiEvt
    */
-  public static function fromDOMElement(DOMElement $xml): TgGroupTiEvt
+  public static function fromDOMElement(DOMElement $xml): GGroupTiEvt
   {
     if (strcmp($xml->tagName, 'gGroupTiEvt') == 0 && $xml->childElementCount == 3) {
-      $res = new TgGroupTiEvt();
+      $res = new GGroupTiEvt();
 
-      $aux = new TrGeVeCan();
+      $aux = new RGeVeCan();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeCan')->item(0)->nodeValue);
       $res->setRGeVeCan($aux);
 
-      $aux = new TrGeVeInu();
+      $aux = new RGeVeInu();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeInu')->item(0)->nodeValue);
-      $res->setRGeVeInu($aux);
+      $res->seRGeVeInu($aux);
 
-      $aux = new TrGeVeTr();
+      $aux = new RGeVeTr();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeTr')->item(0)->nodeValue);
-      $res->setRGeVeTr($aux);
+      $res->seRGeVeTr($aux);
 
       //===================================================================================//
-      $aux = new TrGeVeNotRec();
+      $aux = new RGeVeNotRec();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeNotRec')->item(0)->nodeValue);
-      $res->setRGeVeNotRec($aux);
+      $res->seRGeVeNotRec($aux);
 
-      $aux = new TrGeVeConf();
+      $aux = new RGeVeConf();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeConf')->item(0)->nodeValue);
-      $res->setRGeVeConf($aux);
+      $res->seRGeVeConf($aux);
 
-      $aux = new TrGeVeDisconf();
+      $aux = new RGeVeDisconf();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeDisconf')->item(0)->nodeValue);
-      $res->setRGeVeDisconf($aux);
+      $res->seRGeVeDisconf($aux);
 
-      $aux = new TrGeVeDescon();
+      $aux = new RGeVeDescon();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeDescon')->item(0)->nodeValue);
-      $res->setRGeVeDescon($aux);
+      $res->seRGeVeDescon($aux);
 
       //===============================================================================//
 
-      $aux = new TrGeVeRetAce();
+      $aux = new rGeVeRetAce();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRetAce')->item(0)->nodeValue);
-      $res->setRGeVeRetAce($aux);
+      $res->serGeVeRetAce($aux);
 
-      $aux = new TrGeVeRetAnu();
+      $aux = new rGeVeRetAnu();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRetAnu')->item(0)->nodeValue);
-      $res->setRGeVeRetAnu($aux);
+      $res->serGeVeRetAnu($aux);
 
-      $aux = new TrGeVeCCFF();
+      $aux = new rGeVeCCFF();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeCCFF')->item(0)->nodeValue);
-      $res->setRGeVeCCFF($aux);
+      $res->serGeVeCCFF($aux);
 
-      $aux = new TrGeDevCCFFCue();
+      $aux = new rGeDevCCFFCue();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeDevCCFFCue')->item(0)->nodeValue);
-      $res->setRGeDevCCFFCue($aux);
+      $res->setGeDevCCFFCue($aux);
 
-      $aux = new TrGeDevCCFFDev();
+      $aux = new RGeDevCCFFDev();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeDevCCFFDev')->item(0)->nodeValue);
-      $res->setRGeDevCCFFDev($aux);
+      $res->setGeDevCCFFDev($aux);
 
-      $aux = new TrGeVeAnt();
+      $aux = new RGeVeAnt();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeAnt')->item(0)->nodeValue);
-      $res->setRGeVeAnt($aux);
+      $res->seRGeVeAnt($aux);
 
-      $aux = new TrGeVeRem();
+      $aux = new RGeVeRem();
       $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRem')->item(0)->nodeValue);
-      $res->setRGeVeRem($aux);
+      $res->seRGeVeRem($aux);
 
       return $res;
     } else {

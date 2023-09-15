@@ -1,20 +1,20 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMElement;
 use DateTime;
 
 /**
- * Nodo: GDE002 - rEve - Grupos de Campos Generales del Evento 
+ * Nodo: GDE002 - REve - Grupos de Campos Generales del Evento 
  * Padre: GDE001 - rGesEve - Raíz de Gestión de Eventos
  */
-class TrEve
+class REve
 {
     public int          $Id;          // GDE003 - Identificador del evento - ATRIBUTO DEL CAMPO
     public DateTime     $dFecFirma;   // GDE004 - Fecha y Hora del firmado
     public int          $dVerFor;     // GDE005 - Versión del formato
-    public TgGroupTiEvt $gGroupTiEvt; // GDE007 - Grupo de campos del tipo de evento
+    public GGroupTiEvt $gGroupTiEvt; // GDE007 - Grupo de campos del tipo de evento
 
     ///Setters
 
@@ -70,7 +70,7 @@ class TrEve
      *
      * @return self
      */
-    public function setGGroupTiEvt(TgGroupTiEvt $gGroupTiEvt): self
+    public function setGGroupTiEvt(GGroupTiEvt $gGroupTiEvt): self
     {
         $this->gGroupTiEvt = $gGroupTiEvt;
 
@@ -115,7 +115,7 @@ class TrEve
      *
      * @return TgGroupTiEvt
      */
-    public function getGGroupTiEvt(): TgGroupTiEvt
+    public function getGGroupTiEvt(): GGroupTiEvt
     {
         return $this->gGroupTiEvt;
     }
@@ -144,18 +144,18 @@ class TrEve
      * fromDOMElement
      *
      * @param  mixed $xml
-     * @return TrEve
+     * @return REve
      */
-    public static function fromDOMElement(DOMElement $xml): TrEve
+    public static function fromDOMElement(DOMElement $xml): REve
     {
         if (strcmp($xml->tagName, 'rEve') == 0 && $xml->childElementCount == 4) {
-            $res = new TrEve();
+            $res = new REve();
             $res->setId(intval($xml->getElementsByTagName('Id')->item(0)->nodeValue));
             $res->setDFecFirma(DateTime::createFromFormat("Y-m-d\TH:i:s",$xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
             $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
 
             ///children
-            $aux = new TgGroupTiEvt();
+            $aux = new GGroupTiEvt();
             $aux->fromDOMElement($xml->getElementsByTagName('gGroupTiEvt')->item(0)->nodeValue);
             $res->setGGroupTiEvt($aux);
             return $res;

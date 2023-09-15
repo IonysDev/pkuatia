@@ -8,7 +8,7 @@ use DOMElement;
 /**
  * ID:GEDD001 Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto PADRE:GDE007
  */
-class TrGeDevCCFFDev
+class RGeDevCCFFDev
 {
   public String $Id; // GEDD002 CDC del DE/DTE
   public String $dNumDevSol; // GEDD003 Número DIR
@@ -214,7 +214,7 @@ class TrGeDevCCFFDev
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeDevCCFFDev');
+    $res = new DOMElement('rGeDevCCFFDev');
 
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumDevSol', $this->getDNumDevSol()));
@@ -233,10 +233,10 @@ class TrGeDevCCFFDev
    * @param  mixed $xml
    * @return TrGeVeRetAce
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeDevCCFFDev
+  public static function fromDOMElement(DOMElement $xml): RGeDevCCFFDev
   {
-    if (strcmp($xml->tagName, "trGeDevCCFFDev") == 0 && $xml->childElementCount == 7) {
-      $res = new TrGeDevCCFFDev();
+    if (strcmp($xml->tagName, "rGeDevCCFFDev") == 0 && $xml->childElementCount == 7) {
+      $res = new RGeDevCCFFDev();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDNumDevSol($xml->getElementsByTagName('dNumDevSol')->item(0)->nodeValue);
       $res->setDNumDevInf($xml->getElementsByTagName('dNumDevInf')->item(0)->nodeValue);

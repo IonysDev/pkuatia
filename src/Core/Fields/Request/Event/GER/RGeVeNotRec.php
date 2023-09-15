@@ -6,27 +6,30 @@ use DateTime;
 use DOMElement;
 
 /**
- * ID:GED001 Raiz Gestión de Eventos Desconocimiento PADREGDE007
+ * Nodo: GEN001 - rGeVeNotRec - Raíz Gestión de Eventos Notificación: Recepción DE o DTE
+ * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class TrGeVeDescon
+class RGeVeNotRec
 {
-  public String $Id; //GED002 CDC del DE/DTE
-  public DateTime $dFecEmi; //GED003 Fecha de emisión del DE/DTE
-  public DateTime $dFecRecep; //GED004 Fecha Recepción DE
-  public int $iTipRec; //GED005 Tipo de Receptor
-  public String $dNomRec; //GED006 Nombre o Razón Social del Receptor del DE/DTE
-  public String $dRucRec; //GED007 Ruc del Receptor
-  public int $dDVRec; //GED008 Dígito verificador del  RUC del contribuyente  receptor
-  public int $dTipIDRec; //GED009 Tipo de documento de identidad del receptor
-  public String $dNumID; ///GED010 Número de documento de identidad
-  public String $mOtEve; //GED011 Motivo del Evento
+
+  public String   $Id;        // GEN002 - Identificador del DE/DTE
+  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE
+  public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 
+  public int      $iTipRec;   // GEN005 - Tipo de Receptor
+  public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE
+  public String   $dRucRec;   // GEN007 - RUC del Receptor 
+  public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor
+  public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor
+  public String   $dNumID;    // GEN010 - Número de documento de identidad 
+  public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes
+
 
   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id - Identificador del DE/DTE
    *
    * @param String $Id
    *
@@ -35,13 +38,11 @@ class TrGeVeDescon
   public function setId(String $Id): self
   {
     $this->Id = $Id;
-
     return $this;
   }
 
-
   /**
-   * Set the value of dFecEmi
+   * Establece el valor de dFecEmi - Fecha de emisión del DE/DTE
    *
    * @param DateTime $dFecEmi
    *
@@ -54,9 +55,8 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of dFecRecep
+   * Establece el valor de dFecRecep - Fecha Recepción DE 
    *
    * @param DateTime $dFecRecep
    *
@@ -69,9 +69,8 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of iTipRec
+   * Establece el valor de iTipRec - Tipo de Receptor
    *
    * @param int $iTipRec
    *
@@ -84,9 +83,8 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of dNomRec
+   * Establece el valor de dNomRec - Nombre o Razón Social del Receptor del DE/DTE
    *
    * @param String $dNomRec
    *
@@ -99,9 +97,8 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of dRucRec
+   * Establece el valor de dRucRec - RUC del Receptor 
    *
    * @param String $dRucRec
    *
@@ -114,9 +111,8 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of dDVRec
+   * Establece el valor de dDVRec - Dígito verificador del RUC del contribuyente receptor
    *
    * @param int $dDVRec
    *
@@ -129,9 +125,8 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of dTipIDRec
+   * Establece el valor de dTipIDRec - Tipo de documento de identidad del receptor
    *
    * @param int $dTipIDRec
    *
@@ -144,9 +139,8 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of dNumID
+   * Establece el valor de dNumID - Número de documento de identidad 
    *
    * @param String $dNumID
    *
@@ -159,28 +153,27 @@ class TrGeVeDescon
     return $this;
   }
 
-
   /**
-   * Set the value of mOtEve
+   * Establece el valor de dTotalGs - Total general de la operación en Guaraníes
    *
-   * @param String $mOtEve
+   * @param int $dTotalGs
    *
    * @return self
    */
-  public function setMOtEve(String $mOtEve): self
+  public function setDTotalGs(int $dTotalGs): self
   {
-    $this->mOtEve = $mOtEve;
+    $this->dTotalGs = $dTotalGs;
 
     return $this;
   }
 
-  ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
-  ///////////////////////////////////////////////////////////////////////
 
+  ///////////////////////////////////////////////////////////////////////
+  // Getters
+  ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id - Identificador del DE/DTE
    *
    * @return String
    */
@@ -190,7 +183,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of dFecEmi
+   * Obtiene el valor de dFecEmi - Fecha de emisión del DE/DTE
    *
    * @return DateTime
    */
@@ -200,7 +193,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of dFecRecep
+   * Obtiene el valor de dFecRecep - Fecha Recepción DE 
    *
    * @return DateTime
    */
@@ -210,7 +203,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of iTipRec
+   * Obtiene el valor de iTipRec - Tipo de Receptor
    *
    * @return int
    */
@@ -220,7 +213,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of dNomRec
+   * Obtiene el valor de dNomRec - Nombre o Razón Social del Receptor del DE/DTE
    *
    * @return String
    */
@@ -230,7 +223,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of dRucRec
+   * Obtiene el valor de dRucRec - RUC del Receptor
    *
    * @return String
    */
@@ -240,7 +233,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of dDVRec
+   * Obtiene el valor de dDVRec - Dígito verificador del RUC del contribuyente receptor
    *
    * @return int
    */
@@ -250,7 +243,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of dTipIDRec
+   * Obtiene el valor de dTipIDRec - Tipo de documento de identidad del receptor
    *
    * @return int
    */
@@ -260,7 +253,7 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of dNumID
+   * Obtiene el valor de dNumID - Número de documento de identidad
    *
    * @return String
    */
@@ -270,17 +263,18 @@ class TrGeVeDescon
   }
 
   /**
-   * Get the value of mOtEve
+   * Obtiene el valor de dTotalGs - Total general de la operación en Guaraníes
    *
-   * @return String
+   * @return int
    */
-  public function getMOtEve(): String
+  public function getDTotalGs(): int
   {
-    return $this->mOtEve;
+    return $this->dTotalGs;
   }
 
+
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  // Conversiones XML  
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -290,7 +284,7 @@ class TrGeVeDescon
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeDescon');
+    $res = new DOMElement('rGeVeNotRec');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
@@ -302,11 +296,11 @@ class TrGeVeDescon
     }
 
     if ($this->iTipRec == 2) {
-      $res->appendChild(new DOMElement('dTipIDRec', $this->getITipRec()));
+      $res->appendChild(new DOMElement('dTipIDRec', $this->getDTipIDRec()));
       $res->appendChild(new DOMElement('dNumID', $this->getDNumID()));
     }
 
-    $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
+    $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
     return $res;
   }
 
@@ -314,12 +308,12 @@ class TrGeVeDescon
    * fromDOMElement
    *
    * @param  mixed $xml
-   * @return TrGeVeConf
+   * @return RGeVeNotRec
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeDescon
+  public static function fromDOMElement(DOMElement $xml): RGeVeNotRec
   {
-    if (strcmp($xml->tagName, 'trGeVeDescon') == 0 && $xml->childElementCount == 10) {
-      $res = new TrGeVeDescon();
+    if (strcmp($xml->tagName, "rGeVeNotRec") == 0 && $xml->childElementCount >=6) {
+      $res = new RGeVeNotRec();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue));
       $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
@@ -329,11 +323,12 @@ class TrGeVeDescon
       $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
       $res->setDTipIDRec(intval($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue));
       $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
-      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
-      return $res;
+      $res->setDTotalGs($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");
       return null;
     }
+
+    return $res;
   }
 }

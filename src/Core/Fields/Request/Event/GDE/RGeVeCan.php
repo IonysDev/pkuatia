@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMElement;
 
@@ -8,7 +8,7 @@ use DOMElement;
  * Nodo: GEC001 - rGeVeCan - Campos generales del DE
  * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class TrGeVeCan
+class RGeVeCan
 {
 
   public String $Id;     // GEC002 - Identificador del DTE
@@ -80,7 +80,7 @@ class TrGeVeCan
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeCan');
+    $res = new DOMElement('rGeVeCan');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
     return $res;
@@ -90,13 +90,13 @@ class TrGeVeCan
    * fromDOMElement
    *
    * @param  mixed $xml
-   * @return TrGeVeCan
+   * @return RGeVeCan
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeCan
+  public static function fromDOMElement(DOMElement $xml): RGeVeCan
   {
-    if(strcmp($xml->tagName, 'trGeVeCan') == 0 && $xml->childElementCount == 2)
+    if(strcmp($xml->tagName, 'rGeVeCan') == 0 && $xml->childElementCount == 2)
     {
-      $res = new TrGeVeCan();
+      $res = new RGeVeCan();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
       return $res;

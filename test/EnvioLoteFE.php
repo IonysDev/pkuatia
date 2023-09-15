@@ -194,8 +194,6 @@ while (count($rDeArray) < 10) {
   $rDeArray[] = $rde;
 }
 
-
-
 try {
   $res = Sifen::EnviarLoteDE($rDeArray);
   echo "Resultado: \n";

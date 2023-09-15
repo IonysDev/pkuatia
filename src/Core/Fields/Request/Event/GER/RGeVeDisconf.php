@@ -7,7 +7,7 @@ use DOMElement;
 /**
  *  ID:GDI001 Raiz Gestión de Eventos Disconformidad PADRE:GDE007
  */
-class TrGeVeDisconf
+class RGeVeDisconf
 {
   public String $Id; // GDI002 CDC del DTE
   public String $mOtEve; ///GDI004 Motivo del Evento
@@ -84,7 +84,7 @@ class TrGeVeDisconf
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeDisconf');
+    $res = new DOMElement('rGeVeDisconf');
 
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
@@ -98,10 +98,10 @@ class TrGeVeDisconf
    * @param  mixed $xml
    * @return DOMElement
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeDisconf
+  public static function fromDOMElement(DOMElement $xml): RGeVeDisconf
   {
-    if (strcmp($xml->tagName, 'trGeVeDisconf') == 0 && $xml->childElementCount == 2) {
-      $res = new TrGeVeDisconf();
+    if (strcmp($xml->tagName, 'rGeVeDisconf') == 0 && $xml->childElementCount == 2) {
+      $res = new RGeVeDisconf();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
       return $res;

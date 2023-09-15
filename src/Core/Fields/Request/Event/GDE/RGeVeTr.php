@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Events\GDE;
+namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use DOMElement;
@@ -9,7 +9,7 @@ use DOMElement;
  * Nodo: GET001 - rGeVeTr - Grupos de Campos Generales del Evento 
  * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
-class TrGeVeTr
+class RGeVeTr
 {
   public String $Id;          // GET002 - CDC del DTE 
   public int    $dMotEv;      // GET003 - Motivo del evento
@@ -744,7 +744,7 @@ class TrGeVeTr
    */
   public function toDOMElement(): DOMElement
   {
-    $res = new DOMElement('trGeVeTr');
+    $res = new DOMElement('rGeVeTr');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dMotEv', $this->getDMotEv()));
 
@@ -818,12 +818,12 @@ class TrGeVeTr
    * fromDOMElement
    *
    * @param  mixed $xml
-   * @return TrGeVeTr
+   * @return RGeVeTr
    */
-  public static function fromDOMElement(DOMElement $xml): TrGeVeTr
+  public static function fromDOMElement(DOMElement $xml): RGeVeTr
   {
-    if (strcmp($xml->tagName, 'trGeDeVTr') == 0 && $xml->childElementCount == 23) {
-      $res = new TrGeVeTr();
+    if (strcmp($xml->tagName, 'rGeDeVTr') == 0 && $xml->childElementCount == 23) {
+      $res = new RGeVeTr();
       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       $res->setDMotEv(intval($xml->getElementsByTagName('dMotEv')->item(0)->nodeValue));
       $res->setCDepEnt(intval($xml->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
