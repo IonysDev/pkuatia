@@ -12,14 +12,6 @@ class REnviEventoDe {
     public int $dId; // GSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
     public String $dEvReg;  // GSch03 - Evento a ser registrado en XML.
 
-    /**
-     * Constructor de la clase
-     */
-    public function __construct($dId, $dEvReg) {
-        $this->dId = $dId;
-        $this->dEvReg = $dEvReg;
-    }
-
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////

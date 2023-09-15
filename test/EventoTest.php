@@ -5,36 +5,21 @@ use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupTiEvt;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RrGesEve;
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\TgGroupGesEve;
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\TgGroupTiEvt;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\rEve;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeCan;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeInu;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeTr;
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\TrGesEve;
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\TrGeVeCan;
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\TrGeVeInu;
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\TrGeVeTr;
 use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\RGeDevCCFFCue;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeDevCCFFDev;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeAnt;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeCCFF;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeRem;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\RGeVeRetAce;
-use Abiliomp\Pkuatia\Core\Fields\Request\Events\GEA\TrGeDevCCFFCue;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\TrGeVeAnt;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\TrGeVeCCFF;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\TrGeVeRem;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\TrGeVeRetAce;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GEA\TrGeVeRetAnu;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeConf;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeDescon;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeDisconf;
 use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\RGeVeNotRec;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\TrGeVeConf;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\TrGeVeDescon;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\TrGeVeDisconf;
-use Abiliomp\Pkuatia\Core\Fields\Request\events\GER\TrGeVeNotRec;
+use Abiliomp\Pkuatia\Core\Requests\REnviEventoDe;
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
@@ -63,9 +48,13 @@ $rEve->setDFecFirma(new DateTime());
 $rEve->setDVerFor(150);
 ///se crea el grupo de campos del tipo de evento
 $gGroupTiEvt = new GGroupTiEvt();
+
+
 //=====================================================================
 //Eventos de EMISOR
 //=====================================================================
+
+
 ///////////////////////////////////////////////////////////////
 ///EVENTO DE CANCELACION
 ///////////////////////////////////////////////////////////////
@@ -84,9 +73,13 @@ $rGeVeInu->setDNumIn('000000000000'); ///////////poner un numero de inicio
 $rGeVeInu->setDNumFin('000000000000'); ///////////poner un numero de fin
 $rGeVeInu->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA); ///////////poner un tipo de documento
 $rGeVeInu->setMOtEve('Motivo de inutilizacion');
+
+
 //====================================================================
 //Ecentos de RECEPTOR
 //====================================================================
+
+
 ///////////////////////////////////////////////////////////////
 ///EVENTO DE NOTIFICACION
 ///////////////////////////////////////////////////////////////
@@ -154,9 +147,13 @@ if($trGeVeTra->getDMotEv() == 1)
   $trGeVeTra->setDNumCas('Numero de casa');
   $trGeVeTra->setDCompDir1('Complemento de direccion 1');
 }
+
+
 //==================================================================
 //EVENTOS AUTOMATICOS
 //====================================================================
+
+
 ///////////////////////////////////////////////////////////////
 //Evento automático por interoperabilidad: Evento asociación Retención
 ///////////////////////////////////////////////////////////////
@@ -219,3 +216,22 @@ $trGeVeAnt->setId('0000000000000000000000000000000000000000000000000000000000000
 $trGeVeRem = new RGeVeRem();
 $trGeVeRem->setId('000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'); ///poner un cdc
 ////////////////////////////////////////////////////////////////
+
+
+////se asigna el evento de cancelacion al grupo de campos de tipo evento
+$gGroupTiEvt->setRGeVeCan($rGeVeCan);
+////se asigna el grupo de campos  de tipo evento al grupo de campos generales del evento
+$rEve->setGGroupTiEvt($gGroupTiEvt);
+////se asigna el grupo de campos generales del evento a la raiz de gestion de eventos
+$trGesEve->setREve($rEve);
+////se asigna la raiz de gestion de eventos al array de raices de gestion de eventos
+$rGesEve[] = $trGesEve;
+///se asigna el array al grupo de eventos
+$evento->setRGesEve($rGesEve);
+
+
+////request
+$rEnviEventoDe = new REnviEventoDe();
+$rEnviEventoDe->setDId(1);
+$rEnviEventoDe->setDEvReg("HACER EL XML COMO EN LA PAGINA 32 DEL MANUAL");
+

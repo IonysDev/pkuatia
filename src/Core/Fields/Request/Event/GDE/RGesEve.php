@@ -27,7 +27,7 @@ class RrGesEve
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setEve(REve $REve): self
+    public function setREve(REve $REve): self
     {
         $this->REve = $REve;
         return $this;
@@ -64,7 +64,7 @@ class RrGesEve
 
             $aux = new REve();
             $aux->fromDOMElement($xml->getElementsByTagName('REve')->item(0)->nodeValue);
-            $res->setEve($aux);
+            $res->setREve($aux);
 
             return $res;
         } else {

@@ -17,16 +17,18 @@ class GGroupGesEve
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Método responsable de realizar la información del grupo de eventos
+   * Set the value of rGesEve
    *
-   * @param DOMElement $rGesEve
+   * @param array $rGesEve
+   *
+   * @return self
    */
-  public function setRGesEve(RrGesEve $rGesEve): self
+  public function setRGesEve(array $rGesEve): self
   {
     $this->rGesEve = $rGesEve;
+
     return $this;
   }
-
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -78,4 +80,7 @@ class GGroupGesEve
       return null;
     }
   }
+
+
+
 }
