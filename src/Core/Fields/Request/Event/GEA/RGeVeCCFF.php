@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -105,9 +106,9 @@ class RGeVeCCFF
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeCCFF');
+    $res = $doc->createElement('rGeVeCCFF');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTraCCFF', $this->getDNumTraCCFF()));
     $res->appendChild(new DOMElement('dFeAceTraCCFF', $this->getDFeAceTraCCFF()->format('Y-m-d')));
@@ -115,24 +116,24 @@ class RGeVeCCFF
   }
 
   
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return TrGeVeRetAce
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeCCFF
-  {
-    if (strcmp($xml->tagName, "rGeVeCCFF") == 0 && $xml->childElementCount == 3) {
-      $res = new RGeVeCCFF();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDNumTraCCFF($xml->getElementsByTagName('dNumTraCCFF')->item(0)->nodeValue);
-      $res->setDFeAceTraCCFF(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeAceTraCCFF')->item(0)->nodeValue));
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return TrGeVeRetAce
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeCCFF
+  // {
+  //   if (strcmp($xml->tagName, "rGeVeCCFF") == 0 && $xml->childElementCount == 3) {
+  //     $res = new RGeVeCCFF();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setDNumTraCCFF($xml->getElementsByTagName('dNumTraCCFF')->item(0)->nodeValue);
+  //     $res->setDFeAceTraCCFF(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeAceTraCCFF')->item(0)->nodeValue));
     
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

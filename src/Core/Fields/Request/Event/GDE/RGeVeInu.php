@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -198,42 +199,41 @@ class RGeVeInu
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('RGeVeInu');
-    $res->appendChild(new DOMElement('dNumTim', $this->getDNumTim()));
-    $res->appendChild(new DOMElement('dEst', str_pad($this->dEst, 3, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dPunExp', str_pad($this->dPunExp, 3, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dNumIn', str_pad($this->dNumIn, 7, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dNumFin', str_pad($this->dNumFin, 7, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('iTiDE', $this->getITiDE()));
-    $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
-    //Falta dSerieNum
-    return $res;
-  }
-
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RGeVeInu
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeInu
-  {
-    if (strcmp($xml->tagName, 'rGeVeInu') == 0 && $xml->childElementCount == 8) {
-      $res = new RGeVeInu();
-      $res->setDNumTim(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
-      $res->setDEst($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
-      $res->setDPunExp($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
-      $res->setDNumIn($xml->getElementsByTagName('dNumIn')->item(0)->nodeValue);
-      $res->setDNumFin($xml->getElementsByTagName('dNumFin')->item(0)->nodeValue);
-      $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
-      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
-
+      $res = $doc->createElement('rGeVeInu');
+      $res->appendChild($doc->createElement('dNumTim', $this->dNumTim));
+      $res->appendChild($doc->createElement('dEst', $this->dEst));
+      $res->appendChild($doc->createElement('dPunExp', $this->dPunExp));
+      $res->appendChild($doc->createElement('dNumIn', $this->dNumIn));
+      $res->appendChild($doc->createElement('dNumFin', $this->dNumFin));
+      $res->appendChild($doc->createElement('iTiDE', $this->iTiDE));
+      $res->appendChild($doc->createElement('mOtEve', $this->mOtEve));
       return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
   }
+
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RGeVeInu
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeInu
+  // {
+  //   if (strcmp($xml->tagName, 'rGeVeInu') == 0 && $xml->childElementCount == 8) {
+  //     $res = new RGeVeInu();
+  //     $res->setDNumTim(intval($xml->getElementsByTagName('dNumTim')->item(0)->nodeValue));
+  //     $res->setDEst($xml->getElementsByTagName('dEst')->item(0)->nodeValue);
+  //     $res->setDPunExp($xml->getElementsByTagName('dPunExp')->item(0)->nodeValue);
+  //     $res->setDNumIn($xml->getElementsByTagName('dNumIn')->item(0)->nodeValue);
+  //     $res->setDNumFin($xml->getElementsByTagName('dNumFin')->item(0)->nodeValue);
+  //     $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
+  //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

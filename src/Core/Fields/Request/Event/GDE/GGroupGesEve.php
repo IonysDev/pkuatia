@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -46,40 +47,72 @@ class GGroupGesEve
   // XML Element 
   ///////////////////////////////////////////////////////////////////////
 
+
+  public function toDOMDocument(): DOMDocument
+  {
+    $doc = new DOMDocument('1.0', 'utf-8');
+    $domElement = $this->toDOMElement($doc);
+    $doc->appendChild($domElement);
+    return $doc;
+  }
+
   /**
    * toDOMElement
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gGroupGesEve');
-    ///children
-    // $res->appendChild($this->rGesEve->toDOMElement());
+    // Validaciones
+    if(!isset($this->rGesEve))
+      throw new \Exception('[GGroupGesEve] El campo rGesEve no puede ser nulo.');
+
+    //cabecera dEvReg
+    $res = $doc->createElement('dEvReg');
+    // Conversión
+    $res->appendChild($doc->createElement('gGroupGesEve'));
+    foreach ($this->rGesEve as $key => $value) {
+      ///append in gGroupGesEve
+      $res->getElementsByTagName('gGroupGesEve')->item(0)->appendChild($value->toDOMElement($doc));
+    }
     return $res;
   }
-  
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return GGroupGesEve
-   */
-  public static function fromDOMElement(DOMElement $xml): GGroupGesEve
+
+  public function toXMLString(): string
   {
-    if(strcmp($xml->tagName, 'gGroupGesEve') == 0 && $xml->childElementCount  == 2)
-    { 
-      $res = new GGroupGesEve();
-      //Children
-      // $res->setRGesEve($res->rGesEve->fromDOMElement($xml->getElementsByTagName('rGesEve')->item(0)->nodeValue));
-  
-      return $res;
+    $xmlString = $this->toDOMDocument()->saveXML();
+    if(!$xmlString)
+    {
+      throw new \Exception('[GGroupGesEve] Error al convertir el objeto a XML.');
     }
-    else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
+
+    ///remove the first line of the xml
+    $xmlString = substr($xmlString, strpos($xmlString, "\n") + 1);
+    
+    return $xmlString;
   }
+  
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return GGroupGesEve
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): GGroupGesEve
+  // {
+  //   if(strcmp($xml->tagName, 'gGroupGesEve') == 0 && $xml->childElementCount  == 2)
+  //   { 
+  //     $res = new GGroupGesEve();
+  //     //Children
+  //     // $res->setRGesEve($res->rGesEve->fromDOMElement($xml->getElementsByTagName('rGesEve')->item(0)->nodeValue));
+  
+  //     return $res;
+  //   }
+  //   else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
 
 

@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -82,9 +83,9 @@ class RGeVeDisconf
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeDisconf');
+    $res = $doc->createElement('rGeVeDisconf');
 
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
@@ -92,22 +93,22 @@ class RGeVeDisconf
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return DOMElement
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeDisconf
-  {
-    if (strcmp($xml->tagName, 'rGeVeDisconf') == 0 && $xml->childElementCount == 2) {
-      $res = new RGeVeDisconf();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return DOMElement
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeDisconf
+  // {
+  //   if (strcmp($xml->tagName, 'rGeVeDisconf') == 0 && $xml->childElementCount == 2) {
+  //     $res = new RGeVeDisconf();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

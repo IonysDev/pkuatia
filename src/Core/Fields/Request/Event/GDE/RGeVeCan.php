@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -78,34 +79,34 @@ class RGeVeCan
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeCan');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
+    $res = $doc->createElement('rGeVeCan');
+    $res->appendChild($doc->createElement('Id', $this->Id));
+    $res->appendChild($doc->createElement('mOtEve', $this->mOtEve));
     return $res;
   }
   
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RGeVeCan
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeCan
-  {
-    if(strcmp($xml->tagName, 'rGeVeCan') == 0 && $xml->childElementCount == 2)
-    {
-      $res = new RGeVeCan();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
-      return $res;
-    }
-    else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RGeVeCan
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeCan
+  // {
+  //   if(strcmp($xml->tagName, 'rGeVeCan') == 0 && $xml->childElementCount == 2)
+  //   {
+  //     $res = new RGeVeCan();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+  //     return $res;
+  //   }
+  //   else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
   
 
 }

@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -212,9 +213,9 @@ class RGeDevCCFFDev
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeDevCCFFDev');
+    $res = $doc->createElement('rGeDevCCFFDev');
 
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumDevSol', $this->getDNumDevSol()));
@@ -227,28 +228,28 @@ class RGeDevCCFFDev
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return TrGeVeRetAce
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeDevCCFFDev
-  {
-    if (strcmp($xml->tagName, "rGeDevCCFFDev") == 0 && $xml->childElementCount == 7) {
-      $res = new RGeDevCCFFDev();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDNumDevSol($xml->getElementsByTagName('dNumDevSol')->item(0)->nodeValue);
-      $res->setDNumDevInf($xml->getElementsByTagName('dNumDevInf')->item(0)->nodeValue);
-      $res->setDNumDevRes($xml->getElementsByTagName('dNumDevRes')->item(0)->nodeValue);
-      $res->setDFeEmiSol(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiSol')->item(0)->nodeValue));
-      $res->setDFeEmiInf(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiInf')->item(0)->nodeValue));
-      $res->setDFeEmiRes(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiRes')->item(0)->nodeValue));
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return TrGeVeRetAce
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeDevCCFFDev
+  // {
+  //   if (strcmp($xml->tagName, "rGeDevCCFFDev") == 0 && $xml->childElementCount == 7) {
+  //     $res = new RGeDevCCFFDev();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setDNumDevSol($xml->getElementsByTagName('dNumDevSol')->item(0)->nodeValue);
+  //     $res->setDNumDevInf($xml->getElementsByTagName('dNumDevInf')->item(0)->nodeValue);
+  //     $res->setDNumDevRes($xml->getElementsByTagName('dNumDevRes')->item(0)->nodeValue);
+  //     $res->setDFeEmiSol(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiSol')->item(0)->nodeValue));
+  //     $res->setDFeEmiInf(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiInf')->item(0)->nodeValue));
+  //     $res->setDFeEmiRes(DateTime::createFromFormat('Y-m-d',$xml->getElementsByTagName('dFeEmiRes')->item(0)->nodeValue));
 
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

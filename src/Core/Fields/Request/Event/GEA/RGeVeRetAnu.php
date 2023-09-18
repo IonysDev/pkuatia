@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -235,9 +236,9 @@ class RGeVeRetAnu
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeRetAnu');
+    $res = $doc->createElement('rGeVeRetAnu');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(new DOMElement('dEstRet', $this->getDEstRet()));
@@ -251,28 +252,28 @@ class RGeVeRetAnu
   }
 
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return TrGeVeRetAce
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeRetAnu
-  {
-    if (strcmp($xml->tagName, "rGeVeRetAnu") == 0 && $xml->childElementCount == 8) {
-      $res = new RGeVeRetAnu();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDNumTimRet(intval($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue));
-      $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
-      $res->setDPunExpRet($xml->getElementsByTagName('dPunExpRet')->item(0)->nodeValue);
-      $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
-      $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
-      $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue));
-      $res->setDFecAnRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecAnRet')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return TrGeVeRetAce
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeRetAnu
+  // {
+  //   if (strcmp($xml->tagName, "rGeVeRetAnu") == 0 && $xml->childElementCount == 8) {
+  //     $res = new RGeVeRetAnu();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setDNumTimRet(intval($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue));
+  //     $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
+  //     $res->setDPunExpRet($xml->getElementsByTagName('dPunExpRet')->item(0)->nodeValue);
+  //     $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
+  //     $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
+  //     $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue));
+  //     $res->setDFecAnRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecAnRet')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

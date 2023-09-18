@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -742,9 +743,9 @@ class RGeVeTr
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeTr');
+    $res = $doc->createElement('rGeVeTr');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dMotEv', $this->getDMotEv()));
 
@@ -814,44 +815,44 @@ class RGeVeTr
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RGeVeTr
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeTr
-  {
-    if (strcmp($xml->tagName, 'rGeDeVTr') == 0 && $xml->childElementCount == 23) {
-      $res = new RGeVeTr();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDMotEv(intval($xml->getElementsByTagName('dMotEv')->item(0)->nodeValue));
-      $res->setCDepEnt(intval($xml->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
-      $res->setCDisEnt(intval($xml->getElementsByTagName('cDisEnt')->item(0)->nodeValue));
-      $res->setCCiuEnt(intval($xml->getElementsByTagName('cCiuEnt')->item(0)->nodeValue));
-      $res->setDDirEnt($xml->getElementsByTagName('dDirEnt')->item(0)->nodeValue);
-      $res->setDNumCas(intval($xml->getElementsByTagName('dNumCas')->item(0)->nodeValue));
-      $res->setDCompDir1($xml->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
-      $res->setDNomChof($xml->getElementsByTagName('dNomChof')->item(0)->nodeValue);
-      $res->setDNumIDChof($xml->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
-      $res->setINatTrans(intval($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
-      $res->setDRucTrans($xml->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
-      $res->setDDVTrans(intval($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
-      $res->setDNomTrans($xml->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
-      $res->setITipIDTrans(intval($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
-      $res->setDNumIDTrans($xml->getElementsByTagName('dNumIDTrans')->item(0)->nodeValue);
-      $res->setITipTrans(intval($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
-      $res->setIModTrans(intval($xml->getElementsByTagName('iModTrans')->item(0)->nodeValue));
-      $res->setDTiVehTras($xml->getElementsByTagName('dTiVehTras')->item(0)->nodeValue);
-      $res->setDMarVeh($xml->getElementsByTagName('dMarVeh')->item(0)->nodeValue);
-      $res->setDTipIdenVeh(intval($xml->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue));
-      $res->setDNroIDVeh($xml->getElementsByTagName('dNroIDVeh')->item(0)->nodeValue);
-      $res->setDNroMatVeh($xml->getElementsByTagName('dNroMatVeh')->item(0)->nodeValue);
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RGeVeTr
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeTr
+  // {
+  //   if (strcmp($xml->tagName, 'rGeDeVTr') == 0 && $xml->childElementCount == 23) {
+  //     $res = new RGeVeTr();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setDMotEv(intval($xml->getElementsByTagName('dMotEv')->item(0)->nodeValue));
+  //     $res->setCDepEnt(intval($xml->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
+  //     $res->setCDisEnt(intval($xml->getElementsByTagName('cDisEnt')->item(0)->nodeValue));
+  //     $res->setCCiuEnt(intval($xml->getElementsByTagName('cCiuEnt')->item(0)->nodeValue));
+  //     $res->setDDirEnt($xml->getElementsByTagName('dDirEnt')->item(0)->nodeValue);
+  //     $res->setDNumCas(intval($xml->getElementsByTagName('dNumCas')->item(0)->nodeValue));
+  //     $res->setDCompDir1($xml->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
+  //     $res->setDNomChof($xml->getElementsByTagName('dNomChof')->item(0)->nodeValue);
+  //     $res->setDNumIDChof($xml->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
+  //     $res->setINatTrans(intval($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
+  //     $res->setDRucTrans($xml->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
+  //     $res->setDDVTrans(intval($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
+  //     $res->setDNomTrans($xml->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
+  //     $res->setITipIDTrans(intval($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
+  //     $res->setDNumIDTrans($xml->getElementsByTagName('dNumIDTrans')->item(0)->nodeValue);
+  //     $res->setITipTrans(intval($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
+  //     $res->setIModTrans(intval($xml->getElementsByTagName('iModTrans')->item(0)->nodeValue));
+  //     $res->setDTiVehTras($xml->getElementsByTagName('dTiVehTras')->item(0)->nodeValue);
+  //     $res->setDMarVeh($xml->getElementsByTagName('dMarVeh')->item(0)->nodeValue);
+  //     $res->setDTipIdenVeh(intval($xml->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue));
+  //     $res->setDNroIDVeh($xml->getElementsByTagName('dNroIDVeh')->item(0)->nodeValue);
+  //     $res->setDNroMatVeh($xml->getElementsByTagName('dNroMatVeh')->item(0)->nodeValue);
 
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -54,30 +55,30 @@ class RGeVeRem
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeRem');
+    $res = $doc->createElement('rGeVeRem');
     $res->appendChild(new DOMElement('Id',$this->getId()));
 
     return $res;
   }
 
-    /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return TrGeVeRetAce
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeRem
-  {
-    if (strcmp($xml->tagName, "rGeVeRem") == 0 && $xml->childElementCount == 7) {
-      $res = new RGeVeRem();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+//     /**
+//    * fromDOMElement
+//    *
+//    * @param  mixed $xml
+//    * @return TrGeVeRetAce
+//    */
+//   public static function fromDOMElement(DOMElement $xml): RGeVeRem
+//   {
+//     if (strcmp($xml->tagName, "rGeVeRem") == 0 && $xml->childElementCount == 7) {
+//       $res = new RGeVeRem();
+//       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
       
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+//       return $res;
+//     } else {
+//       throw new \Exception("Invalid XML Element: $xml->tagName");
+//       return null;
+//     }
+//   }
 }

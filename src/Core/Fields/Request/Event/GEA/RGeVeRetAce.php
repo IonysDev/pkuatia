@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -211,9 +212,9 @@ class RGeVeRetAce
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeRetAce');
+    $res = $doc->createElement('rGeVeRetAce');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(new DOMElement('dEstRet', $this->getDEstRet()));
@@ -224,28 +225,28 @@ class RGeVeRetAce
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RGeVeRetAce
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeRetAce
-  {
-    if (strcmp($xml->tagName, "rGeVeRetAce") == 0 && $xml->childElementCount == 7) {
-      $res = new RGeVeRetAce();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDNumTimRet(intval($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue));
-      $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
-      $res->setDPunExpRet($xml->getElementsByTagName('dPunExpRet')->item(0)->nodeValue);
-      $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
-      $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
-      $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue));
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RGeVeRetAce
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeRetAce
+  // {
+  //   if (strcmp($xml->tagName, "rGeVeRetAce") == 0 && $xml->childElementCount == 7) {
+  //     $res = new RGeVeRetAce();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setDNumTimRet(intval($xml->getElementsByTagName('dNumTimRet')->item(0)->nodeValue));
+  //     $res->setDEstRet($xml->getElementsByTagName('dEstRet')->item(0)->nodeValue);
+  //     $res->setDPunExpRet($xml->getElementsByTagName('dPunExpRet')->item(0)->nodeValue);
+  //     $res->setDNumDocRet($xml->getElementsByTagName('dNumDocRet')->item(0)->nodeValue);
+  //     $res->setDCodConRet($xml->getElementsByTagName('dCodConRet')->item(0)->nodeValue);
+  //     $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeEmiRet')->item(0)->nodeValue));
 
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

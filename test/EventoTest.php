@@ -44,7 +44,7 @@ $rGesEve = [];
 $trGesEve = new RGesEve();
 //creamos el grupo de campos generales del evento
 $rEve = new rEve();
-$rEve->setId(1);
+$rEve->setId(123);
 $rEve->setDFecFirma(new DateTime());
 $rEve->setDVerFor(150);
 ///se crea el grupo de campos del tipo de evento
@@ -229,12 +229,12 @@ $rGesEve[] = $trGesEve;
 ///se asigna el array al grupo de eventos
 $evento->setRGesEve($rGesEve);
 
-
 ////request
 $rEnviEventoDe = new REnviEventoDe();
-$rEnviEventoDe->setDId(1);
-$rEnviEventoDe->setDEvReg("HACER EL XML COMO EN LA PAGINA 32 DEL MANUAL");
+$rEnviEventoDe->setDId(123);
+$rEnviEventoDe->setDEvReg($evento->toXMLString());
 
 
-var_dump($evento->toDOMElement());
+
+
 

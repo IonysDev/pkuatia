@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -103,9 +104,9 @@ class RGeVeConf
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeConf');
+    $res = $doc->createElement('rGeVeConf');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('iTipConf', $this->getITipConf()));
     if ($this->iTipConf == 2) {
@@ -114,23 +115,23 @@ class RGeVeConf
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RGeVeConf
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeConf
-  {
-    if (strcmp($xml->tagName, 'rGeVeConf') == 0 && $xml->childElementCount == 3) {
-      $res = new RGeVeConf();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setITipConf(intval($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue));
-      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RGeVeConf
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeConf
+  // {
+  //   if (strcmp($xml->tagName, 'rGeVeConf') == 0 && $xml->childElementCount == 3) {
+  //     $res = new RGeVeConf();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setITipConf(intval($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue));
+  //     $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 }

@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -282,9 +283,9 @@ class RGeVeNotRec
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('rGeVeNotRec');
+    $res = $doc->createElement('rGeVeNotRec');
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
     $res->appendChild(new DOMElement('dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
@@ -304,31 +305,31 @@ class RGeVeNotRec
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RGeVeNotRec
-   */
-  public static function fromDOMElement(DOMElement $xml): RGeVeNotRec
-  {
-    if (strcmp($xml->tagName, "rGeVeNotRec") == 0 && $xml->childElementCount >= 6) {
-      $res = new RGeVeNotRec();
-      $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue));
-      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
-      $res->setITipRec(intval($xml->getElementsByTagName('iTipRec')->item(0)->nodeValue));
-      $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
-      $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
-      $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
-      $res->setDTipIDRec(intval($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue));
-      $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
-      $res->setDTotalGs($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RGeVeNotRec
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): RGeVeNotRec
+  // {
+  //   if (strcmp($xml->tagName, "rGeVeNotRec") == 0 && $xml->childElementCount >= 6) {
+  //     $res = new RGeVeNotRec();
+  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+  //     $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecEmi')->item(0)->nodeValue));
+  //     $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
+  //     $res->setITipRec(intval($xml->getElementsByTagName('iTipRec')->item(0)->nodeValue));
+  //     $res->setDNomRec($xml->getElementsByTagName('dNomRec')->item(0)->nodeValue);
+  //     $res->setDRucRec($xml->getElementsByTagName('dRucRec')->item(0)->nodeValue);
+  //     $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
+  //     $res->setDTipIDRec(intval($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue));
+  //     $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
+  //     $res->setDTotalGs($xml->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
 
-    return $res;
-  }
+  //   return $res;
+  // }
 }

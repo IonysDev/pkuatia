@@ -2,7 +2,9 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
+use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -38,38 +40,38 @@ class RGesEve
      *
      * @return DOMElement
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $res = new DOMElement('rGesEve');
-        $res->appendChild($this->REve->toDOMElement());
+        $res = $doc->createElement('rGesEve');
+        $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_EVENTO);
+        $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_URI);
+        $res->appendChild($this->REve->toDOMElement($doc));
         return $res;
     }
 
+    // ///////////////////////////////////////////////////////////////////////
+    // ///XML ELEMENT
+    // ///////////////////////////////////////////////////////////////////////  
 
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return RrGesEve
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): RGesEve
+    // {
+    //     if (strcmp($xml->tagName, 'rGesEve') == 0 && $xml->childElementCount == 1) {
+    //         $res = new RGesEve();
 
-    ///////////////////////////////////////////////////////////////////////
-    ///XML ELEMENT
-    ///////////////////////////////////////////////////////////////////////  
+    //         $aux = new REve();
+    //         $aux->fromDOMElement($xml->getElementsByTagName('REve')->item(0)->nodeValue);
+    //         $res->setREve($aux);
 
-    /**
-     * fromDOMElement
-     *
-     * @param  mixed $xml
-     * @return RrGesEve
-     */
-    public static function fromDOMElement(DOMElement $xml): RGesEve
-    {
-        if (strcmp($xml->tagName, 'rGesEve') == 0 && $xml->childElementCount == 1) {
-            $res = new RGesEve();
-
-            $aux = new REve();
-            $aux->fromDOMElement($xml->getElementsByTagName('REve')->item(0)->nodeValue);
-            $res->setREve($aux);
-
-            return $res;
-        } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-        }
-    }
+    //         return $res;
+    //     } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //     }
+    // }
 }

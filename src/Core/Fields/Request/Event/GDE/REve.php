@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMElement;
 use DateTime;
+use DOMDocument;
 
 /**
  * Nodo: GDE002 - REve - Grupos de Campos Generales del Evento 
@@ -130,39 +131,37 @@ class REve
      *
      * @return DOMElement
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        $res = new DOMElement('rEve');
+        $res = $doc->createElement('rEve');
         $res->setAttribute('Id', $this->Id);
-        $res->appendChild(new DOMElement('dFecFirma', $this->dFecFirma->format('Y-m-d\TH:i:s')));
-        $res->appendChild(new DOMElement('dVerFor', $this->dVerFor));
-        $res->appendChild($this->gGroupTiEvt->toDOMElement());
+        $res->appendChild($this->gGroupTiEvt->toDOMElement($doc));
         return $res;
     }
     
-    /**
-     * fromDOMElement
-     *
-     * @param  mixed $xml
-     * @return REve
-     */
-    public static function fromDOMElement(DOMElement $xml): REve
-    {
-        if (strcmp($xml->tagName, 'rEve') == 0 && $xml->childElementCount == 4) {
-            $res = new REve();
-            $res->setId(intval($xml->getElementsByTagName('Id')->item(0)->nodeValue));
-            $res->setDFecFirma(DateTime::createFromFormat("Y-m-d\TH:i:s",$xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
-            $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return REve
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): REve
+    // {
+    //     if (strcmp($xml->tagName, 'rEve') == 0 && $xml->childElementCount == 4) {
+    //         $res = new REve();
+    //         $res->setId(intval($xml->getElementsByTagName('Id')->item(0)->nodeValue));
+    //         $res->setDFecFirma(DateTime::createFromFormat("Y-m-d\TH:i:s",$xml->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
+    //         $res->setDVerFor(intval($xml->getElementsByTagName('dVerFor')->item(0)->nodeValue));
 
-            ///children
-            $aux = new GGroupTiEvt();
-            $aux->fromDOMElement($xml->getElementsByTagName('gGroupTiEvt')->item(0)->nodeValue);
-            $res->setGGroupTiEvt($aux);
-            return $res;
-          } else {
-            throw new \Exception("Invalid XML Element: $xml->tagName");
-            return null;
-          }
-    }
+    //         ///children
+    //         $aux = new GGroupTiEvt();
+    //         $aux->fromDOMElement($xml->getElementsByTagName('gGroupTiEvt')->item(0)->nodeValue);
+    //         $res->setGGroupTiEvt($aux);
+    //         return $res;
+    //       } else {
+    //         throw new \Exception("Invalid XML Element: $xml->tagName");
+    //         return null;
+    //       }
+    // }
 
 }
