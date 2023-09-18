@@ -135,6 +135,8 @@ class REve
     {
         $res = $doc->createElement('rEve');
         $res->setAttribute('Id', $this->Id);
+        $res->appendChild($doc->createElement('dFecFirma', $this->dFecFirma->format('Y-m-d\TH:i:s')));
+        $res->appendChild($doc->createElement('dVerFor', $this->dVerFor));
         $res->appendChild($this->gGroupTiEvt->toDOMElement($doc));
         return $res;
     }

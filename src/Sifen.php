@@ -250,8 +250,10 @@ class Sifen
         $documento .= $signedEvent;
       }
     }
+
+    file_put_contents("documento.xml", $documento);
+    
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl", self::$options);
-    var_dump(self::$client->__getFunctions());
     $REnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(
       '<ns1:dEvReg>' . $documento . '</ns1:dEvReg>',
       XSD_ANYXML
