@@ -261,7 +261,7 @@ class Sifen
     $object = self::$client->rEnviEventoDe($REnviEventoDe);
     file_put_contents("request.xml", self::$client->__getLastRequest());
     file_put_contents("response.xml", self::$client->__getLastResponse());
-    var_dump($object);
+    return $object;
 
   }
 
