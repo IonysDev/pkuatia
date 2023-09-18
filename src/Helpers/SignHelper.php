@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Helpers;
 
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use DOMDocument;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
@@ -67,6 +68,14 @@ class SignHelper
         self::$xmlSigner->sign(self::$xmlKey, $xmlDocument->documentElement);
         self::$xmlSigner->appendSignature($rdeNode);
         return $xmlDocument;
+    }
+
+
+    public static function SignEvent(GGroupGesEve $eventos)
+    {
+        if(!isset(self::$xmlSigner))
+            throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
+ 
     }
 
 }

@@ -3,7 +3,6 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use Abiliomp\Pkuatia\Core\Constants;
-use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use DOMDocument;
 use DOMElement;
 
@@ -14,7 +13,6 @@ use DOMElement;
 class RGesEve
 {
     public REve $REve; // GDE002 - Grupos de campos generales del evento
-    public Signature $signature; // GDE008 - Grupo de la firma digital
 
     ///////////////////////////////////////////////////////////////////////
     // Getters

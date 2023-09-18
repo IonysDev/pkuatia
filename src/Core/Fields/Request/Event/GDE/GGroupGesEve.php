@@ -77,20 +77,6 @@ class GGroupGesEve
     }
     return $res;
   }
-
-  public function toXMLString(): string
-  {
-    $xmlString = $this->toDOMDocument()->saveXML();
-    if(!$xmlString)
-    {
-      throw new \Exception('[GGroupGesEve] Error al convertir el objeto a XML.');
-    }
-
-    ///remove the first line of the xml
-    $xmlString = substr($xmlString, strpos($xmlString, "\n") + 1);
-    
-    return $xmlString;
-  }
   
   // /**
   //  * fromDOMElement

@@ -21,6 +21,7 @@ use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDescon;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDisconf;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeNotRec;
 use Abiliomp\Pkuatia\Core\Requests\REnviEventoDe;
+use Abiliomp\Pkuatia\Helpers\SignHelper;
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
@@ -49,6 +50,14 @@ $rEve->setDFecFirma(new DateTime());
 $rEve->setDVerFor(150);
 ///se crea el grupo de campos del tipo de evento
 $gGroupTiEvt = new GGroupTiEvt();
+
+//another
+$trGesEve2 = new RGesEve();
+$rEve2 = new rEve();
+$rEve2->setId(124);
+$rEve2->setDFecFirma(new DateTime());
+$rEve2->setDVerFor(150);
+$gGroupTiEvt2 = new GGroupTiEvt();
 
 
 //=====================================================================
@@ -220,21 +229,25 @@ $trGeVeRem->setId('0000000000000000000000000000000000000000000000000000000000000
 
 ////se asigna el evento de cancelacion al grupo de campos de tipo evento
 $gGroupTiEvt->setRGeVeCan($rGeVeCan);
+$gGroupTiEvt2->setRGeVeInu($rGeVeInu);
 ////se asigna el grupo de campos  de tipo evento al grupo de campos generales del evento
 $rEve->setGGroupTiEvt($gGroupTiEvt);
+$rEve2->setGGroupTiEvt($gGroupTiEvt2);
 ////se asigna el grupo de campos generales del evento a la raiz de gestion de eventos
 $trGesEve->setREve($rEve);
+$trGesEve2->setREve($rEve2);
 ////se asigna la raiz de gestion de eventos al array de raices de gestion de eventos
 $rGesEve[] = $trGesEve;
+$rGesEve[] = $trGesEve2;
 ///se asigna el array al grupo de eventos
 $evento->setRGesEve($rGesEve);
 
-////request
-$rEnviEventoDe = new REnviEventoDe();
-$rEnviEventoDe->setDId(123);
-$rEnviEventoDe->setDEvReg($evento->toXMLString());
 
+SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFilePath);
 
+foreach ($evento as $key => $value) {
+  var_dump($value);
+}
 
 
 

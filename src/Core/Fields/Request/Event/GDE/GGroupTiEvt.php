@@ -69,7 +69,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeInu(RGeVeInu $rGeVeInu): self
+  public function setRGeVeInu(RGeVeInu $rGeVeInu): self
   {
     $this->rGeVeInu = $rGeVeInu;
 
@@ -84,7 +84,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeNotRec(RGeVeNotRec $rGeVeNotRec): self
+  public function setRGeVeNotRec(RGeVeNotRec $rGeVeNotRec): self
   {
     $this->rGeVeNotRec = $rGeVeNotRec;
 
@@ -99,7 +99,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeConf(RGeVeConf $rGeVeConf): self
+  public function setRGeVeConf(RGeVeConf $rGeVeConf): self
   {
     $this->rGeVeConf = $rGeVeConf;
 
@@ -114,7 +114,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeDisconf(RGeVeDisconf $rGeVeDisconf): self
+  public function setRGeVeDisconf(RGeVeDisconf $rGeVeDisconf): self
   {
     $this->rGeVeDisconf = $rGeVeDisconf;
 
@@ -129,7 +129,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeDescon(RGeVeDescon $rGeVeDescon): self
+  public function setRGeVeDescon(RGeVeDescon $rGeVeDescon): self
   {
     $this->rGeVeDescon = $rGeVeDescon;
 
@@ -144,7 +144,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeTr(RGeVeTr $rGeVeTr): self
+  public function setRGeVeTr(RGeVeTr $rGeVeTr): self
   {
     $this->rGeVeTr = $rGeVeTr;
 
@@ -159,7 +159,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function serGeVeRetAce(rGeVeRetAce $rGeVeRetAce): self
+  public function setrGeVeRetAce(rGeVeRetAce $rGeVeRetAce): self
   {
     $this->rGeVeRetAce = $rGeVeRetAce;
     return $this;
@@ -173,7 +173,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function serGeVeRetAnu(rGeVeRetAnu $rGeVeRetAnu): self
+  public function setrGeVeRetAnu(rGeVeRetAnu $rGeVeRetAnu): self
   {
     $this->rGeVeRetAnu = $rGeVeRetAnu;
     return $this;
@@ -187,7 +187,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function serGeVeCCFF(rGeVeCCFF $rGeVeCCFF): self
+  public function setrGeVeCCFF(rGeVeCCFF $rGeVeCCFF): self
   {
     $this->rGeVeCCFF = $rGeVeCCFF;
     return $this;
@@ -229,7 +229,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeAnt(RGeVeAnt $rGeVeAnt): self
+  public function setRGeVeAnt(RGeVeAnt $rGeVeAnt): self
   {
     $this->rGeVeAnt = $rGeVeAnt;
     return $this;
@@ -243,7 +243,7 @@ class GGroupTiEvt
    *
    * @return self
    */
-  public function seRGeVeRem(RGeVeRem $rGeVeRem): self
+  public function setRGeVeRem(RGeVeRem $rGeVeRem): self
   {
     $this->rGeVeRem = $rGeVeRem;
     return $this;
