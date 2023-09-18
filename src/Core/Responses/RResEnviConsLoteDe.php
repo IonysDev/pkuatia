@@ -131,38 +131,40 @@ class RResEnviConsLoteDe
     ///array for gResProcLote
     $gResProcLote = array();
 
-    foreach ($object->gResProcLote as $item) {
-      $aux = new GResProcLote();
-      //ID
-      $aux->setId($item->id);
-      //ESTADO
-      $aux->setDEstRes($item->dEstRes);
-      //OPCIONAL
-      if (isset($item->dProtAut)) {
-        $aux->setDProtAut($item->dProtAut);
+    if(isset($object->gResProcLote)){
+      foreach ($object->gResProcLote as $item) {
+        $aux = new GResProcLote();
+        //ID
+        $aux->setId($item->id);
+        //ESTADO
+        $aux->setDEstRes($item->dEstRes);
+        //OPCIONAL
+        if (isset($item->dProtAut)) {
+          $aux->setDProtAut($item->dProtAut);
+        }
+        ///array for gResProc
+        $gResProc = array();
+  
+        ///check if is an array or an object
+        if (is_array($item->gResProc)) {
+          echo "TODO CUANTICO";
+          echo "is array";
+        } else {
+          $aux2 = new GResProc();
+          $aux2->setDCodRes($item->gResProc->dCodRes);
+          $aux2->setDMsgRes($item->gResProc->dMsgRes);
+        }
+        ///push aux2 into gResProc array
+        array_push($gResProc, $aux2);
+        ///set gResProc to aux
+        $aux->setGResProc($gResProc);
+        //push aux into gResProcLote array
+        array_push($gResProcLote, $aux);
       }
-      ///array for gResProc
-      $gResProc = array();
-
-      ///check if is an array or an object
-      if (is_array($item->gResProc)) {
-        echo "TODO CUANTICO";
-        echo "is array";
-      } else {
-        $aux2 = new GResProc();
-        $aux2->setDCodRes($item->gResProc->dCodRes);
-        $aux2->setDMsgRes($item->gResProc->dMsgRes);
-      }
-      ///push aux2 into gResProc array
-      array_push($gResProc, $aux2);
-      ///set gResProc to aux
-      $aux->setGResProc($gResProc);
-      //push aux into gResProcLote array
-      array_push($gResProcLote, $aux);
+  
+      ///set gResProcLote to res
+      $res->setGResProcLote($gResProcLote);
     }
-
-    ///set gResProcLote to res
-    $res->setGResProcLote($gResProcLote);
     return $res;
   }
 }

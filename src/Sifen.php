@@ -261,7 +261,12 @@ class Sifen
     $object = self::$client->rEnviEventoDe($REnviEventoDe);
     file_put_contents("request.xml", self::$client->__getLastRequest());
     file_put_contents("response.xml", self::$client->__getLastResponse());
-    return $object;
+    if(is_null($object))
+    {
+      echo "Error al registrar el evento";
+    }else{
+      var_dump($object);
+    }
 
   }
 
