@@ -20,9 +20,7 @@ use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeConf;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDescon;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDisconf;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeNotRec;
-use Abiliomp\Pkuatia\Core\Requests\REnviEventoDe;
-use Abiliomp\Pkuatia\Helpers\SignHelper;
-
+use Abiliomp\Pkuatia\Sifen;
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
 error_reporting(E_ALL);
@@ -36,6 +34,8 @@ $config->env = 'env';
 $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
+
+Sifen::Init($config);
 
 ///creamos la raiz del grupo de eventos
 $evento = new GGroupGesEve();
@@ -147,10 +147,9 @@ $rGeVeDescon->setMOtEve('Motivo de desconocimiento');
 $trGeVeTra = new RGeVeTr();
 $trGeVeTra->setId('00000000000000000000000000000000000000000000000000000000000000000'); ///poner un cdc
 $trGeVeTra->setDMotEv(1);
-if($trGeVeTra->getDMotEv() == 1)
-{
+if ($trGeVeTra->getDMotEv() == 1) {
   ///1 cambio del local de entrega
-  $trGeVeTra->setCDepEnt(1); 
+  $trGeVeTra->setCDepEnt(1);
   $trGeVeTra->setCCiuEnt(1);
   $trGeVeTra->setDDirEnt('Direccion de entrega');
   $trGeVeTra->setDNumCas(2345);
@@ -242,12 +241,15 @@ $rGesEve[] = $trGesEve2;
 ///se asigna el array al grupo de eventos
 $evento->setRGesEve($rGesEve);
 
-
-SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFilePath);
-
-foreach ($evento as $key => $value) {
-  var_dump($value);
+//se envia el request
+try {
+  echo "OK\n";
+  echo "Envio de evento\n";
+  $res = Sifen::RegistrarEvento($evento);
+} catch (SoapFault $e) {
+  // Handle SOAP faults/errors
+  echo 'SOAP Error: ' . $e->getMessage();
+} catch (Exception $e) {
+  // Handle general exceptions
+  echo 'Error: ' . $e->getMessage();
 }
-
-
-

@@ -48,36 +48,6 @@ class GGroupGesEve
   ///////////////////////////////////////////////////////////////////////
 
 
-  public function toDOMDocument(): DOMDocument
-  {
-    $doc = new DOMDocument('1.0', 'utf-8');
-    $domElement = $this->toDOMElement($doc);
-    $doc->appendChild($domElement);
-    return $doc;
-  }
-
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    // Validaciones
-    if(!isset($this->rGesEve))
-      throw new \Exception('[GGroupGesEve] El campo rGesEve no puede ser nulo.');
-
-    //cabecera dEvReg
-    $res = $doc->createElement('dEvReg');
-    // Conversión
-    $res->appendChild($doc->createElement('gGroupGesEve'));
-    foreach ($this->rGesEve as $key => $value) {
-      ///append in gGroupGesEve
-      $res->getElementsByTagName('gGroupGesEve')->item(0)->appendChild($value->toDOMElement($doc));
-    }
-    return $res;
-  }
-  
   // /**
   //  * fromDOMElement
   //  *

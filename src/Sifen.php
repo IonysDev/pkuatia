@@ -12,8 +12,10 @@ use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
 use Abiliomp\Pkuatia\Core\Requests\REnviConsLoteDe;
 use Abiliomp\Pkuatia\Core\Requests\REnviDe;
+use Abiliomp\Pkuatia\Core\Requests\REnviEventoDe;
 use Abiliomp\Pkuatia\Core\Requests\REnvioLote;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsLoteDe;
@@ -196,7 +198,6 @@ class Sifen
     //cerrar etiqueta rLoteDE
     $rLotDe .= '</rLoteDE>';
 
-
     ///CREATE ZIP FILE
     $zip = new ZipArchive();
     $zip->open("rLoteDE.zip", ZipArchive::CREATE);
@@ -219,7 +220,7 @@ class Sifen
     $object = self::$client->rEnvioLote($rEnvioLote);
     return RResEnviLoteDe::FromSifenResponseObject($object);
   }
-  
+
   /**
    * Realiza la consulta de un lote de Documentos Electrónicos en el SIFEN.
    *
@@ -233,7 +234,35 @@ class Sifen
     $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
     return RResEnviConsLoteDe::FromSifenResponseObject($object);
   }
-  
+
+  public static function RegistrarEvento(GGroupGesEve $raiz)
+  {
+    $documento = "<gGroupGesEve>";
+    foreach ($raiz->getRGesEve() as $key => $value) {
+      SignHelper::Init(self::$config->privateKeyFilePath, self::$config->privateKeyPassphrase, self::$config->certificateFilePath);
+      $xmlDocument = SignHelper::SingRGesEve($value);
+      $signedEvent = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rGesEve")->item(0));
+
+      ///revisa si es la ultima iteracion
+      if ($key == count($raiz->getRGesEve()) - 1) {
+        $documento .= $signedEvent . "</gGroupGesEve>";
+      } else {
+        $documento .= $signedEvent;
+      }
+    }
+    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl", self::$options);
+    var_dump(self::$client->__getFunctions());
+    $REnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(
+      '<ns1:dEvReg>' . $documento . '</ns1:dEvReg>',
+      XSD_ANYXML
+    ));
+    $object = self::$client->rEnviEventoDe($REnviEventoDe);
+    file_put_contents("request.xml", self::$client->__getLastRequest());
+    file_put_contents("response.xml", self::$client->__getLastResponse());
+    var_dump($object);
+
+  }
+
   /**
    * Maneja los entornos de desarrollo y producción.
    *
@@ -247,7 +276,7 @@ class Sifen
       return Constants::SIFEN_URL_BASE_DEV;
     }
   }
-  
+
   /**
    * Maneja el incremento del dId.
    *

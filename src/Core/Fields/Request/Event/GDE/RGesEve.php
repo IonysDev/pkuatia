@@ -18,9 +18,12 @@ class RGesEve
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getEve(): REve
+    public function getREve(): REve
     {
+        if (isset($this->REve))
         return $this->REve;
+        else
+        throw new \Exception('El campo REve no ha sido definido.');
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -46,6 +49,29 @@ class RGesEve
         $res->appendChild($this->REve->toDOMElement($doc));
         return $res;
     }
+
+    public function toDOMDocument(): DOMDocument
+    {
+        $doc = new DOMDocument('1.0', 'utf-8');
+        $domElement = $this->toDOMElement($doc);
+        $doc->appendChild($domElement);
+        return $doc;
+    }
+
+    public function toXMLString(): string
+    {
+        $xmlString = $this->toDOMDocument()->saveXML();
+        if(!$xmlString)
+        {
+          throw new \Exception('[GGroupGesEve] Error al convertir el objeto a XML.');
+        }
+    
+        ///remove the first line of the xml
+        $xmlString = substr($xmlString, strpos($xmlString, "\n") + 1);
+        
+        return $xmlString;
+    }
+
 
     // ///////////////////////////////////////////////////////////////////////
     // ///XML ELEMENT

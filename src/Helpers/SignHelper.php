@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Helpers;
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
+use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use DOMDocument;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
@@ -27,9 +28,9 @@ class SignHelper
      */
     public static function Init(String $keyFilePath, String $passphrase, String $certFilePath)
     {
-        if(!file_exists($keyFilePath))
+        if (!file_exists($keyFilePath))
             throw new \Exception("[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
-        if(!file_exists($certFilePath))
+        if (!file_exists($certFilePath))
             throw new \Exception("[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
         self::$xmlSigner = new XMLSecurityDSig('');
         self::$xmlSigner->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
@@ -70,12 +71,29 @@ class SignHelper
         return $xmlDocument;
     }
 
-
-    public static function SignEvent(GGroupGesEve $eventos)
+    public static function SingRGesEve(RGesEve $evento)
     {
-        if(!isset(self::$xmlSigner))
+        if (!isset(self::$xmlSigner))
             throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
- 
-    }
 
+        $xmlDocument = new DOMDocument('1.0', 'UTF-8');
+        $xmlDocument->formatOutput = false;
+        $xmlDocument->preserveWhiteSpace = false;
+        $xmlDocument->loadXML($evento->toXMLString());
+
+        $rGesEveNode = $xmlDocument->getElementsByTagName("rGesEve")->item(0);
+        $rEveNode = $xmlDocument->getElementsByTagName("rEve")->item(0);
+        $id = $evento->getREve()->getId();
+
+        self::$xmlSigner->addReference(
+            $rEveNode,
+            XMLSecurityDSig::SHA256,
+            ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
+            ['id_name' => $id, 'overwrite' => true],
+        );
+
+        self::$xmlSigner->sign(self::$xmlKey, $xmlDocument->documentElement);
+        self::$xmlSigner->appendSignature($rGesEveNode);
+        return $xmlDocument;
+    }
 }

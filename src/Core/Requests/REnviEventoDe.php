@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Requests;
 
+use SoapVar;
+
 /**
  * ID GSch01: Clase que coforma una petición de recepción de documento electrónico.
  * 
@@ -10,8 +12,14 @@ namespace Abiliomp\Pkuatia\Core\Requests;
 class REnviEventoDe {
 
     public int $dId; // GSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
-    public String $dEvReg;  // GSch03 - Evento a ser registrado en XML.
+    public SoapVar $dEvReg;  // GSch03 - Evento a ser registrado en XML.
 
+
+    public function __construct(int $dId, SoapVar $dEvReg )
+    {
+        $this->dId = $dId;
+        $this->dEvReg = $dEvReg;
+    }
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
@@ -59,7 +67,7 @@ class REnviEventoDe {
     /**
      * Obtiene el valor XML dEvReg de la solicitud.
      */
-    public function getDEvReg(): String
+    public function getDEvReg(): SoapVar
     {
         return $this->dEvReg;
     }
