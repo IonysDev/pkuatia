@@ -45,7 +45,7 @@ class RGesEve
     {
         $res = $doc->createElement('rGesEve');
         $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_EVENTO);
-        $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_URI);
+        $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_XSI);
         $res->appendChild($this->REve->toDOMElement($doc));
         return $res;
     }

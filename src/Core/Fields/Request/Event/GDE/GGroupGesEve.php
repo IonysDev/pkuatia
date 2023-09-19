@@ -58,7 +58,7 @@ class GGroupGesEve
 
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = $doc->createElement('gGroupGesEve');;
+    $res = $doc->createElement('gGroupGesEve');
     foreach ($this->rGesEve as $rGesEve) {
       $res->appendChild($rGesEve->toDOMElement($doc));
     }
