@@ -30,22 +30,7 @@ try {
     echo "Hora de consulta: " . $requestDate . "\n";
     $res = Sifen::ConsultarDE($testCDC);
     echo "Resultado: \n";
-    if ($res->getRContDe()) {
-        if(($res->getRContDe()->getRDe())){
-            var_dump($res->getRContDe()->getRDe());
-        }
-
-        if(($res->getRContDe()->getRContEv())){
-            var_dump($res->getRContDe()->getRContEv());
-        }else
-        {
-            echo "No hay eventos para este DE\n";
-        }
-    }else
-    {
-        var_dump($res);
-    }
-
+    $res->showData();
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();

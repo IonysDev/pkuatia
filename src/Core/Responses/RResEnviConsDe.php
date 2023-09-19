@@ -13,7 +13,7 @@ use stdClass;
  * Nodo Padre:  Es nodo raiz.
  */
 
-class RResEnviConsDe 
+class RResEnviConsDe
 {
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
@@ -77,7 +77,7 @@ class RResEnviConsDe
    *
    * @return self
    */
-  public function setRContDe(RContDe $rContDe): self 
+  public function setRContDe(RContDe $rContDe): self
   {
     $this->rContDe = $rContDe;
 
@@ -154,21 +154,41 @@ class RResEnviConsDe
     if (isset($object->xContenDE)) {
       // Al 12/08/2023 el SIFEN responde con un valor que el WS no puede interpretar lo cual deriva en una cadena XML inválida con múltiples elementos raiz.
       // Por este motivo se agrega artificialmente ese elemento raiz.
-      if(is_string($object->xContenDE)) {
+      if (is_string($object->xContenDE)) {
         $xml = str_replace('<rDE ', '<rContDe><rDE ', $object->xContenDE);
         $xml = $xml . '</rContDe>';
         //remove the xml declaration, si no se rompe ahora!
         $xml = preg_replace('/<\?xml.*\?>/', '', $xml);
         $res->setRContDe(RContDe::FromSimpleXMLElement(simplexml_load_string($xml)));
-      }
-      else{
+      } else {
         // DRSch05 - rContDe se denomina xContenDE en la respuesta de consulta SOAP.
         $res->setRContDe(RContDe::FromSifenResponseObject($object->xContenDE));
       }
-    }
-    else if (isset($object->rContDe)) {
+    } else if (isset($object->rContDe)) {
       $res->setRContDe(RContDe::FromSifenResponseObject($object->rContDe));
-    }    
+    }
     return $res;
+  }
+  
+  /**
+   * showData
+   *
+   * @return void
+   */
+  public function showData()
+  {
+    if ($this->getRContDe()) {
+      if (($this->getRContDe()->getRDe())) {
+        var_dump($this->getRContDe()->getRDe());
+      }
+
+      if (($this->getRContDe()->getRContEv())) {
+        var_dump($this->getRContDe()->getRContEv());
+      } else {
+        echo "No hay eventos para este DE\n";
+      }
+    } else {
+      var_dump($this);
+    }
   }
 }
