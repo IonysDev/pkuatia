@@ -197,7 +197,7 @@ while (count($rDeArray) < 10) {
 try {
   $res = Sifen::EnviarLoteDE($rDeArray);
   echo "Resultado: \n";
-  echo var_dump($res);
+  echo json_encode($res, JSON_PRETTY_PRINT);
   echo "Numero de Lote: " . $res->dProtConsLote . "\n";
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors

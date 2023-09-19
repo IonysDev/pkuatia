@@ -30,7 +30,7 @@ try {
     echo "Hora de consulta: " . $requestDate . "\n";
     $res = Sifen::consultaLote($nroLote);
     echo "Resultado: \n";
-    var_dump($res);
+    echo json_encode($res, JSON_PRETTY_PRINT);
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();

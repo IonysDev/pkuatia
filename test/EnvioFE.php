@@ -183,7 +183,7 @@ try {
     echo "CDC: " . $cdc . "\n";
     $res = Sifen::EnviarDE($rde);
     echo "Resultado: \n";
-    echo var_dump($res);
+    echo json_encode($res, JSON_PRETTY_PRINT);
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();

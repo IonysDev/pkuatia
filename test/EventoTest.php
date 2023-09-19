@@ -246,7 +246,7 @@ try {
   echo "Envio de evento\n";
   $res = Sifen::RegistrarEvento($evento, $config);
   echo "Respuesta:\n";
-  echo var_dump($res);
+  echo json_encode($res, JSON_PRETTY_PRINT);
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();

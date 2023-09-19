@@ -179,16 +179,16 @@ class RResEnviConsDe
   {
     if ($this->getRContDe()) {
       if (($this->getRContDe()->getRDe())) {
-        var_dump($this->getRContDe()->getRDe());
+        echo json_encode($this->getRContDe()->getRDe(), JSON_PRETTY_PRINT);
       }
 
       if (($this->getRContDe()->getRContEv())) {
-        var_dump($this->getRContDe()->getRContEv());
+        echo json_encode($this->getRContDe()->getRContEv(), JSON_PRETTY_PRINT);
       } else {
         echo "No hay eventos para este DE\n";
       }
     } else {
-      var_dump($this);
+      echo json_encode($this, JSON_PRETTY_PRINT);
     }
   }
 }
