@@ -21,6 +21,7 @@ use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDescon;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDisconf;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeNotRec;
 use Abiliomp\Pkuatia\Sifen;
+
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
 error_reporting(E_ALL);
@@ -244,6 +245,8 @@ try {
   echo "OK\n";
   echo "Envio de evento\n";
   $res = Sifen::RegistrarEvento($evento, $config);
+  echo "Respuesta:\n";
+  echo var_dump($res);
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();

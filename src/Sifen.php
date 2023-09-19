@@ -20,6 +20,7 @@ use Abiliomp\Pkuatia\Core\Responses\RResEnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsLoteDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviLoteDe;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
+use Abiliomp\Pkuatia\Core\Responses\RRetEnviEventoDe;
 use Abiliomp\Pkuatia\Helpers\QRHelper;
 use Abiliomp\Pkuatia\Helpers\SignHelper;
 use SoapClient;
@@ -232,8 +233,15 @@ class Sifen
     $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
     return RResEnviConsLoteDe::FromSifenResponseObject($object);
   }
-
-  public static function RegistrarEvento(GGroupGesEve $raiz, $config)
+  
+  /**
+   * RegistrarEvento
+   *
+   * @param  mixed $raiz
+   * @param  mixed $config
+   * @return RRetEnviEventoDe
+   */
+  public static function RegistrarEvento(GGroupGesEve $raiz, $config):RRetEnviEventoDe
   {
     // Firma el documento electrónico
     $xmlDocument = SignHelper::SingEvents($raiz, $config);
@@ -246,9 +254,7 @@ class Sifen
       XSD_ANYXML
     ));
     $object = self::$client->rEnviEventoDe($rEnviEventoDe);
-    file_put_contents('request.xml', self::$client->__getLastRequest());
-    file_put_contents('response.xml', self::$client->__getLastResponse());
-    var_dump($object);
+    return RRetEnviEventoDe::FromSifenResponseObject($object);
   }
 
   /**

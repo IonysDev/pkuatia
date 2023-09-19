@@ -5,7 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote
 
-class GResProcEve
+class GResProcEVe
 {
   ///ID - DESC - LONG - OCURRENCIA
   public string $dEstRes;   ///GRSch030 - Estado del resultado  - 8-30 - 1-1
