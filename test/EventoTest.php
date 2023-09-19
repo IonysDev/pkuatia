@@ -30,7 +30,7 @@ $keyFile = '80121930-2.pem.key';
 $keyPassphrase = '171222';
 
 $config = new Config();
-$config->env = 'env';
+$config->env = 'dev';
 $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
