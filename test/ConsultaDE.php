@@ -17,7 +17,7 @@ $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
 
-$testCDC = '01800090853013001001802422023052910014652161';
+$testCDC = '01800160967029012009339022023073112091228238';
 $requestDate = new DateTime('now', new DateTimeZone('America/Asuncion'));
 //cast to string to avoid DateTime serialization error
 $requestDate = (string) $requestDate->format('d/m/Y H:i:s');
@@ -30,10 +30,21 @@ try {
     echo "Hora de consulta: " . $requestDate . "\n";
     $res = Sifen::ConsultarDE($testCDC);
     echo "Resultado: \n";
-    if($res->getRContDe())
-        var_dump($res->getRContDe()->getRDe());
-    else
+    if ($res->getRContDe()) {
+        if(($res->getRContDe()->getRDe())){
+            var_dump($res->getRContDe()->getRDe());
+        }
+
+        if(($res->getRContDe()->getRContEv())){
+            var_dump($res->getRContDe()->getRContEv());
+        }else
+        {
+            echo "No hay eventos para este DE\n";
+        }
+    }else
+    {
         var_dump($res);
+    }
 
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors

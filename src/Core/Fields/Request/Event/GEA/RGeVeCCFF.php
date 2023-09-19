@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID:GECF001 Raíz Gestión de Eventos de créditos fiscales PADRE:GDE007
@@ -136,4 +137,17 @@ class RGeVeCCFF
   //     return null;
   //   }
   // }
+
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+    if($node->getName() != 'rGeVeCCFF')
+      throw new \Exception("Invalid XML Element: $node->getName()");
+
+    $res = new RGeVeCCFF();
+    $res->setId($node->Id);
+    $res->setDNumTraCCFF($node->dNumTraCCFF);
+    $res->setDFeAceTraCCFF(DateTime::createFromFormat('Y-m-d', $node->dFeAceTraCCFF));
+    return $res;
+  }
 }

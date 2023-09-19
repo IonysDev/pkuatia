@@ -61,7 +61,7 @@ $gTimb->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA);
 $gTimb->setDNumTim(12560814);
 $gTimb->setDEst('001');
 $gTimb->setDPunExp('001');
-$gTimb->setDNumDoc('0000023');
+$gTimb->setDNumDoc('0000998');
 $gTimb->setDFeIniT(new DateTime('2023-04-14'));
 
 //////////////////////////////////////////////////////////////////

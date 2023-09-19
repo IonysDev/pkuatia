@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
 
+use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
+use SimpleXMLElement;
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote
 
@@ -114,5 +116,38 @@ class GResProcEVe
     $this->gResProc = $gResProc;
 
     return $this;
+  }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+      if(strcmp($node->getName(),'gResProcEVe') != 0) {
+        throw new \Exception("Invalid XML Element: $node->getName()");
+        return null;
+      }
+
+      $res = new GResProcEVe();
+      $res->setDEstRes($node->dEstRes);
+      if(isset($node->dProtAut)) {
+        $res->setDProtAut($node->dProtAut);
+      }
+      if(isset($node->id)) {
+        $res->setId($node->id);
+      }
+      ///array for gResProc
+      $gResProc = array();
+      ///check if is an array or an object
+      if(is_array($node->gResProc)) {
+        echo "TODO CUANTICO";
+        echo "is array";
+      } else {
+        $aux = new GResProc();
+        $aux->setDCodRes($node->gResProc->dCodRes);
+        $aux->setDMsgRes($node->gResProc->dMsgRes);
+        $gResProc[] = $aux;
+      }
+      ///set gResProc to res
+      $res->setGResProc($gResProc);
+
+      return $res;
   }
 }

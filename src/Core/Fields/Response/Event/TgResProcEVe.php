@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Response\Event;
 
+use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
 use Abiliomp\Pkuatia\Core\Fields\Response\TgResProc;
 use DOMElement;
 
@@ -13,7 +14,7 @@ class TgResProcEVe
   public String $dEstRes;    // GRSch030 - Estado del resultado
   public int $dProtAut;      // GRSch031 - Número de transacción
   public int $id;            // GRSch032 -Identificador del evento
-  public TgResProc $gResProc; // GRSch033 Grupo Resultado de Procesamiento 
+  public GResProc $gResProc; // GRSch033 Grupo Resultado de Procesamiento 
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -72,7 +73,7 @@ class TgResProcEVe
    *
    * @return self
    */
-  public function setGResProc(TgResProc $gResProc): self
+  public function setGResProc(GResProc $gResProc): self
   {
     $this->gResProc = $gResProc;
 
@@ -120,7 +121,7 @@ class TgResProcEVe
    *
    * @return TgResProc
    */
-  public function getGResProc(): TgResProc
+  public function getGResProc(): GResProc
   {
     return $this->gResProc;
   }
@@ -158,7 +159,7 @@ class TgResProcEVe
       $res->setDProtAut(intval($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue));
       $res->setId(intval($xml->getElementsByTagName('id')->item(0)->nodeValue));
 
-      $aux = new TgResProc();
+      $aux = new GResProc();
       $aux->fromDOMElement($xml->getElementsByTagName('gResProc')->item(0)->nodeValue);
       $res->setGResProc($aux);
       return $res;

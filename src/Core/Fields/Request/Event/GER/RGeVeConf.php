@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo: GCO001 - rGeVeConf - Raiz Gestión de Eventos Conformidad
@@ -12,9 +13,9 @@ use DOMElement;
  */
 class RGeVeConf
 {
-  public String   $Id;        // GCO002 CDC del DTE 
-  public int      $iTipConf;  // GCO003 Tipo de Conformidad: 1 - Total | 2 - Parcial
-  public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción
+  public String   $Id;        // GCO002 CDC del DTE 1-1
+  public int      $iTipConf;  // GCO003 Tipo de Conformidad: 1 - Total | 2 - Parcial 1-1
+  public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción 0-1
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -134,4 +135,18 @@ class RGeVeConf
   //     return null;
   //   }
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
+  {
+    if($node->getName() != 'rGeVeConf')
+      throw new \Exception("Invalid XML Element: $node->getName()");
+
+    $res = new RGeVeConf();
+    $res->setId($node->Id);
+    $res->setITipConf($node->iTipConf);
+    if(isset($node->dFecRecep))
+      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $node->dFecRecep));
+
+    return $res;
+  }
 }

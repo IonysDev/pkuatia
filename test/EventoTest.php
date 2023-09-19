@@ -71,7 +71,7 @@ $gGroupTiEvt2 = new GGroupTiEvt();
 ///////////////////////////////////////////////////////////////
 ///creamos una raiz de evento de cancelacion
 $rGeVeCan = new RGeVeCan();
-$rGeVeCan->setId('01801219302001001000002322023091912772780450'); ///poner un cdc
+$rGeVeCan->setId('01801219302001001000099922023091917482046319'); ///poner un cdc
 $rGeVeCan->setMOtEve('Motivo de cancelacion');
 ///////////////////////////////////////////////////////////////
 ///EVENTO DE INUTILIZACION
@@ -227,13 +227,13 @@ $trGeVeRem->setId('0000000000000000000000000000000000000000000000000000000000000
 
 ////se asigna el evento de cancelacion al grupo de campos de tipo evento
 $gGroupTiEvt->setRGeVeCan($rGeVeCan);
-$gGroupTiEvt2->setRGeVeInu($rGeVeInu);
+// $gGroupTiEvt2->setRGeVeInu($rGeVeInu);
 ////se asigna el grupo de campos  de tipo evento al grupo de campos generales del evento
 $rEve->setGGroupTiEvt($gGroupTiEvt);
-$rEve2->setGGroupTiEvt($gGroupTiEvt2);
+// $rEve2->setGGroupTiEvt($gGroupTiEvt2);
 ////se asigna el grupo de campos generales del evento a la raiz de gestion de eventos
 $trGesEve->setREve($rEve);
-$trGesEve2->setREve($rEve2);
+// $trGesEve2->setREve($rEve2);
 ////se asigna la raiz de gestion de eventos al array de raices de gestion de eventos
 $rGesEve[] = $trGesEve;
 // $rGesEve[] = $trGesEve2;

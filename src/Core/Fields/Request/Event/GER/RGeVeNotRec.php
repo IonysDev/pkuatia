@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo: GEN001 - rGeVeNotRec - Raíz Gestión de Eventos Notificación: Recepción DE o DTE
@@ -13,16 +14,16 @@ use DOMElement;
 class RGeVeNotRec
 {
 
-  public String   $Id;        // GEN002 - Identificador del DE/DTE
-  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE
-  public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 
-  public int      $iTipRec;   // GEN005 - Tipo de Receptor
-  public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE
-  public String   $dRucRec;   // GEN007 - RUC del Receptor 
-  public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor
-  public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor
-  public String   $dNumID;    // GEN010 - Número de documento de identidad 
-  public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes
+  public String   $Id;        // GEN002 - Identificador del DE/DTE 1-1
+  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE 1-1
+  public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 1-1
+  public int      $iTipRec;   // GEN005 - Tipo de Receptor 1-1
+  public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE 1-1
+  public String   $dRucRec;   // GEN007 - RUC del Receptor 0-1
+  public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor 0-1
+  public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor 0-1
+  public String   $dNumID;    // GEN010 - Número de documento de identidad  0-1
+  public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes 1-1
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -332,4 +333,33 @@ class RGeVeNotRec
 
   //   return $res;
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+    if($node->getName() != 'rGeVeNotRec')
+      throw new \Exception("Invalid XML Element: $node->tagName");
+
+    $res = new RGeVeNotRec();
+
+    $res->setId($node->Id);
+    $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecEmi));
+    $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecRecep));
+    $res->setITipRec(intval($node->iTipRec));
+    $res->setDNomRec($node->dNomRec);
+    if(isset($node->dRucRec))
+    {
+      $res->setDRucRec($node->dRucRec);
+      $res->setDDVRec(intval($node->dDVRec));
+    }
+
+    if(isset($node->dTipIDRec))
+    {
+      $res->setDTipIDRec(intval($node->dTipIDRec));
+      $res->setDNumID($node->dNumID);
+    }
+
+    $res->setDTotalGs(intval($node->dTotalGs));
+
+    return $res;
+  }
 }

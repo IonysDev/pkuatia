@@ -157,7 +157,8 @@ class RResEnviConsDe
       if(is_string($object->xContenDE)) {
         $xml = str_replace('<rDE ', '<rContDe><rDE ', $object->xContenDE);
         $xml = $xml . '</rContDe>';
-        file_put_contents("xContenDE.xml", $xml);
+        //remove the xml declaration, si no se rompe ahora!
+        $xml = preg_replace('/<\?xml.*\?>/', '', $xml);
         $res->setRContDe(RContDe::FromSimpleXMLElement(simplexml_load_string($xml)));
       }
       else{
@@ -169,13 +170,5 @@ class RResEnviConsDe
       $res->setRContDe(RContDe::FromSifenResponseObject($object->rContDe));
     }    
     return $res;
-  }
-
-  public function printData()
-  {
-    return "RespuestaConsultaDE: " . PHP_EOL .
-      "Fecha de Consulta: " . $this->dFecProc . PHP_EOL .
-      "Código de Respuesta: " . $this->dCodRes . PHP_EOL .
-      "Mensaje de Respuesta: " . $this->dMsgRes . PHP_EOL;
   }
 }

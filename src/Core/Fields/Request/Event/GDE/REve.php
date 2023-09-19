@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 use DOMElement;
 use DateTime;
 use DOMDocument;
+use SimpleXMLElement;
 
 /**
  * Nodo: GDE002 - REve - Grupos de Campos Generales del Evento 
@@ -166,4 +167,29 @@ class REve
     //       }
     // }
 
+        
+    /**
+     * FromSimpleXMLElement
+     *
+     * @param  mixed $node
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+    {
+        if(strcmp($node->getName(),'rEve') != 0) {
+            throw new \Exception("Invalid XML Element". $node->getName());
+            return null;
+        }
+
+        $res = new self();
+        $res->setId(intval($node->attributes()['Id']));
+        $res->setDFecFirma(DateTime::createFromFormat("Y-m-d\TH:i:s",$node->dFecFirma));
+        $res->setDVerFor(intval($node->dVerFor));
+
+        if(isset($node->gGroupTiEvt)) {
+            $res->setGGroupTiEvt(GGroupTiEvt::FromSimpleXMLElement($node->gGroupTiEvt));
+        }
+
+        return $res;
+    }
 }

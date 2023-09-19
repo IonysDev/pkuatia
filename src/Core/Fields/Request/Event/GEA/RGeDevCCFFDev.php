@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID:GEDD001 Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto PADRE:GDE007
@@ -252,4 +253,21 @@ class RGeDevCCFFDev
   //     return null;
   //   }
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+    if($node->getName() != 'rGeDevCCFFDev')
+      throw new \Exception("Invalid XML Element: $node->getName()");
+
+    $res = new RGeDevCCFFDev();
+    $res->setId($node->Id);
+    $res->setDNumDevSol($node->dNumDevSol);
+    $res->setDNumDevInf($node->dNumDevInf);
+    $res->setDNumDevRes($node->dNumDevRes);
+    $res->setDFeEmiSol(DateTime::createFromFormat('Y-m-d',$node->dFeEmiSol));
+    $res->setDFeEmiInf(DateTime::createFromFormat('Y-m-d',$node->dFeEmiInf));
+    $res->setDFeEmiRes(DateTime::createFromFormat('Y-m-d',$node->dFeEmiRes));
+
+    return $res;
+  }
 }

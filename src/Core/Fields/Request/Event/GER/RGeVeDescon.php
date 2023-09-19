@@ -5,22 +5,23 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID:GED001 Raiz Gestión de Eventos Desconocimiento PADREGDE007
  */
 class RGeVeDescon
 {
-  public String $Id; //GED002 CDC del DE/DTE
-  public DateTime $dFecEmi; //GED003 Fecha de emisión del DE/DTE
-  public DateTime $dFecRecep; //GED004 Fecha Recepción DE
-  public int $iTipRec; //GED005 Tipo de Receptor
-  public String $dNomRec; //GED006 Nombre o Razón Social del Receptor del DE/DTE
-  public String $dRucRec; //GED007 Ruc del Receptor
-  public int $dDVRec; //GED008 Dígito verificador del  RUC del contribuyente  receptor
-  public int $dTipIDRec; //GED009 Tipo de documento de identidad del receptor
-  public String $dNumID; ///GED010 Número de documento de identidad
-  public String $mOtEve; //GED011 Motivo del Evento
+  public String $Id; //GED002 CDC del DE/DTE 1-1
+  public DateTime $dFecEmi; //GED003 Fecha de emisión del DE/DTE 1-1
+  public DateTime $dFecRecep; //GED004 Fecha Recepción DE 1-1
+  public int $iTipRec; //GED005 Tipo de Receptor 1-1
+  public String $dNomRec; //GED006 Nombre o Razón Social del Receptor del DE/DTE 1-1
+  public String $dRucRec; //GED007 Ruc del Receptor 0-1
+  public int $dDVRec; //GED008 Dígito verificador del RUC del contribuyente receptor 0-1
+  public int $dTipIDRec; //GED009 Tipo de documento de identidad del receptor 0-1
+  public String $dNumID; ///GED010 Número de documento de identidad 0-1
+  public String $mOtEve; //GED011 Motivo del Evento 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -337,4 +338,31 @@ class RGeVeDescon
   //     return null;
   //   }
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+    if($node->getName() != 'rGeVeDescon')
+      throw new \Exception("Invalid XML Element: $node->getName()");
+
+
+    $res = new RGeVeDescon();
+    $res->setId($node->Id);
+    $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecEmi));
+    $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecRecep));
+    $res->setITipRec($node->iTipRec);
+    $res->setDNomRec($node->dNomRec);
+    if(isset($node->dRucRec))
+    {
+      $res->setDRucRec($node->dRucRec);
+      $res->setDDVRec($node->dDVRec);
+    }
+    if(isset($node->dTipIDRec))
+    {
+      $res->setDTipIDRec($node->dTipIDRec);
+      $res->setDNumID($node->dNumID);
+    }
+    $res->setMOtEve($node->mOtEve);
+
+    return $res;
+  }
 }

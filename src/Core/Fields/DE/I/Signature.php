@@ -7,6 +7,7 @@ use Abiliomp\Pkuatia\Core\Fields\Signature\KeyInfo;
 use Abiliomp\Pkuatia\Core\Fields\Signature\SignedInfo;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID I001 - Firma Digital del DTE  PADRE:AA001
@@ -171,7 +172,7 @@ class Signature extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): \DOMElement
   {
     $res = $this->toHeaderOnlyDOMElement($doc);
-    $res->appendChild($this->SignedInfo->toDOMElement());
+    $res->appendChild($this->SignedInfo->toDOMElement($doc));
     $res->appendChild(new DOMElement('SignatureValue', $this->SignatureValue));
     $res->appendChild($this->KeyInfo->toDOMElement());
     return $res;

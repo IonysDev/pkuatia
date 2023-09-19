@@ -10,9 +10,9 @@ use SimpleXMLElement;
  */
 class RContDe
 {
-  public ?RDE $rDe; //ContDE02 - Archivo XML del DE ContDE01 
+  public RDE $rDe; //ContDE02 - Archivo XML del DE ContDE01 
   public String $dProtAut; //ContDE03 - Número De Transacción 
-  public ?RContEv $rContEv; //ContDE04 - Contenedor de Evento
+  public RContEv $rContEv; //ContDE04 - Contenedor de Evento
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -93,9 +93,9 @@ class RContDe
    *
    * @return RContEv
    */
-  public function getRContEv(): RContEv
+  public function getRContEv(): RContEv | null
   {
-    return $this->rContEv;
+    return isset($this->rContEv) ? $this->rContEv : null;
   }
 
   /**
@@ -107,10 +107,12 @@ class RContDe
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
+
     if(strcmp($xml->getName(),'rContDe') != 0) {
-      throw new \Exception("Invalid XML Element: $xml->getName()");
+      throw new \Exception("Invalid XML Element:". $xml->getName());
       return null;
     }
+    
     $res = new self();
     if (isset($xml->dProtAut)) {
       $res->setDProtAut((String) $xml->dProtAut);
@@ -118,8 +120,10 @@ class RContDe
     if (isset($xml->rDE)) {
       $res->setRDe(RDE::FromSimpleXMLElement($xml->rDE));
     }
-    if (isset($xml->rContEv)) {
-      $res->setRContEv(RContEv::fromDOMElement($xml->rContEv));
+    ///el nodo xcontEv  siempre viene, pero puede estar vacio, asi que no se valida
+    //se valida su hijo que es rContEv
+    if (isset($xml->xContEv->rContEv)) {
+      $res->setRContEv(RContEv::FromSimpleXMLElement($xml->xContEv->rContEv));
     }
     return $res;
   }

@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GER;
 
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  *  ID:GDI001 Raiz Gestión de Eventos Disconformidad PADRE:GDE007
@@ -111,4 +112,16 @@ class RGeVeDisconf
   //     return null;
   //   }
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
+  {
+    if($node->getName() != 'rGeVeDisconf')
+      throw new \Exception("Invalid XML Element: $node->getName()");
+
+    $res = new RGeVeDisconf();
+    $res->setId($node->Id);
+    $res->setMOtEve($node->mOtEve);
+
+    return $res;
+  }
 }

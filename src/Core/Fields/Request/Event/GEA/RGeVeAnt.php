@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * ID:GEA001 Raíz Gestión de Eventos anticipo PADRE:GDE007
@@ -81,4 +82,12 @@ class RGeVeAnt
   //     return null;
   //   }
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+    $res = new RGeVeAnt();
+    $res->setId($node->Id);
+
+    return $res;
+  }
 }

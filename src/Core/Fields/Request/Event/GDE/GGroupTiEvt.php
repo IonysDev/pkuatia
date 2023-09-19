@@ -14,6 +14,7 @@ use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDisconf;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GER\RGeVeNotRec;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento 
@@ -511,4 +512,88 @@ class GGroupTiEvt
   //     return null;
   //   }
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+      if(strcmp($node->getName(),'gGroupTiEvt') != 0) {
+          throw new \Exception("Invalid XML Element:". $node->getName());
+          return null;
+      }
+
+      $res = new GGroupTiEvt();
+
+      if(isset($node->rGeVeCan))
+      {
+
+          $res->setRGeVeCan(RGeVeCan::FromSimpleXMLElement($node->rGeVeCan));
+      }
+
+      if(isset($node->rGeVeInu))
+      {
+          $res->setRGeVeInu(RGeVeInu::FromSimpleXMLElement($node->rGeVeInu));
+      }
+
+      if(isset($node->rGeVeTr))
+      {
+          $res->setRGeVeTr(RGeVeTr::FromSimpleXMLElement($node->rGeVeTr));
+      }
+
+
+      if(isset($node->rGeVeNotRec))
+      {
+          $res->setRGeVeNotRec(RGeVeNotRec::FromSimpleXMLElement($node->rGeVeNotRec));
+      }
+
+      if(isset($node->rGeVeConf))
+      {
+          $res->setRGeVeConf(RGeVeConf::FromSimpleXMLElement($node->rGeVeConf));
+      }
+
+      if(isset($node->rGeVeDisconf))
+      {
+          $res->setRGeVeDisconf(RGeVeDisconf::FromSimpleXMLElement($node->rGeVeDisconf));
+      }
+
+      if(isset($node->rGeVeDescon))
+      {
+          $res->setRGeVeDescon(RGeVeDescon::FromSimpleXMLElement($node->rGeVeDescon));
+      }
+
+      if(isset($node->rGeVeRetAce))
+      {
+          $res->setrGeVeRetAce(rGeVeRetAce::FromSimpleXMLElement($node->rGeVeRetAce));
+      }
+
+      if(isset($node->rGeVeRetAnu))
+      {
+          $res->setrGeVeRetAnu(rGeVeRetAnu::FromSimpleXMLElement($node->rGeVeRetAnu));
+      }
+
+      if(isset($node->rGeVeCCFF))
+      {
+          $res->setrGeVeCCFF(rGeVeCCFF::FromSimpleXMLElement($node->rGeVeCCFF));
+      }
+
+      if(isset($node->rGeDevCCFFCue))
+      {
+          $res->setGeDevCCFFCue(rGeDevCCFFCue::FromSimpleXMLElement($node->rGeDevCCFFCue));
+      }
+
+      if(isset($node->rGeDevCCFFDev))
+      {
+          $res->setGeDevCCFFDev(RGeDevCCFFDev::FromSimpleXMLElement($node->rGeDevCCFFDev));
+      }
+
+      if(isset($node->rGeVeAnt))
+      {
+          $res->setRGeVeAnt(RGeVeAnt::FromSimpleXMLElement($node->rGeVeAnt));
+      }
+
+      if(isset($node->rGeVeRem))
+      {
+          $res->setRGeVeRem(RGeVeRem::FromSimpleXMLElement($node->rGeVeRem));
+      }
+
+      return $res;
+    }
 }

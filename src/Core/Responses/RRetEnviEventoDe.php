@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Responses;
 use Abiliomp\Pkuatia\Core\Fields\Response\DE\gResProcEVe;
 use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
 use DateTime;
+use SimpleXMLElement;
 
 //id: GRSch01,respuesta del registro de eventos
 class RRetEnviEventoDe
@@ -122,6 +123,27 @@ class RRetEnviEventoDe
       array_push($gResProcEVe, $aux);
       $res->setgResProcEVe($gResProcEVe);
     }
+    return $res;
+  }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+    if(strcmp($node->getName(),'rRetEnviEventoDe') != 0) {
+      throw new \Exception("Invalid XML Element:" . $node->getName());
+      return null;
+    }
+
+    $res = new RRetEnviEventoDe();
+    $res->setDFecProc(DateTime::createFromFormat("Y-m-d\TH:i:s", $node->dFecProc));
+    ///create the array
+    $gResProcEVe = array();
+    if(isset($node->gResProcEVe))
+    {
+      $aux = gResProcEVe::FromSimpleXMLElement($node->gResProcEVe);
+      array_push($gResProcEVe,$aux);
+      $res->setgResProcEVe($gResProcEVe);
+    }
+
     return $res;
   }
 }

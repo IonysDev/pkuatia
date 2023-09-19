@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo: GDE001 - rGesEve - Raíz de Gestión de Eventos
@@ -72,4 +73,29 @@ class RGesEve
     //         return null;
     //     }
     // }
+
+    
+    /**
+     * FromSimpleXMLElement
+     *
+     * @param  mixed $node
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+    {
+        if(strcmp($node->getName(),'rGesEve') != 0) {
+            throw new \Exception("Invalid XML Element: " . $node->getName());
+            return null;
+        }
+
+        $res = new self();
+
+        if(isset($node->rEve))
+        {
+            $res->setREve(REve::FromSimpleXMLElement($node->rEve));
+        }
+
+        return $res;
+
+    }
 }

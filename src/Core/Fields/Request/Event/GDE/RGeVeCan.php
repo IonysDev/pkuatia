@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo: GEC001 - rGeVeCan - Campos generales del DE
@@ -107,6 +108,34 @@ class RGeVeCan
   //     return null;
   //   }
   // }
+  
+  /**
+   * FromSimpleXMLElement
+   *
+   * @param  mixed $node
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+    if(strcmp($node->getName(),'rGeVeCan') != 0) {
+      throw new \Exception("Invalid XML Element:". $node->getName());
+      return null;
+    }
+
+    $res = new self();
+
+    if(isset($node->Id))
+    {
+      $res->setId($node->Id);
+    }
+
+    if(isset($node->mOtEve))
+    {
+      $res->setMOtEve($node->mOtEve);
+    }
+
+    return $res;
+  }
   
 
 }

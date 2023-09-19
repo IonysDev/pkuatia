@@ -5,6 +5,8 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
+use stdClass;
 
 /**
  *  ID:GERA001 Raíz Gestión de Eventos de retención anulación PADRE:GDE007
@@ -276,4 +278,22 @@ class RGeVeRetAnu
   //     return null;
   //   }
   // }
+
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
+  {
+    if($node->getName() != 'rGeVeRetAnu')
+      throw new \Exception("Invalid XML Element: $node->getName()");
+
+    $res = new RGeVeRetAnu();
+    $res->setId($node->Id);
+    $res->setDNumTimRet(intval($node->dNumTimRet));
+    $res->setDEstRet($node->dEstRet);
+    $res->setDPunExpRet($node->dPunExpRet);
+    $res->setDNumDocRet($node->dNumDocRet);
+    $res->setDCodConRet($node->dCodConRet);
+    $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $node->dFeEmiRet));
+    $res->setDFecAnRet(DateTime::createFromFormat('Y-m-d', $node->dFecAnRet));
+
+    return $res;
+  }
 }

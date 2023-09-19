@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GEA;
 
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  *  ID:GERE001  Raíz Gestión de Eventos remisión PADRE:GDE007
@@ -81,4 +82,12 @@ class RGeVeRem
 //       return null;
 //     }
 //   }
+
+    public static function FromSimpleXMLElement(SimpleXMLElement $xml)
+    {
+        $res = new RGeVeRem();
+        $res->setId($xml->Id);
+
+        return $res;
+    }
 }

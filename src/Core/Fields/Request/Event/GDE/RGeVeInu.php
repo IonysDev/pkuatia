@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo: GEI001 - rGeVeInu - Campos generales del DE
@@ -241,6 +242,9 @@ class RGeVeInu
   //   }
   // }
 
+  ///////////////////////////////////////////////////////////////////////
+  ////AGREGADO EN NOTA TECNICA
+  ///////////////////////////////////////////////////////////////////////
   /**
    * Get the value of dSerieNum
    *
@@ -263,5 +267,33 @@ class RGeVeInu
     $this->dSerieNum = $dSerieNum;
 
     return $this;
+  }
+  
+  /**
+   * FromSimpleXMLElement
+   *
+   * @param  mixed $node
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  {
+     if(strcmp($node->getName(),'rGeVeInu') != 0) {
+       throw new \Exception("Invalid XML Element: $node->getName()");
+       return null;
+     }
+
+      $res = new self();
+      $res->setDNumTim(intval($node->dNumTim));
+      $res->setDEst($node->dEst);
+      $res->setDPunExp($node->dPunExp);
+      $res->setDNumIn($node->dNumIn);
+      $res->setDNumFin($node->dNumFin);
+      $res->setITiDE(intval($node->iTiDE));
+      $res->setMOtEve($node->mOtEve);
+      if(isset($node->dSerieNum)) {
+        $res->setDSerieNum($node->dSerieNum);
+      }
+
+      return $res;
   }
 }
