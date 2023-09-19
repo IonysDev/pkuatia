@@ -70,7 +70,7 @@ $gGroupTiEvt2 = new GGroupTiEvt();
 ///////////////////////////////////////////////////////////////
 ///creamos una raiz de evento de cancelacion
 $rGeVeCan = new RGeVeCan();
-$rGeVeCan->setId('000000000000000000000000000000000000000000000000000000000000'); ///poner un cdc
+$rGeVeCan->setId('01801219302001001000002322023091912772780450'); ///poner un cdc
 $rGeVeCan->setMOtEve('Motivo de cancelacion');
 ///////////////////////////////////////////////////////////////
 ///EVENTO DE INUTILIZACION
@@ -83,8 +83,6 @@ $rGeVeInu->setDNumIn('000000000000'); ///////////poner un numero de inicio
 $rGeVeInu->setDNumFin('000000000000'); ///////////poner un numero de fin
 $rGeVeInu->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA); ///////////poner un tipo de documento
 $rGeVeInu->setMOtEve('Motivo de inutilizacion');
-
-
 //====================================================================
 //Ecentos de RECEPTOR
 //====================================================================

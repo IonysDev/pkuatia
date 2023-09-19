@@ -18,6 +18,7 @@ class RGeVeInu
   public String $dNumFin; // GEI006 - Número Final del rango del documento
   public int    $iTiDE;   // GEI007 - Tipo de Documento Electrónico
   public String $mOtEve;  // GEI008 - Motivo del Evento
+  public String $dSerieNum; // GEI009 - erie del número del documento: OCURRENCIA 0-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -209,6 +210,9 @@ class RGeVeInu
       $res->appendChild($doc->createElement('dNumFin', $this->dNumFin));
       $res->appendChild($doc->createElement('iTiDE', $this->iTiDE));
       $res->appendChild($doc->createElement('mOtEve', $this->mOtEve));
+      if (isset($this->dSerieNum)) {
+        $res->appendChild($doc->createElement('dSerieNum', $this->dSerieNum));
+      }
       return $res;
   }
 
@@ -236,4 +240,28 @@ class RGeVeInu
   //     return null;
   //   }
   // }
+
+  /**
+   * Get the value of dSerieNum
+   *
+   * @return String
+   */
+  public function getDSerieNum(): String
+  {
+    return $this->dSerieNum;
+  }
+
+  /**
+   * Set the value of dSerieNum
+   *
+   * @param String $dSerieNum
+   *
+   * @return self
+   */
+  public function setDSerieNum(String $dSerieNum): self
+  {
+    $this->dSerieNum = $dSerieNum;
+
+    return $this;
+  }
 }

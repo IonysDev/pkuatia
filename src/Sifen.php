@@ -8,7 +8,6 @@ use Abiliomp\Pkuatia\Core\Requests\REnviConsRUC;
 use Abiliomp\Pkuatia\Core\Requests\REnviConsDe;
 use Abiliomp\Pkuatia\Core\Responses\RResEnviConsRUC;
 use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
-use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
@@ -23,7 +22,6 @@ use Abiliomp\Pkuatia\Core\Responses\RResEnviLoteDe;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviDe;
 use Abiliomp\Pkuatia\Helpers\QRHelper;
 use Abiliomp\Pkuatia\Helpers\SignHelper;
-use SimpleXMLElement;
 use SoapClient;
 use SoapVar;
 use ZipArchive;
@@ -247,7 +245,6 @@ class Sifen
       '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
       XSD_ANYXML
     ));
-
     $object = self::$client->rEnviEventoDe($rEnviEventoDe);
     file_put_contents('request.xml', self::$client->__getLastRequest());
     file_put_contents('response.xml', self::$client->__getLastResponse());
