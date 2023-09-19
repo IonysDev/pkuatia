@@ -12,7 +12,7 @@ use DOMElement;
 class GGroupGesEve
 {
   public array $rGesEve; // GDE001 - Raíz de Gestión de Eventos - OCURRENCIA 1-15
- 
+
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
@@ -48,6 +48,32 @@ class GGroupGesEve
   ///////////////////////////////////////////////////////////////////////
 
 
+  public function toDOMDocument(): DOMDocument
+  {
+    $doc = new DOMDocument('1.0', 'utf-8');
+    $domElement = $this->toDOMElement($doc);
+    $doc->appendChild($domElement);
+    return $doc;
+  }
+
+  public function toDOMElement(DOMDocument $doc): DOMElement
+  {
+    $res = $doc->createElement('gGroupGesEve');;
+    foreach ($this->rGesEve as $rGesEve) {
+      $res->appendChild($rGesEve->toDOMElement($doc));
+    }
+    return $res;
+  }
+
+  public function toXMLString(): string
+  {
+    $xmlString = $this->toDOMDocument()->saveXML();
+    if (!$xmlString) {
+      throw new \Exception('Error al generar el XML');
+    }
+    return $xmlString;
+  }
+
   // /**
   //  * fromDOMElement
   //  *
@@ -61,7 +87,7 @@ class GGroupGesEve
   //     $res = new GGroupGesEve();
   //     //Children
   //     // $res->setRGesEve($res->rGesEve->fromDOMElement($xml->getElementsByTagName('rGesEve')->item(0)->nodeValue));
-  
+
   //     return $res;
   //   }
   //   else {

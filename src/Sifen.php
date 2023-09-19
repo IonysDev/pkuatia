@@ -235,39 +235,22 @@ class Sifen
     return RResEnviConsLoteDe::FromSifenResponseObject($object);
   }
 
-  public static function RegistrarEvento(GGroupGesEve $raiz)
+  public static function RegistrarEvento(GGroupGesEve $raiz, $config)
   {
-    $documento = "<gGroupGesEve>";
-    foreach ($raiz->getRGesEve() as $key => $value) {
-      SignHelper::Init(self::$config->privateKeyFilePath, self::$config->privateKeyPassphrase, self::$config->certificateFilePath);
-      $xmlDocument = SignHelper::SingRGesEve($value);
-      $signedEvent = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rGesEve")->item(0));
+    // Firma el documento electrónico
+    $xmlDocument = SignHelper::SingEvents($raiz, $config);
+    $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
 
-      ///revisa si es la ultima iteracion
-      if ($key == count($raiz->getRGesEve()) - 1) {
-        $documento .= $signedEvent . "</gGroupGesEve>";
-      } else {
-        $documento .= $signedEvent;
-      }
-    }
-
-    file_put_contents("documento.xml", $documento);
-    
+    // Realiza el envío del documento electrónico al SIFEN
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl", self::$options);
-    $REnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(
-      '<ns1:dEvReg>' . $documento . '</ns1:dEvReg>',
+    $rEnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(
+      '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
       XSD_ANYXML
     ));
-    $object = self::$client->rEnviEventoDe($REnviEventoDe);
-    file_put_contents("request.xml", self::$client->__getLastRequest());
-    file_put_contents("response.xml", self::$client->__getLastResponse());
-    if(is_null($object))
-    {
-      echo "Error al registrar el evento";
-    }else{
-      var_dump($object);
-    }
 
+    $object = self::$client->rEnviEventoDe($rEnviEventoDe);
+    file_put_contents('request.xml', self::$client->__getLastRequest());
+    file_put_contents('response.xml', self::$client->__getLastResponse());
   }
 
   /**

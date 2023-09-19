@@ -245,7 +245,7 @@ $evento->setRGesEve($rGesEve);
 try {
   echo "OK\n";
   echo "Envio de evento\n";
-  $res = Sifen::RegistrarEvento($evento);
+  $res = Sifen::RegistrarEvento($evento, $config);
 } catch (SoapFault $e) {
   // Handle SOAP faults/errors
   echo 'SOAP Error: ' . $e->getMessage();

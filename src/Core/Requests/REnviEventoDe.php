@@ -10,9 +10,9 @@ use SoapVar;
  */
 
 class REnviEventoDe {
-
-    public int $dId; // GSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
-    public SoapVar $dEvReg;  // GSch03 - Evento a ser registrado en XML.
+                            // Id  - Longitud - Ocurrencia - Descripción    
+    public int $dId;         // GSch02 - 1-15 - 1-1 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
+    public SoapVar $dEvReg;  // GSch03 - XML  - 1-1 - Evento a ser registrado en XML.
 
 
     public function __construct(int $dId, SoapVar $dEvReg )
@@ -20,6 +20,7 @@ class REnviEventoDe {
         $this->dId = $dId;
         $this->dEvReg = $dEvReg;
     }
+    
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////

@@ -50,29 +50,6 @@ class RGesEve
         return $res;
     }
 
-    public function toDOMDocument(): DOMDocument
-    {
-        $doc = new DOMDocument('1.0', 'utf-8');
-        $domElement = $this->toDOMElement($doc);
-        $doc->appendChild($domElement);
-        return $doc;
-    }
-
-    public function toXMLString(): string
-    {
-        $xmlString = $this->toDOMDocument()->saveXML();
-        if(!$xmlString)
-        {
-          throw new \Exception('[GGroupGesEve] Error al convertir el objeto a XML.');
-        }
-    
-        ///remove the first line of the xml
-        $xmlString = substr($xmlString, strpos($xmlString, "\n") + 1);
-        
-        return $xmlString;
-    }
-
-
     // ///////////////////////////////////////////////////////////////////////
     // ///XML ELEMENT
     // ///////////////////////////////////////////////////////////////////////  
