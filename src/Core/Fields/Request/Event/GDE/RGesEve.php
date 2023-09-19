@@ -2,7 +2,6 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
-use Abiliomp\Pkuatia\Core\Constants;
 use DOMDocument;
 use DOMElement;
 
@@ -44,8 +43,6 @@ class RGesEve
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         $res = $doc->createElement('rGesEve');
-        $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_EVENTO);
-        $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_XSI);
         $res->appendChild($this->REve->toDOMElement($doc));
         return $res;
     }

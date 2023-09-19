@@ -235,7 +235,7 @@ $trGesEve->setREve($rEve);
 $trGesEve2->setREve($rEve2);
 ////se asigna la raiz de gestion de eventos al array de raices de gestion de eventos
 $rGesEve[] = $trGesEve;
-$rGesEve[] = $trGesEve2;
+// $rGesEve[] = $trGesEve2;
 ///se asigna el array al grupo de eventos
 $evento->setRGesEve($rGesEve);
 
