@@ -91,7 +91,6 @@ class Sifen
   {
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl", self::$options);
     $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
-    file_put_contents("response2.xml", self::$client->__getLastResponse());
     return RResEnviConsDe::FromSifenResponseObject($object);
   }
 

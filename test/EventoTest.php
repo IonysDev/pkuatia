@@ -71,7 +71,7 @@ $gGroupTiEvt2 = new GGroupTiEvt();
 ///////////////////////////////////////////////////////////////
 ///creamos una raiz de evento de cancelacion
 $rGeVeCan = new RGeVeCan();
-$rGeVeCan->setId('01801219302001001000099922023091917482046319'); ///poner un cdc
+$rGeVeCan->setId('01801219302001001000000222023091919188318385'); ///poner un cdc
 $rGeVeCan->setMOtEve('Motivo de cancelacion');
 ///////////////////////////////////////////////////////////////
 ///EVENTO DE INUTILIZACION

@@ -4,7 +4,6 @@ require '../vendor/autoload.php'; // Include the Composer autoloader
 
 use Abiliomp\Pkuatia\Core\Config;
 use Abiliomp\Pkuatia\Core\Constants;
-use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\B\GOpeDE;
@@ -23,16 +22,8 @@ use Abiliomp\Pkuatia\Core\Fields\DE\E\GPaConEIni;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
-use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
-use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
-use Abiliomp\Pkuatia\Helpers\QRHelper;
-use Abiliomp\Pkuatia\Helpers\SignHelper;
 use Abiliomp\Pkuatia\Sifen;
-use Abiliomp\Pkuatia\Utils\RucUtils;
-use RobRichards\XMLSecLibs\XMLSecurityDSig;
-use RobRichards\XMLSecLibs\XMLSecurityKey;
-use BCMathExtended\BC;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -61,7 +52,7 @@ $gTimb->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA);
 $gTimb->setDNumTim(12560814);
 $gTimb->setDEst('001');
 $gTimb->setDPunExp('001');
-$gTimb->setDNumDoc('0000998');
+$gTimb->setDNumDoc('0000002');
 $gTimb->setDFeIniT(new DateTime('2023-04-14'));
 
 //////////////////////////////////////////////////////////////////
