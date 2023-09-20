@@ -58,8 +58,14 @@ class RRetEnviDe {
      * 
      * @return self
      */
-    public static function FromSifenResponseObject($object): self
+    public static function FromSifenResponseObject($object)
     {
+        if(is_null($object))
+        {
+            throw new \Exception("Error Processing Request: null", 1);
+            return null;
+        }
+        
         $res = new RRetEnviDe();
         $res->setRProtDe(RProtDe::FromSifenResponseObject($object->rProtDe));
         return $res;

@@ -17,7 +17,7 @@ $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
 
-$nroLote = '8592999736579738';
+$nroLote = '8592999737784280';
 $requestDate = new DateTime('now', new DateTimeZone('America/Asuncion'));
 //cast to string to avoid DateTime serialization error
 $requestDate = (string) $requestDate->format('d/m/Y H:i:s');

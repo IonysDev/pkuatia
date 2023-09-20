@@ -183,7 +183,9 @@ try {
     echo "CDC: " . $cdc . "\n";
     $res = Sifen::EnviarDE($rde);
     echo "Resultado: \n";
-    echo json_encode($res, JSON_PRETTY_PRINT);
+    //Nota importante, no se puede encodear a JSON porque el ddigval esta en algun formato raro
+    //echo json_encode($res, JSON_PRETTY_PRINT);
+    var_dump($res);
 } catch (SoapFault $e) {
     // Handle SOAP faults/errors
     echo 'SOAP Error: ' . $e->getMessage();

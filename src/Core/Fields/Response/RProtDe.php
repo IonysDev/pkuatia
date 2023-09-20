@@ -11,7 +11,7 @@ use SimpleXMLElement;
  */
 class RProtDe
 {
-                             // id - DESCRIPCION- LONGITUD - OCURRENCIA
+  // id - DESCRIPCION- LONGITUD - OCURRENCIA
   public String $id;         // PP02 - CDC del DE Procesado - 44 - 1-1
   public DateTime $dFecProc; // PP03 - Fecha y hora del procesamiento - 19 - 1-1
   public String $dDigVal;    // PP04 - DigestValue del DE procesado - 28 - 1-1
@@ -245,7 +245,7 @@ class RProtDe
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): RProtDe
   {
-    if(strcmp($xml->getName(),'rProtDe') != 0) {
+    if (strcmp($xml->getName(), 'rProtDe') != 0) {
       throw new \Exception("Invalid XML Element: $xml->getName()");
       return null;
     }
@@ -256,9 +256,9 @@ class RProtDe
     $res->setDEstRes($xml->dEstRes);
     $res->setDProtAut($xml->dProtAut);
     $res->gResProc = [];
-    foreach($xml->gResProc as $gResProc) {
+    foreach ($xml->gResProc as $gResProc) {
       $res->gResProc[] = GResProc::fromSimpleXMLElement($gResProc);
-    }    
+    }
     return $res;
   }
 
@@ -272,30 +272,25 @@ class RProtDe
   public static function FromSifenResponseObject($node): RProtDe
   {
     $res = new RProtDe();
-    if(isset($node->id))
+    if (isset($node->id))
       $res->setId($node->id);
-    if(isset($node->dFecProc))
+    if (isset($node->dFecProc))
       $res->setDFecProc(DateTime::createFromFormat('Y-m-d\TH:i:sP', $node->dFecProc));
-    if(isset($node->dDigVal))
+    if (isset($node->dDigVal))
       $res->setDDigVal($node->dDigVal);
     $res->setDEstRes($node->dEstRes);
-    if(isset($node->dProtAut))
+    if (isset($node->dProtAut))
       $res->setDProtAut($node->dProtAut);
     $res->gResProc = [];
-    if(isset($node->gResProc))
-    {
-      if(is_array($node->gResProc)) {
-        foreach($node->gResProc as $gResProc) {
+    if (isset($node->gResProc)) {
+      if (is_array($node->gResProc)) {
+        foreach ($node->gResProc as $gResProc) {
           $res->gResProc[] = GResProc::FromSifenResponseObject($gResProc);
         }
-      }
-      else {
+      } else {
         $res->gResProc[] = GResProc::FromSifenResponseObject($node->gResProc);
       }
-    }    
+    }
     return $res;
   }
-
-
-
 }
