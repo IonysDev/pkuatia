@@ -12,15 +12,16 @@ use stdClass;
  *  ID:GERA001 Raíz Gestión de Eventos de retención anulación PADRE:GDE007
  */
 class RGeVeRetAnu
-{
-  public String $Id; /// GERA002CDC del DE/DTE
-  public int $dNumTimRet; ///GERA003 Número de timbrado del documento de retención
-  public String $dEstRet; ///GERA004 Establecimiento del documento de retención
-  public String $dPunExpRet; //// GERA005 Punto de expedición  del documento de  retención
-  public String $dNumDocRet; /// GERA006 Número del documento de la retención
-  public String $dCodConRet; ///GERA007 Identificador de la retención 
-  public DateTime $dFeEmiRet; //GERA008 Fecha de emisión de la retención
-  public DateTime $dFecAnRet; ///GERA009 Fecha de anulación  de la retención 
+{ 
+                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;          // GERA002 - CDC del DE/DTE - 44 - 1-1
+  public int $dNumTimRet;     // GERA003 - Número de timbrado del documento de retención - 8 - 1-1
+  public String $dEstRet;     // GERA004 - Establecimiento del documento de retención - 3 - 1-1
+  public String $dPunExpRet;  // GERA005 - Punto de expedición  del documento de  retención - 3 - 1-1
+  public String $dNumDocRet;  // GERA006 - Número del documento de la retención - 7 - 1-1
+  public String $dCodConRet;  // GERA007 - Identificador de la retención - 40 - 1-1
+  public DateTime $dFeEmiRet; // GERA008 - Fecha de emisión de la retención - 19 - 1-1
+  public DateTime $dFecAnRet; // GERA009 - Fecha de anulación  de la retención - 19 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   //SETTERS

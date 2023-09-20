@@ -12,16 +12,17 @@ use SimpleXMLElement;
  */
 class RGeVeDescon
 {
-  public String $Id; //GED002 CDC del DE/DTE 1-1
-  public DateTime $dFecEmi; //GED003 Fecha de emisión del DE/DTE 1-1
-  public DateTime $dFecRecep; //GED004 Fecha Recepción DE 1-1
-  public int $iTipRec; //GED005 Tipo de Receptor 1-1
-  public String $dNomRec; //GED006 Nombre o Razón Social del Receptor del DE/DTE 1-1
-  public String $dRucRec; //GED007 Ruc del Receptor 0-1
-  public int $dDVRec; //GED008 Dígito verificador del RUC del contribuyente receptor 0-1
-  public int $dTipIDRec; //GED009 Tipo de documento de identidad del receptor 0-1
-  public String $dNumID; ///GED010 Número de documento de identidad 0-1
-  public String $mOtEve; //GED011 Motivo del Evento 1-1
+                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;          // GED002 CDC del DE/DTE - 44- 1-1
+  public DateTime $dFecEmi;   // GED003 Fecha de emisión del DE/DTE - 19 - 1-1
+  public DateTime $dFecRecep; // GED004 Fecha Recepción DE - 19 - 1-1
+  public int $iTipRec;        // GED005 Tipo de Receptor - 1 - 1-1
+  public String $dNomRec;     // GED006 Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
+  public String $dRucRec;     // GED007 Ruc del Receptor - 3-8 - 0-1
+  public int $dDVRec;         // GED008 Dígito verificador del RUC del contribuyente receptor - 1- 0-1
+  public int $dTipIDRec;      // GED009 Tipo de documento de identidad del receptor 1 - 0-1
+  public String $dNumID;      // GED010 Número de documento de identidad - 1-20 -0-1
+  public String $mOtEve;      // GED011 Motivo del Evento - 5-500 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS

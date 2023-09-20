@@ -3,6 +3,8 @@
 namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
+use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
+use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
@@ -13,29 +15,36 @@ use SimpleXMLElement;
  */
 class RGeVeTr
 {
-  public String $Id;          // GET002 - CDC del DTE 1-1
-  public int    $dMotEv;      // GET003 - Motivo del evento 1-1
-  public int    $cDepEnt;     // GET004 - Código del departamento del local de la entrega 0-1
-  public int    $cDisEnt;     // GET006 - Código del distrito del  local de la entrega  0-1
-  public int    $cCiuEnt;     // GET008 - Código de la ciudad del local de la entrega 0-1
-  public String $dDirEnt;     // GET010 - Dirección del local de la entrega 0-1
-  public int    $dNumCas;     // GET011 - Número de casa del local de la entrega 0-1
-  public String $dCompDir1;   // GET012 - Complemento de dirección del local de  la entrega 0-1
-  public String $dNomChof;    // GET013 - Nombre y apellido del chofer 1-1
-  public String $dNumIDChof;  // GET014 - Número de documento  de identidad del chofer 0-1
-  public int    $iNatTrans;   // GET015 - Naturaleza del transportista 0-1
-  public String $dRucTrans;   // GET016 - RUC del transportista 0-1
-  public int    $dDVTrans;    // GET017 - Dígito verificador del RUC del transportista 0-1
-  public String $dNomTrans;   // GET018 - Nombre o razón social del transportista 0-1
-  public int    $iTipIDTrans; // GET019 - Tipo de documento de  identidad del  transportista 0-1
-  public String $dNumIDTrans; // GET021 - Número de documento de identidad del transportista 0-1
-  public int    $iTipTrans;   // GET022 - Tipo de transporte 0-1
-  public int    $iModTrans;   // GET024 - Modalidad del transporte 0-1
-  public String $dTiVehTras;  // GET026 - Tipo de vehículo 0-1
-  public String $dMarVeh;     // GET027 - Marca del vehículo 0-1
-  public int    $dTipIdenVeh; // GET028 - Tipo de identificación del vehículo 0-1
-  public String $dNroIDVeh;   // GET029 - Número de identificación del vehículo 0-1
-  public String $dNroMatVeh;  // GET030 - Número de matrícula  del vehículo 0-1
+                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;           // GET002 - CDC del DTE - 44 - 1 - 1-1
+  public int    $dMotEv;       // GET003 - Motivo del evento 1-1
+  public int    $cDepEnt;      // GET004 - Código del departamento del local de la entrega - 1-2 - 0-1
+  public String $dDesDepEnt;   // GET005 - Descripción del departamento del local de la entrega - 6-16 - 0-1
+  public int    $cDisEnt;      // GET006 - Código del distrito del  local de la entrega - 1-4 - 0-1
+  public String $dDesDisEnt;   // GET007 - Descripción de distrito del local de la entrega -  1-30 - 0-1
+  public int    $cCiuEnt;      // GET008 - Código de la ciudad del local de la entrega - 1-5 - 0-1
+  public String $dDesCiuEnt;   // GET009 - Descripción de ciudad del local de la entrega - 1-30 - 0-1
+  public String $dDirEnt;      // GET010 - Dirección del local de la entrega - 1-255 - 0-1
+  public int    $dNumCas;      // GET011 - Número de casa del local de la entrega - 1-6 - 0-1
+  public String $dCompDir1;    // GET012 - Complemento de dirección del local de la entrega - 1-255 - 0-1
+  public String $dNomChof;     // GET013 - Nombre y apellido del chofer - 4-69 - 1-1
+  public String $dNumIDChof;   // GET014 - Número de documento  de identidad del chofer -  1-20 - 0-1
+  public int    $iNatTrans;    // GET015 - Naturaleza del transportista - 1- 0-1
+  public String $dRucTrans;    // GET016 - RUC del transportista 3-8 - 0-1
+  public int    $dDVTrans;     // GET017 - Dígito verificador del RUC del transportista - 1 - 0-1
+  public String $dNomTrans;    // GET018 - Nombre o razón social del transportista - 4-60 - 0-1
+  public int    $iTipIDTrans;  // GET019 - Tipo de documento de  identidad del  transportista - 1- 0-1
+  public String $dDTipIDTrans; // GET020 - Descripción del tipo de documento de identidad del transportista - 9-20 - 0-1
+  public String $dNumIDTrans;  // GET021 - Número de documento de identidad del transportista - 1-20 - 0-1
+  public int    $iTipTrans;    // GET022 - Tipo de transporte - 1 - 0-1
+  public String $dDesTipTrans; // GET023 - Descripción del tipo de transporte - 6-7 - 0-1
+  public int    $iModTrans;    // GET024 - Modalidad del transporte - 1 - 0-1
+  public String $dDesModTrans; // GET025 - Descripción de la modalidad del transporte - 5-10 - 0-1
+  public String $dTiVehTras;   // GET026 - Tipo de vehículo - 4-10 - 0-1
+  public String $dMarVeh;      // GET027 - Marca del vehículo - 1-10  - 0-1
+  public int    $dTipIdenVeh;  // GET028 - Tipo de identificación del vehículo - 1 - 0-1
+  public String $dNroIDVeh;    // GET029 - Número de identificación del vehículo 1-20 - 0-1
+  public String $dNroMatVeh;   // GET030 - Número de matrícula  del vehículo - 6 - 10
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -369,7 +378,7 @@ class RGeVeTr
     return $this;
   }
 
- 
+
   /**
    * Set the value of dTiVehTras
    *
@@ -598,7 +607,7 @@ class RGeVeTr
       case 4:
         return "Carnet de residencia";
         break;
-      
+
       default:
         # code...
         break;
@@ -747,9 +756,11 @@ class RGeVeTr
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeTr');
+    ///Ocurrrencia 1-1
     $res->appendChild(new DOMElement('Id', $this->getId()));
     $res->appendChild(new DOMElement('dMotEv', $this->getDMotEv()));
 
+    
     if ($this->dMotEv == 1) {
       $res->appendChild(new DOMElement('cDepEnt', $this->getCDepEnt()));
       $res->appendChild(new DOMElement('dDesDepEnt', $this->getDDesDepEnt()));
@@ -857,9 +868,9 @@ class RGeVeTr
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(),'rGeVeTr') != 0) {
+    if (strcmp($node->getName(), 'rGeVeTr') != 0) {
       throw new \Exception("Invalid XML Element: $node->getName()");
       return null;
     }
@@ -868,92 +879,96 @@ class RGeVeTr
     $res->setId(strval($node->Id));
     $res->setDMotEv(intval($node->dMotEv));
 
-    if(isset($node->cDepEnt)) {
+    if (isset($node->cDepEnt)) {
       $res->setCDepEnt(intval($node->cDepEnt));
+      $res->dDesDepEnt = $node->dDesDepEnt;
     }
 
-    if(isset($node->cDisEnt)) {
+    if (isset($node->cDisEnt)) {
       $res->cDisEnt = intval($node->cDisEnt);
+      $res->dDesDisEnt = $node->dDesDisEnt;
     }
 
-    if(isset($node->cCiuEnt)) {
+    if (isset($node->cCiuEnt)) {
       $res->cCiuEnt = intval($node->cCiuEnt);
+      $res->dDesCiuEnt = $node->dDesCiuEnt;
     }
 
-    if(isset($node->dDirEnt)) {
+    if (isset($node->dDirEnt)) {
       $res->dDirEnt = strval($node->dDirEnt);
     }
 
-    if(isset($node->dNumCas)) {
+    if (isset($node->dNumCas)) {
       $res->dNumCas = intval($node->dNumCas);
     }
 
-    if(isset($node->dCompDir1)) {
+    if (isset($node->dCompDir1)) {
       $res->dCompDir1 = strval($node->dCompDir1);
     }
 
-    if(isset($node->dNomChof)) {
+    if (isset($node->dNomChof)) {
       $res->dNomChof = strval($node->dNomChof);
     }
 
-    if(isset($node->dNumIDChof)) {
+    if (isset($node->dNumIDChof)) {
       $res->dNumIDChof = strval($node->dNumIDChof);
     }
 
-    if(isset($node->iNatTrans)) {
+    if (isset($node->iNatTrans)) {
       $res->iNatTrans = intval($node->iNatTrans);
     }
 
-    if(isset($node->dRucTrans)) {
+    if (isset($node->dRucTrans)) {
       $res->dRucTrans = strval($node->dRucTrans);
     }
 
-    if(isset($node->dDVTrans)) {
+    if (isset($node->dDVTrans)) {
       $res->dDVTrans = intval($node->dDVTrans);
     }
 
-    if(isset($node->dNomTrans)) {
+    if (isset($node->dNomTrans)) {
       $res->dNomTrans = strval($node->dNomTrans);
     }
 
-    if(isset($node->iTipIDTrans)) {
+    if (isset($node->iTipIDTrans)) {
       $res->iTipIDTrans = intval($node->iTipIDTrans);
+      $res->dDTipIDTrans = strval($node->dDTipIDTrans);
     }
 
-    if(isset($node->dNumIDTrans)) {
+    if (isset($node->dNumIDTrans)) {
       $res->dNumIDTrans = strval($node->dNumIDTrans);
     }
 
-    if(isset($node->iTipTrans)) {
+    if (isset($node->iTipTrans)) {
       $res->iTipTrans = intval($node->iTipTrans);
+      $res->dDesTipTrans = strval($node->dDesTipTrans);
     }
 
-    if(isset($node->iModTrans)) {
+    if (isset($node->iModTrans)) {
       $res->iModTrans = intval($node->iModTrans);
+      $res->dDesModTrans = strval($node->dDesModTrans);
     }
 
-    if(isset($node->dTiVehTras)) {
+    if (isset($node->dTiVehTras)) {
       $res->dTiVehTras = strval($node->dTiVehTras);
     }
 
-    if(isset($node->dMarVeh)) {
+    if (isset($node->dMarVeh)) {
       $res->dMarVeh = strval($node->dMarVeh);
     }
 
-    if(isset($node->dTipIdenVeh)) {
+    if (isset($node->dTipIdenVeh)) {
       $res->dTipIdenVeh = intval($node->dTipIdenVeh);
     }
 
-    if(isset($node->dNroIDVeh)) {
+    if (isset($node->dNroIDVeh)) {
       $res->dNroIDVeh = strval($node->dNroIDVeh);
     }
 
-    if(isset($node->dNroMatVeh)) {
+    if (isset($node->dNroMatVeh)) {
       $res->dNroMatVeh = strval($node->dNroMatVeh);
     }
 
     return $res;
-
-
   }
 }

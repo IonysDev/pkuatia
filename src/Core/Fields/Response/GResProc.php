@@ -10,8 +10,9 @@ use SimpleXMLElement;
  */
 class GResProc
 {
-  public String $dCodRes;   // PP052 - Código del resultado de procesamiento 
-  public String $dMsgRes; // PP053 - Mensaje del resultado de procesamiento
+                          // ID - DESC - LONG - OCURRENCIA
+  public String $dCodRes; // PP052 - Código del resultado de procesamiento - 4 - 1-1
+  public String $dMsgRes; // PP053 - Mensaje del resultado de procesamiento - 1-255 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -90,24 +91,24 @@ class GResProc
     return $res;
   }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return TgResProc
-   */
-  public static function fromDOMElement(DOMElement $xml): TgResProc
-  {
-    if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 2) {
-      $res = new TgResProc();
-      $res->setDCodRes($xml->getElementsByTagName('dCodRes')->item(0)->nodeValue);
-      $res->setDMsgRes($xml->getElementsByTagName('dMsgRes')->item(0)->nodeValue);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return TgResProc
+  //  */
+  // public static function fromDOMElement(DOMElement $xml): TgResProc
+  // {
+  //   if (strcmp($xml->tagName, 'gResProc') == 0 && $xml->childElementCount == 2) {
+  //     $res = new TgResProc();
+  //     $res->setDCodRes($xml->getElementsByTagName('dCodRes')->item(0)->nodeValue);
+  //     $res->setDMsgRes($xml->getElementsByTagName('dMsgRes')->item(0)->nodeValue);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   /**
    * Converts SimpleXMLElement to object

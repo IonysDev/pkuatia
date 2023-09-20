@@ -11,7 +11,8 @@ use SimpleXMLElement;
  */
 class RGeVeAnt
 {
-  public String $Id; //GEA002 CDC del DTE asociado
+                // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id; // GEA002 - CDC del DTE asociado - 44 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   //SETTERS

@@ -14,16 +14,17 @@ use SimpleXMLElement;
 class RGeVeNotRec
 {
 
-  public String   $Id;        // GEN002 - Identificador del DE/DTE 1-1
-  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE 1-1
-  public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE 1-1
-  public int      $iTipRec;   // GEN005 - Tipo de Receptor 1-1
-  public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE 1-1
-  public String   $dRucRec;   // GEN007 - RUC del Receptor 0-1
-  public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor 0-1
-  public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor 0-1
-  public String   $dNumID;    // GEN010 - Número de documento de identidad  0-1
-  public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes 1-1
+                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String   $Id;        // GEN002 - Identificador del DE/DTE - 44 -1-1
+  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE - 19 - 1-1
+  public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE - 19 - 1-1
+  public int      $iTipRec;   // GEN005 - Tipo de Receptor - 1 - 1-1
+  public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
+  public String   $dRucRec;   // GEN007 - RUC del Receptor - 3-8 - 0-1
+  public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor - 1- 0-1
+  public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor - 1- 0-1
+  public String   $dNumID;    // GEN010 - Número de documento de identidad  - 1-20 - 0-1
+  public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes - 1-15p(0-8) - 1-1
 
 
   ///////////////////////////////////////////////////////////////////////

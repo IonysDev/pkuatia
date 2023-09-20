@@ -11,12 +11,13 @@ use SimpleXMLElement;
  */
 class RProtDe
 {
-  public String $id;         // PP02 - CDC del DE Procesado
-  public DateTime $dFecProc; // PP03 - Fecha y hora del procesamiento 
-  public String $dDigVal;    // PP04 - DigestValue del DE procesado
-  public String $dEstRes;    // PP050 - Estado del resultado
-  public String $dProtAut;   // PP051 - Número de Transacción
-  public array  $gResProc;   // PP05 - Grupo Resultado de Procesamiento 
+                             // id - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $id;         // PP02 - CDC del DE Procesado - 44 - 1-1
+  public DateTime $dFecProc; // PP03 - Fecha y hora del procesamiento - 19 - 1-1
+  public String $dDigVal;    // PP04 - DigestValue del DE procesado - 28 - 1-1
+  public String $dEstRes;    // PP050 - Estado del resultado - 8-30 - 1-1
+  public String $dProtAut;   // PP051 - Número de Transacción - 10 - 1-1
+  public array  $gResProc;   // PP05 - Grupo Resultado de Procesamiento - x - 1-100
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -171,7 +172,7 @@ class RProtDe
    *
    * @return GResProc
    */
-  public function getGResProc(): GResProc
+  public function getGResProc(): array
   {
     return $this->gResProc;
   }
@@ -180,47 +181,47 @@ class RProtDe
   ///XML ELEMENT
   ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(): DOMElement
-  {
-    $res = new DOMElement('txProtDe');
+  // /**
+  //  * toDOMElement
+  //  *
+  //  * @return DOMElement
+  //  */
+  // public function toDOMElement(): DOMElement
+  // {
+  //   $res = new DOMElement('txProtDe');
 
-    $res->appendChild(new DOMElement('dFecProc', $this->dFecProc->format('Y-m-d H:i:s')));
-    $res->appendChild(new DOMElement('dDigVal', $this->dDigVal));
-    $res->appendChild(new DOMElement('dEstRes', $this->dEstRes));
-    $res->appendChild(new DOMElement('dProtAut', $this->dProtAut));
-    $res->appendChild($this->gResProc->toDOMElement());
-    return $res;
-  }
+  //   $res->appendChild(new DOMElement('dFecProc', $this->dFecProc->format('Y-m-d H:i:s')));
+  //   $res->appendChild(new DOMElement('dDigVal', $this->dDigVal));
+  //   $res->appendChild(new DOMElement('dEstRes', $this->dEstRes));
+  //   $res->appendChild(new DOMElement('dProtAut', $this->dProtAut));
+  //   $res->appendChild($this->gResProc->toDOMElement());
+  //   return $res;
+  // }
 
-  /**
-   * fromDOMElement
-   *
-   * @param  mixed $xml
-   * @return RProtDe
-   */
-  public static function FromDOMElement(DOMElement $xml): RProtDe
-  {
-    if (strcmp($xml->tagName, 'rProtDe') == 0 && $xml->childElementCount == 6) {
-      $res = new RProtDe();
-      $res->setDFecProc(DateTime::createFromFormat('Y-m-d H:i:s', $xml->getElementsByTagName('dFecProc')->item(0)->nodeValue));
-      $res->setDDigVal($xml->getElementsByTagName('dDigVal')->item(0)->nodeValue);
-      $res->setDEstRes($xml->getElementsByTagName('dEstRes')->item(0)->nodeValue);
-      $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
+  // /**
+  //  * fromDOMElement
+  //  *
+  //  * @param  mixed $xml
+  //  * @return RProtDe
+  //  */
+  // public static function FromDOMElement(DOMElement $xml): RProtDe
+  // {
+  //   if (strcmp($xml->tagName, 'rProtDe') == 0 && $xml->childElementCount == 6) {
+  //     $res = new RProtDe();
+  //     $res->setDFecProc(DateTime::createFromFormat('Y-m-d H:i:s', $xml->getElementsByTagName('dFecProc')->item(0)->nodeValue));
+  //     $res->setDDigVal($xml->getElementsByTagName('dDigVal')->item(0)->nodeValue);
+  //     $res->setDEstRes($xml->getElementsByTagName('dEstRes')->item(0)->nodeValue);
+  //     $res->setDProtAut($xml->getElementsByTagName('dProtAut')->item(0)->nodeValue);
 
-      $aux = new GResProc();
-      $aux->fromDOMElement($xml->getElementsByTagName('gResProc')->item(0)->nodeValue);
-      $res->setGResProc($aux);
-      return $res;
-    } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
-    }
-  }
+  //     $aux = new GResProc();
+  //     $aux->fromDOMElement($xml->getElementsByTagName('gResProc')->item(0)->nodeValue);
+  //     $res->setGResProc($aux);
+  //     return $res;
+  //   } else {
+  //     throw new \Exception("Invalid XML Element: $xml->tagName");
+  //     return null;
+  //   }
+  // }
 
   /**
    * Converts XML String representation to object

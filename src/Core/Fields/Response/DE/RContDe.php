@@ -10,9 +10,10 @@ use SimpleXMLElement;
  */
 class RContDe
 {
-  public RDE $rDe; //ContDE02 - Archivo XML del DE ContDE01 
-  public String $dProtAut; //ContDE03 - Número De Transacción 
-  public RContEv $rContEv; //ContDE04 - Contenedor de Evento
+                           // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public RDE $rDe;         // ContDE02 - Archivo XML del DE ContDE01 - X - 1-1
+  public String $dProtAut; // ContDE03 - Número De Transacción - X - 1-1
+  public RContEv $rContEv; // ContDE04 - Contenedor de Evento - X - 0-n
 
   ///////////////////////////////////////////////////////////////////////
   // Setters

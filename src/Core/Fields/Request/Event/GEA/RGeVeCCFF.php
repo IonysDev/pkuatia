@@ -12,9 +12,10 @@ use SimpleXMLElement;
  */
 class RGeVeCCFF
 {
-  public String $Id; // GECF002 CDC del DE/DTE
-  public String $dNumTraCCFF; ///GECF003 Número de  transferencia de  créditos fiscales
-  public DateTime $dFeAceTraCCFF; //GECF004 Fecha de aceptación del crédito fiscal
+                                  // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;              // GECF002 - CDC del DE/DTE - 40 -1
+  public String $dNumTraCCFF;     // GECF003 - Número de  transferencia de  créditos fiscales - 10 - 1-1
+  public DateTime $dFeAceTraCCFF; // GECF004 - Fecha de aceptación del crédito fiscal - 19 - 1-S1
 
   ///////////////////////////////////////////////////////////////////////
   //SETTERS

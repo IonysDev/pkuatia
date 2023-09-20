@@ -12,7 +12,8 @@ use SimpleXMLElement;
  */
 class RGesEve
 {
-    public REve $REve; // GDE002 - Grupos de campos generales del evento
+                        // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public REve $REve; // GDE002 - Grupos de campos generales del evento - x - 1-1
 
     ///////////////////////////////////////////////////////////////////////
     // Getters

@@ -11,8 +11,9 @@ use SimpleXMLElement;
  */
 class RGeVeDisconf
 {
-  public String $Id; // GDI002 CDC del DTE
-  public String $mOtEve; ///GDI004 Motivo del Evento
+                         // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;     // GDI002 CDC del DTE - 44 - 1-1
+  public String $mOtEve; // GDI004 Motivo del Evento - 5-500 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   //SETTERS

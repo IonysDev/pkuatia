@@ -13,9 +13,10 @@ use SimpleXMLElement;
  */
 class RGeVeConf
 {
-  public String   $Id;        // GCO002 CDC del DTE 1-1
-  public int      $iTipConf;  // GCO003 Tipo de Conformidad: 1 - Total | 2 - Parcial 1-1
-  public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción 0-1
+  // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String   $Id;        // GCO002 CDC del DTE 44- 1-1
+  public int      $iTipConf;  // GCO003 Tipo de Conformidad - 1 - 1-1
+  public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción - 19 -0-1
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -136,15 +137,15 @@ class RGeVeConf
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): Self
   {
-    if($node->getName() != 'rGeVeConf')
+    if ($node->getName() != 'rGeVeConf')
       throw new \Exception("Invalid XML Element: $node->getName()");
 
     $res = new RGeVeConf();
     $res->setId($node->Id);
     $res->setITipConf($node->iTipConf);
-    if(isset($node->dFecRecep))
+    if (isset($node->dFecRecep))
       $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $node->dFecRecep));
 
     return $res;

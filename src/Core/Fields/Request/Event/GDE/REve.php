@@ -13,10 +13,11 @@ use SimpleXMLElement;
  */
 class REve
 {
-    public int          $Id;          // GDE003 - Identificador del evento - ATRIBUTO DEL CAMPO
-    public DateTime     $dFecFirma;   // GDE004 - Fecha y Hora del firmado
-    public int          $dVerFor;     // GDE005 - Versión del formato
-    public GGroupTiEvt $gGroupTiEvt; // GDE007 - Grupo de campos del tipo de evento
+                                      // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public int          $Id;          // GDE003 - Identificador del evento - ATRIBUTO DEL CAMPO - 1-10 - 1-1
+    public DateTime     $dFecFirma;   // GDE004 - Fecha y Hora del firmado - 19 - 1-1
+    public int          $dVerFor;     // GDE005 - Versión del formato - 3 - 1-1
+    public GGroupTiEvt $gGroupTiEvt;  // GDE007 - Grupo de campos del tipo de evento X - 1-1
 
     ///Setters
 

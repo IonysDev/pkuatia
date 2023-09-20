@@ -12,8 +12,9 @@ use SimpleXMLElement;
  */
 class RContEv
 {
-    public RGesEve $xEvento;              //ContEv02 - XML del Evento
-    public RRetEnviEventoDe $rResEnviEventoDe; //ContEv03 - Respuesta del WS Recepción Evento 
+                                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public RGesEve $xEvento;                   // ContEv02 - XML del Evento - X - 1-1
+    public RRetEnviEventoDe $rResEnviEventoDe; // ContEv03 - Respuesta del WS Recepción Evento  X - ??
 
 
     ///////////////////////////////////////////////////////////////////////

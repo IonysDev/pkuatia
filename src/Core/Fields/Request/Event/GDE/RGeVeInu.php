@@ -12,14 +12,15 @@ use SimpleXMLElement;
  */
 class RGeVeInu
 {
-  public int    $dNumTim; // GEI002 - Número del Timbrado
-  public String $dEst;    // GEI003 - Establecimiento
-  public String $dPunExp; // GEI004 - Punto de expedición
-  public String $dNumIn;  // GEI005 - Número Inicio del rango del documento
-  public String $dNumFin; // GEI006 - Número Final del rango del documento
-  public int    $iTiDE;   // GEI007 - Tipo de Documento Electrónico
-  public String $mOtEve;  // GEI008 - Motivo del Evento
-  public String $dSerieNum; // GEI009 - erie del número del documento: OCURRENCIA 0-1
+                            //RAIZ - DESCRIPCION- LONGITUD - OCURRENCIA
+  public int    $dNumTim;   // GEI002 - Número del Timbrado - 8 - 1-1
+  public String $dEst;      // GEI003 - Establecimiento - 3 - 1-1
+  public String $dPunExp;   // GEI004 - Punto de expedición 3 -1-1
+  public String $dNumIn;    // GEI005 - Número Inicio del rango del documento - 7 - 1-1
+  public String $dNumFin;   // GEI006 - Número Final del rango del documento - 7 - 1-1
+  public int    $iTiDE;     // GEI007 - Tipo de Documento Electrónico  -1-2 - 1-1
+  public String $mOtEve;    // GEI008 - Motivo del Evento 5-500 - 1-1
+  public String $dSerieNum; // GEI009 - Serie del número del documento: OCURRENCIA - 2 - 0-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -278,7 +279,7 @@ class RGeVeInu
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
      if(strcmp($node->getName(),'rGeVeInu') != 0) {
-       throw new \Exception("Invalid XML Element: $node->getName()");
+       throw new \Exception("Invalid XML Element: ". $node->getName());
        return null;
      }
 

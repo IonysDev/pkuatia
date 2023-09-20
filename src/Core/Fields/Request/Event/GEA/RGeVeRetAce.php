@@ -12,13 +12,14 @@ use SimpleXMLElement;
  */
 class RGeVeRetAce
 {
-  public String $Id; ///GER002 CDC del DE/DTE
-  public int $dNumTimRet; /// GER003 Número de timbrado del documento de retención
-  public String $dEstRet; //GER004 Establecimiento
-  public String $dPunExpRet; ///GER005 Punto de expedición
-  public String $dNumDocRet; ///GER006  Número del documento
-  public String $dCodConRet; /// GER007 Identificador de la retención
-  public DateTime $dFeEmiRet; ///GER008  Fecha de emisión de  la retención
+                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;          // GER002 -  CDC del DE/DTE - 4 - 1-1
+  public int $dNumTimRet;     // GER003 - Número de timbrado del documento de retención - 8 - 1-1
+  public String $dEstRet;     // GER004 - Establecimiento - 3 - 1-1
+  public String $dPunExpRet;  // GER005 - Punto de expedición - 3 - 1-1
+  public String $dNumDocRet;  // GER006 - Número del documento - 7 - 1-1
+  public String $dCodConRet;  // GER007 - Identificador de la retención - 40 - 1-1
+  public DateTime $dFeEmiRet; // GER008 - Fecha de emisión de  la retención - 19 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS

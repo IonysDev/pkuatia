@@ -9,9 +9,10 @@ use Abiliomp\Pkuatia\Core\Fields\Response\Ruc\RContRuc;
  */
 class RResEnviConsRUC 
 {
-  public int    $dCodRes;    // RRSch02 - Código del resultado de la consulta RUC 
-  public String $dMsgRes;    // RRSch03 - Mensaje del resultado  de  la consulta RUC
-  public RContRuc $rContRuc; // RRSch04 - Contenedor del RUC consultado
+                             // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public int    $dCodRes;    // RRSch02 - Código del resultado de la consulta RUC  - 4 - 1-1
+  public String $dMsgRes;    // RRSch03 - Mensaje del resultado  de  la consulta RUC - 1-255 - 1-1
+  public RContRuc $rContRuc; // RRSch04 - Contenedor del RUC consultado - X - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters

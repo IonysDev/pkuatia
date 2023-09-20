@@ -11,11 +11,12 @@ use SimpleXMLElement;
 
 class RContRUC
 {
-  public String $dRUCCons;      // ContRUC02 - RUC Consultado
-  public String $dRazCons;      // ContRUC03 - Razón social del RUC Consultado
-  public String $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado
-  public String $dDesEstCons;   // ContRUC05 - Descripción Código del Estado del RUC Consultado
-  public String $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico
+                                // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $dRUCCons;      // ContRUC02 - RUC Consultado - 5-8 - 1-1
+  public String $dRazCons;      // ContRUC03 - Razón social del RUC Consultado - 1-250 - 1-1
+  public String $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado - 3 - 1-1
+  public String $dDesEstCons;   // ContRUC05 - Descripción Código del Estado del RUC Consultado - 6-25 - 1-1
+  public String $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico - 1 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS

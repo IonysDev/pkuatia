@@ -12,9 +12,9 @@ use SimpleXMLElement;
  */
 class RGeVeCan
 {
-
-  public String $Id;     // GEC002 - Identificador del DTE
-  public String $mOtEve; // GEC003 - Motivo del Evento
+                          // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;     // GEC002 - Identificador del DTE - 44 - 1-1
+  public String $mOtEve; // GEC003 - Motivo del Evento  - 5-500 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -74,7 +74,7 @@ class RGeVeCan
   ///////////////////////////////////////////////////////////////////////
   // Conversiones XML
   ///////////////////////////////////////////////////////////////////////
-   
+
   /**
    * toDOMElement
    *
@@ -87,7 +87,7 @@ class RGeVeCan
     $res->appendChild($doc->createElement('mOtEve', $this->mOtEve));
     return $res;
   }
-  
+
   // /**
   //  * fromDOMElement
   //  *
@@ -108,34 +108,30 @@ class RGeVeCan
   //     return null;
   //   }
   // }
-  
+
   /**
    * FromSimpleXMLElement
    *
    * @param  mixed $node
    * @return self
    */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(),'rGeVeCan') != 0) {
-      throw new \Exception("Invalid XML Element:". $node->getName());
+    if (strcmp($node->getName(), 'rGeVeCan') != 0) {
+      throw new \Exception("Invalid XML Element:" . $node->getName());
       return null;
     }
 
     $res = new self();
 
-    if(isset($node->Id))
-    {
+    if (isset($node->Id)) {
       $res->setId($node->Id);
     }
 
-    if(isset($node->mOtEve))
-    {
+    if (isset($node->mOtEve)) {
       $res->setMOtEve($node->mOtEve);
     }
 
     return $res;
   }
-  
-
 }

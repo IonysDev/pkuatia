@@ -5,9 +5,9 @@ namespace Abiliomp\Pkuatia\Core\Requests;
 //ID: CSch01: Clase que compone la solicitud de consulta de un lote de DEs por su numero de lote obtenido por el WS
 
 class REnviConsLoteDe
-{                             //ID - DESC - LONG - OCURRENCIA
-  public int $dId;           //CSch02 - Identificador de control de envío - 1-15 - 1-1
-  public int $dProtConsLote; //CSch03 - Número de lote - 1-15 - 1-1
+{                            // ID - DESC - LONG - OCURRENCIA
+  public int $dId;           // CSch02 - Identificador de control de envío - 1-15 - 1-1
+  public int $dProtConsLote; // CSch03 - Número de lote - 1-15 - 1-1
 
 
   public function __construct($dId, $dProtConsLote)

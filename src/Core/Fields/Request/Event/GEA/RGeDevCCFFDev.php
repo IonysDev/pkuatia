@@ -12,13 +12,14 @@ use SimpleXMLElement;
  */
 class RGeDevCCFFDev
 {
-  public String $Id; // GEDD002 CDC del DE/DTE
-  public String $dNumDevSol; // GEDD003 Número DIR
-  public String $dNumDevInf; // GEDD004 Número de informe
-  public String $dNumDevRes; // GEDD005 Número de resolución de la devolución
-  public DateTime $dFeEmiSol; ///GEDD006 Fecha de emisión de DIR
-  public DateTime $dFeEmiInf; // GEDD007 Fecha de emisión del informe
-  public DateTime $dFeEmiRes; // GEDD008  Fecha de emisión de la resolución
+                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+  public String $Id;          // GEDD002 - CDC del DE/DTE - 40 - 1-1
+  public String $dNumDevSol;  // GEDD003 - Número DIR - 10 - 1-1
+  public String $dNumDevInf;  // GEDD004 - Número de informe - 10 - 1-1
+  public String $dNumDevRes;  // GEDD005 - Número de resolución de la devolución - 10 - 1-1
+  public DateTime $dFeEmiSol; // GEDD006 - Fecha de emisión de DIR - 19 - 1-1
+  public DateTime $dFeEmiInf; // GEDD007 - Fecha de emisión del informe - 19 - 1-1
+  public DateTime $dFeEmiRes; // GEDD008 - Fecha de emisión de la resolución - 19 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
