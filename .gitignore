@@ -1,0 +1,13 @@
+test/*.pem
+test/*.p12
+test/*.crt
+test/*.csr
+test/*.srl
+test/*.xml
+test/*.key
+*.log
+*.log.*
+*.log-*
+*.dat.*
+test/80121930-2.pem.key
+test/PKuatiaDId.json
