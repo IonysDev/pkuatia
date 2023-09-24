@@ -5,11 +5,6 @@ namespace Abiliomp\Pkuatia\Fields;
 use DateTime;
 use DOMElement;
 
-/**
- * Campos de datos del Timbrado (C001)
- * Nodo padre DE (A001): Campos firmados del DE
- */
-
 class GTimb {
     
     public int $iTiDE; // Tipo de documento electrónico

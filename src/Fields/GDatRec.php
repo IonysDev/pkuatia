@@ -5,8 +5,8 @@ namespace Abiliomp\Pkuatia\Fields;
 use DOMElement;
 
 /**
- * Campos que identifican al receptor (D200)
- * Nodo padre gDatGralOpe (D001): Campos Generales del Documento Electrónico DE
+ * Grupo de campos que identifican al receptor (D200)
+ * Nodo Padre gDatGralOpe (D001)
  */
 
 class GDatRec {
@@ -129,75 +129,10 @@ class GDatRec {
         $this->cDepRec = $cDepRec;
     }
 
-    public function setDDesDepRec(int $dDesDepRec): void
-    {
-        $this->dDesDepRec = $dDesDepRec;
-    }
-
-    public function setCDisRec(int $cDisRec): void
-    {
-        $this->cDisRec = $cDisRec;
-    }
-
-    public function setDDesDisRec(int $dDesDisRec): void
-    {
-        $this->dDesDisRec = $dDesDisRec;
-    }
-
-    public function setCCiuRec(int $cCiuRec): void
-    {
-        $this->cCiuRec = $cCiuRec;
-    }
-
-    public function setDDesCiuRec(int $dDesCiuRec): void
-    {
-        $this->dDesCiuRec = $dDesCiuRec;
-    }
-
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getINatRec(): int 
-    {
-        return $this->iNatRec;
-    }
-
-    public function getITiOpe(): int 
-    {
-        return $this->iTiOpe;
-    }
-
-    public function getCPaisRec(): string 
-    {
-        return $this->cPaisRec;
-    }
-
-    public function getDDesPaisRe(): string 
-    {
-        return $this->dDesPaisRe;
-    }
-
-    public function getITiContRec(): int 
-    {
-        return $this->iTiContRec;
-    }
-
-    public function getDRucRec(): string 
-    {
-        return $this->dRucRec;
-    }
-
-    public function getDDVRec(): int 
-    {
-        return $this->dDVRec;
-    }
-
-    public function getITipIDRec(): int 
-    {
-        return $this->iTipIDRec;
-    }
-    
     public function getDDTipIDRec(): string
     {
         switch($this->iTipIDRec) {
@@ -223,143 +158,6 @@ class GDatRec {
                 return 'Otro';
                 break;
         }
-    }
-
-    public function getDNumIDRec(): string 
-    {
-        return $this->dNumIDRec;
-    }
-
-    public function getDNomRec(): string 
-    {
-        return $this->dNomRec;
-    }
-
-    public function getDNomFanRec(): string 
-    {
-        return $this->dNomFanRec;
-    }
-
-    public function getDDirRec(): string 
-    {
-        return $this->dDirRec;
-    }
-
-    public function getDTelRec(): string 
-    {
-        return $this->dTelRec;
-    }
-
-    public function getDCelRec(): string 
-    {
-        return $this->dCelRec;
-    }
-
-    public function getDEmailRec(): string 
-    {
-        return $this->dEmailRec;
-    }
-
-    public function getDCodCliente(): string 
-    {
-        return $this->dCodCliente;
-    }
-
-    public function getDNumCasRec(): int 
-    {
-        return $this->dNumCasRec;
-    }
-
-    public function getCDepRec(): int 
-    {
-        return $this->cDepRec;
-    }
-
-    public function getDDesDepRec(): string 
-    {
-        return $this->dDesDepRec;
-    }
-
-    public function getCDisRec(): int 
-    {
-        return $this->cDisRec;
-    }
-
-    public function getDDesDisRec(): string 
-    {
-        return $this->dDesDisRec;
-    }
-
-    public function getCCiuRec(): int 
-    {
-        return $this->cCiuRec;
-    }
-
-    public function getDDesCiuRec(): string 
-    {
-        return $this->dDesCiuRec;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    // XML Element
-    ///////////////////////////////////////////////////////////////////////
-
-    public function toDOMElement(): DOMElement
-    {
-        $res = new DOMElement('gDatRec');
-        $res->appendChild(new DOMElement('iNatRec', $this->iNatRec));
-        $res->appendChild(new DOMElement('iTiOpe', $this->iTiOpe));
-        $res->appendChild(new DOMElement('cPaisRec', $this->cPaisRec));
-        $res->appendChild(new DOMElement('dDesPaisRe', $this->dDesPaisRe));
-        
-        if($this->iNatRec != 2) {
-            // No informar si D201 = 2 
-            $res->appendChild(new DOMElement('iTiContRec', $this->iTiContRec));
-            $res->appendChild(new DOMElement('dRucRec', $this->dRucRec));
-            // Obligatorio si existe el campo D206
-            $res->appendChild(new DOMElement('dDVRec', $this->dDVRec));
-        }
-
-        if($this->iNatRec != 1 && $this->iTiOpe != 4) {
-            // No informar si D201 = 1 o D202=4
-            $res->appendChild(new DOMElement('iTipIDRec', $this->iTipIDRec));
-            // Obligatorio si existe el campo D208
-            $res->appendChild(new DOMElement('dDTipIDRec', $this->getDDTipIDRec()));
-            // No informar si D201 = 1 o D202=4. En caso de DE innominado, completar con 0 (cero) 
-            $res->appendChild(new DOMElement('dNumIDRec', $this->iTipIDRec == 5 ? 0 : $this->dNumIDRec));
-        }
-
-        // En caso de DE innominado, completar con “Sin Nombre”
-        $res->appendChild(new DOMElement('dNomRec', $this->iTipIDRec == 5 ? "Sin Nombre" : $this->dNomRec));
-        if(isset($this->dNomFanRec))
-            $res->appendChild(new DOMElement('dNomFanRec', $this->dNomFanRec));
-        
-        if(isset($this->dDirRec)) {
-            $res->appendChild(new DOMElement('dDirRec', $this->dDirRec));
-            $res->appendChild(new DOMElement('dNumCasRec', $this->dNumCasRec));
-            if($this->iTiOpe != 4) {
-                $res->appendChild(new DOMElement('cDepRec', $this->cDepRec));
-                $res->appendChild(new DOMElement('dDesDepRec', $this->dDesDepRec));
-                $res->appendChild(new DOMElement('cDisRec', $this->cDisRec));
-                $res->appendChild(new DOMElement('dDesDisRec', $this->dDesDisRec));
-                $res->appendChild(new DOMElement('cCiuRec', $this->cCiuRec));
-                $res->appendChild(new DOMElement('dDesCiuRec', $this->dDesCiuRec));
-            }
-        }
-
-        if(isset($this->dTelRec))
-            $res->appendChild(new DOMElement('dTelRec', $this->dTelRec));
-        
-        if(isset($this->dCelRec))
-            $res->appendChild(new DOMElement('dCelRec', $this->dCelRec));
-        
-        if(isset($this->dEmailRec))
-            $res->appendChild(new DOMElement('dEmailRec', $this->dEmailRec));
-    
-        if(isset($this->dCodCliente))
-            $res->appendChild(new DOMElement('dCodCliente', $this->dCodCliente));
-
-        return $res;
     }
 
 }

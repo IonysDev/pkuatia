@@ -4,11 +4,6 @@ namespace Abiliomp\Pkuatia\Fields;
 
 use DOMElement;
 
-/**
- * Campos inherentes a la operación de Documentos Electrónicos (B001)
- * Nodo padre DE (A001): Campos firmados del DE
- */
-
 class GOpeDE {
     
     public int $iTipEmi; // Tipo de emision: 1 = Normal | 2 = Contingencia

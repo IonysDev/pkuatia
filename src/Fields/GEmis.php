@@ -5,8 +5,8 @@ namespace Abiliomp\Pkuatia\Fields;
 use DOMElement;
 
 /**
- * Campos que identifican al emisor gEmis (D100)
- * Nodo padre gDatGralOpe (D001): Campos Generales del Documento Electrónico DE
+ * Grupo de campos que identifican al emisor gEmis (D100)
+ * Nodo Padre gDatGralOpe (D001)
  */
 
 class GEmis {
