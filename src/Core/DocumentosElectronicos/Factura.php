@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core;
+namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
 
-use Abiliomp\Pkuatia\Core\DocumentoElectronico;
+use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use Abiliomp\Pkuatia\Core\Constants;
 use Abiliomp\Pkuatia\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Utils\RucUtils;
@@ -25,19 +25,28 @@ use Abiliomp\Pkuatia\Core\Fields\DE\G\GCamCarg;
 use Abiliomp\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
 
 /**
- * TIPO SIFEN NRO 1
+ * Tipo de Documento Electrónico Sifen: 1 - Factura
  */
 class Factura extends DocumentoElectronico
 {
+  
   //////////////////////////////////////////
-  //CONSTRUCTOR
+  // Atributos
   //////////////////////////////////////////
+  public GCamFE $gCamFE; // Campos que componen la factura electrónica (FE)
+  
+  //////////////////////////////////////////
+  // Constructor
+  //////////////////////////////////////////
+  
   public function __construct()
   {
     parent::__construct();
+
     /////////////////////////////////////////////////////////////////////////////
     ///Inicializar las clases correspondiete a su tipo de documento
     /////////////////////////////////////////////////////////////////////////////
+    
     //D
     //Obligatorio si C002 ≠ 7 No informar si C002 = 7
     $this->rDE->dE->gDatGralOpe->gOpeCom = new GOpeCom();
@@ -111,4 +120,18 @@ class Factura extends DocumentoElectronico
     //digito verificador del CDC
     $this->rDE->dE->dDVId = intval(substr($this->rDE->dE->iD, -1));
   }
+
+  
+
+  //////////////////////////////////////////
+  // Getters
+  //////////////////////////////////////////
+
+  //////////////////////////////////////////
+  // Setters
+  //////////////////////////////////////////
+
+  //////////////////////////////////////////
+  // Otros Métodos
+  //////////////////////////////////////////
 }

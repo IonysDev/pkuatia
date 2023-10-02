@@ -101,24 +101,6 @@ class GCamNCDE
 
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamNCDE
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamNCDE
-  // {
-  //   if (strcmp($xml->tagName, 'gCamNCDE') == 0 && $xml->childElementCount == 2) {
-  //     $res = new GCamNCDE();
-  //     $res->setIMotEmi(intval($xml->getElementsByTagName('iMotE')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
    * FromSimpleXMLElement
@@ -133,6 +115,22 @@ class GCamNCDE
     {
       $res->setIMotEmi(intval($object->iMotEmi));
     }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto del tipo GCamNCDE a partir de un DOMElement que representa el nodo XML del objeto GCamNCDE.
+   * 
+   * @param DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamNCDE') != 0)
+      throw new \Exception('[GCamNCDE] El nombre del nodo no corresponde a gCamNCDE: ' . $node->nodeName, 1);
+    $res = new GCamNCDE();
+    $res->setIMotEmi(intval($node->getElementsByTagName('iMotEmi')->item(0)->nodeValue));
     return $res;
   }
 }

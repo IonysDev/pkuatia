@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -11,7 +12,7 @@ use SimpleXMLElement;
  * Nodo Padre: E605 
  */
 
-class GPagTarCD
+class GPagTarCD extends BaseSifenField
 {
   public int $iDenTarj;       // E621 - 1-2  - 1-1 - Denominación de la tarjeta
   public String $dDesDenTarj; // E622 - 4-20 - 1-1 - Descripción de la Denominación de la tarjeta
@@ -376,31 +377,6 @@ class GPagTarCD
 
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GPagTarCD
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GPagTarCD
-  // {
-  //   if (strcmp($xml->tagName, 'gPagTarCD') == 0 && $xml->childElementCount == 9) {
-  //     $res = new GPagTarCD();
-  //     $res->setIDenTarj(intval($xml->getElementsByTagName('iDenTarj')->item(0)->nodeValue));
-  //     $res->setDRSProTar($xml->getElementsByTagName('dRSProTar')->item(0)->nodeValue);
-  //     $res->setDRUCProTar($xml->getElementsByTagName('dRUCProTar')->item(0)->nodeValue);
-  //     $res->setDDVProTar($xml->getElementsByTagName('dDDVProTar')->item(0)->nodeValue);
-  //     $res->setIForProPa(intval($xml->getElementsByTagName('iForProPa')->item(0)->nodeValue));
-  //     $res->setDCodAuOpe(intval($xml->getElementsByTagName('dCodAuOpe')->item(0)->nodeValue));
-  //     $res->setDNomTit($xml->getElementsByTagName('dNomTit')->item(0)->nodeValue);
-  //     $res->setDNumTarj(intval($xml->getElementsByTagName('dNumTarj')->item(0)->nodeValue));
-
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Elemement: $xml->tagName");
-  //   }
-  // }
   
   /**
    * FromSifenResponseObject
@@ -443,6 +419,36 @@ class GPagTarCD
     {
       $res->setDNumTarj(intval($object->dNumTarj));
     }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto gPagTarCD a partir de un DOMElement que representa el nodo XML del objeto gPagTarCD.
+   * 
+   * @param DOMElement $node Nodo XML que representa el gPagTarCD
+   * 
+   * @return GPagTarCD Objeto instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): GPagTarCD
+  {
+    if(strcmp($node->nodeName, 'gPagTarCD') != 0)
+      throw new \Exception('[GPagTarCD] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GPagTarCD();
+    $res->setIDenTarj(intval($node->getElementsByTagName('iDenTarj')->item(0)->nodeValue));
+    $res->setDDesDenTarj(strval($node->getElementsByTagName('dDesDenTarj')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dRSProTar')->length > 0)
+      $res->setDRSProTar(strval($node->getElementsByTagName('dRSProTar')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dRUCProTar')->length > 0)
+      $res->setDRUCProTar(strval($node->getElementsByTagName('dRUCProTar')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDVProTar')->length > 0)
+      $res->setDDVProTar(intval($node->getElementsByTagName('dDVProTar')->item(0)->nodeValue));
+    $res->setIForProPa(intval($node->getElementsByTagName('iForProPa')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dCodAuOpe')->length > 0)
+      $res->setDCodAuOpe(intval($node->getElementsByTagName('dCodAuOpe')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNomTit')->length > 0)
+      $res->setDNomTit(strval($node->getElementsByTagName('dNomTit')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumTarj')->length > 0)
+      $res->setDNumTarj(intval($node->getElementsByTagName('dNumTarj')->item(0)->nodeValue));
     return $res;
   }
 }

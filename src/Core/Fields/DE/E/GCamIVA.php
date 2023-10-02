@@ -314,4 +314,26 @@ class GCamIVA extends BaseSifenField
 
     return $this;
   }
+
+  /**
+   * Instancia un objeto GCamIVA a partir de un DOMElement que lo representa.
+   * 
+   * @param DOMElement $node El DOMElement que representa el objeto.
+   * 
+   * @return self El objeto instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamIVA') != 0)
+        throw new \Exception('[GCamIVA] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    $res->iAfecIVA = intval(trim($node->getElementsByTagName('iAfecIVA')->item(0)->nodeValue));
+    $res->dDesAfecIVA = trim($node->getElementsByTagName('dDesAfecIVA')->item(0)->nodeValue);
+    $res->dPropIVA = trim($node->getElementsByTagName('dPropIVA')->item(0)->nodeValue);
+    $res->dTasaIVA = intval(trim($node->getElementsByTagName('dTasaIVA')->item(0)->nodeValue));
+    $res->dBasGravIVA = trim($node->getElementsByTagName('dBasGravIVA')->item(0)->nodeValue);
+    $res->dLiqIVAItem = trim($node->getElementsByTagName('dLiqIVAItem')->item(0)->nodeValue);
+    $res->dBasExe = trim($node->getElementsByTagName('dBasExe')->item(0)->nodeValue);
+    return $res;
+  }
 }

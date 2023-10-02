@@ -220,4 +220,26 @@ class GCompPub extends BaseSifenField
     
     return $res;
   }
+
+  /**
+   * Instancia un objeto GCompPub a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GCompPub
+   * 
+   * @return GCompPub Objeto GCompPub instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCompPub') != 0)
+      throw new \Exception('[GCompPub] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GCompPub();
+    $res->setDModCont($node->getElementsByTagName('dModCont')->item(0)->nodeValue);
+    $res->setDEntCont(intval($node->getElementsByTagName('dEntCont')->item(0)->nodeValue));
+    $res->setDAnoCont(intval($node->getElementsByTagName('dAnoCont')->item(0)->nodeValue));
+    $res->setDSecCont(intval($node->getElementsByTagName('dSecCont')->item(0)->nodeValue));
+    $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFeCodCont')->item(0)->nodeValue));
+    return $res;
+  }
+
+  public function validate(): void {}
 }

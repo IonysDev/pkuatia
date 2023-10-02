@@ -401,6 +401,37 @@ class DE extends BaseSifenField
   }
 
   /**
+   * Genera un objeto DE a partir de un nodo DOMElement.
+   * 
+   * @param DOMElement $node Nodo XML que representa un DE
+   * 
+   * @return DE Objeto DE con los datos extraídos del nodo XML
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'DE') != 0)
+      throw new \Exception('[DE] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new DE();
+    $res->id = $node->getAttribute('Id');
+    $res->dDVId = intval($node->getElementsByTagName('dDVId')->item(0)->nodeValue);
+    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
+    $res->dSisFact = intval($node->getElementsByTagName('dSisFact')->item(0)->nodeValue);
+    $res->gOpeDe = GOpeDE::FromDOMElement($node->getElementsByTagName('gOpeDE')->item(0));
+    $res->gTimb = GTimb::FromDOMElement($node->getElementsByTagName('gTimb')->item(0));
+    $res->gDatGralOpe = GDatGralOpe::FromDOMElement($node->getElementsByTagName('gDatGralOpe')->item(0));
+    $res->gDtipDe = GDtipDE::FromDOMElement($node->getElementsByTagName('gDtipDE')->item(0));
+    if($node->getElementsByTagName('gTotSub')->length > 0)
+      $res->gTotSub = GTotSub::FromDOMElement($node->getElementsByTagName('gTotSub')->item(0));
+    if($node->getElementsByTagName('gCamGen')->length > 0)
+      $res->gCamGen = GCamGen::FromDOMElement($node->getElementsByTagName('gCamGen')->item(0));
+    if($node->getElementsByTagName('gCamDEAsoc')->length > 0) {
+      foreach($node->getElementsByTagName('gCamDEAsoc') as $g)
+        $res->gCamDEAsoc[] = GCamDEAsoc::FromDOMElement($g);
+    }
+    return $res;
+  }
+
+  /**
    * Genera un objeto DE a partir de un objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.
    *
    * @param stdClass $object Objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.

@@ -361,4 +361,35 @@ class GCamCarg
     
     return $res;
   }
+
+  /**
+   * Instancia un objeto GCamCarg a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamCarg') != 0)
+      throw new \Exception('[GCamCarg] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
+    $res = new GCamCarg();
+    if($node->getElementsByTagName('cUniMedTotVol')->length > 0)
+      $res->setCUniMedTotVol(intval($node->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDesUniMedTotVol')->length > 0)
+      $res->setDDesUniMedTotVol($node->getElementsByTagName('dDesUniMedTotVol')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTotVolMerc')->length > 0)
+      $res->setDTotVolMerc(intval($node->getElementsByTagName('dTotVolMerc')->item(0)->nodeValue));
+    if($node->getElementsByTagName('cUniMedTotPes')->length > 0)
+      $res->setCUniMedTotPes(intval($node->getElementsByTagName('cUniMedTotPes')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDesUniMedTotPes')->length > 0)
+      $res->setDDesUniMedTotPes($node->getElementsByTagName('dDesUniMedTotPes')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTotPesMerc')->length > 0)
+      $res->setDTotPesMerc(intval($node->getElementsByTagName('dTotPesMerc')->item(0)->nodeValue));
+    if($node->getElementsByTagName('iCarCarga')->length > 0)
+      $res->setICarCarga(intval($node->getElementsByTagName('iCarCarga')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDesCarCarga')->length > 0)
+      $res->setDDesCarCarga($node->getElementsByTagName('dDesCarCarga')->item(0)->nodeValue);
+    return $res;
+  }
 }

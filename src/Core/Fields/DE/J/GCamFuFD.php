@@ -135,7 +135,7 @@ class GCamFuFD extends BaseSifenField
     }
     else if(strlen($this->dCarQR) < 100 || strlen($this->dCarQR) > 600)
     {
-      throw new \Exception('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres.');
+      throw new \Exception('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres. Se encontraron ' . strlen($this->dCarQR) . '.');
     }
     if(isset($this->dInfAdic) && strlen($this->dInfAdic) > 5000)
     {
@@ -151,6 +151,24 @@ class GCamFuFD extends BaseSifenField
     if (isset($this->dInfAdic))
       $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
 
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GCamFuFD a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GCamFuFD
+   * 
+   * @return GCamFuFD Objeto GCamFuFD instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamFuFD') != 0)
+        throw new \Exception('[GCamFuFD] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    $res->setDCarQR(trim($node->getElementsByTagName('dCarQR')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dInfAdic')->length > 0)
+        $res->setDInfAdic(trim($node->getElementsByTagName('dInfAdic')->item(0)->nodeValue));
     return $res;
   }
 }

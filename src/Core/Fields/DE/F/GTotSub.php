@@ -337,7 +337,7 @@ class GTotSub
 
 
   /**
-   * Set the value of dIVA10
+   * Establece el valor de dIVA10, liquidación del IVA a la tasa del 10%.
    *
    * @param String $dIVA10
    *
@@ -455,7 +455,7 @@ class GTotSub
 
 
   /**
-   * Set the value of dTBasGraIVA
+   * Establece el valor de dTBasGraIV, total de la base gravada de IVA F018+F019
    *
    * @param String $dTBasGraIVA
    *
@@ -909,8 +909,6 @@ class GTotSub
     return $res;
   }
 
-  
-
   /**
    * FromSifenResponseObject
    *
@@ -1000,6 +998,62 @@ class GTotSub
     }    
     return $res;
   }
+
+  /**
+   * Instancia un objeto GTotSub a partir de un DOMElement que lo representa.
+   * 
+   * @param DOMElement $node El DOMElement que contiene la representación XML de un GTotSub.
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gTotSub') != 0)
+      throw new \Exception('[GTotSub] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GTotSub();
+    if($node->getElementsByTagName('dSubExe')->length > 0)
+      $res->setDSubExe($node->getElementsByTagName('dSubExe')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dSubExo')->length > 0)
+      $res->setDSubExo($node->getElementsByTagName('dSubExo')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dSub5')->length > 0)
+      $res->setDSub5($node->getElementsByTagName('dSub5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dSub10')->length > 0)
+      $res->setDSub10($node->getElementsByTagName('dSub10')->item(0)->nodeValue);
+    $res->setDTotOpe($node->getElementsByTagName('dTotOpe')->item(0)->nodeValue);
+    $res->setDTotDesc($node->getElementsByTagName('dTotDesc')->item(0)->nodeValue);
+    $res->setDTotDescGlotem($node->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue);
+    $res->setDTotAntItem($node->getElementsByTagName('dTotAntItem')->item(0)->nodeValue);
+    $res->setDTotAnt($node->getElementsByTagName('dTotAnt')->item(0)->nodeValue);
+    $res->setDPorcDescTotal($node->getElementsByTagName('dPorcDescTotal')->item(0)->nodeValue);
+    $res->setDDescTotal($node->getElementsByTagName('dDescTotal')->item(0)->nodeValue);
+    $res->setDAnticipo($node->getElementsByTagName('dAnticipo')->item(0)->nodeValue);
+    $res->setDRedon($node->getElementsByTagName('dRedon')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dComi')->length > 0)
+      $res->setDComi($node->getElementsByTagName('dComi')->item(0)->nodeValue);
+    $res->setDTotGralOpe($node->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dIVA5')->length > 0)
+      $res->setDIVA5($node->getElementsByTagName('dIVA5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dIVA10')->length > 0)
+      $res->setDIVA10($node->getElementsByTagName('dIVA10')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dLiqTotIVA5')->length > 0)
+      $res->setDLiqTotIVA5($node->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dLiqTotIVA10')->length > 0)
+      $res->setDLiqTotIVA10($node->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dIVAComi')->length > 0)
+      $res->setDIVAComi($node->getElementsByTagName('dIVAComi')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTotIVA')->length > 0)
+      $res->setDTotIVA($node->getElementsByTagName('dTotIVA')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dBaseGrav5')->length > 0)
+      $res->setDBaseGrav5($node->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dBaseGrav10')->length > 0)
+      $res->setDBaseGrav10($node->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTBasGraIVA')->length > 0)
+      $res->setDTBasGraIVA($node->getElementsByTagName('dTBasGraIVA')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTotalGs')->length > 0)
+      $res->setDTotalGs($node->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
+    return $res;
+  }
+
 
   ///////////////////////////////////////////////////////////////////////
   // Funciones de Cálculo

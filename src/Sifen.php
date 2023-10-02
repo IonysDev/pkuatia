@@ -25,6 +25,7 @@ use Abiliomp\Pkuatia\Helpers\QRHelper;
 use Abiliomp\Pkuatia\Helpers\SignHelper;
 use SoapClient;
 use SoapVar;
+use Stringable;
 use ZipArchive;
 
 class Sifen
@@ -95,19 +96,21 @@ class Sifen
   }
 
   /**
-   * Realiza el envío de un Documento Electrónico al SIFEN.
+   * Firma un DE (contenido en un RDE) y devuelve en forma de cadena el XML firmado.
+   * Además genera el link para el código QR del DE. 
+   * Este XML estará listo para envío al SIFEN.
+   *  
+   * @param RDE $rde Contenedor del DE a firmar.
    * 
-   * @param DocumentoElectronico $de Documento Electrónico a enviar.
-   * 
-   * @return RRetEnviDe
+   * @return String XML del DE firmado.
    */
-  public static function EnviarDE(RDE $rde): RRetEnviDe
+  public static function FirmarDE(RDE $rde): String
   {
     // Firma el documento electrónico
     $xmlDocument = SignHelper::SignRDE($rde);
+
     // Extrae la firma del documento electrónico
-    $signatureNode = $xmlDocument->getElementsByTagName("Signature")->item(0);
-    $Signature = Signature::FromDOMElement($signatureNode);
+    $Signature = Signature::FromDOMElement($xmlDocument->getElementsByTagName("Signature")->item(0));
 
     // Verifica si en los campos fuera de la firma hay datos
     $gCamFuFD = $rde->getGCamFuFD();
@@ -132,12 +135,22 @@ class Sifen
     $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
 
     // Genera la cadena XML a ser enviada al SIFEN
-    $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
+    return $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
+  }
 
+  /**
+   * Realiza el envío de un Documento Electrónico al SIFEN.
+   * 
+   * @param String $rdeXML Cadena XML del DE firmado en un contenedor XML.
+   * 
+   * @return RRetEnviDe Respuesta del SIFEN a la solicitud de Envío.
+   */
+  public static function EnviarDE(String $rdeXML): RRetEnviDe
+  {    
     // Realiza el envío del documento electrónico al SIFEN
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
     $rEnviDe = new REnviDe(self::GetDId(), new SoapVar(
-      '<ns1:xDE>' . $signedXML . '</ns1:xDE>',
+      '<ns1:xDE>' . $rdeXML . '</ns1:xDE>',
       XSD_ANYXML
     ));
     $object = self::$client->rEnviDe($rEnviDe);
@@ -148,72 +161,47 @@ class Sifen
    * Realiza el envío de un lote de Documentos Electrónicos al SIFEN.
    * De acuerdo a la versión 150 del MT, este WS soporta hasta 50 documentos electrónicos por lote.
    * 
-   * @param array $lote Lote de Documentos Electrónicos a enviar.
+   * @param array $lote Lote de DEs (contenidos en sus RDE respectivos) firmados en formato de cadena XML
    * 
    * @return RResEnviLoteDe
    */
   public static function EnviarLoteDE(array $lote): RResEnviLoteDe
   {
-
-    //Cabecera del rLoteDE
+    if(!is_array($lote))
+      throw new \Exception("[Sifen] El parámetro lote debe ser un array de documentos electrónicos.");
+    if(count($lote) > 50)
+      throw new \Exception("[Sifen] El lote no puede contener más de 50 documentos electrónicos.");
+    
+    // Cabecera del rLoteDE
     $rLotDe = '<rLoteDE>';
 
-    foreach ($lote as $key => $value) {
-      SignHelper::Init(self::$config->privateKeyFilePath, self::$config->privateKeyPassphrase, self::$config->certificateFilePath);
-      // Firma el documento electrónico
-      $xmlDocument = SignHelper::SignRDE($value);
-      // Extrae la firma del documento electrónico
-      $signatureNode = $xmlDocument->getElementsByTagName("Signature")->item(0);
-      $signature = Signature::FromDOMElement($signatureNode);
-
-      // Verifica si en los campos fuera de la firma hay datos
-      $gCamFuFD = $value->getGCamFuFD();
-      if (is_null($gCamFuFD)) {
-        $gCamFuFD = new GCamFuFD();
-      } else {
-        // Eliminar el nodo del gCamFuFD si es que existe del xmlDocument firmado
-        $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
-        for ($i = 0; $i < $rdeNode->childNodes->length; $i++) {
-          $node = $rdeNode->childNodes->item($i);
-          if (strcmp($node->nodeName, 'gCamFuFD') == 0) {
-            $rdeNode->removeChild($node);
-          }
-        }
-      }
-
-      // Establece el valor del link para el QR 
-      $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent(self::$config, $value->getDE(), $signature));
-      $gCamFuFDNode = $gCamFuFD->toDOMElement($xmlDocument);
-
-      // Agrega el nodo del QR al documento electrónico
-      $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
-
-      $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("rDE")->item(0));
-
-      //concatenar los documentos electrónicos
-      $rLotDe .= $signedXML;
+    foreach ($lote as $rde) {
+      if(!is_string($rde))
+        throw new \Exception("[Sifen] El lote debe contener documentos electrónicos en formato de cadena XML.");
+      // Concatenar los documentos electrónicos
+      $rLotDe .= $rde;
     }
 
-    //cerrar etiqueta rLoteDE
+    //Cerrar etiqueta rLoteDE
     $rLotDe .= '</rLoteDE>';
 
-    ///CREATE ZIP FILE
+    // Crea el comprimido ZIP que contendrá el lote de documentos electrónicos
     $zip = new ZipArchive();
     $zip->open("rLoteDE.zip", ZipArchive::CREATE);
 
-    ///ADD rLoteDe.xml to ZIP FILE
+    // Agrega el lote de documentos electrónicos al comprimido
     $zip->addFromString("rLoteDE.xml", $rLotDe);
 
-    ///CLOSE ZIP FILE
+    // Cierra el comprimido
     $zip->close();
 
-    ///GET ZIP FILE CONTENT
+    // Lee el contenido del comprimido
     $zipcontent = file_get_contents("rLoteDE.zip");
 
-    //delete zip file
+    // Elimina el comprimido
     unlink("rLoteDE.zip");
 
-    //send zip file to Sifen
+    // Realiza el envío del lote de documentos electrónicos al SIFEN
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
     $rEnvioLote = new REnvioLote(self::GetDId(), $zipcontent);
     $object = self::$client->rEnvioLote($rEnvioLote);
@@ -226,7 +214,7 @@ class Sifen
    * @param  mixed $nroLote, nro del lote provisto por el SIFEN
    * @return RResEnviConsLoteDe
    */
-  public static function consultaLote($nroLote): RResEnviConsLoteDe
+  public static function ConsultaLote($nroLote): RResEnviConsLoteDe
   {
     self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl", self::$options);
     $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
@@ -258,7 +246,7 @@ class Sifen
   }
 
   /**
-   * Maneja los entornos de desarrollo y producción.
+   * Devuelve la URL base del WS del SIFEN según el entorno.
    *
    * @return String
    */
@@ -272,7 +260,7 @@ class Sifen
   }
 
   /**
-   * Maneja el incremento del dId.
+   * Devuelve los valores del dID generados por la librería.
    *
    * @return int
    */

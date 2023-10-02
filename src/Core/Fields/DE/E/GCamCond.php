@@ -226,4 +226,34 @@ class GCamCond
     }
     return $res;
   }
+
+  /**
+   * Instancia un objeto del tipo GCamCond a partir de un DOMElement que representa el nodo XML del objeto GCamCond.
+   * 
+   * @param DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamCond') != 0){
+      throw new \Exception("El nodo '" . $node->nodeName . "' no corresponde a gCamCond", 1);
+    }
+    $res = new self();
+    if($node->getElementsByTagName('iCondOpe')->length > 0){
+      $res->setICondOpe(intval($node->getElementsByTagName('iCondOpe')->item(0)->nodeValue));
+    }
+    if($node->getElementsByTagName('dDCondOpe')->length > 0){
+      $res->setDDCondOpe(strval($node->getElementsByTagName('dDCondOpe')->item(0)->nodeValue));
+    }
+    if($node->getElementsByTagName('gPaConEIni')->length > 0){
+      foreach ($node->getElementsByTagName('gPaConEIni') as $g) {
+        $res->gPaConEIni[] = GPaConEIni::FromDOMElement($g);
+      }
+    }
+    if($node->getElementsByTagName('gPagCred')->length > 0){
+      $res->setGPagCred(GPagCred::FromDOMElement($node->getElementsByTagName('gPagCred')->item(0)));
+    }
+    return $res;
+  }
 }

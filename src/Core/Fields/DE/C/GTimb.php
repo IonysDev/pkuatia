@@ -276,6 +276,29 @@ class GTimb extends BaseSifenField
         return $res;
     }
 
+    /**
+     * Instancia un objeto GTimb a partir de un DOMElement que representa el nodo XML del objeto GTimb
+     * 
+     * @param DOMElement $node Nodo XML que representa el objeto GTimb
+     * 
+     * @return self Objeto GTimb instanciado
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if(strcmp($node->nodeName, 'gTimb') != 0)
+            throw new \Exception('[GTimb] Nodo con nombre inválido: ' . $node->nodeName);
+        $res = new GTimb();
+        $res->setITiDE(intval($node->getElementsByTagName('iTiDE')->item(0)->nodeValue));
+        $res->setDNumTim(intval(trim($node->getElementsByTagName('dNumTim')->item(0)->nodeValue)));
+        $res->setDEst(trim($node->getElementsByTagName('dEst')->item(0)->nodeValue));
+        $res->setDPunExp(trim($node->getElementsByTagName('dPunExp')->item(0)->nodeValue));
+        $res->setDNumDoc(trim($node->getElementsByTagName('dNumDoc')->item(0)->nodeValue));
+        if($node->getElementsByTagName('dSerieNum')->length > 0)
+            $res->setDSerieNum(trim($node->getElementsByTagName('dSerieNum')->item(0)->nodeValue));
+        $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dFeIniT')->item(0)->nodeValue)));
+        return $res;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Conversores
     ///////////////////////////////////////////////////////////////////////

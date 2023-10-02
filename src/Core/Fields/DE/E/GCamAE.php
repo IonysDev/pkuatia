@@ -317,7 +317,36 @@ class GCamAE
   public function setCCiuProv(int $cCiuProv): self
   {
     $this->cCiuProv = $cCiuProv;
+    return $this;
+  }
 
+  public function setDDesDisVen(String $dDesDisVen): self
+  {
+    $this->dDesDisVen = $dDesDisVen;
+    return $this;
+  }
+
+  public function setDDesCiuVen(String $dDesCiuVen): self
+  {
+    $this->dDesCiuVen = $dDesCiuVen;
+    return $this;
+  }
+
+  public function setDDesDepProv(String $dDesDepProv): self
+  {
+    $this->dDesDepProv = $dDesDepProv;
+    return $this;
+  }
+
+  public function setDDesDisProv(String $dDesDisProv): self
+  {
+    $this->dDesDisProv = $dDesDisProv;
+    return $this;
+  }
+
+  public function setDDesCiuProv(String $dDesCiuProv): self
+  {
+    $this->dDesCiuProv = $dDesCiuProv;
     return $this;
   }
 
@@ -573,6 +602,46 @@ class GCamAE
     $res->appendChild(new DOMElement('cCiuProv',    $this->getCCiuProv()));
     $res->appendChild(new DOMElement('dDesCiuProv', $this->getDDesCiuProv()));
 
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GCamAE a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GCamAE
+   * 
+   * @return GCamAE Objeto GCamAE instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamAE') != 0)
+      throw new \Exception('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->nodeName, 1);
+    $res = new GCamAE();
+    $res->setINatVen(intval($node->getElementsByTagName('iNatVen')->item(0)));
+    $res->setDDesNatVen(strval($node->getElementsByTagName('dDesNatVen')->item(0)));
+    $res->setITipIDVen(intval($node->getElementsByTagName('iTipIDVen')->item(0)));
+    $res->setDDTipIDVen(strval($node->getElementsByTagName('dDTipIDVen')->item(0)));
+    $res->setDNumIDVen(strval($node->getElementsByTagName('dNumIDVen')->item(0)));
+    $res->setDNomVen(strval($node->getElementsByTagName('dNomVen')->item(0)));
+    $res->setDDirVen(strval($node->getElementsByTagName('dDirVen')->item(0)));
+    $res->setDNumCasVen(intval($node->getElementsByTagName('dNumCasVen')->item(0)));
+    $res->setCDepVen(intval($node->getElementsByTagName('cDepVen')->item(0)));
+    $res->setDDesDepVen(strval($node->getElementsByTagName('dDesDepVen')->item(0)));
+    if($node->getElementsByTagName('cDisVen')->length > 0)
+      $res->setCDisVen(intval($node->getElementsByTagName('cDisVen')->item(0)));
+    if($node->getElementsByTagName('dDesDisVen')->length > 0)
+      $res->setDDesDisVen(strval($node->getElementsByTagName('dDesDisVen')->item(0)));
+    $res->setCCiuVen(intval($node->getElementsByTagName('cCiuVen')->item(0)));
+    $res->setDDesCiuVen(strval($node->getElementsByTagName('dDesCiuVen')->item(0)));
+    $res->setDDirProv(strval($node->getElementsByTagName('dDirProv')->item(0)));
+    $res->setCDepProv(intval($node->getElementsByTagName('cDepProv')->item(0)));
+    $res->setDDesDepProv(strval($node->getElementsByTagName('dDesDepProv')->item(0)));
+    if($node->getElementsByTagName('cDisProv')->length > 0)
+      $res->setCDisProv(intval($node->getElementsByTagName('cDisProv')->item(0)));
+    if($node->getElementsByTagName('dDesDisProv')->length > 0)
+      $res->setDDesDisProv(strval($node->getElementsByTagName('dDesDisProv')->item(0)));
+    $res->setCCiuProv(intval($node->getElementsByTagName('cCiuProv')->item(0)));
+    $res->setDDesCiuProv(strval($node->getElementsByTagName('dDesCiuProv')->item(0)));
     return $res;
   }
 

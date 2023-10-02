@@ -216,4 +216,27 @@ class GCamGen
     }
     return $res;
   }
+
+  /**
+   * Instancia un objeto GCamGen a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto.
+   * 
+   * @return self Objeto instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamGen') != 0)
+      throw new \Exception('[GCamGen] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
+    $res = new GCamGen();
+    if($node->getElementsByTagName('dOrdCompra')->length > 0)
+      $res->setDOrdCompra($node->getElementsByTagName('dOrdCompra')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dOrdVta')->length > 0)
+      $res->setDOrdVta($node->getElementsByTagName('dOrdVta')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dAsiento')->length > 0)
+      $res->setDAsiento($node->getElementsByTagName('dAsiento')->item(0)->nodeValue);
+    if($node->getElementsByTagName('gCamCarg')->length > 0)
+      $res->setGCamCarg(GCamCarg::FromDOMElement($node->getElementsByTagName('gCamCarg')->item(0)));
+    return $res;
+  }
 }

@@ -252,8 +252,13 @@ class GPagCred
 
     $res->appendChild(new DOMElement('dMonEnt', $this->getDMonEnt()));
     ///children
-    $res->appendChild($this->gCuotas->toDOMElement());
-
+    // $res->appendChild($this->gCuotas->toDOMElement());
+    if(isset($this->gCuotas) && count($this->gCuotas) > 0)
+    {
+      foreach ($this->gCuotas as $g) {
+        $res->appendChild($g->toDOMElement());
+      }
+    }
     return $res;
   }
 
@@ -290,7 +295,39 @@ class GPagCred
     //children
     if(isset($object->gCuotas))
     {
-      $res->setGCuotas(GCuotas::FromSifenResponseObject($object->gCuotas));
+      //$res->setGCuotas(GCuotas::FromSifenResponseObject($object->gCuotas));
+      foreach ($object->gCuotas as $g) {
+        $res->gCuotas[] = GCuotas::FromSifenResponseObject($g);
+      }
+    }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GPagCred a partir de un DOMElement que representa el nodo XML del objeto GPagCred.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GPagCred
+   * 
+   * @return self Objeto GPagCred instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gPagCred') != 0)
+      throw new \Exception('[GPagCred] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GPagCred();
+    $res->setICondCred(intval($node->getElementsByTagName('iCondCred')->item(0)->nodeValue));
+    $res->setDDCondCred(strval($node->getElementsByTagName('dDCondCred')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dPlazoCre')->length > 0)
+      $res->setDPlazoCre(strval($node->getElementsByTagName('dPlazoCre')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dCuotas')->length > 0)
+      $res->setDCuotas(intval($node->getElementsByTagName('dCuotas')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dMonEnt')->length > 0)
+      $res->setDMonEnt(intval($node->getElementsByTagName('dMonEnt')->item(0)->nodeValue));
+    if($node->getElementsByTagName('gCuotas')->length > 0) {
+      $res->gCuotas = [];
+      foreach ($node->getElementsByTagName('gCuotas') as $g) {
+        $res->gCuotas[] = GCuotas::FromDOMElement($g);
+      }
     }
     return $res;
   }

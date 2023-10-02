@@ -159,10 +159,8 @@ class Reference
         $res->setURI((String) $node->getAttribute('URI'));
         if($node->getElementsByTagName("Transforms")->length > 0)
         {
-            foreach($node->getElementsByTagName("Transforms")->item(0)->childNodes as $t)
-            {
+            foreach($node->getElementsByTagName("Transforms") as $t)
                 $res->Transforms[] = Transform::FromDOMElement($t);
-            }
         }
         $res->setDigestMethod(DigestMethod::FromDOMElement($node->getElementsByTagName("DigestMethod")->item(0)));
         $res->setDigestValue((String) $node->getElementsByTagName("DigestValue")->item(0)->nodeValue);

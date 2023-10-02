@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -10,7 +11,7 @@ use SimpleXMLElement;
  * Campos que describen el pago o entrega inicial de la operación con cheque
  * PADRE:E605
  */
-class GPagCheq
+class GPagCheq extends BaseSifenField
 {
   public String $dNumCheq; //E631 Número de cheque  
   public String $dBcoEmi; //E632  Banco emisor
@@ -126,6 +127,25 @@ class GPagCheq
     {
       $res->setDBcoEmi($object->dBcoEmi);
     }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GPagCheq a partir de un DOMElement que representa el nodo XML del objeto GPagCheq.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GPagCheq
+   * 
+   * @return self Objeto GPagCheq instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gPagCheq') != 0)
+      throw new \Exception("El nodo '" . $node->nodeName . "' no corresponde a gPagCheq", 1);
+    $res = new GPagCheq();
+    if($node->getElementsByTagName('dNumCheq')->length > 0)
+      $res->setDNumCheq($node->getElementsByTagName('dNumCheq')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dBcoEmi')->length > 0)
+      $res->setDBcoEmi($node->getElementsByTagName('dBcoEmi')->item(0)->nodeValue);
     return $res;
   }
 }

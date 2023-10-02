@@ -424,5 +424,31 @@ class GPaConEIni
 
     return $res;
   }
+
+  /**
+   * Instancia un objeto GPaConEIni a partir de un DOMElement que representa el nodo XML del objeto GPaConEIni.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GPaConEIni
+   * 
+   * @return self Objeto GPaConEIni instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gPaConEIni') != 0)
+      throw new \Exception('[GPaConEIni] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GPaConEIni();
+    $res->setITiPago(intval(trim($node->getElementsByTagName('iTiPago')->item(0)->nodeValue)));
+    $res->setDDesTiPag(trim($node->getElementsByTagName('dDesTiPag')->item(0)->nodeValue));
+    $res->setDMonTiPag(intval(trim($node->getElementsByTagName('dMonTiPag')->item(0)->nodeValue)));
+    $res->setCMoneTiPag(trim($node->getElementsByTagName('cMoneTiPag')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dTiCamTiPag')->length > 0)
+      $res->setDTiCamTiPag(trim($node->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue));
+    if($node->getElementsByTagName('gPagTarCD')->length > 0)
+      $res->setGPagTarCD(GPagTarCD::FromDOMElement($node->getElementsByTagName('gPagTarCD')->item(0)));
+    if($node->getElementsByTagName('gPagCheq')->length > 0)
+      $res->setGPagCheq(GPagCheq::FromDOMElement($node->getElementsByTagName('gPagCheq')->item(0)));
+    return $res;
+  }
+  
   
 }

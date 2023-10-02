@@ -364,7 +364,7 @@ class GTransp
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///xml Element
+  // XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -399,38 +399,46 @@ class GTransp
     return $res;
   }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GTransp
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GTransp
-  // {
-  //   if (strcmp($xml->tagName, 'gTransp') == 0 && $xml->childElementCount >= 13) {
-  //     $res = new GTransp();
-  //     $res->setITipTrans(intval($xml->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
-  //     $res->setIModTrans(intval($xml->getElementsByTagName('imodTrans')->item(0)->nodeValue));
-  //     $res->setIRespFlete(intval($xml->getElementsByTagName('iRespFlete')->item(0)->nodeValue));
-  //     $res->setCCondNeg($xml->getElementsByTagName('cCondNeg')->item(0)->nodeValue);
-  //     $res->setDNuManif($xml->getElementsByTagName('dNuManif')->item(0)->nodeValue);
-  //     $res->setDNuDespImp($xml->getElementsByTagName('dNuDespImp')->item(0)->nodeValue);
-  //     $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dIniTras')->item(0)->nodeValue));
-  //     $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dfinTras')->item(0)->nodeValue));
-  //     $res->setCPaisDest($xml->getElementsByTagName('cPaisDest')->item(0)->nodeValue);
-  //     //Children
-  //     $res->setGCamSal($res->gCamSal->fromDOMElement($xml->getElementsByTagName('gCamSal')->item(0)->nodeValue));
-  //     $res->setGCamEnt($res->gCamEnt->fromDOMElement($xml->getElementsByTagName('gCamEnt')->item(0)->nodeValue));
-  //     $res->setGVehTras($res->gVehTras->fromDOMElement($xml->getElementsByTagName('gVehTras')->item(0)->nodeValue));
-  //     $res->setGCamTrans($res->gCamTrans->fromDOMElement($xml->getElementsByTagName('gCamTrans')->item(0)->nodeValue));
-
-  //     return $res;
-
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
+  /**
+   * Instancia un objeto GTransp a partir de un DOMElement obtenido de un documento XML.
+   * 
+   * @param DOMElement $node Nodo DOMElement que contiene los datos.
+   * 
+   * @return self Objeto GTransp instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gTransp') != 0)
+      throw new \Exception('[GTransp] El nombre del nodo no es gTransp: ' . $node->nodeName);
+    $res = new self();
+    if($node->getElementsByTagName('iTipTrans')->length > 0)
+      $res->setITipTrans(intval($node->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
+    if($node->getElementsByTagName('iModTrans')->length > 0)
+      $res->setIModTrans(intval($node->getElementsByTagName('iModTrans')->item(0)->nodeValue));
+    if($node->getElementsByTagName('iRespFlete')->length > 0)
+      $res->setIRespFlete(intval($node->getElementsByTagName('iRespFlete')->item(0)->nodeValue));
+    if($node->getElementsByTagName('cCondNeg')->length > 0)
+      $res->setCCondNeg($node->getElementsByTagName('cCondNeg')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dNuManif')->length > 0)
+      $res->setDNuManif($node->getElementsByTagName('dNuManif')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dNuDespImp')->length > 0)
+      $res->setDNuDespImp($node->getElementsByTagName('dNuDespImp')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dIniTras')->length > 0)
+      $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dIniTras')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dFinTras')->length > 0)
+      $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFinTras')->item(0)->nodeValue));
+    if($node->getElementsByTagName('cPaisDest')->length > 0)
+      $res->setCPaisDest($node->getElementsByTagName('cPaisDest')->item(0)->nodeValue);
+    if($node->getElementsByTagName('gCamSal')->length > 0)
+      $res->setGCamSal(GCamSal::FromDOMElement($node->getElementsByTagName('gCamSal')->item(0)));
+    if($node->getElementsByTagName('gCamEnt')->length > 0)
+      $res->setGCamEnt(GCamEnt::FromDOMElement($node->getElementsByTagName('gCamEnt')->item(0)));
+    if($node->getElementsByTagName('gVehTras')->length > 0)
+      $res->setGVehTras(GVehTras::FromDOMElement($node->getElementsByTagName('gVehTras')->item(0)));
+    if($node->getElementsByTagName('gCamTrans')->length > 0)
+      $res->setGCamTrans(GCamTrans::FromDOMElement($node->getElementsByTagName('gCamTrans')->item(0)));
+    return $res;
+  }
 
   ///////////////////////////////////////////////////////////////////////
   //Others
