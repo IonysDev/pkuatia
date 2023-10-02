@@ -342,4 +342,33 @@ class GValorRestaItem extends BaseSifenField
     
     return $res;
   }
+
+  /**
+   * Instancia un objeto GValorRestaItem a partir de un DOMElement que lo representa.
+   * 
+   * @param  DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gValorRestaItem') != 0)
+        throw new \Exception('[GValorRestaItem] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    if($node->getElementsByTagName('dDescItem')->length > 0)
+      $res->setDDescItem(trim($node->getElementsByTagName('dDescItem')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dPorcDesIt')->length > 0)
+      $res->setDPorcDesIt(trim($node->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDescGloItem')->length > 0)
+      $res->setDDescGloItem(trim($node->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dAntPreUniIt')->length > 0)
+      $res->setDAntPreUniIt(trim($node->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dAntGloPreUniIt')->length > 0)
+      $res->setDAntGloPreUniIt(trim($node->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
+    $res->setDTotOpeItem(trim($node->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dTotOpeGs')->length > 0)
+      $res->setDTotOpeGs(trim($node->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
+    return $res;
+  }
+
 }

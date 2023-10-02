@@ -410,6 +410,37 @@ class GOpeCom extends BaseSifenField
         return $res;
     }
 
+    /**
+     * Instancia un GOpeCom a partir de un DOMElement que lo representa.
+     * 
+     * @param DOMElement $node Nodo DOM que representa el objeto.
+     * 
+     * @return GOpeCom
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if(strcmp($node->nodeName, 'gOpeCom') != 0)
+            throw new \Exception('[GOpeCom] Nodo con nombre inválido: ' . $node->nodeName);
+        $res = new GOpeCom();
+        if($node->getElementsByTagName('iTipTra')->length > 0)
+            $res->setITipTra(intval(trim($node->getElementsByTagName('iTipTra')->item(0)->nodeValue)));
+        if($node->getElementsByTagName('dDesTipTra')->length > 0)
+            $res->setDDesTipTra(trim(strval($node->getElementsByTagName('dDesTipTra')->item(0)->nodeValue)));
+        $res->setITImp(intval($node->getElementsByTagName('iTImp')->item(0)->nodeValue));
+        $res->setDDesTImp(strval($node->getElementsByTagName('dDesTImp')->item(0)->nodeValue));
+        $res->setCMoneOpe(trim(strval($node->getElementsByTagName('cMoneOpe')->item(0)->nodeValue)));
+        $res->setDDesMoneOpe(trim(strval($node->getElementsByTagName('dDesMoneOpe')->item(0)->nodeValue)));
+        if($node->getElementsByTagName('dCondTiCam')->length > 0)
+            $res->setDCondTiCam(intval(trim($node->getElementsByTagName('dCondTiCam')->item(0)->nodeValue)));
+        if($node->getElementsByTagName('dTiCam')->length > 0)
+            $res->setDTiCam(trim(strval($node->getElementsByTagName('dTiCam')->item(0)->nodeValue)));
+        if($node->getElementsByTagName('iCondAnt')->length > 0)
+            $res->setICondAnt(intval(trim($node->getElementsByTagName('iCondAnt')->item(0)->nodeValue)));
+        if($node->getElementsByTagName('dDesCondAnt')->length > 0)
+            $res->setDDesCondAnt(trim(strval($node->getElementsByTagName('dDesCondAnt')->item(0)->nodeValue)));
+        return $res;
+    }
+
 
     /**
      * FromSifenResponseObject

@@ -221,4 +221,24 @@ class GValorItem extends BaseSifenField
     }
     return $res;
   }
+
+  /**
+   * Instancia un objeto GValorItem a partir de un DOMElement que lo representa.
+   * 
+   * @param  DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gValorItem') != 0)
+        throw new \Exception('[GValorItem] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    $res->setDPUniProSer(trim($node->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dTiCamIt')->length > 0)
+      $res->setDTiCamIt(trim($node->getElementsByTagName('dTiCamIt')->item(0)->nodeValue));
+    $res->setDTotBruOpeItem(trim($node->getElementsByTagName('dTotBruOpeItem')->item(0)->nodeValue));
+    $res->setGValorRestaItem(GValorRestaItem::FromDOMElement($node->getElementsByTagName('gValorRestaItem')->item(0)));
+    return $res;
+  }
 }

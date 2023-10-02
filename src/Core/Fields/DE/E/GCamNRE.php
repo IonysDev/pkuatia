@@ -234,6 +234,33 @@ class GCamNRE
 
     return $res;
   }
+
+  /**
+   * Instancia un objeto del tipo GCamNRE a partir de un DOMElement que representa el nodo XML del objeto GCamNRE.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GCamNRE
+   * 
+   * @return self Objeto GCamNRE instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    $res = new GCamNRE();
+
+    if($node->getElementsByTagName('iMotEmiNR')->length > 0){
+      $res->setIMotEmiNR(intval($node->getElementsByTagName('iMotEmiNR')->item(0)->nodeValue));
+    }
+    if($node->getElementsByTagName('iRespEmiNR')->length > 0){
+      $res->setIRespEmiNR(intval($node->getElementsByTagName('iRespEmiNR')->item(0)->nodeValue));
+    }
+    if($node->getElementsByTagName('dKmR')->length > 0){
+      $res->setDKmR(intval($node->getElementsByTagName('dKmR')->item(0)->nodeValue));
+    }
+    if($node->getElementsByTagName('dFecEm')->length > 0){
+      $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFecEm')->item(0)->nodeValue));
+    }
+    
+    return $res;
+  }
   
   /**
    * FromSifenResponseObject

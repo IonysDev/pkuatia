@@ -342,6 +342,40 @@ class GDtipDE extends BaseSifenField
     return $res;
   }
 
+  /**
+   * Instancia un objeto GDtipDE a partir de un DOMElement que representa el nodo XML del objeto GDtipDE.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GDtipDE.
+   * 
+   * @return self Objeto instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gDtipDE') != 0)
+      throw new \Exception('[GDtipDE] El nombre del nodo no corresponde a gDtipDE: ' . $node->nodeName, 1);
+    $res = new GDtipDE();
+    if($node->getElementsByTagName('gCamFE')->length > 0)
+      $res->setGCamFE(GCamFE::FromDOMElement($node->getElementsByTagName('gCamFE')->item(0)));
+    if($node->getElementsByTagName('gCamAE')->length > 0)
+      $res->setGCamAE(GCamAE::FromDOMElement($node->getElementsByTagName('gCamAE')->item(0)));
+    if($node->getElementsByTagName('gCamNCDE')->length > 0)
+      $res->setGCamNCDE(GCamNCDE::FromDOMElement($node->getElementsByTagName('gCamNCDE')->item(0)));
+    if($node->getElementsByTagName('gCamNRE')->length > 0)
+      $res->setGCamNRE(GCamNRE::FromDOMElement($node->getElementsByTagName('gCamNRE')->item(0)));
+    if($node->getElementsByTagName('gCamCond')->length > 0)
+      $res->setGCamCond(GCamCond::FromDOMElement($node->getElementsByTagName('gCamCond')->item(0)));
+    if($node->getElementsByTagName('gCamItem')->length > 0) {
+      $res->gCamItem = [];
+      foreach($node->getElementsByTagName('gCamItem') as $gCamItem)
+        $res->gCamItem[] = GCamItem::FromDOMElement($gCamItem);
+    }
+    if($node->getElementsByTagName('gCamEsp')->length > 0)
+      $res->setGCamEsp(GCamEsp::FromDOMElement($node->getElementsByTagName('gCamEsp')->item(0)));
+    if($node->getElementsByTagName('gTransp')->length > 0)
+      $res->setGTransp(GTransp::FromDOMElement($node->getElementsByTagName('gTransp')->item(0)));
+    return $res;
+  }
+
 
 
   /**

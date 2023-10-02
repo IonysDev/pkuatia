@@ -46,4 +46,22 @@ class RucUtils {
 		}
 		return $dv;
 	}
+
+	/**
+	 * Función para validar un RUC en formato de cadena con su dígito verificador.
+	 * 
+	 * @param String $value cadena de RUC con DV en formato 12345678-9
+	 * 
+	 * @return bool true si es válido, false si no lo es.
+	 */
+	public static function ValidarRUCconDV(String $value){
+		$regex = '^\d{1,8}-\d$';
+		if(!preg_match($regex, $value)){
+			return false;
+		}
+		$dv = intval(substr($value, -1));
+		$ruc = substr($value, 0, -2);
+		$dv_calc = self::CalcDV($ruc);
+		return $dv == $dv_calc;
+	}
 }

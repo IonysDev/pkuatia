@@ -239,4 +239,70 @@ class GCamFE extends BaseSifenField
     }
     return $res;
   }
+
+  /**
+   * Instancia un objeto GCamFE a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamFE') != 0)
+      throw new \Exception('[GCamFE] El nombre del nodo no corresponde a gCamFE: ' . $node->nodeName, 1);
+    $res = new GCamFE();
+    $res->iIndPres = intval($node->getElementsByTagName('iIndPres')->item(0)->nodeValue);
+    $res->dDesIndPres = strval($node->getElementsByTagName('dDesIndPres')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dFecEmNR')->length > 0)
+      $res->dFecEmNR = DateTime::createFromFormat('Y-m-d', strval($node->getElementsByTagName('dFecEmNR')->item(0)->nodeValue));
+    if($node->getElementsByTagName('gComPub')->length > 0)
+      $res->gComPub = GCompPub::FromDOMElement($node->getElementsByTagName('gComPub')->item(0));
+    return $res;
+  }
+
+  /**
+   * 
+   */
+
+  /**
+   * Valida el contenido del objeto de conformidad a lo establecido en el MT
+   * 
+   * @throws \Exception Si el contenido del objeto no es válido emite una excepción con el mensaje de error.
+   */
+  public function validate(): void
+  {
+    $errMsg = "";
+    if(!isset($this->iIndPres))
+    {
+      $errMsg .= "[GCamFE] El campo 'iIndPres' no ha sido informado.\n";
+    }
+    else if($this->iIndPres < 1 || $this->iIndPres > 9)
+    {
+      $errMsg .= "[GCamFE] El campo 'iIndPres' debe ser un valor entre 1 y 9.\n";
+    }
+    if(!isset($this->dDesIndPres))
+    {
+      $errMsg .= "[GCamFE] El campo 'dDesIndPres' no ha sido informado.\n";
+    } 
+    else if(strlen($this->dDesIndPres) < 10 || strlen($this->dDesIndPres) > 30)
+    {
+      $errMsg .= "[GCamFE] El campo 'dDesIndPres' debe tener una longitud entre 10 y 30 caracteres.\n";
+    }
+    if(isset($this->gComPub))
+    {
+      try {
+        $this->gComPub->validate();
+      }
+      catch(\Exception $e)
+      {
+        $errMsg .= $e->getMessage();
+      }
+    }
+    if(strlen($errMsg) > 0)
+    {
+      throw new \Exception($errMsg);
+    }
+  }
 }
+

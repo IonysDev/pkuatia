@@ -135,5 +135,22 @@ class GActEco extends BaseSifenField
         return $res; 
     }
 
+    /**
+     * Instancia un objeto GActEco a partir de un DOMElement con los datos del mismo.
+     * 
+     * @param  DOMElement $node Nodo DOM que contiene los datos del objeto.
+     * 
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if(strcmp($node->nodeName, 'gActEco') != 0)
+            throw new \Exception('[GActEco] Nodo con nombre inválido: ' . $node->nodeName);
+        $res = new self();
+        $res->setCActEco(trim(strval($node->getElementsByTagName('cActEco')->item(0)->nodeValue)));
+        $res->setDDesActEco(trim(strval($node->getElementsByTagName('dDesActEco')->item(0)->nodeValue)));
+        return $res;
+    }
+
     
 }

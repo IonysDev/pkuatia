@@ -876,4 +876,61 @@ class GCamItem extends BaseSifenField
     }
     return $res;
   }
+
+
+  /**
+   * Instancia un objeto GCamItem a partir de un DOMElement que lo representa.
+   * 
+   * @param DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamItem') != 0)
+        throw new \Exception('[GCamItem] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    $res->setDCodInt(trim($node->getElementsByTagName('dCodInt')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dParAranc')->length > 0)
+      $res->setDParAranc(intval(trim($node->getElementsByTagName('dParAranc')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dNCM')->length > 0)
+      $res->setDNCM(intval(trim($node->getElementsByTagName('dNCM')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dDncpG')->length > 0)
+      $res->setDDncpG(trim($node->getElementsByTagName('dDncpG')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDncpE')->length > 0)
+      $res->setDDncpE(trim($node->getElementsByTagName('dDncpE')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dGtin')->length > 0)
+      $res->setDGtin(intval(trim($node->getElementsByTagName('dGtin')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dGtinPq')->length > 0)
+      $res->setDGtinPq(intval(trim($node->getElementsByTagName('dGtinPq')->item(0)->nodeValue)));
+    $res->setDDesProSer(trim($node->getElementsByTagName('dDesProSer')->item(0)->nodeValue));
+    $res->setCUniMed(intval(trim($node->getElementsByTagName('cUniMed')->item(0)->nodeValue)));
+    $res->setDDesUniMed(trim($node->getElementsByTagName('dDesUniMed')->item(0)->nodeValue));
+    $res->setDCantProSer(floatval(trim($node->getElementsByTagName('dCantProSer')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('cPaisOrig')->length > 0)
+      $res->setCPaisOrig(trim($node->getElementsByTagName('cPaisOrig')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDesPaisOrig')->length > 0)
+      $res->setDDesPaisOrig(trim($node->getElementsByTagName('dDesPaisOrig')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dInfItem')->length > 0)
+      $res->setDInfItem(trim($node->getElementsByTagName('dInfItem')->item(0)->nodeValue));
+    if($node->getElementsByTagName('cRelMerc')->length > 0)
+      $res->setCRelMerc(intval(trim($node->getElementsByTagName('cRelMerc')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dDesRelMerc')->length > 0)
+      $res->setDDesRelMerc(trim($node->getElementsByTagName('dDesRelMerc')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dCanQuiMer')->length > 0)
+      $res->setDCanQuiMer(trim($node->getElementsByTagName('dCanQuiMer')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dPorQuiMer')->length > 0)
+      $res->setDPorQuiMer(trim($node->getElementsByTagName('dPorQuiMer')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dCDCAnticipo')->length > 0)
+      $res->setDCDCAnticipo(trim($node->getElementsByTagName('dCDCAnticipo')->item(0)->nodeValue));
+    if($node->getElementsByTagName('gValorItem')->length > 0)
+      $res->setGValorItem(GValorItem::FromDOMElement($node->getElementsByTagName('gValorItem')->item(0)));
+    if($node->getElementsByTagName('gCamIVA')->length > 0)
+      $res->setGCamIVa(GCamIVA::FromDOMElement($node->getElementsByTagName('gCamIVA')->item(0)));
+    if($node->getElementsByTagName('gRasMerc')->length > 0)
+      $res->setGRasMerc(GRasMerc::FromDOMElement($node->getElementsByTagName('gRasMerc')->item(0)));
+    if($node->getElementsByTagName('gVehNuevo')->length > 0)
+      $res->setGVehNuevo(GVehNuevo::FromDOMElement($node->getElementsByTagName('gVehNuevo')->item(0)));
+    return $res;
+  }
 }

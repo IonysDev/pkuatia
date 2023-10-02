@@ -166,6 +166,29 @@ class RDE
   }
 
   /**
+   * Instancia un objeto RDE a partir de un DOMElement que representa el nodo XML del objeto RDE
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto RDE
+   * 
+   * @return self Objeto RDE instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'rDE') != 0)
+      throw new \Exception('[RDE] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new RDE();
+    if($node->getElementsByTagName('dVerFor')->length > 0)
+      $res->setDVerFor(intval($node->getElementsByTagName('dVerFor')->item(0)->nodeValue));
+    if($node->getElementsByTagName('DE')->length > 0)
+      $res->setDE(DE::FromDOMElement($node->getElementsByTagName('DE')->item(0)));
+    if($node->getElementsByTagName('Signature')->length > 0)
+      $res->setSignature(Signature::FromDOMElement($node->getElementsByTagName('Signature')->item(0)));
+    if($node->getElementsByTagName('gCamFuFD')->length > 0)
+      $res->setGCamFuFD(GCamFuFD::FromDOMElement($node->getElementsByTagName('gCamFuFD')->item(0)));
+    return $res;
+  }
+
+  /**
    * Instancia un objeto RDE a partir de objeto tipo stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
    * @param stdClass $object Objeto stdClass que representa el objeto RDE

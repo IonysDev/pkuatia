@@ -168,26 +168,6 @@ class GCuotas
 
     return $res;
   }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCuotas
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCuotas
-  // {
-  //   if (strcmp($xml->tagName, 'gCuotas') == 0 && $xml->childElementCount == 4) {
-  //     $res = new GCuotas();
-  //     $res->setCMoneCuo($xml->getElementsByTagName('cMoneCuo')->item(0)->nodeValue);
-  //     $res->setDMonCuota($xml->getElementsByTagName('dDMoneCuo')->item(0)->nodeValue);
-  //     $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dVencCuo')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
   
   /**
    * FromSifenResponseObject
@@ -214,4 +194,25 @@ class GCuotas
     return $res;
 
   }
+
+  /**
+   * Instancia un objeto GCuotas a partir de un DOMElement que representa el nodo XML del objeto GCuotas.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GCuotas
+   * 
+   * @return self Objeto GCuotas instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCuotas') != 0)
+      throw new \Exception('[GCuotas] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GCuotas();
+    $res->setCMoneCuo($node->getElementsByTagName('cMoneCuo')->item(0)->nodeValue);
+    $res->setDDMoneCuo($node->getElementsByTagName('dDMoneCuo')->item(0)->nodeValue);
+    $res->setDMonCuota($node->getElementsByTagName('dMonCuota')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dVencCuo')->length > 0)
+      $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dVencCuo')->item(0)->nodeValue));
+    return $res;
+  }
+
 }

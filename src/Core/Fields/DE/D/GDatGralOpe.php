@@ -216,6 +216,26 @@ class GDatGralOpe extends BaseSifenField
     $res->appendChild($this->gDatRec->toDOMElement($doc));
     return $res;
   }
+
+  /**
+   * Instancia un objeto GDatGralOpe a partir de un DOMElement que lo representa.
+   * 
+   * @param  DOMElement $node Nodo DOM que representa el objeto.
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gDatGralOpe') != 0)
+      throw new \Exception('[GDatGralOpe] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GDatGralOpe();
+    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFeEmiDE')[0]->nodeValue)));
+    if($node->getElementsByTagName('gOpeCom')->length > 0)
+      $res->setGOpeCom(GOpeCom::FromDOMElement($node->getElementsByTagName('gOpeCom')[0]));
+    $res->setGEmis(GEmis::FromDOMElement($node->getElementsByTagName('gEmis')[0]));
+    $res->setGDatRec(GDatRec::FromDOMElement($node->getElementsByTagName('gDatRec')[0]));
+    return $res;
+  }
   
   
 }

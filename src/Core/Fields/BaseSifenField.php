@@ -18,6 +18,15 @@ abstract class BaseSifenField
     abstract public function toDOMElement(DOMDocument $doc): DOMElement;
 
     /**
+     * Instancia un objeto a partir de un DOMElement que representa el nodo XML del objeto.
+     * 
+     * @param DOMElement $node Nodo XML que representa el objeto.
+     * 
+     * @return self Objeto instanciado.
+     */
+    abstract public static function FromDOMElement(DOMElement $node): self;
+
+    /**
      * Serializa el objeto en una cadena XML.
      */
     public function toXMLString(): String

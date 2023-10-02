@@ -61,12 +61,18 @@ class QRHelper
 
     $hash = hash('sha256', $step2);
 
+    file_put_contents('qr.txt', $step2 . "\n\n". $hash);
+
     $qrUrl = null;
     if (strcmp(strtolower($config->getEnv()), 'prod') == 0)
       $qrUrl = Constants::SIFEN_URL_CONSULTA_QR_PROD;
     else
-      $qrUrl = Constants::SIFEN_URL_CONSULTA_QR_DEV . $step1 . '&cHashQR=' . $hash;
+      $qrUrl = Constants::SIFEN_URL_CONSULTA_QR_DEV;
 
+    $qrUrl .= $step1 . '&cHashQR=' . $hash;
+    
     return $qrUrl;
   }
+
+
 }

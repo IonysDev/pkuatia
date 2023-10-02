@@ -184,6 +184,28 @@ class GOpeDE extends BaseSifenField
         return $res;
     }
 
+    /**
+     * Instancia un objeto GOpeDE a partir de un DOMElement que representa el nodo XML del objeto GOpeDE
+     * 
+     * @param DOMElement $node Nodo XML que representa el objeto GOpeDE
+     * 
+     * @return self Objeto GOpeDE instanciado
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if(strcmp($node->nodeName, 'gOpeDE') != 0)
+            throw new \Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
+        $res = new GOpeDE();
+        $res->setITipEmi(intval($node->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
+        $res->setDDesTipEmi($node->getElementsByTagName('dDesTipEmi')->item(0)->nodeValue);
+        $res->setDCodSeg(intval($node->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
+        if($node->getElementsByTagName('dInfoEmi')->length > 0)
+            $res->setDInfoEmi($node->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
+        if($node->getElementsByTagName('dInfoFisc')->length > 0)
+            $res->setDInfoFisc($node->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
+        return $res;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Conversores
     ///////////////////////////////////////////////////////////////////////

@@ -1,64 +1,57 @@
 <?php
 
 namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
-use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
+
+use Abiliomp\Pkuatia\Core\Fields\DE\B\GOpeDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
 
 /**
  * Clase que contiene la estructura básica de un DE, en todos los casos posibles de éste
  */
 class DocumentoElectronico {
 
-  public RDE $rDE; //Raiz del documento electronico AA01
-
-  public function __construct()
-  {
-    $this->rDE = new RDE();
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
+  public GOpeDE $gOpeDE; // Campos que describen la operación del documento electrónico
+  public GTimb  $gTimb; // Campos que describen el timbrado del documento electrónico
 
   /**
-   * Establece el valor de rDE (Raiz del documento electronico)
-   *
-   * @param RDE $rDE
-   *
+   * Constructor
+   * 
+   * @param GTimb $timbrado datos de timbrado del documento electrónico
+   */
+  public function __construct(GTimb $timbrado = null)
+  {
+    $this->gOpeDE = new GOpeDE();
+    if($timbrado)
+      $this->gTimb = $timbrado;
+    else
+      $this->gTimb = new GTimb();
+  }
+
+
+  /**
+   * Establece información y/o comentarios de interés del emisor.
+   * 
+   * @param String $dInfEmi comentarios del emisor
+   * 
    * @return self
    */
-  public function setRDE(RDE $rDE): self
+  public function setInfoEmi(String $infoEmi): self
   {
-    $this->rDE = $rDE;
-
+    $this->gOpeDE->setDInfoEmi($infoEmi);
     return $this;
   }
 
-  ///////////////////////////////////////////////////////////////////////
-  // Getters
-  ///////////////////////////////////////////////////////////////////////
-
   /**
-   * Devuelve el valor de rDE (Raiz del documento electronico)
-   *
-   * @return RDE
+   * Establece información y/o comentarios de interés para el fisco.
+   * 
+   * @param String $dInfFisc comentarios del fisco
+   * 
+   * @return self
    */
-  public function getRDE(): RDE
+  public function setInfoFisc(String $infoFisc): self
   {
-    return $this->rDE;
+    $this->gOpeDE->setDInfoFisc($infoFisc);
+    return $this;
   }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Conversores
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Convierte el objeto a un String XML
-   *
-   * @return String
-   */
-  public function toXMLString(): String
-  {
-    return $this->rDE->toXMLString();
-  }
-
+  
 }

@@ -25,12 +25,13 @@ class DepartamentoMapping
 
   public static function getDepName($code): String
   {
-    $country = strtoupper($code);
+    $depCode = strtoupper($code);
     $array = self::getArray();
     ///iterate the array
     foreach ($array as $key => $value) {
-      if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $country) {
-        return $value['annotation']['documentation'];
+      if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $depCode) {
+        $res = $value['annotation']['documentation'];
+        return $res;
       }
     }
     return null;

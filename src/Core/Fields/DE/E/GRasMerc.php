@@ -374,4 +374,39 @@ class GRasMerc extends BaseSifenField
     }
     return $res;
   }
+
+  /**
+   * Instancia un objeto GRasMerc a partir de un DOMElement que lo representa.
+   * 
+   * @param DOMElement $node
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gRasMerc') != 0)
+        throw new \Exception('[GRasMerc] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    if($node->getElementsByTagName('dNumLote')->length > 0)
+      $res->setDNumLote(intval(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dVencMerc')->length > 0)
+      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dVencMerc')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dNSerie')->length > 0)
+      $res->setDNSerie(trim($node->getElementsByTagName('dNSerie')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumPedi')->length > 0)
+      $res->setDNumPedi(trim($node->getElementsByTagName('dNumPedi')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumSegui')->length > 0)
+      $res->setDNumSegui(trim($node->getElementsByTagName('dNumSegui')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNomImp')->length > 0)
+      $res->setDNomImp(trim($node->getElementsByTagName('dNomImp')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDirImp')->length > 0)
+      $res->setDDirImp(trim($node->getElementsByTagName('dDirImp')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumFir')->length > 0)
+      $res->setDNumFir(trim($node->getElementsByTagName('dNumFir')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumReg')->length > 0)
+      $res->setDNumReg(trim($node->getElementsByTagName('dNumReg')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumRegEntCom')->length > 0)
+      $res->setDNumRegEntCom(trim($node->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue));
+    return $res;
+  }
 }
