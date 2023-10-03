@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
+use Abiliomp\Pkuatia\Utils\StringNumberFormatter;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
@@ -52,6 +53,13 @@ class GCamItem extends BaseSifenField
       return null;
   }
 
+  public function getFormattedSubtEx() {
+    if(is_null($this->calcSubtEx()))
+      return null;
+    else
+      return StringNumberFormatter::FormatBCMAthNumber($this->calcSubtEx(), ',', '.');
+  }
+
   public function calcSubt05() {
     if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
       if($this->gCamIVA->getDTasaIVA() == 5)
@@ -62,6 +70,13 @@ class GCamItem extends BaseSifenField
       return null;
   }
 
+  public function getFormattedSubt05() {
+    if(is_null($this->calcSubt05()))
+      return null;
+    else
+      return StringNumberFormatter::FormatBCMAthNumber($this->calcSubt05(), ',', '.');
+  }
+
   public function calcSubt10() {
     if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
       if($this->gCamIVA->getDTasaIVA() == 10)
@@ -70,6 +85,13 @@ class GCamItem extends BaseSifenField
         return 0;
     else
       return null;
+  }
+
+  public function getFormattedSubt10() {
+    if(is_null($this->calcSubt10()))
+      return null;
+    else
+      return StringNumberFormatter::FormatBCMAthNumber($this->calcSubt10(), ',', '.');
   }
 
   ///////////////////////////////////////////////////////////////////////
