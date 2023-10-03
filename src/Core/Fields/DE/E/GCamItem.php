@@ -45,7 +45,32 @@ class GCamItem extends BaseSifenField
   // Constructor
   /////////////////////////////////////////////////////////
 
- 
+  public function calcSubtEx() {
+    if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
+      return $this->gCamIVA->getDBasExe();
+    else
+      return null;
+  }
+
+  public function calcSubt05() {
+    if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
+      if($this->gCamIVA->getDTasaIVA() == 5)
+        return $this->gCamIVA->getDBasGravIVA() + $this->gCamIVA->getDLiqIVAItem();
+      else
+        return 0;
+    else
+      return null;
+  }
+
+  public function calcSubt10() {
+    if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
+      if($this->gCamIVA->getDTasaIVA() == 10)
+        return $this->gCamIVA->getDBasGravIVA() + $this->gCamIVA->getDLiqIVAItem();
+      else
+        return 0;
+    else
+      return null;
+  }
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
