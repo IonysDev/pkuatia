@@ -111,7 +111,7 @@ class GValorItem extends BaseSifenField
 
   public function getFormattedDPUniProSer(): String
   {
-    return StringNumberFormatter::FormatBCMAthNumber($this->dPUniProSer, '.', ',');
+    return StringNumberFormatter::FormatBCMAthNumber($this->dPUniProSer, ',', '.');
   }
 
   /**
