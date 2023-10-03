@@ -17,7 +17,7 @@ $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
 
-$testCDC = '01801219302001001000012922023100312415822231';
+$testCDC = '01801219302001001000016622023100311674909785';
 $requestDate = new DateTime('now', new DateTimeZone('America/Asuncion'));
 //cast to string to avoid DateTime serialization error
 $requestDate = (string) $requestDate->format('d/m/Y H:i:s');

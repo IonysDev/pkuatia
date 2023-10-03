@@ -71,19 +71,19 @@ $gGroupTiEvt2 = new GGroupTiEvt();
 ///////////////////////////////////////////////////////////////
 ///creamos una raiz de evento de cancelacion
 $rGeVeCan = new RGeVeCan();
-$rGeVeCan->setId('01801219302001001000000222023091919188318385'); ///poner un cdc
-$rGeVeCan->setMOtEve('Motivo de cancelacion');
+$rGeVeCan->setId('01801219302001001000016622023100311674909785'); ///poner un cdc
+$rGeVeCan->setMOtEve('lorem ipsum circa mia pectora suspiria tenebris');
 ///////////////////////////////////////////////////////////////
 ///EVENTO DE INUTILIZACION
 ///////////////////////////////////////////////////////////////
 $rGeVeInu = new RGeVeInu();
-$rGeVeInu->setDNumTim(1); ///////////poner un numero de timbrado
-$rGeVeInu->setDEst('Establecimiento');
-$rGeVeInu->setDPunExp('Punto de expedicion');
-$rGeVeInu->setDNumIn('000000000000'); ///////////poner un numero de inicio
-$rGeVeInu->setDNumFin('000000000000'); ///////////poner un numero de fin
+$rGeVeInu->setDNumTim(12560814); ///////////poner un numero de timbrado
+$rGeVeInu->setDEst('001');
+$rGeVeInu->setDPunExp('001');
+$rGeVeInu->setDNumIn('0000167'); ///////////poner un numero de inicio
+$rGeVeInu->setDNumFin('0000167'); ///////////poner un numero de fin
 $rGeVeInu->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA); ///////////poner un tipo de documento
-$rGeVeInu->setMOtEve('Motivo de inutilizacion');
+$rGeVeInu->setMOtEve('Motivo de inutilizacion xD');
 //====================================================================
 //Ecentos de RECEPTOR
 //====================================================================
@@ -227,7 +227,7 @@ $trGeVeRem->setId('0000000000000000000000000000000000000000000000000000000000000
 
 ////se asigna el evento de cancelacion al grupo de campos de tipo evento
 $gGroupTiEvt->setRGeVeCan($rGeVeCan);
-// $gGroupTiEvt2->setRGeVeInu($rGeVeInu);
+// $gGroupTiEvt->setRGeVeInu($rGeVeInu);
 ////se asigna el grupo de campos  de tipo evento al grupo de campos generales del evento
 $rEve->setGGroupTiEvt($gGroupTiEvt);
 // $rEve2->setGGroupTiEvt($gGroupTiEvt2);
