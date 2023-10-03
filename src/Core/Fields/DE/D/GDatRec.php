@@ -76,7 +76,6 @@ class GDatRec extends BaseSifenField
         $this->iNatRec = self::NATURALEZA_NO_CONTRIBUYENTE;
         $this->iTiOpe = self::TIPO_OPERACION_B2C;
         $this->iTipIDRec = self::TIPO_DOCUMENTO_IDENTIDAD_INNOMINADO;
-        $this->dNumIDRec = 0;
         $this->dNomRec = 'Sin Nombre';
         $this->cPaisRec = 'PRY';
         $this->dDesPaisRe = 'Paraguay';
@@ -553,7 +552,7 @@ class GDatRec extends BaseSifenField
         if(isset($node->dRucRec))
             $res->setDRucRec(strval($node->dRucRec));
         if(isset($node->dDVRec))
-            $res->setITipIDRec(intval($node->dDVRec));
+            $res->setDDVRec(intval($node->dDVRec));
         if(isset($node->iTipIDRec))
             $res->setDNumIDRec(intval($node->iTipIDRec));
         if(isset($node->dDTipIDRec))
@@ -656,6 +655,8 @@ class GDatRec extends BaseSifenField
      */
     public static function FromSifenResponseObject($object): self
     {
+       
+
         $res = new GDatRec();
         if(isset($object->iNatRec)){
             $res->setINatRec(intval($object->iNatRec));
