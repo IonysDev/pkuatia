@@ -27,8 +27,8 @@ use Abiliomp\Pkuatia\Sifen;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$certFile = 'D:\abili\OneDrive\Software Projects\pkuatia\test\80121930-2.pem.crt';
-$keyFile = 'D:\abili\OneDrive\Software Projects\pkuatia\test\80121930-2.pem.key';
+$certFile = '80121930-2.pem.crt';
+$keyFile = '80121930-2.pem.key';
 $keyPassphrase = '171222';
 
 $config = new Config();
@@ -55,7 +55,7 @@ $gTimb->setITiDE(Constants::TIPO_DOCUMENTO_FACTURA);
 $gTimb->setDNumTim(12560814);
 $gTimb->setDEst('001');
 $gTimb->setDPunExp('001');
-$gTimb->setDNumDoc('0000129');
+$gTimb->setDNumDoc('0000167');
 $gTimb->setDFeIniT(new DateTime('2023-04-14'));
 
 //////////////////////////////////////////////////////////////////
