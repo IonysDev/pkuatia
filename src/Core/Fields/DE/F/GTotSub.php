@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\F;
 
+use Abiliomp\Pkuatia\Utils\StringNumberFormatter;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
@@ -505,6 +506,14 @@ class GTotSub
       return null;
   }
 
+  public function getFormattedDSubExe(): String | null
+  {
+    if(isset($this->dSubExe))
+      return StringNumberFormatter::FormatBCMAthNumber($this->dSubExe, ',', '.');
+    else
+      return null;
+  }
+
   /**
    * Get the value of dSubExo
    *
@@ -514,6 +523,14 @@ class GTotSub
   {
     if(isset($this->dSubExo))
       return $this->dSubExo;
+    else
+      return null;
+  }
+
+  public function getFormattedDSubExo(): String | null
+  {
+    if(isset($this->dSubExo))
+      return StringNumberFormatter::FormatBCMAthNumber($this->dSubExo, ',', '.');
     else
       return null;
   }
@@ -530,6 +547,14 @@ class GTotSub
     else
       return null;
   }
+
+  public function getFormattedDSub5(): String | null
+  {
+    if(isset($this->dSub5))
+      return StringNumberFormatter::FormatBCMAthNumber($this->dSub5, ',', '.');
+    else
+      return null;
+  }
  
 
   /**
@@ -541,6 +566,14 @@ class GTotSub
   {
    if(isset($this->dSub10))
       return $this->dSub10;
+    else
+      return null;
+  }
+
+  public function getFormattedDSub10(): String | null
+  {
+    if(isset($this->dSub10))
+      return StringNumberFormatter::FormatBCMAthNumber($this->dSub10, ',', '.');
     else
       return null;
   }
@@ -660,6 +693,11 @@ class GTotSub
     return $this->dTotGralOpe;
   }
 
+  public function getFormattedDTotGralOpe(): String
+  {
+    return StringNumberFormatter::FormatBCMAthNumber($this->dTotGralOpe, ',', '.');
+  }
+
   /**
    * Get the value of dIVA5
    *
@@ -669,6 +707,14 @@ class GTotSub
   {
     if(isset($this->dIVA5))
       return $this->dIVA5;
+    else
+      return null;
+  }
+
+  public function getFormattedDIVA5(): String | null
+  {
+    if(isset($this->dIVA5))
+      return StringNumberFormatter::FormatBCMAthNumber($this->dIVA5, ',', '.');
     else
       return null;
   }
@@ -683,6 +729,14 @@ class GTotSub
   {
     if(isset($this->dIVA10))
       return $this->dIVA10;
+    else
+      return null;
+  }
+
+  public function getFormattedDIVA10(): String | null  
+  {
+    if(isset($this->dIVA10))
+      return StringNumberFormatter::FormatBCMAthNumber($this->dIVA10, ',', '.');
     else
       return null;
   }
@@ -739,6 +793,14 @@ class GTotSub
       return null;
   }
 
+  public function getFormattedDTotIVA(): String | null
+  {
+    if(isset($this->dTotIVA))
+      return StringNumberFormatter::FormatBCMAthNumber($this->dTotIVA, ',', '.');
+    else
+      return null;
+  }
+
   /**
    * Get the value of dBaseGrav5
    *
@@ -780,6 +842,11 @@ class GTotSub
   public function getDTotalGs(): String
   {
     return $this->dTotalGs;
+  }
+
+  public function getFormattedDTotalGs(): String
+  {
+    return StringNumberFormatter::FormatBCMAthNumber($this->dTotalGs, ',', '.');
   }
 
   ///////////////////////////////////////////////////////////////////////

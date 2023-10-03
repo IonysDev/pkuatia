@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Helpers;
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Utils\RNGMaker;
 use Abiliomp\Pkuatia\Utils\RucUtils;
+use Stringable;
 
 class CDCHelper
 {
