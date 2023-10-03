@@ -94,7 +94,14 @@ class RResEnviConsRUC
    */
   public function getRContRuc(): RContRuc
   {
-    return $this->rContRuc;
+    if(isset($this->rContRuc))
+    {
+      return $this->rContRuc;
+    }
+    else
+    {
+      return new RContRuc();
+    }
   }
 
   ///////////////////////////////////////////////////////////////////////
