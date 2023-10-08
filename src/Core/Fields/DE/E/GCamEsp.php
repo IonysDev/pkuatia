@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -196,20 +197,20 @@ class GCamEsp extends BaseSifenField
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gCamEsp');
+    $res = $doc->createElement("gCamEsp");
     if (isset($this->gGrupoEner)) {
-      $res->appendChild($this->gGrupoEner->toDOMElement());
+      $res->appendChild($this->gGrupoEner->toDOMElement($doc));
     }
     if (isset($this->gGrupSup)) {
-      $res->appendChild($this->gGrupSup->toDOMElement());
+      $res->appendChild($this->gGrupSup->toDOMElement($doc));
     }
     if (isset($this->gGrupoSeg)) {
-      $res->appendChild($this->gGrupSup->toDOMElement());
+      $res->appendChild($this->gGrupSup->toDOMElement($doc));
     }
     if (isset($this->gGrupAdi)) {
-      $res->appendChild($this->gGrupAdi->toDOMElement());
+      $res->appendChild($this->gGrupAdi->toDOMElement($doc));
     }
     return $res;
   }

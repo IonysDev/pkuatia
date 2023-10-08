@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -267,33 +268,21 @@ class GGrupEner
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gGrupEner');
+    $res = $doc->createElement("gGrupEner");
     if(isset($this->dNroMed))
-    {
       $res->appendChild(new DOMElement('dNroMed', $this->getDNroMed()));
-    }
     if(isset($this->dActiv))
-    {
       $res->appendChild(new DOMElement('dActiv', $this->getDActiv()));
-    }
     if(isset($this->dCateg))
-    {
       $res->appendChild(new DOMElement('dCateg', $this->getDCateg()));
-    }
     if(isset($this->dLecAnt))
-    {
       $res->appendChild(new DOMElement('dLecAnt', $this->getDLecAnt()));
-    }
     if(isset($this->dLecAct))
-    {
       $res->appendChild(new DOMElement('dLecAct', $this->getDLecAct()));
-    }
     if(isset($this->dConKwh))
-    {
       $res->appendChild(new DOMElement('dConKwh', $this->getDConKwh()));
-    }
     return $res;
   }
 
