@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -157,16 +158,14 @@ class GGrupSup
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gGrupSup');
-
+    $res = $doc->createElement('gGrupSup');
     $res->appendChild(new DOMElement('dNomCaj', $this->getDNomCaj()));
     $res->appendChild(new DOMElement('dEfectivo', $this->getDEfectivo()));
     $res->appendChild(new DOMElement('dVuelto', $this->getDVuelto()));
     $res->appendChild(new DOMElement('dDonac', $this->getDDonac()));
     $res->appendChild(new DOMElement('dDesDonac', $this->getDDesDonac()));
-
     return $res;
   }
 

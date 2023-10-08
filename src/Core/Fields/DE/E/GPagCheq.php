@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -99,10 +100,9 @@ class GPagCheq extends BaseSifenField
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gPagCheq');
-
+    $res = $doc->createElement('gPagCheq');
     //Completar con 0 (cero) a la izquierda hasta alcanzar 8 (ocho) cifras
     $res->appendChild(new DOMElement('dNumCheq', str_pad($this->dNumCheq, 8, "0", STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('dBcoEmi', $this->getDBcoEmi()));

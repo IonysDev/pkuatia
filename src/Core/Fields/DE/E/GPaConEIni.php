@@ -368,9 +368,8 @@ class GPaConEIni
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new DOMDocument('1.0', 'utf-8');
     $res = $doc->createElement('gPaConEIni');
     $res->appendChild(new DOMElement('iTiPago', $this->getITiPago()));
     $res->appendChild(new DOMElement('dDesTiPag', $this->getDDesTiPag()));
@@ -381,9 +380,9 @@ class GPaConEIni
       $res->appendChild(new DOMElement('dTiCamTiPag', $this->getDTiCamTiPag()));
     }
     if(isset($this->gPagTarCD))
-      $res->appendChild($this->gPagTarCD->toDOMElement());
+      $res->appendChild($this->gPagTarCD->toDOMElement($doc));
     if(isset($this->gPagCheq))
-      $res->appendChild($this->gPagCheq->toDOMElement());
+      $res->appendChild($this->gPagCheq->toDOMElement($doc));
     return $res;
   }
   

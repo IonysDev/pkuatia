@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Utils\ValueValidations;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -237,13 +238,11 @@ class GPagCred
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gPagCred');
-
+    $res = $doc->createElement('gPagCred');
     $res->appendChild(new DOMElement('iCondCred', $this->getICondCred()));
     $res->appendChild(new DOMElement('dDCondCred', $this->getICondCred()));
-
     if ($this->iCondCred == 1) {
       $res->appendChild(new DOMElement('dPlazoCre', $this->getDPlazoCre()));
     } else if ($this->iCondCred == 2) {

@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -155,15 +156,15 @@ class GGrupSeg extends BaseSifenField
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gGrupSeg');
+    $res = $doc->createElement('gGrupSeg');
     $res->appendChild(new DOMElement('dCodEmpSeg', $this->getDCodEmpSeg()));
     if(isset($this->gGrupPolSeg) && count($this->gGrupPolSeg) > 0)
     {
       foreach($this->gGrupPolSeg as $gGrupPolSeg)
       {
-        $res->appendChild($gGrupPolSeg->toDOMElement());
+        $res->appendChild($gGrupPolSeg->toDOMElement($doc));
       }
     }
     return $res;

@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -260,6 +261,24 @@ class GGrupPolSeg extends BaseSifenField
     return $res;
   }
 
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gGrupPolSeg') != 0)
+      throw new \Exception('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->nodeName, 1);
+    $res = new GGrupPolSeg();
+    $res->setDPoliza($node->getElementsByTagName('dPoliza')->item(0)->nodeValue)
+        ->setDUnidVig($node->getElementsByTagName('dUnidVig')->item(0)->nodeValue)
+        ->setDVigencia($node->getElementsByTagName('dVigencia')->item(0)->nodeValue)
+        ->setDNumPoliza($node->getElementsByTagName('dNumPoliza')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dFecIniVig')->length > 0)
+      $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->getElementsByTagName('dFecIniVig')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dFecFinVig')->length > 0)
+      $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->getElementsByTagName('dFecFinVig')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dCodInt')->length > 0)
+      $res->setDCodInt($node->getElementsByTagName('dCodInt')->item(0)->nodeValue);
+    return $res;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   // Conversores
   ///////////////////////////////////////////////////////////////////////
@@ -269,9 +288,9 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gGrupPolSeg');
+    $res = $doc->createElement('gGrupPolSeg');
     $res->appendChild(new DOMElement('dPoliza', $this->getDPoliza()));
     $res->appendChild(new DOMElement('dUnidVig', $this->getDUnidVig()));
     $res->appendChild(new DOMElement('dVigencia', $this->getDVigencia()));

@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -357,14 +358,15 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * toDOMElement
+   * Convierte este objeto a un DOMElement para embutirse en un DOMDocument especifico.
+   * 
+   * @param DOMDocument $doc Documento DOM en el que se va a embutir el DOMElement
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gPagTarCD');
-
+    $res = $doc->createElement('gPagTarCD');
     $res->appendChild(new DOMElement('iDenTarj', $this->getIDenTarj()));
     $res->appendChild(new DOMElement('dDesDenTarj', $this->getDDesDenTarj()));
     $res->appendChild(new DOMElement('dRSProTar', $this->getDRSProTar()));
@@ -374,7 +376,6 @@ class GPagTarCD extends BaseSifenField
     $res->appendChild(new DOMElement('dCodAuOpe', $this->getDCodAuOpe()));
     $res->appendChild(new DOMElement('dNomTit', $this->getDNomTit()));
     $res->appendChild(new DOMElement('dNumTarj', $this->getDNumTarj()));
-
     return $res;
   }
   

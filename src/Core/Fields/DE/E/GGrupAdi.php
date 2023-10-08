@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use DateTime;
+use DOMDocument;
 use DOMElement;
 
 /**
@@ -188,9 +189,9 @@ class GGrupAdi
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gGrupoAdi');
+    $res = $doc->createElement('gGrupAdi');
     $res->appendChild(new DOMElement('ciclo', $this->ciclo));
     $res->appendChild(new DOMElement('dFecIniC', $this->dFecIniC->format('yyyy-mm-dd')));
     $res->appendChild(new DOMElement('dFecFinC', $this->dFecFinC->format('yyyy-mm-dd')));

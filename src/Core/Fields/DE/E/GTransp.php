@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -372,14 +373,12 @@ class GTransp
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gTransp');
-
+    $res = $doc->createElement('gTransp');
     $res->appendChild(new DOMElement('iTipTrans', $this->getITipTrans()));
-    if (isset($this->iTipTrans)) {
+    if (isset($this->iTipTrans))
       $res->appendChild(new DOMElement('dDesTipTrans', $this->getDDesTipTrans()));
-    }
     $res->appendChild(new DOMElement('iModTrans', $this->getIModTrans()));
     $res->appendChild(new DOMElement('dDesModTrans', $this->getDDesModTrans()));
     $res->appendChild(new DOMElement('iRespFlete', $this->getIRespFlete()));
@@ -390,12 +389,10 @@ class GTransp
     $res->appendChild(new DOMElement('dFinTras', $this->getDFinTras()->format('Y-m-d')));
     $res->appendChild(new DOMElement('cPaisDest', $this->getCPaisDest()));
     $res->appendChild(new DOMElement('dDesPaisDest', $this->getDDesPaisDest()));
-    //Chilren
-    $res->appendChild($this->gCamSal->toDOMElement());
-    $res->appendChild($this->gCamEnt->toDOMElement());
-    $res->appendChild($this->gVehTras->toDOMElement());
-    $res->appendChild($this->gCamTrans->toDOMElement());
-
+    $res->appendChild($this->gCamSal->toDOMElement($doc));
+    $res->appendChild($this->gCamEnt->toDOMElement($doc));
+    $res->appendChild($this->gVehTras->toDOMElement($doc));
+    $res->appendChild($this->gCamTrans->toDOMElement($doc));
     return $res;
   }
 
