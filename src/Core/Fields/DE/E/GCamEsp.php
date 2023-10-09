@@ -16,8 +16,8 @@ use SimpleXMLElement;
 class GCamEsp extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
-  public GGrupEner $gGrupoEner; // E791 - - 0-1 - Campos del sector de energía eléctrica
-  public GGrupSeg  $gGrupoSeg;  // E800 - - 0-1 - Campos del sector de seguros
+  public GGrupEner $gGrupEner; // E791 - - 0-1 - Campos del sector de energía eléctrica
+  public GGrupSeg  $gGrupSeg;  // E800 - - 0-1 - Campos del sector de seguros
   public GGrupSup  $gGrupSup;   // E810 - - 0-1 - Campos del sector de supermercados
   public GGrupAdi  $gGrupAdi;   // E820 - - 0-1 - Grupo  de  datos adicionales de uso comercial 
 
@@ -26,28 +26,28 @@ class GCamEsp extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Establece el valor de gGrupoEner (Campos del sector de energía eléctrica)
+   * Establece el valor de gGrupEner (Campos del sector de energía eléctrica)
    *
-   * @param GGrupEner $gGrupoEner
+   * @param GGrupEner $gGrupEner
    *
    * @return self
    */
-  public function setGGrupoEner(GGrupEner $gGrupoEner): self
+  public function setgGrupEner(GGrupEner $gGrupEner): self
   {
-    $this->gGrupoEner = $gGrupoEner;
+    $this->gGrupEner = $gGrupEner;
     return $this;
   }
 
   /**
-   * Establece el valor de gGrupoSeg (Campos del sector de seguros)
+   * Establece el valor de gGrupSeg (Campos del sector de seguros)
    *
-   * @param GGrupSeg $gGrupoSeg
+   * @param GGrupSeg $gGrupSeg
    *
    * @return self
    */
-  public function setGGrupoSeg(GGrupSeg $gGrupoSeg): self
+  public function setGGrupoSeg(GGrupSeg $gGrupSeg): self
   {
-    $this->gGrupoSeg = $gGrupoSeg;
+    $this->gGrupSeg = $gGrupSeg;
     return $this;
   }
 
@@ -82,23 +82,23 @@ class GCamEsp extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of gGrupoEner
+   * Get the value of gGrupEner
    *
    * @return GGrupEner
    */
-  public function getGGrupoEner(): GGrupEner
+  public function getgGrupEner(): GGrupEner
   {
-    return $this->gGrupoEner;
+    return $this->gGrupEner;
   }
 
   /**
-   * Get the value of gGrupoSeg
+   * Get the value of gGrupSeg
    *
    * @return GGrupSeg
    */
   public function getGGrupoSeg(): GGrupSeg
   {
-    return $this->gGrupoSeg;
+    return $this->gGrupSeg;
   }
 
   /**
@@ -137,13 +137,13 @@ class GCamEsp extends BaseSifenField
     if(strcmp($node->getName(), 'gCamEsp') != 0)
       throw new \Exception('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->getName(), 1);
     $res = new GCamEsp();
-    if(isset($node->gGrupoEner))
+    if(isset($node->gGrupEner))
     {
-      $res->setGGrupoEner(GGrupEner::FromSimpleXMLElement($node->gGrupoEner));
+      $res->setgGrupEner(GGrupEner::FromSimpleXMLElement($node->gGrupEner));
     }
-    if(isset($node->gGrupoSeg))
+    if(isset($node->gGrupSeg))
     {
-      $res->setGGrupoSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupoSeg));
+      $res->setGGrupoSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupSeg));
     }
     if(isset($node->gGrupSup))
     {
@@ -166,14 +166,14 @@ class GCamEsp extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GCamEsp();
-    if(isset($object->gGrupoEner))
+    if(isset($object->gGrupEner))
     {
-      $res->setGGrupoEner(GGrupEner::FromSifenResponseObject($object->gGrupoEner));
+      $res->setgGrupEner(GGrupEner::FromSifenResponseObject($object->gGrupEner));
     }
 
-    if(isset($object->gGrupoSeg))
+    if(isset($object->gGrupSeg))
     {
-      $res->setGGrupoSeg(GGrupSeg::FromSifenResponseObject($object->gGrupoSeg));
+      $res->setGGrupoSeg(GGrupSeg::FromSifenResponseObject($object->gGrupSeg));
     }
 
     if(isset($object->gGrupoSup))
@@ -185,6 +185,22 @@ class GCamEsp extends BaseSifenField
     {
       $res->setGGrupAdi(GGrupAdi::FromSifenResponseObject($object->gGrupAdi));
     }
+    return $res;
+  }
+
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamEsp') != 0)
+      throw new \Exception('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->nodeName, 1);
+    $res = new GCamEsp();
+    if($node->getElementsByTagName('gGrupEner')->length > 0)
+      $res->setgGrupEner(GGrupEner::FromDOMElement($node->getElementsByTagName('gGrupEner')->item(0)));
+    if($node->getElementsByTagName('gGrupSeg')->length > 0)
+      $res->setGGrupoSeg(GGrupSeg::FromDOMElement($node->getElementsByTagName('gGrupSup')->item(0)));
+    if($node->getElementsByTagName('gGrupSup')->length > 0)
+      $res->setGGrupSup(GGrupSup::FromDOMElement($node->getElementsByTagName('gGrupSup')->item(0)));
+    if($node->getElementsByTagName('gGrupAdi')->length > 0)
+      $res->setGGrupAdi(GGrupAdi::FromDOMElement($node->getElementsByTagName('gGrupAdi')->item(0)));
     return $res;
   }
 
@@ -200,13 +216,13 @@ class GCamEsp extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement("gCamEsp");
-    if (isset($this->gGrupoEner)) {
-      $res->appendChild($this->gGrupoEner->toDOMElement($doc));
+    if (isset($this->gGrupEner)) {
+      $res->appendChild($this->gGrupEner->toDOMElement($doc));
     }
     if (isset($this->gGrupSup)) {
       $res->appendChild($this->gGrupSup->toDOMElement($doc));
     }
-    if (isset($this->gGrupoSeg)) {
+    if (isset($this->gGrupSeg)) {
       $res->appendChild($this->gGrupSup->toDOMElement($doc));
     }
     if (isset($this->gGrupAdi)) {
