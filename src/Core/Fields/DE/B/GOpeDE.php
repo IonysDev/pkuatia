@@ -9,13 +9,14 @@ use DOMElement;
 
 /**
  * Nodo Id: B001        
- * Nombre: gOpeDE       
+ * Nombre: gOpeDE
  * Descripción: Campos inherentes a la operación de DE      
- * Nodo Padre: A001     
+ * Nodo Padre: A001 - DE - Campos firmados del DE   
  */
 
 class GOpeDE extends BaseSifenField
 {
+                               // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipEmi;    // B002 - 1      - 1-1 - Tipo de emisión: 1 - Normal, 2 - Contingencia
     public String $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
     public String $dCodSeg;    // B004 - 9      - 1-1 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
@@ -24,6 +25,9 @@ class GOpeDE extends BaseSifenField
 
     /**
      * Constructor
+     * Establece valores por defecto:
+     * - iTipEmi = 1
+     * - dCodSeg = RNG::GenerateAsString(0, 999999999, 9)
      */
     public function __construct()
     {
@@ -38,9 +42,9 @@ class GOpeDE extends BaseSifenField
     /**
      * Establece el valor de iTipEmi que representa el tipo de emisión del documento.
      * 
-     * @param int $iTipEmi
+     * @param int $iTipEmi Tipo de emisión del documento: 1 - Normal, 2 - Contingencia
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setITipEmi(int $iTipEmi): self
     {
@@ -62,10 +66,12 @@ class GOpeDE extends BaseSifenField
 
     /**
      * Establece el valor de dDesTipEmi que representa la descripción del tipo de emisión del documento.
+     * Este valor se establece automáticamente al establecer el valor de iTipEmi.
+     * No debería usarse en la conformación de un DE nuevo. Se usa para la deserialización de un DE existente.
      * 
-     * @param String $dDesTipEmi
+     * @param String $dDesTipEmi Descripción del tipo de emisión del documento.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDDesTipEmi(String $dDesTipEmi): self
     {
@@ -73,13 +79,12 @@ class GOpeDE extends BaseSifenField
         return $this;
     }
 
-
     /**
      * Establece el valor de dCodSeg que representa el código de seguridad del documento.
      * 
-     * @param String $dCodSeg
+     * @param String $dCodSeg Código de seguridad del documento.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDCodSeg(String $dCodSeg): self
     {
@@ -90,9 +95,9 @@ class GOpeDE extends BaseSifenField
     /**
      * Establece el valor de dInfoEmi que representa información de interés del emisor respecto al documento.
      * 
-     * @param String $dInfoEmi
+     * @param String $dInfoEmi Información de interés del emisor respecto al documento.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDInfoEmi(String $dInfoEmi): self
     {
@@ -103,9 +108,9 @@ class GOpeDE extends BaseSifenField
     /**
      * Establece el valor de dInfoFisc que representa información de interés del fisco respecto al documento.
      *
-     * @param String $dInfoFisc
+     * @param String $dInfoFisc Información de interés del fisco respecto al documento.
      *
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDInfoFisc(String $dInfoFisc): self
     {
@@ -117,30 +122,50 @@ class GOpeDE extends BaseSifenField
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
+    /**
+     * Obtiene el valor de iTipEmi que representa el tipo de emisión del documento.
+     * 
+     * @return int Tipo de emisión del documento: 1 - Normal, 2 - Contingencia
+     */
     public function getITipEmi(): int
     {
         return $this->iTipEmi;
     }
 
+    /**
+     * Obtiene el valor de dDesTipEmi que representa la descripción del tipo de emisión del documento.
+     * 
+     * @return String Descripción del tipo de emisión del documento.
+     */
     public function getDDesTipEmi(): String
     {
         return $this->dDesTipEmi;
     }
 
+    /**
+     * Obtiene el valor de dCodSeg que representa el código de seguridad del documento.
+     * 
+     * @return String Código de seguridad del documento.
+     */
     public function getDCodSeg(): String
     {
         return $this->dCodSeg;
     }
 
+    /**
+     * Obtiene el valor de dInfoEmi que representa información de interés del emisor respecto al documento.
+     * 
+     * @return String Información de interés del emisor respecto al documento.
+     */
     public function getDInfoEmi(): String
     {
         return $this->dInfoEmi;
     }
 
     /**
-     * Get the value of dInfoFisc
-     *
-     * @return String
+     * Obtiene el valor de dInfoFisc que representa información de interés del fisco respecto al documento.
+     * 
+     * @return String Información de interés del fisco respecto al documento.
      */
     public function getDInfoFisc(): String
     {
@@ -151,10 +176,15 @@ class GOpeDE extends BaseSifenField
     // Instanciadores
     ///////////////////////////////////////////////////////////////////////
 
-    public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+    /**
+     * Instancia un objeto GOpeDE a partir de un SimpleXMLElement que representa el nodo XML del objeto GOpeDE.
+     * 
+     * @param SimpleXMLElement $node Nodo XML que representa el objeto GOpeDE
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         if(strcmp($node->getName(), 'gOpeDE') != 0){
-            throw new \Exception('[GOpeDE] El nombre del elemento no es gOpeDE: ' . $node->getName());
+            throw new Exception('[GOpeDE] El nombre del elemento no es gOpeDE: ' . $node->getName());
         }
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->iTipEmi));
@@ -167,6 +197,13 @@ class GOpeDE extends BaseSifenField
         return $res;
     }
 
+    /**
+     * Instancia un objeto GOpeDE a partir de un objeto stdClass respuesta a una solicitud SOAP del SIFEN.
+     * 
+     * @param stdClass $object Objeto stdClass que representa la respuesta a una solicitud SOAP del SIFEN.
+     * 
+     * @return self Objeto GOpeDE instanciado
+     */
     public static function FromSifenResponseObject($object): self
     {
         $res = new GOpeDE();
@@ -194,7 +231,7 @@ class GOpeDE extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gOpeDE') != 0)
-            throw new \Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
         $res->setDDesTipEmi($node->getElementsByTagName('dDesTipEmi')->item(0)->nodeValue);
@@ -211,11 +248,11 @@ class GOpeDE extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Convierte el objeto GOpeDE en un DOMElement
+     * Convierte el objeto GOpeDE en un DOMElement generado a partir del DOMDocument especificado.
      * 
-     * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
+     * @param DOMDocument $doc Documento DOM donde se generará el nodo, pero NO será insertado.
      *  
-     * @return DOMElement Nodo DOM creado pero no insertado.
+     * @return DOMElement DOMElement generado.
      */
     public function toDOMElement(DOMDocument $doc): DOMElement
     {

@@ -5,7 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
-use Abiliomp\Pkuatia\Utils\StringNumberFormatter;
+use Abiliomp\Pkuatia\Utils\NumberStringFormatter;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
@@ -57,7 +57,7 @@ class GCamItem extends BaseSifenField
     if(is_null($this->calcSubtEx()))
       return null;
     else
-      return StringNumberFormatter::FormatBCMAthNumber($this->calcSubtEx(), ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->calcSubtEx(), ',', '.');
   }
 
   public function calcSubt05() {
@@ -74,7 +74,7 @@ class GCamItem extends BaseSifenField
     if(is_null($this->calcSubt05()))
       return null;
     else
-      return StringNumberFormatter::FormatBCMAthNumber($this->calcSubt05(), ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->calcSubt05(), ',', '.');
   }
 
   public function calcSubt10() {
@@ -91,7 +91,7 @@ class GCamItem extends BaseSifenField
     if(is_null($this->calcSubt10()))
       return null;
     else
-      return StringNumberFormatter::FormatBCMAthNumber($this->calcSubt10(), ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->calcSubt10(), ',', '.');
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -478,7 +478,7 @@ class GCamItem extends BaseSifenField
    *
    * @return int
    */
-  public function getDParAranc(): int | null
+  public function getDParAranc(): ?int
   {
     if(isset($this->dParAranc))
       return $this->dParAranc;
@@ -491,7 +491,7 @@ class GCamItem extends BaseSifenField
    *
    * @return int
    */
-  public function getDNCM(): int | null
+  public function getDNCM(): ?int
   {
     if(isset($this->dNCM))
       return $this->dNCM;

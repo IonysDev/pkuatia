@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\AA;
 
 use Abiliomp\Pkuatia\Core\Constants;
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
 use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
@@ -18,7 +19,7 @@ use stdClass;
  * Nodo Padre:  Es nodo raiz.
  */
 
-class RDE
+class RDE extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
   public int $dVerFor;         // AA002 - 3 - 1-1 - Versión del formato

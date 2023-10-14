@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\Fields;
 
 use DOMDocument;
 use DOMElement;
+use ReflectionClass;
 
 /**
  * Clase que debe ser extendida por todos los campos de Sifen

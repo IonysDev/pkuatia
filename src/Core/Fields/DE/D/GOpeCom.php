@@ -15,7 +15,6 @@ use SimpleXMLElement;
  * Descripción: Campos inherentes a la operación comercial.
  * Nodo Padre:  D001 - dDatGralOpe - Campos generales del DE
  */
-
 class GOpeCom extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
@@ -474,7 +473,6 @@ class GOpeCom extends BaseSifenField
         if (isset($object->iCondAnt)) {
             $res->setICondAnt(intval($object->iCondAnt));
         }
-
         return $res;
     }
 }

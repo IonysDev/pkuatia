@@ -3,7 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\Utils\StringNumberFormatter;
+use Abiliomp\Pkuatia\Utils\NumberStringFormatter;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
@@ -111,7 +111,7 @@ class GValorItem extends BaseSifenField
 
   public function getFormattedDPUniProSer(): String
   {
-    return StringNumberFormatter::FormatBCMAthNumber($this->dPUniProSer, ',', '.');
+    return NumberStringFormatter::FormatBCMAthNumber($this->dPUniProSer, ',', '.');
   }
 
   /**

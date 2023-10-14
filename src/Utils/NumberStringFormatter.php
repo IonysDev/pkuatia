@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Utils;
 
-class StringNumberFormatter {
+class NumberStringFormatter {
 
     /**
      * Formatea un número decimal expresado como String (BCMath) a una cadena con separador de miles y decimales.

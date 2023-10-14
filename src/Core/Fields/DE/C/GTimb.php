@@ -3,21 +3,32 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\C;
 
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-
 use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
 /**
- * ID:C001 Datos del timbrado PADRE:A001
+ * Nodo Id:     C001        
+ * Nombre:      gTimb       
+ * Descripción: Datos del timbrado      
+ * Nodo Padre:  A001 - DE - Campos firmados del DE 
  */
 class GTimb extends BaseSifenField
 {
+    // Constantes de tipo de documento electrónico
+    public const TIPO_DOCUMENTO_FACTURA               = 1;
+    public const TIPO_DOCUMENTO_FACTURA_EXPORTACION   = 2;
+    public const TIPO_DOCUMENTO_FACTURA_IMPORTACION   = 3;
+    public const TIPO_DOCUMENTO_AUTOFACTURA           = 4;
+    public const TIPO_DOCUMENTO_NOTA_CREDITO          = 5;
+    public const TIPO_DOCUMENTO_NOTA_DEBITO           = 6;
+    public const TIPO_DOCUMENTO_COMPROBANTE_RETENCION = 7;
 
-    public int $iTiDE;        // C002 - 1-2   - 1-1 - Tipo de documento electrónico
+                              // Id - Longirud - Ocurrencia - Descripción
+    public int    $iTiDE;     // C002 - 1-2   - 1-1 - Tipo de documento electrónico
     public String $dDesTiDE;  // C003 - 15-40 - 1-1 - Descripción del tipo de documento electrónico
-    public int $dNumTim;      // C004 - 8     - 1-1 - Número del timbrado
+    public int    $dNumTim;   // C004 - 8     - 1-1 - Número del timbrado
     public String $dEst;      // C005 - 3     - 1-1 - Establecimiento
     public String $dPunExp;   // C006 - 3     - 1-1 - Punto de expedición
     public String $dNumDoc;   // C007 - 7     - 1-1 - Número del documento
@@ -31,9 +42,9 @@ class GTimb extends BaseSifenField
     /**
      * Establece el valor de iTiDE que representa el tipo de documento electrónico.
      * 
-     * @param int $iTiDE
+     * @param int $iTiDE Valor del tipo de documento electrónico.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setITiDE(int $iTiDE): self
     {
@@ -73,10 +84,12 @@ class GTimb extends BaseSifenField
 
     /**
      * Establece el valor de dDesTiDE que representa la descripción del tipo de documento electrónico.
+     * Este valor se establece automáticamente al establecer el valor de iTiDE.
+     * No debería usarse en la conformación de un DE nuevo. Se usa para la deserialización de un DE existente.
      * 
-     * @param String $dDesTiDE
+     * @param String $dDesTiDE Descripción del tipo de documento electrónico.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDDesTiDE(String $dDesTiDE): self
     {
@@ -87,9 +100,9 @@ class GTimb extends BaseSifenField
     /**
      * Establece el valor de dNumTim que representa el número del timbrado.
      * 
-     * @param int $dNumTim
+     * @param int $dNumTim Número del timbrado.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDNumTim(int $dNumTim): self
     {
@@ -100,11 +113,12 @@ class GTimb extends BaseSifenField
     }
 
     /**
-     * Establece el valor de dEst que representa el establecimiento.
+     * Establece el valor de dEst que representa el númnero de establecimiento en formato de 3 dígitos.
+     * Para valores por debajo de 100, se debe anteponer ceros.
      * 
-     * @param String $dEst
+     * @param String $dEst Número de establecimiento.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDEst(String $dEst): self
     {
@@ -115,11 +129,12 @@ class GTimb extends BaseSifenField
     }
 
     /**
-     * Establece el valor de dPunExp que representa el punto de expedición.
+     * Establece el valor de dPunExp que representa el punto de expedición en formato de 3 dígitos.
+     * Para valores por debajo de 100, se debe anteponer ceros.
      * 
-     * @param String $dPunExp
+     * @param String $dPunExp Número de punto de expedición.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDPunExp(String $dPunExp): self
     {
@@ -130,11 +145,12 @@ class GTimb extends BaseSifenField
     }
 
     /**
-     * Establece el valor de dNumDoc que representa el número del documento.
+     * Establece el valor de dNumDoc que representa el número del documento en formato de 7 dígitos.
+     * Para valores por debajo de 1000000, se debe anteponer ceros.
      * 
-     * @param String $dNumDoc
+     * @param String $dNumDoc Número del documento.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDNumDoc(String $dNumDoc): self
     {
@@ -147,9 +163,9 @@ class GTimb extends BaseSifenField
     /**
      * Establece el valor de dSerieNum que representa la serie del número de timbrado.
      * 
-     * @param String $dSerieNum
+     * @param String $dSerieNum Serie del número de timbrado.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDSerieNum(String $dSerieNum): self
     {
@@ -160,9 +176,9 @@ class GTimb extends BaseSifenField
     /**
      * Establece el valor de dFeIniT que representa la fecha inicio de vigencia del timbrado.
      * 
-     * @param DateTime $dFeIniT
+     * @param DateTime $dFeIniT Fecha inicio de vigencia del timbrado.
      * 
-     * @return self
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setDFeIniT(DateTime $dFeIniT): self
     {
@@ -175,9 +191,9 @@ class GTimb extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Devuelve el tipo de documento electrónico
+     * Obtiene el tipo de documento electrónico del timbrado
      * 
-     * @return int
+     * @return int Tipo de documento electrónico
      */
     public function getITiDE(): int
     {
@@ -185,9 +201,9 @@ class GTimb extends BaseSifenField
     }
 
     /**
-     * Devuelve la descripción del tipo de documento electrónico
+     * Obtiene la descripción del tipo de documento electrónico.
      * 
-     * @return String
+     * @return String Descripción del tipo de documento electrónico.
      */
     public function getDDesTiDE(): String
     {
@@ -195,35 +211,60 @@ class GTimb extends BaseSifenField
     }
 
     /**
-     * Devuelve el número del timbrado
+     * Obtiene el número del timbrado.
      * 
-     * @return int
+     * @return int Número del timbrado.
      */
     public function getDNumTim(): int
     {
         return $this->dNumTim;
     }
 
+    /**
+     * Obtiene el número de establecimiento.
+     * 
+     * @return String Número de establecimiento.
+     */
     public function getDEst(): String
     {
         return $this->dEst;
     }
 
+    /**
+     * Obtiene el número de punto de expedición.
+     * 
+     * @return String Número de punto de expedición.
+     */
     public function getDPunExp(): String
     {
         return $this->dPunExp;
     }
 
+    /**
+     * Obtiene el número del documento.
+     * 
+     * @return String Número del documento.
+     */
     public function getDNumDoc(): String
     {
         return $this->dNumDoc;
     }
 
+    /**
+     * Obtiene la serie del número de timbrado.
+     * 
+     * @return String Serie del número de timbrado.
+     */
     public function getDSerieNum(): String
     {
         return $this->dSerieNum;
     }
 
+    /**
+     * Obtiene la fecha inicio de vigencia del timbrado.
+     * 
+     * @return DateTime Fecha inicio de vigencia del timbrado.
+     */
     public function getDFeIniT(): DateTime
     {
         return $this->dFeIniT;
@@ -234,9 +275,9 @@ class GTimb extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Instancia un objeto GTimb a partir de un SimpleXMLElement
+     * Instancia un objeto GTimb a partir de un SimpleXMLElement.
      * 
-     * @return self
+     * @return self Objeto GTimb instanciado.
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $xml) 
     {
@@ -257,8 +298,9 @@ class GTimb extends BaseSifenField
     /**
      * Instancia un objeto GTimb a partir de un objeto stdClass de respuesta del SIFEN a una solicitud SOAP.
      *
-     * @param  mixed $object
-     * @return self
+     * @param  stdClass $object Objeto stdClass que representa la respuesta del SIFEN.
+     * 
+     * @return self Objeto GTimb instanciado.
      */
     public static function FromSifenResponseObject($object): self
     {
@@ -304,9 +346,9 @@ class GTimb extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Convierte el objeto en un DOMElement
+     * Convierte el objeto en un DOMElement para ser usado en el DOMDocument especificado.
      *
-     * @return DOMElement
+     * @return DOMElement Objeto convertido en DOMElement.
      */
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
@@ -322,6 +364,4 @@ class GTimb extends BaseSifenField
         $res->appendChild(new DOMElement('dFeIniT', $this->dFeIniT->format('Y-m-d')));
         return $res;
     }
-    
-    
 }

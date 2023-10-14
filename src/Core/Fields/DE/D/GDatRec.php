@@ -11,11 +11,11 @@ use DOMElement;
 use SimpleXMLElement;
 
 /**
- * Nodo Id: D200
+ * Nodo Id:     D200
+ * Nombre:      gDatRec
  * Descripción: Grupo de campos que identifican al receptor
- * Nodo Padre: gDatGralOpe (D001)
+ * Nodo Padre:  D001 - gDatGralOpe - Campos generales del DE
  */
-
 class GDatRec extends BaseSifenField
 {
     public const NATURALEZA_CONTRIBUYENTE = 1;
@@ -37,6 +37,7 @@ class GDatRec extends BaseSifenField
     public const TIPO_DOCUMENTO_IDENTIDAD_TARJETA_DIPLOMATICA = 6;
     public const TIPO_DOCUMENTO_IDENTIDAD_OTRO = 9;
 
+                                // Id - Longitud - Ocurrencia - Descripción
     public int    $iNatRec;     // D201 - 1     - 1-1 - Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
     public int    $iTiOpe;      // D202 - 1     - 1-1 - Tipo de operación: 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
     public String $cPaisRec;    // D203 - 3     - 1-1 - Código de país del receptor
@@ -86,7 +87,11 @@ class GDatRec extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Establece el valor de iNatRec
+     * Establece el valor de iNatRec (D201) que representa la naturaleza del receptor.
+     * 
+     * @param int $iNatRec Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
+     * 
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setINatRec(int $iNatRec): self
     {
@@ -238,7 +243,7 @@ class GDatRec extends BaseSifenField
     /**
      * Get the value of iNatRec
      */
-    public function getINatRec(): int | null
+    public function getINatRec(): ?int
     {
         if(isset($this->iNatRec))
             return $this->iNatRec;
@@ -249,7 +254,7 @@ class GDatRec extends BaseSifenField
     /**
      * Get the value of iTiOpe
      */
-    public function getITiOpe() : int | null
+    public function getITiOpe() : ?int
     {
         if(isset($this->iTiOpe))
             return $this->iTiOpe;
@@ -262,7 +267,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getCPaisRec(): String | null
+    public function getCPaisRec(): ?String
     {
         if(isset($this->cPaisRec))
             return $this->cPaisRec;
@@ -275,7 +280,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesPaisRe(): String | null
+    public function getDDesPaisRe(): ?String
     {
         if(isset($this->dDesPaisRe))
             return $this->dDesPaisRe;
@@ -300,7 +305,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDRucRec(): String | null
+    public function getDRucRec(): ?String
     {
         if(isset($this->dRucRec))
             return $this->dRucRec;
@@ -313,7 +318,7 @@ class GDatRec extends BaseSifenField
      *
      * @return int
      */
-    public function getDDVRec(): int | null
+    public function getDDVRec(): ?int
     {
         return $this->dDVRec;
     }
@@ -321,7 +326,7 @@ class GDatRec extends BaseSifenField
     /**
      * Get the value of iTipIDRec
      */
-    public function getITipIDRec() : int | null
+    public function getITipIDRec() : ?int
     {
         if(isset($this->iTipIDRec))
             return $this->iTipIDRec;
@@ -334,7 +339,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDTipIDRec(): String | null
+    public function getDDTipIDRec(): ?String
     {
         if(isset($this->iTipIDRec)) {
             switch ($this->iTipIDRec) {
@@ -370,7 +375,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDNumIDRec(): String | null
+    public function getDNumIDRec(): ?String
     {
         if(isset($this->dNumIDRec))
             return $this->dNumIDRec;
@@ -393,7 +398,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDNomFanRec(): String | null
+    public function getDNomFanRec(): ?String
     {
         if(isset($this->dNomFanRec))
             return $this->dNomFanRec;
@@ -406,7 +411,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDirRec(): String | null
+    public function getDDirRec(): ?String
     {
         if(isset($this->dDirRec))
             return $this->dDirRec;

@@ -2,7 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\F;
 
-use Abiliomp\Pkuatia\Utils\StringNumberFormatter;
+use Abiliomp\Pkuatia\Utils\NumberStringFormatter;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
@@ -511,7 +511,7 @@ class GTotSub
    *
    * @return String  El valor del subtotal de la operación exenta expresado en cadena numérica de caracteres.
    */
-  public function getDSubExe(): String | null
+  public function getDSubExe(): ?String
   {
     if(isset($this->dSubExe))
       return $this->dSubExe;
@@ -525,10 +525,10 @@ class GTotSub
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
    * 
    */
-  public function getFormattedDSubExe(): String | null
+  public function getFormattedDSubExe(): ?String
   {
     if(isset($this->dSubExe))
-      return StringNumberFormatter::FormatBCMAthNumber($this->dSubExe, ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->dSubExe, ',', '.');
     else
       return null;
   }
@@ -538,7 +538,7 @@ class GTotSub
    *
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica de caracteres.
    */
-  public function getDSubExo(): String | null
+  public function getDSubExo(): ?String
   {
     if(isset($this->dSubExo))
       return $this->dSubExo;
@@ -551,10 +551,10 @@ class GTotSub
    * 
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSubExo(): String | null
+  public function getFormattedDSubExo(): ?String
   {
     if(isset($this->dSubExo))
-      return StringNumberFormatter::FormatBCMAthNumber($this->dSubExo, ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->dSubExo, ',', '.');
     else
       return null;
   }
@@ -564,7 +564,7 @@ class GTotSub
    *
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica de caracteres.
    */
-  public function getDSub5(): String | null
+  public function getDSub5(): ?String
   {
     if(isset($this->dSub5))
       return $this->dSub5;
@@ -577,10 +577,10 @@ class GTotSub
    * 
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSub5(): String | null
+  public function getFormattedDSub5(): ?String
   {
     if(isset($this->dSub5))
-      return StringNumberFormatter::FormatBCMAthNumber($this->dSub5, ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->dSub5, ',', '.');
     else
       return null;
   }
@@ -591,7 +591,7 @@ class GTotSub
    *
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica de caracteres.
    */
-  public function getDSub10(): String | null
+  public function getDSub10(): ?String
   {
    if(isset($this->dSub10))
       return $this->dSub10;
@@ -604,10 +604,10 @@ class GTotSub
    * 
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSub10(): String | null
+  public function getFormattedDSub10(): ?String
   {
     if(isset($this->dSub10))
-      return StringNumberFormatter::FormatBCMAthNumber($this->dSub10, ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->dSub10, ',', '.');
     else
       return null;
   }
@@ -709,7 +709,7 @@ class GTotSub
    *
    * @return String El valor de la comisión de la operación expresado en cadena numérica de caracteres.
    */
-  public function getDComi(): String | null
+  public function getDComi(): ?String
   {
    if(isset($this->dComi))
       return $this->dComi;
@@ -729,7 +729,7 @@ class GTotSub
 
   public function getFormattedDTotGralOpe(): String
   {
-    return StringNumberFormatter::FormatBCMAthNumber($this->dTotGralOpe, ',', '.');
+    return NumberStringFormatter::FormatBCMAthNumber($this->dTotGralOpe, ',', '.');
   }
 
   /**
@@ -737,7 +737,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica de caracteres.
    */
-  public function getDIVA5(): String | null
+  public function getDIVA5(): ?String
   {
     if(isset($this->dIVA5))
       return $this->dIVA5;
@@ -750,10 +750,10 @@ class GTotSub
    * 
    * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDIVA5(): String | null
+  public function getFormattedDIVA5(): ?String
   {
     if(isset($this->dIVA5))
-      return StringNumberFormatter::FormatBCMAthNumber($this->dIVA5, ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->dIVA5, ',', '.');
     else
       return null;
   }
@@ -764,7 +764,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica de caracteres.
    */
-  public function getDIVA10(): String | null  
+  public function getDIVA10(): ?String  
   {
     if(isset($this->dIVA10))
       return $this->dIVA10;
@@ -777,10 +777,10 @@ class GTotSub
    * 
    * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDIVA10(): String | null  
+  public function getFormattedDIVA10(): ?String  
   {
     if(isset($this->dIVA10))
-      return StringNumberFormatter::FormatBCMAthNumber($this->dIVA10, ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->dIVA10, ',', '.');
     else
       return null;
   }
@@ -790,7 +790,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA por redondeo a la tasa del 5% expresado en cadena numérica de caracteres.
    */
-  public function getDLiqTotIVA5(): String | null
+  public function getDLiqTotIVA5(): ?String
   {
     if(isset($this->dLiqTotIVA5))
       return $this->dLiqTotIVA5;
@@ -803,7 +803,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA por redondeo a la tasa del 10% expresado en cadena numérica de caracteres.
    */
-  public function getDLiqTotIVA10(): String | null
+  public function getDLiqTotIVA10(): ?String
   {
     if(isset($this->dLiqTotIVA10))
       return $this->dLiqTotIVA10;
@@ -816,7 +816,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA de la comisión expresado en cadena numérica de caracteres.
    */
-  public function getDIVAComi(): String | null
+  public function getDIVAComi(): ?String
   {
     if(isset($this->dIVAComi))
       return $this->dIVAComi;
@@ -829,7 +829,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
    */
-  public function getDTotIVA(): String | null
+  public function getDTotIVA(): ?String
   {
     if(isset($this->dTotIVA))
       return $this->dTotIVA;
@@ -842,10 +842,10 @@ class GTotSub
    * 
    * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDTotIVA(): String | null
+  public function getFormattedDTotIVA(): ?String
   {
     if(isset($this->dTotIVA))
-      return StringNumberFormatter::FormatBCMAthNumber($this->dTotIVA, ',', '.');
+      return NumberStringFormatter::FormatBCMAthNumber($this->dTotIVA, ',', '.');
     else
       return null;
   }
@@ -855,7 +855,7 @@ class GTotSub
    *
    * @return String El valor de la base gravada de IVA al 5% expresado en cadena numérica de caracteres.
    */
-  public function getDBaseGrav5(): String | null
+  public function getDBaseGrav5(): ?String
   {
     if(isset($this->dBaseGrav5))
       return $this->dBaseGrav5;
@@ -900,7 +900,7 @@ class GTotSub
    */
   public function getFormattedDTotalGs(): String
   {
-    return StringNumberFormatter::FormatBCMAthNumber($this->dTotalGs, ',', '.');
+    return NumberStringFormatter::FormatBCMAthNumber($this->dTotalGs, ',', '.');
   }
 
   ///////////////////////////////////////////////////////////////////////

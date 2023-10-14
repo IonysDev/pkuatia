@@ -15,7 +15,6 @@ use SimpleXMLElement;
  * Descripción: Campos generales del DE
  * Nodo Padre:  A001 - DE - Campos firmados del DE
  */
-
 class GDatGralOpe extends BaseSifenField
 {
                              // Id - Longitud - Ocurrencia - Descripción
@@ -29,74 +28,65 @@ class GDatGralOpe extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dFeEmiDE
+   * Establece el valor de dFeEmiDE (D002) que es la fecha y hora de emisión del DE.
    *
-   * @param DateTime $dFeEmiDE
+   * @param DateTime $dFeEmiDE Fecha y hora de emisión del DE.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDFeEmiDE(DateTime $dFeEmiDE): self
   {
     $this->dFeEmiDE = $dFeEmiDE;
-
     return $this;
   }
 
-
   /**
-   * Set the value of gOpeCom
+   * Establece el valor de gOpeCom (D010) que son los campos inherentes a la operación comercial.
    *
-   * @param GOpeCom $gOpeCom
+   * @param GOpeCom $gOpeCom Campos inherentes a la operación comercial.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setGOpeCom(GOpeCom $gOpeCom): self
   {
     $this->gOpeCom = $gOpeCom;
-
     return $this;
   }
 
-
   /**
-   * Set the value of gEmis
+   * Establece el valor de gEmis (D100) que son los campos que identifican al emisor.
    *
-   * @param GEmis $gEmis
+   * @param GEmis $gEmis Campos que identifican al emisor.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setGEmis(GEmis $gEmis): self
   {
     $this->gEmis = $gEmis;
-
     return $this;
   }
 
-
   /**
-   * Set the value of gDatRec
+   * Establece el valor de gDatRec (D200) que son los campos que identifican al receptor.
    *
-   * @param GDatRec $gDatRec
+   * @param GDatRec $gDatRec Campos que identifican al receptor.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setGDatRec(GDatRec $gDatRec): self
   {
     $this->gDatRec = $gDatRec;
-
     return $this;
   }
-
 
   ///////////////////////////////////////////////////////////////////////
   // Getters
   ///////////////////////////////////////////////////////////////////////
 
-
   /**
-   * Get the value of dFeEmiDE
+   * Devuelve el valor de dFeEmiDE (D002) que es la fecha y hora de emisión del DE.
    *
-   * @return DateTime
+   * @return DateTime Fecha y hora de emisión del DE.
    */
   public function getDFeEmiDE(): DateTime
   {
@@ -104,9 +94,9 @@ class GDatGralOpe extends BaseSifenField
   }
 
   /**
-   * Get the value of gOpeCom
+   * Devuelve el valor de gOpeCom (D010) que son los campos inherentes a la operación comercial.
    *
-   * @return GOpeCom
+   * @return GOpeCom Campos inherentes a la operación comercial.
    */
   public function getGOpeCom(): GOpeCom
   {
@@ -114,9 +104,9 @@ class GDatGralOpe extends BaseSifenField
   }
 
   /**
-   * Get the value of gEmis
+   * Devuelve el valor de gEmis (D100) que son los campos que identifican al emisor.
    *
-   * @return GEmis
+   * @return GEmis Campos que identifican al emisor.
    */
   public function getGEmis(): GEmis
   {
@@ -124,9 +114,9 @@ class GDatGralOpe extends BaseSifenField
   }
 
   /**
-   * Get the value of gDatRec
+   * Devuelve el valor de gDatRec (D200) que son los campos que identifican al receptor.
    *
-   * @return GDatRec
+   * @return GDatRec Campos que identifican al receptor.
    */
   public function getGDatRec(): GDatRec
   {
@@ -161,31 +151,43 @@ class GDatGralOpe extends BaseSifenField
   }
 
   /**
-   * FromSifenResponseObject
+   * Instancia un objeto GDatGralOpe a partir de un objeto stdClass que contiene los datos de respuesa SOAP del SIFEN.
    *
-   * @param  mixed $object
-   * @return self
+   * @param stdClass $object Objeto respuesta del SIFEN.
+   * 
+   * @return self Objeto GDatGralOpe instanciado.
    */
   public static function FromSifenResponseObject($object): self
   {
     $res = new GDatGralOpe();
     if(isset($object->dFeEmiDE))
-    {
       $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFeEmiDE));
-    }
-    ///children
     if(isset($object->gOpeCom))
-    {
       $res->setGOpeCom(GOpeCom::FromSifenResponseObject($object->gOpeCom));
-    }
     if(isset($object->gEmis))
-    {
       $res->setGEmis(GEmis::FromSifenResponseObject($object->gEmis));
-    }
     if(isset($object->gDatRec))
-    {
       $res->setGDatRec(GDatRec::FromSifenResponseObject($object->gDatRec));
-    }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GDatGralOpe a partir de un DOMElement con los datos del mismo.
+   * 
+   * @param DOMElement $node Nodo DOM que contiene los datos del objeto.
+   * 
+   * @return self Objeto GDatGralOpe instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gDatGralOpe') != 0)
+      throw new \Exception('[GDatGralOpe] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GDatGralOpe();
+    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFeEmiDE')[0]->nodeValue)));
+    if($node->getElementsByTagName('gOpeCom')->length > 0)
+      $res->setGOpeCom(GOpeCom::FromDOMElement($node->getElementsByTagName('gOpeCom')[0]));
+    $res->setGEmis(GEmis::FromDOMElement($node->getElementsByTagName('gEmis')[0]));
+    $res->setGDatRec(GDatRec::FromDOMElement($node->getElementsByTagName('gDatRec')[0]));
     return $res;
   }
 
@@ -194,11 +196,11 @@ class GDatGralOpe extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Convierte este GDatGralOpe a un DOMElement
+   * Convierte este GDatGralOpe en un DOMElement generado en el DOMDocument especificado.
    * 
-   * @param  DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será agregado.
+   * @param DOMDocument $doc DOMDocument que generará el DOMElement.
    *
-   * @return DOMElement Nodo DOM que representa el objeto
+   * @return DOMElement DOMElement creado pero no insertado.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
@@ -216,26 +218,4 @@ class GDatGralOpe extends BaseSifenField
     $res->appendChild($this->gDatRec->toDOMElement($doc));
     return $res;
   }
-
-  /**
-   * Instancia un objeto GDatGralOpe a partir de un DOMElement que lo representa.
-   * 
-   * @param  DOMElement $node Nodo DOM que representa el objeto.
-   * 
-   * @return self
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->nodeName, 'gDatGralOpe') != 0)
-      throw new \Exception('[GDatGralOpe] Nodo con nombre inválido: ' . $node->nodeName);
-    $res = new GDatGralOpe();
-    $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFeEmiDE')[0]->nodeValue)));
-    if($node->getElementsByTagName('gOpeCom')->length > 0)
-      $res->setGOpeCom(GOpeCom::FromDOMElement($node->getElementsByTagName('gOpeCom')[0]));
-    $res->setGEmis(GEmis::FromDOMElement($node->getElementsByTagName('gEmis')[0]));
-    $res->setGDatRec(GDatRec::FromDOMElement($node->getElementsByTagName('gDatRec')[0]));
-    return $res;
-  }
-  
-  
 }

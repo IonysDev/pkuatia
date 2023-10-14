@@ -309,7 +309,7 @@ class GEmis extends BaseSifenField
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // XML Element
+    // Instanciadores
     ///////////////////////////////////////////////////////////////////////
 
     /**
@@ -361,58 +361,64 @@ class GEmis extends BaseSifenField
         if(isset($node->gRespDE))
             $res->gRespDE = GRespDE::FromSimpleXMLElement($node->gRespDE);
         return $res;
-    } 
+    }
 
     /**
-     * Convierte este GEmis en un DOMElement que puede ser insertado en un DOMDocument.
+     * Instancia un objeto GEmis a partir de un DOMElement que lo representa.
      * 
-     * @param DOMDocument $doc Documento DOM donde se creará el DOMElement sin insertarse.
+     * @param DOMElement $node El DOMElement que representa al GEmis.
      * 
-     * @return DOMElement El DOMElement que representa a este GEmis.
+     * @return GEmis El GEmis representado por el DOMElement dado.
      */
-    public function toDOMElement(DOMDocument $doc): DOMElement
+    public static function FromDOMElement(DOMElement $node) : self
     {
-        $res = $doc->createElement('gEmis');
-        $res->appendChild(new DOMElement('dRucEm', $this->dRucEm));
-        $res->appendChild(new DOMElement('dDVEmi', $this->dDVEmi));
-        $res->appendChild(new DOMElement('iTipCont', $this->iTipCont));
-        if(isset($this->cTipReg))
-            $res->appendChild(new DOMElement('cTipReg', $this->cTipReg));
-        $res->appendChild(new DOMElement('dNomEmi', $this->dNomEmi));
-        if(isset($this->dNomFanEmi))
-            $res->appendChild(new DOMElement('dNomFanEmi', $this->dNomFanEmi));
-        $res->appendChild(new DOMElement('dDirEmi', $this->dDirEmi));
-        $res->appendChild(new DOMElement('dNumCas', $this->dNumCas));
-        if(isset($this->dCompDir1))
-            $res->appendChild(new DOMElement('dCompDir1', $this->dCompDir1));
-        if(isset($this->dCompDir2))
-            $res->appendChild(new DOMElement('dCompDir2', $this->dCompDir2));
-        $res->appendChild(new DOMElement('cDepEmi', $this->cDepEmi));
-        $res->appendChild(new DOMElement('dDesDepEmi', $this->getDDesDepEmi()));
-        if(isset($this->cDisEmi))
-            $res->appendChild(new DOMElement('cDisEmi', $this->cDisEmi));
-        if(isset($this->dDesDisEmi))
-            $res->appendChild(new DOMElement('dDesDisEmi', $this->getDDesDisEmi()));
-        $res->appendChild(new DOMElement('cCiuEmi', $this->cCiuEmi));
-        $res->appendChild(new DOMElement('dDesCiuEmi', $this->getDDesCiuEmi()));
-        $res->appendChild(new DOMElement('dTelEmi', $this->dTelEmi));
-        $res->appendChild(new DOMElement('dEmailE', $this->dEmailE));
-        if(isset($this->dDenSuc))
-            $res->appendChild(new DOMElement('dDenSuc', $this->dDenSuc));
-        if(isset($this->gActEco)) {
-            foreach ($this->gActEco as $g)
-                $res->appendChild($g->toDOMElement($doc));
+        if(strcmp($node->nodeName, 'gEmis') != 0)
+            throw new \Exception('[GEmis] Nodo con nombre inválido: ' . $node->nodeName);
+        $res = new self();
+        $res->dRucEm = trim($node->getElementsByTagName('dRucEm')->item(0)->nodeValue);
+        $res->dDVEmi = intval(trim($node->getElementsByTagName('dDVEmi')->item(0)->nodeValue));
+        $res->iTipCont = intval(trim($node->getElementsByTagName('iTipCont')->item(0)->nodeValue));
+        if($node->getElementsByTagName('cTipReg')->length > 0)
+            $res->cTipReg = intval(trim($node->getElementsByTagName('cTipReg')->item(0)->nodeValue));
+        $res->dNomEmi = trim($node->getElementsByTagName('dNomEmi')->item(0)->nodeValue);
+        if($node->getElementsByTagName('dNomFanEmi')->length > 0)
+            $res->dNomFanEmi = trim($node->getElementsByTagName('dNomFanEmi')->item(0)->nodeValue);
+        $res->dDirEmi = trim($node->getElementsByTagName('dDirEmi')->item(0)->nodeValue);
+        $res->dNumCas = intval(trim($node->getElementsByTagName('dNumCas')->item(0)->nodeValue));
+        if($node->getElementsByTagName('dCompDir1')->length > 0)
+            $res->dCompDir1 = trim($node->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
+        if($node->getElementsByTagName('dCompDir2')->length > 0)
+            $res->dCompDir2 = trim($node->getElementsByTagName('dCompDir2')->item(0)->nodeValue);
+        $res->cDepEmi = intval(trim($node->getElementsByTagName('cDepEmi')->item(0)->nodeValue));
+        $res->dDesDepEmi = trim($node->getElementsByTagName('dDesDepEmi')->item(0)->nodeValue);
+        if($node->getElementsByTagName('cDisEmi')->length > 0)
+            $res->cDisEmi = intval(trim($node->getElementsByTagName('cDisEmi')->item(0)->nodeValue));
+        if($node->getElementsByTagName('dDesDisEmi')->length > 0)
+            $res->dDesDisEmi = trim($node->getElementsByTagName('dDesDisEmi')->item(0)->nodeValue);
+        $res->cCiuEmi = intval(trim($node->getElementsByTagName('cCiuEmi')->item(0)->nodeValue));
+        $res->dDesCiuEmi = trim($node->getElementsByTagName('dDesCiuEmi')->item(0)->nodeValue);
+        $res->dTelEmi = trim($node->getElementsByTagName('dTelEmi')->item(0)->nodeValue);
+        $res->dEmailE = trim($node->getElementsByTagName('dEmailE')->item(0)->nodeValue);
+        if($node->getElementsByTagName('dDenSuc')->length > 0)
+            $res->dDenSuc = trim($node->getElementsByTagName('dDenSuc')->item(0)->nodeValue);
+        if($node->getElementsByTagName('gActEco')->length > 0)
+        {
+            foreach($node->getElementsByTagName('gActEco') as $g)
+            {
+                $res->gActEco[] = GActEco::FromDOMElement($g);
+            }
         }
-        if (isset($this->gRespDE))
-            $res->appendChild($this->gRespDE->toDOMElement($doc));
+        if($node->getElementsByTagName('gRespDE')->length > 0)
+            $res->gRespDE = GRespDE::FromDOMElement($node->getElementsByTagName('gRespDE')->item(0));
         return $res;
     }
 
     /**
-     * FromSifenResponseObject
+     * Instancia un objeto GEmis a partir de un objeto stdClass producido por una respuesta del SIFEN
      *
-     * @param  mixed $object
-     * @return self
+     * @param stdClass $object Objeto stdClass que contiene los datos de la respuesta del SIFEN.
+     * 
+     * @return self Objeto GEmis instanciado.
      */
     public static function FromSifenResponseObject($object): self
     {
@@ -484,53 +490,52 @@ class GEmis extends BaseSifenField
         return $gEmis;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    // Covnersores
+    ///////////////////////////////////////////////////////////////////////
+
     /**
-     * Instancia un objeto GEmis a partir de un DOMElement que lo representa.
+     * Convierte este GEmis en un DOMElement que puede ser insertado en un DOMDocument.
      * 
-     * @param DOMElement $node El DOMElement que representa al GEmis.
+     * @param DOMDocument $doc Documento DOM donde se creará el DOMElement sin insertarse.
      * 
-     * @return GEmis El GEmis representado por el DOMElement dado.
+     * @return DOMElement El DOMElement que representa a este GEmis.
      */
-    public static function FromDOMElement(DOMElement $node) : self
+    public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        if(strcmp($node->nodeName, 'gEmis') != 0)
-            throw new \Exception('[GEmis] Nodo con nombre inválido: ' . $node->nodeName);
-        $res = new self();
-        $res->dRucEm = trim($node->getElementsByTagName('dRucEm')->item(0)->nodeValue);
-        $res->dDVEmi = intval(trim($node->getElementsByTagName('dDVEmi')->item(0)->nodeValue));
-        $res->iTipCont = intval(trim($node->getElementsByTagName('iTipCont')->item(0)->nodeValue));
-        if($node->getElementsByTagName('cTipReg')->length > 0)
-            $res->cTipReg = intval(trim($node->getElementsByTagName('cTipReg')->item(0)->nodeValue));
-        $res->dNomEmi = trim($node->getElementsByTagName('dNomEmi')->item(0)->nodeValue);
-        if($node->getElementsByTagName('dNomFanEmi')->length > 0)
-            $res->dNomFanEmi = trim($node->getElementsByTagName('dNomFanEmi')->item(0)->nodeValue);
-        $res->dDirEmi = trim($node->getElementsByTagName('dDirEmi')->item(0)->nodeValue);
-        $res->dNumCas = intval(trim($node->getElementsByTagName('dNumCas')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dCompDir1')->length > 0)
-            $res->dCompDir1 = trim($node->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
-        if($node->getElementsByTagName('dCompDir2')->length > 0)
-            $res->dCompDir2 = trim($node->getElementsByTagName('dCompDir2')->item(0)->nodeValue);
-        $res->cDepEmi = intval(trim($node->getElementsByTagName('cDepEmi')->item(0)->nodeValue));
-        $res->dDesDepEmi = trim($node->getElementsByTagName('dDesDepEmi')->item(0)->nodeValue);
-        if($node->getElementsByTagName('cDisEmi')->length > 0)
-            $res->cDisEmi = intval(trim($node->getElementsByTagName('cDisEmi')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dDesDisEmi')->length > 0)
-            $res->dDesDisEmi = trim($node->getElementsByTagName('dDesDisEmi')->item(0)->nodeValue);
-        $res->cCiuEmi = intval(trim($node->getElementsByTagName('cCiuEmi')->item(0)->nodeValue));
-        $res->dDesCiuEmi = trim($node->getElementsByTagName('dDesCiuEmi')->item(0)->nodeValue);
-        $res->dTelEmi = trim($node->getElementsByTagName('dTelEmi')->item(0)->nodeValue);
-        $res->dEmailE = trim($node->getElementsByTagName('dEmailE')->item(0)->nodeValue);
-        if($node->getElementsByTagName('dDenSuc')->length > 0)
-            $res->dDenSuc = trim($node->getElementsByTagName('dDenSuc')->item(0)->nodeValue);
-        if($node->getElementsByTagName('gActEco')->length > 0)
-        {
-            foreach($node->getElementsByTagName('gActEco') as $g)
-            {
-                $res->gActEco[] = GActEco::FromDOMElement($g);
-            }
+        $res = $doc->createElement('gEmis');
+        $res->appendChild(new DOMElement('dRucEm', $this->dRucEm));
+        $res->appendChild(new DOMElement('dDVEmi', $this->dDVEmi));
+        $res->appendChild(new DOMElement('iTipCont', $this->iTipCont));
+        if(isset($this->cTipReg))
+            $res->appendChild(new DOMElement('cTipReg', $this->cTipReg));
+        $res->appendChild(new DOMElement('dNomEmi', $this->dNomEmi));
+        if(isset($this->dNomFanEmi))
+            $res->appendChild(new DOMElement('dNomFanEmi', $this->dNomFanEmi));
+        $res->appendChild(new DOMElement('dDirEmi', $this->dDirEmi));
+        $res->appendChild(new DOMElement('dNumCas', $this->dNumCas));
+        if(isset($this->dCompDir1))
+            $res->appendChild(new DOMElement('dCompDir1', $this->dCompDir1));
+        if(isset($this->dCompDir2))
+            $res->appendChild(new DOMElement('dCompDir2', $this->dCompDir2));
+        $res->appendChild(new DOMElement('cDepEmi', $this->cDepEmi));
+        $res->appendChild(new DOMElement('dDesDepEmi', $this->getDDesDepEmi()));
+        if(isset($this->cDisEmi))
+            $res->appendChild(new DOMElement('cDisEmi', $this->cDisEmi));
+        if(isset($this->dDesDisEmi))
+            $res->appendChild(new DOMElement('dDesDisEmi', $this->getDDesDisEmi()));
+        $res->appendChild(new DOMElement('cCiuEmi', $this->cCiuEmi));
+        $res->appendChild(new DOMElement('dDesCiuEmi', $this->getDDesCiuEmi()));
+        $res->appendChild(new DOMElement('dTelEmi', $this->dTelEmi));
+        $res->appendChild(new DOMElement('dEmailE', $this->dEmailE));
+        if(isset($this->dDenSuc))
+            $res->appendChild(new DOMElement('dDenSuc', $this->dDenSuc));
+        if(isset($this->gActEco)) {
+            foreach ($this->gActEco as $g)
+                $res->appendChild($g->toDOMElement($doc));
         }
-        if($node->getElementsByTagName('gRespDE')->length > 0)
-            $res->gRespDE = GRespDE::FromDOMElement($node->getElementsByTagName('gRespDE')->item(0));
+        if (isset($this->gRespDE))
+            $res->appendChild($this->gRespDE->toDOMElement($doc));
         return $res;
     }
 }

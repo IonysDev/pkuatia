@@ -13,19 +13,18 @@ use SimpleXMLElement;
  * Descripción: Grupo de campos que describen la actividad económica del emisor.
  * Nodo Padre:  D100 - gEmis - Grupo de campos que identifican al emisor 
  */
-
 class GActEco extends BaseSifenField
 {
-
-    public String $cActEco;    // D131 - Código de la actividad económica del emisor 
-    public String $dDesActEco; // D132 - Descripción de la actividad económica del emisor
+                               // Id - Longitud - Ocurrencia - Descripción
+    public String $cActEco;    // D131 - 1-8   - 1-1 - Código de la actividad económica del emisor 
+    public String $dDesActEco; // D132 - 1-300 - 1-1 - Descripción de la actividad económica del emisor
   
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Establece el valor de cActEco que representa el código de la actividad económica del emisor.
+     * Establece el valor de cActEco (D131) que representa el código de la actividad económica del emisor.
      * 
      * @param String $cActEco
      * 
@@ -38,9 +37,9 @@ class GActEco extends BaseSifenField
     }
 
     /**
-     * Establece el valor de dDesActEco que representa la descripción de la actividad económica del emisor.
+     * Establece el valor de dDesActEco (D132) que representa la descripción de la actividad económica del emisor.
      *
-     * @param ?String $dDesActEco
+     * @param String $dDesActEco
      *
      * @return self
      */
@@ -55,8 +54,7 @@ class GActEco extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Devuelve el valor de cActEco que representa el código de la actividad económica del emisor.
-     * El mismo corresponde al nodo D131 del manual técnico.
+     * Devuelve el valor de cActEco (D131) que representa el código de la actividad económica del emisor.
      * 
      * @return String
      */
@@ -66,8 +64,7 @@ class GActEco extends BaseSifenField
     }
 
     /**
-     * Devuelve el valor de dDesActEco que representa la descripción de la actividad económica del emisor.
-     * El mismo corresponde al nodo D132 del manual técnico.
+     * Devuelve el valor de dDesActEco (D132) que representa la descripción de la actividad económica del emisor.
      *
      * @return String
      */
@@ -77,70 +74,15 @@ class GActEco extends BaseSifenField
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // XML Element
+    // Instanciadores
     ///////////////////////////////////////////////////////////////////////
-
-    /**
-     * Instancia la clase a partir de un SimpleXMLElement
-     *
-     * @param  SimpleXMLElement $node
-     * 
-     * @return self
-     */
-    public static function FromSimpleXMLElement(SimpleXMLElement $node) 
-    {
-        if(strcmp($node->getName(), 'gActEco') != 0)
-        {
-            throw new \Exception('El nombre del nodo debe ser "gActEco"');
-        }
-        $res = new GActEco();
-        $res->setCActEco((String) $node->cActEco);
-        $res->setDDesActEco((String) $node->dDesActEco);
-        return $res;
-    }
-
-    /**
-     * Convierte el objeto GActEco a un DOMElement
-     * 
-     * @param  DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será agregado.
-     * 
-     * @return DOMElement Nodo DOM que representa el objeto
-     */
-    public function toDOMElement(DOMDocument $doc): DOMElement
-    {
-        $res = $doc->createElement('gActEco');
-        $res->appendChild(new DOMElement('cActEco', $this->getCActEco()));
-        $res->appendChild(new DOMElement('dDesActEco', $this->getDDesActEco()));
-        return $res;
-    }
-    
-    /**
-     * FromSifenResponseObject
-     *
-     * @param  mixed $object
-     * @return self
-     */
-    public static function FromSifenResponseObject($object):self
-    {
-        $res = new GActEco();
-        if(isset($object->cActEco))
-        {
-            $res->setCActEco($object->cActEco);
-        }
-        if(isset($object->dDesActEco))
-        {
-            $res->setDDesActEco($object->dDesActEco);
-        }
-
-        return $res; 
-    }
 
     /**
      * Instancia un objeto GActEco a partir de un DOMElement con los datos del mismo.
      * 
      * @param  DOMElement $node Nodo DOM que contiene los datos del objeto.
      * 
-     * @return self
+     * @return self Objeto GActEco instanciado.
      */
     public static function FromDOMElement(DOMElement $node): self
     {
@@ -152,5 +94,56 @@ class GActEco extends BaseSifenField
         return $res;
     }
 
-    
+    /**
+     * Instancia un objeto GActEco a partir de un SimpleXMLElement
+     *
+     * @param  SimpleXMLElement $node
+     * 
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node) 
+    {
+        if(strcmp($node->getName(), 'gActEco') != 0)
+            throw new \Exception('[GActEco] Nodo con nombre inválido: ' . $node->getName());
+        $res = new GActEco();
+        $res->setCActEco(strval($node->cActEco));
+        $res->setDDesActEco(strval($node->dDesActEco));
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GActEco a partir de un objeto stdClass que contiene los datos de respuesa SOAP del SIFEN.
+     *
+     * @param stdClass $object Objeto respuesta del SIFEN.
+     * 
+     * @return self Objeto GActEco instanciado.
+     */
+    public static function FromSifenResponseObject(stdClass $object):self
+    {
+        $res = new GActEco();
+        if(isset($object->cActEco))
+            $res->setCActEco($object->cActEco);
+        if(isset($object->dDesActEco))
+            $res->setDDesActEco($object->dDesActEco);
+        return $res; 
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte este GActEco en un DOMElement generado en el DOMDocument especificado.
+     * 
+     * @param DOMDocument $doc DOMDocument que generará el DOMElement.
+     *
+     * @return DOMElement DOMElement creado pero no insertado.
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gActEco');
+        $res->appendChild(new DOMElement('cActEco', $this->getCActEco()));
+        $res->appendChild(new DOMElement('dDesActEco', $this->getDDesActEco()));
+        return $res;
+    }    
 }
