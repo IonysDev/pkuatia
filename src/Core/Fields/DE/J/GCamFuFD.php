@@ -80,6 +80,24 @@ class GCamFuFD extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
+   * Instancia un objeto GCamFuFD a partir de un DOMElement que representa al objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GCamFuFD
+   * 
+   * @return GCamFuFD Objeto GCamFuFD instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamFuFD') != 0)
+        throw new \Exception('[GCamFuFD] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    $res->setDCarQR(trim($node->getElementsByTagName('dCarQR')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dInfAdic')->length > 0)
+        $res->setDInfAdic(trim($node->getElementsByTagName('dInfAdic')->item(0)->nodeValue));
+    return $res;
+  }
+  
+  /**
    * Instancia un objeto GCamFuFD a partir de un SimpleXMLElement
    * 
    * @param SimpleXMLElement $xml
@@ -120,55 +138,28 @@ class GCamFuFD extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Convierte el objeto GCamFuFD a un DOMElement
+   * Convierte el objeto GCamFuFD a un DOMElement que puede ser insertado en el DOMDocument especificado.
    * 
-   * @param DOMDocument $doc Documento DOM donde se agregará el nodo
+   * @param DOMDocument $doc DOMDocument que crea el DOMElement
    *
-   * @return DOMElement Nodo DOM que representa el objeto
+   * @return DOMElement Objeto GCamFuFD convertido a DOMElement
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     // Validaciones
     if(!isset($this->dCarQR) || empty($this->dCarQR))
-    {
       throw new \Exception('[GCamFuFD] dCarQR no puede estar vacío.');
-    }
     else if(strlen($this->dCarQR) < 100 || strlen($this->dCarQR) > 600)
-    {
       throw new \Exception('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres. Se encontraron ' . strlen($this->dCarQR) . '.');
-    }
     if(isset($this->dInfAdic) && strlen($this->dInfAdic) > 5000)
-    {
       throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
-    }
     // Conversión
-    $res = $doc->createElement('gCamFuFD');
-    
+    $res = $doc->createElement('gCamFuFD');    
     $qr = new DOMElement('dCarQR');
-    $qr->textContent = $this->getDCarQR();
-    
+    $qr->textContent = $this->getDCarQR();    
     $res->appendChild($qr);
     if (isset($this->dInfAdic))
       $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
-
     return $res;
-  }
-
-  /**
-   * Instancia un objeto GCamFuFD a partir de un DOMElement que representa el nodo XML del objeto.
-   * 
-   * @param DOMElement $node Nodo XML que representa el objeto GCamFuFD
-   * 
-   * @return GCamFuFD Objeto GCamFuFD instanciado
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->nodeName, 'gCamFuFD') != 0)
-        throw new \Exception('[GCamFuFD] Nodo con nombre inválido: ' . $node->nodeName);
-    $res = new self();
-    $res->setDCarQR(trim($node->getElementsByTagName('dCarQR')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dInfAdic')->length > 0)
-        $res->setDInfAdic(trim($node->getElementsByTagName('dInfAdic')->item(0)->nodeValue));
-    return $res;
-  }
+  }  
 }

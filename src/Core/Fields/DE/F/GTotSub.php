@@ -6,16 +6,18 @@ use Abiliomp\Pkuatia\Utils\StringNumberFormatter;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
+use Exception;
 use SimpleXMLElement;
 
 /**
- * Nodo Id: F001 
+ * Nodo Id:     F001
+ * Nombre:      gTotSub
  * Descripción: Campos de subtotales y totales 
- * Nodo Padre: A001 
+ * Nodo Padre:  A001 - DE - Campos firmados del DE 
  */
+
 class GTotSub
 {
-  // Representación de números como cadenas para trabajar con BCMath para evitar errores de redondeo o truncamiento
                                  // ID - Longitud - Ocurrencia - Descripción
   public String $dSubExe;        // F002 - 1-15p(0-8) - 0-1 - Subtotal de la operación exenta
   public String $dSubExo;        // F003 - 1-15p(0-8) - 0-1 - Subtotal de la operación exonerada
@@ -42,9 +44,20 @@ class GTotSub
   public String $dBaseGrav10;    // F019 - 1-15p(0-8) - 0-1 - Total base gravada al 10%
   public String $dTBasGraIVA;    // F020 - 1-15p(0-8) - 0-1 - Total de la base gravada de IVA F018+F019 
   public String $dTotalGs;       // F023 - 1-15p(0-8) - 0-1 - Total general de la operación en Guaraníes
+  // Representación de números como cadenas para trabajar con BCMath para evitar errores de redondeo o truncamiento
 
   /**
-   * Constructor de la clase
+   * Constructor de la clase con valores por defecto:
+   * - dTotOpe = 0
+   * - dTotDesc = 0
+   * - dTotDescGlotem = 0
+   * - dTotAntItem = 0
+   * - dTotAnt = 0
+   * - dPorcDescTotal = 0
+   * - dDescTotal = 0
+   * - dAnticipo = 0
+   * - dRedon = 0
+   * - dTotGralOpe = 0
    */
   public function __construct()
   {
@@ -66,11 +79,11 @@ class GTotSub
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dSubExe
+   * Establece el valor de dSubExe que representa el subtotal de la operación exenta.
    *
-   * @param String $dSubExe
+   * @param String $dSubExe El valor del subtotal de la operación exenta expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDSubExe(String $dSubExe): self
   {
@@ -83,11 +96,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dSubExo
+   * Establece el valor de dSubExo que representa el subtotal de la operación exonerada.
    *
-   * @param String $dSubExo
+   * @param String $dSubExo El valor del subtotal de la operación exonerada expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDSubExo(String $dSubExo): self
   {
@@ -100,11 +113,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dSub5
+   * Establece el valor de dSub5 que representa el subtotal de la operación con IVA incluido a la tasa 5%.
    *
-   * @param String $dSub5
+   * @param String $dSub5 El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDSub5(String $dSub5): self
   {
@@ -117,11 +130,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dSub10
+   * Establece el valor de dSub10 que representa el subtotal de la operación con IVA incluido a la tasa 10%.
    *
-   * @param String $dSub10
+   * @param String $dSub10 El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDSub10(String $dSub10): self
   {
@@ -134,11 +147,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotOpe
+   * Establece el valor de dTotOpe que representa el total bruto de la operación.
    *
-   * @param String $dTotOpe
+   * @param String $dTotOpe El valor del total bruto de la operación expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotOpe(String $dTotOpe): self
   {
@@ -151,11 +164,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotDesc
+   * Establece el valor de dTotDesc que representa el total descuento particular por ítem.
    *
-   * @param String $dTotDesc
+   * @param String $dTotDesc El valor del total descuento particular por ítem expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotDesc(String $dTotDesc): self
   {
@@ -168,11 +181,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotDescGlotem
+   * Establece el valor de dTotDescGlotem que representa el total descuento global por ítem.
+   * 
+   * @param String $dTotDescGlotem El valor del total descuento global por ítem expresado en cadena numérica de caracteres.
    *
-   * @param String $dTotDescGlotem
-   *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotDescGlotem(String $dTotDescGlotem): self
   {
@@ -185,11 +198,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotAntItem
+   * Establece el valor de dTotAntItem que representa el total anticipo por ítem.
    *
-   * @param String $dTotAntItem
+   * @param String $dTotAntItem El valor del total anticipo por ítem expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotAntItem(String $dTotAntItem): self
   {
@@ -202,11 +215,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotAnt
+   * Establece el valor de dTotAnt que representa el total anticipo global por ítem.
    *
-   * @param String $dTotAnt
+   * @param String $dTotAnt El valor del total anticipo global por ítem expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotAnt(String $dTotAnt): self
   {
@@ -219,11 +232,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dPorcDescTotal
+   * Establece el valor de dPorcDescTotal que representa el porcentaje de descuento global sobre total de la operación.
    *
-   * @param String $dPorcDescTotal
+   * @param String $dPorcDescTotal El valor del porcentaje de descuento global sobre total de la operación expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDPorcDescTotal(String $dPorcDescTotal): self
   {
@@ -236,11 +249,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dDescTotal
+   * Establece el valor de dDescTotal que representa el total descuentos de la operación.
    *
-   * @param String $dDescTotal
+   * @param String $dDescTotal El valor del total descuentos de la operación expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDDescTotal(String $dDescTotal): self
   {
@@ -253,11 +266,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dAnticipo
+   * Establece el valor de dAnticipo que representa el total anticipos de la operación.
    *
-   * @param String $dAnticipo
+   * @param String $dAnticipo El valor del total anticipos de la operación expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDAnticipo(String $dAnticipo): self
   {
@@ -270,11 +283,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dRedon
+   * Establece el valor de dRedon que representa el redondeo de la operación.
    *
-   * @param String $dRedon
+   * @param String $dRedon El valor del redondeo de la operación expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDRedon(String $dRedon): self
   {
@@ -287,11 +300,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dComi
+   * Establece el valor de dComi que representa la comisión de la operación.
    *
-   * @param String $dComi
+   * @param String $dComi El valor de la comisión de la operación expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDComi(String $dComi): self
   {
@@ -304,11 +317,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotGralOpe
+   * Establece el valor de dTotGralOpe que representa el total neto de la operación.
    *
-   * @param String $dTotGralOpe
+   * @param String $dTotGralOpe El valor del total neto de la operación expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotGralOpe(String $dTotGralOpe): self
   {
@@ -321,11 +334,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dIVA5
+   * Establece el valor de dIVA5 que representa la liquidación del IVA a la tasa del 5%.
    *
-   * @param String $dIVA5
+   * @param String $dIVA5 El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDIVA5(String $dIVA5): self
   {
@@ -338,11 +351,11 @@ class GTotSub
 
 
   /**
-   * Establece el valor de dIVA10, liquidación del IVA a la tasa del 10%.
+   * Establece el valor de dIVA10 que representa la liquidación del IVA a la tasa del 10%.
    *
    * @param String $dIVA10
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDIVA10(String $dIVA10): self
   {
@@ -355,11 +368,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dLiqTotIVA5
+   * Establece el valor de dLiqTotIVA5 que representa la liquidación total del IVA por redondeo a la tasa del 5%.
    *
-   * @param String $dLiqTotIVA5
+   * @param String $dLiqTotIVA5 El valor de la liquidación total del IVA por redondeo a la tasa del 5% expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDLiqTotIVA5(String $dLiqTotIVA5): self
   {
@@ -372,11 +385,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dLiqTotIVA10
+   * Establece el valor de dLiqTotIVA10 que representa la liquidación total del IVA por redondeo a la tasa del 10%.
    *
-   * @param String $dLiqTotIVA10
+   * @param String $dLiqTotIVA10 El valor de la liquidación total del IVA por redondeo a la tasa del 10% expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDLiqTotIVA10(String $dLiqTotIVA10): self
   {
@@ -389,11 +402,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dIVAComi
+   * Establece el valor de dIVAComi que representa la liquidación total del IVA de la comisión.
    *
-   * @param String $dIVAComi
-   *
-   * @return self
+   * @param String $dIVAComi El valor de la liquidación total del IVA de la comisión expresado en cadena numérica de caracteres.
+   *  
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDIVAComi(String $dIVAComi): self
   {
@@ -406,11 +419,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotIVA
+   * Establece el valor de dTotIVA que representa la liquidación total del IVA.
    *
-   * @param String $dTotIVA
+   * @param String $dTotIVA El valor de la liquidación total del IVA expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotIVA(String $dTotIVA): self
   {
@@ -423,11 +436,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dBaseGrav5
+   * Establece el valor de dBaseGrav5 que representa el total de la base gravada de IVA al 5%.
    *
-   * @param String $dBaseGrav5
+   * @param String $dBaseGrav5 El valor de la base gravada de IVA al 5% expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDBaseGrav5(String $dBaseGrav5): self
   {
@@ -456,11 +469,11 @@ class GTotSub
 
 
   /**
-   * Establece el valor de dTBasGraIV, total de la base gravada de IVA F018+F019
+   * Establece el valor de dTBasGraIV que representa el total de la base gravada de IVA F018+F019
    *
-   * @param String $dTBasGraIVA
+   * @param String $dTBasGraIVA El valor de la base gravada de IVA F018+F019 expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTBasGraIVA(String $dTBasGraIVA): self
   {
@@ -473,11 +486,11 @@ class GTotSub
 
 
   /**
-   * Set the value of dTotalGs
+   * Establece el valor de dTotalGs que representa el total general de la operación en Guaraníes.
    *
-   * @param String $dTotalGs
+   * @param String $dTotalGs El valor del total general de la operación en Guaraníes expresado en cadena numérica de caracteres.
    *
-   * @return self
+   * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDTotalGs(String $dTotalGs): self
   {
@@ -494,9 +507,9 @@ class GTotSub
 
 
   /**
-   * Get the value of dSubExe
+   * Obtiene el valor de dSubExe que representa el subtotal de la operación exenta.
    *
-   * @return String
+   * @return String  El valor del subtotal de la operación exenta expresado en cadena numérica de caracteres.
    */
   public function getDSubExe(): String | null
   {
@@ -506,6 +519,12 @@ class GTotSub
       return null;
   }
 
+  /**
+   * Obtiene el valor de dSubExo que representa el subtotal de la operación exonerada en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
+   * 
+   */
   public function getFormattedDSubExe(): String | null
   {
     if(isset($this->dSubExe))
@@ -515,9 +534,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dSubExo
+   * Obtiene el valor de dSubExo que representa el subtotal de la operación exonerada.
    *
-   * @return String
+   * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica de caracteres.
    */
   public function getDSubExo(): String | null
   {
@@ -527,6 +546,11 @@ class GTotSub
       return null;
   }
 
+  /**
+   * Obtiene el valor de dSubExo que representa el subtotal de la operación exonerada en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
+   */
   public function getFormattedDSubExo(): String | null
   {
     if(isset($this->dSubExo))
@@ -536,9 +560,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dSub5
+   * Obtiene el valor de dSub5 que representa el subtotal de la operación con IVA incluido a la tasa 5%.
    *
-   * @return String
+   * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica de caracteres.
    */
   public function getDSub5(): String | null
   {
@@ -548,6 +572,11 @@ class GTotSub
       return null;
   }
 
+  /**
+   * Obtiene el valor de dSub5 que representa el subtotal de la operación con IVA incluido a la tasa 5% en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica formateada de caracteres.
+   */
   public function getFormattedDSub5(): String | null
   {
     if(isset($this->dSub5))
@@ -558,9 +587,9 @@ class GTotSub
  
 
   /**
-   * Get the value of dSub10
+   * Obtiene el valor de dSub10 que representa el subtotal de la operación con IVA incluido a la tasa 10%.
    *
-   * @return String
+   * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica de caracteres.
    */
   public function getDSub10(): String | null
   {
@@ -570,6 +599,11 @@ class GTotSub
       return null;
   }
 
+  /**
+   * Obtiene el valor de dSub10 que representa el subtotal de la operación con IVA incluido a la tasa 10% en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica formateada de caracteres.
+   */
   public function getFormattedDSub10(): String | null
   {
     if(isset($this->dSub10))
@@ -579,9 +613,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dTotOpe
+   * Obtiene el valor de dTotOpe que representa el total bruto de la operación.
    *
-   * @return String
+   * @return String El valor del total bruto de la operación expresado en cadena numérica de caracteres.
    */
   public function getDTotOpe(): String
   {
@@ -591,9 +625,9 @@ class GTotSub
 
 
   /**
-   * Get the value of dTotDesc
+   * Obtiene el valor de dTotDesc que representa el total descuento particular por ítem.
    *
-   * @return String
+   * @return String El valor del total descuento particular por ítem expresado en cadena numérica de caracteres.
    */
   public function getDTotDesc(): String
   {
@@ -601,9 +635,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dTotDescGlotem
+   * Obtiene el valor de dTotDescGlotem que representa el total descuento global por ítem.
    *
-   * @return String
+   * @return String El valor del total descuento global por ítem expresado en cadena numérica de caracteres.
    */
   public function getDTotDescGlotem(): String
   {
@@ -611,9 +645,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dTotAntItem
+   * Obtiene el valor de dTotAntItem que representa el total anticipo por ítem.
    *
-   * @return String
+   * @return String El valor del total anticipo por ítem expresado en cadena numérica de caracteres.
    */
   public function getDTotAntItem(): String
   {
@@ -621,9 +655,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dTotAnt
+   * Obtiene el valor de dTotAnt que representa el total anticipo global por ítem.
    *
-   * @return String
+   * @return String El valor del total anticipo global por ítem expresado en cadena numérica de caracteres.
    */
   public function getDTotAnt(): String
   {
@@ -631,9 +665,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dPorcDescTotal
+   * Obtiene el valor de dPorcDescTotal que representa el porcentaje de descuento global sobre total de la operación.
    *
-   * @return String
+   * @return String El valor del porcentaje de descuento global sobre total de la operación expresado en cadena numérica de caracteres.
    */
   public function getDPorcDescTotal(): String
   {
@@ -641,9 +675,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dDescTotal
+   * Obtiene el valor de dDescTotal que representa el total descuentos de la operación.
    *
-   * @return String
+   * @return String El valor del total descuentos de la operación expresado en cadena numérica de caracteres.
    */
   public function getDDescTotal(): String
   {
@@ -651,7 +685,7 @@ class GTotSub
   }
 
   /**
-   * Get the value of dAnticipo
+   * Obtiene el valor de dAnticipo que representa el total anticipos de la operación.
    *
    * @return String
    */
@@ -661,9 +695,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dRedon
+   * Obtiene el valor de dRedon que representa el redondeo de la operación.
    *
-   * @return String
+   * @return String El valor del redondeo de la operación expresado en cadena numérica de caracteres.
    */
   public function getDRedon(): String
   {
@@ -671,9 +705,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dComi
+   * Obtiene el valor de dComi que representa la comisión de la operación.
    *
-   * @return String
+   * @return String El valor de la comisión de la operación expresado en cadena numérica de caracteres.
    */
   public function getDComi(): String | null
   {
@@ -684,9 +718,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dTotGralOpe
+   * Obtiene el valor de dTotGralOpe que representa el total neto de la operación.
    *
-   * @return String
+   * @return String El valor del total neto de la operación expresado en cadena numérica de caracteres.
    */
   public function getDTotGralOpe(): String
   {
@@ -699,9 +733,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dIVA5
+   * Obtiene el valor de dIVA5 que representa la liquidación del IVA a la tasa del 5%.
    *
-   * @return String
+   * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica de caracteres.
    */
   public function getDIVA5(): String | null
   {
@@ -711,6 +745,11 @@ class GTotSub
       return null;
   }
 
+  /**
+   * Obtiene el valor de dIVA5 que representa la liquidación del IVA a la tasa del 5% en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica formateada de caracteres.
+   */
   public function getFormattedDIVA5(): String | null
   {
     if(isset($this->dIVA5))
@@ -721,9 +760,9 @@ class GTotSub
   
 
   /**
-   * Get the value of dIVA10
+   * Obtiene el valor de dIVA10 que representa la liquidación del IVA a la tasa del 10%.
    *
-   * @return String
+   * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica de caracteres.
    */
   public function getDIVA10(): String | null  
   {
@@ -733,6 +772,11 @@ class GTotSub
       return null;
   }
 
+  /**
+   * Obtiene el valor de dIVA10 que representa la liquidación del IVA a la tasa del 10% en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica formateada de caracteres.
+   */
   public function getFormattedDIVA10(): String | null  
   {
     if(isset($this->dIVA10))
@@ -742,9 +786,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dLiqTotIVA5
+   * Obtiene el valor de dLiqTotIVA5 que representa la liquidación total del IVA por redondeo a la tasa del 5%.
    *
-   * @return String
+   * @return String El valor de la liquidación total del IVA por redondeo a la tasa del 5% expresado en cadena numérica de caracteres.
    */
   public function getDLiqTotIVA5(): String | null
   {
@@ -755,9 +799,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dLiqTotIVA10
+   * Obtiene el valor de dLiqTotIVA10 que representa la liquidación total del IVA por redondeo a la tasa del 10%.
    *
-   * @return String
+   * @return String El valor de la liquidación total del IVA por redondeo a la tasa del 10% expresado en cadena numérica de caracteres.
    */
   public function getDLiqTotIVA10(): String | null
   {
@@ -768,9 +812,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dIVAComi
+   * Obtiene el valor de dIVAComi que representa la liquidación total del IVA de la comisión.
    *
-   * @return String
+   * @return String El valor de la liquidación total del IVA de la comisión expresado en cadena numérica de caracteres.
    */
   public function getDIVAComi(): String | null
   {
@@ -781,9 +825,9 @@ class GTotSub
   }
 
   /**
-   * Devuelve el valor dTotIVA (F017 - Liquidación total del IVA)
+   * Devuelve el valor dTotIVA (F017 - Liquidación total del IVA) en formato de cadena formateada con separador de miles.
    *
-   * @return String
+   * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
    */
   public function getDTotIVA(): String | null
   {
@@ -793,6 +837,11 @@ class GTotSub
       return null;
   }
 
+  /**
+   * Devuelve el valor dTotIVA (F017 - Liquidación total del IVA) en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
+   */
   public function getFormattedDTotIVA(): String | null
   {
     if(isset($this->dTotIVA))
@@ -802,9 +851,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dBaseGrav5
+   * Obtiene el valor de dBaseGrav5 que representa el total de la base gravada de IVA al 5%.
    *
-   * @return String
+   * @return String El valor de la base gravada de IVA al 5% expresado en cadena numérica de caracteres.
    */
   public function getDBaseGrav5(): String | null
   {
@@ -815,9 +864,9 @@ class GTotSub
   }
 
   /**
-   * Get the value of dBaseGrav10
+   * Obtiene el valor de dBaseGrav10 que representa el total de la base gravada de IVA al 10%.
    *
-   * @return String
+   * @return String El valor de la base gravada de IVA al 10% expresado en cadena numérica de caracteres.
    */
   public function getDBaseGrav10(): String
   {
@@ -825,7 +874,7 @@ class GTotSub
   }
 
   /**
-   * Get the value of dTBasGraIVA
+   * Obtiene el valor de dTBasGraIVA que representa el total de la base gravada de IVA F018+F019
    *
    * @return String
    */
@@ -834,24 +883,84 @@ class GTotSub
     return $this->dTBasGraIVA;
   }
 
-  /**
-   * Get the value of dTotalGs
+  /** 
+   * Obtiene el valor de dTotalGs que representa el total general de la operación en Guaraníes.
    *
-   * @return String
+   * @return String El valor del total general de la operación en Guaraníes expresado en cadena numérica de caracteres.
    */
   public function getDTotalGs(): String
   {
     return $this->dTotalGs;
   }
 
+  /**
+   * Obtiene el valor de dTotalGs que representa el total general de la operación en Guaraníes en formato de cadena formateada con separador de miles.
+   * 
+   * @return String El valor del total general de la operación en Guaraníes expresado en cadena numérica formateada de caracteres.
+   */
   public function getFormattedDTotalGs(): String
   {
     return StringNumberFormatter::FormatBCMAthNumber($this->dTotalGs, ',', '.');
   }
 
   ///////////////////////////////////////////////////////////////////////
-  // XML Element  
+  // Instanciadores
   ///////////////////////////////////////////////////////////////////////
+  
+  /**
+   * Instancia un objeto GTotSub a partir de un DOMElement que lo representa.
+   * 
+   * @param DOMElement $node El DOMElement que contiene la representación XML de un GTotSub.
+   * 
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gTotSub') != 0)
+      throw new \Exception('[GTotSub] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new GTotSub();
+    if($node->getElementsByTagName('dSubExe')->length > 0)
+      $res->setDSubExe($node->getElementsByTagName('dSubExe')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dSubExo')->length > 0)
+      $res->setDSubExo($node->getElementsByTagName('dSubExo')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dSub5')->length > 0)
+      $res->setDSub5($node->getElementsByTagName('dSub5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dSub10')->length > 0)
+      $res->setDSub10($node->getElementsByTagName('dSub10')->item(0)->nodeValue);
+    $res->setDTotOpe($node->getElementsByTagName('dTotOpe')->item(0)->nodeValue);
+    $res->setDTotDesc($node->getElementsByTagName('dTotDesc')->item(0)->nodeValue);
+    $res->setDTotDescGlotem($node->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue);
+    $res->setDTotAntItem($node->getElementsByTagName('dTotAntItem')->item(0)->nodeValue);
+    $res->setDTotAnt($node->getElementsByTagName('dTotAnt')->item(0)->nodeValue);
+    $res->setDPorcDescTotal($node->getElementsByTagName('dPorcDescTotal')->item(0)->nodeValue);
+    $res->setDDescTotal($node->getElementsByTagName('dDescTotal')->item(0)->nodeValue);
+    $res->setDAnticipo($node->getElementsByTagName('dAnticipo')->item(0)->nodeValue);
+    $res->setDRedon($node->getElementsByTagName('dRedon')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dComi')->length > 0)
+      $res->setDComi($node->getElementsByTagName('dComi')->item(0)->nodeValue);
+    $res->setDTotGralOpe($node->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dIVA5')->length > 0)
+      $res->setDIVA5($node->getElementsByTagName('dIVA5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dIVA10')->length > 0)
+      $res->setDIVA10($node->getElementsByTagName('dIVA10')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dLiqTotIVA5')->length > 0)
+      $res->setDLiqTotIVA5($node->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dLiqTotIVA10')->length > 0)
+      $res->setDLiqTotIVA10($node->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dIVAComi')->length > 0)
+      $res->setDIVAComi($node->getElementsByTagName('dIVAComi')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTotIVA')->length > 0)
+      $res->setDTotIVA($node->getElementsByTagName('dTotIVA')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dBaseGrav5')->length > 0)
+      $res->setDBaseGrav5($node->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dBaseGrav10')->length > 0)
+      $res->setDBaseGrav10($node->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTBasGraIVA')->length > 0)
+      $res->setDTBasGraIVA($node->getElementsByTagName('dTBasGraIVA')->item(0)->nodeValue);
+    if($node->getElementsByTagName('dTotalGs')->length > 0)
+      $res->setDTotalGs($node->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
+    return $res;
+  }
 
   /**
    * Instancia un objeto de la clase a partir de un SimpleXMLElement
@@ -920,59 +1029,6 @@ class GTotSub
     if (isset($xml->dTotalGs)) {
       $res->setDTotalGs($xml->dTotalGs);
     }
-    return $res;
-  }
-
-  /**
-   * Convierte este GTotSub en un DOMElement perteneciente a un DOMDocument
-   * 
-   * @param DOMDocument $doc El DOMDocument que generará el DOMElement sin insertarlo.
-   *
-   * @return DOMElement El DOMElement que representa a este GTotSub.
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gTotSub');
-    if(isset($this->dSubExe))
-      $res->appendChild(new DOMElement('dSubExe', $this->getDSubExe()));
-    if(isset($this->dSubExo))
-      $res->appendChild(new DOMElement('dSubExo', $this->getDSubExo()));
-    if(isset($this->dSub5))
-      $res->appendChild(new DOMElement('dSub5', $this->getDSub5()));
-    if(isset($this->dSub10))
-      $res->appendChild(new DOMElement('dSub10', $this->getDSub10()));
-    $res->appendChild(new DOMElement('dTotOpe', $this->getDTotOpe()));
-    $res->appendChild(new DOMElement('dTotDesc', $this->getDTotDesc()));
-    $res->appendChild(new DOMElement('dTotDescGlotem', $this->getDTotDescGlotem()));
-    $res->appendChild(new DOMElement('dTotAntItem', $this->getDTotAntItem()));
-    $res->appendChild(new DOMElement('dTotAnt', $this->getDTotAnt()));
-    $res->appendChild(new DOMElement('dPorcDescTotal', $this->getDPorcDescTotal()));
-    $res->appendChild(new DOMElement('dDescTotal', $this->getDDescTotal()));
-    $res->appendChild(new DOMElement('dAnticipo', $this->getDAnticipo()));
-    $res->appendChild(new DOMElement('dRedon', $this->getDRedon()));
-    if(isset($this->dComi))
-      $res->appendChild(new DOMElement('dComi', $this->getDComi()));
-    $res->appendChild(new DOMElement('dTotGralOpe', $this->getDTotGralOpe()));
-    if(isset($this->dIVA5))
-      $res->appendChild(new DOMElement('dIVA5', $this->getDIVA5()));
-    if(isset($this->dIVA10))
-      $res->appendChild(new DOMElement('dIVA10', $this->getDIVA10()));
-    if(isset($this->dLiqTotIVA5))
-      $res->appendChild(new DOMElement('dLiqTotIVA5', $this->getDLiqTotIVA5()));
-    if(isset($this->dLiqTotIVA10))
-      $res->appendChild(new DOMElement('dLiqTotIVA10', $this->getDLiqTotIVA10()));
-    if(isset($this->dIVAComi))
-      $res->appendChild(new DOMElement('dIVAComi', $this->getDIVAComi()));
-    if(isset($this->dTotIVA))
-      $res->appendChild(new DOMElement('dTotIVA', $this->getDTotIVA()));
-    if(isset($this->dBaseGrav5))
-      $res->appendChild(new DOMElement('dBaseGrav5', $this->dBaseGrav5));
-    if(isset($this->dBaseGrav10))
-      $res->appendChild(new DOMElement('dBaseGrav10', $this->getDBaseGrav10()));
-    if(isset($this->dTBasGraIVA))
-      $res->appendChild(new DOMElement('dTBasGraIVA', $this->getDTBasGraIVA()));
-    if(isset($this->dTotalGs))
-      $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
     return $res;
   }
 
@@ -1066,61 +1122,62 @@ class GTotSub
     return $res;
   }
 
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
+
   /**
-   * Instancia un objeto GTotSub a partir de un DOMElement que lo representa.
+   * Convierte este GTotSub en un DOMElement perteneciente a un DOMDocument
    * 
-   * @param DOMElement $node El DOMElement que contiene la representación XML de un GTotSub.
-   * 
-   * @return self
+   * @param DOMDocument $doc El DOMDocument que generará el DOMElement sin insertarlo.
+   *
+   * @return DOMElement El DOMElement que representa a este GTotSub.
    */
-  public static function FromDOMElement(DOMElement $node): self
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    if(strcmp($node->nodeName, 'gTotSub') != 0)
-      throw new \Exception('[GTotSub] Nodo con nombre inválido: ' . $node->nodeName);
-    $res = new GTotSub();
-    if($node->getElementsByTagName('dSubExe')->length > 0)
-      $res->setDSubExe($node->getElementsByTagName('dSubExe')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dSubExo')->length > 0)
-      $res->setDSubExo($node->getElementsByTagName('dSubExo')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dSub5')->length > 0)
-      $res->setDSub5($node->getElementsByTagName('dSub5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dSub10')->length > 0)
-      $res->setDSub10($node->getElementsByTagName('dSub10')->item(0)->nodeValue);
-    $res->setDTotOpe($node->getElementsByTagName('dTotOpe')->item(0)->nodeValue);
-    $res->setDTotDesc($node->getElementsByTagName('dTotDesc')->item(0)->nodeValue);
-    $res->setDTotDescGlotem($node->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue);
-    $res->setDTotAntItem($node->getElementsByTagName('dTotAntItem')->item(0)->nodeValue);
-    $res->setDTotAnt($node->getElementsByTagName('dTotAnt')->item(0)->nodeValue);
-    $res->setDPorcDescTotal($node->getElementsByTagName('dPorcDescTotal')->item(0)->nodeValue);
-    $res->setDDescTotal($node->getElementsByTagName('dDescTotal')->item(0)->nodeValue);
-    $res->setDAnticipo($node->getElementsByTagName('dAnticipo')->item(0)->nodeValue);
-    $res->setDRedon($node->getElementsByTagName('dRedon')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dComi')->length > 0)
-      $res->setDComi($node->getElementsByTagName('dComi')->item(0)->nodeValue);
-    $res->setDTotGralOpe($node->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dIVA5')->length > 0)
-      $res->setDIVA5($node->getElementsByTagName('dIVA5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dIVA10')->length > 0)
-      $res->setDIVA10($node->getElementsByTagName('dIVA10')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dLiqTotIVA5')->length > 0)
-      $res->setDLiqTotIVA5($node->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dLiqTotIVA10')->length > 0)
-      $res->setDLiqTotIVA10($node->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dIVAComi')->length > 0)
-      $res->setDIVAComi($node->getElementsByTagName('dIVAComi')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dTotIVA')->length > 0)
-      $res->setDTotIVA($node->getElementsByTagName('dTotIVA')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dBaseGrav5')->length > 0)
-      $res->setDBaseGrav5($node->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dBaseGrav10')->length > 0)
-      $res->setDBaseGrav10($node->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dTBasGraIVA')->length > 0)
-      $res->setDTBasGraIVA($node->getElementsByTagName('dTBasGraIVA')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dTotalGs')->length > 0)
-      $res->setDTotalGs($node->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
+    $res = $doc->createElement('gTotSub');
+    if(isset($this->dSubExe))
+      $res->appendChild(new DOMElement('dSubExe', $this->getDSubExe()));
+    if(isset($this->dSubExo))
+      $res->appendChild(new DOMElement('dSubExo', $this->getDSubExo()));
+    if(isset($this->dSub5))
+      $res->appendChild(new DOMElement('dSub5', $this->getDSub5()));
+    if(isset($this->dSub10))
+      $res->appendChild(new DOMElement('dSub10', $this->getDSub10()));
+    $res->appendChild(new DOMElement('dTotOpe', $this->getDTotOpe()));
+    $res->appendChild(new DOMElement('dTotDesc', $this->getDTotDesc()));
+    $res->appendChild(new DOMElement('dTotDescGlotem', $this->getDTotDescGlotem()));
+    $res->appendChild(new DOMElement('dTotAntItem', $this->getDTotAntItem()));
+    $res->appendChild(new DOMElement('dTotAnt', $this->getDTotAnt()));
+    $res->appendChild(new DOMElement('dPorcDescTotal', $this->getDPorcDescTotal()));
+    $res->appendChild(new DOMElement('dDescTotal', $this->getDDescTotal()));
+    $res->appendChild(new DOMElement('dAnticipo', $this->getDAnticipo()));
+    $res->appendChild(new DOMElement('dRedon', $this->getDRedon()));
+    if(isset($this->dComi))
+      $res->appendChild(new DOMElement('dComi', $this->getDComi()));
+    $res->appendChild(new DOMElement('dTotGralOpe', $this->getDTotGralOpe()));
+    if(isset($this->dIVA5))
+      $res->appendChild(new DOMElement('dIVA5', $this->getDIVA5()));
+    if(isset($this->dIVA10))
+      $res->appendChild(new DOMElement('dIVA10', $this->getDIVA10()));
+    if(isset($this->dLiqTotIVA5))
+      $res->appendChild(new DOMElement('dLiqTotIVA5', $this->getDLiqTotIVA5()));
+    if(isset($this->dLiqTotIVA10))
+      $res->appendChild(new DOMElement('dLiqTotIVA10', $this->getDLiqTotIVA10()));
+    if(isset($this->dIVAComi))
+      $res->appendChild(new DOMElement('dIVAComi', $this->getDIVAComi()));
+    if(isset($this->dTotIVA))
+      $res->appendChild(new DOMElement('dTotIVA', $this->getDTotIVA()));
+    if(isset($this->dBaseGrav5))
+      $res->appendChild(new DOMElement('dBaseGrav5', $this->dBaseGrav5));
+    if(isset($this->dBaseGrav10))
+      $res->appendChild(new DOMElement('dBaseGrav10', $this->getDBaseGrav10()));
+    if(isset($this->dTBasGraIVA))
+      $res->appendChild(new DOMElement('dTBasGraIVA', $this->getDTBasGraIVA()));
+    if(isset($this->dTotalGs))
+      $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
     return $res;
   }
-
 
   ///////////////////////////////////////////////////////////////////////
   // Funciones de Cálculo

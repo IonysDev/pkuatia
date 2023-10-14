@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
@@ -15,7 +16,7 @@ use SimpleXMLElement;
  * Nodo Padre:  E600
  */
 
-class GPaConEIni
+class GPaConEIni extends BaseSifenField
 {
   public int $iTiPago;         // E606 - 1-2        - 1-1 - Tipo de pago
   public String $dDesTiPag;    // E607 - 4-30       - 1-1 - Descripción del tipo de pago
@@ -364,9 +365,11 @@ class GPaConEIni
   }
 
   /**
-   * toDOMElement
+   * Convierte este GPaConEIni a un DOMElement insertable en el DOMDocument indicado.
+   * 
+   * @param DOMDocument $doc Documento DOM en el que se insertará el DOMElement
    *
-   * @return DOMElement
+   * @return DOMElement Elemento DOM que representa este GPaConEIni
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {

@@ -5,6 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 
 /**
  * Nodo Id:     E600
@@ -13,7 +14,7 @@ use SimpleXMLElement;
  * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico
  */
 
-class GCamCond
+class GCamCond extends BaseSifenField
 {
                                  // Id - Longitud - Ocurrencia - Descripción
   public int        $iCondOpe;   // E601 - 1 - 1-1   - Condición de la operación: 1-Contado | 2-Crédito
@@ -175,13 +176,14 @@ class GCamCond
   }
 
   /**
-   * toDOMElement
+   * Convierte este objeto GCamCond a un DOMElement insertable en el DOMDocument indicado.
+   * 
+   * @param DOMDocument $doc Documento DOM en el que se insertará el DOMElement
    *
-   * @return DOMElement
+   * @return DOMElement Objeto DOMElement que representa a este GCamCond
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $doc = new DOMDocument('1.0', 'utf-8');
     $res = $doc->createElement('gCamCond');
     if(isset($this->iCondOpe))
       $res->appendChild(new DOMElement('iCondOpe', $this->getICondOpe()));
@@ -189,13 +191,11 @@ class GCamCond
       $res->appendChild(new DOMElement('dDCondOpe', $this->getDDCondOpe()));
     if(isset($this->gPaConEIni) && count($this->getGPaConEIni()) > 0){
       foreach ($this->getGPaConEIni() as $g) {
-        $importNode = $doc->importNode($g->toDOMElement(), true);
-        $res->appendChild($importNode);
+        $res->appendChild($g->toDOMElement($doc));
       }
     }
     if(isset($this->gPagCred)) {
-      $importNode = $doc->importNode($this->gPagCred->toDOMElement(), true);
-      $res->appendChild($importNode);
+      $res->appendChild($this->gPagCred->toDOMElement($doc));
     }
     return $res;
   }

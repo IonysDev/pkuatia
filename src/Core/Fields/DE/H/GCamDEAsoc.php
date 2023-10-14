@@ -6,6 +6,7 @@ use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use Exception;
 use SimpleXMLElement;
 
 /**
@@ -498,8 +499,53 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   ///////////////////////////////////////////////////////////////////////
-  // XML Element
+  // Instanciadores
   ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Instancia un objeto GCamDEAsoc a partir de un DOMElement que representa al objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto GCamFuFD
+   * 
+   * @return GCamDEAsoc Objeto GCamDEAsoc instanciado
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamDEAsoc') != 0)
+        throw new Exception('[GCamDEAsoc] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new self();
+    $res->setITipDocAso(intval(trim($node->getElementsByTagName('iTipDocAso')->item(0)->nodeValue)));
+    $res->setDDesTipDocAso(trim($node->getElementsByTagName('dDesTipDocAso')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dCdCDERef')->length > 0)
+      $res->setDCdCDERef(trim($node->getElementsByTagName('dCdCDERef')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNTimDI')->length > 0)
+      $res->setDNTimDI(intval(trim($node->getElementsByTagName('dNTimDI')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dEstDocAso')->length > 0)
+      $res->setDEstDocAso(trim($node->getElementsByTagName('dEstDocAso')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dPExpDocAso')->length > 0)
+      $res->setDPExpDocAso(trim($node->getElementsByTagName('dPExpDocAso')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumDocAso')->length > 0)
+      $res->setDNumDocAso(trim($node->getElementsByTagName('dNumDocAso')->item(0)->nodeValue));
+    if($node->getElementsByTagName('iTipoDocAso')->length > 0)
+      $res->setITipoDocAso(trim($node->getElementsByTagName('iTipoDocAso')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dDTipoDocAso')->length > 0)
+      $res->setDDTipoDocAso(trim($node->getElementsByTagName('dDTipoDocAso')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dFecEmiDI')->length > 0)
+      $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dFecEmiDI')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dNumComRet')->length > 0)
+      $res->setDNumComRet(trim($node->getElementsByTagName('dNumComRet')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumResCF')->length > 0)
+      $res->setDNumResCF(trim($node->getElementsByTagName('dNumResCF')->item(0)->nodeValue));
+    if($node->getElementsByTagName('iTipCons')->length > 0)
+      $res->setITipCons(intval(trim($node->getElementsByTagName('iTipCons')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dDesTipCons')->length > 0)
+      $res->setDDesTipCons(trim($node->getElementsByTagName('dDesTipCons')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNumCons')->length > 0)
+      $res->setDNumCons(intval(trim($node->getElementsByTagName('dNumCons')->item(0)->nodeValue)));
+    if($node->getElementsByTagName('dNumControl')->length > 0)
+      $res->setDNumControl(trim($node->getElementsByTagName('dNumControl')->item(0)->nodeValue));
+    return $res;
+  }
 
   /**
    * Instancia un objeto GCamDEAsoc a partir de un SimpleXMLElement
@@ -577,56 +623,6 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Convierte el objeto GCamDEAsoc a un DOMElement
-   * 
-   * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO se insertará.
-   *
-   * @return DOMElement Nodo DOM creado NO insertado en el documento.
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gCamDEAsoc');
-
-    $res->appendChild(new DOMElement('iTipDocAso', $this->getITipDocAso()));
-    $res->appendChild(new DOMElement('dDesTipDocAso', $this->getDDesTipDocAso()));
-
-    if ($this->iTipDocAso == 1) {
-      $res->appendChild(new DOMElement('dCdCDERef', $this->getDCdCDERef()));
-    }
-    else if ($this->iTipDocAso == 2) {
-      $res->appendChild(new DOMElement('dNTimDI', $this->getDNTimDI()));
-      $res->appendChild(new DOMElement('dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('iTipoDocAso', $this->getITipDocAso()));
-      $res->appendChild(new DOMElement('dDTipoDocAso', $this->getDDTipoDocAso()));
-    }
-
-    if (isset($this->dNTimDI)) {
-      $res->appendChild(new DOMElement('dFecEmiDI', $this->getDFecEmiDI()->format('Y-m-d')));
-    }
-
-    if(isset($this->dNumComRet))
-      $res->appendChild(new DOMElement('dNumComRet', $this->getDNumComRet()));
-    
-    if(isset($this->dNumResCF))
-      $res->appendChild(new DOMElement('dNumResCF', $this->getDNumResCF()));
-
-    if($this->iTipDocAso == 3) {
-      $res->appendChild(new DOMElement('iTipCons', $this->getITipCons()));
-      $res->appendChild(new DOMElement('dDesTipCons', $this->getDDesTipCons()));
-    }
-
-    if ($this->iTipDocAso == 3 && $this->iTipCons == 2) {
-      $res->appendChild(new DOMElement('dNumCons', $this->getDNumCons()));
-      $res->appendChild(new DOMElement('dNumControl', $this->getDNumControl()));
-    }
-
-    return $res;
-  }
-
-    
-  /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
@@ -688,6 +684,59 @@ class GCamDEAsoc extends BaseSifenField
       $res->setDNumControl($object->dNumControl);
     }
     
+    return $res;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Convierte el objeto GCamDEAsoc a un DOMElement
+   * 
+   * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO se insertará.
+   *
+   * @return DOMElement Nodo DOM creado NO insertado en el documento.
+   */
+  public function toDOMElement(DOMDocument $doc): DOMElement
+  {
+    $res = $doc->createElement('gCamDEAsoc');
+
+    $res->appendChild(new DOMElement('iTipDocAso', $this->getITipDocAso()));
+    $res->appendChild(new DOMElement('dDesTipDocAso', $this->getDDesTipDocAso()));
+
+    if ($this->iTipDocAso == 1) {
+      $res->appendChild(new DOMElement('dCdCDERef', $this->getDCdCDERef()));
+    }
+    else if ($this->iTipDocAso == 2) {
+      $res->appendChild(new DOMElement('dNTimDI', $this->getDNTimDI()));
+      $res->appendChild(new DOMElement('dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
+      $res->appendChild(new DOMElement('dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
+      $res->appendChild(new DOMElement('dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
+      $res->appendChild(new DOMElement('iTipoDocAso', $this->getITipDocAso()));
+      $res->appendChild(new DOMElement('dDTipoDocAso', $this->getDDTipoDocAso()));
+    }
+
+    if (isset($this->dNTimDI)) {
+      $res->appendChild(new DOMElement('dFecEmiDI', $this->getDFecEmiDI()->format('Y-m-d')));
+    }
+
+    if(isset($this->dNumComRet))
+      $res->appendChild(new DOMElement('dNumComRet', $this->getDNumComRet()));
+    
+    if(isset($this->dNumResCF))
+      $res->appendChild(new DOMElement('dNumResCF', $this->getDNumResCF()));
+
+    if($this->iTipDocAso == 3) {
+      $res->appendChild(new DOMElement('iTipCons', $this->getITipCons()));
+      $res->appendChild(new DOMElement('dDesTipCons', $this->getDDesTipCons()));
+    }
+
+    if ($this->iTipDocAso == 3 && $this->iTipCons == 2) {
+      $res->appendChild(new DOMElement('dNumCons', $this->getDNumCons()));
+      $res->appendChild(new DOMElement('dNumControl', $this->getDNumControl()));
+    }
+
     return $res;
   }
 }

@@ -6,6 +6,7 @@ use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 
 /**
  * Nodo Id:     E640
@@ -14,8 +15,12 @@ use SimpleXMLElement;
  * Nodo Padre:  E600
  */
 
-class GPagCred
+class GPagCred extends BaseSifenField
 {
+
+  public const CONDICION_CREDITO_PLAZO = 1;	
+  public const CONDICION_CREDITO_CUOTA = 2;
+
   public int    $iCondCred;  // E641 - 1          - 1-1   - Condición de la  operación a crédito
   public String $dDCondCred; // E642 - 5-6        - 1-1   - Descripción de la Condición de la operación a crédito
   public String $dPlazoCre;  // E643 - 2-15       - 0-1   - Plazo del crédito
@@ -167,8 +172,10 @@ class GPagCred
    *
    * @return int
    */
-  public function getDCuotas(): int
+  public function getDCuotas(): ?int
   {
+    if(!isset($this->dMonEnt))
+      return null;
     return $this->dCuotas;
   }
 
@@ -177,8 +184,10 @@ class GPagCred
    *
    * @return int
    */
-  public function getDMonEnt(): int
+  public function getDMonEnt(): ?int
   {
+    if(!isset($this->dMonEnt))
+      return null;
     return $this->dMonEnt;
   } 
 
@@ -213,13 +222,9 @@ class GPagCred
     $res->setICondCred(intval($node->iCondCred));
     $res->setDDCondCred(strval($node->dDCondCred));
     if(isset($node->dPlazoCre))
-    {
       $res->setDPlazoCre(strval($node->dPlazoCre));
-    }
     if(isset($node->dCuotas))
-    {
       $res->setDCuotas(intval($node->dCuotas));
-    }
     if(isset($node->dMonEnt))
     {
       $res->setDMonEnt(intval($node->dMonEnt));
@@ -242,14 +247,14 @@ class GPagCred
   {
     $res = $doc->createElement('gPagCred');
     $res->appendChild(new DOMElement('iCondCred', $this->getICondCred()));
-    $res->appendChild(new DOMElement('dDCondCred', $this->getICondCred()));
+    $res->appendChild(new DOMElement('dDCondCred', $this->getDDCondCred()));
     if ($this->iCondCred == 1) {
       $res->appendChild(new DOMElement('dPlazoCre', $this->getDPlazoCre()));
     } else if ($this->iCondCred == 2) {
       $res->appendChild(new DOMElement('dCuotas', $this->getDCuotas()));
     }
-
-    $res->appendChild(new DOMElement('dMonEnt', $this->getDMonEnt()));
+    if(isset($this->dMonEnt))
+      $res->appendChild(new DOMElement('dMonEnt', $this->getDMonEnt()));
     ///children
     // $res->appendChild($this->gCuotas->toDOMElement());
     if(isset($this->gCuotas) && count($this->gCuotas) > 0)

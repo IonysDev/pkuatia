@@ -258,34 +258,22 @@ class GDtipDE extends BaseSifenField
     $res = $doc->createElement('gDtipDE');
     if(isset($this->gCamFE))
       $res->appendChild($this->gCamFE->toDOMElement($doc));
-    if(isset($this->gCamAE)){
-      $importNode = $doc->importNode($this->gCamAE->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
-    if(isset($this->gCamNCDE)){
-      $importNode = $doc->importNode($this->gCamNCDE->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
-    if(isset($this->gCamNRE)){
-      $importNode = $doc->importNode($this->gCamNRE->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
-    if(isset($this->gCamCond)){
-      $importNode = $doc->importNode($this->gCamCond->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
-    if(isset($this->gCamItem)){
+    if(isset($this->gCamAE))
+      $res->appendChild($this->gCamAE->toDOMElement($doc));
+    if(isset($this->gCamNCDE))
+      $res->appendChild($this->gCamNCDE->toDOMElement($doc));
+    if(isset($this->gCamNRE))
+      $res->appendChild($this->gCamNRE->toDOMElement($doc));
+    if(isset($this->gCamCond))
+      $res->appendChild($this->gCamCond->toDOMElement($doc));
+    if(isset($this->gCamItem)) {
       foreach($this->gCamItem as $gCamItem)
         $res->appendChild($gCamItem->toDOMElement($doc));
     }
-    if(isset($this->gCamEsp)){
-      $importNode = $doc->importNode($this->gCamEsp->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
-    if(isset($this->gTransp)){
-      $importNode = $doc->importNode($this->gTransp->toDOMElement(), true);
-      $res->appendChild($importNode);
-    }
+    if(isset($this->gCamEsp))
+      $res->appendChild($this->gCamEsp->toDOMElement($doc));
+    if(isset($this->gTransp))
+      $res->appendChild($this->gTransp->toDOMElement($doc));
     return $res;
   }
 

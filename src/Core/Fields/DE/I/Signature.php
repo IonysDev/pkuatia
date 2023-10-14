@@ -163,13 +163,13 @@ class Signature extends BaseSifenField
   }
 
   /**
-   * Convierte el objeto a un DOMElement
+   * Convierte este objeto Signature a un DOMElement que puede ser insertado en el DOMDocument especificado.
    * 
-   * @param DOMDocument $doc Documento DOM donde se agregará el nodo
+   * @param DOMDocument $doc DOMDocument que crea el DOMElement
    *
-   * @return \DOMElement Nodo DOM que representa el objeto
+   * @return DOMElement Objeto Signature convertido a DOMElement
    */
-  public function toDOMElement(DOMDocument $doc): \DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $this->toHeaderOnlyDOMElement($doc);
     $res->appendChild($this->SignedInfo->toDOMElement($doc));

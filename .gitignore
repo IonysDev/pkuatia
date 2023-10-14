@@ -11,3 +11,8 @@ test/*.key
 *.dat.*
 test/80121930-2.pem.key
 test/PKuatiaDId.json
+test/EnvioLoteFEGarelli.php
+test/ConsultaLoteGarelli.php
+test/qr.txt
+
+test/qr.txt
