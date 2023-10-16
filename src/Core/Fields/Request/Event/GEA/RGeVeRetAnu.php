@@ -28,7 +28,7 @@ class RGeVeRetAnu
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param String $Id
    *
@@ -43,7 +43,7 @@ class RGeVeRetAnu
 
 
   /**
-   * Set the value of dNumTimRet
+   * Establece el valor de dNumTimRet
    *
    * @param int $dNumTimRet
    *
@@ -58,7 +58,7 @@ class RGeVeRetAnu
 
 
   /**
-   * Set the value of dEstRet
+   * Establece el valor de dEstRet
    *
    * @param String $dEstRet
    *
@@ -73,7 +73,7 @@ class RGeVeRetAnu
 
 
   /**
-   * Set the value of dPunExpRet
+   * Establece el valor de dPunExpRet
    *
    * @param String $dPunExpRet
    *
@@ -88,7 +88,7 @@ class RGeVeRetAnu
 
 
   /**
-   * Set the value of dNumDocRet
+   * Establece el valor de dNumDocRet
    *
    * @param String $dNumDocRet
    *
@@ -102,7 +102,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Set the value of dCodConRet
+   * Establece el valor de dCodConRet
    *
    * @param String $dCodConRet
    *
@@ -117,7 +117,7 @@ class RGeVeRetAnu
 
 
   /**
-   * Set the value of dFeEmiRet
+   * Establece el valor de dFeEmiRet
    *
    * @param DateTime $dFeEmiRet
    *
@@ -132,7 +132,7 @@ class RGeVeRetAnu
 
 
   /**
-   * Set the value of dFecAnRet
+   * Establece el valor de dFecAnRet
    *
    * @param DateTime $dFecAnRet
    *
@@ -151,7 +151,7 @@ class RGeVeRetAnu
 
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id
    *
    * @return String
    */
@@ -161,7 +161,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Get the value of dNumTimRet
+   * Obtiene el valor de dNumTimRet
    *
    * @return int
    */
@@ -171,7 +171,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Get the value of dEstRet
+   * Obtiene el valor de dEstRet
    *
    * @return String
    */
@@ -181,7 +181,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Get the value of dPunExpRet
+   * Obtiene el valor de dPunExpRet
    *
    * @return String
    */
@@ -191,7 +191,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Get the value of dNumDocRet
+   * Obtiene el valor de dNumDocRet
    *
    * @return String
    */
@@ -201,7 +201,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Get the value of dCodConRet
+   * Obtiene el valor de dCodConRet
    *
    * @return String
    */
@@ -211,7 +211,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Get the value of dFeEmiRet
+   * Obtiene el valor de dFeEmiRet
    *
    * @return DateTime
    */
@@ -221,7 +221,7 @@ class RGeVeRetAnu
   }
 
   /**
-   * Get the value of dFecAnRet
+   * Obtiene el valor de dFecAnRet
    *
    * @return DateTime
    */

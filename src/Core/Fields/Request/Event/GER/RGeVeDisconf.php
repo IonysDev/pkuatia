@@ -21,7 +21,7 @@ class RGeVeDisconf
 
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param String $Id
    *
@@ -36,7 +36,7 @@ class RGeVeDisconf
 
 
   /**
-   * Set the value of mOtEve
+   * Establece el valor de mOtEve
    *
    * @param String $mOtEve
    *
@@ -56,7 +56,7 @@ class RGeVeDisconf
 
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id
    *
    * @return String
    */
@@ -66,7 +66,7 @@ class RGeVeDisconf
   }
 
   /**
-   * Get the value of mOtEve
+   * Obtiene el valor de mOtEve
    *
    * @return String
    */

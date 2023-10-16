@@ -23,7 +23,7 @@ class REnvioLote {
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Set the value of dId
+     * Establece el valor de dId
      *
      * @param int $dId
      *
@@ -38,7 +38,7 @@ class REnvioLote {
 
 
     /**
-     * Set the value of xDE
+     * Establece el valor de xDE
      *
      * @param string $xDE
      *
@@ -58,7 +58,7 @@ class REnvioLote {
     
 
     /**
-     * Get the value of dId
+     * Obtiene el valor de dId
      *
      * @return int
      */
@@ -68,7 +68,7 @@ class REnvioLote {
     }
 
     /**
-     * Get the value of xDE
+     * Obtiene el valor de xDE
      *
      * @return string
      */

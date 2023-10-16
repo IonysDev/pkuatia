@@ -29,7 +29,7 @@ class GCamCarg
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of cUniMedTotVol
+   * Establece el valor de cUniMedTotVol
    *
    * @param int $cUniMedTotVol
    *
@@ -43,7 +43,7 @@ class GCamCarg
   }
 
   /**
-   * Set the value of dDesUniMedTotVol
+   * Establece el valor de dDesUniMedTotVol
    * 
    * @param String $dDesUniMedTotVol
    * 
@@ -63,7 +63,7 @@ class GCamCarg
   }
 
   /**
-   * Set the value of dTotVolMerc
+   * Establece el valor de dTotVolMerc
    *
    * @param int $dTotVolMerc
    *
@@ -78,7 +78,7 @@ class GCamCarg
 
 
   /**
-   * Set the value of cUniMedTotPes
+   * Establece el valor de cUniMedTotPes
    *
    * @param int $cUniMedTotPes
    *
@@ -92,7 +92,7 @@ class GCamCarg
   }
 
   /**
-   * Set the value of dDesUniMedTotPes
+   * Establece el valor de dDesUniMedTotPes
    *
    * @param String $dDesUniMedTotPes
    *
@@ -112,7 +112,7 @@ class GCamCarg
   }
 
   /**
-   * Set the value of dTotPesMerc
+   * Establece el valor de dTotPesMerc
    *
    * @param int $dTotPesMerc
    *
@@ -127,7 +127,7 @@ class GCamCarg
 
 
   /**
-   * Set the value of iCarCarga
+   * Establece el valor de iCarCarga
    *
    * @param int $iCarCarga
    *
@@ -148,7 +148,7 @@ class GCamCarg
   }
 
   /**
-   * Set the value of dDesCarCarga
+   * Establece el valor de dDesCarCarga
    * 
    * @param String $dDesCarCarga
    * 
@@ -173,7 +173,7 @@ class GCamCarg
 
 
   /**
-   * Get the value of cUniMedTotVol
+   * Obtiene el valor de cUniMedTotVol
    *
    * @return int
    */
@@ -194,7 +194,7 @@ class GCamCarg
 
 
   /**
-   * Get the value of dTotVolMerc
+   * Obtiene el valor de dTotVolMerc
    *
    * @return int
    */
@@ -204,7 +204,7 @@ class GCamCarg
   }
 
   /**
-   * Get the value of cUniMedTotPes
+   * Obtiene el valor de cUniMedTotPes
    *
    * @return int
    */
@@ -226,7 +226,7 @@ class GCamCarg
   }
 
   /**
-   * Get the value of dTotPesMerc
+   * Obtiene el valor de dTotPesMerc
    *
    * @return int
    */
@@ -236,7 +236,7 @@ class GCamCarg
   }
 
   /**
-   * Get the value of iCarCarga
+   * Obtiene el valor de iCarCarga
    *
    * @return int
    */

@@ -26,7 +26,7 @@ class RResEnviLoteDe
 
 
     /**
-     * Set the value of dFechProc
+     * Establece el valor de dFechProc
      *
      * @param DateTime $dFechProc
      *
@@ -41,7 +41,7 @@ class RResEnviLoteDe
 
 
     /**
-     * Set the value of dCodRes
+     * Establece el valor de dCodRes
      *
      * @param int $dCodRes
      *
@@ -56,7 +56,7 @@ class RResEnviLoteDe
 
 
     /**
-     * Set the value of dMsgRes
+     * Establece el valor de dMsgRes
      *
      * @param string $dMsgRes
      *
@@ -71,7 +71,7 @@ class RResEnviLoteDe
 
 
     /**
-     * Set the value of dProtConsLote
+     * Establece el valor de dProtConsLote
      *
      * @param int $dProtConsLote
      *
@@ -86,7 +86,7 @@ class RResEnviLoteDe
 
 
     /**
-     * Set the value of dTpoProces
+     * Establece el valor de dTpoProces
      *
      * @param int $dTpoProces
      *
@@ -105,7 +105,7 @@ class RResEnviLoteDe
 
 
     /**
-     * Get the value of dFechProc
+     * Obtiene el valor de dFechProc
      *
      * @return DateTime
      */
@@ -115,7 +115,7 @@ class RResEnviLoteDe
     }
 
     /**
-     * Get the value of dCodRes
+     * Obtiene el valor de dCodRes
      *
      * @return int
      */
@@ -125,7 +125,7 @@ class RResEnviLoteDe
     }
 
     /**
-     * Get the value of dMsgRes
+     * Obtiene el valor de dMsgRes
      *
      * @return string
      */
@@ -135,7 +135,7 @@ class RResEnviLoteDe
     }
 
     /**
-     * Get the value of dProtConsLote
+     * Obtiene el valor de dProtConsLote
      *
      * @return int
      */
@@ -145,7 +145,7 @@ class RResEnviLoteDe
     }
 
     /**
-     * Get the value of dTpoProces
+     * Obtiene el valor de dTpoProces
      *
      * @return int
      */

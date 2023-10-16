@@ -27,7 +27,7 @@ class GCamEnt
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dDirLocEnt
+   * Establece el valor de dDirLocEnt
    *
    * @param String $dDirLocEnt
    *
@@ -42,7 +42,7 @@ class GCamEnt
 
 
   /**
-   * Set the value of dNumCasEnt
+   * Establece el valor de dNumCasEnt
    *
    * @param int $dNumCasEnt
    *
@@ -57,7 +57,7 @@ class GCamEnt
 
 
   /**
-   * Set the value of dComp1Ent
+   * Establece el valor de dComp1Ent
    *
    * @param String $dComp1Ent
    *
@@ -72,7 +72,7 @@ class GCamEnt
 
 
   /**
-   * Set the value of dComp2Ent
+   * Establece el valor de dComp2Ent
    *
    * @param String $dComp2Ent
    *
@@ -87,7 +87,7 @@ class GCamEnt
 
 
   /**
-   * Set the value of cDepEnt
+   * Establece el valor de cDepEnt
    *
    * @param int $cDepEnt
    *
@@ -102,7 +102,7 @@ class GCamEnt
 
 
   /**
-   * Set the value of cDisEnt
+   * Establece el valor de cDisEnt
    *
    * @param int $cDisEnt
    *
@@ -117,7 +117,7 @@ class GCamEnt
 
 
   /**
-   * Set the value of cCiuEnt
+   * Establece el valor de cCiuEnt
    *
    * @param int $cCiuEnt
    *
@@ -132,7 +132,7 @@ class GCamEnt
 
 
   /**
-   * Set the value of dTelEnt
+   * Establece el valor de dTelEnt
    *
    * @param String $dTelEnt
    *
@@ -150,7 +150,7 @@ class GCamEnt
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dDirLocEnt
+   * Obtiene el valor de dDirLocEnt
    *
    * @return String
    */
@@ -160,7 +160,7 @@ class GCamEnt
   }
 
   /**
-   * Get the value of dNumCasEnt
+   * Obtiene el valor de dNumCasEnt
    *
    * @return int
    */
@@ -170,7 +170,7 @@ class GCamEnt
   }
 
   /**
-   * Get the value of dComp1Ent
+   * Obtiene el valor de dComp1Ent
    *
    * @return String
    */
@@ -180,7 +180,7 @@ class GCamEnt
   }
 
   /**
-   * Get the value of dComp2Ent
+   * Obtiene el valor de dComp2Ent
    *
    * @return String
    */
@@ -190,7 +190,7 @@ class GCamEnt
   }
 
   /**
-   * Get the value of cDepEnt
+   * Obtiene el valor de cDepEnt
    *
    * @return int
    */
@@ -211,7 +211,7 @@ class GCamEnt
 
 
   /**
-   * Get the value of cDisEnt
+   * Obtiene el valor de cDisEnt
    *
    * @return int
    */
@@ -231,7 +231,7 @@ class GCamEnt
   }
 
   /**
-   * Get the value of cCiuEnt
+   * Obtiene el valor de cCiuEnt
    *
    * @return int
    */
@@ -251,7 +251,7 @@ class GCamEnt
   }
 
   /**
-   * Get the value of dTelEnt
+   * Obtiene el valor de dTelEnt
    *
    * @return String
    */

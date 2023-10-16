@@ -87,7 +87,7 @@ class GCamFE extends BaseSifenField
   }
 
   /**
-   * Set the value of dDesIndPres
+   * Establece el valor de dDesIndPres
    *
    * @param String $dDesIndPres
    *
@@ -108,7 +108,7 @@ class GCamFE extends BaseSifenField
 
 
   /**
-   * Set the value of dFecEmNR
+   * Establece el valor de dFecEmNR
    *
    * @param DateTime $dFecEmNR
    *
@@ -122,7 +122,7 @@ class GCamFE extends BaseSifenField
 
 
   /**
-   * Set the value of gComPub
+   * Establece el valor de gComPub
    *
    * @param GCompPub $gComPub
    *
@@ -139,7 +139,7 @@ class GCamFE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iIndPres
+   * Obtiene el valor de iIndPres
    */
   public function getIIndPres(): int
   {
@@ -157,7 +157,7 @@ class GCamFE extends BaseSifenField
   }
 
   /**
-   * Get the value of dFecEmNR
+   * Obtiene el valor de dFecEmNR
    */
   public function getDFecEmNR(): DateTime
   {

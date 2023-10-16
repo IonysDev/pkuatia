@@ -15,7 +15,7 @@ class RRetEnviEventoDe
 
 
   /**
-   * Set the value of dFecProc
+   * Establece el valor de dFecProc
    *
    * @param DateTime $dFecProc
    *
@@ -30,7 +30,7 @@ class RRetEnviEventoDe
 
 
   /**
-   * Set the value of gResProcEVe
+   * Establece el valor de gResProcEVe
    *
    * @param array $gResProcEVe
    *
@@ -44,7 +44,7 @@ class RRetEnviEventoDe
   }
 
   /**
-   * Get the value of dFecProc
+   * Obtiene el valor de dFecProc
    *
    * @return DateTime
    */
@@ -54,7 +54,7 @@ class RRetEnviEventoDe
   }
 
   /**
-   * Get the value of gResProcEVe
+   * Obtiene el valor de gResProcEVe
    *
    * @return array
    */

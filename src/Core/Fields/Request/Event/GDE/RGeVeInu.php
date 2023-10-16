@@ -247,7 +247,7 @@ class RGeVeInu
   ////AGREGADO EN NOTA TECNICA
   ///////////////////////////////////////////////////////////////////////
   /**
-   * Get the value of dSerieNum
+   * Obtiene el valor de dSerieNum
    *
    * @return String
    */
@@ -257,7 +257,7 @@ class RGeVeInu
   }
 
   /**
-   * Set the value of dSerieNum
+   * Establece el valor de dSerieNum
    *
    * @param String $dSerieNum
    *

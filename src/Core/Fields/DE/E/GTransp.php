@@ -34,7 +34,7 @@ class GTransp
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iTipTrans
+   * Establece el valor de iTipTrans
    *
    * @param int $iTipTrans
    *
@@ -49,7 +49,7 @@ class GTransp
 
 
   /**
-   * Set the value of iModTrans
+   * Establece el valor de iModTrans
    *
    * @param int $iModTrans
    *
@@ -64,7 +64,7 @@ class GTransp
 
 
   /**
-   * Set the value of iRespFlete
+   * Establece el valor de iRespFlete
    *
    * @param int $iRespFlete
    *
@@ -79,7 +79,7 @@ class GTransp
 
 
   /**
-   * Set the value of cCondNeg
+   * Establece el valor de cCondNeg
    *
    * @param String $cCondNeg
    *
@@ -94,7 +94,7 @@ class GTransp
 
 
   /**
-   * Set the value of dNuManif
+   * Establece el valor de dNuManif
    *
    * @param String $dNuManif
    *
@@ -109,7 +109,7 @@ class GTransp
 
 
   /**
-   * Set the value of dNuDespImp
+   * Establece el valor de dNuDespImp
    *
    * @param String $dNuDespImp
    *
@@ -124,7 +124,7 @@ class GTransp
 
 
   /**
-   * Set the value of dIniTras
+   * Establece el valor de dIniTras
    *
    * @param DateTime $dIniTras
    *
@@ -139,7 +139,7 @@ class GTransp
 
 
   /**
-   * Set the value of dFinTras
+   * Establece el valor de dFinTras
    *
    * @param DateTime $dFinTras
    *
@@ -154,7 +154,7 @@ class GTransp
 
 
   /**
-   * Set the value of cPaisDest
+   * Establece el valor de cPaisDest
    *
    * @param String $cPaisDest
    *
@@ -173,7 +173,7 @@ class GTransp
 
 
   /**
-   * Get the value of iTipTrans
+   * Obtiene el valor de iTipTrans
    *
    * @return int
    */
@@ -205,7 +205,7 @@ class GTransp
   }
 
   /**
-   * Get the value of iModTrans
+   * Obtiene el valor de iModTrans
    *
    * @return int
    */
@@ -247,7 +247,7 @@ class GTransp
 
 
   /**
-   * Get the value of iRespFlete
+   * Obtiene el valor de iRespFlete
    *
    * @return int
    */
@@ -257,7 +257,7 @@ class GTransp
   }
 
   /**
-   * Get the value of cCondNeg
+   * Obtiene el valor de cCondNeg
    *
    * @return String
    */
@@ -305,7 +305,7 @@ class GTransp
   }
 
   /**
-   * Get the value of dNuManif
+   * Obtiene el valor de dNuManif
    *
    * @return String
    */
@@ -315,7 +315,7 @@ class GTransp
   }
 
   /**
-   * Get the value of dNuDespImp
+   * Obtiene el valor de dNuDespImp
    *
    * @return String
    */
@@ -325,7 +325,7 @@ class GTransp
   }
 
   /**
-   * Get the value of dIniTras
+   * Obtiene el valor de dIniTras
    *
    * @return DateTime
    */
@@ -335,7 +335,7 @@ class GTransp
   }
 
   /**
-   * Get the value of dFinTras
+   * Obtiene el valor de dFinTras
    *
    * @return DateTime
    */
@@ -345,7 +345,7 @@ class GTransp
   }
 
   /**
-   * Get the value of cPaisDest
+   * Obtiene el valor de cPaisDest
    *
    * @return String
    */
@@ -442,7 +442,7 @@ class GTransp
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of gCamSal
+   * Obtiene el valor de gCamSal
    *
    * @return GCamSal
    */
@@ -452,7 +452,7 @@ class GTransp
   }
 
   /**
-   * Set the value of gCamSal
+   * Establece el valor de gCamSal
    *
    * @param GCamSal $gCamSal
    *
@@ -466,7 +466,7 @@ class GTransp
   }
 
   /**
-   * Get the value of gVehTras
+   * Obtiene el valor de gVehTras
    *
    * @return GVehTras
    */
@@ -476,7 +476,7 @@ class GTransp
   }
 
   /**
-   * Set the value of gVehTras
+   * Establece el valor de gVehTras
    *
    * @param GVehTras $gVehTras
    *
@@ -490,7 +490,7 @@ class GTransp
   }
 
   /**
-   * Get the value of gCamTrans
+   * Obtiene el valor de gCamTrans
    *
    * @return GCamTrans
    */
@@ -500,7 +500,7 @@ class GTransp
   }
 
   /**
-   * Set the value of gCamTrans
+   * Establece el valor de gCamTrans
    *
    * @param GCamTrans $gCamTrans
    *
@@ -514,7 +514,7 @@ class GTransp
   }
 
   /**
-   * Get the value of gCamEnt
+   * Obtiene el valor de gCamEnt
    *
    * @return GCamEnt
    */
@@ -524,7 +524,7 @@ class GTransp
   }
 
   /**
-   * Set the value of gCamEnt
+   * Establece el valor de gCamEnt
    *
    * @param GCamEnt $gCamEnt
    *

@@ -40,7 +40,7 @@ class GCamDEAsoc extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iTipDocAso
+   * Establece el valor de iTipDocAso
    *
    * @param int $iTipDocAso
    *
@@ -67,7 +67,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Set the value of dDesTipDocAso
+   * Establece el valor de dDesTipDocAso
    * 
    * @param String $dDesTipDocAso
    * 
@@ -88,7 +88,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dCdCDERef
+   * Establece el valor de dCdCDERef
    *
    * @param String $dCdCDERef
    *
@@ -103,7 +103,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dNTimDI
+   * Establece el valor de dNTimDI
    *
    * @param int $dNTimDI
    *
@@ -118,7 +118,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dEstDocAso
+   * Establece el valor de dEstDocAso
    *
    * @param String $dEstDocAso
    *
@@ -133,7 +133,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dPExpDocAso
+   * Establece el valor de dPExpDocAso
    *
    * @param String $dPExpDocAso
    *
@@ -148,7 +148,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumDocAso
+   * Establece el valor de dNumDocAso
    *
    * @param String $dNumDocAso
    *
@@ -163,7 +163,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of iTipoDocAso
+   * Establece el valor de iTipoDocAso
    *
    * @param int $iTipoDocAso
    *
@@ -196,7 +196,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Set the value of dDTipoDocAso
+   * Establece el valor de dDTipoDocAso
    * 
    * @param String $dDTipoDocAso
    * 
@@ -217,7 +217,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dFecEmiDI
+   * Establece el valor de dFecEmiDI
    *
    * @param DateTime $dFecEmiDI
    *
@@ -232,7 +232,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumComRet
+   * Establece el valor de dNumComRet
    *
    * @param String $dNumComRet
    *
@@ -247,7 +247,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumResCF
+   * Establece el valor de dNumResCF
    *
    * @param String $dNumResCF
    *
@@ -261,7 +261,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Set the value of iTipCons
+   * Establece el valor de iTipCons
    *
    * @param int $iTipCons
    *
@@ -285,7 +285,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Set the value of dDesTipCons
+   * Establece el valor de dDesTipCons
    * 
    * @param String $dDesTipCons
    * 
@@ -306,7 +306,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumCons
+   * Establece el valor de dNumCons
    *
    * @param int $dNumCons
    *
@@ -321,7 +321,7 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumControl
+   * Establece el valor de dNumControl
    *
    * @param String $dNumControl
    *
@@ -339,7 +339,7 @@ class GCamDEAsoc extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iTipDocAso
+   * Obtiene el valor de iTipDocAso
    *
    * @return int
    */
@@ -349,7 +349,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dDesTipDocAso
+   * Obtiene el valor de dDesTipDocAso
    *
    * @return String
    */
@@ -359,7 +359,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dCdCDERef
+   * Obtiene el valor de dCdCDERef
    *
    * @return String
    */
@@ -369,7 +369,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNTimDI
+   * Obtiene el valor de dNTimDI
    *
    * @return int
    */
@@ -379,7 +379,7 @@ class GCamDEAsoc extends BaseSifenField
   }  
 
   /**
-   * Get the value of dEstDocAso
+   * Obtiene el valor de dEstDocAso
    *
    * @return String
    */
@@ -389,7 +389,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dPExpDocAso
+   * Obtiene el valor de dPExpDocAso
    *
    * @return String
    */
@@ -399,7 +399,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumDocAso
+   * Obtiene el valor de dNumDocAso
    *
    * @return String
    */
@@ -409,7 +409,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of iTipoDocAso
+   * Obtiene el valor de iTipoDocAso
    *
    * @return int
    */
@@ -419,7 +419,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dDTipoDocAso
+   * Obtiene el valor de dDTipoDocAso
    * 
    * @return String
    */
@@ -429,7 +429,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dFecEmiDI
+   * Obtiene el valor de dFecEmiDI
    *
    * @return DateTime
    */
@@ -439,7 +439,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumComRet
+   * Obtiene el valor de dNumComRet
    *
    * @return String
    */
@@ -449,7 +449,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumResCF
+   * Obtiene el valor de dNumResCF
    *
    * @return String
    */
@@ -459,7 +459,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of iTipCons
+   * Obtiene el valor de iTipCons
    *
    * @return int
    */
@@ -469,7 +469,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dDesTipCons
+   * Obtiene el valor de dDesTipCons
    *
    * @return String
    */
@@ -479,7 +479,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumCons
+   * Obtiene el valor de dNumCons
    *
    * @return int
    */
@@ -489,7 +489,7 @@ class GCamDEAsoc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumControl
+   * Obtiene el valor de dNumControl
    *
    * @return String
    */

@@ -17,7 +17,7 @@ class RResEnviConsLoteDe
   public array $gResProcLote; ///CRSch05 - Grupo Resultado del procesamiento del lote - Sin longitud - 0-50
 
   /**
-   * Set the value of dFecProc
+   * Establece el valor de dFecProc
    *
    * @param DateTime $dFecProc
    *
@@ -32,7 +32,7 @@ class RResEnviConsLoteDe
 
 
   /**
-   * Set the value of dCodResLot
+   * Establece el valor de dCodResLot
    *
    * @param int $dCodResLot
    *
@@ -47,7 +47,7 @@ class RResEnviConsLoteDe
 
 
   /**
-   * Set the value of dMsgResLot
+   * Establece el valor de dMsgResLot
    *
    * @param string $dMsgResLot
    *
@@ -62,7 +62,7 @@ class RResEnviConsLoteDe
 
 
   /**
-   * Set the value of gResProcLote
+   * Establece el valor de gResProcLote
    *
    * @param array $gResProcLote
    *
@@ -76,7 +76,7 @@ class RResEnviConsLoteDe
   }
 
   /**
-   * Get the value of dFecProc
+   * Obtiene el valor de dFecProc
    *
    * @return DateTime
    */
@@ -86,7 +86,7 @@ class RResEnviConsLoteDe
   }
 
   /**
-   * Get the value of dCodResLot
+   * Obtiene el valor de dCodResLot
    *
    * @return int
    */
@@ -96,7 +96,7 @@ class RResEnviConsLoteDe
   }
 
   /**
-   * Get the value of dMsgResLot
+   * Obtiene el valor de dMsgResLot
    *
    * @return string
    */
@@ -106,7 +106,7 @@ class RResEnviConsLoteDe
   }
 
   /**
-   * Get the value of gResProcLote
+   * Obtiene el valor de gResProcLote
    *
    * @return array
    */

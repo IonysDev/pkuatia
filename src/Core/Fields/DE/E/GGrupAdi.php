@@ -25,7 +25,7 @@ class GGrupAdi
 
 
   /**
-   * Set the value of ciclo
+   * Establece el valor de ciclo
    *
    * @param String $ciclo
    *
@@ -40,7 +40,7 @@ class GGrupAdi
 
 
   /**
-   * Set the value of dFecIniC
+   * Establece el valor de dFecIniC
    *
    * @param ?DateTime $dFecIniC
    *
@@ -57,7 +57,7 @@ class GGrupAdi
 
 
   /**
-   * Set the value of dFecFinC
+   * Establece el valor de dFecFinC
    *
    * @param ?DateTime $dFecFinC
    *
@@ -72,7 +72,7 @@ class GGrupAdi
 
 
   /**
-   * Set the value of dVencPag
+   * Establece el valor de dVencPag
    *
    * @param ?DateTime $dVencPag
    *
@@ -87,7 +87,7 @@ class GGrupAdi
 
 
   /**
-   * Set the value of dContrato
+   * Establece el valor de dContrato
    *
    * @param String $dContrato
    *
@@ -102,7 +102,7 @@ class GGrupAdi
 
 
   /**
-   * Set the value of dSaltAnt
+   * Establece el valor de dSaltAnt
    *
    * @param ?float $dSaltAnt
    *
@@ -121,7 +121,7 @@ class GGrupAdi
   
 
   /**
-   * Get the value of ciclo
+   * Obtiene el valor de ciclo
    *
    * @return String
    */
@@ -131,7 +131,7 @@ class GGrupAdi
   }
 
   /**
-   * Get the value of dFecIniC
+   * Obtiene el valor de dFecIniC
    *
    * @return ?DateTime
    */
@@ -141,7 +141,7 @@ class GGrupAdi
   }
 
   /**
-   * Get the value of dFecFinC
+   * Obtiene el valor de dFecFinC
    *
    * @return ?DateTime
    */
@@ -151,7 +151,7 @@ class GGrupAdi
   }
 
   /**
-   * Get the value of dVencPag
+   * Obtiene el valor de dVencPag
    *
    * @return ?DateTime
    */
@@ -161,7 +161,7 @@ class GGrupAdi
   }
 
   /**
-   * Get the value of dContrato
+   * Obtiene el valor de dContrato
    *
    * @return String
    */
@@ -171,7 +171,7 @@ class GGrupAdi
   }
 
   /**
-   * Get the value of dSaltAnt
+   * Obtiene el valor de dSaltAnt
    *
    * @return ?float
    */

@@ -22,7 +22,7 @@ class TgResProcEVe
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dEstRes
+   * Establece el valor de dEstRes
    *
    * @param String $dEstRes
    *
@@ -37,7 +37,7 @@ class TgResProcEVe
 
 
   /**
-   * Set the value of dProtAut
+   * Establece el valor de dProtAut
    *
    * @param int $dProtAut
    *
@@ -52,7 +52,7 @@ class TgResProcEVe
 
 
   /**
-   * Set the value of id
+   * Establece el valor de id
    *
    * @param int $id
    *
@@ -67,7 +67,7 @@ class TgResProcEVe
 
 
   /**
-   * Set the value of gResProc
+   * Establece el valor de gResProc
    *
    * @param TgResProc $gResProc
    *
@@ -87,7 +87,7 @@ class TgResProcEVe
 
 
   /**
-   * Get the value of dEstRes
+   * Obtiene el valor de dEstRes
    *
    * @return String
    */
@@ -97,7 +97,7 @@ class TgResProcEVe
   }
 
   /**
-   * Get the value of dProtAut
+   * Obtiene el valor de dProtAut
    *
    * @return int
    */
@@ -107,7 +107,7 @@ class TgResProcEVe
   }
 
   /**
-   * Get the value of id
+   * Obtiene el valor de id
    *
    * @return int
    */
@@ -117,7 +117,7 @@ class TgResProcEVe
   }
 
   /**
-   * Get the value of gResProc
+   * Obtiene el valor de gResProc
    *
    * @return TgResProc
    */

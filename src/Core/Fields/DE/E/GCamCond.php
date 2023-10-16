@@ -36,7 +36,7 @@ class GCamCond extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iCondOpe
+   * Establece el valor de iCondOpe
    *
    * @param int $iCondOpe
    *
@@ -74,7 +74,7 @@ class GCamCond extends BaseSifenField
   }
 
   /**
-   * Set the value of gPaConEIni
+   * Establece el valor de gPaConEIni
    *
    * @param array $gPaConEIni
    *
@@ -88,7 +88,7 @@ class GCamCond extends BaseSifenField
   }
 
   /**
-   * Set the value of gPagCred
+   * Establece el valor de gPagCred
    *
    * @param GPagCred $gPagCred
    *
@@ -106,7 +106,7 @@ class GCamCond extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iCondOpe
+   * Obtiene el valor de iCondOpe
    *
    * @return int
    */
@@ -126,7 +126,7 @@ class GCamCond extends BaseSifenField
   }
 
   /**
-   * Get the value of gPaConEIni
+   * Obtiene el valor de gPaConEIni
    *
    * @return array
    */
@@ -136,7 +136,7 @@ class GCamCond extends BaseSifenField
   }
 
   /**
-   * Get the value of gPagCred
+   * Obtiene el valor de gPagCred
    *
    * @return GPagCred
    */

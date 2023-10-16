@@ -82,7 +82,7 @@ class GCamEsp extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of gGrupEner
+   * Obtiene el valor de gGrupEner
    *
    * @return GGrupEner
    */
@@ -92,7 +92,7 @@ class GCamEsp extends BaseSifenField
   }
 
   /**
-   * Get the value of gGrupSeg
+   * Obtiene el valor de gGrupSeg
    *
    * @return GGrupSeg
    */
@@ -102,7 +102,7 @@ class GCamEsp extends BaseSifenField
   }
 
   /**
-   * Get the value of gGrupSup
+   * Obtiene el valor de gGrupSup
    *
    * @return GGrupSup
    */
@@ -112,7 +112,7 @@ class GCamEsp extends BaseSifenField
   }
 
   /**
-   * Get the value of gGrupAdi
+   * Obtiene el valor de gGrupAdi
    *
    * @return GGrupAdi
    */

@@ -26,7 +26,7 @@ class GCamSal
   ///SETTERS
   ///////////////////////////////////////////////////////////////////////
   /**
-   * Set the value of dDirLocSal
+   * Establece el valor de dDirLocSal
    *
    * @param String $dDirLocSal
    *
@@ -41,7 +41,7 @@ class GCamSal
 
 
   /**
-   * Set the value of dNumCasSal
+   * Establece el valor de dNumCasSal
    *
    * @param int $dNumCasSal
    *
@@ -56,7 +56,7 @@ class GCamSal
 
 
   /**
-   * Set the value of dComp1Sal
+   * Establece el valor de dComp1Sal
    *
    * @param String $dComp1Sal
    *
@@ -71,7 +71,7 @@ class GCamSal
 
 
   /**
-   * Set the value of dComp2Sal
+   * Establece el valor de dComp2Sal
    *
    * @param String $dComp2Sal
    *
@@ -86,7 +86,7 @@ class GCamSal
 
 
   /**
-   * Set the value of cDepSal
+   * Establece el valor de cDepSal
    *
    * @param int $cDepSal
    *
@@ -101,7 +101,7 @@ class GCamSal
 
 
   /**
-   * Set the value of cDisSal
+   * Establece el valor de cDisSal
    *
    * @param int $cDisSal
    *
@@ -116,7 +116,7 @@ class GCamSal
 
 
   /**
-   * Set the value of cCiuSal
+   * Establece el valor de cCiuSal
    *
    * @param int $cCiuSal
    *
@@ -131,7 +131,7 @@ class GCamSal
 
 
   /**
-   * Set the value of dTelSal
+   * Establece el valor de dTelSal
    *
    * @param String $dTelSal
    *
@@ -149,7 +149,7 @@ class GCamSal
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dDirLocSal
+   * Obtiene el valor de dDirLocSal
    *
    * @return String
    */
@@ -159,7 +159,7 @@ class GCamSal
   }
 
   /**
-   * Get the value of dNumCasSal
+   * Obtiene el valor de dNumCasSal
    *
    * @return int
    */
@@ -169,7 +169,7 @@ class GCamSal
   }
 
   /**
-   * Get the value of dComp1Sal
+   * Obtiene el valor de dComp1Sal
    *
    * @return String
    */
@@ -179,7 +179,7 @@ class GCamSal
   }
 
   /**
-   * Get the value of dComp2Sal
+   * Obtiene el valor de dComp2Sal
    *
    * @return String
    */
@@ -189,7 +189,7 @@ class GCamSal
   }
 
   /**
-   * Get the value of cDepSal
+   * Obtiene el valor de cDepSal
    *
    * @return int
    */
@@ -210,7 +210,7 @@ class GCamSal
   }
 
   /**
-   * Get the value of cDisSal
+   * Obtiene el valor de cDisSal
    *
    * @return int
    */
@@ -230,7 +230,7 @@ class GCamSal
   }
 
   /**
-   * Get the value of cCiuSal
+   * Obtiene el valor de cCiuSal
    *
    * @return int
    */
@@ -251,7 +251,7 @@ class GCamSal
   }
 
   /**
-   * Get the value of dTelSal
+   * Obtiene el valor de dTelSal
    *
    * @return String
    */

@@ -22,7 +22,7 @@ class REve
     ///Setters
 
     /**
-     * Set the value of Id
+     * Establece el valor de Id
      *
      * @param int $Id
      *
@@ -37,7 +37,7 @@ class REve
 
 
     /**
-     * Set the value of dFecFirma
+     * Establece el valor de dFecFirma
      *
      * @param DateTime $dFecFirma
      *
@@ -52,7 +52,7 @@ class REve
 
 
     /**
-     * Set the value of dVerFor
+     * Establece el valor de dVerFor
      *
      * @param int $dVerFor
      *
@@ -67,7 +67,7 @@ class REve
 
 
     /**
-     * Set the value of gGroupTiEvt
+     * Establece el valor de gGroupTiEvt
      *
      * @param TgGroupTiEvt $gGroupTiEvt
      *
@@ -84,7 +84,7 @@ class REve
     
 
     /**
-     * Get the value of Id
+     * Obtiene el valor de Id
      *
      * @return int
      */
@@ -94,7 +94,7 @@ class REve
     }
 
     /**
-     * Get the value of dFecFirma
+     * Obtiene el valor de dFecFirma
      *
      * @return DateTime
      */
@@ -104,7 +104,7 @@ class REve
     }
 
     /**
-     * Get the value of dVerFor
+     * Obtiene el valor de dVerFor
      *
      * @return int
      */
@@ -114,7 +114,7 @@ class REve
     }
 
     /**
-     * Get the value of gGroupTiEvt
+     * Obtiene el valor de gGroupTiEvt
      *
      * @return TgGroupTiEvt
      */

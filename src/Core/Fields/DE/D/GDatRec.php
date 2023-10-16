@@ -241,7 +241,7 @@ class GDatRec extends BaseSifenField
     // Getters
     ///////////////////////////////////////////////////////////////////////
     /**
-     * Get the value of iNatRec
+     * Obtiene el valor de iNatRec
      */
     public function getINatRec(): ?int
     {
@@ -252,7 +252,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of iTiOpe
+     * Obtiene el valor de iTiOpe
      */
     public function getITiOpe() : ?int
     {
@@ -263,7 +263,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of cPaisRec
+     * Obtiene el valor de cPaisRec
      *
      * @return String
      */
@@ -290,7 +290,7 @@ class GDatRec extends BaseSifenField
 
 
     /**
-     * Get the value of iTiContRec
+     * Obtiene el valor de iTiContRec
      */
     public function getITiContRec() : ?int
     {
@@ -314,7 +314,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dDVRec
+     * Obtiene el valor de dDVRec
      *
      * @return int
      */
@@ -324,7 +324,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of iTipIDRec
+     * Obtiene el valor de iTipIDRec
      */
     public function getITipIDRec() : ?int
     {
@@ -371,7 +371,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dNumIDRec
+     * Obtiene el valor de dNumIDRec
      *
      * @return String
      */
@@ -384,7 +384,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dNomRec
+     * Obtiene el valor de dNomRec
      *
      * @return String
      */
@@ -394,7 +394,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dNomFanRec
+     * Obtiene el valor de dNomFanRec
      *
      * @return String
      */
@@ -407,7 +407,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dDirRec 
+     * Obtiene el valor de dDirRec 
      *
      * @return String
      */
@@ -420,7 +420,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dTelRec
+     * Obtiene el valor de dTelRec
      *
      * @return String
      */
@@ -430,7 +430,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dCelRec
+     * Obtiene el valor de dCelRec
      *
      * @return String
      */
@@ -440,7 +440,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dEmailRec
+     * Obtiene el valor de dEmailRec
      *
      * @return String
      */
@@ -450,7 +450,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dCodCliente
+     * Obtiene el valor de dCodCliente
      *
      * @return String
      */
@@ -460,7 +460,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of dNumCasRec
+     * Obtiene el valor de dNumCasRec
      *
      * @return int
      */
@@ -470,7 +470,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of cDepRec
+     * Obtiene el valor de cDepRec
      *
      * @return int
      */
@@ -490,7 +490,7 @@ class GDatRec extends BaseSifenField
     }
 
     /**
-     * Get the value of cDisRec
+     * Obtiene el valor de cDisRec
      *
      * @return int
      */
@@ -511,7 +511,7 @@ class GDatRec extends BaseSifenField
 
 
     /**
-     * Get the value of cCiuRec
+     * Obtiene el valor de cCiuRec
      *
      * @return int
      */

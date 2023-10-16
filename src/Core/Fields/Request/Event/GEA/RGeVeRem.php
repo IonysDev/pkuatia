@@ -20,7 +20,7 @@ class RGeVeRem
 
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param String $Id
    *
@@ -38,7 +38,7 @@ class RGeVeRem
    ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id
    *
    * @return String
    */

@@ -15,7 +15,7 @@ class GResProcLote
 
 
   /**
-   * Set the value of id
+   * Establece el valor de id
    *
    * @param string $id
    *
@@ -30,7 +30,7 @@ class GResProcLote
 
 
   /**
-   * Set the value of dEstRes
+   * Establece el valor de dEstRes
    *
    * @param string $dEstRes
    *
@@ -45,7 +45,7 @@ class GResProcLote
 
 
   /**
-   * Set the value of dProtAut
+   * Establece el valor de dProtAut
    *
    * @param string $dProtAut
    *
@@ -62,7 +62,7 @@ class GResProcLote
 
 
   /**
-   * Get the value of id
+   * Obtiene el valor de id
    *
    * @return string
    */
@@ -72,7 +72,7 @@ class GResProcLote
   }
 
   /**
-   * Get the value of dEstRes
+   * Obtiene el valor de dEstRes
    *
    * @return string
    */
@@ -82,7 +82,7 @@ class GResProcLote
   }
 
   /**
-   * Get the value of dProtAut
+   * Obtiene el valor de dProtAut
    *
    * @return string
    */
@@ -92,7 +92,7 @@ class GResProcLote
   }
 
   /**
-   * Get the value of gResProc
+   * Obtiene el valor de gResProc
    *
    * @return array
    */
@@ -103,7 +103,7 @@ class GResProcLote
 
 
   /**
-   * Set the value of gResProc
+   * Establece el valor de gResProc
    *
    * @param array $gResProc
    *

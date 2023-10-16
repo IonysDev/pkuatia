@@ -21,7 +21,7 @@ class REnviConsLoteDe
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dId
+   * Establece el valor de dId
    *
    * @param int $dId
    *
@@ -36,7 +36,7 @@ class REnviConsLoteDe
 
 
   /**
-   * Set the value of dProtConsLote
+   * Establece el valor de dProtConsLote
    *
    * @param int $dProtConsLote
    *
@@ -55,7 +55,7 @@ class REnviConsLoteDe
   
 
   /**
-   * Get the value of dId
+   * Obtiene el valor de dId
    *
    * @return int
    */
@@ -65,7 +65,7 @@ class REnviConsLoteDe
   }
 
   /**
-   * Get the value of dProtConsLote
+   * Obtiene el valor de dProtConsLote
    *
    * @return int
    */

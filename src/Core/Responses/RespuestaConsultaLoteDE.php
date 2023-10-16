@@ -15,7 +15,7 @@ class RespuestaConsultaLoteDE
   ///SETTERS
   ///////////////////////////////////////////////////////////////////////
   /**
-   * Set the value of dFecProd
+   * Establece el valor de dFecProd
    *
    * @param String $dFecProd
    *
@@ -30,7 +30,7 @@ class RespuestaConsultaLoteDE
 
 
   /**
-   * Set the value of dCodResLot
+   * Establece el valor de dCodResLot
    *
    * @param String $dCodResLot
    *
@@ -45,7 +45,7 @@ class RespuestaConsultaLoteDE
 
 
   /**
-   * Set the value of dMsgResLot
+   * Establece el valor de dMsgResLot
    *
    * @param String $dMsgResLot
    *
@@ -65,7 +65,7 @@ class RespuestaConsultaLoteDE
 
 
   /**
-   * Get the value of dFecProd
+   * Obtiene el valor de dFecProd
    *
    * @return String
    */
@@ -75,7 +75,7 @@ class RespuestaConsultaLoteDE
   }
 
   /**
-   * Get the value of dCodResLot
+   * Obtiene el valor de dCodResLot
    *
    * @return String
    */
@@ -85,7 +85,7 @@ class RespuestaConsultaLoteDE
   }
 
   /**
-   * Get the value of dMsgResLot
+   * Obtiene el valor de dMsgResLot
    *
    * @return String
    */

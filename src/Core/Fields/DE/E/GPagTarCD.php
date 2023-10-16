@@ -30,7 +30,7 @@ class GPagTarCD extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iDenTarj
+   * Establece el valor de iDenTarj
    *
    * @param int $iDenTarj
    *
@@ -91,7 +91,7 @@ class GPagTarCD extends BaseSifenField
 
 
   /**
-   * Set the value of dRSProTar
+   * Establece el valor de dRSProTar
    *
    * @param String $dRSProTar
    *
@@ -113,7 +113,7 @@ class GPagTarCD extends BaseSifenField
 
 
   /**
-   * Set the value of dRUCProTar
+   * Establece el valor de dRUCProTar
    *
    * @param String $dRUCProTar
    *
@@ -135,7 +135,7 @@ class GPagTarCD extends BaseSifenField
 
 
   /**
-   * Set the value of dDVProTar
+   * Establece el valor de dDVProTar
    *
    * @param int $dDVProTar
    *
@@ -149,7 +149,7 @@ class GPagTarCD extends BaseSifenField
 
 
   /**
-   * Set the value of iForProPa
+   * Establece el valor de iForProPa
    *
    * @param int $iForProPa
    *
@@ -166,7 +166,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Set the value of dCodAuOpe
+   * Establece el valor de dCodAuOpe
    *
    * @param int $dCodAuOpe
    *
@@ -180,7 +180,7 @@ class GPagTarCD extends BaseSifenField
 
 
   /**
-   * Set the value of dNomTit
+   * Establece el valor de dNomTit
    *
    * @param String $dNomTit
    *
@@ -202,7 +202,7 @@ class GPagTarCD extends BaseSifenField
 
 
   /**
-   * Set the value of dNumTarj
+   * Establece el valor de dNumTarj
    *
    * @param int $dNumTarj
    *
@@ -219,7 +219,7 @@ class GPagTarCD extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iDenTarj
+   * Obtiene el valor de iDenTarj
    *
    * @return int
    */
@@ -240,7 +240,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Get the value of dRSProTar
+   * Obtiene el valor de dRSProTar
    *
    * @return String
    */
@@ -250,7 +250,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Get the value of dRUCProTar
+   * Obtiene el valor de dRUCProTar
    *
    * @return String
    */
@@ -260,7 +260,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Get the value of dDVProTar
+   * Obtiene el valor de dDVProTar
    *
    * @return int
    */
@@ -270,7 +270,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Get the value of iForProPa
+   * Obtiene el valor de iForProPa
    *
    * @return int
    */
@@ -280,7 +280,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Get the value of dCodAuOpe
+   * Obtiene el valor de dCodAuOpe
    *
    * @return int
    */
@@ -290,7 +290,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Get the value of dNomTit
+   * Obtiene el valor de dNomTit
    *
    * @return String
    */
@@ -300,7 +300,7 @@ class GPagTarCD extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumTarj
+   * Obtiene el valor de dNumTarj
    *
    * @return int
    */

@@ -24,7 +24,7 @@ class RProtDe
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of id
+   * Establece el valor de id
    *
    * @param String $id
    *
@@ -39,7 +39,7 @@ class RProtDe
 
 
   /**
-   * Set the value of dFecProc
+   * Establece el valor de dFecProc
    *
    * @param DateTime $dFecProc
    *
@@ -54,7 +54,7 @@ class RProtDe
 
 
   /**
-   * Set the value of dDigVal
+   * Establece el valor de dDigVal
    *
    * @param String $dDigVal
    *
@@ -69,7 +69,7 @@ class RProtDe
 
 
   /**
-   * Set the value of dEstRes
+   * Establece el valor de dEstRes
    *
    * @param String $dEstRes
    *
@@ -84,7 +84,7 @@ class RProtDe
 
 
   /**
-   * Set the value of dProtAut
+   * Establece el valor de dProtAut
    *
    * @param String $dProtAut
    *
@@ -99,7 +99,7 @@ class RProtDe
 
 
   /**
-   * Set the value of gResProc
+   * Establece el valor de gResProc
    *
    * @param TgResProc $gResProc
    *
@@ -118,7 +118,7 @@ class RProtDe
 
 
   /**
-   * Get the value of id
+   * Obtiene el valor de id
    *
    * @return String
    */
@@ -128,7 +128,7 @@ class RProtDe
   }
 
   /**
-   * Get the value of dFecProc
+   * Obtiene el valor de dFecProc
    *
    * @return DateTime
    */
@@ -138,7 +138,7 @@ class RProtDe
   }
 
   /**
-   * Get the value of dDigVal
+   * Obtiene el valor de dDigVal
    *
    * @return String
    */
@@ -148,7 +148,7 @@ class RProtDe
   }
 
   /**
-   * Get the value of dEstRes
+   * Obtiene el valor de dEstRes
    *
    * @return String
    */
@@ -158,7 +158,7 @@ class RProtDe
   }
 
   /**
-   * Get the value of dProtAut
+   * Obtiene el valor de dProtAut
    *
    * @return String
    */
@@ -168,7 +168,7 @@ class RProtDe
   }
 
   /**
-   * Get the value of gResProc
+   * Obtiene el valor de gResProc
    *
    * @return GResProc
    */

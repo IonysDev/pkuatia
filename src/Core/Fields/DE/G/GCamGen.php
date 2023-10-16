@@ -24,7 +24,7 @@ class GCamGen
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dOrdCompra
+   * Establece el valor de dOrdCompra
    *
    * @param String $dOrdCompra
    *
@@ -45,7 +45,7 @@ class GCamGen
 
 
   /**
-   * Set the value of dOrdVta
+   * Establece el valor de dOrdVta
    *
    * @param String $dOrdVta
    *
@@ -66,7 +66,7 @@ class GCamGen
 
 
   /**
-   * Set the value of dAsiento
+   * Establece el valor de dAsiento
    *
    * @param String $dAsiento
    *
@@ -96,7 +96,7 @@ class GCamGen
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dOrdCompra
+   * Obtiene el valor de dOrdCompra
    *
    * @return String
    */
@@ -106,7 +106,7 @@ class GCamGen
   }
 
   /**
-   * Get the value of dOrdVta
+   * Obtiene el valor de dOrdVta
    *
    * @return String
    */
@@ -116,7 +116,7 @@ class GCamGen
   }
 
   /**
-   * Get the value of dAsiento
+   * Obtiene el valor de dAsiento
    *
    * @return String
    */
@@ -126,7 +126,7 @@ class GCamGen
   }
 
   /**
-   * Get the value of gCamCarg
+   * Obtiene el valor de gCamCarg
    *
    * @return GCamCarg
    */

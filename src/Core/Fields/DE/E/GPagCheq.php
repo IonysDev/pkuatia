@@ -23,7 +23,7 @@ class GPagCheq extends BaseSifenField
 
 
   /**
-   * Set the value of dNumCheq
+   * Establece el valor de dNumCheq
    *
    * @param String $dNumCheq
    *
@@ -38,7 +38,7 @@ class GPagCheq extends BaseSifenField
 
 
   /**
-   * Set the value of dBcoEmi
+   * Establece el valor de dBcoEmi
    *
    * @param String $dBcoEmi
    *
@@ -57,7 +57,7 @@ class GPagCheq extends BaseSifenField
 
 
   /**
-   * Get the value of dNumCheq
+   * Obtiene el valor de dNumCheq
    *
    * @return String
    */
@@ -67,7 +67,7 @@ class GPagCheq extends BaseSifenField
   }
 
   /**
-   * Get the value of dBcoEmi
+   * Obtiene el valor de dBcoEmi
    *
    * @return String
    */

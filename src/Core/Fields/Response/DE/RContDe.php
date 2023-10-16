@@ -20,7 +20,7 @@ class RContDe
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of rDe
+   * Establece el valor de rDe
    *
    * @param RDE $rDe
    *
@@ -35,7 +35,7 @@ class RContDe
 
 
   /**
-   * Set the value of dProtAut
+   * Establece el valor de dProtAut
    *
    * @param String $dProtAut
    *
@@ -50,7 +50,7 @@ class RContDe
 
 
   /**
-   * Set the value of rContEv
+   * Establece el valor de rContEv
    *
    * @param RContEv $rContEv
    *
@@ -70,7 +70,7 @@ class RContDe
 
 
   /**
-   * Get the value of rDe
+   * Obtiene el valor de rDe
    *
    * @return RDE
    */
@@ -80,7 +80,7 @@ class RContDe
   }
 
   /**
-   * Get the value of dProtAut
+   * Obtiene el valor de dProtAut
    *
    * @return String
    */
@@ -90,7 +90,7 @@ class RContDe
   }
 
   /**
-   * Get the value of rContEv
+   * Obtiene el valor de rContEv
    *
    * @return RContEv
    */

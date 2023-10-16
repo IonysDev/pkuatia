@@ -13,7 +13,7 @@ class TxContenEv
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of rContEv
+   * Establece el valor de rContEv
    *
    * @param RContEv $rContEv
    *
@@ -31,7 +31,7 @@ class TxContenEv
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of rContEv
+   * Obtiene el valor de rContEv
    *
    * @return RContEv
    */

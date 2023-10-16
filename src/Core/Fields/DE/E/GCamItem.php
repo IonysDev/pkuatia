@@ -99,7 +99,7 @@ class GCamItem extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dCodInt
+   * Establece el valor de dCodInt
    *
    * @param String $dCodInt
    *
@@ -114,7 +114,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dParAranc
+   * Establece el valor de dParAranc
    *
    * @param int $dParAranc
    *
@@ -129,7 +129,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dNCM
+   * Establece el valor de dNCM
    *
    * @param int $dNCM
    *
@@ -144,7 +144,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dDncpG
+   * Establece el valor de dDncpG
    *
    * @param String $dDncpG
    *
@@ -159,7 +159,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dDncpE
+   * Establece el valor de dDncpE
    *
    * @param String $dDncpE
    *
@@ -174,7 +174,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dGtin
+   * Establece el valor de dGtin
    *
    * @param int $dGtin
    *
@@ -189,7 +189,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dGtinPq
+   * Establece el valor de dGtinPq
    *
    * @param int $dGtinPq
    *
@@ -204,7 +204,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dDesProSer
+   * Establece el valor de dDesProSer
    *
    * @param String $dDesProSer
    *
@@ -219,7 +219,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of cUniMed
+   * Establece el valor de cUniMed
    *
    * @param int $cUniMed
    *
@@ -233,7 +233,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Set the value of dDesUniMed
+   * Establece el valor de dDesUniMed
    * 
    * @param String $dDesUniMed
    * 
@@ -254,7 +254,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dCantProSer
+   * Establece el valor de dCantProSer
    *
    * @param int $dCantProSer
    *
@@ -269,7 +269,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of cPaisOrig
+   * Establece el valor de cPaisOrig
    *
    * @param String $cPaisOrig
    *
@@ -283,7 +283,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Set the value of dDesPaisOrig
+   * Establece el valor de dDesPaisOrig
    * 
    * @param String $dDesPaisOrig
    * 
@@ -304,7 +304,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dInfItem
+   * Establece el valor de dInfItem
    *
    * @param String $dInfItem
    *
@@ -319,7 +319,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of cRelMerc
+   * Establece el valor de cRelMerc
    *
    * @param int $cRelMerc
    *
@@ -343,7 +343,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Set the value of dDesRelMerc
+   * Establece el valor de dDesRelMerc
    * 
    * @param String $dDesRelMerc
    * 
@@ -364,7 +364,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dCanQuiMer
+   * Establece el valor de dCanQuiMer
    *
    * @param int $dCanQuiMer
    *
@@ -379,7 +379,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dPorQuiMer
+   * Establece el valor de dPorQuiMer
    *
    * @param int $dPorQuiMer
    *
@@ -394,7 +394,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Set the value of dCDCAnticipo
+   * Establece el valor de dCDCAnticipo
    *
    * @param int $dCDCAnticipo
    *
@@ -408,7 +408,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Set the value of gValorItem
+   * Establece el valor de gValorItem
    * 
    * @param GValorItem $gValorItem
    * 
@@ -421,7 +421,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Set the value of gCamIVa
+   * Establece el valor de gCamIVa
    * 
    * @param GCamIVA $gCamIVA
    * 
@@ -434,7 +434,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Set the value of gRasMerc
+   * Establece el valor de gRasMerc
    * 
    * @param GRasMerc $gRasMerc
    * 
@@ -447,7 +447,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Set the value of gVehNuevo
+   * Establece el valor de gVehNuevo
    * 
    * @param GVehNuevo $gVehNuevo
    * 
@@ -464,7 +464,7 @@ class GCamItem extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dCodInt
+   * Obtiene el valor de dCodInt
    *
    * @return String
    */
@@ -474,7 +474,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dParAranc
+   * Obtiene el valor de dParAranc
    *
    * @return int
    */
@@ -487,7 +487,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dNCM
+   * Obtiene el valor de dNCM
    *
    * @return int
    */
@@ -500,7 +500,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dDncpG
+   * Obtiene el valor de dDncpG
    *
    * @return String
    */
@@ -510,7 +510,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dDncpE
+   * Obtiene el valor de dDncpE
    *
    * @return String
    */
@@ -520,7 +520,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dGtin
+   * Obtiene el valor de dGtin
    *
    * @return int
    */
@@ -530,7 +530,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dGtinPq
+   * Obtiene el valor de dGtinPq
    *
    * @return int
    */
@@ -540,7 +540,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dDesProSer
+   * Obtiene el valor de dDesProSer
    *
    * @return String
    */
@@ -550,7 +550,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of cUniMed
+   * Obtiene el valor de cUniMed
    *
    * @return int
    */
@@ -570,7 +570,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dCantProSer
+   * Obtiene el valor de dCantProSer
    *
    * @return int
    */
@@ -580,7 +580,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of cPaisOrig
+   * Obtiene el valor de cPaisOrig
    *
    * @return String
    */
@@ -601,7 +601,7 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Get the value of dInfItem
+   * Obtiene el valor de dInfItem
    *
    * @return String
    */
@@ -611,7 +611,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of cRelMerc
+   * Obtiene el valor de cRelMerc
    *
    * @return int
    */
@@ -631,7 +631,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dCanQuiMer
+   * Obtiene el valor de dCanQuiMer
    *
    * @return String
    */
@@ -641,7 +641,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dPorQuiMer
+   * Obtiene el valor de dPorQuiMer
    *
    * @return String
    */
@@ -651,7 +651,7 @@ class GCamItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dCDCAnticipo
+   * Obtiene el valor de dCDCAnticipo
    *
    * @return String
    */

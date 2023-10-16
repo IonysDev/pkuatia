@@ -19,7 +19,7 @@ class GResProc
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dCodRes
+   * Establece el valor de dCodRes
    *
    * @param int $dCodRes
    *
@@ -34,7 +34,7 @@ class GResProc
 
 
   /**
-   * Set the value of dMsgRes
+   * Establece el valor de dMsgRes
    *
    * @param String $dMsgRes
    *
@@ -52,7 +52,7 @@ class GResProc
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dCodRes
+   * Obtiene el valor de dCodRes
    *
    * @return int
    */
@@ -62,7 +62,7 @@ class GResProc
   }
 
   /**
-   * Get the value of dMsgRes
+   * Obtiene el valor de dMsgRes
    *
    * @return String
    */

@@ -18,7 +18,7 @@ class GCamNCDE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iMotEmi
+   * Establece el valor de iMotEmi
    *
    * @param int $iMotEmi
    *
@@ -36,7 +36,7 @@ class GCamNCDE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iMotEmi
+   * Obtiene el valor de iMotEmi
    *
    * @return int
    */

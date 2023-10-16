@@ -33,7 +33,7 @@ class GRasMerc extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dNumLote
+   * Establece el valor de dNumLote
    *
    * @param int $dNumLote
    *
@@ -48,7 +48,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dVencMerc
+   * Establece el valor de dVencMerc
    *
    * @param DateTime $dVencMerc
    *
@@ -63,7 +63,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dNSerie
+   * Establece el valor de dNSerie
    *
    * @param String $dNSerie
    *
@@ -78,7 +78,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumPedi
+   * Establece el valor de dNumPedi
    *
    * @param String $dNumPedi
    *
@@ -93,7 +93,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumSegui
+   * Establece el valor de dNumSegui
    *
    * @param String $dNumSegui
    *
@@ -108,7 +108,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dNomImp
+   * Establece el valor de dNomImp
    *
    * @param String $dNomImp
    *
@@ -123,7 +123,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dDirImp
+   * Establece el valor de dDirImp
    *
    * @param String $dDirImp
    *
@@ -138,7 +138,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumFir
+   * Establece el valor de dNumFir
    *
    * @param String $dNumFir
    *
@@ -153,7 +153,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumReg
+   * Establece el valor de dNumReg
    *
    * @param String $dNumReg
    *
@@ -168,7 +168,7 @@ class GRasMerc extends BaseSifenField
 
 
   /**
-   * Set the value of dNumRegEntCom
+   * Establece el valor de dNumRegEntCom
    *
    * @param String $dNumRegEntCom
    *
@@ -186,7 +186,7 @@ class GRasMerc extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dNumLote
+   * Obtiene el valor de dNumLote
    *
    * @return int
    */
@@ -196,7 +196,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dVencMerc
+   * Obtiene el valor de dVencMerc
    *
    * @return DateTime
    */
@@ -206,7 +206,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNSerie
+   * Obtiene el valor de dNSerie
    *
    * @return String
    */
@@ -216,7 +216,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumPedi
+   * Obtiene el valor de dNumPedi
    *
    * @return String
    */
@@ -226,7 +226,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumSegui
+   * Obtiene el valor de dNumSegui
    *
    * @return String
    */
@@ -236,7 +236,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNomImp
+   * Obtiene el valor de dNomImp
    *
    * @return String
    */
@@ -246,7 +246,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dDirImp
+   * Obtiene el valor de dDirImp
    *
    * @return String
    */
@@ -256,7 +256,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumFir
+   * Obtiene el valor de dNumFir
    *
    * @return String
    */
@@ -266,7 +266,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumReg
+   * Obtiene el valor de dNumReg
    *
    * @return String
    */
@@ -276,7 +276,7 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Get the value of dNumRegEntCom
+   * Obtiene el valor de dNumRegEntCom
    *
    * @return String
    */

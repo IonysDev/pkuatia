@@ -35,7 +35,7 @@ class GCamIVA extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iAfecIVA
+   * Establece el valor de iAfecIVA
    *
    * @param int $iAfecIVA
    *
@@ -79,7 +79,7 @@ class GCamIVA extends BaseSifenField
 
 
   /**
-   * Set the value of dPropIVA
+   * Establece el valor de dPropIVA
    *
    * @param String $dPropIVA
    *
@@ -94,7 +94,7 @@ class GCamIVA extends BaseSifenField
 
 
   /**
-   * Set the value of dTasaIVA
+   * Establece el valor de dTasaIVA
    *
    * @param int $dTasaIVA
    *
@@ -109,7 +109,7 @@ class GCamIVA extends BaseSifenField
 
 
   /**
-   * Set the value of dBasGravIVA
+   * Establece el valor de dBasGravIVA
    *
    * @param String $dBasGravIVA
    *
@@ -125,7 +125,7 @@ class GCamIVA extends BaseSifenField
 
 
   /**
-   * Set the value of dLiqIVAItem
+   * Establece el valor de dLiqIVAItem
    *
    * @param String $dLiqIVAItem
    *
@@ -144,7 +144,7 @@ class GCamIVA extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iAfecIVA
+   * Obtiene el valor de iAfecIVA
    *
    * @return int
    */
@@ -165,7 +165,7 @@ class GCamIVA extends BaseSifenField
   }
 
   /**
-   * Get the value of dPropIVA
+   * Obtiene el valor de dPropIVA
    *
    * @return String
    */
@@ -175,7 +175,7 @@ class GCamIVA extends BaseSifenField
   }
 
   /**
-   * Get the value of dTasaIVA
+   * Obtiene el valor de dTasaIVA
    *
    * @return int
    */
@@ -185,7 +185,7 @@ class GCamIVA extends BaseSifenField
   }
 
   /**
-   * Get the value of dBasGravIVA
+   * Obtiene el valor de dBasGravIVA
    *
    * @return String
    */
@@ -195,7 +195,7 @@ class GCamIVA extends BaseSifenField
   }
 
   /**
-   * Get the value of dLiqIVAItem
+   * Obtiene el valor de dLiqIVAItem
    *
    * @return String
    */
@@ -289,7 +289,7 @@ class GCamIVA extends BaseSifenField
   }
 
   /**
-   * Get the value of dBasExe
+   * Obtiene el valor de dBasExe
    *
    * @return String
    */
@@ -302,7 +302,7 @@ class GCamIVA extends BaseSifenField
   }
 
   /**
-   * Set the value of dBasExe
+   * Establece el valor de dBasExe
    *
    * @param String $dBasExe
    *

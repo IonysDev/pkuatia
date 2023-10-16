@@ -20,7 +20,7 @@ class GCamNRE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iMotEmiNR
+   * Establece el valor de iMotEmiNR
    *
    * @param int $iMotEmiNR
    *
@@ -34,7 +34,7 @@ class GCamNRE
   }
 
   /**
-   * Set the value of iRespEmiNR
+   * Establece el valor de iRespEmiNR
    *
    * @param int $iRespEmiNR
    *
@@ -50,7 +50,7 @@ class GCamNRE
 
 
   /**
-   * Set the value of dKmR
+   * Establece el valor de dKmR
    *
    * @param int $dKmR
    *
@@ -65,7 +65,7 @@ class GCamNRE
 
 
   /**
-   * Set the value of dFecEm
+   * Establece el valor de dFecEm
    *
    * @param DateTime $dFecEm
    *
@@ -83,7 +83,7 @@ class GCamNRE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iMotEmiNR
+   * Obtiene el valor de iMotEmiNR
    *
    * @return int
    */
@@ -153,7 +153,7 @@ class GCamNRE
   }
 
   /**
-   * Get the value of iRespEmiNR
+   * Obtiene el valor de iRespEmiNR
    *
    * @return int
    */
@@ -193,7 +193,7 @@ class GCamNRE
   }
 
   /**
-   * Get the value of dKmR
+   * Obtiene el valor de dKmR
    *
    * @return int
    */
@@ -203,7 +203,7 @@ class GCamNRE
   }
 
   /**
-   * Get the value of dFecEm
+   * Obtiene el valor de dFecEm
    *
    * @return DateTime
    */

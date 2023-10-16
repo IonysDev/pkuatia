@@ -29,7 +29,7 @@ class RGeVeDescon
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param String $Id
    *
@@ -44,7 +44,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of dFecEmi
+   * Establece el valor de dFecEmi
    *
    * @param DateTime $dFecEmi
    *
@@ -59,7 +59,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of dFecRecep
+   * Establece el valor de dFecRecep
    *
    * @param DateTime $dFecRecep
    *
@@ -74,7 +74,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of iTipRec
+   * Establece el valor de iTipRec
    *
    * @param int $iTipRec
    *
@@ -89,7 +89,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of dNomRec
+   * Establece el valor de dNomRec
    *
    * @param String $dNomRec
    *
@@ -104,7 +104,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of dRucRec
+   * Establece el valor de dRucRec
    *
    * @param String $dRucRec
    *
@@ -119,7 +119,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of dDVRec
+   * Establece el valor de dDVRec
    *
    * @param int $dDVRec
    *
@@ -134,7 +134,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of dTipIDRec
+   * Establece el valor de dTipIDRec
    *
    * @param int $dTipIDRec
    *
@@ -149,7 +149,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of dNumID
+   * Establece el valor de dNumID
    *
    * @param String $dNumID
    *
@@ -164,7 +164,7 @@ class RGeVeDescon
 
 
   /**
-   * Set the value of mOtEve
+   * Establece el valor de mOtEve
    *
    * @param String $mOtEve
    *
@@ -183,7 +183,7 @@ class RGeVeDescon
 
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id
    *
    * @return String
    */
@@ -193,7 +193,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of dFecEmi
+   * Obtiene el valor de dFecEmi
    *
    * @return DateTime
    */
@@ -203,7 +203,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of dFecRecep
+   * Obtiene el valor de dFecRecep
    *
    * @return DateTime
    */
@@ -213,7 +213,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of iTipRec
+   * Obtiene el valor de iTipRec
    *
    * @return int
    */
@@ -223,7 +223,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of dNomRec
+   * Obtiene el valor de dNomRec
    *
    * @return String
    */
@@ -233,7 +233,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of dRucRec
+   * Obtiene el valor de dRucRec
    *
    * @return String
    */
@@ -243,7 +243,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of dDVRec
+   * Obtiene el valor de dDVRec
    *
    * @return int
    */
@@ -253,7 +253,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of dTipIDRec
+   * Obtiene el valor de dTipIDRec
    *
    * @return int
    */
@@ -263,7 +263,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of dNumID
+   * Obtiene el valor de dNumID
    *
    * @return String
    */
@@ -273,7 +273,7 @@ class RGeVeDescon
   }
 
   /**
-   * Get the value of mOtEve
+   * Obtiene el valor de mOtEve
    *
    * @return String
    */

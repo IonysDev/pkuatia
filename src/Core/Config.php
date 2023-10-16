@@ -81,7 +81,7 @@ class Config
     // Setters
 
     /**
-     * Set the value of env
+     * Establece el valor de env
      *
      * @param String $env
      *
@@ -95,7 +95,7 @@ class Config
     }
 
     /**
-     * Set the value of certificateFormat
+     * Establece el valor de certificateFormat
      *
      * @param String $certificateFormat
      *
@@ -109,7 +109,7 @@ class Config
     }
 
     /**
-     * Set the value of certificateFilePath
+     * Establece el valor de certificateFilePath
      *
      * @param String $certificateFilePath
      *
@@ -123,7 +123,7 @@ class Config
     }
 
     /**
-     * Set the value of privateKeyFilePath
+     * Establece el valor de privateKeyFilePath
      *
      * @param String $privateKeyFilePath
      *
@@ -137,7 +137,7 @@ class Config
     }
 
     /**
-     * Set the value of privateKeyPassphrase
+     * Establece el valor de privateKeyPassphrase
      *
      * @param String $privateKeyPassphrase
      *
@@ -151,7 +151,7 @@ class Config
     }
 
     /**
-     * Set the value of idCsc
+     * Establece el valor de idCsc
      *
      * @param String $idCsc
      *
@@ -165,7 +165,7 @@ class Config
     }
 
     /**
-     * Set the value of csc
+     * Establece el valor de csc
      *
      * @param String $csc
      *
@@ -179,7 +179,7 @@ class Config
     }
 
     /**
-     * Set the value of dIdFilePath
+     * Establece el valor de dIdFilePath
      *
      * @param String $dIdFilePath
      *

@@ -22,7 +22,7 @@ class RGeVeCCFF
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param String $Id
    *
@@ -37,7 +37,7 @@ class RGeVeCCFF
 
 
   /**
-   * Set the value of dNumTraCCFF
+   * Establece el valor de dNumTraCCFF
    *
    * @param String $dNumTraCCFF
    *
@@ -52,7 +52,7 @@ class RGeVeCCFF
 
 
   /**
-   * Set the value of dFeAceTraCCFF
+   * Establece el valor de dFeAceTraCCFF
    *
    * @param DateTime $dFeAceTraCCFF
    *
@@ -70,7 +70,7 @@ class RGeVeCCFF
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id
    *
    * @return String
    */
@@ -80,7 +80,7 @@ class RGeVeCCFF
   }
 
   /**
-   * Get the value of dNumTraCCFF
+   * Obtiene el valor de dNumTraCCFF
    *
    * @return String
    */
@@ -90,7 +90,7 @@ class RGeVeCCFF
   }
 
   /**
-   * Get the value of dFeAceTraCCFF
+   * Obtiene el valor de dFeAceTraCCFF
    *
    * @return DateTime
    */

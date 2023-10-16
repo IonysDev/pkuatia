@@ -32,7 +32,7 @@ class GCamTrans
    ///////////////////////////////////////////////////////////////////////
 
    /**
-    * Set the value of iNatTrans
+    * Establece el valor de iNatTrans
     *
     * @param int $iNatTrans
     *
@@ -47,7 +47,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dNomTrans
+    * Establece el valor de dNomTrans
     *
     * @param String $dNomTrans
     *
@@ -62,7 +62,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dRucTrans
+    * Establece el valor de dRucTrans
     *
     * @param String $dRucTrans
     *
@@ -77,7 +77,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dDVTrans
+    * Establece el valor de dDVTrans
     *
     * @param int $dDVTrans
     *
@@ -92,7 +92,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of iTipIDTrans
+    * Establece el valor de iTipIDTrans
     *
     * @param int $iTipIDTrans
     *
@@ -107,7 +107,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dNumIDTrans
+    * Establece el valor de dNumIDTrans
     *
     * @param String $dNumIDTrans
     *
@@ -122,7 +122,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of cNacTrans
+    * Establece el valor de cNacTrans
     *
     * @param String $cNacTrans
     *
@@ -137,7 +137,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dNumIDChof
+    * Establece el valor de dNumIDChof
     *
     * @param String $dNumIDChof
     *
@@ -152,7 +152,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dNomChof
+    * Establece el valor de dNomChof
     *
     * @param String $dNomChof
     *
@@ -167,7 +167,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dDomFisc
+    * Establece el valor de dDomFisc
     *
     * @param String $dDomFisc
     *
@@ -182,7 +182,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dDirChof
+    * Establece el valor de dDirChof
     *
     * @param String $dDirChof
     *
@@ -197,7 +197,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dNombAg
+    * Establece el valor de dNombAg
     *
     * @param String $dNombAg
     *
@@ -212,7 +212,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dRucAg
+    * Establece el valor de dRucAg
     *
     * @param String $dRucAg
     *
@@ -227,7 +227,7 @@ class GCamTrans
 
 
    /**
-    * Set the value of dDVAg
+    * Establece el valor de dDVAg
     *
     * @param String $dDVAg
     *
@@ -241,7 +241,7 @@ class GCamTrans
    }
 
    /**
-    * Set the value of dDirAge
+    * Establece el valor de dDirAge
     *
     * @param String $dDirAge
     *
@@ -259,7 +259,7 @@ class GCamTrans
    ///////////////////////////////////////////////////////////////////////
 
    /**
-    * Get the value of iNatTrans
+    * Obtiene el valor de iNatTrans
     *
     * @return int
     */
@@ -269,7 +269,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dNomTrans
+    * Obtiene el valor de dNomTrans
     *
     * @return String
     */
@@ -279,7 +279,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dRucTrans
+    * Obtiene el valor de dRucTrans
     *
     * @return String
     */
@@ -289,7 +289,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dDVTrans
+    * Obtiene el valor de dDVTrans
     *
     * @return int
     */
@@ -299,7 +299,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of iTipIDTrans
+    * Obtiene el valor de iTipIDTrans
     *
     * @return int
     */
@@ -338,7 +338,7 @@ class GCamTrans
 
 
    /**
-    * Get the value of dNumIDTrans
+    * Obtiene el valor de dNumIDTrans
     *
     * @return String
     */
@@ -348,7 +348,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of cNacTrans
+    * Obtiene el valor de cNacTrans
     *
     * @return String
     */
@@ -368,7 +368,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dNumIDChof
+    * Obtiene el valor de dNumIDChof
     *
     * @return String
     */
@@ -378,7 +378,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dNomChof
+    * Obtiene el valor de dNomChof
     *
     * @return String
     */
@@ -388,7 +388,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dDomFisc
+    * Obtiene el valor de dDomFisc
     *
     * @return String
     */
@@ -398,7 +398,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dDirChof
+    * Obtiene el valor de dDirChof
     *
     * @return String
     */
@@ -408,7 +408,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dNombAg
+    * Obtiene el valor de dNombAg
     *
     * @return String
     */
@@ -418,7 +418,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dRucAg
+    * Obtiene el valor de dRucAg
     *
     * @return String
     */
@@ -428,7 +428,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dDVAg
+    * Obtiene el valor de dDVAg
     *
     * @return String
     */
@@ -438,7 +438,7 @@ class GCamTrans
    }
 
    /**
-    * Get the value of dDirAge
+    * Obtiene el valor de dDirAge
     *
     * @return String
     */

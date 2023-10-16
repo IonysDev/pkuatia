@@ -49,7 +49,7 @@ class GGroupTiEvt
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of rGeVeCan
+   * Establece el valor de rGeVeCan
    *
    * @param TrGeVeCan $rGeVeCan
    *
@@ -64,7 +64,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeInu
+   * Establece el valor de rGeVeInu
    *
    * @param RGeVeInu $rGeVeInu
    *
@@ -79,7 +79,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeNotRec
+   * Establece el valor de rGeVeNotRec
    *
    * @param RGeVeNotRec $rGeVeNotRec
    *
@@ -94,7 +94,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeConf
+   * Establece el valor de rGeVeConf
    *
    * @param RGeVeConf $rGeVeConf
    *
@@ -109,7 +109,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeDisconf
+   * Establece el valor de rGeVeDisconf
    *
    * @param RGeVeDisconf $rGeVeDisconf
    *
@@ -124,7 +124,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeDescon
+   * Establece el valor de rGeVeDescon
    *
    * @param RGeVeDescon $rGeVeDescon
    *
@@ -139,7 +139,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeTr
+   * Establece el valor de rGeVeTr
    *
    * @param RGeVeTr $rGeVeTr
    *
@@ -154,7 +154,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeRetAce
+   * Establece el valor de rGeVeRetAce
    *
    * @param rGeVeRetAce $rGeVeRetAce
    *
@@ -168,7 +168,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeRetAnu
+   * Establece el valor de rGeVeRetAnu
    *
    * @param rGeVeRetAnu $rGeVeRetAnu
    *
@@ -182,7 +182,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeCCFF
+   * Establece el valor de rGeVeCCFF
    *
    * @param rGeVeCCFF $rGeVeCCFF
    *
@@ -196,7 +196,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeDevCCFFCue
+   * Establece el valor de rGeDevCCFFCue
    *
    * @param rGeDevCCFFCue $rGeDevCCFFCue
    *
@@ -210,7 +210,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeDevCCFFDev
+   * Establece el valor de rGeDevCCFFDev
    *
    * @param rGeDevCCFFCue $rGeDevCCFFDev
    *
@@ -224,7 +224,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeAnt
+   * Establece el valor de rGeVeAnt
    *
    * @param RGeVeAnt $rGeVeAnt
    *
@@ -238,7 +238,7 @@ class GGroupTiEvt
 
 
   /**
-   * Set the value of rGeVeRem
+   * Establece el valor de rGeVeRem
    *
    * @param RGeVeRem $rGeVeRem
    *
@@ -256,7 +256,7 @@ class GGroupTiEvt
   ///////////////////////////////////////////////////////////////////////  
 
   /**
-   * Get the value of rGeVeCan
+   * Obtiene el valor de rGeVeCan
    *
    * @return TrGeVeCan
    */
@@ -266,7 +266,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeInu
+   * Obtiene el valor de rGeVeInu
    *
    * @return RGeVeInu
    */
@@ -276,7 +276,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeNotRec
+   * Obtiene el valor de rGeVeNotRec
    *
    * @return RGeVeNotRec
    */
@@ -286,7 +286,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeConf
+   * Obtiene el valor de rGeVeConf
    *
    * @return RGeVeConf
    */
@@ -296,7 +296,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeDisconf
+   * Obtiene el valor de rGeVeDisconf
    *
    * @return RGeVeDisconf
    */
@@ -306,7 +306,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeDescon
+   * Obtiene el valor de rGeVeDescon
    *
    * @return RGeVeDescon
    */
@@ -316,7 +316,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeTr
+   * Obtiene el valor de rGeVeTr
    *
    * @return RGeVeTr
    */
@@ -326,7 +326,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeRetAce
+   * Obtiene el valor de rGeVeRetAce
    *
    * @return rGeVeRetAce
    */
@@ -336,7 +336,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeRetAnu
+   * Obtiene el valor de rGeVeRetAnu
    *
    * @return rGeVeRetAnu
    */
@@ -346,7 +346,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeCCFF
+   * Obtiene el valor de rGeVeCCFF
    *
    * @return rGeVeCCFF
    */
@@ -356,7 +356,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeDevCCFFDev
+   * Obtiene el valor de rGeDevCCFFDev
    *
    * @return RGeDevCCFFDev
    */
@@ -366,7 +366,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeAnt
+   * Obtiene el valor de rGeVeAnt
    *
    * @return RGeVeAnt
    */
@@ -376,7 +376,7 @@ class GGroupTiEvt
   }
 
   /**
-   * Get the value of rGeVeRem
+   * Obtiene el valor de rGeVeRem
    *
    * @return RGeVeRem
    */

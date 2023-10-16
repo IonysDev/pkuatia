@@ -39,7 +39,7 @@ class GDtipDE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of gCamFE
+   * Obtiene el valor de gCamFE
    *
    * @return GCamFE
    */
@@ -49,7 +49,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Set the value of gCamFE
+   * Establece el valor de gCamFE
    *
    * @param GCamFE $gCamFE
    *
@@ -63,7 +63,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Get the value of gCamAE
+   * Obtiene el valor de gCamAE
    *
    * @return GCamAE
    */
@@ -73,7 +73,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Set the value of gCamAE
+   * Establece el valor de gCamAE
    *
    * @param GCamAE $gCamAE
    *
@@ -87,7 +87,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Get the value of gCamNCDE
+   * Obtiene el valor de gCamNCDE
    *
    * @return GCamNCDE
    */
@@ -97,7 +97,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Set the value of gCamNCDE
+   * Establece el valor de gCamNCDE
    *
    * @param GCamNCDE $gCamNCDE
    *
@@ -111,7 +111,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Get the value of gCamNRE
+   * Obtiene el valor de gCamNRE
    *
    * @return GCamNRE
    */
@@ -121,7 +121,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Set the value of gCamNRE
+   * Establece el valor de gCamNRE
    *
    * @param GCamNRE $gCamNRE
    *
@@ -135,7 +135,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Get the value of gCamCond
+   * Obtiene el valor de gCamCond
    *
    * @return GCamCond
    */
@@ -145,7 +145,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Set the value of gCamCond
+   * Establece el valor de gCamCond
    *
    * @param GCamCond $gCamCond
    *
@@ -161,7 +161,7 @@ class GDtipDE extends BaseSifenField
 
 
   /**
-   * Set the value of gCamItem
+   * Establece el valor de gCamItem
    *
    * @param GCamItem $gCamItem
    *
@@ -175,7 +175,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Get the value of gCamEsp
+   * Obtiene el valor de gCamEsp
    *
    * @return GCamEsp
    */
@@ -185,7 +185,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Set the value of gCamEsp
+   * Establece el valor de gCamEsp
    *
    * @param GCamEsp $gCamEsp
    *
@@ -367,7 +367,7 @@ class GDtipDE extends BaseSifenField
 
 
   /**
-   * Get the value of gCamItem
+   * Obtiene el valor de gCamItem
    *
    * @return array
    */
@@ -377,7 +377,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Get the value of gTransp
+   * Obtiene el valor de gTransp
    *
    * @return GTransp
    */
@@ -387,7 +387,7 @@ class GDtipDE extends BaseSifenField
   }
 
   /**
-   * Set the value of gTransp
+   * Establece el valor de gTransp
    *
    * @param GTransp $gTransp
    *

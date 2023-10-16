@@ -26,7 +26,7 @@ class RResEnviConsDe
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dFecProc
+   * Establece el valor de dFecProc
    *
    * @param DateTime $dFecProc
    *
@@ -41,7 +41,7 @@ class RResEnviConsDe
 
 
   /**
-   * Set the value of dCodRes
+   * Establece el valor de dCodRes
    *
    * @param String $dCodRes
    *
@@ -56,7 +56,7 @@ class RResEnviConsDe
 
 
   /**
-   * Set the value of dMsgRes
+   * Establece el valor de dMsgRes
    *
    * @param String $dMsgRes
    *
@@ -71,7 +71,7 @@ class RResEnviConsDe
 
 
   /**
-   * Set the value of rContDe
+   * Establece el valor de rContDe
    *
    * @param RContDe $rContDe
    *
@@ -90,7 +90,7 @@ class RResEnviConsDe
 
 
   /**
-   * Get the value of dFecProc
+   * Obtiene el valor de dFecProc
    *
    * @return DateTime
    */
@@ -100,7 +100,7 @@ class RResEnviConsDe
   }
 
   /**
-   * Get the value of dCodRes
+   * Obtiene el valor de dCodRes
    *
    * @return String
    */
@@ -110,7 +110,7 @@ class RResEnviConsDe
   }
 
   /**
-   * Get the value of dMsgRes
+   * Obtiene el valor de dMsgRes
    *
    * @return String
    */
@@ -120,7 +120,7 @@ class RResEnviConsDe
   }
 
   /**
-   * Get the value of rContDe
+   * Obtiene el valor de rContDe
    *
    * @return RContDe
    */

@@ -248,7 +248,7 @@ class GCamAE
 
 
   /**
-   * Set the value of cCiuVen
+   * Establece el valor de cCiuVen
    *
    * @param int $cCiuVen
    *
@@ -263,7 +263,7 @@ class GCamAE
 
 
   /**
-   * Set the value of dDirProv
+   * Establece el valor de dDirProv
    *
    * @param String $dDirProv
    *
@@ -278,7 +278,7 @@ class GCamAE
 
 
   /**
-   * Set the value of cDepProv
+   * Establece el valor de cDepProv
    *
    * @param int $cDepProv
    *
@@ -293,7 +293,7 @@ class GCamAE
 
 
   /**
-   * Set the value of cDisProv
+   * Establece el valor de cDisProv
    *
    * @param int $cDisProv
    *
@@ -308,7 +308,7 @@ class GCamAE
 
 
   /**
-   * Set the value of cCiuProv
+   * Establece el valor de cCiuProv
    *
    * @param int $cCiuProv
    *
@@ -355,7 +355,7 @@ class GCamAE
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iNatVen
+   * Obtiene el valor de iNatVen
    */
   public function getINatVen(): int
   {
@@ -374,7 +374,7 @@ class GCamAE
 
 
   /**
-   * Get the value of iTipIDVen
+   * Obtiene el valor de iTipIDVen
    */
   public function getITipIDVen(): int
   {
@@ -394,7 +394,7 @@ class GCamAE
 
 
   /**
-   * Get the value of dNumIDVen
+   * Obtiene el valor de dNumIDVen
    */
   public function getDNumIDVen(): String
   {
@@ -402,7 +402,7 @@ class GCamAE
   }
 
   /**
-   * Get the value of dNomVen
+   * Obtiene el valor de dNomVen
    */
   public function getDNomVen(): String
   {
@@ -412,7 +412,7 @@ class GCamAE
 
 
   /**
-   * Get the value of dDirVen
+   * Obtiene el valor de dDirVen
    */
   public function getDDirVen(): String
   {
@@ -420,7 +420,7 @@ class GCamAE
   }
 
   /**
-   * Get the value of dNumCasVen
+   * Obtiene el valor de dNumCasVen
    */
   public function getDNumCasVen(): int
   {
@@ -428,7 +428,7 @@ class GCamAE
   }
 
   /**
-   * Get the value of cDepVen
+   * Obtiene el valor de cDepVen
    */
   public function getCDepVen(): int
   {
@@ -447,7 +447,7 @@ class GCamAE
 
 
   /**
-   * Get the value of cDisVen
+   * Obtiene el valor de cDisVen
    *
    * @return int
    */
@@ -467,7 +467,7 @@ class GCamAE
   }
 
   /**
-   * Get the value of cCiuVen
+   * Obtiene el valor de cCiuVen
    *
    * @return int
    */
@@ -488,7 +488,7 @@ class GCamAE
 
 
   /**
-   * Get the value of dDirProv
+   * Obtiene el valor de dDirProv
    *
    * @return String
    */
@@ -498,7 +498,7 @@ class GCamAE
   }
 
   /**
-   * Get the value of cDepProv
+   * Obtiene el valor de cDepProv
    *
    * @return int
    */
@@ -519,7 +519,7 @@ class GCamAE
 
 
   /**
-   * Get the value of cDisProv
+   * Obtiene el valor de cDisProv
    *
    * @return int
    */
@@ -539,7 +539,7 @@ class GCamAE
   }
 
   /**
-   * Get the value of cCiuProv
+   * Obtiene el valor de cCiuProv
    *
    * @return int
    */

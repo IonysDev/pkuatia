@@ -20,7 +20,7 @@ class TgResProcLote
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of id
+   * Establece el valor de id
    *
    * @param String $id
    *
@@ -35,7 +35,7 @@ class TgResProcLote
 
 
   /**
-   * Set the value of dEstRes
+   * Establece el valor de dEstRes
    *
    * @param String $dEstRes
    *
@@ -50,7 +50,7 @@ class TgResProcLote
 
 
   /**
-   * Set the value of dProtAut
+   * Establece el valor de dProtAut
    *
    * @param String $dProtAut
    *
@@ -65,7 +65,7 @@ class TgResProcLote
 
 
   /**
-   * Set the value of gResProc
+   * Establece el valor de gResProc
    *
    * @param TgResProc $gResProc
    *
@@ -83,7 +83,7 @@ class TgResProcLote
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of id
+   * Obtiene el valor de id
    *
    * @return String
    */
@@ -93,7 +93,7 @@ class TgResProcLote
   }
 
   /**
-   * Get the value of dEstRes
+   * Obtiene el valor de dEstRes
    *
    * @return String
    */
@@ -103,7 +103,7 @@ class TgResProcLote
   }
 
   /**
-   * Get the value of dProtAut
+   * Obtiene el valor de dProtAut
    *
    * @return String
    */
@@ -113,7 +113,7 @@ class TgResProcLote
   }
 
   /**
-   * Get the value of gResProc
+   * Obtiene el valor de gResProc
    *
    * @return TgResProc
    */

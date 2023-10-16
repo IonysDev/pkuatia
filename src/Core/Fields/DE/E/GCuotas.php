@@ -27,7 +27,7 @@ class GCuotas
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of cMoneCuo
+   * Establece el valor de cMoneCuo
    *
    * @param String $cMoneCuo
    *
@@ -58,7 +58,7 @@ class GCuotas
   }
 
   /**
-   * Set the value of dMonCuota
+   * Establece el valor de dMonCuota
    *
    * @param String $dMonCuota
    *
@@ -73,7 +73,7 @@ class GCuotas
   }
 
   /**
-   * Set the value of dVencCuo
+   * Establece el valor de dVencCuo
    *
    * @param DateTime $dVencCuo
    *
@@ -90,7 +90,7 @@ class GCuotas
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of cMoneCuo
+   * Obtiene el valor de cMoneCuo
    *
    * @return String
    */
@@ -110,7 +110,7 @@ class GCuotas
   }
 
   /**
-   * Get the value of dMonCuota
+   * Obtiene el valor de dMonCuota
    *
    * @return String
    */
@@ -120,7 +120,7 @@ class GCuotas
   }
 
   /**
-   * Get the value of dVencCuo
+   * Obtiene el valor de dVencCuo
    *
    * @return DateTime
    */

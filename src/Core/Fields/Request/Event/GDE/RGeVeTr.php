@@ -52,7 +52,7 @@ class RGeVeTr
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param String $Id
    *
@@ -67,7 +67,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dMotEv
+   * Establece el valor de dMotEv
    *
    * @param int $dMotEv
    *
@@ -82,7 +82,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of cDepEnt
+   * Establece el valor de cDepEnt
    *
    * @param int $cDepEnt
    *
@@ -97,7 +97,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of cDisEnt
+   * Establece el valor de cDisEnt
    *
    * @param int $cDisEnt
    *
@@ -112,7 +112,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of cCiuEnt
+   * Establece el valor de cCiuEnt
    *
    * @param int $cCiuEnt
    *
@@ -127,7 +127,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dDirEnt
+   * Establece el valor de dDirEnt
    *
    * @param String $dDirEnt
    *
@@ -142,7 +142,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dNumCas
+   * Establece el valor de dNumCas
    *
    * @param int $dNumCas
    *
@@ -157,7 +157,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dCompDir1
+   * Establece el valor de dCompDir1
    *
    * @param String $dCompDir1
    *
@@ -171,7 +171,7 @@ class RGeVeTr
   }
 
   /**
-   * Set the value of dNomChof
+   * Establece el valor de dNomChof
    *
    * @param String $dNomChof
    *
@@ -185,7 +185,7 @@ class RGeVeTr
   }
 
   /**
-   * Set the value of dNumIDChof
+   * Establece el valor de dNumIDChof
    *
    * @param String $dNumIDChof
    *
@@ -200,7 +200,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of iNatTrans
+   * Establece el valor de iNatTrans
    *
    * @param int $iNatTrans
    *
@@ -215,7 +215,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dRucTrans
+   * Establece el valor de dRucTrans
    *
    * @param String $dRucTrans
    *
@@ -230,7 +230,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dDVTrans
+   * Establece el valor de dDVTrans
    *
    * @param int $dDVTrans
    *
@@ -245,7 +245,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dNomTrans
+   * Establece el valor de dNomTrans
    *
    * @param String $dNomTrans
    *
@@ -260,7 +260,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of iTipIDTrans
+   * Establece el valor de iTipIDTrans
    *
    * @param int $iTipIDTrans
    *
@@ -275,7 +275,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dNumIDTrans
+   * Establece el valor de dNumIDTrans
    *
    * @param String $dNumIDTrans
    *
@@ -290,7 +290,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of iTipTrans
+   * Establece el valor de iTipTrans
    *
    * @param int $iTipTrans
    *
@@ -305,7 +305,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of iModTrans
+   * Establece el valor de iModTrans
    *
    * @param int $iModTrans
    *
@@ -320,7 +320,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dMarVeh
+   * Establece el valor de dMarVeh
    *
    * @param String $dMarVeh
    *
@@ -335,7 +335,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dTipIdenVeh
+   * Establece el valor de dTipIdenVeh
    *
    * @param int $dTipIdenVeh
    *
@@ -350,7 +350,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dNroIDVeh
+   * Establece el valor de dNroIDVeh
    *
    * @param String $dNroIDVeh
    *
@@ -365,7 +365,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dNroMatVeh
+   * Establece el valor de dNroMatVeh
    *
    * @param String $dNroMatVeh
    *
@@ -380,7 +380,7 @@ class RGeVeTr
 
 
   /**
-   * Set the value of dTiVehTras
+   * Establece el valor de dTiVehTras
    *
    * @param String $dTiVehTras
    *
@@ -399,7 +399,7 @@ class RGeVeTr
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id
    *
    * @return String
    */
@@ -409,7 +409,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dMotEv
+   * Obtiene el valor de dMotEv
    *
    * @return int
    */
@@ -419,7 +419,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of cDepEnt
+   * Obtiene el valor de cDepEnt
    *
    * @return int
    */
@@ -440,7 +440,7 @@ class RGeVeTr
 
 
   /**
-   * Get the value of cDisEnt
+   * Obtiene el valor de cDisEnt
    *
    * @return int
    */
@@ -463,7 +463,7 @@ class RGeVeTr
 
 
   /**
-   * Get the value of cCiuEnt
+   * Obtiene el valor de cCiuEnt
    *
    * @return int
    */
@@ -485,7 +485,7 @@ class RGeVeTr
 
 
   /**
-   * Get the value of dDirEnt
+   * Obtiene el valor de dDirEnt
    *
    * @return String
    */
@@ -495,7 +495,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dNumCas
+   * Obtiene el valor de dNumCas
    *
    * @return int
    */
@@ -505,7 +505,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dCompDir1
+   * Obtiene el valor de dCompDir1
    *
    * @return String
    */
@@ -515,7 +515,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dNomChof
+   * Obtiene el valor de dNomChof
    *
    * @return String
    */
@@ -525,7 +525,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dNumIDChof
+   * Obtiene el valor de dNumIDChof
    *
    * @return String
    */
@@ -535,7 +535,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of iNatTrans
+   * Obtiene el valor de iNatTrans
    *
    * @return int
    */
@@ -545,7 +545,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dRucTrans
+   * Obtiene el valor de dRucTrans
    *
    * @return String
    */
@@ -555,7 +555,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dDVTrans
+   * Obtiene el valor de dDVTrans
    *
    * @return int
    */
@@ -565,7 +565,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dNomTrans
+   * Obtiene el valor de dNomTrans
    *
    * @return String
    */
@@ -575,7 +575,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of iTipIDTrans
+   * Obtiene el valor de iTipIDTrans
    *
    * @return int
    */
@@ -615,7 +615,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dNumIDTrans
+   * Obtiene el valor de dNumIDTrans
    *
    * @return String
    */
@@ -625,7 +625,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of iTipTrans
+   * Obtiene el valor de iTipTrans
    *
    * @return int
    */
@@ -656,7 +656,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of iModTrans
+   * Obtiene el valor de iModTrans
    *
    * @return int
    */
@@ -695,7 +695,7 @@ class RGeVeTr
 
 
   /**
-   * Get the value of dTiVehTras
+   * Obtiene el valor de dTiVehTras
    *
    * @return String
    */
@@ -705,7 +705,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dMarVeh
+   * Obtiene el valor de dMarVeh
    *
    * @return String
    */
@@ -715,7 +715,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dTipIdenVeh
+   * Obtiene el valor de dTipIdenVeh
    *
    * @return int
    */
@@ -725,7 +725,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dNroIDVeh
+   * Obtiene el valor de dNroIDVeh
    *
    * @return String
    */
@@ -735,7 +735,7 @@ class RGeVeTr
   }
 
   /**
-   * Get the value of dNroMatVeh
+   * Obtiene el valor de dNroMatVeh
    *
    * @return String
    */

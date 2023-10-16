@@ -26,7 +26,7 @@ class RGeDevCCFFDev
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of Id
+   * Establece el valor de Id
    *
    * @param String $Id
    *
@@ -41,7 +41,7 @@ class RGeDevCCFFDev
 
 
   /**
-   * Set the value of dNumDevSol
+   * Establece el valor de dNumDevSol
    *
    * @param String $dNumDevSol
    *
@@ -56,7 +56,7 @@ class RGeDevCCFFDev
 
 
   /**
-   * Set the value of dNumDevInf
+   * Establece el valor de dNumDevInf
    *
    * @param String $dNumDevInf
    *
@@ -71,7 +71,7 @@ class RGeDevCCFFDev
 
 
   /**
-   * Set the value of dNumDevRes
+   * Establece el valor de dNumDevRes
    *
    * @param String $dNumDevRes
    *
@@ -86,7 +86,7 @@ class RGeDevCCFFDev
 
 
   /**
-   * Set the value of dFeEmiSol
+   * Establece el valor de dFeEmiSol
    *
    * @param DateTime $dFeEmiSol
    *
@@ -101,7 +101,7 @@ class RGeDevCCFFDev
 
 
   /**
-   * Set the value of dFeEmiInf
+   * Establece el valor de dFeEmiInf
    *
    * @param DateTime $dFeEmiInf
    *
@@ -116,7 +116,7 @@ class RGeDevCCFFDev
 
 
   /**
-   * Set the value of dFeEmiRes
+   * Establece el valor de dFeEmiRes
    *
    * @param DateTime $dFeEmiRes
    *
@@ -136,7 +136,7 @@ class RGeDevCCFFDev
 
 
   /**
-   * Get the value of Id
+   * Obtiene el valor de Id
    *
    * @return String
    */
@@ -146,7 +146,7 @@ class RGeDevCCFFDev
   }
 
   /**
-   * Get the value of dNumDevSol
+   * Obtiene el valor de dNumDevSol
    *
    * @return String
    */
@@ -156,7 +156,7 @@ class RGeDevCCFFDev
   }
 
   /**
-   * Get the value of dNumDevInf
+   * Obtiene el valor de dNumDevInf
    *
    * @return String
    */
@@ -166,7 +166,7 @@ class RGeDevCCFFDev
   }
 
   /**
-   * Get the value of dNumDevRes
+   * Obtiene el valor de dNumDevRes
    *
    * @return String
    */
@@ -176,7 +176,7 @@ class RGeDevCCFFDev
   }
 
   /**
-   * Get the value of dFeEmiSol
+   * Obtiene el valor de dFeEmiSol
    *
    * @return DateTime
    */
@@ -186,7 +186,7 @@ class RGeDevCCFFDev
   }
 
   /**
-   * Get the value of dFeEmiInf
+   * Obtiene el valor de dFeEmiInf
    *
    * @return DateTime
    */
@@ -196,7 +196,7 @@ class RGeDevCCFFDev
   }
 
   /**
-   * Get the value of dFeEmiRes
+   * Obtiene el valor de dFeEmiRes
    *
    * @return DateTime
    */

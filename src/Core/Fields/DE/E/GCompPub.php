@@ -28,7 +28,7 @@ class GCompPub extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dModCont
+   * Establece el valor de dModCont
    *
    * @param String $dModCont
    *
@@ -43,7 +43,7 @@ class GCompPub extends BaseSifenField
 
 
   /**
-   * Set the value of dEntCont
+   * Establece el valor de dEntCont
    *
    * @param int $dEntCont
    *
@@ -58,7 +58,7 @@ class GCompPub extends BaseSifenField
 
 
   /**
-   * Set the value of dAnoCont
+   * Establece el valor de dAnoCont
    *
    * @param int $dAnoCont
    *
@@ -73,7 +73,7 @@ class GCompPub extends BaseSifenField
 
 
   /**
-   * Set the value of dSecCont
+   * Establece el valor de dSecCont
    *
    * @param int $dSecCont
    *
@@ -88,7 +88,7 @@ class GCompPub extends BaseSifenField
 
 
   /**
-   * Set the value of dFeCodCont
+   * Establece el valor de dFeCodCont
    *
    * @param DateTime $dFeCodCont
    *
@@ -107,7 +107,7 @@ class GCompPub extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dModCont
+   * Obtiene el valor de dModCont
    */
   public function getDModCont(): String
   {
@@ -115,7 +115,7 @@ class GCompPub extends BaseSifenField
   }
 
   /**
-   * Get the value of dEntCont
+   * Obtiene el valor de dEntCont
    */
   public function getDEntCont(): int
   {
@@ -123,7 +123,7 @@ class GCompPub extends BaseSifenField
   }
 
   /**
-   * Get the value of dAnoCont
+   * Obtiene el valor de dAnoCont
    */
   public function getDAnoCont(): int
   {
@@ -131,7 +131,7 @@ class GCompPub extends BaseSifenField
   }
 
   /**
-   * Get the value of dSecCont
+   * Obtiene el valor de dSecCont
    */
   public function getDSecCont(): int
   {
@@ -139,7 +139,7 @@ class GCompPub extends BaseSifenField
   }
 
   /**
-   * Get the value of dFeCodCont
+   * Obtiene el valor de dFeCodCont
    */
   public function getDFeCodCont(): DateTime
   {

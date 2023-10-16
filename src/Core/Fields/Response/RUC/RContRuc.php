@@ -23,7 +23,7 @@ class RContRUC
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dRUCCons
+   * Establece el valor de dRUCCons
    *
    * @param String $dRUCCons
    *
@@ -38,7 +38,7 @@ class RContRUC
 
 
   /**
-   * Set the value of dRazCons
+   * Establece el valor de dRazCons
    *
    * @param String $dRazCons
    *
@@ -53,7 +53,7 @@ class RContRUC
 
 
   /**
-   * Set the value of dCodEstCons
+   * Establece el valor de dCodEstCons
    *
    * @param String $dCodEstCons
    *
@@ -67,7 +67,7 @@ class RContRUC
   }
 
   /**
-   * Set the value of dDesEstCons
+   * Establece el valor de dDesEstCons
    *
    * @param String $dDesEstCons
    *
@@ -82,7 +82,7 @@ class RContRUC
 
 
   /**
-   * Set the value of dRUCFactElec
+   * Establece el valor de dRUCFactElec
    *
    * @param String $dRUCFactElec
    *
@@ -100,7 +100,7 @@ class RContRUC
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dRUCCons
+   * Obtiene el valor de dRUCCons
    *
    * @return String
    */
@@ -110,7 +110,7 @@ class RContRUC
   }
 
   /**
-   * Get the value of dRazCons
+   * Obtiene el valor de dRazCons
    *
    * @return String
    */
@@ -120,7 +120,7 @@ class RContRUC
   }
 
   /**
-   * Get the value of dCodEstCons
+   * Obtiene el valor de dCodEstCons
    *
    * @return String
    */
@@ -164,7 +164,7 @@ class RContRUC
 
 
   /**
-   * Get the value of dRUCFactElec
+   * Obtiene el valor de dRUCFactElec
    *
    * @return String
    */

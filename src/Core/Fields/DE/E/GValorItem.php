@@ -28,7 +28,7 @@ class GValorItem extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dPUniProSer
+   * Establece el valor de dPUniProSer
    *
    * @param String $dPUniProSer
    *
@@ -46,7 +46,7 @@ class GValorItem extends BaseSifenField
 
 
   /**
-   * Set the value of dTiCamIt
+   * Establece el valor de dTiCamIt
    *
    * @param String $dTiCamIt
    *
@@ -64,7 +64,7 @@ class GValorItem extends BaseSifenField
 
 
   /**
-   * Set the value of dTotBruOpeItem
+   * Establece el valor de dTotBruOpeItem
    *
    * @param String $dTotBruOpeItem
    *
@@ -81,7 +81,7 @@ class GValorItem extends BaseSifenField
   }
 
   /**
-   * Set the value of gValorRestaItem
+   * Establece el valor de gValorRestaItem
    *
    * @param GValorRestaItem $gValorRestaItem
    *
@@ -100,7 +100,7 @@ class GValorItem extends BaseSifenField
 
 
   /**
-   * Get the value of dPUniProSer
+   * Obtiene el valor de dPUniProSer
    *
    * @return String
    */
@@ -115,7 +115,7 @@ class GValorItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dTiCamIt
+   * Obtiene el valor de dTiCamIt
    *
    * @return String
    */
@@ -125,7 +125,7 @@ class GValorItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dTotBruOpeItem
+   * Obtiene el valor de dTotBruOpeItem
    *
    * @return String
    */
@@ -135,7 +135,7 @@ class GValorItem extends BaseSifenField
   }
 
   /**
-   * Get the value of gValorRestaItem
+   * Obtiene el valor de gValorRestaItem
    *
    * @return GValorRestaItem
    */

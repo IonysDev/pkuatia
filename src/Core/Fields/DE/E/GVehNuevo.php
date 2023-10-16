@@ -32,7 +32,7 @@ class GVehNuevo extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iTipOpVN
+   * Establece el valor de iTipOpVN
    *
    * @param int $iTipOpVN
    *
@@ -47,7 +47,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dChasis
+   * Establece el valor de dChasis
    *
    * @param String $dChasis
    *
@@ -62,7 +62,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dColor
+   * Establece el valor de dColor
    *
    * @param String $dColor
    *
@@ -77,7 +77,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dPotencia
+   * Establece el valor de dPotencia
    *
    * @param int $dPotencia
    *
@@ -92,7 +92,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dCapMot
+   * Establece el valor de dCapMot
    *
    * @param int $dCapMot
    *
@@ -107,7 +107,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dPNet
+   * Establece el valor de dPNet
    *
    * @param int $dPNet
    *
@@ -122,7 +122,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dPBruto
+   * Establece el valor de dPBruto
    *
    * @param int $dPBruto
    *
@@ -137,7 +137,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of iTipCom
+   * Establece el valor de iTipCom
    *
    * @param int $iTipCom
    *
@@ -152,7 +152,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dNroMotor
+   * Establece el valor de dNroMotor
    *
    * @param String $dNroMotor
    *
@@ -167,7 +167,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dCapTracc
+   * Establece el valor de dCapTracc
    *
    * @param int $dCapTracc
    *
@@ -182,7 +182,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dAnoFab
+   * Establece el valor de dAnoFab
    *
    * @param int $dAnoFab
    *
@@ -197,7 +197,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of cTipVeh
+   * Establece el valor de cTipVeh
    *
    * @param String $cTipVeh
    *
@@ -212,7 +212,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dCapac
+   * Establece el valor de dCapac
    *
    * @param int $dCapac
    *
@@ -227,7 +227,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Set the value of dCilin
+   * Establece el valor de dCilin
    *
    * @param String $dCilin
    *
@@ -245,7 +245,7 @@ class GVehNuevo extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iTipOpVN
+   * Obtiene el valor de iTipOpVN
    *
    * @return int
    */
@@ -284,7 +284,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Get the value of dChasis
+   * Obtiene el valor de dChasis
    *
    * @return String
    */
@@ -294,7 +294,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dColor
+   * Obtiene el valor de dColor
    *
    * @return String
    */
@@ -304,7 +304,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dPotencia
+   * Obtiene el valor de dPotencia
    *
    * @return int
    */
@@ -314,7 +314,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dCapMot
+   * Obtiene el valor de dCapMot
    *
    * @return int
    */
@@ -324,7 +324,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dPNet
+   * Obtiene el valor de dPNet
    *
    * @return int
    */
@@ -334,7 +334,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dPBruto
+   * Obtiene el valor de dPBruto
    *
    * @return int
    */
@@ -344,7 +344,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of iTipCom
+   * Obtiene el valor de iTipCom
    *
    * @return int
    */
@@ -387,7 +387,7 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Get the value of dNroMotor
+   * Obtiene el valor de dNroMotor
    *
    * @return String
    */
@@ -397,7 +397,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dCapTracc
+   * Obtiene el valor de dCapTracc
    *
    * @return int
    */
@@ -407,7 +407,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dAnoFab
+   * Obtiene el valor de dAnoFab
    *
    * @return int
    */
@@ -417,7 +417,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of cTipVeh
+   * Obtiene el valor de cTipVeh
    *
    * @return String
    */
@@ -427,7 +427,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dCapac
+   * Obtiene el valor de dCapac
    *
    * @return int
    */
@@ -437,7 +437,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * Get the value of dCilin
+   * Obtiene el valor de dCilin
    *
    * @return String
    */

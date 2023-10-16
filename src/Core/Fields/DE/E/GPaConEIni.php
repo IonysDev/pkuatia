@@ -135,7 +135,7 @@ class GPaConEIni extends BaseSifenField
   }
 
   /**
-   * Set the value of dMonTiPag
+   * Establece el valor de dMonTiPag
    *
    * @param String $dMonTiPag Monto por tipo de pago en cadena de formato decimal.
    *
@@ -156,7 +156,7 @@ class GPaConEIni extends BaseSifenField
 
 
   /**
-   * Set the value of cMoneTiPag
+   * Establece el valor de cMoneTiPag
    *
    * @param String $cMoneTiPag
    *
@@ -193,7 +193,7 @@ class GPaConEIni extends BaseSifenField
 
 
   /**
-   * Set the value of dTiCamTiPag
+   * Establece el valor de dTiCamTiPag
    *
    * @param String $dTiCamTiPag
    *
@@ -213,7 +213,7 @@ class GPaConEIni extends BaseSifenField
   }
 
   /**
-   * Set the value of gPagTarCD
+   * Establece el valor de gPagTarCD
    *
    * @param GPagTarCD $gPagTarCD
    *
@@ -227,7 +227,7 @@ class GPaConEIni extends BaseSifenField
   }
 
   /**
-   * Set the value of gPagCheq
+   * Establece el valor de gPagCheq
    *
    * @param GPagCheq $gPagCheq
    *
@@ -245,7 +245,7 @@ class GPaConEIni extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iTiPago
+   * Obtiene el valor de iTiPago
    *
    * @return int
    */
@@ -266,7 +266,7 @@ class GPaConEIni extends BaseSifenField
 
 
   /**
-   * Get the value of dMonTiPag
+   * Obtiene el valor de dMonTiPag
    *
    * @return int
    */
@@ -276,7 +276,7 @@ class GPaConEIni extends BaseSifenField
   }
 
   /**
-   * Get the value of cMoneTiPag
+   * Obtiene el valor de cMoneTiPag
    *
    * @return String
    */
@@ -297,7 +297,7 @@ class GPaConEIni extends BaseSifenField
 
 
   /**
-   * Get the value of dTiCamTiPag
+   * Obtiene el valor de dTiCamTiPag
    *
    * @return String
    */
@@ -307,7 +307,7 @@ class GPaConEIni extends BaseSifenField
   }
 
   /**
-   * Get the value of gPagTarCD
+   * Obtiene el valor de gPagTarCD
    *
    * @return GPagTarCD
    */
@@ -317,7 +317,7 @@ class GPaConEIni extends BaseSifenField
   }
 
   /**
-   * Get the value of gPagCheq
+   * Obtiene el valor de gPagCheq
    *
    * @return GPagCheq
    */

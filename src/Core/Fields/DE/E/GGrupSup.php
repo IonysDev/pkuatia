@@ -22,7 +22,7 @@ class GGrupSup
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dNomCaj
+   * Establece el valor de dNomCaj
    *
    * @param String $dNomCaj
    *
@@ -37,7 +37,7 @@ class GGrupSup
 
 
   /**
-   * Set the value of dEfectivo
+   * Establece el valor de dEfectivo
    *
    * @param int $dEfectivo
    *
@@ -52,7 +52,7 @@ class GGrupSup
 
 
   /**
-   * Set the value of dVuelto
+   * Establece el valor de dVuelto
    *
    * @param int $dVuelto
    *
@@ -67,7 +67,7 @@ class GGrupSup
 
 
   /**
-   * Set the value of dDonac
+   * Establece el valor de dDonac
    *
    * @param int $dDonac
    *
@@ -82,7 +82,7 @@ class GGrupSup
 
 
   /**
-   * Set the value of dDesDonac
+   * Establece el valor de dDesDonac
    *
    * @param String $dDesDonac
    *
@@ -100,7 +100,7 @@ class GGrupSup
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dNomCaj
+   * Obtiene el valor de dNomCaj
    *
    * @return String
    */
@@ -110,7 +110,7 @@ class GGrupSup
   }
 
   /**
-   * Get the value of dEfectivo
+   * Obtiene el valor de dEfectivo
    *
    * @return int
    */
@@ -120,7 +120,7 @@ class GGrupSup
   }
 
   /**
-   * Get the value of dVuelto
+   * Obtiene el valor de dVuelto
    *
    * @return int
    */
@@ -130,7 +130,7 @@ class GGrupSup
   }
 
   /**
-   * Get the value of dDonac
+   * Obtiene el valor de dDonac
    *
    * @return int
    */
@@ -140,7 +140,7 @@ class GGrupSup
   }
 
   /**
-   * Get the value of dDesDonac
+   * Obtiene el valor de dDesDonac
    *
    * @return String
    */

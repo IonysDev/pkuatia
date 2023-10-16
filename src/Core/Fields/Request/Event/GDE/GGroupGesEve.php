@@ -20,7 +20,7 @@ class GGroupGesEve
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of rGesEve
+   * Establece el valor de rGesEve
    *
    * @param array $rGesEve
    *

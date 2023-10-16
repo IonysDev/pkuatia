@@ -41,7 +41,7 @@ class GPagCred extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of iCondCred
+   * Establece el valor de iCondCred
    *
    * @param int $iCondCred
    *
@@ -78,7 +78,7 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Set the value of dPlazoCre
+   * Establece el valor de dPlazoCre
    *
    * @param String $dPlazoCre
    *
@@ -91,7 +91,7 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Set the value of dCuotas
+   * Establece el valor de dCuotas
    *
    * @param int $dCuotas
    *
@@ -104,7 +104,7 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Set the value of dMonEnt
+   * Establece el valor de dMonEnt
    *
    * @param int $dMonEnt
    *
@@ -121,7 +121,7 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Set the value of gCuotas
+   * Establece el valor de gCuotas
    *
    * @param array $gCuotas
    *
@@ -138,7 +138,7 @@ class GPagCred extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of iCondCred
+   * Obtiene el valor de iCondCred
    *
    * @return int
    */
@@ -158,7 +158,7 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Get the value of dPlazoCre
+   * Obtiene el valor de dPlazoCre
    *
    * @return String
    */
@@ -168,7 +168,7 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Get the value of dCuotas
+   * Obtiene el valor de dCuotas
    *
    * @return int
    */
@@ -180,7 +180,7 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Get the value of dMonEnt
+   * Obtiene el valor de dMonEnt
    *
    * @return int
    */
@@ -192,7 +192,7 @@ class GPagCred extends BaseSifenField
   } 
 
   /**
-   * Get the value of gCuotas
+   * Obtiene el valor de gCuotas
    *
    * @return GCuotas
    */

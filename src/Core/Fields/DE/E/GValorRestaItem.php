@@ -30,7 +30,7 @@ class GValorRestaItem extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Set the value of dDescItem
+   * Establece el valor de dDescItem
    *
    * @param String $dDescItem
    *
@@ -47,7 +47,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Set the value of dPorcDesIt
+   * Establece el valor de dPorcDesIt
    *
    * @param String $dPorcDesIt
    *
@@ -65,7 +65,7 @@ class GValorRestaItem extends BaseSifenField
 
 
   /**
-   * Set the value of dDescGloItem
+   * Establece el valor de dDescGloItem
    *
    * @param String $dDescGloItem
    *
@@ -83,7 +83,7 @@ class GValorRestaItem extends BaseSifenField
 
 
   /**
-   * Set the value of dAntPreUniIt
+   * Establece el valor de dAntPreUniIt
    *
    * @param String $dAntPreUniIt
    *
@@ -101,7 +101,7 @@ class GValorRestaItem extends BaseSifenField
 
 
   /**
-   * Set the value of dAntGloPreUniIt
+   * Establece el valor de dAntGloPreUniIt
    *
    * @param String $dAntGloPreUniIt
    *
@@ -119,7 +119,7 @@ class GValorRestaItem extends BaseSifenField
 
 
   /**
-   * Set the value of dTotOpeItem
+   * Establece el valor de dTotOpeItem
    *
    * @param String $dTotOpeItem
    *
@@ -136,7 +136,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Set the value of dTotOpeGs
+   * Establece el valor de dTotOpeGs
    *
    * @param String $dTotOpeGs
    *
@@ -157,7 +157,7 @@ class GValorRestaItem extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Get the value of dDescItem
+   * Obtiene el valor de dDescItem
    *
    * @return String
    */
@@ -167,7 +167,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dPorcDesIt
+   * Obtiene el valor de dPorcDesIt
    *
    * @return String
    */
@@ -177,7 +177,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dDescGloItem
+   * Obtiene el valor de dDescGloItem
    *
    * @return String
    */
@@ -187,7 +187,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dAntPreUniIt
+   * Obtiene el valor de dAntPreUniIt
    *
    * @return String
    */
@@ -197,7 +197,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dAntGloPreUniIt
+   * Obtiene el valor de dAntGloPreUniIt
    *
    * @return String
    */
@@ -207,7 +207,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dTotOpeItem
+   * Obtiene el valor de dTotOpeItem
    *
    * @return String
    */
@@ -217,7 +217,7 @@ class GValorRestaItem extends BaseSifenField
   }
 
   /**
-   * Get the value of dTotOpeGs
+   * Obtiene el valor de dTotOpeGs
    *
    * @return String
    */
