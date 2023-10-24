@@ -25,6 +25,16 @@ class GCamFE extends BaseSifenField
   public const INDICADOR_PRESENCIA_OPERACION_CICLICA = 6;
   public const INDICADOR_PRESENCIA_OTRO = 9;
 
+  public const INDICADORES_PRESENCIA = [
+    self::INDICADOR_PRESENCIA_OPERACION_PRESENCIAL => 'Operación presencial',
+    self::INDICADOR_PRESENCIA_OPERACION_ELECTRONICA => 'Operación electrónica',
+    self::INDICADOR_PRESENCIA_OPERACION_TELEMARKETING => 'Operación telemarketing',
+    self::INDICADOR_PRESENCIA_VENTA_A_DOMICILIO => 'Venta a domicilio',
+    self::INDICADOR_PRESENCIA_OPERACION_BANCARIA => 'Operación bancaria',
+    self::INDICADOR_PRESENCIA_OPERACION_CICLICA => 'Operación cíclica',
+    self::INDICADOR_PRESENCIA_OTRO => 'Otro',
+  ];
+
                                 // Id - Longitud - Ocurrencia - Descripción
   public int      $iIndPres;    // E011 - 1     - 1-1 - Indicador de presencia
   public String   $dDesIndPres; // E012 - 10-30 - 1-1 - Descripción del indicador de presencia
