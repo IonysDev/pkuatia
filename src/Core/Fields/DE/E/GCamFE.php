@@ -25,7 +25,7 @@ class GCamFE extends BaseSifenField
   public const INDICADOR_PRESENCIA_OPERACION_CICLICA = 6;
   public const INDICADOR_PRESENCIA_OTRO = 9;
 
-  public const INDICADORES_PRESENCIA = [
+  public const INDICADOR_PRESENCIA_DESCRIPCIONES = [
     self::INDICADOR_PRESENCIA_OPERACION_PRESENCIAL => 'Operación presencial',
     self::INDICADOR_PRESENCIA_OPERACION_ELECTRONICA => 'Operación electrónica',
     self::INDICADOR_PRESENCIA_OPERACION_TELEMARKETING => 'Operación telemarketing',
