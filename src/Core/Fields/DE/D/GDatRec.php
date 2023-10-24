@@ -26,6 +26,13 @@ class GDatRec extends BaseSifenField
     public const TIPO_OPERACION_B2G = 3;
     public const TIPO_OPERACION_B2F = 4;
 
+    public const TIPO_OPERACION_DESCRIPCIONES = [
+        self::TIPO_OPERACION_B2B => 'B2B - Negocio a Negocio',
+        self::TIPO_OPERACION_B2C => 'B2C - Negocio a Consumidor Final',
+        self::TIPO_OPERACION_B2G => 'B2G - Negocio a Gobierno',
+        self::TIPO_OPERACION_B2F => 'B2F - Negocio a Financiero',
+    ];
+
     public const TIPO_CONTRIBUYENTE_PERSONA_FISICA = 1;
     public const TIPO_CONTRIBUYENTE_PERSONA_JURIDICA = 2;
 
