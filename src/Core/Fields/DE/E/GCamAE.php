@@ -248,7 +248,7 @@ class GCamAE
 
 
   /**
-   * Establece el valor de cCiuVen
+   * Establece el valor de cCiuVen (E314) que representa el código de la ciudad del vendedor.
    *
    * @param int $cCiuVen
    *
