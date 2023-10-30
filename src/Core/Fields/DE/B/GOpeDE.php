@@ -6,6 +6,7 @@ use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\RNG;
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 /**
  * Nodo Id: B001        
@@ -184,7 +185,7 @@ class GOpeDE extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         if(strcmp($node->getName(), 'gOpeDE') != 0){
-            throw new Exception('[GOpeDE] El nombre del elemento no es gOpeDE: ' . $node->getName());
+            throw new \Exception('[GOpeDE] El nombre del elemento no es gOpeDE: ' . $node->getName());
         }
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->iTipEmi));
@@ -231,7 +232,7 @@ class GOpeDE extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gOpeDE') != 0)
-            throw new Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new \Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
         $res->setDDesTipEmi($node->getElementsByTagName('dDesTipEmi')->item(0)->nodeValue);
