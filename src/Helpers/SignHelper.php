@@ -40,7 +40,6 @@ class SignHelper
     self::$xmlKey->loadKey($keyFilePath, true);
   }
 
-
   /**
    * Firma un documento DE contenido en un objeto RDE
    * 

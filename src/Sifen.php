@@ -241,6 +241,7 @@ class Sifen
       '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
       XSD_ANYXML
     ));
+    file_put_contents('rEnviEventoDe.xml', $signedXML);
     $object = self::$client->rEnviEventoDe($rEnviEventoDe);
     return RRetEnviEventoDe::FromSifenResponseObject($object);
   }

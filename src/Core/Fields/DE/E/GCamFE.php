@@ -58,7 +58,7 @@ class GCamFE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * establece el valor de iIndPres (código indicador de presencia)
+   * Establece el valor de iIndPres (código indicador de presencia)
    *
    * @param int $iIndPres
    *
@@ -177,7 +177,7 @@ class GCamFE extends BaseSifenField
   
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element
+  // XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**

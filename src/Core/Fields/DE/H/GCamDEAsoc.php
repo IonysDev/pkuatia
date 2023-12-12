@@ -10,13 +10,17 @@ use Exception;
 use SimpleXMLElement;
 
 /**
- * Nodo Id:H001
+ * Nodo Id:     H001
+ * Nombre:      gCamDEAsoc
  * Descripción: Campos que identifican al DE asociado
- * Nodo Padre: A001 - Campos firmados del DE
+ * Nodo Padre:  A001 - Campos firmados del DE
  */
 
 class GCamDEAsoc extends BaseSifenField
 {
+  public const TIPO_DE_DOCUMENTO_ASOCIADO_ELECTRONICO = 1;
+  public const TIPO_DE_DOCUMENTO_ASOCIADO_IMPRESO = 2;
+  public const TIPO_DE_DOCUMENTO_ASOCIADO_CONSTANCIA_ELECTRONICA = 3;
 
   public int      $iTipDocAso;    // H002 - 1     - 1-1 - Tipo de documento asociado
   public String   $dDesTipDocAso; // H003 - 7-11  - 1-1 - Descripción del tipo de documento asociado
@@ -75,14 +79,7 @@ class GCamDEAsoc extends BaseSifenField
    */
   public function setDDesTipDocAso(String $dDesTipDocAso): self
   {
-    if(is_null($dDesTipDocAso) || strlen($dDesTipDocAso) == 0)
-    {
-      $this->dDesTipDocAso;
-    }
-    else
-    {
-      $this->dDesTipDocAso = substr($dDesTipDocAso, 0, 11);
-    }
+    $this->dDesTipDocAso = $dDesTipDocAso;
     return $this;
   }
 

@@ -22,15 +22,16 @@ use stdClass;
  * Nombre:      DE
  * Descripción: Campos firmados del DE
  * Nodo Padre:  AA001 - rDE - Documento Electrónico elemento raíz
+ * Ocurrencia:  1-1 (obligatorio)
  */
 
 class DE extends BaseSifenField
 {
-                              // Id - Longitud - Ocurrencia - Descripción
-  public String   $id;        // A002 - 44 - 1-1 - Identificador del DE ubicado en el atributo de <DE>
-  public int      $dDVId;     // A003 - 1  - 1-1 - Dígito verificador del dentificador del DE 
-  public DateTime $dFecFirma; // A004 - 19 - 1-1 - Fecha de la firma
-  public int      $dSisFact;  // A005 - 1  - 1-1 - Sistema de facturación
+                                   // Id - Longitud - Ocurrencia - Descripción
+  public String   $id;             // A002 - 44 - 1-1 - Identificador del DE ubicado en el atributo de <DE>
+  public int      $dDVId;          // A003 - 1  - 1-1 - Dígito verificador del dentificador del DE 
+  public DateTime $dFecFirma;      // A004 - 19 - 1-1 - Fecha de la firma
+  public int      $dSisFact;       // A005 - 1  - 1-1 - Sistema de facturación
 
   public GOpeDE      $gOpeDe;      // B002 - G - 1-1  - Campos inherentes a la operación de DE
   public GTimb       $gTimb;       // C001 - G - 1-1  - Datos del timbrado 
@@ -328,44 +329,41 @@ class DE extends BaseSifenField
   {
     return $this->gCamDEAsoc;
   }
-  
-  ///////////////////////////////////////////////////////////////////////
-  // Conversores
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Convierte este DE a un DOMElement insertable en el DOMDocument indicado.
-   * 
-   * @param DOMDocument $doc DOMDocument que generará el DOMElement sin insertarlo
-   *
-   * @return DOMElement DOMElement generado que representa este DE
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('DE');
-    $res->setAttribute('Id', $this->getId());
-    $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
-    $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
-    $res->appendChild($this->gOpeDe->toDOMElement($doc));
-    $res->appendChild($this->gTimb->toDOMElement($doc));
-    $res->appendChild($this->gDatGralOpe->toDOMElement($doc));
-    $res->appendChild($this->gDtipDe->toDOMElement($doc));
-    if(isset($this->gTotSub))
-      $res->appendChild($this->gTotSub->toDOMElement($doc));
-    if(isset($this->gCamGen))
-      $res->appendChild($this->gCamGen->toDOMElement($doc));
-    if(count($this->gCamDEAsoc) > 0)
-    {
-      foreach($this->gCamDEAsoc as $g)
-        $res->appendChild($g->toDOMElement($doc));
-    }
-    return $res;
-  }
 
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
   ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Genera un objeto DE a partir de un nodo DOMElement.
+   * 
+   * @param DOMElement $node Nodo XML que representa un DE
+   * 
+   * @return DE Objeto DE con los datos extraídos del nodo XML
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'DE') != 0)
+      throw new \Exception('[DE] Nodo con nombre inválido: ' . $node->nodeName);
+    $res = new DE();
+    $res->id = $node->getAttribute('Id');
+    $res->dDVId = intval($node->getElementsByTagName('dDVId')->item(0)->nodeValue);
+    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
+    $res->dSisFact = intval($node->getElementsByTagName('dSisFact')->item(0)->nodeValue);
+    $res->gOpeDe = GOpeDE::FromDOMElement($node->getElementsByTagName('gOpeDE')->item(0));
+    $res->gTimb = GTimb::FromDOMElement($node->getElementsByTagName('gTimb')->item(0));
+    $res->gDatGralOpe = GDatGralOpe::FromDOMElement($node->getElementsByTagName('gDatGralOpe')->item(0));
+    $res->gDtipDe = GDtipDE::FromDOMElement($node->getElementsByTagName('gDtipDE')->item(0));
+    if($node->getElementsByTagName('gTotSub')->length > 0)
+      $res->gTotSub = GTotSub::FromDOMElement($node->getElementsByTagName('gTotSub')->item(0));
+    if($node->getElementsByTagName('gCamGen')->length > 0)
+      $res->gCamGen = GCamGen::FromDOMElement($node->getElementsByTagName('gCamGen')->item(0));
+    if($node->getElementsByTagName('gCamDEAsoc')->length > 0) {
+      foreach($node->getElementsByTagName('gCamDEAsoc') as $g)
+        $res->gCamDEAsoc[] = GCamDEAsoc::FromDOMElement($g);
+    }
+    return $res;
+  }
 
   /**
    * Genera un objeto DE a partir de un nodo SimpleXMLElement.
@@ -396,37 +394,6 @@ class DE extends BaseSifenField
       {
         $res->gCamDEAsoc[] = GCamDEAsoc::FromSimpleXMLElement($g);
       }
-    }
-    return $res;
-  }
-
-  /**
-   * Genera un objeto DE a partir de un nodo DOMElement.
-   * 
-   * @param DOMElement $node Nodo XML que representa un DE
-   * 
-   * @return DE Objeto DE con los datos extraídos del nodo XML
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->nodeName, 'DE') != 0)
-      throw new \Exception('[DE] Nodo con nombre inválido: ' . $node->nodeName);
-    $res = new DE();
-    $res->id = $node->getAttribute('Id');
-    $res->dDVId = intval($node->getElementsByTagName('dDVId')->item(0)->nodeValue);
-    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
-    $res->dSisFact = intval($node->getElementsByTagName('dSisFact')->item(0)->nodeValue);
-    $res->gOpeDe = GOpeDE::FromDOMElement($node->getElementsByTagName('gOpeDE')->item(0));
-    $res->gTimb = GTimb::FromDOMElement($node->getElementsByTagName('gTimb')->item(0));
-    $res->gDatGralOpe = GDatGralOpe::FromDOMElement($node->getElementsByTagName('gDatGralOpe')->item(0));
-    $res->gDtipDe = GDtipDE::FromDOMElement($node->getElementsByTagName('gDtipDE')->item(0));
-    if($node->getElementsByTagName('gTotSub')->length > 0)
-      $res->gTotSub = GTotSub::FromDOMElement($node->getElementsByTagName('gTotSub')->item(0));
-    if($node->getElementsByTagName('gCamGen')->length > 0)
-      $res->gCamGen = GCamGen::FromDOMElement($node->getElementsByTagName('gCamGen')->item(0));
-    if($node->getElementsByTagName('gCamDEAsoc')->length > 0) {
-      foreach($node->getElementsByTagName('gCamDEAsoc') as $g)
-        $res->gCamDEAsoc[] = GCamDEAsoc::FromDOMElement($g);
     }
     return $res;
   }
@@ -479,5 +446,39 @@ class DE extends BaseSifenField
       }
     }
     return $de;
+  }
+  
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Convierte este DE a un DOMElement insertable en el DOMDocument indicado.
+   * 
+   * @param DOMDocument $doc DOMDocument que generará el DOMElement sin insertarlo
+   *
+   * @return DOMElement DOMElement generado que representa este DE
+   */
+  public function toDOMElement(DOMDocument $doc): DOMElement
+  {
+    $res = $doc->createElement('DE');
+    $res->setAttribute('Id', $this->getId());
+    $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
+    $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
+    $res->appendChild($this->gOpeDe->toDOMElement($doc));
+    $res->appendChild($this->gTimb->toDOMElement($doc));
+    $res->appendChild($this->gDatGralOpe->toDOMElement($doc));
+    $res->appendChild($this->gDtipDe->toDOMElement($doc));
+    if(isset($this->gTotSub))
+      $res->appendChild($this->gTotSub->toDOMElement($doc));
+    if(isset($this->gCamGen))
+      $res->appendChild($this->gCamGen->toDOMElement($doc));
+    if(count($this->gCamDEAsoc) > 0)
+    {
+      foreach($this->gCamDEAsoc as $g)
+        $res->appendChild($g->toDOMElement($doc));
+    }
+    return $res;
   }
 }

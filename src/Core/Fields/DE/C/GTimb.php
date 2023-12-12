@@ -40,7 +40,7 @@ class GTimb extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Establece el valor de iTiDE que representa el tipo de documento electrónico.
+     * Establece el valor de iTiDE (C002) que representa el tipo de documento electrónico.
      * 
      * @param int $iTiDE Valor del tipo de documento electrónico.
      * 

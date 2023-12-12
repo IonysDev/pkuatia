@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Utils;
 
+use Exception;
+
 /**
  * Clase con métodos de utilidad para el timbrado de documentos.
  */
@@ -19,11 +21,11 @@ class TimbradoUtils {
     {
         if(!isset($serieActual) || strlen($serieActual) == 0)
             return 'AA';
-        if(strcmp($this->dSerieNum, 'ZZ') == 0)
+        if(strcmp($serieActual, 'ZZ') == 0)
             throw new Exception('[GTimb] La serie actual es ZZ, no existe una serie siguiente.');
         $res = '';
-        $c1 = substr($this->dSerieNum, 0, 1);
-        $c2 = substr($this->dSerieNum, 1, 1);
+        $c1 = substr($serieActual, 0, 1);
+        $c2 = substr($serieActual, 1, 1);
         if(strcmp($c2, 'Z') == 0)
         {
             $c1 = chr(ord($c1) + 1);
@@ -34,6 +36,26 @@ class TimbradoUtils {
             $c2 = chr(ord($c2) + 1);
         }
         return $res;
+    }
+
+    /**
+     * Valida un número de serie
+     * 
+     * @param String $serie serie a validar
+     * 
+     * @return bool true si la serie es válida, false en caso contrario
+     */
+    public static function ValidarSerie($serie): bool
+    {
+        if(strlen($serie) != 2)
+            return false;
+        $c1 = substr($serie, 0, 1);
+        $c2 = substr($serie, 1, 1);
+        if(ord($c1) < ord('A') || ord($c1) > ord('Z'))
+            return false;
+        if(ord($c2) < ord('A') || ord($c2) > ord('Z'))
+            return false;
+        return true;
     }
 
 }

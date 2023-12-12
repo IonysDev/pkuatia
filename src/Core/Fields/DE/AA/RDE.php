@@ -17,15 +17,17 @@ use stdClass;
  * Nombre:      rDE
  * Descripción: Campos que identifican el formato electrónico XML (AA001-AA009)
  * Nodo Padre:  Es nodo raiz.
+ * Ocurrencia:  1-1 (obligatorio)
  */
 
 class RDE extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
   public int $dVerFor;         // AA002 - 3 - 1-1 - Versión del formato
-  public DE $DE;               // A001  -   - 1-1 - Campos firmados del  DE
-  public Signature $Signature; // I001  -   - 1-1 - Firma Digital del DTE
-  public GCamFuFD $gCamFuFD;   // J001  -   - 1-1 - Campos fuera de la firma digital
+  
+  public DE $DE;               // A001  - G - 1-1 - Campos firmados del  DE
+  public Signature $Signature; // I001  - G - 1-1 - Firma Digital del DTE
+  public GCamFuFD $gCamFuFD;   // J001  - G - 1-1 - Campos fuera de la firma digital
 
   /**
    * Constructor de la clase RDE

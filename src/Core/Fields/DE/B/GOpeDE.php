@@ -6,17 +6,27 @@ use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\RNG;
 use DOMDocument;
 use DOMElement;
+use Exception;
 use SimpleXMLElement;
 
 /**
- * Nodo Id: B001        
- * Nombre: gOpeDE
- * Descripción: Campos inherentes a la operación de DE      
- * Nodo Padre: A001 - DE - Campos firmados del DE   
+ * Nodo Id:     B001        
+ * Nombre:      gOpeDE
+ * Descripción: Campos inherentes a la operación de DE 
+ * Nodo Padre:  A001 - DE - Campos firmados del DE
+ * Ocurrencia:  1-1 (obligatorio para todos los DE)
  */
 
 class GOpeDE extends BaseSifenField
 {
+    public const TIPO_DE_EMISION_NORMAL = 1;
+    public const TIPO_DE_EMISION_CONTINGENCIA = 2;
+
+    public const TIPO_DE_EMISION_DESCRIPCIONES = [
+        self::TIPO_DE_EMISION_NORMAL => 'Normal',
+        self::TIPO_DE_EMISION_CONTINGENCIA => 'Contingencia'
+    ];
+
                                // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipEmi;    // B002 - 1      - 1-1 - Tipo de emisión: 1 - Normal, 2 - Contingencia
     public String $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
@@ -41,7 +51,8 @@ class GOpeDE extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Establece el valor de iTipEmi que representa el tipo de emisión del documento.
+     * Establece el valor de iTipEmi que representa el tipo de emisión del documento y establece el valor de dDesTipEmi
+     * que representa la descripción del tipo de emisión del documento de acuerdo al valor de iTipEmi.
      * 
      * @param int $iTipEmi Tipo de emisión del documento: 1 - Normal, 2 - Contingencia
      * 
@@ -49,13 +60,12 @@ class GOpeDE extends BaseSifenField
      */
     public function setITipEmi(int $iTipEmi): self
     {
-        $this->iTipEmi = $iTipEmi;
+        
         switch ($this->iTipEmi) {
             case 1:
-                $this->dDesTipEmi = 'Normal';
-                break;
             case 2:
-                $this->dDesTipEmi = 'Contingencia';
+                $this->iTipEmi = $iTipEmi;
+                $this->dDesTipEmi = self::TIPO_DE_EMISION_DESCRIPCIONES[$iTipEmi];
                 break;
             default:
                 unset($this->dDesTipEmi);
@@ -102,6 +112,8 @@ class GOpeDE extends BaseSifenField
      */
     public function setDInfoEmi(String $dInfoEmi): self
     {
+        if(strlen($dInfoEmi) > 3000)
+            throw new Exception('[GOpeDE] El valor de dInfoEmi no puede tener más de 3000 caracteres.');
         $this->dInfoEmi = $dInfoEmi;
         return $this;
     }
@@ -115,6 +127,8 @@ class GOpeDE extends BaseSifenField
      */
     public function setDInfoFisc(String $dInfoFisc): self
     {
+        if(strlen($dInfoFisc) > 3000)
+            throw new Exception('[GOpeDE] El valor de dInfoFisc no puede tener más de 3000 caracteres.');
         $this->dInfoFisc = $dInfoFisc;
         return $this;
     }
@@ -178,6 +192,28 @@ class GOpeDE extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
+     * Instancia un objeto GOpeDE a partir de un DOMElement que representa el nodo XML del objeto GOpeDE
+     * 
+     * @param DOMElement $node Nodo XML que representa el objeto GOpeDE
+     * 
+     * @return self Objeto GOpeDE instanciado
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if(strcmp($node->nodeName, 'gOpeDE') != 0)
+            throw new Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
+        $res = new GOpeDE();
+        $res->setITipEmi(intval($node->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
+        $res->setDDesTipEmi($node->getElementsByTagName('dDesTipEmi')->item(0)->nodeValue);
+        $res->setDCodSeg(intval($node->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
+        if($node->getElementsByTagName('dInfoEmi')->length > 0)
+            $res->setDInfoEmi($node->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
+        if($node->getElementsByTagName('dInfoFisc')->length > 0)
+            $res->setDInfoFisc($node->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
+        return $res;
+    }
+
+    /**
      * Instancia un objeto GOpeDE a partir de un SimpleXMLElement que representa el nodo XML del objeto GOpeDE.
      * 
      * @param SimpleXMLElement $node Nodo XML que representa el objeto GOpeDE
@@ -185,7 +221,7 @@ class GOpeDE extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         if(strcmp($node->getName(), 'gOpeDE') != 0){
-            throw new \Exception('[GOpeDE] El nombre del elemento no es gOpeDE: ' . $node->getName());
+            throw new Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->getName());
         }
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->iTipEmi));
@@ -222,28 +258,6 @@ class GOpeDE extends BaseSifenField
         return $res;
     }
 
-    /**
-     * Instancia un objeto GOpeDE a partir de un DOMElement que representa el nodo XML del objeto GOpeDE
-     * 
-     * @param DOMElement $node Nodo XML que representa el objeto GOpeDE
-     * 
-     * @return self Objeto GOpeDE instanciado
-     */
-    public static function FromDOMElement(DOMElement $node): self
-    {
-        if(strcmp($node->nodeName, 'gOpeDE') != 0)
-            throw new \Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
-        $res = new GOpeDE();
-        $res->setITipEmi(intval($node->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
-        $res->setDDesTipEmi($node->getElementsByTagName('dDesTipEmi')->item(0)->nodeValue);
-        $res->setDCodSeg(intval($node->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dInfoEmi')->length > 0)
-            $res->setDInfoEmi($node->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
-        if($node->getElementsByTagName('dInfoFisc')->length > 0)
-            $res->setDInfoFisc($node->getElementsByTagName('dInfoFisc')->item(0)->nodeValue);
-        return $res;
-    }
-
     ///////////////////////////////////////////////////////////////////////
     // Conversores
     ///////////////////////////////////////////////////////////////////////
@@ -267,6 +281,4 @@ class GOpeDE extends BaseSifenField
             $res->appendChild(new DOMElement('dInfoFisc', $this->getDInfoFisc()));
         return $res;
     }
-
-    
 }

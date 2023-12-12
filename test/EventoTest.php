@@ -224,7 +224,6 @@ $trGeVeRem = new RGeVeRem();
 $trGeVeRem->setId('000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'); ///poner un cdc
 ////////////////////////////////////////////////////////////////
 
-
 ////se asigna el evento de cancelacion al grupo de campos de tipo evento
 $gGroupTiEvt->setRGeVeCan($rGeVeCan);
 // $gGroupTiEvt->setRGeVeInu($rGeVeInu);

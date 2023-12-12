@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Constants\OpeComTipImp;
+use Abiliomp\Pkuatia\Core\Constants\OpeComTipTrans;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
@@ -33,104 +35,59 @@ class GOpeCom extends BaseSifenField
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setITipTra(int $iTipTra): void
+    /**
+     * Establece el tipo de transacción de la operación comercial. Así mismo establece la descripción del tipo de transacción.
+     * 
+     * @param int $iTipTra El tipo de transacción. Valores permitidos: 1 (Venta de mercadería), 2 (Prestación de servicios), 3 (Mixto), 4 (Venta de activo fijo), 5 (Venta de divisas), 6 (Compra de divisas), 7 (Promoción o entrega de muestras), 8 (Donación), 9 (Anticipo), 10 (Compra de productos), 11 (Compra de servicios), 12 (Venta de crédito fiscal), 13 (Muestras médicas)
+     * 
+     * @return self
+     */
+    public function setITipTra(int $iTipTra): self
     {
+        $this->dDesTipTra = OpeComTipTrans::getDescripcion($iTipTra);
         $this->iTipTra = $iTipTra;
-        switch ($iTipTra) {
-            case 1:
-                $this->dDesTipTra = 'Venta de mercadería';
-                break;
-            case 2:
-                $this->dDesTipTra = 'Prestación de servicios';
-                break;
-            case 3:
-                $this->dDesTipTra = 'Mixto (Venta de mercadería y servicios)';
-                break;
-            case 4:
-                $this->dDesTipTra = 'Venta de activo fijo';
-                break;
-            case 5:
-                $this->dDesTipTra = 'Venta de divisas';
-                break;
-            case 6:
-                $this->dDesTipTra = 'Compra de divisas';
-                break;
-            case 7:
-                $this->dDesTipTra = 'Promoción o entrega de muestras';
-                break;
-            case 8:
-                $this->dDesTipTra = 'Donación';
-                break;
-            case 9:
-                $this->dDesTipTra = 'Anticipo';
-                break;
-            case 10:
-                $this->dDesTipTra = 'Compra de productos';
-                break;
-            case 11:
-                $this->dDesTipTra = 'Compra de servicios';
-                break;
-            case 12:
-                $this->dDesTipTra = 'Venta de crédito fiscal';
-                break;
-            case 13:
-                $this->dDesTipTra = 'Muestras médicas (Art. 3 RG 24/2014)';
-                break;
-            default:
-                unset($this->iTipTra);
-                throw new \InvalidArgumentException("[GOpeCom] El valor del campo iTipTra no es válido: " . $iTipTra);
-                break;
-        }
+        return $this;
     }
 
-    public function setDDesTipTra(String $dDesTipTra): void
+    /**
+     * Establece la descripción del tipo de transacción.
+     * Este método no debería utilizarse para conformar un nuevo DE. Solo debe usarse para deserializar un DE existente.
+     * 
+     * @param String $dDesTipTra Descripción del tipo de transacción.
+     * 
+     * @return self
+     */
+    public function setDDesTipTra(String $dDesTipTra): self
     {
-        if(is_null($this->iTipTra) || strlen($dDesTipTra) == 0)
-        {
-            $this->dDesTipTra;
-        }
-        else 
-        {
-            $this->dDesTipTra = substr($dDesTipTra, 0, 36);
-        }
+        $this->dDesTipTra = $dDesTipTra;
+        return $this;
     }
 
-    public function setITImp(int $iTImp): void
+    /**
+     * Establece el tipo de impuesto afectado. Así mismo establece la descripción del tipo de impuesto afectado.
+     * 
+     * @param int $iTImp El tipo de impuesto afectado. Valores permitidos: 1 (IVA), 2 (ISC), 3 (Renta), 4 (Ninguno), 5 (IVA - Renta)
+     * 
+     * @return self
+     */
+    public function setITImp(int $iTImp): self
     {
+        $this->dDesTImp = OpeComTipImp::getDescripcion($iTImp);
         $this->iTImp = $iTImp;
-        switch ($iTImp) {
-            case 1:
-                $this->dDesTImp = 'IVA';
-                break;
-            case 2:
-                $this->dDesTImp = 'ISC';
-                break;
-            case 3:
-                $this->dDesTImp = 'Renta';
-                break;
-            case 4:
-                $this->dDesTImp = 'Ninguno';
-                break;
-            case 5:
-                $this->dDesTImp = 'IVA - Renta';
-                break;
-            default:
-                unset($this->iTImp);
-                throw new \InvalidArgumentException("[GOpenCom] El valor del campo iTImp no es válido: " . $iTImp);
-                break;
-        }
+        return $this;
     }
 
-    public function setDDesTImp(String $dDesTImp): void
+    /**
+     * Establece la descripción del tipo de impuesto afectado. Este método no debería utilizarse para conformar un nuevo DE. Solo debe usarse para deserializar un DE existente.
+     * 
+     * @param String $dDesTImp Descripción del tipo de impuesto afectado.
+     * 
+     * @return self
+     */
+    public function setDDesTImp(String $dDesTImp): self
     {
-        if(is_null($this->iTImp) || strlen($dDesTImp) == 0)
-        {
-            $this->dDesTImp;
-        }
-        else 
-        {
-            $this->dDesTImp = substr($dDesTImp, 0, 11);
-        }
+        $this->dDesTImp = $dDesTImp;
+        return $this;
     }
 
     public function setCMoneOpe(String $cMoneOpe): void
@@ -143,6 +100,7 @@ class GOpeCom extends BaseSifenField
             throw new \InvalidArgumentException("[GOpeCom] El valor del campo cMoneOpe no es válido: " . $cMoneOpe);
         }
     }
+
 
     public function setDDesMoneOpe(String $dDesMoneOpe): void
     {
@@ -402,7 +360,7 @@ class GOpeCom extends BaseSifenField
             $res->appendChild(new DOMElement('dCondTiCam', $this->getDCondTiCam()));
         if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2)
             $res->appendChild(new DOMElement('dTiCam', $this->getDTiCam()));
-        if ($this->iTipTra == 9) {
+        if (isset($this->iTipTra) && $this->iTipTra == 9) {
             $res->appendChild(new DOMElement('iCondAnt', $this->getICondAnt()));
             $res->appendChild(new DOMElement('dDesCondAnt', $this->getDDesCondAnt()));
         }
