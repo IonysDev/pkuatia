@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Constants\CamFEIndPres;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
@@ -64,35 +65,10 @@ class GCamFE extends BaseSifenField
    *
    * @return self
    */
-  public function setIIndPres(int $iIndPres): self
+  public function setIIndPres(int|CamFEIndPres $iIndPres): self
   {
-    $this->iIndPres = $iIndPres;
-    switch ($iIndPres) {
-      case 1:
-        $this->dDesIndPres = "Operación presencial";
-        break;
-      case 2:
-        $this->dDesIndPres = "Operación electrónica";
-        break;
-      case 3:
-        $this->dDesIndPres = "Operación telemarketing";
-        break;
-      case 4:
-        $this->dDesIndPres = "Venta a domicilio";
-        break;
-      case 5:
-        $this->dDesIndPres = "Operación bancaria";
-        break;
-      case 6:
-        $this->dDesIndPres = "Operación cíclica";
-        break;
-      case 9:
-        $this->dDesIndPres = "Otro";
-        break;
-      default:
-        throw new \Exception("Invalid iIndPres value: " . $iIndPres);
-        break;
-    }
+    $this->iIndPres = $iIndPres instanceof CamFEIndPres ? $iIndPres->value : $iIndPres;
+    $this->dDesIndPres = $iIndPres instanceof CamFEIndPres ? $iIndPres : CamFEIndPres::getDescripcion($iIndPres);
     return $this;
   }
 

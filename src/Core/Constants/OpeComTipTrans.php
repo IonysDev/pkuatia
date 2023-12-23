@@ -57,7 +57,7 @@ enum OpeComTipTrans: int {
             case 13:
                 return 'Muestras médicas (Art. 3 RG 24/2014)';
             default:
-                throw new Exception('Tipo de transacción no soportada.');
+                throw new Exception('[OpeComTipTrans] Tipo de transacción no soportada: ' . $tipTrans);
         }
     }
 }

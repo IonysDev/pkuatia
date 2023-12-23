@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Constants\CamCondOpe;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
@@ -42,21 +43,10 @@ class GCamCond extends BaseSifenField
    *
    * @return self
    */
-  public function setICondOpe(int $iCondOpe): self
+  public function setICondOpe(int|CamCondOpe $iCondOpe): self
   {
-    $this->iCondOpe = $iCondOpe;
-    switch ($this->iCondOpe) {
-      case 1:
-        $this->dDCondOpe = "Contado";
-        break;
-
-      case 2:
-        $this->dDCondOpe = "Crédito";
-        break;
-      default:
-        throw new \Exception("Condición de operación (iCondOpe) no válida: " . $iCondOpe, 1);
-        break;
-    }
+    $this->iCondOpe = $iCondOpe instanceof CamCondOpe ? $iCondOpe->value : $iCondOpe;
+    $this->dDCondOpe = $iCondOpe instanceof CamCondOpe ? $iCondOpe : CamCondOpe::getDescripcion($iCondOpe);
     return $this;
   }
 

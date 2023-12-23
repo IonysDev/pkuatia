@@ -3,12 +3,15 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
 use Abiliomp\Pkuatia\Config;
+use Abiliomp\Pkuatia\Core\Constants\EmisRecTipCont;
+use Abiliomp\Pkuatia\Core\Constants\TipoDeRegimen;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
 use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
+use InvalidArgumentException;
 use SimpleXMLElement;
 
 /**
@@ -67,15 +70,15 @@ class GEmis extends BaseSifenField
         return $this;
     }
 
-    public function setITipCont(int $iTipCont): self
+    public function setITipCont(int|EmisRecTipCont $iTipCont): self
     {
-        $this->iTipCont = $iTipCont;
+        $this->iTipCont = $iTipCont instanceof EmisRecTipCont ? $iTipCont->value : $iTipCont;
         return $this;
     }
 
-    public function setCTipReg(int $cTipReg): self
+    public function setCTipReg(int|TipoDeRegimen $cTipReg): self
     {
-        $this->cTipReg = $cTipReg;
+        $this->cTipReg = $cTipReg instanceof TipoDeRegimen ? $cTipReg->value : $cTipReg;
         return $this;
     }
 
@@ -115,24 +118,62 @@ class GEmis extends BaseSifenField
         return $this;
     }
 
+    /**
+     * Establece el código de departamento de emisión (D111) y su descripción (D112).
+     * Valida que el código de departamento exista en la lista de departamentos del SIFEN.
+     * 
+     * @param int $cDepEmi Código de departamento de emisión.
+     * 
+     * @return self
+     */
     public function setCDepEmi(int $cDepEmi): self
     {
+        $this->dDesDepEmi = DepartamentoMapping::getDepName(strval($this->cDepEmi));
+        if(is_null($this->dDesDepEmi))
+            throw new InvalidArgumentException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
         $this->cDepEmi = $cDepEmi;
         return $this;
     }
 
+    /**
+     * Establece la descripción del departamento de emisión (D114).
+     * Este método solo debería utilizarse al deserializar un objeto GEmis de un XML.
+     * 
+     * @param String $dDesDepEmi Descripción del departamento de emisión.
+     * 
+     * @return self
+     */
     public function setDDesDepEmi(String $dDesDepEmi): self
     {
         $this->dDesDepEmi = $dDesDepEmi;
         return $this;
     }
 
+    /**
+     * Establece el código del distrito de emisión (D113) y su descripción (D114).
+     * Valida que el código de distrito exista en la lista de distritos del SIFEN.
+     * 
+     * @param int $cDisEmi Código del distrito de emisión (D113).
+     * 
+     * @return self
+     */
     public function setCDisEmi(int $cDisEmi): self
     {
+        $this->cDisEmi = PyGeoCodesMapping::getDistName(strval($this->cDisEmi));
+        if(is_null($this->cDisEmi))
+            throw new InvalidArgumentException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
         $this->cDisEmi = $cDisEmi;
         return $this;
     }
 
+    /**
+     * Establece la descripción del distrito de emisión (D114).
+     * Este método solo debería utilizarse al deserializar un objeto GEmis de un XML.
+     * 
+     * @param String $dDesDisEmi Descripción del distrito de emisión.
+     * 
+     * @return self
+     */
     public function setDDesDisEmi(String $dDesDisEmi): self
     {
         $this->dDesDisEmi = $dDesDisEmi;
@@ -247,7 +288,6 @@ class GEmis extends BaseSifenField
      */
     public function getDDesDepEmi(): String
     {
-        // return DepartamentoMapping::getDepName(strval($this->cDepEmi));
         return $this->dDesDepEmi;
     }
 
@@ -263,7 +303,6 @@ class GEmis extends BaseSifenField
      */
     public function getDDesDisEmi(): String
     {
-        // return PyGeoCodesMapping::getDistName(strval($this->cDisEmi));
         return $this->dDesDisEmi;
     }
 
@@ -491,7 +530,7 @@ class GEmis extends BaseSifenField
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Covnersores
+    // Conversores
     ///////////////////////////////////////////////////////////////////////
 
     /**
@@ -537,5 +576,24 @@ class GEmis extends BaseSifenField
         if (isset($this->gRespDE))
             $res->appendChild($this->gRespDE->toDOMElement($doc));
         return $res;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Otros
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Agrega una actividad económica (objeto GActEco) a este emisor.
+     * El código y la descripción deben corresponder a lo declarado en el RUC.
+     * 
+     * @param int $cod Código de la actividad económica.
+     * @param String $desc Descripción de la actividad económica.
+     * 
+     * @return self
+     */
+    public function addActEco(int $cod, String $desc): self
+    {
+        $this->gActEco[] = new GActEco($cod, $desc);
+        return $this;
     }
 }

@@ -14,7 +14,7 @@ enum OpeComTipImp: int {
     case ISC = 2;
     case Renta = 3;
     case Ninguno = 4;
-    case IVA_Renta = 5;
+    case IVARenta = 5;
 
     public function __toString(): string {
         return self::getDescripcion($this->value);

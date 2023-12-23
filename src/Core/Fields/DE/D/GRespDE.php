@@ -2,10 +2,12 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Constants\TipIDRespDE;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * Nodo Id:     D140
@@ -36,33 +38,14 @@ class GRespDE extends BaseSifenField
     /**
      * Establece el valor iTipIDRespDE (D141) que corresponde al tipo de documento de identidad del responsable de la generación del DE.
      * 
-     * @param int $iTipIDRespDE Tipo de documento de identidad del responsable de la generación del DE.
+     * @param int|TipIDRespDE $iTipIDRespDE Tipo de documento de identidad del responsable de la generación del DE.
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setITipIDRespDE(int $iTipIDRespDE): self
+    public function setITipIDRespDE(int|TipIDRespDE $iTipIDRespDE): self
     {
-        $this->iTipIDRespDE = $iTipIDRespDE;
-        switch($this->iTipIDRespDE) {
-            case 1:
-                $this->dDTipIDRespDE = 'Cédula paraguaya';
-                break;
-            case 2:
-                $this->dDTipIDRespDE = 'Pasaporte';
-                break;
-            case 3:
-                $this->dDTipIDRespDE = 'Cédula extranjera';
-                break;
-            case 4:
-                $this->dDTipIDRespDE = 'Carnet de residencia';
-                break;
-            case 9:
-                $this->dDTipIDRespDE = null;
-                break;
-            default:
-                unset($this->iTipIDRespDE);
-                throw new \Exception('[GRespDE] El valor de iTipIDRespDE no es válido: ' . $this->iTipIDRespDE);
-        }
+        $this->iTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE->value : $iTipIDRespDE;
+        $this->dDTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE : TipIDRespDE::getDescripcion($iTipIDRespDE);
         return $this;
     }
 
@@ -223,11 +206,21 @@ class GRespDE extends BaseSifenField
     /**
      * Instancia un GRespDE a partir de un DOMElement que lo representa.
      * 
+     * @param DOMElement $node Nodo DOM que contiene los datos.
      * 
+     * @return self Objeto instanciado.
      */
     public static function FromDOMElement(DOMElement $node): self
     {
-        
+        if(strcmp($node->nodeName, 'gRespDE') != 0)
+            throw new \Exception('[GRespDE] Nodo con nombre inválido: ' . $node->nodeName);
+        $res = new GRespDE();
+        $res->setITipIDRespDE(intval($node->getElementsByTagName('iTipIDRespDE')->item(0)->nodeValue));
+        $res->setDDTipIDRespDE(strval($node->getElementsByTagName('dDTipIDRespDE')->item(0)->nodeValue));
+        $res->setDNumIDRespDE(strval($node->getElementsByTagName('dNumIDRespDE')->item(0)->nodeValue));
+        $res->setDNomRespDE(strval($node->getElementsByTagName('dNomRespDE')->item(0)->nodeValue));
+        $res->setDCarRespDE(strval($node->getElementsByTagName('dCarRespDE')->item(0)->nodeValue));
+        return $res;
     }
 
     ///////////////////////////////////////////////////////////////////////

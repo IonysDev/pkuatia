@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\C;
 
+use Abiliomp\Pkuatia\Core\Constants\TimbTiDE;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
@@ -16,15 +17,6 @@ use SimpleXMLElement;
  */
 class GTimb extends BaseSifenField
 {
-    // Constantes de tipo de documento electrónico
-    public const TIPO_DOCUMENTO_FACTURA               = 1;
-    public const TIPO_DOCUMENTO_FACTURA_EXPORTACION   = 2;
-    public const TIPO_DOCUMENTO_FACTURA_IMPORTACION   = 3;
-    public const TIPO_DOCUMENTO_AUTOFACTURA           = 4;
-    public const TIPO_DOCUMENTO_NOTA_CREDITO          = 5;
-    public const TIPO_DOCUMENTO_NOTA_DEBITO           = 6;
-    public const TIPO_DOCUMENTO_COMPROBANTE_RETENCION = 7;
-
                               // Id - Longirud - Ocurrencia - Descripción
     public int    $iTiDE;     // C002 - 1-2   - 1-1 - Tipo de documento electrónico
     public String $dDesTiDE;  // C003 - 15-40 - 1-1 - Descripción del tipo de documento electrónico
@@ -40,45 +32,16 @@ class GTimb extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Establece el valor de iTiDE (C002) que representa el tipo de documento electrónico.
+     * Establece el valor de iTiDE (C002) que representa el tipo de documento electrónico, así como su descripción en dDesTiDE (C003).
      * 
      * @param int $iTiDE Valor del tipo de documento electrónico.
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setITiDE(int $iTiDE): self
+    public function setITiDE(int | TimbTiDE $iTiDE): self
     {
-        $this->iTiDE = $iTiDE;
-        switch ($this->iTiDE) {
-            case 1:
-                $this->dDesTiDE = 'Factura electrónica';
-                break;
-            case 2:
-                $this->dDesTiDE = 'Factura electrónica de exportación';
-                break;
-            case 3:
-                $this->dDesTiDE = 'Factura electrónica de importación';
-                break;
-            case 4:
-                $this->dDesTiDE = 'Autofactura electrónica';
-                break;
-            case 5:
-                $this->dDesTiDE = 'Nota de crédito electrónica';
-                break;
-            case 6:
-                $this->dDesTiDE = 'Nota de débito electrónica';
-                break;
-            case 7:
-                $this->dDesTiDE = 'Nota de remisión electrónica';
-                break;
-            case 8:
-                $this->dDesTiDE = 'Comprobante de retención electrónico';
-                break;
-            default:
-                unset($this->dDesTiDE);
-                unset($this->iTiDE);
-                throw new \Exception('[GTimb] El valor de iTiDE no es válido: ' . $this->iTiDE);
-        }
+        $this->dDesTiDE = $iTiDE instanceof TimbTiDE ? $iTiDE : TimbTiDE::getDescripcion($iTiDE);
+        $this->iTiDE = $iTiDE instanceof TimbTiDE ? $iTiDE->value : $iTiDE;
         return $this;
     }
 

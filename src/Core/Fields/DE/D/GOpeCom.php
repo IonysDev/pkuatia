@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Constants\OpeComCondAnt;
+use Abiliomp\Pkuatia\Core\Constants\OpeComCondTipCam;
 use Abiliomp\Pkuatia\Core\Constants\OpeComTipImp;
 use Abiliomp\Pkuatia\Core\Constants\OpeComTipTrans;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
@@ -9,6 +11,7 @@ use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
+use InvalidArgumentException;
 use SimpleXMLElement;
 
 /**
@@ -32,20 +35,30 @@ class GOpeCom extends BaseSifenField
     public String $dDesCondAnt; // D020 - 15-17     - 0-1 - Descripción de la condición del anticipo
 
     ///////////////////////////////////////////////////////////////////////
+    ///Constructor
+    ///////////////////////////////////////////////////////////////////////
+
+
+    public function __construct()
+    {
+        $this->setCMoneOpe("PYG");
+    }
+
+    ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
     /**
      * Establece el tipo de transacción de la operación comercial. Así mismo establece la descripción del tipo de transacción.
      * 
-     * @param int $iTipTra El tipo de transacción. Valores permitidos: 1 (Venta de mercadería), 2 (Prestación de servicios), 3 (Mixto), 4 (Venta de activo fijo), 5 (Venta de divisas), 6 (Compra de divisas), 7 (Promoción o entrega de muestras), 8 (Donación), 9 (Anticipo), 10 (Compra de productos), 11 (Compra de servicios), 12 (Venta de crédito fiscal), 13 (Muestras médicas)
+     * @param int|OpeComTipTrans $iTipTra El tipo de transacción. Valores permitidos: 1 (Venta de mercadería), 2 (Prestación de servicios), 3 (Mixto), 4 (Venta de activo fijo), 5 (Venta de divisas), 6 (Compra de divisas), 7 (Promoción o entrega de muestras), 8 (Donación), 9 (Anticipo), 10 (Compra de productos), 11 (Compra de servicios), 12 (Venta de crédito fiscal), 13 (Muestras médicas)
      * 
      * @return self
      */
-    public function setITipTra(int $iTipTra): self
+    public function setITipTra(int|OpeComTipTrans $iTipTra): self
     {
-        $this->dDesTipTra = OpeComTipTrans::getDescripcion($iTipTra);
-        $this->iTipTra = $iTipTra;
+        $this->dDesTipTra = $iTipTra instanceof OpeComTipTrans ? $iTipTra : OpeComTipTrans::getDescripcion($iTipTra);
+        $this->iTipTra = $iTipTra instanceof OpeComTipTrans ? $iTipTra->value : $iTipTra;
         return $this;
     }
 
@@ -66,14 +79,14 @@ class GOpeCom extends BaseSifenField
     /**
      * Establece el tipo de impuesto afectado. Así mismo establece la descripción del tipo de impuesto afectado.
      * 
-     * @param int $iTImp El tipo de impuesto afectado. Valores permitidos: 1 (IVA), 2 (ISC), 3 (Renta), 4 (Ninguno), 5 (IVA - Renta)
+     * @param int|OpeComTipImp $iTImp El tipo de impuesto afectado. Valores permitidos: 1 (IVA), 2 (ISC), 3 (Renta), 4 (Ninguno), 5 (IVA - Renta)
      * 
      * @return self
      */
-    public function setITImp(int $iTImp): self
+    public function setITImp(int|OpeComTipImp $iTImp): self
     {
-        $this->dDesTImp = OpeComTipImp::getDescripcion($iTImp);
-        $this->iTImp = $iTImp;
+        $this->dDesTImp = $iTImp instanceof OpeComTipImp ? $iTImp : OpeComTipImp::getDescripcion($iTImp);
+        $this->iTImp = $iTImp instanceof OpeComTipImp ? $iTImp->value : $iTImp;
         return $this;
     }
 
@@ -90,19 +103,20 @@ class GOpeCom extends BaseSifenField
         return $this;
     }
 
-    public function setCMoneOpe(String $cMoneOpe): void
+    public function setCMoneOpe(String $cMoneOpe): self
     {
         $this->cMoneOpe = $cMoneOpe;
         $this->dDesMoneOpe = MonedaMapping::GetDescription($this->cMoneOpe);
         if(is_null($this->dDesMoneOpe))
         {
             unset($this->cMoneOpe);
-            throw new \InvalidArgumentException("[GOpeCom] El valor del campo cMoneOpe no es válido: " . $cMoneOpe);
+            throw new InvalidArgumentException("[GOpeCom] El valor del campo cMoneOpe no es válido: " . $cMoneOpe);
         }
+        return $this;
     }
 
 
-    public function setDDesMoneOpe(String $dDesMoneOpe): void
+    public function setDDesMoneOpe(String $dDesMoneOpe): self
     {
         if(is_null($this->cMoneOpe) || strlen($dDesMoneOpe) == 0)
         {
@@ -112,6 +126,7 @@ class GOpeCom extends BaseSifenField
         {
             $this->dDesMoneOpe = substr($dDesMoneOpe, 0, 20);
         }
+        return $this;
     }
 
     /**
@@ -119,19 +134,20 @@ class GOpeCom extends BaseSifenField
      * 
      * @param int $dCondTiCam Valores permitidos: 1 (Global), 2 (Por ítem)
      * 
-     * @return void
+     * @return self
      */
-    public function setDCondTiCam(int $dCondTiCam): void
+    public function setDCondTiCam(int|OpeComCondTipCam $dCondTiCam): self
     {
-        if($dCondTiCam != 1 && $dCondTiCam != 2)
+        if($dCondTiCam instanceof int && $dCondTiCam != 1 && $dCondTiCam != 2)
         {
             unset($this->dCondTiCam);
-            throw new \InvalidArgumentException("[GOpeCom] El valor del campo dCondTiCam no es válido: " . $dCondTiCam);
+            throw new InvalidArgumentException("[GOpeCom] El valor del campo dCondTiCam no es válido: " . $dCondTiCam);
         }
         else
         {
-            $this->dCondTiCam = $dCondTiCam;
+            $this->dCondTiCam = $dCondTiCam instanceof int ? $dCondTiCam : $dCondTiCam->value;
         }
+        return $this;
     }
 
     /**
@@ -139,9 +155,9 @@ class GOpeCom extends BaseSifenField
      * 
      * @param String $dTiCam Valor de la tasa de cambio expresada en cadena decimal.
      * 
-     * @return void
+     * @return self
      */
-    public function setDTiCam(String $dTiCam): void
+    public function setDTiCam(String $dTiCam): self
     {
         if(ValueValidations::isValidStringDecimal($dTiCam, 5, 0))
         {
@@ -150,52 +166,37 @@ class GOpeCom extends BaseSifenField
         else
         {
             unset($this->dTiCam);
-            throw new \InvalidArgumentException("[GOpeCom] El valor del campo dTiCam no es válido: " . $dTiCam);
+            throw new InvalidArgumentException("[GOpeCom] El valor del campo dTiCam no es válido: " . $dTiCam);
         }
+        return $this;
     }
 
     /**
-     * Establece la condición del anticipo.
+     * Establece la condición del anticipo y su descripción.
      * 
      * @param int $iCondAnt Valores permitidos: 1 (Anticipo Global), 2 (Anticipo por Ítem)
      * 
-     * @return void
+     * @return self
      */
-    public function setICondAnt(int $iCondAnt): void
+    public function setICondAnt(int|OpeComCondAnt $iCondAnt): self
     {
-        $this->iCondAnt = $iCondAnt;
-        switch ($this->iCondAnt) {
-            case 1:
-                $this->dDesCondAnt = 'Anticipo Global';
-                break;
-            case 2:
-                $this->dDesCondAnt = 'Anticipo por Ítem';
-                break;
-            default:
-                unset($this->iCondAnt);
-                unset($this->dDesCondAnt);
-                throw new \InvalidArgumentException("[GOpeCom] El valor del campo iCondAnt no es válido: " . $iCondAnt);
-                break;
-        }
+        $this->dDesCondAnt = $iCondAnt instanceof OpeComCondAnt ? $iCondAnt : OpeComCondAnt::getDescripcion($iCondAnt);
+        $this->iCondAnt = $iCondAnt instanceof OpeComCondAnt ? $iCondAnt->value : $iCondAnt;
+        return $this;
     }
 
     /**
      * Establece la descripción de la condición del anticipo.
+     * Este método no debería utilizarse para conformar un nuevo DE. Solo debe usarse para deserializar un DE existente.
      * 
      * @param String $dDesCondAnt
      * 
-     * @return void
+     * @return self
      */
-    public function setDDesCondAnt(String $dDesCondAnt): void
+    public function setDDesCondAnt(String $dDesCondAnt): self
     {
-        if(is_null($this->iCondAnt) || strlen($dDesCondAnt) == 0)
-        {
-            $this->dDesCondAnt;
-        }
-        else 
-        {
-            $this->dDesCondAnt = substr($dDesCondAnt, 0, 17);
-        }
+        $this->dDesCondAnt = $dDesCondAnt;
+        return $this;
     }
 
     ///////////////////////////////////////////////////////////////////////

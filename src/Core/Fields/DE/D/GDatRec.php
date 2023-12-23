@@ -2,6 +2,10 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
 
+use Abiliomp\Pkuatia\Core\Constants\EmisRecTipCont;
+use Abiliomp\Pkuatia\Core\Constants\RecNat;
+use Abiliomp\Pkuatia\Core\Constants\RecTiOpe;
+use Abiliomp\Pkuatia\Core\Constants\TipIDRec;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
@@ -96,14 +100,14 @@ class GDatRec extends BaseSifenField
     /**
      * Establece el valor de iNatRec (D201) que representa la naturaleza del receptor.
      * 
-     * @param int $iNatRec Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
+     * @param int|RecNat $iNatRec Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setINatRec(int $iNatRec): self
+    public function setINatRec(int|RecNat $iNatRec): self
     {
-        $this->iNatRec = $iNatRec;
-        if($iNatRec == self::NATURALEZA_CONTRIBUYENTE) {
+        $this->iNatRec = $iNatRec instanceof RecNat ? $iNatRec->value : $iNatRec;
+        if($this->iNatRec == self::NATURALEZA_CONTRIBUYENTE) {
             unset($this->iTipIDRec);
             unset($this->dDTipIDRec);
             unset($this->dNumIDRec);
@@ -115,9 +119,9 @@ class GDatRec extends BaseSifenField
         return $this;
     }
 
-    public function setITiOpe(int $iTiOpe): void
+    public function setITiOpe(int|RecTiOpe $iTiOpe): void
     {
-        $this->iTiOpe = $iTiOpe;
+        $this->iTiOpe = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
     }
 
     public function setCPaisRec(String $cPaisRec): void
@@ -130,9 +134,9 @@ class GDatRec extends BaseSifenField
         $this->dDesPaisRe = $dDesPaisRe;
     }
 
-    public function setITiContRec(int $iTiContRec): void
+    public function setITiContRec(int|EmisRecTipCont $iTiContRec): void
     {
-        $this->iTiContRec = $iTiContRec;
+        $this->iTiContRec = $iTiContRec instanceof EmisRecTipCont ? $iTiContRec->value : $iTiContRec;
     }
 
     public function setDRucRec(String $dRucRec): void
@@ -140,19 +144,23 @@ class GDatRec extends BaseSifenField
         $this->dRucRec = $dRucRec;
     }
 
-    public function setDDVRec(int $dDVRec): void
+    public function setDDVRec(int $dDVRec): self
     {
         $this->dDVRec = $dDVRec;
+        return $this;
     }
 
-    public function setITipIDRec(int $iTipIDRec): void
+    public function setITipIDRec(int|TipIDRec $iTipIDRec): self
     {
-        $this->iTipIDRec = $iTipIDRec;
+        $this->iTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->value : $iTipIDRec;
+        $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec : TipIDRec::getDescripcion($iTipIDRec);
+        return $this;
     }
 
-    public function setDDTipIDRec(String $dDTipIDRec): void
+    public function setDDTipIDRec(String $dDTipIDRec): self
     {
         $this->dDTipIDRec = $dDTipIDRec;
+        return $this;
     }
 
     public function setDNumIDRec(String $dNumIDRec): void
