@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Constants\PagCredCondCred;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
@@ -41,33 +42,25 @@ class GPagCred extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Establece el valor de iCondCred
-   *
-   * @param int $iCondCred
-   *
+   * Establece el valor de iCondCred (E641) que representa la condición de la operación a crédito.
+   * A su vez establece el valor de dDCondCred (E642) que es la descripción de la condición de la operación a crédito.
+   * 
+   * @param int|PagCredCondCred $iCondCred Condición de la operación a crédito
+   * 
    * @return self
    */
-  public function setICondCred(int $iCondCred): self
+  public function setICondCred(int|PagCredCondCred $iCondCred): self
   {
-    $this->iCondCred = $iCondCred;
-    switch ($this->iCondCred) {
-      case 1:
-        $this->dDCondCred = "Plazo";
-        break;
-      case 2:
-        $this->dDCondCred = "Cuota";
-        break;
-      default:
-        throw new \Exception("Condición de crédito (iCondCred) no válida: " . $iCondCred, 1);
-        break;
-    }
+    $this->iCondCred = $iCondCred instanceof PagCredCondCred ? $iCondCred->value : $iCondCred;
+    $this->dDCondCred = PagCredCondCred::getDescripcion($this->iCondCred);
     return $this;
   }
 
   /**
-   * Establece la descripción de la condición de la operación a crédito
+   * Establece dDCondCred (E642) que es la descripción de la condición de la operación a crédito.
+   * Esta función solo debería utilizarse para deserializar un DE existente.
    * 
-   * @param String $dDCondCred
+   * @param String $dDCondCred Descripción de la condición de la operación a crédito.
    * 
    * @return self
    */

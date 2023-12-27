@@ -254,16 +254,15 @@ class GCamItem extends BaseSifenField
 
 
   /**
-   * Establece el valor de dCantProSer
+   * Establece el valor de dCantProSer (E711) que representa la cantidad del producto y/o servicio.
    *
-   * @param int $dCantProSer
+   * @param int $dCantProSer Cantidad del producto y/o servicio (en cadena de texto decimal BCMath).
    *
    * @return self
    */
-  public function setDCantProSer(float $dCantProSer): self
+  public function setDCantProSer(String $dCantProSer): self
   {
     $this->dCantProSer = $dCantProSer;
-
     return $this;
   }
 

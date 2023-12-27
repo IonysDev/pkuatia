@@ -246,4 +246,17 @@ class GCamCond extends BaseSifenField
     }
     return $res;
   }
+
+  /**
+   * Agrega un objeto GPaConEIni al array gPaConEIni (E605) que contiene los campos que describen las condiciones de pago al contado o de la entrega inicial.
+   * 
+   * @param GPaConEIni $gPaConEIni Objeto GPaConEIni a agregar al array gPaConEIni
+   * 
+   * @return self
+   */
+  public function addGPaConEIni(GPaConEIni $gPaConEIni): self
+  {
+    $this->gPaConEIni[] = $gPaConEIni;
+    return $this;
+  }
 }

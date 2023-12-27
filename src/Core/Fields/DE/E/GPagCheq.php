@@ -31,14 +31,15 @@ class GPagCheq extends BaseSifenField
    */
   public function setDNumCheq(String $dNumCheq): self
   {
-    $this->dNumCheq = $dNumCheq;
-
+    if(strlen($dNumCheq) > 8)
+      throw new \Exception("[GPagCheq] El número de cheque no puede tener más de 8 caracteres", 1);
+    $this->dNumCheq = str_pad($dNumCheq, 8, "0", STR_PAD_LEFT);
     return $this;
   }
 
 
   /**
-   * Establece el valor de dBcoEmi
+   * Establece el valor de dBcoEmi (E632) que es el banco emisor
    *
    * @param String $dBcoEmi
    *
@@ -47,7 +48,6 @@ class GPagCheq extends BaseSifenField
   public function setDBcoEmi(String $dBcoEmi): self
   {
     $this->dBcoEmi = $dBcoEmi;
-
     return $this;
   }
 

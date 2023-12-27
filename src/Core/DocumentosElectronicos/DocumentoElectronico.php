@@ -28,6 +28,8 @@ class DocumentoElectronico {
   public GDatGralOpe $gDatGralOpe; // D001 -Campos generales del documento electrónico
   public GEmis $gEmis; // D100 - Campos que describen al emisor del documento electrónico
   public GDatRec $gDatRec; // D200 - Campos que describen al receptor del documento electrónico
+  public array $items; // E700 - Campos que describen los items del documento electrónico
+  
 
   /**
    * Constructor
@@ -563,5 +565,11 @@ class DocumentoElectronico {
   {
     return $this->gTimb->getDEst() . '-' . $this->gTimb->getDPunExp() . '-' . $this->gTimb->getDNumDoc();
   }
+
+  ///////////////////////////////////////////////////////////////////////
+  // Otros
+  ///////////////////////////////////////////////////////////////////////
+
+  
   
 }

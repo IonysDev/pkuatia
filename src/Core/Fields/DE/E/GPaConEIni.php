@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Constants\PaConEIniTiPago;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
@@ -34,83 +35,14 @@ class GPaConEIni extends BaseSifenField
   /**
    * Establece el código de tipo de pago y la descrición en caso de que sea un tipo de pago soportado. Usar código de tipo de pago 99 para otros tipos de pago.
    *
-   * @param int $iTiPago
+   * @param int|PaConEIniTiPago $iTiPago Código de tipo de pago o instancia de PaConEIniTiPago
    *
    * @return self
    */
-  public function setITiPago(int $iTiPago): self
+  public function setITiPago(int|PaConEIniTiPago $iTiPago): self
   {
-    $this->iTiPago = $iTiPago;
-    switch ($this->iTiPago) {
-      case 1:
-        $this->dDesTiPag = "Efectivo";
-        break;
-      case 2:
-        $this->dDesTiPag = "Cheque";
-        break;
-      case 3:
-        $this->dDesTiPag = "Tarjeta de crédito";
-        break;
-      case 4:
-        $this->dDesTiPag = "Tarjeta de débito";
-        break;
-      case 5:
-        $this->dDesTiPag = "Transferencia";
-        break;
-      case 6:
-        $this->dDesTiPag = "Giro";
-        break;
-      case 7:
-        $this->dDesTiPag = "Billetera electrónica";
-        break;
-      case 8:
-        $this->dDesTiPag = "Tarjeta empresarial";
-        break;
-      case 9:
-        $this->dDesTiPag = "Vale";
-        break;
-      case 10:
-        $this->dDesTiPag = "Retención";
-        break;
-      case 11:
-        $this->dDesTiPag = "Pago por anticipo";
-        break;
-      case 12:
-        $this->dDesTiPag = "Valor fiscal";
-        break;
-      case 13:
-        $this->dDesTiPag = "Valor comercial";
-        break;
-      case 14:
-        $this->dDesTiPag = "Compensación";
-        break;
-      case 15:
-        $this->dDesTiPag = "Permuta";
-        break;
-      case 16:
-        $this->dDesTiPag = "Pago bancario";
-        break;
-      case 17:
-        $this->dDesTiPag = "Pago Móvil";
-        break;
-      case 18:
-        $this->dDesTiPag = "Donación";
-        break;
-      case 19:
-        $this->dDesTiPag = "Promoción";
-        break;
-      case 20:
-        $this->dDesTiPag = "Consumo Interno";
-        break;
-      case 21:
-        $this->dDesTiPag = "Pago Electrónico";
-        break;
-      case 99:
-        break;
-      default:
-        throw new \Exception("Tipo de pago no soportado");
-        break;
-    }
+    $this->iTiPago = $iTiPago instanceof PaConEIniTiPago ? $iTiPago->value : $iTiPago;
+    $this->dDesTiPag = PaConEIniTiPago::getDescripcion($this->iTiPago);
     return $this;
   }
 

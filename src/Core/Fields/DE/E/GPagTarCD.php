@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Constants\PagTarCDDenTarj;
+use Abiliomp\Pkuatia\Core\Constants\PagTarCDForProPa;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
@@ -36,35 +38,10 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setIDenTarj(int $iDenTarj): self
+  public function setIDenTarj(int|PagTarCDDenTarj $iDenTarj): self
   {
-    $this->iDenTarj = $iDenTarj;
-    switch ($this->iDenTarj) {
-      case  1:
-        $this->setDDesDenTarj("Visa");
-        break;
-      case  2:
-        $this->setDDesDenTarj("Mastercard");
-        break;
-      case  3:
-        $this->setDDesDenTarj("American Express");
-        break;
-      case  4:
-        $this->setDDesDenTarj("Maestro");
-        break;
-      case  5:
-        $this->setDDesDenTarj("Panal");
-        break;
-      case  6:
-        $this->setDDesDenTarj("Cabal");
-        break;
-      case 99:
-        $this->setDDesDenTarj("Otro");
-        break;
-      default:
-        throw new \Exception("Valor de iDenTarj inválido: $iDenTarj");
-        break;
-    }
+    $this->iDenTarj = $iDenTarj instanceof PagTarCDDenTarj ? $iDenTarj->value : $iDenTarj;
+    $this->dDesDenTarj = PagTarCDDenTarj::getDescripcion($this->iDenTarj);
     return $this;
   }
 
@@ -155,13 +132,13 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setIForProPa(int $iForProPa): self
+  public function setIForProPa(int|PagTarCDForProPa $iForProPa): self
   {
-    if($iForProPa != 1 && $iForProPa != 2 && $iForProPa != 9)
+    if(is_int($iForProPa) && $iForProPa != 1 && $iForProPa != 2 && $iForProPa != 9)
     {
-      throw new \Exception("Valor de iForProPa inválido: $iForProPa");
+      throw new \Exception("[GPagTarCD] Valor de iForProPa inválido: $iForProPa");
     }
-    $this->iForProPa = $iForProPa;
+    $this->iForProPa = $iForProPa instanceof PagTarCDForProPa ? $iForProPa->value : $iForProPa;
     return $this;
   }
 

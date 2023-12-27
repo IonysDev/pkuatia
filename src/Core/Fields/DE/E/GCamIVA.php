@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Constants\CamIVAAfecIVA;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
@@ -41,26 +42,10 @@ class GCamIVA extends BaseSifenField
    *
    * @return self
    */
-  public function setIAfecIVA(int $iAfecIVA): self
+  public function setIAfecIVA(int|CamIVAAfecIVA $iAfecIVA): self
   {
-    $this->iAfecIVA = $iAfecIVA;
-    switch ($this->iAfecIVA) {
-      case 1:
-        $this->dDesAfecIVA = "Gravado IVA";
-        break;
-      case 2:
-        $this->dDesAfecIVA = "Exonerado (Art. 83- Ley 125/91)";
-        break;
-      case 3:
-        $this->dDesAfecIVA = "Exento";
-        break;
-      case 4:
-        $this->dDesAfecIVA = "Gravado parcial (Grav-Exento)";
-        break;
-      default:
-        throw new \Exception("Invalid iAfecIVA: $iAfecIVA");
-        break;
-    }
+    $this->iAfecIVA = $iAfecIVA instanceof CamIVAAfecIVA ? $iAfecIVA->value : $iAfecIVA;
+    $this->dDesAfecIVA = CamIVAAfecIVA::getDescripcion($this->iAfecIVA);
     return $this;
   }
 
