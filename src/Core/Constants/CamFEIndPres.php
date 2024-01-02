@@ -19,10 +19,6 @@ enum CamFEIndPres: int {
     case CiclicaOSuscripcion = 6;
     case Otro = 9;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $value): string {
         switch($value) {
             case 1:

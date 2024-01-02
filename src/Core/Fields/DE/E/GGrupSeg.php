@@ -59,6 +59,12 @@ class GGrupSeg extends BaseSifenField
     return $this;
   }
 
+  public function addGrupPolSeg(GGrupPolSeg $gGrupPolSeg): self
+  {
+    $this->gGrupPolSeg[] = $gGrupPolSeg;
+    return $this;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   // Getters
   ///////////////////////////////////////////////////////////////////////

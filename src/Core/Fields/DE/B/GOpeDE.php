@@ -60,8 +60,7 @@ class GOpeDE extends BaseSifenField
      */
     public function setITipEmi(int $iTipEmi): self
     {
-        
-        switch ($this->iTipEmi) {
+        switch ($iTipEmi) {
             case 1:
             case 2:
                 $this->iTipEmi = $iTipEmi;

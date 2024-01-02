@@ -33,11 +33,6 @@ enum PaConEIniTiPago: int {
     case PagoElectronico = 21;
     case Otros = 99;
 
-
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $value): string {
         switch($value) {
             case 1:

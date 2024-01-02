@@ -7,12 +7,19 @@ use Abiliomp\Pkuatia\Core\Constants\RecTiOpe;
 use Abiliomp\Pkuatia\Core\Constants\TipIDRec;
 use Abiliomp\Pkuatia\Core\Constants\TipIDRespDE;
 use Abiliomp\Pkuatia\Core\Constants\TipoDeRegimen;
+use Abiliomp\Pkuatia\Core\DocumentosElectronicos\Traits\ValueItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatGralOpe;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatRec;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GEmis;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GRespDE;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GGrupAdi;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GGrupEner;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GGrupPolSeg;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GGrupSeg;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GGrupSup;
+use Abiliomp\Pkuatia\Core\Fields\DE\E\GTransp;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Utils\TimbradoUtils;
 use DateTime;
@@ -23,13 +30,19 @@ use Exception;
  */
 class DocumentoElectronico {
 
+  use ValueItem;
+
   public GOpeDE $gOpeDE; // B001 - Campos que describen la operación del documento electrónico
   public GTimb  $gTimb; // C001 - Campos que describen el timbrado del documento electrónico
   public GDatGralOpe $gDatGralOpe; // D001 -Campos generales del documento electrónico
   public GEmis $gEmis; // D100 - Campos que describen al emisor del documento electrónico
   public GDatRec $gDatRec; // D200 - Campos que describen al receptor del documento electrónico
   public array $items; // E700 - Campos que describen los items del documento electrónico
-  
+  public GGrupEner $gGrupEner; // E791 - Campos que describen datos específicos para el sector energía eléctrica
+  public GGrupSeg $gGrupSeg; // E800 - Campos que describen datos específicos para el sector seguros
+  public GGrupSup $gGrupSup; // E810 - Campos que describen datos específicos para el sector supermercados
+  public GGrupAdi $gGrupAdi; // E820 - Campos que describen datos adicionales de uso comercial en general
+  public GTransp $gTransp; // E900 - Campos que describen el transporte de las mercaderías
 
   /**
    * Constructor
@@ -430,20 +443,7 @@ class DocumentoElectronico {
     return $this;
   }
 
-  /**
-   * Agrega una actividad económica al emisor del documento electrónico.
-   * Tanto el código como la descripción deben corresponderse con lo declarado en el RUC.
-   * 
-   * @param int $codigo código de la actividad económica
-   * @param String $descripcion descripción de la actividad económica
-   * 
-   * @return self
-   */
-  public function addEmisorActividadEconomica(int $codigo, String $descripcion): self
-  {
-    $this->gEmis->addActEco($codigo, $descripcion);
-    return $this;
-  }
+  
 
   /**
    * Establece la persona responsable de la generación del documento electrónico dentro de la organización del emisor.
@@ -552,6 +552,102 @@ class DocumentoElectronico {
     return $this;
   }
 
+  /**
+   * Establece los datos complementarios de uso específico para el sector de energía eléctrica.
+   * 
+   * @param String $nroMedidor número de medidor
+   * @param int $codActividad código de actividad
+   * @param String $codCategoria código de categoría
+   * @param String $lecturaAnterior lectura anterior
+   * @param String $lecturaActual lectura actual
+   * @param String $consumoKwh consumo en Kwh
+   * 
+   * @return self
+   */
+  public function setDatosComplementariosSectorEnergia(
+    String $nroMedidor,	
+    int $codActividad,
+    String $codCategoria,
+    String $lecturaAnterior,
+    String $lecturaActual,
+    String $consumoKwh
+  ) : self {
+    $this->gGrupEner = new GGrupEner();
+    $this->gGrupEner->setDNroMed($nroMedidor);
+    $this->gGrupEner->setDActiv($codActividad);
+    $this->gGrupEner->setDCateg($codCategoria);
+    $this->gGrupEner->setDLecAnt($lecturaAnterior);
+    $this->gGrupEner->setDLecAct($lecturaActual);
+    $this->gGrupEner->setDConKwh($consumoKwh);
+    return $this;
+  }
+
+  /**
+   * Establece los datos complementarios de uso específico para el sector de supermercados.
+   * 
+   * @param String $nombreCajero nombre del cajero
+   * @param String $montoPagoEfectivo monto de pago en efectivo (decimal BCMath)
+   * @param String $montoVuelto monto de vuelto (decimal BCMath)
+   * @param String $montoDonacion monto de donación (decimal BCMath)
+   * @param String $descripcionDonacion descripción de la donación
+   */
+  public function setDatosComplementariosSectorSupermercados(
+    ?String $nombreCajero,
+    ?String $montoPagoEfectivo,
+    ?String $montoVuelto,
+    ?String $montoDonacion,
+    ?String $descripcionDonacion
+  )
+  {
+    $this->gGrupSup = new GGrupSup();
+    if(isset($nombreCajero))
+      $this->gGrupSup->setDNomCaj($nombreCajero);
+    if(isset($montoPagoEfectivo))
+      $this->gGrupSup->setDEfectivo($montoPagoEfectivo);
+    if(isset($montoVuelto))
+      $this->gGrupSup->setDVuelto($montoVuelto);
+    if(isset($montoDonacion))
+      $this->gGrupSup->setDDonac($montoDonacion);
+    if(isset($descripcionDonacion))
+      $this->gGrupSup->setDDesDonac($descripcionDonacion);
+    return $this;
+  }
+
+  /**
+   * Establece los datos adicionales de uso comercial que hacen relación a las operaciones de carácter cíclico como ser suscripciones o contratos de facturacion periódica.
+   * 
+   * @param String $cicloDeFacturacion descripción del ciclo de facturación al se refiere el documento electrónico.
+   * @param DateTime $fechaInicioCiclo fecha de inicio del ciclo de facturación.
+   * @param DateTime $fechaFinCiclo fecha de fin del ciclo de facturación.
+   * @param DateTime $fechaVencimiento fecha de vencimiento para el pago de la factura.
+   * @param String $numeroContrato número de contrato.
+   * @param String $saldoAnteriorAdeudado saldo anterior adeudado.
+   */
+  public function setDatosAdicionalesDeUsoComercial(
+    ?String $cicloDeFacturacion,
+    ?DateTime $fechaInicioCiclo,
+    ?DateTime $fechaFinCiclo,
+    ?DateTime $fechaVencimiento,
+    ?String $numeroContrato,
+    ?String $saldoAnteriorAdeudado
+  )
+  {
+    $this->gGrupAdi = new GGrupAdi();
+    if(isset($cicloDeFacturacion))
+      $this->gGrupAdi->setDCiclo($cicloDeFacturacion);
+    if(isset($fechaInicioCiclo))
+      $this->gGrupAdi->setDFecIniC($fechaInicioCiclo);
+    if(isset($fechaFinCiclo))
+      $this->gGrupAdi->setDFecFinC($fechaFinCiclo);
+    if(isset($fechaVencimiento))
+      $this->gGrupAdi->setDVencPag($fechaVencimiento);
+    if(isset($numeroContrato))
+      $this->gGrupAdi->setDContrato($numeroContrato);
+    if(isset($saldoAnteriorAdeudado))
+      $this->gGrupAdi->setDSalAnt($saldoAnteriorAdeudado);
+    return $this;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   // Getters
   ///////////////////////////////////////////////////////////////////////
@@ -570,6 +666,55 @@ class DocumentoElectronico {
   // Otros
   ///////////////////////////////////////////////////////////////////////
 
-  
+  /**
+   * Agrega una actividad económica al emisor del documento electrónico.
+   * Tanto el código como la descripción deben corresponderse con lo declarado en el RUC.
+   * 
+   * @param int $codigo código de la actividad económica
+   * @param String $descripcion descripción de la actividad económica
+   * 
+   * @return self
+   */
+  public function addEmisorActividadEconomica(int $codigo, String $descripcion): self
+  {
+    $this->gEmis->addActEco($codigo, $descripcion);
+    return $this;
+  }
+
+  public function addDatosComplementariosSectorSegurosPoliza(
+    String $codigoEmpresaSeguros,
+    String $codigoPoliza,
+    String $unidadTiempoVigencia,
+    String $cantTiempoVigencia,
+    String $numeroPoliza,
+    ?DateTime $fechaInicioVigencia,
+    ?DateTime $fechaFinVigencia,
+    ?String $codigoInternoItem
+  ) : self {
+    if(!isset($this->gGrupSeg)) {
+      $this->gGrupSeg = new GGrupSeg();
+      $this->gGrupSeg->setDCodEmpSeg($codigoEmpresaSeguros);
+    }
+    else {
+      if(strcmp($this->gGrupSeg->getDCodEmpSeg(), $codigoEmpresaSeguros) != 0)
+        throw new Exception("[DocumentoElectronico::addDatosComplementariosSectorSegurosPoliza] No se puede agregar una póliza de una empresa de seguros diferente a la ya agregada. Valor recibido: $codigoEmpresaSeguros");
+    }
+    $poliza = new GGrupPolSeg();
+    $poliza->setDPoliza($codigoPoliza);
+    $poliza->setDUnidVig($unidadTiempoVigencia);
+    $poliza->setDVigencia($cantTiempoVigencia);
+    $poliza->setDNumPoliza($numeroPoliza);
+    if(isset($fechaInicioVigencia))
+      $poliza->setDFecIniVig($fechaInicioVigencia);
+    if(isset($fechaFinVigencia))
+      $poliza->setDFecFinVig($fechaFinVigencia);
+    if(isset($codigoInternoItem))
+      $poliza->setDCodInt($codigoInternoItem);
+    $this->gGrupSeg->addGrupPolSeg($poliza);
+    return $this;
+  }
+
+
+
   
 }

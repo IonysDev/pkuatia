@@ -11,12 +11,12 @@ use DOMElement;
  */
 class GGrupAdi
 {
-  public String $ciclo;     //E821 Ciclo 
+  public ?String $dCiclo;     //E821 Ciclo 
   public ?DateTime $dFecIniC; //E822 Fecha de inicio de ciclo
   public ?DateTime $dFecFinC; //E823 Fecha de fin de ciclo
   public ?DateTime $dVencPag; //E824 Fecha de vencimiento de pago
-  public String $dContrato; //E825 Número de contrato
-  public ?float $dSaltAnt;   //E826 Saldo anterior
+  public ?String $dContrato; //E825 Número de contrato
+  public ?String $dSalAnt;   //E826 Saldo anterior
 
 
   /////////////////////////////////////////////
@@ -27,13 +27,13 @@ class GGrupAdi
   /**
    * Establece el valor de ciclo
    *
-   * @param String $ciclo
+   * @param String $dCiclo
    *
    * @return self
    */
-  public function setCiclo(String $ciclo): self
+  public function setDCiclo(String $dCiclo): self
   {
-    $this->ciclo = $ciclo;
+    $this->dCiclo = $dCiclo;
 
     return $this;
   }
@@ -102,15 +102,15 @@ class GGrupAdi
 
 
   /**
-   * Establece el valor de dSaltAnt
+   * Establece el valor de dSalAnt
    *
-   * @param ?float $dSaltAnt
+   * @param ?String $dSalAnt (decimal BCMAth)
    *
    * @return self
    */
-  public function setDSaltAnt(?float $dSaltAnt): self
+  public function setDSalAnt(?String $dSalAnt): self
   {
-    $this->dSaltAnt = $dSaltAnt;
+    $this->dSalAnt = $dSalAnt;
 
     return $this;
   }
@@ -125,9 +125,9 @@ class GGrupAdi
    *
    * @return String
    */
-  public function getCiclo(): String
+  public function getDCiclo(): String
   {
-    return $this->ciclo;
+    return $this->dCiclo;
   }
 
   /**
@@ -171,13 +171,13 @@ class GGrupAdi
   }
 
   /**
-   * Obtiene el valor de dSaltAnt
+   * Obtiene el valor de dSalAnt
    *
    * @return ?float
    */
-  public function getDSaltAnt(): ?float
+  public function getDSalAnt(): ?float
   {
-    return $this->dSaltAnt;
+    return $this->dSalAnt;
   }
 
   /////////////////////////////////////////////
@@ -192,12 +192,12 @@ class GGrupAdi
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gGrupAdi');
-    $res->appendChild(new DOMElement('ciclo', $this->ciclo));
+    $res->appendChild(new DOMElement('dCiclo', $this->dCiclo));
     $res->appendChild(new DOMElement('dFecIniC', $this->dFecIniC->format('yyyy-mm-dd')));
     $res->appendChild(new DOMElement('dFecFinC', $this->dFecFinC->format('yyyy-mm-dd')));
     $res->appendChild(new DOMElement('dVencPag', $this->dVencPag->format('yyyy-mm-dd')));
     $res->appendChild(new DOMElement('dContrato', $this->dContrato));
-    $res->appendChild(new DOMElement('dSaltAnt', $this->dSaltAnt));
+    $res->appendChild(new DOMElement('dSalAnt', $this->dSalAnt));
     return $res;
   }
   
@@ -213,7 +213,7 @@ class GGrupAdi
 
     if(isset($object->ciclo))
     {
-      $res->setCiclo($object->ciclo);
+      $res->setDCiclo($object->ciclo);
     }
 
     if(isset($object->dFecIniC))
@@ -236,9 +236,9 @@ class GGrupAdi
       $res->setDContrato($object->dContrato);
     }
 
-    if(isset($object->dSaltAnt))
+    if(isset($object->dSalAnt))
     {
-      $res->setDSaltAnt($object->dSaltAnt);
+      $res->setDSalAnt($object->dSalAnt);
     }
 
     return $res;

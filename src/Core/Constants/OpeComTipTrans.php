@@ -24,10 +24,6 @@ enum OpeComTipTrans: int {
     case VentaCreditoFiscal = 12;
     case MuestrasMedicas = 13;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $tipTrans): string {
         switch($tipTrans) {
             case 1:

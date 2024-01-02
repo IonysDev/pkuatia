@@ -18,10 +18,6 @@ enum TipoDeRegimen: int {
     case MedianoProductor = 7;
     case Contable = 8;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $tipImp): string {
         switch($tipImp) {
             case 1:

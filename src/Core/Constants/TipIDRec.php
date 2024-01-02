@@ -19,10 +19,6 @@ enum TipIDRec: int {
     case TajetaDiplomatica = 6;
     case Otro = 9;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $tipImp): string {
         switch($tipImp) {
             case 1:

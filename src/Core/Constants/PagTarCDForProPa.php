@@ -11,7 +11,7 @@ enum PagTarCDForProPa: int {
     case POS = 1;
     case PagoElectronico = 2;
     case Otro = 9;
-
+    
 }
 
 ?>

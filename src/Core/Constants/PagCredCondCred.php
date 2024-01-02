@@ -14,10 +14,6 @@ enum PagCredCondCred: int {
     case Plazo = 1;
     case Cuota = 2;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $value): string {
         switch($value) {
             case 1:

@@ -3,6 +3,7 @@
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
 use Abiliomp\Pkuatia\Core\Constants\CamIVAAfecIVA;
+use Abiliomp\Pkuatia\Core\Constants\CamIVATasaIVA;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use Abiliomp\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
@@ -85,10 +86,9 @@ class GCamIVA extends BaseSifenField
    *
    * @return self
    */
-  public function setDTasaIVA(int $dTasaIVA): self
+  public function setDTasaIVA(int|CamIVATasaIVA $dTasaIVA): self
   {
-    $this->dTasaIVA = $dTasaIVA;
-
+    $this->dTasaIVA = $dTasaIVA instanceof CamIVATasaIVA ? $dTasaIVA->value : $dTasaIVA;
     return $this;
   }
 

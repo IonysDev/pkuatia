@@ -18,11 +18,7 @@ enum PagTarCDDenTarj: int {
     case Panal = 5;
     case Cabal = 6;
     case Otro = 99;
-
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
+    
     public static function getDescripcion(int $tipoDE): string {
         switch ($tipoDE) {
             case 1:

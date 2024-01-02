@@ -97,6 +97,8 @@ trait NoValueItem {
                 $gRasMerc->setDNumPedi($nroPedido);
             $gCamItem->setGRasMerc($gRasMerc);
         }
+        if(!isset($this->items))
+            $this->items = [];
         $this->items[] = $gCamItem;
         return $this;
     }

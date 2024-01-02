@@ -13,11 +13,7 @@ enum CamItemRelMerc: int {
 
     case ToleranciaQuiebra = 1;
     case ToleranciaMerma = 2;
-
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
+    
     public static function getDescripcion(int $value): string {
         switch($value) {
             case 1:

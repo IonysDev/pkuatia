@@ -20,10 +20,6 @@ enum TimbTiDE: int {
     case NotaRemision = 7;
     case ComprobanteRetencion = 8;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $tipoDE): string {
         switch ($tipoDE) {
             case 1:

@@ -293,7 +293,7 @@ class GGrupEner
    */
   public function toXMLString(): String
   {
-    $domElement = $this->toDOMElement();
+    $domElement = $this->toDOMElement(new DOMDocument());
     $xmlString = $domElement->ownerDocument->saveXML($domElement);
     if(!$xmlString)
       throw new \Exception('[GGrupEner] Error al convertir el objeto a XML.');

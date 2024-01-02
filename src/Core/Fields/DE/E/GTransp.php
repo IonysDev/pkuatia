@@ -2,144 +2,179 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
 
+use Abiliomp\Pkuatia\Core\Constants\GTranspModTrans;
+use Abiliomp\Pkuatia\Core\Constants\GTranspRespFlete;
+use Abiliomp\Pkuatia\Core\Constants\GTranspTipTrans;
+use Abiliomp\Pkuatia\Core\Constants\Incoterm;
 use Abiliomp\Pkuatia\DataMappings\CountryMapping;
 use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use Stringable;
 
 /**
- * ID:E900 
- *Campos que describen  el transporte de mercaderías
- * PADRE:E001
+ * Nodo Id:     E900    
+ * Nombre:      gTransp    
+ * Descripción: Campos que describen  el transporte de mercaderías    
+ * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico
  */
-class GTransp
+class GTransp extends BaseSifenField
 {
-  public ?int $iTipTrans;     // E901 - Tipo de transporte
-  public ?int $iModTrans;     // E903 - Modalidad de transporte
-  public ?int $iRespFlete;    // E905 - Responsable del costo del flete
-  public String $cCondNeg;   // E906 - Condición de la negociación 
-  public String $dNuManif;   // E907 - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
-  public String $dNuDespImp; // E908 - Número de despacho de importación
-  public ?DateTime $dIniTras; // E909 - Fecha estimada de inicio de traslado
-  public ?DateTime $dFinTras; // E910 - Fecha estimada de fin  de traslado
-  public String $cPaisDest;  // E911 - Código del país de destino
-  public ?GCamSal $gCamSal;   // Campos que identifican el local de salida de las mercaderías 
-  public ?GCamEnt $gCamEnt;   // Campos que identifican el local de la entrega de las mercaderías
-  public ?GVehTras $gVehTras; // Campos que identifican al vehículo del traslado de mercaderías
-  public ?GCamTrans $gCamTrans; // Campos que identifican al transportista
+                                   // Id - Longitud - Ocurrencia - Descripción
+  public ?int       $iTipTrans;    // E901 - 1    - 0-1  - Tipo de transporte
+  public ?String    $dDesTipTrans; // E902 - 6-7  - 0-1  - Descripción del tipo de transporte
+  public ?int       $iModTrans;    // E903 - 1    - 1-1  - Modalidad de transporte
+  public ?String    $dDesModTrans; // E904 - 5-10 - 1-1  - Descripción de la modalidad del transporte
+  public ?int       $iRespFlete;   // E905 - 1    - 1-1  - Responsable del costo del flete
+  public String     $cCondNeg;     // E906 - 3    - 0-1  - Condición de la negociación 
+  public String     $dNuManif;     // E907 - 1-15 - 0-1  - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
+  public String     $dNuDespImp;   // E908 - 16   - 0-1  - Número de despacho de importación
+  public ?DateTime  $dIniTras;     // E909 - 10   - 0-1  - Fecha estimada de inicio de traslado
+  public ?DateTime  $dFinTras;     // E910 - 10   - 0-1  - Fecha estimada de fin  de traslado
+  public String     $cPaisDest;    // E911 - 3    - 0-1  - Código del país de destino
+  public String     $dPaisDest;    // E912 - 5-50 - 0-1  - Descripción del país de destino
+  public ?GCamSal   $gCamSal;      // E920 - G    - 0-1  - Campos que identifican el local de salida de las mercaderías 
+  public ?array     $gCamEnt;      // E940 - G    - 0-99 - Campos que identifican el local de la entrega de las mercaderías
+  public ?array     $gVehTras;     // E960 - G    - 0-4  - Campos que identifican al vehículo del traslado de mercaderías
+  public ?GCamTrans $gCamTrans;    // E980 - G    - 0-1  - Campos que identifican al transportista
 
   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Establece el valor de iTipTrans
+   * Establece el valor de iTipTrans (E901) que indica el tipo de transporte, así como su descripción dDesTipTrans (E902).
+   * Este valor es obligatorio para el tipo de documento electrónico Nota de Remisión (C002 = 7).
+   * Los valores permitidos son:
+   * - 1: Propio
+   * - 2: Tercero
    *
-   * @param int $iTipTrans
-   *
+   * @param int|GTranspTipTrans $iTipTrans Código del tipo de transporte.
+   * 
+   * @return self 
+   */
+  public function setITipTrans(int|GTranspTipTrans $iTipTrans): self
+  {
+    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->value : $iTipTrans;
+    $this->dDesTipTrans = GTranspTipTrans::getDescripcion($this->iTipTrans);
+    return $this;
+  }
+
+  /**
+   * Establece la descripción del tipo de transporte (E902).
+   * Esta función no debería ser llamada directamente, salvo para deserializar un DE existente, ya que el valor de este campo se establece automáticamente al establecer el valor de iTipTrans (E901).
+   * 
+   * @param String $dDesTipTrans Descripción del tipo de transporte.
+   * 
    * @return self
    */
-  public function setITipTrans(int $iTipTrans): self
+  public function setDDesTipTrans(String $dDesTipTrans): self
   {
-    $this->iTipTrans = $iTipTrans;
-
+    $this->dDesTipTrans = $dDesTipTrans;
     return $this;
   }
 
 
   /**
-   * Establece el valor de iModTrans
+   * Establece el valor de iModTrans (E903) que indica la modalidad de transporte, así como su descripción dDesModTrans (E904).
    *
-   * @param int $iModTrans
+   * @param int|GTranspModTrans $iModTrans Código de la modalidad de transporte.
    *
    * @return self
    */
-  public function setIModTrans(int $iModTrans): self
+  public function setIModTrans(int|GTranspModTrans $iModTrans): self
   {
-    $this->iModTrans = $iModTrans;
+    $this->iModTrans = $iModTrans instanceof GTranspModTrans ? $iModTrans->value : $iModTrans;
+    $this->dDesModTrans = GTranspModTrans::getDescripcion($this->iModTrans);
+    return $this;
+  }
 
+  /**
+   * Establece la descripción de la modalidad de transporte (E904).
+   * Esta función no debería ser llamada directamente, salvo para deserializar un DE existente, ya que el valor de este campo se establece automáticamente al establecer el valor de iModTrans (E903).
+   * 
+   * @param String $dDesModTrans Descripción de la modalidad de transporte.
+   * 
+   * @return self
+   */
+  public function setDDesModTrans(String $dDesModTrans): self
+  {
+    $this->dDesModTrans = $dDesModTrans;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de iRespFlete (E905) que indica el responsable del costo del flete.
+   *
+   * @param int $iRespFlete Código del responsable del costo del flete.
+   *
+   * @return self
+   */
+  public function setIRespFlete(int|GTranspRespFlete $iRespFlete): self
+  {
+    $this->iRespFlete = $iRespFlete instanceof GTranspRespFlete ? $iRespFlete->value : $iRespFlete;
+    return $this;
+  }
+
+  /**
+   * Establece el valor de cCondNeg (E906) que indica la condición o INCOTERM de la negociación.
+   *
+   * @param String|Incoterm $cCondNeg Código de la condición o INCOTERM de la negociación.
+   *
+   * @return self
+   */
+  public function setCCondNeg(String|Incoterm $cCondNeg): self
+  {
+    $this->cCondNeg = $cCondNeg instanceof Incoterm ? $cCondNeg->value : $cCondNeg;
     return $this;
   }
 
 
   /**
-   * Establece el valor de iRespFlete
+   * Establece el valor de dNuManif (E907) que indica el número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional.
    *
-   * @param int $iRespFlete
-   *
-   * @return self
-   */
-  public function setIRespFlete(int $iRespFlete): self
-  {
-    $this->iRespFlete = $iRespFlete;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cCondNeg
-   *
-   * @param String $cCondNeg
-   *
-   * @return self
-   */
-  public function setCCondNeg(String $cCondNeg): self
-  {
-    $this->cCondNeg = $cCondNeg;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNuManif
-   *
-   * @param String $dNuManif
+   * @param String $dNuManif Número de manifiesto de carga o guía.
    *
    * @return self
    */
   public function setDNuManif(String $dNuManif): self
   {
     $this->dNuManif = $dNuManif;
-
     return $this;
   }
 
 
   /**
-   * Establece el valor de dNuDespImp
+   * Establece el valor de dNuDespImp (E908) que indica el número de despacho de importación.
    *
-   * @param String $dNuDespImp
+   * @param String $dNuDespImp Número de despacho de importación.
    *
    * @return self
    */
   public function setDNuDespImp(String $dNuDespImp): self
   {
     $this->dNuDespImp = $dNuDespImp;
-
     return $this;
   }
 
 
   /**
-   * Establece el valor de dIniTras
+   * Establece el valor de dIniTras (E909) que indica la fecha estimada de inicio de traslado.
    *
-   * @param DateTime $dIniTras
+   * @param DateTime $dIniTras Fecha estimada de inicio de traslado.
    *
    * @return self
    */
   public function setDIniTras(DateTime $dIniTras): self
   {
     $this->dIniTras = $dIniTras;
-
     return $this;
   }
 
 
   /**
-   * Establece el valor de dFinTras
+   * Establece el valor de dFinTras (E910) que indica la fecha estimada de fin de traslado.
    *
    * @param DateTime $dFinTras
    *
@@ -148,7 +183,6 @@ class GTransp
   public function setDFinTras(DateTime $dFinTras): self
   {
     $this->dFinTras = $dFinTras;
-
     return $this;
   }
 

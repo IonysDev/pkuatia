@@ -17,11 +17,7 @@ enum CamIVAAfecIVA: int {
     case Exonerado = 2;
     case Exento = 3;
     case GravadoParcial = 4;
-
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
+    
     public static function getDescripcion(int $value): string {
         switch($value) {
             case 1:

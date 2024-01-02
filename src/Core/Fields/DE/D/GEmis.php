@@ -128,7 +128,7 @@ class GEmis extends BaseSifenField
      */
     public function setCDepEmi(int $cDepEmi): self
     {
-        $this->dDesDepEmi = DepartamentoMapping::getDepName(strval($this->cDepEmi));
+        $this->dDesDepEmi = DepartamentoMapping::getDepName(strval($cDepEmi));
         if(is_null($this->dDesDepEmi))
             throw new InvalidArgumentException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
         $this->cDepEmi = $cDepEmi;

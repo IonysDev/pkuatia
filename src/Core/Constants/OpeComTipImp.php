@@ -16,10 +16,6 @@ enum OpeComTipImp: int {
     case Ninguno = 4;
     case IVARenta = 5;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $tipImp): string {
         switch($tipImp) {
             case 1:

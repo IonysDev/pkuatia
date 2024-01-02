@@ -14,10 +14,6 @@ enum CamCondOpe: int {
     case Contado = 1;
     case Credito = 2;
 
-    public function __toString(): string {
-        return self::getDescripcion($this->value);
-    }
-
     public static function getDescripcion(int $value): string {
         switch($value) {
             case 1:
