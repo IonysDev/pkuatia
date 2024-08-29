@@ -9,6 +9,7 @@ use Abiliomp\Pkuatia\Core\Constants\PagCredCondCred;
 use Abiliomp\Pkuatia\Core\Constants\PagTarCDDenTarj;
 use Abiliomp\Pkuatia\Core\Constants\PagTarCDForProPa;
 use Abiliomp\Pkuatia\Core\Constants\TimbTiDE;
+use Abiliomp\Pkuatia\Core\DocumentosElectronicos\Traits\ItemValorado;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamCond;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamFE;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCompPub;
@@ -26,6 +27,8 @@ use DateTime;
 class Factura extends DocumentoElectronicoComercial
 {
   
+  use ItemValorado;
+
   //////////////////////////////////////////
   // Atributos
   //////////////////////////////////////////

@@ -7,7 +7,6 @@ use Abiliomp\Pkuatia\Core\Constants\RecTiOpe;
 use Abiliomp\Pkuatia\Core\Constants\TipIDRec;
 use Abiliomp\Pkuatia\Core\Constants\TipIDRespDE;
 use Abiliomp\Pkuatia\Core\Constants\TipoDeRegimen;
-use Abiliomp\Pkuatia\Core\DocumentosElectronicos\Traits\ValueItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\B\GOpeDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GDatGralOpe;
@@ -30,14 +29,11 @@ use Exception;
  */
 class DocumentoElectronico {
 
-  use ValueItem;
-
   public GOpeDE $gOpeDE; // B001 - Campos que describen la operación del documento electrónico
   public GTimb  $gTimb; // C001 - Campos que describen el timbrado del documento electrónico
   public GDatGralOpe $gDatGralOpe; // D001 -Campos generales del documento electrónico
   public GEmis $gEmis; // D100 - Campos que describen al emisor del documento electrónico
   public GDatRec $gDatRec; // D200 - Campos que describen al receptor del documento electrónico
-  public array $items; // E700 - Campos que describen los items del documento electrónico
   public GGrupEner $gGrupEner; // E791 - Campos que describen datos específicos para el sector energía eléctrica
   public GGrupSeg $gGrupSeg; // E800 - Campos que describen datos específicos para el sector seguros
   public GGrupSup $gGrupSup; // E810 - Campos que describen datos específicos para el sector supermercados

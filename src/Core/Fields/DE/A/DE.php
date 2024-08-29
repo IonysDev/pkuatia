@@ -33,7 +33,7 @@ class DE extends BaseSifenField
   public DateTime $dFecFirma;      // A004 - 19 - 1-1 - Fecha de la firma
   public int      $dSisFact;       // A005 - 1  - 1-1 - Sistema de facturación
 
-  public GOpeDE      $gOpeDe;      // B002 - G - 1-1  - Campos inherentes a la operación de DE
+  public GOpeDE      $gOpeDe;      // B001 - G - 1-1  - Campos inherentes a la operación de DE
   public GTimb       $gTimb;       // C001 - G - 1-1  - Datos del timbrado 
   public GDatGralOpe $gDatGralOpe; // D001 - G - 1-1  - Campos generales del DE
   public GDtipDE     $gDtipDe;     // E001 - G - 1-1  - Campos específicos por tipo de Documento Electrónico 

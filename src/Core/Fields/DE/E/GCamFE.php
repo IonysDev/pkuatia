@@ -18,24 +18,6 @@ use SimpleXMLElement;
 
 class GCamFE extends BaseSifenField
 {
-  public const INDICADOR_PRESENCIA_OPERACION_PRESENCIAL = 1;
-  public const INDICADOR_PRESENCIA_OPERACION_ELECTRONICA = 2;
-  public const INDICADOR_PRESENCIA_OPERACION_TELEMARKETING = 3;
-  public const INDICADOR_PRESENCIA_VENTA_A_DOMICILIO = 4;
-  public const INDICADOR_PRESENCIA_OPERACION_BANCARIA = 5;
-  public const INDICADOR_PRESENCIA_OPERACION_CICLICA = 6;
-  public const INDICADOR_PRESENCIA_OTRO = 9;
-
-  public const INDICADOR_PRESENCIA_DESCRIPCIONES = [
-    self::INDICADOR_PRESENCIA_OPERACION_PRESENCIAL => 'Operación presencial',
-    self::INDICADOR_PRESENCIA_OPERACION_ELECTRONICA => 'Operación electrónica',
-    self::INDICADOR_PRESENCIA_OPERACION_TELEMARKETING => 'Operación telemarketing',
-    self::INDICADOR_PRESENCIA_VENTA_A_DOMICILIO => 'Venta a domicilio',
-    self::INDICADOR_PRESENCIA_OPERACION_BANCARIA => 'Operación bancaria',
-    self::INDICADOR_PRESENCIA_OPERACION_CICLICA => 'Operación cíclica',
-    self::INDICADOR_PRESENCIA_OTRO => 'Otro',
-  ];
-
                                 // Id - Longitud - Ocurrencia - Descripción
   public int      $iIndPres;    // E011 - 1     - 1-1 - Indicador de presencia
   public String   $dDesIndPres; // E012 - 10-30 - 1-1 - Descripción del indicador de presencia
@@ -50,8 +32,8 @@ class GCamFE extends BaseSifenField
    */
   public function __construct()
   {
-    $this->iIndPres = self::INDICADOR_PRESENCIA_OPERACION_PRESENCIAL;
-    $this->dDesIndPres = "Operación presencial";
+    $this->iIndPres = CamFEIndPres::Presencial->value;
+    $this->dDesIndPres = CamFEIndPres::getDescripcion(CamFEIndPres::Presencial->value);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -59,11 +41,11 @@ class GCamFE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Establece el valor de iIndPres (código indicador de presencia)
+   * Establece el valor de iIndPres (E011) que corresponde al indicador de presencia.
    *
-   * @param int $iIndPres
+   * @param int $iIndPres Código del indicador de presencia.
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setIIndPres(int|CamFEIndPres $iIndPres): self
   {
@@ -73,11 +55,13 @@ class GCamFE extends BaseSifenField
   }
 
   /**
-   * Establece el valor de dDesIndPres
+   * Establece el valor de dDesIndPres (E012) que es la descripción del indicador de presencia.
+   * No debería utilizarse este método directamente, ya que la descripción del indicador de presencia se establece automáticamente al establecer el código del indicador de presencia.
+   * Solo utilizarlo al deserializar un DE.
    *
-   * @param String $dDesIndPres
+   * @param String $dDesIndPres Descripción del indicador de presencia.
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDDesIndPres(String $dDesIndPres): self
   {
@@ -94,11 +78,11 @@ class GCamFE extends BaseSifenField
 
 
   /**
-   * Establece el valor de dFecEmNR
+   * Establece el valor de dFecEmNR (E012) que es fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica, cuando corresponda.
+   * 
+   * @param DateTime $dFecEmNR Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica.
    *
-   * @param DateTime $dFecEmNR
-   *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setDFecEmNR(DateTime $dFecEmNR): self
   {
@@ -108,11 +92,12 @@ class GCamFE extends BaseSifenField
 
 
   /**
-   * Establece el valor de gComPub
+   * Establece el valor de gComPub (E020) que corresponde a los campos que describen las informaciones de compras públicas.
+   * Obligatorio cuando la operación es B2G (D202 = 3).
    *
-   * @param GCompPub $gComPub
+   * @param GCompPub $gComPub Campos que describen las informaciones de compras públicas.
    *
-   * @return self
+   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
   public function setGComPub(GCompPub $gComPub): self
   {
@@ -125,7 +110,9 @@ class GCamFE extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Obtiene el valor de iIndPres
+   * Obtiene el valor de iIndPres (E011) que corresponde al indicador de presencia.
+   * 
+   * @return int Código del indicador de presencia.
    */
   public function getIIndPres(): int
   {
@@ -133,9 +120,9 @@ class GCamFE extends BaseSifenField
   }
 
   /**
-   * E012 dDesIndPres Descripción del indicador de presencia
+   * Obtiene el valor de dDesIndPres (E012) que corresponde a la descripción del indicador de presencia.
    *
-   * @return String
+   * @return String Descripción del indicador de presencia.
    */
   public function getDDesIndPres(): String
   {
@@ -143,25 +130,35 @@ class GCamFE extends BaseSifenField
   }
 
   /**
-   * Obtiene el valor de dFecEmNR
+   * Obtiene el valor de dFecEmNR (E013) que corresponde a la fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica, cuando corresponda.
+   * 
+   * @return DateTime Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica.
    */
   public function getDFecEmNR(): DateTime
   {
     return $this->dFecEmNR;
   }
 
-  
+  /**
+   * Obtiene el valor de gComPub (E020) que corresponde a los campos que describen las informaciones de compras públicas.
+   * 
+   * @return GCompPub Campos que describen las informaciones de compras públicas.
+   */
+  public function getGComPub(): GCompPub
+  {
+    return $this->gComPub;
+  }
 
   ///////////////////////////////////////////////////////////////////////
-  // XML Element
+  // Instanciadores
   ///////////////////////////////////////////////////////////////////////
 
   /**
    * Instancia un objeto del tipo GCamFE a partir de un SimpleXMLElement
    * 
-   * @param SimpleXMLElement $node
+   * @param SimpleXMLElement $node Nodo XML que representa el objeto.
    * 
-   * @return self
+   * @return self Objeto GCamFE instanciado.
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
@@ -184,27 +181,11 @@ class GCamFE extends BaseSifenField
   }
 
   /**
-   * XML Element
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gCamFE');
-    $res->appendChild(new DOMElement('iIndPres', $this->iIndPres));
-    $res->appendChild(new DOMElement('dDesIndPres', $this->getDDesIndPres()));
-    if(isset($this->dFecEmNR))
-      $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
-    if(isset($this->gComPub))
-      $res->appendChild($this->gComPub->toDOMElement($doc));
-    return $res;
-  }
-  
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
+   * Instancia un objeto del tipo GCamFE a partir de un objeto stdClass que es la respuesta de la API de Sifen que contiene un gCamFE.
+   * 
+   * @param  mixed $object Objeto stdClass que contiene un gCamFE.
+   * 
+   * @return self Objeto GCamFE instanciado.
    */
   public static function FromSifenResponseObject($object): self
   {
@@ -229,9 +210,9 @@ class GCamFE extends BaseSifenField
   /**
    * Instancia un objeto GCamFE a partir de un DOMElement que representa el nodo XML del objeto.
    * 
-   * @param DOMElement $node
+   * @param DOMElement $node Nodo XML que representa el objeto.
    * 
-   * @return self
+   * @return self Objeto GCamFE instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
@@ -247,9 +228,32 @@ class GCamFE extends BaseSifenField
     return $res;
   }
 
+  ///////////////////////////////////////////////////////////////////////
+  // Conversores
+  ///////////////////////////////////////////////////////////////////////
+
   /**
+   * Convierte el objeto GCamFE a un DOMElement.
    * 
+   * @param DOMDocument $doc Documento XML en el que se creará el DOMElement.
+   *
+   * @return DOMElement Objeto DOMElement que representa el objeto GCamFE.
    */
+  public function toDOMElement(DOMDocument $doc): DOMElement
+  {
+    $res = $doc->createElement('gCamFE');
+    $res->appendChild(new DOMElement('iIndPres', $this->iIndPres));
+    $res->appendChild(new DOMElement('dDesIndPres', $this->getDDesIndPres()));
+    if(isset($this->dFecEmNR))
+      $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
+    if(isset($this->gComPub))
+      $res->appendChild($this->gComPub->toDOMElement($doc));
+    return $res;
+  }
+  
+  ///////////////////////////////////////////////////////////////////////
+  // Validadores
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Valida el contenido del objeto de conformidad a lo establecido en el MT

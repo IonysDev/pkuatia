@@ -21,3 +21,5 @@ test/qr.txt
 test/EnvioLoteNCGarelli.php
 test/EnvioLoteNCGarelli.php
 test/ConsultaLoteGarelli-AbilioAERO.php
+test/EventoTestGarelli.php
+test/qr.txt

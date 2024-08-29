@@ -64,8 +64,8 @@ $gGroupTiEvt = new GGroupTiEvt();
 ///////////////////////////////////////////////////////////////
 ///creamos una raiz de evento de cancelacion
 $rGeVeCan = new RGeVeCan();
-$rGeVeCan->setId('01800075307001001000001122023120213067447859'); ///poner un cdc
-$rGeVeCan->setMOtEve('Error de facturación a cliente.');
+$rGeVeCan->setId('01800075307001001000002622024042715547589476'); ///poner un cdc
+$rGeVeCan->setMOtEve('Error de clasificación de tipo de transacción.');
 ///////////////////////////////////////////////////////////////
 ///EVENTO DE INUTILIZACION
 ///////////////////////////////////////////////////////////////
