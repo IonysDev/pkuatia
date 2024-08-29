@@ -30,7 +30,7 @@ class GCamIVA extends BaseSifenField
   public int    $dTasaIVA;    // E734 - 1-2        - 1-1 - Tasa del IVA (% en número entero)
   public String $dBasGravIVA; // E735 - 1-15p(0-8) - 1-1 - Base gravada del IVA por ítem 
   public String $dLiqIVAItem; // E736 - 1-15p(0-8) - 1-1 - Liquidación del IVA por ítem
-  public String $dBasExe;     // E730 - 1-15p(0-8) - 1-1 - Base Exenta por ítem 
+  public String $dBasExe;     // E737 - 1-15p(0-8) - 1-1 - Base Exenta por ítem 
 
   ///////////////////////////////////////////////////////////////////////
   // Setters

@@ -16,7 +16,7 @@ class RGeVeNotRec
 
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public String   $Id;        // GEN002 - Identificador del DE/DTE - 44 -1-1
-  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE/DTE - 19 - 1-1
+  public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE - 19 - 1-1
   public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE - 19 - 1-1
   public int      $iTipRec;   // GEN005 - Tipo de Receptor - 1 - 1-1
   public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1

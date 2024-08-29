@@ -22,7 +22,7 @@ class GVehTras extends BaseSifenField
     public int    $dTipIdenVeh; // E967 - 1    - 1-1 - Tipo de identificación del vehículo: 1 = Número de identificación del vehículo | 2 = Número de matrícula del vehículo
     public String $dNroIDVeh;   // E963 - 1-20 - 0-1 - Número de identificación del vehículo
     public String $dAdicVeh;    // E964 - 1-20 - 0-1 - Datos adicionales del vehículo
-    public String $dNroMatVeh;  // E965 - 6    - 0-1 - Número de matrícula del vehículo
+    public String $dNroMatVeh;  // E965 - 6-7    - 0-1 - Número de matrícula del vehículo
     public String $dNroVuelo;   // E966 - 6    - 0-1 - Número de vuelo
 
     ///////////////////////////////////////////////////////////////////////

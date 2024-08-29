@@ -5,7 +5,7 @@ namespace Abiliomp\Pkuatia\Core\Constants;
 use Exception;
 
 /**
- * Enumeración que contiene los tipos de transacción de una operación comercial para los campos
+ * Enumeración que contiene los tipos de obligaciones afectadas por una operación comercial para los campos
  * iTipTra (D011) y dDesTipTra (D012) del grupo gOpeCom (D010).
  */
 enum OpeComTipTrans: int {

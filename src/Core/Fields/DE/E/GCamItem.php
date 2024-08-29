@@ -18,14 +18,14 @@ use SimpleXMLElement;
  */
 class GCamItem extends BaseSifenField
 {
-  public String     $dCodInt;      // E701 - 1-20       - 1-1 - Código interno
+  public String     $dCodInt;      // E701 - 1-50       - 1-1 - Código interno
   public int        $dParAranc;    // E702 - 4          - 0-1 - Partida arancelaria
   public int        $dNCM;         // E703 - 6-8        - 0-1 - Nomenclatura común del Mercosur (NCM)
   public String     $dDncpG;       // E704 - 8          - 0-1 - Código DNCP – Nivel General
   public String     $dDncpE;       // E705 - 3-4        - 0-1 - Código DNCP – Nivel Especifico
   public int        $dGtin;        // E706 - 8,12,13,14 - 0-1 - Código GTIN por producto
   public int        $dGtinPq;      // E707 - 8,12,13,14 - 0-1 - Código GTIN por paquete
-  public String     $dDesProSer;   // E708 - 1-120      - 1-1 - Descripción del producto  y/o servicio
+  public String     $dDesProSer;   // E708 - 1-2000      - 1-1 - Descripción del producto  y/o servicio
   public int        $cUniMed;      // E709 - 1-5        - 1-1 - Unidad de medida
   public String     $dDesUniMed;   // E710 - 1-10       - 1-1 - Descripción de la unidad de medida
   public String     $dCantProSer;  // E711 - 1-10p(0-4) - 1-1 - Cantidad del producto y/o servicio (es un decimal BCMAth)

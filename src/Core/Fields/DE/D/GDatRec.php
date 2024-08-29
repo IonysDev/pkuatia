@@ -52,7 +52,7 @@ class GDatRec extends BaseSifenField
     public int    $iNatRec;     // D201 - 1     - 1-1 - Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
     public int    $iTiOpe;      // D202 - 1     - 1-1 - Tipo de operación: 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
     public String $cPaisRec;    // D203 - 3     - 1-1 - Código de país del receptor
-    public String $dDesPaisRe;  // D204 - 4-30  - 1-1 - Descripción del país del receptor
+    public String $dDesPaisRe;  // D204 - 4-50  - 1-1 - Descripción del país del receptor
     public int    $iTiContRec;  // D205 - 1     - 0-1 - Tipo de contribuyente receptor: 1 = Persona Física | 2 = Persona Jurídica
     public String $dRucRec;     // D206 - 3-8   - 0-1 - RUC del receptor
     public int    $dDVRec;      // D207 - 1     - 0-1 - Dígito verificador del RUC del receptor

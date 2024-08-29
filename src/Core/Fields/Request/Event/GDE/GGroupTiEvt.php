@@ -44,6 +44,9 @@ class GGroupTiEvt
   public RGeVeAnt      $rGeVeAnt;     // GEA001  - Raíz Gestión de Eventos anticipo
   public RGeVeRem      $rGeVeRem;     // GERE001 - Raíz Gestión de Eventos remisión 
 
+  // Eventos de Nominación
+  public RGeVeNom      $rGeVeNom;     // GENFE001 - Raíz Gestión de Eventos de Nominación
+
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
@@ -250,6 +253,19 @@ class GGroupTiEvt
     return $this;
   }
 
+  
+  /**
+   * Establece el valor de rGeVeNom
+   *
+   * @param RGeVeNom $rGeVeNom
+   *
+   * @return self
+   */
+  public function setRGeVeNom(RGeVeNom $rGeVeNom): self
+  {
+    $this->rGeVeNom = $rGeVeNom;
+    return $this;
+  }
 
   ///////////////////////////////////////////////////////////////////////
   // Getters
@@ -385,6 +401,16 @@ class GGroupTiEvt
     return $this->rGeVeRem;
   }
 
+  /**
+   * Obtiene el valor de rGeVeNom
+   *
+   * @return RGeVeNom
+   */
+  public function getRGeVeNom(): RGeVeNom
+  {
+    return $this->rGeVeNom;
+  }
+
 
   ///////////////////////////////////////////////////////////////////////
   ///XML ELEMENT
@@ -432,7 +458,8 @@ class GGroupTiEvt
     $res->appendChild($this->rGeVeAnt->toDOMElement($doc));
     if(isset($this->rGeVeRem))
     $res->appendChild($this->rGeVeRem->toDOMElement($doc));
-
+    if(isset($this->rGeVeNom))
+    $res->appendChild($this->rGeVeNom->toDOMElement($doc));
     return $res;
   }
 
@@ -592,6 +619,11 @@ class GGroupTiEvt
       if(isset($node->rGeVeRem))
       {
           $res->setRGeVeRem(RGeVeRem::FromSimpleXMLElement($node->rGeVeRem));
+      }
+
+      if(isset($node->rGeVeNom))
+      {
+          $res->setRGeVeNom(RGeVeNom::FromSimpleXMLElement($node->rGeVeNom));
       }
 
       return $res;

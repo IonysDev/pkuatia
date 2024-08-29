@@ -14,7 +14,7 @@ class RGeVeDescon
 {
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public String $Id;          // GED002 CDC del DE/DTE - 44- 1-1
-  public DateTime $dFecEmi;   // GED003 Fecha de emisión del DE/DTE - 19 - 1-1
+  public DateTime $dFecEmi;   // GED003 Fecha de emisión del DE - 19 - 1-1
   public DateTime $dFecRecep; // GED004 Fecha Recepción DE - 19 - 1-1
   public int $iTipRec;        // GED005 Tipo de Receptor - 1 - 1-1
   public String $dNomRec;     // GED006 Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1

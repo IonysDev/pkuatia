@@ -868,6 +868,12 @@ class RGeVeTr
   //   }
   // }
 
+  /**
+   * FromSimpleXMLElement
+   *
+   * @param  SimpleXMLElement $node
+   * @return RGeVeTr
+   */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if (strcmp($node->getName(), 'rGeVeTr') != 0) {

@@ -113,8 +113,12 @@ class DE extends BaseSifenField
    */
   public function setDSisFact(int $dSisFact): self
   {
-    if($dSisFact != Constants::SISTEMA_FACTURACION_CONTRIBUYENTE && $dSisFact != Constants::SISTEMA_FACTURACION_SIFEN_GRATUITO)
-      throw new \Exception('[DE] Valor dSisFact inválido: ' . $dSisFact . '. Debe ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET)');
+    // if($dSisFact != Constants::SISTEMA_FACTURACION_CONTRIBUYENTE && $dSisFact != Constants::SISTEMA_FACTURACION_SIFEN_GRATUITO)
+    //   throw new \Exception('[DE] Valor dSisFact inválido: ' . $dSisFact . '. Debe ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET)');
+    // $this->dSisFact = $dSisFact;
+    // return $this;
+    if($dSisFact != Constants::SISTEMA_FACTURACION_CONTRIBUYENTE)
+      throw new \Exception('[DE] Valor dSisFact inválido: ' . $dSisFact . '. Debe ser 1 (Contribuyente)');
     $this->dSisFact = $dSisFact;
     return $this;
   }

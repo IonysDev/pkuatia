@@ -14,6 +14,7 @@ class GCamNRE
   public int $iRespEmiNR; ///ID:E503 Responsable de la emisión de la Nota Remisión Electrónica Padre:E500 
   public int $dKmR; ///E505 Kilómetros estimados de recorrido E500 
   public DateTime $dFecEm; //ID:E506 Fecha futura de emisión de la factura PADRE:E500
+  public String $cPreFle; //Costo del Flete 
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -48,7 +49,6 @@ class GCamNRE
   }
 
 
-
   /**
    * Establece el valor de dKmR
    *
@@ -77,6 +77,14 @@ class GCamNRE
 
     return $this;
   }
+
+  public function setCPrefle(String $cPreFle): self
+  {
+    $this->cPreFle = $cPreFle;
+
+    return $this;
+  }
+
 
   ///////////////////////////////////////////////////////////////////////
   ///Getters
@@ -212,6 +220,11 @@ class GCamNRE
     return $this->dFecEm;
   }
 
+  public function getCPrefle(): String 
+  {
+    return $this->cPreFle;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   ///XML Element
   ///////////////////////////////////////////////////////////////////////
@@ -231,6 +244,7 @@ class GCamNRE
     $res->appendChild(new DOMElement('dDesRespEmiNR', $this->getDDesRespEmiNR()));
     $res->appendChild(new DOMElement('dKmR', $this->getDKmR()));
     $res->appendChild(new DOMElement('dFecEm', $this->getDFecEm()->format('Y-m-d')));
+    $res->appendChild(new DOMElement('cPreFle', $this->getCPrefle()));
 
     return $res;
   }
@@ -259,6 +273,10 @@ class GCamNRE
       $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFecEm')->item(0)->nodeValue));
     }
     
+    if($node->getElementsByTagName('cPreFle')->length > 0){
+      $res->setCPrefle($node->getElementsByTagName('cPreFle')->item(0)->nodeValue);
+    }
+
     return $res;
   }
   
@@ -283,6 +301,10 @@ class GCamNRE
     }
     if(isset($object->dFecEm)){
       $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $object->dFecEm));
+    }
+
+    if(isset($object->cPreFle)){
+      $res->setCPrefle($object->cPreFle);
     }
     
     return $res;

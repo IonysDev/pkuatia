@@ -22,11 +22,10 @@ class GRasMerc extends BaseSifenField
   public String   $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
   public String   $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
   public String   $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
-  public String   $dNomImp;       // E756 - 4-60  - 0-1 - Nombre del Importador
-  public String   $dDirImp;       // E757 - 1-255 - 0-1 - Dirección de Importador
-  public String   $dNumFir;       // E758 - 20    - 0-1 - Número de registro de la firma del importador
-  public String   $dNumReg;       // E759 - 20    - 0-1 - Número de registro del  producto otorgado por  el SENAVE
-  public String   $dNumRegEntCom; // E760 - 20    - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
+  public String   $dNumReg;       // E759 - 1-20  - 0-1 - Número de registro del  producto otorgado por  el SENAVE
+  public String   $dNumRegEntCom; // E760 - 1-20  - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
+  public String   $dNomPro;       // E761 - 1-30  - 0-1 - Nombre del Producto
+  
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -106,52 +105,6 @@ class GRasMerc extends BaseSifenField
     return $this;
   }
 
-
-  /**
-   * Establece el valor de dNomImp
-   *
-   * @param String $dNomImp
-   *
-   * @return self
-   */
-  public function setDNomImp(String $dNomImp): self
-  {
-    $this->dNomImp = $dNomImp;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dDirImp
-   *
-   * @param String $dDirImp
-   *
-   * @return self
-   */
-  public function setDDirImp(String $dDirImp): self
-  {
-    $this->dDirImp = $dDirImp;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNumFir
-   *
-   * @param String $dNumFir
-   *
-   * @return self
-   */
-  public function setDNumFir(String $dNumFir): self
-  {
-    $this->dNumFir = $dNumFir;
-
-    return $this;
-  }
-
-
   /**
    * Establece el valor de dNumReg
    *
@@ -177,6 +130,20 @@ class GRasMerc extends BaseSifenField
   public function setDNumRegEntCom(String $dNumRegEntCom): self
   {
     $this->dNumRegEntCom = $dNumRegEntCom;
+
+    return $this;
+  }
+
+  /**
+   * Establece el valor de dNomPro
+   *
+   * @param String $dNomPro
+   *
+   * @return self
+   */
+  public function setDNomPro(String $dNomPro): self
+  {
+    $this->dNomPro = $dNomPro;
 
     return $this;
   }
@@ -236,36 +203,6 @@ class GRasMerc extends BaseSifenField
   }
 
   /**
-   * Obtiene el valor de dNomImp
-   *
-   * @return String
-   */
-  public function getDNomImp(): String
-  {
-    return $this->dNomImp;
-  }
-
-  /**
-   * Obtiene el valor de dDirImp
-   *
-   * @return String
-   */
-  public function getDDirImp(): String
-  { 
-    return $this->dDirImp;
-  }
-
-  /**
-   * Obtiene el valor de dNumFir
-   *
-   * @return String
-   */
-  public function getDNumFir(): String
-  {
-    return $this->dNumFir;
-  }
-
-  /**
    * Obtiene el valor de dNumReg
    *
    * @return String
@@ -283,6 +220,16 @@ class GRasMerc extends BaseSifenField
   public function getDNumRegEntCom(): String
   {
     return $this->dNumRegEntCom;
+  }
+
+  /**
+   * Obtiene el valor de dNomPro
+   *
+   * @return String
+   */
+  public function getDNomPro(): String
+  {
+    return $this->dNomPro;
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -304,11 +251,9 @@ class GRasMerc extends BaseSifenField
     $res->appendChild(new DOMElement('dNSerie', $this->getDNSerie()));
     $res->appendChild(new DOMElement('dNumPedi', $this->getDNumPedi()));
     $res->appendChild(new DOMElement('dNumSegui', $this->getDNumSegui()));
-    $res->appendChild(new DOMElement('dNomImp', $this->getDNomImp()));
-    $res->appendChild(new DOMElement('dDirImp', $this->getDDirImp()));
-    $res->appendChild(new DOMElement('dNumFir', $this->getDNumFir()));
     $res->appendChild(new DOMElement('dNumReg', $this->getDNumReg()));
     $res->appendChild(new DOMElement('dNumRegEntCom', $this->getDNumRegEntCom()));
+    $res->appendChild(new DOMElement('dNomPro', $this->getDNomPro()));
     return $res;
   }
 
@@ -352,18 +297,6 @@ class GRasMerc extends BaseSifenField
     {
       $res->setDNumSegui($node->dNumSegui);
     }
-    if(isset($node->dNomImp))
-    {
-      $res->setDNomImp($node->dNomImp);
-    }
-    if(isset($node->dDirImp))
-    {
-      $res->setDDirImp($node->dDirImp);
-    }
-    if(isset($node->dNumFir))
-    {
-      $res->setDNumFir($node->dNumFir);
-    }
     if(isset($node->dNumReg))
     {
       $res->setDNumReg($node->dNumReg);
@@ -371,6 +304,10 @@ class GRasMerc extends BaseSifenField
     if(isset($node->dNumRegEntCom))
     {
       $res->setDNumRegEntCom($node->dNumRegEntCom);
+    }
+    if(isset($node->dNomPro))
+    {
+      $res->setDNomPro($node->dNomPro);
     }
     return $res;
   }
@@ -397,16 +334,12 @@ class GRasMerc extends BaseSifenField
       $res->setDNumPedi(trim($node->getElementsByTagName('dNumPedi')->item(0)->nodeValue));
     if($node->getElementsByTagName('dNumSegui')->length > 0)
       $res->setDNumSegui(trim($node->getElementsByTagName('dNumSegui')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNomImp')->length > 0)
-      $res->setDNomImp(trim($node->getElementsByTagName('dNomImp')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dDirImp')->length > 0)
-      $res->setDDirImp(trim($node->getElementsByTagName('dDirImp')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumFir')->length > 0)
-      $res->setDNumFir(trim($node->getElementsByTagName('dNumFir')->item(0)->nodeValue));
     if($node->getElementsByTagName('dNumReg')->length > 0)
       $res->setDNumReg(trim($node->getElementsByTagName('dNumReg')->item(0)->nodeValue));
     if($node->getElementsByTagName('dNumRegEntCom')->length > 0)
       $res->setDNumRegEntCom(trim($node->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dNomPro')->length > 0)
+      $res->setDNomPro(trim($node->getElementsByTagName('dNomPro')->item(0)->nodeValue));
     return $res;
   }
 }

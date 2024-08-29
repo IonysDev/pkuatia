@@ -24,7 +24,7 @@ class GGrupPolSeg extends BaseSifenField
   public String   $dNumPoliza; // EA794 - 1-25  - 1-1 - Número de la póliza
   public DateTime $dFecIniVig; // EA795 - 19    - 0-1 - Fecha de inicio de vigencia en formato AAAA-MM-DDThh:mm:ss
   public DateTime $dFecFinVig; // EA796 - 19    - 0-1 - Fecha de fin de vigencia en formato AAAA-MM-DDThh:mm:ss
-  public String   $dCodInt;    // EA797 - 1-20  - 0-1 - Código interno de referencia a un ítem
+  public String   $dCodInt;    // EA797 - 1-50  - 0-1 - Código interno de referencia a un ítem
 
   ///////////////////////////////////////////////////////////////////////
   // Setters

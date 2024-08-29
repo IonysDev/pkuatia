@@ -24,7 +24,7 @@ class GOpeCom extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipTra;     // D011 - 1-2       - 0-1 - Tipo de transacción
-    public String $dDesTipTra;  // D012 - 5-36      - 0-1 - Descripción del tipo de transacción
+    public String $dDesTipTra;  // D012 - 5-39      - 0-1 - Descripción del tipo de transacción
     public int    $iTImp;       // D013 - 1         - 1-1 - Tipo de impuesto afectado
     public String $dDesTImp;    // D014 - 3-11      - 1-1 - Descripción del tipo de impuesto afectado
     public String $cMoneOpe;    // D015 - 3         - 1-1 - Moneda de la operación
