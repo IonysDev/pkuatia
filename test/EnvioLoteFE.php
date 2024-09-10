@@ -21,11 +21,7 @@ use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
 use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
 use Abiliomp\Pkuatia\Helpers\CDCHelper;
-use Abiliomp\Pkuatia\Helpers\SignHelper;
 use Abiliomp\Pkuatia\Sifen;
-use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
-use Abiliomp\Pkuatia\Core\Fields\DE\J\GCamFuFD;
-use Abiliomp\Pkuatia\Helpers\QRHelper;
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
@@ -33,7 +29,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 $certFile = '80121930-2.pem.crt';
 $keyFile = '80121930-2.pem.key';
-$keyPassphrase = '171222';
+$keyPassphrase = '801219';
 
 $config = new Config();
 $config->env = 'dev';

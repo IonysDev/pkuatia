@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 $certFile = '80121930-2.pem.crt';
 $keyFile = '80121930-2.pem.key';
-$keyPassphrase = '171222';
+$keyPassphrase = '801219';
 
 $config = new Config();
 $config->env = 'env';
@@ -17,7 +17,7 @@ $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
 
-$nroLote = '116231288704800473';
+$nroLote = '8592999779328838';
 $requestDate = new DateTime('now', new DateTimeZone('America/Asuncion'));
 //cast to string to avoid DateTime serialization error
 $requestDate = (string) $requestDate->format('d/m/Y H:i:s');
