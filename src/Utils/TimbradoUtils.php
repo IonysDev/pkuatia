@@ -2,6 +2,7 @@
 
 namespace Abiliomp\Pkuatia\Utils;
 
+use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
 use Exception;
 
 /**
@@ -36,6 +37,31 @@ class TimbradoUtils {
             $c2 = chr(ord($c2) + 1);
         }
         return $res;
+    }
+
+    /**
+     * Calcula el siguiente número a partir del serie/número indicado
+     * 
+     * @param String $serieActual Serie actual
+     * @param int $numeroActual Número actual
+     * 
+     * @return array con las claves 'serie' y 'numero' que contienen la serie y número siguientes
+     */
+    public static function CalcNumSgte(String $serieActual, int $numeroActual): array
+    {
+        if(!self::ValidarSerie($serieActual))
+            throw new Exception('[TimbradoUtils] La serie actual no es válida.');
+        if($numeroActual < 1 || $numeroActual > GTimb::MAX_NUMDOC)
+            throw new Exception('[TimbradoUtils] El número actual no es válido.');
+
+        if($numeroActual < GTimb::MAX_NUMDOC) {
+            return ['serie' => $serieActual, 'numero' => $numeroActual + 1];
+        }
+        else {
+            if(strcmp($serieActual, 'ZZ') == 0)
+                throw new Exception('[TimbradoUtils] Series y números agotados.');
+            return ['serie' => self::CalcSerieSgte($serieActual), 'numero' => 1];
+        }
     }
 
     /**

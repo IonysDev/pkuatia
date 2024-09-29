@@ -17,6 +17,9 @@ use SimpleXMLElement;
  */
 class GTimb extends BaseSifenField
 {
+    public const MAX_NUMDOC = 9999999;
+    public const MAX_SERIE = 'ZZ';
+    
                               // Id - Longirud - Ocurrencia - Descripción
     public int    $iTiDE;     // C002 - 1-2   - 1-1 - Tipo de documento electrónico
     public String $dDesTiDE;  // C003 - 15-40 - 1-1 - Descripción del tipo de documento electrónico
