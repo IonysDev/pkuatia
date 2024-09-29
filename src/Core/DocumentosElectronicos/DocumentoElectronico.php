@@ -568,15 +568,15 @@ class DocumentoElectronico {
    * 
    * @return self
    */
-  public function setReceptor(
+  public function setReceptor (
     String $nombre,
     bool $esContribuyente,
-    RecTiOpe $tipoOperacion, 
+    int|RecTiOpe $tipoOperacion, 
     String $codPais,
-    ?EmisRecTipCont $tipoContribuyente,
+    int|EmisRecTipCont|null $tipoContribuyente,
     ?String $ruc,
     ?int $dv,
-    ?TipIDRec $tipoIdentificacion,
+    int|TipIDRec|null $tipoIdentificacion,
     ?String $nroIdentificacion,
     ?String $nombreFantasia,
     ?String $callePrincipal,
@@ -589,38 +589,78 @@ class DocumentoElectronico {
     ?String $codigoDeCliente
     ) : self
   {
+    // Validación de tipo de operación y país
+    $tipoOpInt = $tipoOperacion instanceof RecTiOpe ? $tipoOperacion->value : $tipoOperacion;
+    if($tipoOpInt == RecTiOpe::B2F && strcmp($codPais, 'PRY') == 0) {
+      throw new Exception("[DocumentoElectronico::setReceptor] No se puede emitir un DE de tipo B2F para un receptor en Paraguay.");
+    }
+    // Validación de tipo de identidad y estado de contribuyente
+    if($esContribuyente) {
+      if(!$tipoContribuyente)
+        throw new Exception("[DocumentoElectronico::setReceptor] El tipo de contribuyente es obligatorio si el receptor es contribuyente.");
+      if(!$ruc)
+        throw new Exception("[DocumentoElectronico::setReceptor] El RUC del receptor es obligatorio si el receptor es contribuyente.");
+      if(!$dv)
+        throw new Exception("[DocumentoElectronico::setReceptor] El dígito verificador del RUC del receptor es obligatorio si el receptor es contribuyente.");
+    } else {
+      if(!$tipoIdentificacion)
+        throw new Exception("[DocumentoElectronico::setReceptor] El tipo de identificación es obligatorio si el receptor no es contribuyente.");
+      if(!$nroIdentificacion)
+        throw new Exception("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente.");
+    }
+
     $gDatRec = new GDatRec();
-    $gDatRec->setDNomRec($nombre);
     $gDatRec->setINatRec($esContribuyente ? 1 : 0);
     $gDatRec->setITiOpe($tipoOperacion);
     $gDatRec->setCPaisRec($codPais);
+
     if($esContribuyente) {
       $gDatRec->setITiContRec($tipoContribuyente);
       $gDatRec->setDRucRec($ruc);
       $gDatRec->setDDVRec($dv);
-    } else {
+    }
+    
+    if(!$esContribuyente && $tipoOperacion != RecTiOpe::B2F) {
       $gDatRec->setITipIDRec($tipoIdentificacion);
       $gDatRec->setDNumIDRec($nroIdentificacion);
     }
+
+    if($tipoIdentificacion == TipIDRec::Innominado) {
+      $gDatRec->setDNomRec('Sin Nombre');
+    }
+    else {
+      $gDatRec->setDNomRec($nombre);
+    }
+
     if(isset($nombreFantasia))
       $gDatRec->setDNomFanRec($nombreFantasia);
-    if(isset($callePrincipal))
+
+    if($tipoOperacion == RecTiOpe::B2F && $callePrincipal == null) {
+      throw new Exception("[DocumentoElectronico::setReceptor] La calle principal es obligatoria para un receptor extranjero.");
+    }
+
+    if(isset($callePrincipal)) {
       $gDatRec->setDDirRec($callePrincipal);
-    if(isset($numeroCasa))
+      if(!isset($numeroCasa))
+        throw new Exception("[DocumentoElectronico::setReceptor] El número de casa es obligatorio si se establece la calle principal.");
       $gDatRec->setDNumCasRec($numeroCasa);
-    if(isset($codigoDepartamento))
-      $gDatRec->setCDepRec($codigoDepartamento);
-    if(isset($codigoDistrito))
-      $gDatRec->setCDisRec($codigoDistrito);
-    if(isset($codigoCiudad))  
-      $gDatRec->setCCiuRec($codigoCiudad);
-    if(isset($telefono))
-      $gDatRec->setDTelRec($telefono);
-    if(isset($email))
-      $gDatRec->setDEmailRec($email);
-    if(isset($codigoDeCliente))
-      $gDatRec->setDCodCliente($codigoDeCliente);
-    $this->gDatRec = $gDatRec;
+      if($tipoOperacion != RecTiOpe::B2F) {
+        if(!isset($codigoDepartamento))
+          throw new Exception("[DocumentoElectronico::setReceptor] El código de departamento es obligatorio si se establece la calle principal.");
+        $gDatRec->setCDepRec($codigoDepartamento);
+        if(isset($codigoDistrito))
+          $gDatRec->setCDisRec($codigoDistrito);
+        if(!isset($codigoCiudad))
+          throw new Exception("[DocumentoElectronico::setReceptor] El código de ciudad es obligatorio si se establece la calle principal.");
+        $gDatRec->setCCiuRec($codigoCiudad);
+        if(isset($telefono))
+          $gDatRec->setDTelRec($telefono);
+        if(isset($email))
+          $gDatRec->setDEmailRec($email);
+        if(isset($codigoDeCliente))
+          $gDatRec->setDCodCliente($codigoDeCliente);
+      }
+    }
     return $this;
   }
 
