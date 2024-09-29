@@ -242,7 +242,7 @@ class DocumentoElectronico {
    * 
    * @return self
    */
-  public function setEmisorTipoContribuyente(EmisRecTipCont $tipoContribuyente): self
+  public function setEmisorTipoContribuyente(int|EmisRecTipCont $tipoContribuyente): self
   {
     $this->gEmis->setITipCont($tipoContribuyente);
     return $this;
@@ -256,7 +256,7 @@ class DocumentoElectronico {
    * 
    * @return self
    */
-  public function setEmisorTipoRegimen(TipoDeRegimen $tipoRegimen): self
+  public function setEmisorTipoRegimen(int|TipoDeRegimen $tipoRegimen): self
   {
     $this->gEmis->setCTipReg($tipoRegimen);
     return $this;
@@ -593,7 +593,7 @@ class DocumentoElectronico {
     ?String $montoVuelto,
     ?String $montoDonacion,
     ?String $descripcionDonacion
-  )
+  ) : self
   {
     $this->gGrupSup = new GGrupSup();
     if(isset($nombreCajero))
@@ -626,7 +626,7 @@ class DocumentoElectronico {
     ?DateTime $fechaVencimiento,
     ?String $numeroContrato,
     ?String $saldoAnteriorAdeudado
-  )
+  ) : self
   {
     $this->gGrupAdi = new GGrupAdi();
     if(isset($cicloDeFacturacion))

@@ -44,7 +44,7 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
    * @return self
    * 
    */
-  public function setTipoDeTransaccion(OpeComTipTrans $tipTra): self
+  public function setTipoDeTransaccion(int|OpeComTipTrans $tipTra): self
   {
     $this->gOpeCom->setITipTra($tipTra);
     return $this;
@@ -57,7 +57,7 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
    * 
    * @return self
    */
-  public function setTipoDeImpuestoAfectado(OpeComTipImp $tipImp): self
+  public function setTipoDeImpuestoAfectado(int|OpeComTipImp $tipImp): self
   {
     $this->gOpeCom->setITImp($tipImp);
     return $this;
@@ -67,11 +67,11 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
    * Establece la moneda de la operación comercial. Se debe expresar en código de moneda ISO 4217.
    * Valor por defecto: PYG
    * 
-   * @param string $moneda Código de moneda ISO 4217
+   * @param String $moneda Código de moneda ISO 4217
    * 
    * @return self
    */
-  public function setMoneda(string $moneda): self
+  public function setMoneda(String $moneda): self
   {
     $this->gOpeCom->setCMoneOpe($moneda);
     return $this;
@@ -84,7 +84,7 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
    * 
    * @return self
    */
-  public function setCondicionTipoDeCambio(OpeComCondTipCam $condTipCam): self
+  public function setCondicionTipoDeCambio(int|OpeComCondTipCam $condTipCam): self
   {
     $this->gOpeCom->setDCondTiCam($condTipCam);
     return $this;
@@ -110,7 +110,7 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
    * 
    * @return self
    */
-  public function setCondicionDeAnticipo(OpeComCondAnt $condAnt): self
+  public function setCondicionDeAnticipo(int|OpeComCondAnt $condAnt): self
   {
     $this->gOpeCom->setICondAnt($condAnt);
     return $this;
