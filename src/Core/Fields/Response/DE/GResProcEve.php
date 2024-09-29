@@ -7,7 +7,7 @@ use SimpleXMLElement;
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote
 
-class GResProcEVe
+class GResProcEve
 {
   ///ID - DESC - LONG - OCURRENCIA
   public string $dEstRes;   ///GRSch030 - Estado del resultado  - 8-30 - 1-1

@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\De;
+namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
 
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use Abiliomp\Pkuatia\Core\Responses\RRetEnviEventoDe;
