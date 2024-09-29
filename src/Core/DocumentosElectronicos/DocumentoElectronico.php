@@ -217,6 +217,78 @@ class DocumentoElectronico {
   /////////////////////////////////////////////////////////////////
 
   /**
+   * Establece los datos del Emisor del documento electrónico.
+   * Valor OBLIGATORIO para todos los documentos electrónicos.
+   * 
+   * @param String $rucEmisor RUC del emisor (obligatorio)
+   * @param int $dv dígito verificador del RUC del emisor (obligatorio)
+   * @param EmisRecTipCont $tipoContribuyente tipo de contribuyente del emisor (obligatorio)
+   * @param TipoDeRegimen $tipoRegimen tipo de régimen tributario del emisor (opcional)
+   * @param String $nombreEmisor nombre o razón social del emisor (obligatorio)
+   * @param String $nombreFantasia nombre de fantasía del emisor (opcional)
+   * @param String $callePrincipal calle principal de la dirección del emisor (obligatorio)
+   * @param String $casaNro número de casa de la dirección del emisor (obligatorio)
+   * @param String $calleSecundaria calle secundaria de la dirección del emisor (opcional)
+   * @param String $complementoDir complemento de la dirección del emisor (opcional)
+   * @param int $codDep código del departamento nacional donde se encuentra el emisor (obligatorio)
+   * @param int $codDistrito código del distrito donde se encuentra el emisor (opcional)
+   * @param int $codCiud código de la ciudad donde se encuentra el emisor (obligatorio)
+   * @param String $telefono número de teléfono del emisor (obligatorio)
+   * @param String $email dirección de correo electrónico del emisor (obligatorio)
+   * @param String $nombreSucursal denominación de la sucursal del emisor (opcional)
+   * 
+   * @return self Instancia de la clase DocumentoElectronico con los datos del emisor establecidos para poder encadenar métodos.
+   */
+  public function setEmisor(
+    String $rucEmisor,
+    int $dv,
+    int|EmisRecTipCont $tipoContribuyente,
+    int|TipoDeRegimen|null $tipoRegimen,
+    String $nombreEmisor,
+    ?String $nombreFantasia,
+    String $callePrincipal,
+    String $casaNro,
+    ?String $calleSecundaria,
+    ?String $complementoDir,
+    int $codDep,
+    ?int $codDistrito,
+    int $codCiud,
+    String $telefono,
+    String $email,
+    ?String $nombreSucursal
+  ) : self {
+    $this->setEmisorRUC($rucEmisor, $dv);
+    $this->setEmisorTipoContribuyente($tipoContribuyente);
+
+    if($tipoRegimen)
+      $this->setEmisorTipoRegimen($tipoRegimen);
+
+    $this->setEmisorNombre($nombreEmisor);
+    
+    if($nombreFantasia)
+      $this->setEmisorNombreFantasia($nombreFantasia);
+
+    $this->setEmisorDireccionLocal($callePrincipal);
+    $this->setEmisorNumCasa($casaNro);
+    if($calleSecundaria)
+      $this->setEmisorCalleSecundaria($calleSecundaria);
+    if($complementoDir)
+      $this->setEmisorComplementoDireccion($complementoDir);
+    
+    $this->setEmisorCodigoDepartamento($codDep);
+    if($codDistrito)
+      $this->setEmisorCodigoDistrito($codDistrito);
+    $this->setEmisorCodigoCiudad($codCiud);
+
+    $this->setEmisorTelefono($telefono);
+    $this->setEmisorEmail($email);
+
+    if($nombreSucursal)
+      $this->setEmisorDenominacionSucursal($nombreSucursal);
+    return $this;
+  }
+
+  /**
    * Establece el RUC, junto con su digito verificador, del contribuyente emisor del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
    * 
@@ -465,6 +537,10 @@ class DocumentoElectronico {
 
   /////////////////////////////////////////////////////////////////
   // END - Datos del emisor
+  /////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////
+  // START - Datos del receptor
   /////////////////////////////////////////////////////////////////
 
   /**
