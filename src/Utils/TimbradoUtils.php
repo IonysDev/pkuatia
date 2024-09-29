@@ -18,9 +18,9 @@ class TimbradoUtils {
      * 
      * @return String Serie siguiente.
      */
-    public static function CalcSerieSgte($serieActual = null): String
+    public static function CalcSerieSgte(?String $serieActual = null): String
     {
-        if(!isset($serieActual) || strlen($serieActual) == 0)
+        if(is_null($serieActual) || strlen($serieActual) == 0)
             return 'AA';
         if(strcmp($serieActual, 'ZZ') == 0)
             throw new Exception('[GTimb] La serie actual es ZZ, no existe una serie siguiente.');
@@ -47,7 +47,7 @@ class TimbradoUtils {
      * 
      * @return array con las claves 'serie' y 'numero' que contienen la serie y número siguientes
      */
-    public static function CalcNumSgte(String $serieActual, int $numeroActual): array
+    public static function CalcNumSgte(?String $serieActual, int $numeroActual): array
     {
         if(!self::ValidarSerie($serieActual))
             throw new Exception('[TimbradoUtils] La serie actual no es válida.');
@@ -58,7 +58,7 @@ class TimbradoUtils {
             return ['serie' => $serieActual, 'numero' => $numeroActual + 1];
         }
         else {
-            if(strcmp($serieActual, 'ZZ') == 0)
+            if(!is_null($serieActual) && strcmp($serieActual, 'ZZ') == 0)
                 throw new Exception('[TimbradoUtils] Series y números agotados.');
             return ['serie' => self::CalcSerieSgte($serieActual), 'numero' => 1];
         }
@@ -71,8 +71,10 @@ class TimbradoUtils {
      * 
      * @return bool true si la serie es válida, false en caso contrario
      */
-    public static function ValidarSerie($serie): bool
+    public static function ValidarSerie(?String $serie): bool
     {
+        if(is_null($serie))
+            return true;
         if(strlen($serie) != 2)
             return false;
         $c1 = substr($serie, 0, 1);
