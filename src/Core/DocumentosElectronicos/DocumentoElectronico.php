@@ -585,6 +585,7 @@ class DocumentoElectronico {
     ?int $codigoDistrito,
     ?int $codigoCiudad,
     ?String $telefono,
+    ?String $celular,
     ?String $email,
     ?String $codigoDeCliente
     ) : self
@@ -655,6 +656,8 @@ class DocumentoElectronico {
         $gDatRec->setCCiuRec($codigoCiudad);
         if(isset($telefono))
           $gDatRec->setDTelRec($telefono);
+        if(isset($celular))
+          $gDatRec->setDCelRec($celular);
         if(isset($email))
           $gDatRec->setDEmailRec($email);
         if(isset($codigoDeCliente))
