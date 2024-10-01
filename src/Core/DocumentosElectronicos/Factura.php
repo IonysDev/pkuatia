@@ -120,6 +120,29 @@ class Factura extends DocumentoElectronicoComercial
   //////////////////////////////////////////
 
   /**
+   * Agrega un pago a la factura electrónica. No utilizar para pagos con tarjeta de crédito, débito o cheque. 
+   * Para estos casos, utilizar los métodos addPagoPYGPorTarjeta, addPagoPYGPorCheque y addPagoUSDPorCheque.
+   * 
+   * @param int|PaConEIniTiPago $tipoDePago Tipo de pago.
+   * @param String $monto Monto del pago para uso como decimal tipo BCMath.
+   * @param String $moneda Código de moneda ISO 4217.
+   * 
+   * @return self 
+   */
+  public function addPago(
+    int|PaConEIniTiPago $tipoDePago,
+    String $monto,
+    String $moneda = 'PYG') : self
+  {
+    $gPaConEIni = new GPaConEIni();
+    $gPaConEIni->setITiPago($tipoDePago);
+    $gPaConEIni->setDMonTiPag($monto);
+    $gPaConEIni->setCMoneTiPag($moneda);
+    $this->gCamCond->addGPaConEIni($gPaConEIni);
+    return $this;
+  }
+
+  /**
    * Agrega un pago en Guaraníes por tarjeta de crédito o débito a la factura electrónica.
    * 
    * @param bool $esTarjetaCredito Indica si el pago es por tarjeta de crédito (true) o débito (false).
