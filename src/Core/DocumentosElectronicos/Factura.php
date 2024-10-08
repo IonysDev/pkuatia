@@ -46,11 +46,11 @@ class Factura extends DocumentoElectronicoComercial
   /**
    * Constructor de la clase.
    * 
-   * @param CamCondOpe $condicion Condición de operación de la factura electrónica.
+   * @param int|CamCondOpe $condicion Condición de operación de la factura electrónica.
    * 
    * @return void
    */
-  public function __construct(CamCondOpe $condicion)
+  public function __construct(int | CamCondOpe $condicion)
   {
     parent::__construct();
     $this->gTimb->setITiDE(TimbTiDE::Factura);
