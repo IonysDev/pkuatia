@@ -409,6 +409,8 @@ trait ItemValorado {
         return $this->gTotSub;
     }
 
+    
+
 }
 
 ?>

@@ -57,6 +57,24 @@ class DocumentoElectronico {
   }
 
   ///////////////////////////////////////////////////////////////////////
+  // Getters
+  ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Genera y devuelve un objeto DE que contiene todos los campos de este documento electrónico.
+   */
+
+  /**
+   * Devuelve el número completo del documento electrónico formateado.
+   * 
+   * @return String el número completo del documento electrónico formateado 000-000-0000000
+   */
+  public function getNumeroDocumentoCompleto(): String
+  {
+    return $this->gTimb->getDEst() . '-' . $this->gTimb->getDPunExp() . '-' . $this->gTimb->getDNumDoc();
+  }
+
+  ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
 
@@ -785,20 +803,6 @@ class DocumentoElectronico {
     if(isset($saldoAnteriorAdeudado))
       $this->gGrupAdi->setDSalAnt($saldoAnteriorAdeudado);
     return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Devuelve el número completo del documento electrónico formateado.
-   * 
-   * @return String el número completo del documento electrónico formateado 000-000-0000000
-   */
-  public function getNumeroDocumentoCompleto(): String
-  {
-    return $this->gTimb->getDEst() . '-' . $this->gTimb->getDPunExp() . '-' . $this->gTimb->getDNumDoc();
   }
 
   ///////////////////////////////////////////////////////////////////////
