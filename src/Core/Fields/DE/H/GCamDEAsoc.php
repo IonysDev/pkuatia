@@ -2,6 +2,8 @@
 
 namespace Abiliomp\Pkuatia\Core\Fields\DE\H;
 
+use Abiliomp\Pkuatia\Core\Constants\TipDocAso;
+use Abiliomp\Pkuatia\Core\Constants\TipoDocImpresoAso;
 use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
@@ -50,23 +52,10 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setITipDocAso(int $iTipDocAso): self
+  public function setITipDocAso(int|TipDocAso $iTipDocAso): self
   {
-    $this->iTipDocAso = $iTipDocAso;
-    switch ($this->iTipDocAso) {
-      case 1:
-        $this->setDDesTipDocAso("Electrónico");
-        break;
-      case 2:
-        $this->setDDesTipDocAso("Impreso");
-        break;
-      case 3:
-        $this->setDDesTipDocAso("Constancia Electrónica");
-        break;
-      default:
-        throw new \Exception("Invalid iTipDocAso: $iTipDocAso");
-        break;
-    }
+    $this->iTipDocAso = $iTipDocAso instanceof TipDocAso ? $iTipDocAso->value : $iTipDocAso;
+    $this->dDesTipDocAso = TipDocAso::getDescripcion($this->iTipDocAso);
     return $this;
   }
 
@@ -166,29 +155,10 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setITipoDocAso(int $iTipoDocAso): self
+  public function setITipoDocAso(int|TipoDocImpresoAso $iTipoDocAso): self
   {
-    $this->iTipoDocAso = $iTipoDocAso;
-    switch ($this->iTipDocAso) {
-      case 1:
-        $this->setDDTipoDocAso("Factura");
-        break;
-      case 2:
-        $this->setDDTipoDocAso("Nota de crédito");
-        break;
-      case 3:
-        $this->setDDTipoDocAso("Nota de débito");
-        break;
-      case 4:
-        $this->setDDTipoDocAso("Nota de remisión");
-        break;
-      case 5:
-        $this->setDDTipoDocAso("Comprobante de retención");
-        break;
-      default:
-        throw new \Exception("Invalid iTipoDocAso: $iTipoDocAso");
-        break;
-    }
+    $this->iTipoDocAso = $iTipoDocAso instanceof TipoDocImpresoAso ? $iTipoDocAso->value : $iTipoDocAso;
+    $this->dDTipoDocAso = TipoDocImpresoAso::getDescripcion($this->iTipoDocAso);
     return $this;
   }
 

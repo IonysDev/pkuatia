@@ -8,7 +8,10 @@ namespace Abiliomp\Pkuatia\Core;
  */
 class Config
 {  
-    public String $env = "dev"; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
+    public const ENV_DEV = "dev";
+    public const ENV_PROD = "prod";
+
+    public String $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
 
     // Parámetros de Firma Digital
     public String $certificateFormat = "pem";   // Solo se aceptan valores "pfx", "pem" o "der".

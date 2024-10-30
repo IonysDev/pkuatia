@@ -7,17 +7,32 @@ use Abiliomp\Pkuatia\Sifen;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$certFile = '80121930-2.pem.crt';
-$keyFile = '80121930-2.pem.key';
-$keyPassphrase = '801219';
+
+// Leer los argumentos --cert, --key --pass --lot --prod (opcional) de la línea de comandos
+$shortopts = '';
+$longopts = array(
+    'cert:',
+    'key:',
+    'pass:',
+    'ruc:'
+);
+$options = getopt($shortopts, $longopts);
+if (!isset($options['cert']) || !isset($options['key']) || !isset($options['pass']) || !isset($options['ruc'])) {
+    echo "Uso: php ConsultaLote.php [--prod] --cert=<certFile> --key=<keyFile> --pass=<keyPassphrase> --ruc=<ruc>\n";
+    exit(1);
+}
+
+$certFile = $options['cert'];
+$keyFile = $options['key'];
+$keyPassphrase = $options['pass'];
+$testRuc = $options['ruc'];
 
 $config = new Config();
-$config->env = 'dev';
+$config->env = isset($options['prod']) ? Config::ENV_PROD : Config::ENV_DEV;
 $config->certificateFilePath = $certFile;
 $config->privateKeyFilePath = $keyFile;
 $config->privateKeyPassphrase = $keyPassphrase;
 
-$testRuc = '80057292';
 $requestDate = new DateTime('now', new DateTimeZone('America/Asuncion'));
 //cast to string to avoid DateTime serialization error
 $requestDate = (string) $requestDate->format('d/m/Y H:i:s');
@@ -27,6 +42,7 @@ try {
     echo "Inicializando Sifen... ";
     Sifen::Init($config);
     echo "OK\n";
+    echo "Entorno de ejecución: " . $config->env . "\n";
     echo "Consultando RUC " . $testRuc . "...\n";
     echo "Hora de consulta: " . $requestDate . "\n";
     $res = Sifen::ConsultarRUC($testRuc);

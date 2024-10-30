@@ -7,6 +7,7 @@ use Abiliomp\Pkuatia\Core\Constants\OpeComCondTipCam;
 use Abiliomp\Pkuatia\Core\Constants\OpeComTipImp;
 use Abiliomp\Pkuatia\Core\Constants\OpeComTipTrans;
 use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
+use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
 
 /**
@@ -127,4 +128,14 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
   //////////////////////////////////////////
   // Otros Métodos
   //////////////////////////////////////////
+
+  /**
+   * Genera y devuelve un objeto RDE que contiene todos los campos de este documento electrónico.
+   */
+  public function documentoElectronicoComercialToRDE(): RDE
+  {
+    $rde = $this->documentoElectronicoToRDE();
+    $rde->DE->gDatGralOpe->gOpeCom = $this->gOpeCom;
+    return $rde;
+  }
 }

@@ -22,7 +22,7 @@ class GCamFE extends BaseSifenField
   public int      $iIndPres;    // E011 - 1     - 1-1 - Indicador de presencia
   public String   $dDesIndPres; // E012 - 10-30 - 1-1 - Descripción del indicador de presencia
   public DateTime $dFecEmNR;    // E013 - 10    - 0-1 - Fecha en el formato: AAAA-MM-DD Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda. RG 41/14
-  public GCompPub $gComPub;     // E020 -       - 0-1 - Campos que describen las informaciones de compras públicas
+  public GCompPub $gCompPub;    // E020 -       - 0-1 - Campos que describen las informaciones de compras públicas
 
   /**
    * Constructor
@@ -92,16 +92,16 @@ class GCamFE extends BaseSifenField
 
 
   /**
-   * Establece el valor de gComPub (E020) que corresponde a los campos que describen las informaciones de compras públicas.
+   * Establece el valor de gCompPub (E020) que corresponde a los campos que describen las informaciones de compras públicas.
    * Obligatorio cuando la operación es B2G (D202 = 3).
    *
-   * @param GCompPub $gComPub Campos que describen las informaciones de compras públicas.
+   * @param GCompPub $gCompPub Campos que describen las informaciones de compras públicas.
    *
    * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
-  public function setGComPub(GCompPub $gComPub): self
+  public function setgCompPub(GCompPub $gCompPub): self
   {
-    $this->gComPub = $gComPub;
+    $this->gCompPub = $gCompPub;
     return $this;
   }
 
@@ -140,13 +140,13 @@ class GCamFE extends BaseSifenField
   }
 
   /**
-   * Obtiene el valor de gComPub (E020) que corresponde a los campos que describen las informaciones de compras públicas.
+   * Obtiene el valor de gCompPub (E020) que corresponde a los campos que describen las informaciones de compras públicas.
    * 
    * @return GCompPub Campos que describen las informaciones de compras públicas.
    */
-  public function getGComPub(): GCompPub
+  public function getgCompPub(): GCompPub
   {
-    return $this->gComPub;
+    return $this->gCompPub;
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -173,9 +173,9 @@ class GCamFE extends BaseSifenField
     {
       $res->dFecEmNR = DateTime::createFromFormat('Y-m-d', strval($node->dFecEmNR));
     }
-    if(isset($node->gComPub))
+    if(isset($node->gCompPub))
     {
-      $res->gComPub = GCompPub::FromSimpleXMLElement($node->gComPub);
+      $res->gCompPub = GCompPub::FromSimpleXMLElement($node->gCompPub);
     }
     return $res;
   }
@@ -200,9 +200,9 @@ class GCamFE extends BaseSifenField
       $res->setDFecEmNR(DateTime::createFromFormat('Y-m-d', $object->dFecEmNR));
     }
     //Children
-    if(isset($object->gComPub))
+    if(isset($object->gCompPub))
     {
-      $res->setGComPub(GCompPub::FromSifenResponseObject($object->gComPub));
+      $res->setgCompPub(GCompPub::FromSifenResponseObject($object->gCompPub));
     }
     return $res;
   }
@@ -223,8 +223,8 @@ class GCamFE extends BaseSifenField
     $res->dDesIndPres = strval($node->getElementsByTagName('dDesIndPres')->item(0)->nodeValue);
     if($node->getElementsByTagName('dFecEmNR')->length > 0)
       $res->dFecEmNR = DateTime::createFromFormat('Y-m-d', strval($node->getElementsByTagName('dFecEmNR')->item(0)->nodeValue));
-    if($node->getElementsByTagName('gComPub')->length > 0)
-      $res->gComPub = GCompPub::FromDOMElement($node->getElementsByTagName('gComPub')->item(0));
+    if($node->getElementsByTagName('gCompPub')->length > 0)
+      $res->gCompPub = GCompPub::FromDOMElement($node->getElementsByTagName('gCompPub')->item(0));
     return $res;
   }
 
@@ -246,8 +246,8 @@ class GCamFE extends BaseSifenField
     $res->appendChild(new DOMElement('dDesIndPres', $this->getDDesIndPres()));
     if(isset($this->dFecEmNR))
       $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
-    if(isset($this->gComPub))
-      $res->appendChild($this->gComPub->toDOMElement($doc));
+    if(isset($this->gCompPub))
+      $res->appendChild($this->gCompPub->toDOMElement($doc));
     return $res;
   }
   
@@ -279,10 +279,10 @@ class GCamFE extends BaseSifenField
     {
       $errMsg .= "[GCamFE] El campo 'dDesIndPres' debe tener una longitud entre 10 y 30 caracteres.\n";
     }
-    if(isset($this->gComPub))
+    if(isset($this->gCompPub))
     {
       try {
-        $this->gComPub->validate();
+        $this->gCompPub->validate();
       }
       catch(\Exception $e)
       {

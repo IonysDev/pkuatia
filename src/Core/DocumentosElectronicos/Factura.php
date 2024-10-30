@@ -10,6 +10,7 @@ use Abiliomp\Pkuatia\Core\Constants\PagTarCDDenTarj;
 use Abiliomp\Pkuatia\Core\Constants\PagTarCDForProPa;
 use Abiliomp\Pkuatia\Core\Constants\TimbTiDE;
 use Abiliomp\Pkuatia\Core\DocumentosElectronicos\Traits\ItemValorado;
+use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamCond;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamFE;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GCompPub;
@@ -36,8 +37,6 @@ class Factura extends DocumentoElectronicoComercial
   public GCamFE $gCamFE; // E010 - Campos que componen la factura electrónica (FE)
   public GCompPub $gCompPub; // E020 - Campos que describen las informaciones de compras públicas
   public GCamCond $gCamCond; // E600 - Campos que describen las condiciones de pago de la factura electrónica
-  public GPaConEIni $gPaConEIni; // E605 - Campos que describen las condiciones de pago al contado o de la entrega inicial.
-
 
   //////////////////////////////////////////
   // Constructor
@@ -305,6 +304,22 @@ class Factura extends DocumentoElectronicoComercial
     }
     $this->gCamCond->setGPagCred($gPagCred);
     return $this;
+  }
+
+  /**
+   * Genera y devuelve un objeto RDE que contiene todos los campos de este documento electrónico.
+   */
+  public function facturaToRDE(): RDE
+  {
+    $rde = $this->documentoElectronicoComercialToRDE();
+    if(isset($this->gCompPub)) {
+      $this->gCamFE->gCompPub = $this->gCompPub;
+    }
+    $rde->DE->gDtipDe->gCamFE = $this->gCamFE;
+    $rde->DE->gDtipDe->gCamCond = $this->gCamCond;
+    $rde->DE->gDtipDe->gCamItem = $this->items;
+    $rde->DE->gTotSub = $this->gTotSub;
+    return $rde;
   }
 }
 

@@ -32,11 +32,7 @@ class GCamGen
    */
   public function setDOrdCompra(String $dOrdCompra): self
   {
-    if(is_null($dOrdCompra) || strlen($dOrdCompra) == 0)
-    {
-      $this->dOrdCompra;
-    }
-    else
+    if(isset($dOrdCompra) && strlen($dOrdCompra) > 0)
     {
       $this->dOrdCompra = substr($dOrdCompra, 0, 15);
     }

@@ -45,7 +45,7 @@ class GCamEsp extends BaseSifenField
    *
    * @return self
    */
-  public function setGGrupoSeg(GGrupSeg $gGrupSeg): self
+  public function setGGrupSeg(GGrupSeg $gGrupSeg): self
   {
     $this->gGrupSeg = $gGrupSeg;
     return $this;
