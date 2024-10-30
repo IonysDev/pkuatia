@@ -1,0 +1,16 @@
+C002 - iTiDE - Tipo de Documento Electrónico
+1 = Factura electrónica 
+2 = Factura electrónica de exportación (Futuro) 
+3 = Factura electrónica de importación (Futuro) 
+4 = Autofactura electrónica 
+5 = Nota de crédito electrónica 
+6 = Nota de débito electrónica 
+7 = Nota de remisión electrónica 
+8 = Comprobante de retención electrónico (Futuro)
+
+D013 - iTImp - Tipo de impuesto afectado
+1 = IVA 
+2 = ISC  
+3 = Renta 
+4 = Ninguno 
+5 = IVA - Renta 

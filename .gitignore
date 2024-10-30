@@ -1,0 +1,11 @@
+*.pem
+*.p12
+*.crt
+*.csr
+*.srl
+*.xml
+*.key
+*.log
+*.log.*
+*.log-*
+*.dat.*
