@@ -1,5 +1,5 @@
 {
-    "name": "abiliomp/pkuatia",
+    "name": "IonysDev/pkuatia",
     "description": "Implementacion en PHP de la interfaz con el sistema EKuatia de faturacion electronica de Paraguay",
     "type": "library",
     "license": "MIT",
@@ -11,7 +11,11 @@
     "authors": [
         {
             "name": "Abilio Mancuello Petters",
-            "email": "abiliomp@gmail.com"
+            "email": "abiliomp@ionys.com.py"
+        },
+        {
+            "name": "Gabriel Gauto",
+            "email": "ggauto@ionys.com.py"
         }
     ],
     "minimum-stability": "stable",
