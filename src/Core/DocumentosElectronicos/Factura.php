@@ -4,6 +4,7 @@ namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
 
 use Abiliomp\Pkuatia\Core\Constants\CamCondOpe;
 use Abiliomp\Pkuatia\Core\Constants\CamFEIndPres;
+use Abiliomp\Pkuatia\Core\Constants\OpeComTipImp;
 use Abiliomp\Pkuatia\Core\Constants\PaConEIniTiPago;
 use Abiliomp\Pkuatia\Core\Constants\PagCredCondCred;
 use Abiliomp\Pkuatia\Core\Constants\PagTarCDDenTarj;
@@ -43,9 +44,10 @@ class Factura extends DocumentoElectronicoComercial
   //////////////////////////////////////////
   
   /**
-   * Constructor de la clase.
+   * Constructor de la clase. Establece el tipo de documento electrónico como Factura.
+   * Adicionalmente inicializa el campo de impuesto afectado como IVA y la moneda como Guaraníes (PYG).
    * 
-   * @param int|CamCondOpe $condicion Condición de operación de la factura electrónica.
+   * @param int|CamCondOpe $condicion Condición de operación de la factura electrónica (Contado o Crédito).
    * 
    * @return void
    */
@@ -56,6 +58,8 @@ class Factura extends DocumentoElectronicoComercial
     $this->gCamFE = new GCamFE();
     $this->gCamCond = new GCamCond();
     $this->gCamCond->setICondOpe($condicion);
+    $this->setTipoDeImpuestoAfectado(OpeComTipImp::IVA);
+    $this->setMoneda('PYG');
   }  
 
   //////////////////////////////////////////

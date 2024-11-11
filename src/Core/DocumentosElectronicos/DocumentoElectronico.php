@@ -181,21 +181,22 @@ class DocumentoElectronico
    * 
    * @param int $numTimb número de timbrado
    * @param DateTime $fechaInicio fecha de inicio del timbrado
-   * @param String $serie serie del número de timbrado
    * @param int $numEst número de establecimiento
    * @param int $numExp número de punto de expedición
    * @param int $numDoc número de documento electrónico
+   * @param String $serie serie del número de timbrado (opcional)
    * 
    * @return self
    */
-  public function setTimbrado(int $numTimb, DateTime $fechaInicio, String $serie, int $numEst, int $numExp, int $numDoc): self
+  public function setTimbrado(int $numTimb, DateTime $fechaInicio, int $numEst, int $numExp, int $numDoc, ?String $serie = null): self
   {
     $this->setNumeroDeTimbrado($numTimb);
     $this->setFechaInicioTimbrado($fechaInicio);
-    $this->setSerieNumeroTimbrado($serie);
     $this->setNumeroEstablecimiento($numEst);
     $this->setNumeroPuntoExpedicion($numExp);
     $this->setNumeroDocumento($numDoc);
+    if ($serie)
+      $this->setSerieNumeroTimbrado($serie);	
     return $this;
   }
 
