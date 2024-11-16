@@ -46,7 +46,7 @@ class GCamCond extends BaseSifenField
   public function setICondOpe(int|CamCondOpe $iCondOpe): self
   {
     $this->iCondOpe = $iCondOpe instanceof CamCondOpe ? $iCondOpe->value : $iCondOpe;
-    $this->dDCondOpe = $iCondOpe instanceof CamCondOpe ? $iCondOpe : CamCondOpe::getDescripcion($iCondOpe);
+    $this->dDCondOpe = CamCondOpe::getDescripcion($this->iCondOpe);
     return $this;
   }
 
