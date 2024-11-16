@@ -303,7 +303,7 @@ class DocumentoElectronico
   {
     if ($numDoc < 1 || $numDoc > 9999999)
       throw new Exception("[DocumentoElectronico::setNumeroDocumento] El número de documento debe ser un valor entre 1 y 9999999. Valor recibido: $numDoc");
-    $this->gTimb->setDNumDoc($numDoc);
+    $this->gTimb->setDNumDoc(str_pad($numDoc, 7, '0', STR_PAD_LEFT));
     return $this;
   }
 
