@@ -85,8 +85,8 @@ class GOpeCom extends BaseSifenField
      */
     public function setITImp(int|OpeComTipImp $iTImp): self
     {
-        $this->dDesTImp = $iTImp instanceof OpeComTipImp ? $iTImp : OpeComTipImp::getDescripcion($iTImp);
         $this->iTImp = $iTImp instanceof OpeComTipImp ? $iTImp->value : $iTImp;
+        $this->dDesTImp = OpeComTipImp::getDescripcion($this->iTImp);
         return $this;
     }
 
