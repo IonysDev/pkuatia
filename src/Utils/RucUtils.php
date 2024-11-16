@@ -55,8 +55,8 @@ class RucUtils {
 	 * @return bool true si es válido, false si no lo es.
 	 */
 	public static function ValidarRUCconDV(String $value){
-		$regex = "/^\d{1,8}-\d$/";
-		if(!preg_match($regex, $value)){
+		$test = preg_match('/^(\d{1,8}-\d)$/', $value);
+		if($test == 0){
 			return false;
 		}
 		$dv = intval(substr($value, -1));
