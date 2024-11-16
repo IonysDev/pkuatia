@@ -180,8 +180,8 @@ class GOpeCom extends BaseSifenField
      */
     public function setICondAnt(int|OpeComCondAnt $iCondAnt): self
     {
-        $this->dDesCondAnt = $iCondAnt instanceof OpeComCondAnt ? $iCondAnt : OpeComCondAnt::getDescripcion($iCondAnt);
         $this->iCondAnt = $iCondAnt instanceof OpeComCondAnt ? $iCondAnt->value : $iCondAnt;
+        $this->dDesCondAnt = OpeComCondAnt::getDescripcion($this->iCondAnt );
         return $this;
     }
 
