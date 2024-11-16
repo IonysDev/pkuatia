@@ -43,8 +43,8 @@ class GTimb extends BaseSifenField
      */
     public function setITiDE(int | TimbTiDE $iTiDE): self
     {
-        $this->dDesTiDE = $iTiDE instanceof TimbTiDE ? $iTiDE : TimbTiDE::getDescripcion($iTiDE);
         $this->iTiDE = $iTiDE instanceof TimbTiDE ? $iTiDE->value : $iTiDE;
+        $this->dDesTiDE = TimbTiDE::getDescripcion($this->iTiDE);        
         return $this;
     }
 
