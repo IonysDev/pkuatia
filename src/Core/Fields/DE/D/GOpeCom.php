@@ -57,8 +57,8 @@ class GOpeCom extends BaseSifenField
      */
     public function setITipTra(int|OpeComTipTrans $iTipTra): self
     {
-        $this->dDesTipTra = $iTipTra instanceof OpeComTipTrans ? $iTipTra : OpeComTipTrans::getDescripcion($iTipTra);
         $this->iTipTra = $iTipTra instanceof OpeComTipTrans ? $iTipTra->value : $iTipTra;
+        $this->dDesTipTra = OpeComTipTrans::getDescripcion($this->iTipTra);
         return $this;
     }
 
