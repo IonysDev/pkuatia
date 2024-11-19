@@ -718,57 +718,57 @@ class DocumentoElectronico
         throw new Exception("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente.");
     }
 
-    $gDatRec = new GDatRec();
-    $gDatRec->setINatRec($esContribuyente ? 1 : 0);
-    $gDatRec->setITiOpe($tipoOperacion);
-    $gDatRec->setCPaisRec($codPais);
+    $this->gDatRec = new GDatRec();
+    $this->gDatRec->setINatRec($esContribuyente ? 1 : 0);
+    $this->gDatRec->setITiOpe($tipoOperacion);
+    $this->gDatRec->setCPaisRec($codPais);
 
     if ($esContribuyente) {
-      $gDatRec->setITiContRec($tipoContribuyente);
-      $gDatRec->setDRucRec($ruc);
-      $gDatRec->setDDVRec($dv);
+      $this->gDatRec->setITiContRec($tipoContribuyente);
+      $this->gDatRec->setDRucRec($ruc);
+      $this->gDatRec->setDDVRec($dv);
     }
 
     if (!$esContribuyente && $tipoOperacion != RecTiOpe::B2F) {
-      $gDatRec->setITipIDRec($tipoIdentificacion);
-      $gDatRec->setDNumIDRec($nroIdentificacion);
+      $this->gDatRec->setITipIDRec($tipoIdentificacion);
+      $this->gDatRec->setDNumIDRec($nroIdentificacion);
     }
 
     if ($tipoIdentificacion == TipIDRec::Innominado) {
-      $gDatRec->setDNomRec('Sin Nombre');
+      $this->gDatRec->setDNomRec('Sin Nombre');
     } else {
-      $gDatRec->setDNomRec($nombre);
+      $this->gDatRec->setDNomRec($nombre);
     }
 
     if (isset($nombreFantasia))
-      $gDatRec->setDNomFanRec($nombreFantasia);
+      $this->gDatRec->setDNomFanRec($nombreFantasia);
 
     if ($tipoOperacion == RecTiOpe::B2F && $callePrincipal == null) {
       throw new Exception("[DocumentoElectronico::setReceptor] La calle principal es obligatoria para un receptor extranjero.");
     }
 
     if (isset($callePrincipal)) {
-      $gDatRec->setDDirRec($callePrincipal);
+      $this->gDatRec->setDDirRec($callePrincipal);
       if (!isset($numeroCasa))
         throw new Exception("[DocumentoElectronico::setReceptor] El número de casa es obligatorio si se establece la calle principal.");
-      $gDatRec->setDNumCasRec($numeroCasa);
+      $this->gDatRec->setDNumCasRec($numeroCasa);
       if ($tipoOperacion != RecTiOpe::B2F) {
         if (!isset($codigoDepartamento))
           throw new Exception("[DocumentoElectronico::setReceptor] El código de departamento es obligatorio si se establece la calle principal.");
-        $gDatRec->setCDepRec($codigoDepartamento);
+        $this->gDatRec->setCDepRec($codigoDepartamento);
         if (isset($codigoDistrito))
-          $gDatRec->setCDisRec($codigoDistrito);
+          $this->gDatRec->setCDisRec($codigoDistrito);
         if (!isset($codigoCiudad))
           throw new Exception("[DocumentoElectronico::setReceptor] El código de ciudad es obligatorio si se establece la calle principal.");
-        $gDatRec->setCCiuRec($codigoCiudad);
+        $this->gDatRec->setCCiuRec($codigoCiudad);
         if (isset($telefono))
-          $gDatRec->setDTelRec($telefono);
+          $this->gDatRec->setDTelRec($telefono);
         if (isset($celular))
-          $gDatRec->setDCelRec($celular);
+          $this->gDatRec->setDCelRec($celular);
         if (isset($email))
-          $gDatRec->setDEmailRec($email);
+          $this->gDatRec->setDEmailRec($email);
         if (isset($codigoDeCliente))
-          $gDatRec->setDCodCliente($codigoDeCliente);
+          $this->gDatRec->setDCodCliente($codigoDeCliente);
       }
     }
     return $this;
