@@ -27,6 +27,7 @@ use Abiliomp\Pkuatia\Core\Fields\DE\E\GGrupSup;
 use Abiliomp\Pkuatia\Core\Fields\DE\E\GTransp;
 use Abiliomp\Pkuatia\Core\Fields\DE\G\GCamGen;
 use Abiliomp\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
+use Abiliomp\Pkuatia\Helpers\CDCHelper;
 use Abiliomp\Pkuatia\Utils\RucUtils;
 use Abiliomp\Pkuatia\Utils\TimbradoUtils;
 use DateTime;
@@ -124,6 +125,11 @@ class DocumentoElectronico
     // H. Campos que identifican al documento asociado (H001-H049)
     if(isset($this->gCamDEAsoc) && count($this->gCamDEAsoc) > 0)
       $de->setGCamDEAsoc($this->gCamDEAsoc);
+
+    // Se genera el CDC y se asigna a los campos correspondientes
+    $cdc = CDCHelper::Generate($de);
+    $de->setId($cdc);
+    $de->setDDVId($cdc[43]);
 
     // Por último se encapsulan los campos en un RDE
     $rde = new RDE();

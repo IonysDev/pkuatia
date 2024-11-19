@@ -315,14 +315,13 @@ class Factura extends DocumentoElectronicoComercial
    */
   public function facturaToRDE(): RDE
   {
-    $this->gDtipDE->gCamFE = $this->gCamFE;
-    $rde = $this->documentoElectronicoComercialToRDE();
     if(isset($this->gCompPub)) {
       $this->gCamFE->gCompPub = $this->gCompPub;
     }
-    $rde->DE->gDtipDe->gCamFE = $this->gCamFE;
-    $rde->DE->gDtipDe->gCamCond = $this->gCamCond;
-    $rde->DE->gDtipDe->gCamItem = $this->items;
+    $this->gDtipDE->gCamFE = $this->gCamFE;
+    $this->gDtipDE->gCamCond = $this->gCamCond;
+    $this->gDtipDE->gCamItem = $this->items;
+    $rde = $this->documentoElectronicoComercialToRDE();
     $rde->DE->gTotSub = $this->gTotSub;
     return $rde;
   }
