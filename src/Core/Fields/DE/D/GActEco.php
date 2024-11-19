@@ -18,6 +18,24 @@ class GActEco extends BaseSifenField
                                // Id - Longitud - Ocurrencia - Descripción
     public String $cActEco;    // D131 - 1-8   - 1-1 - Código de la actividad económica del emisor 
     public String $dDesActEco; // D132 - 1-300 - 1-1 - Descripción de la actividad económica del emisor
+
+    ///////////////////////////////////////////////////////////////////////
+    // Constructor
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Constructor de la clase GActEco
+     *
+     * @param String $cActEco Código de la actividad económica del emisor.
+     * @param String $dDesActEco Descripción de la actividad económica del emisor.
+     *
+     * @return self
+     */
+    public function __construct(String $cActEco = '', String $dDesActEco = '')
+    {
+        $this->cActEco = $cActEco;
+        $this->dDesActEco = $dDesActEco;
+    }
   
     ///////////////////////////////////////////////////////////////////////
     // Setters
