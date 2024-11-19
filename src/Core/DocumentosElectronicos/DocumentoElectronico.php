@@ -707,9 +707,9 @@ class DocumentoElectronico
     if ($esContribuyente) {
       if (!$tipoContribuyente)
         throw new Exception("[DocumentoElectronico::setReceptor] El tipo de contribuyente es obligatorio si el receptor es contribuyente.");
-      if (!$ruc)
+      if (is_null($ruc))
         throw new Exception("[DocumentoElectronico::setReceptor] El RUC del receptor es obligatorio si el receptor es contribuyente.");
-      if (!$dv)
+      if (is_null($dv))
         throw new Exception("[DocumentoElectronico::setReceptor] El dígito verificador del RUC del receptor es obligatorio si el receptor es contribuyente.");
     } else {
       if (!$tipoIdentificacion)
