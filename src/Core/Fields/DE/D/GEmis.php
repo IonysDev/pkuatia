@@ -159,7 +159,7 @@ class GEmis extends BaseSifenField
      */
     public function setCDisEmi(int $cDisEmi): self
     {
-        $this->cDisEmi = PyGeoCodesMapping::getDistName(strval($this->cDisEmi));
+        $this->cDisEmi = PyGeoCodesMapping::getDistName(strval($cDisEmi));
         if(is_null($this->cDisEmi))
             throw new InvalidArgumentException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
         $this->cDisEmi = $cDisEmi;
