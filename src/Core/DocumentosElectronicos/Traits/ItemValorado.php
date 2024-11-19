@@ -276,25 +276,9 @@ trait ItemValorado {
             }
             // F010
             $this->gTotSub->setDDescTotal(bcadd($this->gTotSub->getDTotDesc(), $this->gTotSub->getDTotDescGlotem(), 8));
-            // F011
-            $this->gTotSub->setDPorcDescTotal(bcdiv(bcmul($this->gTotSub->getDDescTotal(), '100', 8), $this->gTotSub->getDTotOpe(), 8));
+            
             // F012
             $this->gTotSub->setDAnticipo(bcadd($this->gTotSub->getDTotAntItem(), $this->gTotSub->getDTotAnt(), 8));
-
-            // F013
-            if($redondeoSedeco) {
-                if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') == 0) {
-                    $this->gTotSub->setDRedon(bcmod($this->gTotSub->getDTotOpe(), '50', 4));
-                }
-                else {
-                    $divVal = bcdiv($this->gTotSub->getDTotOpe(), '0.5', 1);
-                    $roundedVal = bcmul($divVal, '0.5', 1);
-                    $this->gTotSub->setDRedon(bcsub($this->gTotSub->getDTotOpe(), $roundedVal, 4));
-                }
-            }
-            else{
-                $this->gTotSub->setDRedon('0');
-            }
 
             if($this->gTimb->getITiDE() == TimbTiDE::Autofactura->value) {
                 // F008
@@ -314,7 +298,7 @@ trait ItemValorado {
                         $this->gTotSub->setDSubExo(bcadd($this->gTotSub->getDSubExe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                 }
 
-                if($this->getGDatGralOpe()->getGOpeCom()->getITImp() == OpeComTipImp::IVA || $this->getGDatGralOpe()->getGOpeCom()->getITImp() == OpeComTipImp::IVARenta) {
+                if($this->gOpeCom->getITImp() == OpeComTipImp::IVA->value || $this->gOpeCom->getITImp() == OpeComTipImp::IVARenta->value) {
                     $this->gTotSub->setDSub5('0');
                     $this->gTotSub->setDSub10('0');
                     $this->gTotSub->setDIVA5('0');
@@ -323,7 +307,7 @@ trait ItemValorado {
                     $this->gTotSub->setDBaseGrav10('0');
                     foreach($this->items as $item)
                     {
-                        if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Gravado || $item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::GravadoParcial)
+                        if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Gravado->value || $item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::GravadoParcial->value)
                         {
                             
                             if($item->getGCamIVA()->getDTasaIVA() == 5) {
@@ -338,9 +322,9 @@ trait ItemValorado {
                                 // F005
                                 $this->gTotSub->setDSub10(bcadd($this->gTotSub->getDSub10(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                                 // F016
-                                $this->gTotSub->setDIVA10(bcadd($this->gTotSub->getDIVA10(), $item->getGCamIVA->getDLiqIVAItem(), 8));
+                                $this->gTotSub->setDIVA10(bcadd($this->gTotSub->getDIVA10(), $item->getGCamIVA()->getDLiqIVAItem(), 8));
                                 // F019
-                                $this->gTotSub->setDBaseGrav10(bcadd($this->gTotSub->getDBaseGrav10(), $item->getGCamIVA->getDBasGravIVA(), 8));
+                                $this->gTotSub->setDBaseGrav10(bcadd($this->gTotSub->getDBaseGrav10(), $item->getGCamIVA()->getDBasGravIVA(), 8));
                             }
                         }
                     }
@@ -389,9 +373,28 @@ trait ItemValorado {
                     );
                 }
             }
+            
+            // F011
+            $this->gTotSub->setDPorcDescTotal(bcdiv(bcmul($this->gTotSub->getDDescTotal(), '100', 8), $this->gTotSub->getDTotOpe(), 8));
+
+            // F013
+            if($redondeoSedeco) {
+                if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') == 0) {
+                    $this->gTotSub->setDRedon(bcmod($this->gTotSub->getDTotOpe(), '50', 4));
+                }
+                else {
+                    $divVal = bcdiv($this->gTotSub->getDTotOpe(), '0.5', 1);
+                    $roundedVal = bcmul($divVal, '0.5', 1);
+                    $this->gTotSub->setDRedon(bcsub($this->gTotSub->getDTotOpe(), $roundedVal, 4));
+                }
+            }
+            else{
+                $this->gTotSub->setDRedon('0');
+            }
 
             // F14
             $this->gTotSub->setDTotGralOpe(bcadd(bcsub($this->gTotSub->getDTotOpe(), $this->gTotSub->getDRedon(), 8), $this->gTotSub->getDComi() ?? '0', 8));
+            
 
             // F23
             if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') != 0) {
