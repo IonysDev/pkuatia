@@ -6,6 +6,7 @@ use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
 use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
 use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
+use DateTime;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use DOMDocument;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
@@ -47,10 +48,12 @@ class SignHelper
    * 
    * @return DOMDocument  Documento XML firmado.
    */
-  public static function SignRDE(RDE $rde): DOMDocument
+  public static function SignRDE(RDE $rde, DateTime $fechaFirma = new DateTime('now')): DOMDocument
   {
     if (!isset(self::$xmlSigner))
       throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
+
+    $rde->DE->setDFecFirma($fechaFirma);
 
     $xmlDocument = new DOMDocument('1.0', 'UTF-8');
     $xmlDocument->formatOutput = false;
