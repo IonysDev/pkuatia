@@ -183,6 +183,9 @@ class GEmis extends BaseSifenField
     public function setCCiuEmi(int $cCiuEmi): self
     {
         $this->cCiuEmi = $cCiuEmi;
+        if(!is_null($cCiuEmi)) {
+            $this->dDesCiuEmi = PyGeoCodesMapping::getCiudName(strval($this->cCiuEmi));
+        }
         return $this;
     }
 
