@@ -40,6 +40,7 @@ class GCamDEAsoc extends BaseSifenField
   public String   $dDesTipCons;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
   public int      $dNumCons;      // H016 - 11    - 0-1 - Número de constancia 
   public String   $dNumControl;   // H017 - 8     - 0-1 - Número de control de la constancia 
+  public String   $dRucFus;       // H018 - 3-8   - 0-1 - Obligatorio cuando el CDC del DTE  referenciado corresponda a un  RUC fusionado
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -301,6 +302,20 @@ class GCamDEAsoc extends BaseSifenField
     return $this;
   }
 
+  /**
+   * Establece el valor de dRucFus
+   *
+   * @param String $dRucFus
+   *
+   * @return self
+   */
+  public function setDRucFus(String $dRucFus): self
+  {
+    $this->dRucFus = $dRucFus;
+
+    return $this;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   // Getters
   ///////////////////////////////////////////////////////////////////////
@@ -465,6 +480,16 @@ class GCamDEAsoc extends BaseSifenField
     return $this->dNumControl;
   }
 
+  /**
+   * Obtiene el valor de dRucFus
+   *
+   * @return String
+   */
+  public function getDRucFus(): String
+  {
+    return $this->dRucFus;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
   ///////////////////////////////////////////////////////////////////////
@@ -511,6 +536,8 @@ class GCamDEAsoc extends BaseSifenField
       $res->setDNumCons(intval(trim($node->getElementsByTagName('dNumCons')->item(0)->nodeValue)));
     if($node->getElementsByTagName('dNumControl')->length > 0)
       $res->setDNumControl(trim($node->getElementsByTagName('dNumControl')->item(0)->nodeValue));
+    if($node->getElementsByTagName('dRucFus')->length > 0)
+      $res->setDRucFus(trim($node->getElementsByTagName('dRucFus')->item(0)->nodeValue));
     return $res;
   }
 
@@ -586,6 +613,10 @@ class GCamDEAsoc extends BaseSifenField
     {
       $res->setDNumControl(strval($nodo->dNumControl));
     }
+    if(isset($nodo->dRucFus))
+    {
+      $res->setDRucFus(strval($nodo->dRucFus));
+    }
     return $res;
   }
 
@@ -650,6 +681,10 @@ class GCamDEAsoc extends BaseSifenField
     {
       $res->setDNumControl($object->dNumControl);
     }
+    if(isset($object->dRucFus))
+    {
+      $res->setDRucFus($object->dRucFus);
+    }
     
     return $res;
   }
@@ -703,6 +738,9 @@ class GCamDEAsoc extends BaseSifenField
       $res->appendChild(new DOMElement('dNumCons', $this->getDNumCons()));
       $res->appendChild(new DOMElement('dNumControl', $this->getDNumControl()));
     }
+
+    if(isset($this->dRucFus))
+      $res->appendChild(new DOMElement('dRucFus', $this->getDRucFus()));
 
     return $res;
   }

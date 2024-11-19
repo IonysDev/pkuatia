@@ -28,7 +28,7 @@ class GCamItem extends BaseSifenField
   public String     $dDesProSer;   // E708 - 1-2000      - 1-1 - Descripción del producto  y/o servicio
   public int        $cUniMed;      // E709 - 1-5        - 1-1 - Unidad de medida
   public String     $dDesUniMed;   // E710 - 1-10       - 1-1 - Descripción de la unidad de medida
-  public String     $dCantProSer;  // E711 - 1-10p(0-4) - 1-1 - Cantidad del producto y/o servicio (es un decimal BCMAth)
+  public String     $dCantProSer;  // E711 - 1-10p(0-8) - 1-1 - Cantidad del producto y/o servicio (es un decimal BCMAth)
   public String     $cPaisOrig;    // E712 - 3          - 0-1 - Código del país de origen del producto
   public String     $dDesPaisOrig; // E713 - 4-30       - 0-1 - Descripción del país de origen del producto
   public String     $dInfItem;     // E714 - 1-500      - 0-1 - Información de interés  del emisor con respecto al item;
