@@ -315,6 +315,7 @@ class Factura extends DocumentoElectronicoComercial
    */
   public function facturaToRDE(): RDE
   {
+    $this->gDtipDE->gCamFE = $this->gCamFE;
     $rde = $this->documentoElectronicoComercialToRDE();
     if(isset($this->gCompPub)) {
       $this->gCamFE->gCompPub = $this->gCompPub;

@@ -64,6 +64,7 @@ class DocumentoElectronico
   public function __construct(GTimb $timbrado = null)
   {
     $this->gOpeDE = new GOpeDE();
+    $this->gDtipDE = new GDtipDE();
     if ($timbrado)
       $this->gTimb = $timbrado;
     else
