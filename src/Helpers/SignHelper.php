@@ -60,13 +60,14 @@ class SignHelper
     $xmlDocument->preserveWhiteSpace = false;
     $xmlDocument->loadXML($rde->toXMLString());
     $deNode = $xmlDocument->getElementsByTagName("DE")->item(0);
+
     $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
     $cdc = $rde->getDE()->getId();
     self::$xmlSigner->addReference(
       $deNode,
       XMLSecurityDSig::SHA256,
       ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
-      ['id_name' => $cdc, 'overwrite' => true],
+      ['id_name' => 'Id', 'overwrite' => true],
     );
     self::$xmlSigner->sign(self::$xmlKey, $xmlDocument->documentElement);
     self::$xmlSigner->appendSignature($rdeNode);

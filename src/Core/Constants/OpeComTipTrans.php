@@ -31,7 +31,7 @@ enum OpeComTipTrans: int {
             case 2:
                 return 'Prestación de servicios';
             case 3:
-                return 'Mixto';
+                return 'Mixto (Venta de mercadería y servicios)';
             case 4:
                 return 'Venta de activo fijo';
             case 5:
