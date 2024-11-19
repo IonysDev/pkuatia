@@ -632,7 +632,7 @@ class GDatRec extends BaseSifenField
             $res->appendChild(new DOMElement('dDVRec', $this->getDDVRec()));
         }
 
-        if ($this->iNatRec == 2 && $this->iTiOpe != 4) {
+        if ($this->iNatRec == 2) {
             $res->appendChild(new DOMElement('iTipIDRec', $this->getITipIDRec()));
             $res->appendChild(new DOMElement('dDTipIDRec', $this->getDDTipIDRec()));
             $res->appendChild(new DOMElement('dNumIDRec', $this->getDNumIDRec()));

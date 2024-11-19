@@ -20,7 +20,7 @@ class GGrupEner
   public String $dCateg;  // E794 - 3      - 0-1 - Código de categoría
   public String $dLecAnt; // E795 - 1-11p2 - 0-1 - Lectura anterior (decimal BCMath)
   public String $dLecAct; // E796 - 1-11p2 - 0-1 - Lectura actual (decimal BCMath)
-  public String $dConKwh; // E797 - 1-11p2 - 0-1 - Consumo en Kwh (decimal BCMath)
+  public String $dConKwh; // E797 - 1-11p2 - 0-1 - Consumo en Kwh (decimal BCMath) - Corresponde a  la diferencia  entre E796-E795
 
   ///////////////////////////////////////////////////////////////////////
   // Setters

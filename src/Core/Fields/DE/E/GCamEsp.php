@@ -15,11 +15,11 @@ use SimpleXMLElement;
  */
 class GCamEsp extends BaseSifenField
 {
-                                // Id - Longitud - Ocurrencia - Descripción
-  public GGrupEner $gGrupEner; // E791 - - 0-1 - Campos del sector de energía eléctrica
-  public GGrupSeg  $gGrupSeg;  // E800 - - 0-1 - Campos del sector de seguros
-  public GGrupSup  $gGrupSup;   // E810 - - 0-1 - Campos del sector de supermercados
-  public GGrupAdi  $gGrupAdi;   // E820 - - 0-1 - Grupo  de  datos adicionales de uso comercial 
+                                // Id   - Longitud - Ocurrencia - Descripción
+  public GGrupEner $gGrupEner;  // E791 - - 0-9    - Campos del sector de energía eléctrica
+  public GGrupSeg  $gGrupSeg;   // E800 - - 0-1    - Campos del sector de seguros
+  public GGrupSup  $gGrupSup;   // E810 - - 0-1    - Campos del sector de supermercados
+  public GGrupAdi  $gGrupAdi;   // E820 - - 0-1    - Grupo  de  datos adicionales de uso comercial 
 
   ///////////////////////////////////////////////////////////////////////
   // Setters

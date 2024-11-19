@@ -17,7 +17,7 @@ class GGrupAdi
   public ?DateTime $dVencPag; //E824 Fecha de vencimiento de pago
   public ?String $dContrato; //E825 Número de contrato
   public ?String $dSalAnt;   //E826 Saldo anterior
-  public ?String $dCodConDnc; //E827 Código de contratación de la DNCP
+  public ?String $dCodConDncp; //E827 Código de contratación de la DNCP
 
   /////////////////////////////////////////////
   //setters
@@ -114,15 +114,15 @@ class GGrupAdi
   }
 
   /**
-   * Establece el valor de dCodConDnc
+   * Establece el valor de dCodConDncp
    *
-   * @param ?String $dCodConDnc
+   * @param ?String $dCodConDncp
    *
    * @return self
    */
-  public function setDCodConDnc(?String $dCodConDnc): self
+  public function setdCodConDncp(?String $dCodConDncp): self
   {
-    $this->dCodConDnc = $dCodConDnc;
+    $this->dCodConDncp = $dCodConDncp;
 
     return $this;
   }
@@ -194,13 +194,13 @@ class GGrupAdi
 
 
   /**
-   * Obtiene el valor de dCodConDnc
+   * Obtiene el valor de dCodConDncp
    *
    * @return ?String
    */
-  public function getDCodConDnc(): ?String
+  public function getdCodConDncp(): ?String
   {
-    return $this->dCodConDnc;
+    return $this->dCodConDncp;
   }
 
   /////////////////////////////////////////////
@@ -221,7 +221,7 @@ class GGrupAdi
     $res->appendChild(new DOMElement('dVencPag', $this->dVencPag->format('yyyy-mm-dd')));
     $res->appendChild(new DOMElement('dContrato', $this->dContrato));
     $res->appendChild(new DOMElement('dSalAnt', $this->dSalAnt));
-    $res->appendChild(new DOMElement('dCodConDnc', $this->dCodConDnc));
+    $res->appendChild(new DOMElement('dCodConDncp', $this->dCodConDncp));
     return $res;
   }
   
@@ -265,9 +265,9 @@ class GGrupAdi
       $res->setDSalAnt($object->dSalAnt);
     }
 
-    if(isset($object->dCodConDnc))
+    if(isset($object->dCodConDncp))
     {
-      $res->setDCodConDnc($object->dCodConDnc);
+      $res->setdCodConDncp($object->dCodConDncp);
     }
 
     return $res;

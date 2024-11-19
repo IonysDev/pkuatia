@@ -180,7 +180,157 @@
                 <xs:annotation>
                     <xs:documentation>Ración - ración</xs:documentation>
                 </xs:annotation>
-            </xs:enumeration>            
+            </xs:enumeration>      
+                <xs:enumeration value="111">
+                <xs:annotation>
+                    <xs:documentation>Bovinas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration> 
+            <xs:enumeration value="112">
+                <xs:annotation>
+                    <xs:documentation>Currie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="113">
+                <xs:annotation>
+                    <xs:documentation>Docena</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>    
+            <xs:enumeration value="114">
+                <xs:annotation>
+                    <xs:documentation>Galones</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>  
+            <xs:enumeration value="115">
+                <xs:annotation>
+                    <xs:documentation>Gruesas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="116">
+                <xs:annotation>
+                    <xs:documentation>Kilogramo Bruto</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="117">
+                <xs:annotation>
+                    <xs:documentation>Kits</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="118">
+                <xs:annotation>
+                    <xs:documentation>Microcurie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="119">
+                <xs:annotation>
+                    <xs:documentation>Milicurie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="120">
+                <xs:annotation>
+                    <xs:documentation>Millar</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="121">
+                <xs:annotation>
+                    <xs:documentation>Par</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="122">
+                <xs:annotation>
+                    <xs:documentation>Pies</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="123">
+                <xs:annotation>
+                    <xs:documentation>Pies Cuadradas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="124">
+                <xs:annotation>
+                    <xs:documentation>Piezas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="125">
+                <xs:annotation>
+                    <xs:documentation>Quilate</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="126">
+                <xs:annotation>
+                    <xs:documentation>Resmas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="127">
+                <xs:annotation>
+                    <xs:documentation>Rollos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="128">
+                <xs:annotation>
+                    <xs:documentation>1000 Kilowatt Hora</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="129">
+                <xs:annotation>
+                    <xs:documentation>Mazos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="130">
+                <xs:annotation>
+                    <xs:documentation>Tambores</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="131">
+                <xs:annotation>
+                    <xs:documentation>Caja</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="132">
+                <xs:annotation>
+                    <xs:documentation>Juego</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="133">
+                <xs:annotation>
+                    <xs:documentation>Paquete</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="134">
+                <xs:annotation>
+                    <xs:documentation>Bolsa</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="135">
+                <xs:annotation>
+                    <xs:documentation>Docena Par</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="136">
+                <xs:annotation>
+                    <xs:documentation>Pote</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="137">
+                <xs:annotation>
+                    <xs:documentation>Fardos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="138">
+                <xs:annotation>
+                    <xs:documentation>Bulto</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="139">
+                <xs:annotation>
+                    <xs:documentation>Cesta</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="140">
+                <xs:annotation>
+                    <xs:documentation>Peso Base</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     
@@ -363,7 +513,157 @@
                 <xs:annotation>
                     <xs:documentation>Ración</xs:documentation>
                 </xs:annotation>
-            </xs:enumeration>            
+            </xs:enumeration>  
+            <xs:enumeration value="4A">
+                <xs:annotation>
+                    <xs:documentation>Bovinas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>  
+            <xs:enumeration value="Ci">
+                <xs:annotation>
+                    <xs:documentation>Currie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>      
+            <xs:enumeration value="DOC">
+                <xs:annotation>
+                    <xs:documentation>Docena</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GLL">
+                <xs:annotation>
+                    <xs:documentation>Galones (US) (3,7843 LT)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GRO">
+                <xs:annotation>
+                    <xs:documentation>Gruesas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="E4">
+                <xs:annotation>
+                    <xs:documentation>Kilogramo Bruto</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KT">
+                <xs:annotation>
+                    <xs:documentation>Kits</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M5">
+                <xs:annotation>
+                    <xs:documentation>Microcurie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MCU">
+                <xs:annotation>
+                    <xs:documentation>Milicurie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MIL">
+                <xs:annotation>
+                    <xs:documentation>Millar</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAR">
+                <xs:annotation>
+                    <xs:documentation>Par</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FOT">
+                <xs:annotation>
+                    <xs:documentation>Pies</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FTK">
+                <xs:annotation>
+                    <xs:documentation>Pies Cuadradas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCE">
+                <xs:annotation>
+                    <xs:documentation>Piezas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KLT">
+                <xs:annotation>
+                    <xs:documentation>Quilate</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RM">
+                <xs:annotation>
+                    <xs:documentation>Resmas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RO">
+                <xs:annotation>
+                    <xs:documentation>Rollos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kWh">
+                <xs:annotation>
+                    <xs:documentation>1000 Kilowatt Hora</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U(JGO)">
+                <xs:annotation>
+                    <xs:documentation>Mazos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DR">
+                <xs:annotation>
+                    <xs:documentation>Tambores</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BX">
+                <xs:annotation>
+                    <xs:documentation>Caja</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SET">
+                <xs:annotation>
+                    <xs:documentation>Juego</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PK">
+                <xs:annotation>
+                    <xs:documentation>Paquete</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BG">
+                <xs:annotation>
+                    <xs:documentation>Bolsa</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DPC">
+                <xs:annotation>
+                    <xs:documentation>Docena Par</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="JR">
+                <xs:annotation>
+                    <xs:documentation>Pote</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BL">
+                <xs:annotation>
+                    <xs:documentation>Fardos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AB">
+                <xs:annotation>
+                    <xs:documentation>Bulto</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BK">
+                <xs:annotation>
+                    <xs:documentation>Cesta</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BW">
+                <xs:annotation>
+                    <xs:documentation>Peso Base</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
