@@ -163,6 +163,10 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDDescItem(): String
   {
+    if(!isset($this->dDescItem))
+    {
+      return '0';
+    }
     return $this->dDescItem;
   }
 
@@ -173,6 +177,10 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDPorcDesIt(): String
   {
+    if(!isset($this->dPorcDesIt))
+    {
+      return '0';
+    }
     return $this->dPorcDesIt;
   }
 
@@ -183,6 +191,10 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDDescGloItem(): String
   {
+    if(!isset($this->dDescGloItem))
+    {
+      return '0';
+    }
     return $this->dDescGloItem;
   }
 
@@ -193,6 +205,10 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDAntPreUniIt(): String
   {
+    if(!isset($this->dAntPreUniIt))
+    {
+      return '0';
+    }
     return $this->dAntPreUniIt;
   }
 
@@ -203,6 +219,10 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDAntGloPreUniIt(): String
   {
+    if(!isset($this->dAntGloPreUniIt))
+    {
+      return '0';
+    }
     return $this->dAntGloPreUniIt;
   }
 
