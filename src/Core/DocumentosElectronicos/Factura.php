@@ -161,7 +161,7 @@ class Factura extends DocumentoElectronicoComercial
     String $monto, 
     String|PagTarCDDenTarj $denomTarjeta, 
     PagTarCDForProPa $formaProc, 
-    ?String $codAutorizacion, 
+    ?int $codAutorizacion, 
     ?String $nombreTitular, 
     ?String $ult4NroTarjeta) : self
   {
@@ -174,9 +174,15 @@ class Factura extends DocumentoElectronicoComercial
       $gPagTarCD->setDDesDenTarj($denomTarjeta);
     }
     $gPagTarCD->setIForProPa($formaProc);
-    $gPagTarCD->setDCodAuOpe($codAutorizacion);
-    $gPagTarCD->setDNomTit($nombreTitular);
-    $gPagTarCD->setDNumTarj($ult4NroTarjeta);
+    if(isset($codAutorizacion)) {
+      $gPagTarCD->setDCodAuOpe($codAutorizacion);
+    }
+    if(isset($nombreTitular)) {
+      $gPagTarCD->setDNomTit($nombreTitular);
+    }
+    if(isset($ult4NroTarjeta)) {
+      $gPagTarCD->setDNumTarj($ult4NroTarjeta);
+    }
 
     $gPaConEIni = new GPaConEIni();
     $gPaConEIni->setITiPago($esTarjetaCredito ? PaConEIniTiPago::TarjetaCredito : PaConEIniTiPago::TarjetaDebito);
