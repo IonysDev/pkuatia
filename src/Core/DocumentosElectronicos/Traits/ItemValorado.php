@@ -293,10 +293,10 @@ trait ItemValorado {
                 foreach($this->items as $item)
                 {
                     // F002
-                    if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exento)
+                    if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exento->value)
                         $this->gTotSub->setDSubExe(bcadd($this->gTotSub->getDSubExe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                     // F003
-                    if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exonerado)
+                    if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exonerado->value)
                         $this->gTotSub->setDSubExo(bcadd($this->gTotSub->getDSubExe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                 }
 
