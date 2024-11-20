@@ -346,13 +346,26 @@ class GPagTarCD extends BaseSifenField
     $res = $doc->createElement('gPagTarCD');
     $res->appendChild(new DOMElement('iDenTarj', $this->getIDenTarj()));
     $res->appendChild(new DOMElement('dDesDenTarj', $this->getDDesDenTarj()));
-    $res->appendChild(new DOMElement('dRSProTar', $this->getDRSProTar()));
-    $res->appendChild(new DOMElement('dRUCProTar', $this->getDRUCProTar()));
-    $res->appendChild(new DOMElement('dDVProTar', $this->getDDVProTar()));
+    
+    if(isset($this->dRSProTar) && strlen($this->getDRSProTar()) > 0)
+      $res->appendChild(new DOMElement('dRSProTar', $this->getDRSProTar()));
+    
+    if(isset($this->dRUCProTar) && strlen($this->getDRUCProTar()) > 0)
+      $res->appendChild(new DOMElement('dRUCProTar', $this->getDRUCProTar()));
+    
+    if(isset($this->dDVProTar))
+      $res->appendChild(new DOMElement('dDVProTar', $this->getDDVProTar()));
+    
     $res->appendChild(new DOMElement('iForProPa', $this->getIForProPa()));
-    $res->appendChild(new DOMElement('dCodAuOpe', $this->getDCodAuOpe()));
-    $res->appendChild(new DOMElement('dNomTit', $this->getDNomTit()));
-    $res->appendChild(new DOMElement('dNumTarj', $this->getDNumTarj()));
+
+    if(isset($this->dCodAuOpe))
+      $res->appendChild(new DOMElement('dCodAuOpe', $this->getDCodAuOpe()));
+    
+    if(isset($this->dNomTit) && strlen($this->getDNomTit()) > 0)
+      $res->appendChild(new DOMElement('dNomTit', $this->getDNomTit()));
+    
+    if(isset($this->dNumTarj))
+      $res->appendChild(new DOMElement('dNumTarj', $this->getDNumTarj()));
     return $res;
   }
   
