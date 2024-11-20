@@ -314,9 +314,9 @@ trait ItemValorado {
                                 // F004
                                 $this->gTotSub->setDSub5(bcadd($this->gTotSub->getDSub5(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                                 // F015
-                                $this->gTotSub->setDIVA5(bcadd($this->gTotSub->getDIVA5(), $item->getGCamIVA->getDLiqIVAItem(), 8));
+                                $this->gTotSub->setDIVA5(bcadd($this->gTotSub->getDIVA5(), $item->getGCamIVA()->getDLiqIVAItem(), 8));
                                 // F018
-                                $this->gTotSub->setDBaseGrav5(bcadd($this->gTotSub->getDBaseGrav5(), $item->getGCamIVA->getDBasGravIVA(), 8));
+                                $this->gTotSub->setDBaseGrav5(bcadd($this->gTotSub->getDBaseGrav5(), $item->getGCamIVA()->getDBasGravIVA(), 8));
                             }
                             if($item->getGCamIVA()->getDTasaIVA() == 10) {
                                 // F005

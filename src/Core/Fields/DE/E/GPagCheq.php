@@ -14,8 +14,9 @@ use SimpleXMLElement;
  */
 class GPagCheq extends BaseSifenField
 {
-  public String $dNumCheq; //E631 Número de cheque  
-  public String $dBcoEmi; //E632  Banco emisor
+                           // Id - Longitud - Ocurrencia - Descripción
+  public String $dNumCheq; // E631 - 8 -    1-1 - Número de cheque  
+  public String $dBcoEmi;  // E632 - 4-20 - 1-1 - Banco emisor
 
   ///////////////////////////////////////////////////////////////////////
   ///Settets
@@ -32,8 +33,11 @@ class GPagCheq extends BaseSifenField
   public function setDNumCheq(String $dNumCheq): self
   {
     if(strlen($dNumCheq) > 8)
-      throw new \Exception("[GPagCheq] El número de cheque no puede tener más de 8 caracteres", 1);
-    $this->dNumCheq = str_pad($dNumCheq, 8, "0", STR_PAD_LEFT);
+      $this->dNumCheq = substr($dNumCheq, 0, 8);
+    else if(strlen($dNumCheq) < 8)
+      $this->dNumCheq = str_pad($dNumCheq, 8, "0", STR_PAD_LEFT);
+    else
+      $this->dNumCheq = $dNumCheq;
     return $this;
   }
 
@@ -47,7 +51,12 @@ class GPagCheq extends BaseSifenField
    */
   public function setDBcoEmi(String $dBcoEmi): self
   {
-    $this->dBcoEmi = $dBcoEmi;
+    if(strlen($dBcoEmi) < 4)
+      $this->dBcoEmi = str_pad($dBcoEmi, 4, " ", STR_PAD_RIGHT);
+    else if(strlen($dBcoEmi) > 20)
+      $this->dBcoEmi = substr($dBcoEmi, 0, 20);
+    else
+      $this->dBcoEmi = $dBcoEmi;
     return $this;
   }
 
