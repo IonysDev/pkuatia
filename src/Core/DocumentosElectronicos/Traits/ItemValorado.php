@@ -208,11 +208,13 @@ trait ItemValorado {
             if($afectacionIVA == CamIVAAfecIVA::Exento || $afectacionIVA == CamIVAAfecIVA::Exonerado) {
                 $gCamIVA->setDBasGravIVA('0');
                 $gCamIVA->setDLiqIVAItem('0');
+                $gCamIVA->setDBasExe($totOpeItem);
             }
             else {
                 $baseGravada = bcdiv(bcmul($totOpeItem, bcdiv($proporcionGravadaIVA, '100', 8), 8),bcadd('1', bcdiv(strval($tasaIVA->value), 100, 8), 8), 8);
                 $gCamIVA->setDBasGravIVA($baseGravada);
                 $gCamIVA->setDLiqIVAItem(bcmul($baseGravada, bcdiv(strval($tasaIVA->value), 100, 8), 8));
+                $gCamIVA->setDBasExe(bcsub(bcsub($totOpeItem, $baseGravada, 8), $gCamIVA->getDLiqIVAItem(), 8));
             }
             $gCamItem->setGCamIVA($gCamIVA);
         }
