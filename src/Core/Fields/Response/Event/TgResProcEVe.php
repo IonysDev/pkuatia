@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\Event;
+namespace IonysDev\Pkuatia\Core\Fields\Response\Event;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
-use Abiliomp\Pkuatia\Core\Fields\Response\TgResProc;
+use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
+use IonysDev\Pkuatia\Core\Fields\Response\TgResProc;
 use DOMElement;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Requests;
+namespace IonysDev\Pkuatia\Core\Requests;
 
 //ID: CSch01: Clase que compone la solicitud de consulta de un lote de DEs por su numero de lote obtenido por el WS
 

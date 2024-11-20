@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Utils;
+namespace IonysDev\Pkuatia\Utils;
 
 class NumberStringFormatter {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
 use DOMDocument;
 use DOMElement;

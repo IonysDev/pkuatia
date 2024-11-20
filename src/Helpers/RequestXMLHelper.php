@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Helpers;
+namespace IonysDev\Pkuatia\Helpers;
 
 use SimpleXMLElement;
 

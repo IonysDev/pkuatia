@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Constants;
+namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
  * Enumeraración que contiene las condiciones del tipo de cambio aplicables en una operación comercial.

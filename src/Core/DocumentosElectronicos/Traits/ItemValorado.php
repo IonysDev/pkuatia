@@ -1,21 +1,21 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos\Traits;
+namespace IonysDev\Pkuatia\Core\DocumentosElectronicos\Traits;
 
-use Abiliomp\Pkuatia\Core\Constants\CamIVAAfecIVA;
-use Abiliomp\Pkuatia\Core\Constants\CamIVATasaIVA;
-use Abiliomp\Pkuatia\Core\Constants\OpeComCondTipCam;
-use Abiliomp\Pkuatia\Core\Constants\OpeComTipImp;
-use Abiliomp\Pkuatia\Core\Constants\TimbTiDE;
-use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamItem;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamIVA;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GRasMerc;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorItem;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GVehNuevo;
-use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
-use Abiliomp\Pkuatia\Utils\NumberFunctions;
+use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
+use IonysDev\Pkuatia\Core\Constants\CamIVATasaIVA;
+use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
+use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
+use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
+use IonysDev\Pkuatia\Core\Fields\DE\C\GTimb;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GCamItem;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GCamIVA;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GRasMerc;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GValorItem;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
+use IonysDev\Pkuatia\Core\Fields\DE\F\GTotSub;
+use IonysDev\Pkuatia\Utils\NumberFunctions;
 use DateTime;
 
 trait ItemValorado {

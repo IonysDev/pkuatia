@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Responses;
+namespace IonysDev\Pkuatia\Core\Responses;
 
 /**
  * RespuestaConsultaLoteDE

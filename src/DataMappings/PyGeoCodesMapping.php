@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\DataMappings;
+namespace IonysDev\Pkuatia\DataMappings;
 
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
+namespace IonysDev\Pkuatia\Core\Fields\Response\DE;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
+use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use SimpleXMLElement;
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote

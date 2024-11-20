@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Constants;
+namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
  * Enumeraración que lista las formas de procesamiento de los pagos por tarjetas de crédito y débito.

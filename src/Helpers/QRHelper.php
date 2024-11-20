@@ -1,11 +1,11 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Helpers;
+namespace IonysDev\Pkuatia\Helpers;
 
-use Abiliomp\Pkuatia\Core\Config;
-use Abiliomp\Pkuatia\Core\Constants;
-use Abiliomp\Pkuatia\Core\Fields\DE\A\DE;
-use Abiliomp\Pkuatia\Core\Fields\DE\I\Signature;
+use IonysDev\Pkuatia\Core\Config;
+use IonysDev\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Fields\DE\A\DE;
+use IonysDev\Pkuatia\Core\Fields\DE\I\Signature;
 
 class QRHelper
 {

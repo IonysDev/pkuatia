@@ -1,11 +1,11 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\DataMappings\CountryMapping;
-use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
-use Abiliomp\Pkuatia\Utils\NumberStringFormatter;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\DataMappings\CountryMapping;
+use IonysDev\Pkuatia\DataMappings\UnidadMedidaMapping;
+use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

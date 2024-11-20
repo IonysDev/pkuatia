@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
+namespace IonysDev\Pkuatia\Core\Fields\Response\DE;
 
-use Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
-use Abiliomp\Pkuatia\Core\Responses\RRetEnviEventoDe;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
+use IonysDev\Pkuatia\Core\Responses\RRetEnviEventoDe;
 use DOMElement;
 use SimpleXMLElement;
 

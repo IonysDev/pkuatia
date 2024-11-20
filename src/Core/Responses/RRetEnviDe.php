@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Responses;
+namespace IonysDev\Pkuatia\Core\Responses;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\RProtDe;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 
 /**
  * Nodo Id:     ARSch01

@@ -2,8 +2,8 @@
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
-use Abiliomp\Pkuatia\Core\Config;
-use Abiliomp\Pkuatia\Sifen;
+use IonysDev\Pkuatia\Core\Config;
+use IonysDev\Pkuatia\Sifen;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

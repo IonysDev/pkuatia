@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\C;
+namespace IonysDev\Pkuatia\Core\Fields\DE\C;
 
-use Abiliomp\Pkuatia\Core\Constants\TimbTiDE;
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
 use DOMElement;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GTransp;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GTransp;
 use DOMDocument;
 use DOMElement;
 

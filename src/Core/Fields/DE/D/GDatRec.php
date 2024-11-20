@@ -1,15 +1,15 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
+namespace IonysDev\Pkuatia\Core\Fields\DE\D;
 
-use Abiliomp\Pkuatia\Core\Constants\EmisRecTipCont;
-use Abiliomp\Pkuatia\Core\Constants\RecNat;
-use Abiliomp\Pkuatia\Core\Constants\RecTiOpe;
-use Abiliomp\Pkuatia\Core\Constants\TipIDRec;
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\DataMappings\CountryMapping;
-use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
-use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
+use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
+use IonysDev\Pkuatia\Core\Constants\RecNat;
+use IonysDev\Pkuatia\Core\Constants\RecTiOpe;
+use IonysDev\Pkuatia\Core\Constants\TipIDRec;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\DataMappings\CountryMapping;
+use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
+use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

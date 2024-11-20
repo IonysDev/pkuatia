@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;;
+namespace IonysDev\Pkuatia\Core\Fields\Response\DE;;
 
-use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
+use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use SimpleXMLElement;
 
 /**

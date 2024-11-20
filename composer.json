@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Abiliomp\\Pkuatia\\": "src/"
+            "IonysDev\\Pkuatia\\": "src/"
         }
     },
     "authors": [

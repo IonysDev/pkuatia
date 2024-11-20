@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Signature;
+namespace IonysDev\Pkuatia\Core\Fields\Signature;
 
 /**
  * Clase que representa el campo X509Data de la firma

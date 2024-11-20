@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\Batch;
+namespace IonysDev\Pkuatia\Core\Fields\Response\Batch;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\TgResProc;
+use IonysDev\Pkuatia\Core\Fields\Response\TgResProc;
 use DOMElement;
 
 /**

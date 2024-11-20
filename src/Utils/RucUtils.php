@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Utils;
+namespace IonysDev\Pkuatia\Utils;
 
 /**
  * Clase con funciones de utilidad para el procesamiento de datos del RUC

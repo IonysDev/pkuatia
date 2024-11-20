@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Responses;
+namespace IonysDev\Pkuatia\Core\Responses;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\DE\gResProcEVe;
-use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
+use IonysDev\Pkuatia\Core\Fields\Response\DE\gResProcEVe;
+use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use DateTime;
 use SimpleXMLElement;
 

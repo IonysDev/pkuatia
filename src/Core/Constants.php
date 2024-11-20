@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core;
+namespace IonysDev\Pkuatia\Core;
 
 
 /**

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Abiliomp\Pkuatia\Core\Constants;
+namespace IonysDev\Pkuatia\Core\Constants;
 
 use Exception;
 

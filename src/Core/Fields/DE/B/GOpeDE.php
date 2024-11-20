@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\B;
+namespace IonysDev\Pkuatia\Core\Fields\DE\B;
 
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\Utils\RNG;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Utils\RNG;
 use DOMDocument;
 use DOMElement;
 use Exception;

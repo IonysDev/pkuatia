@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Requests;
+namespace IonysDev\Pkuatia\Core\Requests;
 
 /**
  * ID RSch01: Clase que compone la solicitud de consulta de RUC

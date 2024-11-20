@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\Core\Constants\COblAfe;
+namespace IonysDev\Pkuatia\Core\Fields\DE\D;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Core\Constants\COblAfe;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

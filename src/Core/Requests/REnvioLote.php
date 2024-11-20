@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Requests;
+namespace IonysDev\Pkuatia\Core\Requests;
 
     // Nodo ID: BSch01 rEnvioLote Raíz
     // Nombre: rEnvioLote

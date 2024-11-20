@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
+namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 
-use Abiliomp\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Constants;
 use DOMDocument;
 use DOMElement;
 

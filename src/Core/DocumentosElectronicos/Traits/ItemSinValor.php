@@ -1,10 +1,10 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos\Traits;
+namespace IonysDev\Pkuatia\Core\DocumentosElectronicos\Traits;
 
-use Abiliomp\Pkuatia\Core\Constants\CamItemRelMerc;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamItem;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GRasMerc;
+use IonysDev\Pkuatia\Core\Constants\CamItemRelMerc;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GCamItem;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GRasMerc;
 use DateTime;
 
 trait ItemSinValor {

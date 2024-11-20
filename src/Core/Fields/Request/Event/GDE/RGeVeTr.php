@@ -1,10 +1,10 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
+namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 
-use Abiliomp\Pkuatia\DataMappings\CountryMapping;
-use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
-use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
+use IonysDev\Pkuatia\DataMappings\CountryMapping;
+use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
+use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

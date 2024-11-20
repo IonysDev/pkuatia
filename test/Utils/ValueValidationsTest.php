@@ -2,7 +2,7 @@
 
 require '../vendor/autoload.php'; // Include the Composer autoloader
 
-use Abiliomp\Pkuatia\Utils\ValueValidations;
+use IonysDev\Pkuatia\Utils\ValueValidations;
 
 $values = [
     '13245.222', // true

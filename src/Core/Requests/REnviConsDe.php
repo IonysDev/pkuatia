@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Requests;
+namespace IonysDev\Pkuatia\Core\Requests;
 
 /**
  * ID DSch01: Clase que compone la solicitud de consulta de un DE por su CDC

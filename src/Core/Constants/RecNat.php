@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Constants;
+namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
  * Enumeraración que lista la naturaleza de los receptores de documentos electrónicos.

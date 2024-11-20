@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\DE;
+namespace IonysDev\Pkuatia\Core\Fields\Response\DE;
 
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote

@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\G;
+namespace IonysDev\Pkuatia\Core\Fields\DE\G;
 
-use Abiliomp\Pkuatia\DataMappings\UnidadMedidaMapping;
+use IonysDev\Pkuatia\DataMappings\UnidadMedidaMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

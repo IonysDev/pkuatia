@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
-use Abiliomp\Pkuatia\Utils\ValueValidations;
+use IonysDev\Pkuatia\DataMappings\MonedaMapping;
+use IonysDev\Pkuatia\Utils\ValueValidations;
 use DateTime;
 use DOMElement;
 use SimpleXMLElement;

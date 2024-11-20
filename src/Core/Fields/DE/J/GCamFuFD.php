@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\J;
+namespace IonysDev\Pkuatia\Core\Fields\DE\J;
 
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

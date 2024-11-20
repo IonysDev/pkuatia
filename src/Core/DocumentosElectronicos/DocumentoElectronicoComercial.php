@@ -1,14 +1,14 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
+namespace IonysDev\Pkuatia\Core\DocumentosElectronicos;
 
-use Abiliomp\Pkuatia\Core\Constants\OpeComCondAnt;
-use Abiliomp\Pkuatia\Core\Constants\OpeComCondTipCam;
-use Abiliomp\Pkuatia\Core\Constants\OpeComTipImp;
-use Abiliomp\Pkuatia\Core\Constants\OpeComTipTrans;
-use Abiliomp\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
-use Abiliomp\Pkuatia\Core\Fields\DE\AA\RDE;
-use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
+use IonysDev\Pkuatia\Core\Constants\OpeComCondAnt;
+use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
+use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
+use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
+use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
+use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
+use IonysDev\Pkuatia\Core\Fields\DE\D\GOpeCom;
 
 /**
  * Clase que extiende a DocumentoElectronico y contiene la estructura básica de un Documento Electrónico Comercial.

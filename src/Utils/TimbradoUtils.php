@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Utils;
+namespace IonysDev\Pkuatia\Utils;
 
-use Abiliomp\Pkuatia\Core\Fields\DE\C\GTimb;
+use IonysDev\Pkuatia\Core\Fields\DE\C\GTimb;
 use Exception;
 
 /**

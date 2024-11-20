@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Utils\ValueValidations;
+use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

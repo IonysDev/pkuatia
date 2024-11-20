@@ -1,11 +1,11 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\Core\Constants\PaConEIniTiPago;
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
-use Abiliomp\Pkuatia\Utils\ValueValidations;
+use IonysDev\Pkuatia\Core\Constants\PaConEIniTiPago;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\DataMappings\MonedaMapping;
+use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

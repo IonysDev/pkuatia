@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Responses;
+namespace IonysDev\Pkuatia\Core\Responses;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\DE\RContDe;
+use IonysDev\Pkuatia\Core\Fields\Response\DE\RContDe;
 use DateTime;
 use stdClass;
 

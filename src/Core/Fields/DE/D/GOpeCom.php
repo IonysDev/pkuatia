@@ -1,14 +1,14 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
+namespace IonysDev\Pkuatia\Core\Fields\DE\D;
 
-use Abiliomp\Pkuatia\Core\Constants\OpeComCondAnt;
-use Abiliomp\Pkuatia\Core\Constants\OpeComCondTipCam;
-use Abiliomp\Pkuatia\Core\Constants\OpeComTipImp;
-use Abiliomp\Pkuatia\Core\Constants\OpeComTipTrans;
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\DataMappings\MonedaMapping;
-use Abiliomp\Pkuatia\Utils\ValueValidations;
+use IonysDev\Pkuatia\Core\Constants\OpeComCondAnt;
+use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
+use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
+use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\DataMappings\MonedaMapping;
+use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;

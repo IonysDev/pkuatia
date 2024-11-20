@@ -21,7 +21,7 @@ class ComposerStaticInitc01502e803508f456dba99c789d101e8
         ),
         'A' => 
         array (
-            'Abiliomp\\Pkuatia\\' => 17,
+            'IonysDev\\Pkuatia\\' => 17,
         ),
     );
 
@@ -38,7 +38,7 @@ class ComposerStaticInitc01502e803508f456dba99c789d101e8
         array (
             0 => __DIR__ . '/..' . '/krowinski/bcmath-extended/src/BCMathExtended',
         ),
-        'Abiliomp\\Pkuatia\\' => 
+        'IonysDev\\Pkuatia\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

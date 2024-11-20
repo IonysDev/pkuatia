@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Request\Event\GDE;
+namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use DOMDocument;
 use DOMElement;

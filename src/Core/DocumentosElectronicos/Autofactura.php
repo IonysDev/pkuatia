@@ -1,22 +1,22 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\DocumentosElectronicos;
+namespace IonysDev\Pkuatia\Core\DocumentosElectronicos;
 
-use Abiliomp\Pkuatia\Config;
-use Abiliomp\Pkuatia\Core\Constants;
-use Abiliomp\Pkuatia\Core\Fields\DE\D\GOpeCom;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamAE;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GCamCond;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GCuotas;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GPaConEIni;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GPagCheq;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GPagCred;
-use Abiliomp\Pkuatia\Core\Fields\DE\E\GPagTarCD;
-use Abiliomp\Pkuatia\Core\Fields\DE\F\GTotSub;
-use Abiliomp\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
-use Abiliomp\Pkuatia\Utils\RNGMaker;
-use Abiliomp\Pkuatia\Utils\RucUtils;
-use Abiliomp\Pkuatia\Helpers\CDCHelper;
+use IonysDev\Pkuatia\Config;
+use IonysDev\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Fields\DE\D\GOpeCom;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GCamAE;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GCamCond;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GCuotas;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GPaConEIni;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GPagCheq;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GPagCred;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GPagTarCD;
+use IonysDev\Pkuatia\Core\Fields\DE\F\GTotSub;
+use IonysDev\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
+use IonysDev\Pkuatia\Utils\RNGMaker;
+use IonysDev\Pkuatia\Utils\RucUtils;
+use IonysDev\Pkuatia\Helpers\CDCHelper;
 
 /**
  * TIPO SIFEN NRO 4

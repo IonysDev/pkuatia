@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
+namespace IonysDev\Pkuatia\Core\Fields\DE\D;
 
-use Abiliomp\Pkuatia\Core\Constants\TipIDRespDE;
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Core\Constants\TipIDRespDE;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;

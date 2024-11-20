@@ -1,14 +1,14 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
+namespace IonysDev\Pkuatia\Core\Fields\DE\D;
 
-use Abiliomp\Pkuatia\Config;
-use Abiliomp\Pkuatia\Core\Constants\EmisRecTipCont;
-use Abiliomp\Pkuatia\Core\Constants\TipoDeRegimen;
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
-use Abiliomp\Pkuatia\Utils\RucUtils;
-use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
-use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
+use IonysDev\Pkuatia\Config;
+use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
+use IonysDev\Pkuatia\Core\Constants\TipoDeRegimen;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Utils\RucUtils;
+use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
+use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;

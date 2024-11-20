@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Responses;
+namespace IonysDev\Pkuatia\Core\Responses;
 
-use Abiliomp\Pkuatia\Core\Fields\Response\DE\GResProcLote;
-use Abiliomp\Pkuatia\Core\Fields\Response\GResProc;
+use IonysDev\Pkuatia\Core\Fields\Response\DE\GResProcLote;
+use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use DateTime;
 
 // Id: CRSch01, resultado del procesamiento de la consulta de un lote de DEs

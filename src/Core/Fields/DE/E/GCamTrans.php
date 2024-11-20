@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\DataMappings\CountryMapping;
+use IonysDev\Pkuatia\DataMappings\CountryMapping;
 use DOMElement;
 
 /**

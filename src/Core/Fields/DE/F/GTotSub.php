@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\F;
+namespace IonysDev\Pkuatia\Core\Fields\DE\F;
 
-use Abiliomp\Pkuatia\Utils\NumberStringFormatter;
-use Abiliomp\Pkuatia\Utils\ValueValidations;
+use IonysDev\Pkuatia\Utils\NumberStringFormatter;
+use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use Exception;

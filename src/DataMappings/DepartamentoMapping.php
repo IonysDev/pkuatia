@@ -1,7 +1,7 @@
 <?php
 
-// namespace Abiliomp\Pkuatia\Helpers;
-namespace Abiliomp\Pkuatia\DataMappings;
+// namespace IonysDev\Pkuatia\Helpers;
+namespace IonysDev\Pkuatia\DataMappings;
 
 use DOMDocument;
 

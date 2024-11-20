@@ -1,8 +1,8 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\D;
+namespace IonysDev\Pkuatia\Core\Fields\DE\D;
 
-use Abiliomp\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
 use DOMElement;

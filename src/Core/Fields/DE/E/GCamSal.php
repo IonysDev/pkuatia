@@ -1,9 +1,9 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\DE\E;
+namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
-use Abiliomp\Pkuatia\DataMappings\DepartamentoMapping;
-use Abiliomp\Pkuatia\DataMappings\PyGeoCodesMapping;
+use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
+use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMElement;
 
 /**

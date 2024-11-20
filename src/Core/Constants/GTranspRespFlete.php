@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Constants;
+namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
  * Enumeración que contiene los códigos para el responsable por el costo de flete que pueden informar en los campos que describen el transporte de las mercaderías.

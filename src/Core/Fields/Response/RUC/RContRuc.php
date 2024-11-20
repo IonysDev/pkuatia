@@ -1,6 +1,6 @@
 <?php
 
-namespace Abiliomp\Pkuatia\Core\Fields\Response\RUC;
+namespace IonysDev\Pkuatia\Core\Fields\Response\RUC;
 
 use DOMElement;
 use SimpleXMLElement;
