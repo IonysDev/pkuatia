@@ -33,6 +33,26 @@ class GCamIVA extends BaseSifenField
   public String $dBasExe;     // E737 - 1-15p(0-8) - 1-1 - Base Exenta por ítem 
 
   ///////////////////////////////////////////////////////////////////////
+  // Constructor
+  ///////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor de GCamIVA
+   * Establece los valores por defecto de los campos en
+   * afectación del IVA Gravado, con proporción de 100% y tasa del 10%.
+   * La base gravada, liquidación del IVA y base exenta se establecen en 0.
+   */
+  public function __construct()
+  {
+    $this->iAfecIVA = 1;
+    $this->dDesAfecIVA = 'Gravado';
+    $this->dPropIVA = '100';
+    $this->dTasaIVA = 10;
+    $this->dBasGravIVA = '0';
+    $this->dLiqIVAItem = '0';
+    $this->dBasExe = '0';
+  }
+
+  ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
 
