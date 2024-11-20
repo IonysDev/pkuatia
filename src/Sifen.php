@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia;
 
+use DateTime;
 use IonysDev\Pkuatia\Core\Config;
 use IonysDev\Pkuatia\Core\Constants;
 use IonysDev\Pkuatia\Core\Requests\REnviConsRUC;
@@ -104,10 +105,10 @@ class Sifen
    * 
    * @return String XML del DE firmado.
    */
-  public static function FirmarDE(RDE $rde): String
+  public static function FirmarDE(RDE $rde, DateTime $fechaFirma): String
   {
     // Firma el documento electrónico
-    $xmlDocument = SignHelper::SignRDE($rde);
+    $xmlDocument = SignHelper::SignRDE($rde, $fechaFirma);
 
     // Extrae la firma del documento electrónico
     $Signature = Signature::FromDOMElement($xmlDocument->getElementsByTagName("Signature")->item(0));
