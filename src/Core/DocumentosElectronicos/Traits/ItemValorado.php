@@ -205,16 +205,24 @@ trait ItemValorado {
             $gCamIVA->setIAfecIVA($afectacionIVA);
             $gCamIVA->setDPropIVA($proporcionGravadaIVA);
             $gCamIVA->setDTasaIVA($tasaIVA);
+            // E735 y E736
             if($afectacionIVA == CamIVAAfecIVA::Exento || $afectacionIVA == CamIVAAfecIVA::Exonerado) {
                 $gCamIVA->setDBasGravIVA('0');
                 $gCamIVA->setDLiqIVAItem('0');
-                $gCamIVA->setDBasExe($totOpeItem);
             }
             else {
                 $baseGravada = bcdiv(bcmul($totOpeItem, bcdiv($proporcionGravadaIVA, '100', 10), 10), bcadd('1', bcdiv(strval($tasaIVA->value), 100, 10), 10), 10);                
                 $gCamIVA->setDBasGravIVA(NumberFunctions::bcround($baseGravada, 8));
                 $gCamIVA->setDLiqIVAItem(NumberFunctions::bcround(bcmul($baseGravada, bcdiv(strval($tasaIVA->value), 100, 10), 10), 8));
-                $gCamIVA->setDBasExe(bcsub(bcsub($totOpeItem, $gCamIVA->getDBasGravIVA(), 8), $gCamIVA->getDLiqIVAItem(), 8));
+            }
+            // E737 (ver NT13)
+            if($afectacionIVA == CamIVAAfecIVA::GravadoParcial) {
+                $dBasExe = bcmul(bcmul(100, $totOpeItem, 10), bcsub(100, $proporcionGravadaIVA, 10), 10);
+                $dBasExe = bcdiv($dBasExe, bcadd(10000, bcmul($tasaIVA->value, $proporcionGravadaIVA, 10), 10), 10);
+                $gCamIVA->setDBasExe(NumberFunctions::bcround($dBasExe, 8));
+            }
+            else {
+                $gCamIVA->setDBasExe('0');
             }
             $gCamItem->setGCamIVA($gCamIVA);
         }
@@ -328,6 +336,7 @@ trait ItemValorado {
                                 // F019
                                 $this->gTotSub->setDBaseGrav10(bcadd($this->gTotSub->getDBaseGrav10(), $item->getGCamIVA()->getDBasGravIVA(), 8));
                             }
+                            $this->gTotSub->setDSubExe(bcadd($this->gTotSub->getDSubExe(), $item->getGCamIVA()->getDBasExe(), 8));
                         }
                     }
 
