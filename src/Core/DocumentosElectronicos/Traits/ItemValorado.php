@@ -211,7 +211,8 @@ trait ItemValorado {
                 $gCamIVA->setDLiqIVAItem('0');
             }
             else {
-                $baseGravada = bcdiv(bcmul($totOpeItem, bcdiv($proporcionGravadaIVA, '100', 10), 10), bcadd('1', bcdiv(strval($tasaIVA->value), 100, 10), 10), 10);                
+                $baseGravada = bcmul(bcmul(100, $totOpeItem, 10), $proporcionGravadaIVA, 10);
+                $baseGravada = bcdiv($baseGravada, bcadd(10000, bcmul($tasaIVA->value, $proporcionGravadaIVA, 10), 10), 10);
                 $gCamIVA->setDBasGravIVA(NumberFunctions::bcround($baseGravada, 8));
                 $gCamIVA->setDLiqIVAItem(NumberFunctions::bcround(bcmul($baseGravada, bcdiv(strval($tasaIVA->value), 100, 10), 10), 8));
             }
