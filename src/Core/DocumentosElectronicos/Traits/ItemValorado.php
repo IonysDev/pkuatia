@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\DocumentosElectronicos\Traits;
 
+use BCMathExtended\BC;
 use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
 use IonysDev\Pkuatia\Core\Constants\CamIVATasaIVA;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
@@ -213,14 +214,15 @@ trait ItemValorado {
             else {
                 $baseGravada = bcmul(bcmul(100, $totOpeItem, 10), $proporcionGravadaIVA, 10);
                 $baseGravada = bcdiv($baseGravada, bcadd(10000, bcmul($tasaIVA->value, $proporcionGravadaIVA, 10), 10), 10);
-                $gCamIVA->setDBasGravIVA(NumberFunctions::bcround($baseGravada, 8));
-                $gCamIVA->setDLiqIVAItem(NumberFunctions::bcround(bcmul($baseGravada, bcdiv(strval($tasaIVA->value), 100, 10), 10), 8));
+                $gCamIVA->setDBasGravIVA(BC::round($baseGravada, 8));
+                $gCamIVA->setDLiqIVAItem(BC::round(bcmul($baseGravada, bcdiv(strval($tasaIVA->value), 100, 10), 10), 8));
             }
             // E737 (ver NT13)
             if($afectacionIVA == CamIVAAfecIVA::GravadoParcial) {
                 $dBasExe = bcmul(bcmul(100, $totOpeItem, 10), bcsub(100, $proporcionGravadaIVA, 10), 10);
                 $dBasExe = bcdiv($dBasExe, bcadd(10000, bcmul($tasaIVA->value, $proporcionGravadaIVA, 10), 10), 10);
-                $gCamIVA->setDBasExe(NumberFunctions::bcround($dBasExe, 8));
+                $gCamIVA->setDBasExe(BC::round($dBasExe, 8));
+                
             }
             else {
                 $gCamIVA->setDBasExe('0');
@@ -369,7 +371,7 @@ trait ItemValorado {
                     if($comision) {
                         $this->gTotSub->setDComi($comision);
                         // El iva de comisiones es 10%
-                        $this->gTotSub->setDIVAComi(NumberFunctions::bcround(bcdiv($comision, '11', 10), 8));
+                        $this->gTotSub->setDIVAComi(BC::round(bcdiv($comision, '11', 10), 8));
                     }
 
                     // F017
