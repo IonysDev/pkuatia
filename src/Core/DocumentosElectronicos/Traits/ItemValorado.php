@@ -325,7 +325,7 @@ trait ItemValorado {
                             
                             if($item->getGCamIVA()->getDTasaIVA() == 5) {
                                 // F004
-                                $this->gTotSub->setDSub5(bcadd($this->gTotSub->getDSub5(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
+                                $this->gTotSub->setDSub5(bcadd($this->gTotSub->getDSub5(), bcadd($item->getGCamIVA()->getDBasGravIVA(), $item->getGCamIVA()->getDLiqIVAItem(), 8), 8));
                                 // F015
                                 $this->gTotSub->setDIVA5(bcadd($this->gTotSub->getDIVA5(), $item->getGCamIVA()->getDLiqIVAItem(), 8));
                                 // F018
@@ -333,7 +333,7 @@ trait ItemValorado {
                             }
                             if($item->getGCamIVA()->getDTasaIVA() == 10) {
                                 // F005
-                                $this->gTotSub->setDSub10(bcadd($this->gTotSub->getDSub10(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
+                                $this->gTotSub->setDSub10(bcadd($this->gTotSub->getDSub10(), bcadd($item->getGCamIVA()->getDBasGravIVA(), $item->getGCamIVA()->getDLiqIVAItem(), 8), 8));
                                 // F016
                                 $this->gTotSub->setDIVA10(bcadd($this->gTotSub->getDIVA10(), $item->getGCamIVA()->getDLiqIVAItem(), 8));
                                 // F019
