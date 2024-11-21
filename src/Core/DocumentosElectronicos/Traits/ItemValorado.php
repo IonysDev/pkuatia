@@ -308,7 +308,7 @@ trait ItemValorado {
                         $this->gTotSub->setDSubExe(bcadd($this->gTotSub->getDSubExe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                     // F003
                     if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exonerado->value)
-                        $this->gTotSub->setDSubExo(bcadd($this->gTotSub->getDSubExe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
+                        $this->gTotSub->setDSubExo(bcadd($this->gTotSub->getDSubExo(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                 }
 
                 if($this->gOpeCom->getITImp() == OpeComTipImp::IVA->value || $this->gOpeCom->getITImp() == OpeComTipImp::IVARenta->value) {
