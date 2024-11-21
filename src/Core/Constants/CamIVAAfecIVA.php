@@ -23,11 +23,11 @@ enum CamIVAAfecIVA: int {
             case 1:
                 return 'Gravado IVA';
             case 2:
-                return 'Exonerado (Art. 83- Ley 125/91)';
+                return 'Exonerado (Art. 100 - Ley 6380/2019)';
             case 3:
                 return 'Exento';
             case 4:
-                return 'Gravado parcial (Grav-Exento)';
+                return 'Gravado parcial (Grav- Exento)';
             default:
                 throw new Exception("[CamIVAAfecIVA] Tipo de afectación tributaria inválida: $value");
         }

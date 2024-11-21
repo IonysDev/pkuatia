@@ -336,6 +336,7 @@ trait ItemValorado {
                                 // F019
                                 $this->gTotSub->setDBaseGrav10(bcadd($this->gTotSub->getDBaseGrav10(), $item->getGCamIVA()->getDBasGravIVA(), 8));
                             }
+                            // F002
                             $this->gTotSub->setDSubExe(bcadd($this->gTotSub->getDSubExe(), $item->getGCamIVA()->getDBasExe(), 8));
                         }
                     }
