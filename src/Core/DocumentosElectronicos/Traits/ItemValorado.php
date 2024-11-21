@@ -8,7 +8,6 @@ use IonysDev\Pkuatia\Core\Constants\CamIVATasaIVA;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
-use IonysDev\Pkuatia\Core\Fields\DE\C\GTimb;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamItem;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamIVA;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GRasMerc;
@@ -16,7 +15,6 @@ use IonysDev\Pkuatia\Core\Fields\DE\E\GValorItem;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
 use IonysDev\Pkuatia\Core\Fields\DE\F\GTotSub;
-use IonysDev\Pkuatia\Utils\NumberFunctions;
 use DateTime;
 
 trait ItemValorado {
@@ -427,7 +425,201 @@ trait ItemValorado {
         return $this->gTotSub;
     }
 
-    
+    ///////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////
+
+    /**
+     * Establece el si el tipo de cambio es por ítem (true) o global (false).
+     * 
+     * @param bool $esTipoCambioPorItem Indica si el tipo de cambio es por ítem.
+     * 
+     * @return self
+     */
+    public function setEsTipoCambioPorItem(bool $esTipoCambioPorItem) : self {
+        $this->esTipoCambioPorItem = $esTipoCambioPorItem;
+        return $this;
+    }
+
+    /**
+     * Establece el tipo de cambio del documento electrónico.
+     * 
+     * @param String $tipoDeCambio valor numerico del tipo de cambio del documento electrónico, expresado en cadena de texto decimal BCMath.
+     * 
+     * @return self
+     */
+    public function setTipoDeCambio(String $tipoDeCambio) : self {
+        $this->tipoDeCambio = $tipoDeCambio;
+        return $this;
+    }
+
+    /**
+     * Establece el número de lote del ítem.
+     * 
+     * @param String $nroLote Número de lote del ítem.
+     * 
+     * @return self
+     */
+    public function setNroLote(String $nroLote) : self {
+        $this->nroLote = $nroLote;
+        return $this;
+    }
+
+    /**
+     * Establece la fecha de vencimiento del ítem.
+     * 
+     * @param DateTime $fechaVencimiento Fecha de vencimiento del ítem.
+     * 
+     * @return self
+     */
+    public function setFechaVencimiento(DateTime $fechaVencimiento) : self {
+        $this->fechaVencimiento = $fechaVencimiento;
+        return $this;
+    }
+
+    /**
+     * Establece el número de serie del ítem.
+     * 
+     * @param String $nroSerie Número de serie del ítem.
+     * 
+     * @return self
+     */
+    public function setNroSerie(String $nroSerie) : self {
+        $this->nroSerie = $nroSerie;
+        return $this;
+    }
+
+    /**
+     * Establece el número de pedido del ítem.
+     * 
+     * @param String $nroPedido Número de pedido del ítem.
+     * 
+     * @return self
+     */
+    public function setNroPedido(String $nroPedido) : self {
+        $this->nroPedido = $nroPedido;
+        return $this;
+    }
+
+    /**
+     * Establece información del emisor acerca del ítem.
+     * 
+     * @param String $infoEmisor Información adicional del ítem de interés del emisor.
+     * 
+     * @return self
+     */
+    public function setInfoEmisor(String $infoEmisor) : self {
+        $this->infoEmisor = $infoEmisor;
+        return $this;
+    }
+
+    /**
+     * Establece el CDC de la factura donde se registra el anticipo particular o global que afecta al ítem.
+     * 
+     * @param String $cdcFacturaAnticipo Código de la factura de anticipo. Es obligatorio cuando exista anticipo particular o global, o cuando el tipo de pago de la factura sea anticipo.
+     * 
+     * @return self
+     */
+    public function setCDCFacturaAnticipo(String $cdcFacturaAnticipo) : self {
+        $this->cdcFacturaAnticipo = $cdcFacturaAnticipo;
+        return $this;
+    }
+
+    /**
+     * Establece el número de partida arancelaria aduanera del ítem.
+     * 
+     * @param int $partidaArancelaria Código de la partida arancelaria aduanera del ítem (4 dígitos).
+     * 
+     * @return self
+     */
+    public function setPartidaArancelaria(int $partidaArancelaria) : self {
+        $this->partidaArancelaria = $partidaArancelaria;
+        return $this;
+    }
+
+    /**
+     * Establece el código NCM Mercosur del ítem.
+     * 
+     * @param int $ncmMercosur Código del Nomenclador Común del Mercosur del ítem (6 a 8 dígitos).
+     * 
+     * @return self
+     */
+    public function setNcmMercosur(int $ncmMercosur) : self {
+        $this->ncmMercosur = $ncmMercosur;
+        return $this;
+    }
+
+    /**
+     * Establece el código ISO3166 del país de origen del ítem.
+     * 
+     * @param String $codPaisOrigen Código ISO3166 del país de origen del ítem.
+     * 
+     * @return self
+     */
+    public function setCodPaisOrigen(String $codPaisOrigen) : self {
+        $this->codPaisOrigen = $codPaisOrigen;
+        return $this;
+    }
+
+    /**
+     * Establece el código general del ítem según el Catálogo de Bienes y Servicios de la DNCP.
+     * 
+     * @param String $dncpCodigoGeneral Código general del ítem según el Catálogo de Bienes y Servicios de la DNCP (obligatorio solo cuando receptor es B2G).
+     * 
+     * @return self
+     */
+    public function setDncpCodigoGeneral(String $dncpCodigoGeneral) : self {
+        $this->dncpCodigoGeneral = $dncpCodigoGeneral;
+        return $this;
+    }
+
+    /**
+     * Establece el código específico del ítem según el Catálogo de Bienes y Servicios de la DNCP.
+     * 
+     * @param String $dncpCodigoEspecifico Código específico del ítem según el Catálogo de Bienes y Servicios de la DNCP (obligatorio solo cuando receptor es B2G).
+     * 
+     * @return self
+     */
+    public function setDncpCodigoEspecifico(String $dncpCodigoEspecifico) : self {
+        $this->dncpCodigoEspecifico = $dncpCodigoEspecifico;
+        return $this;
+    }
+
+    /**
+     * Establece el código GTIN (código comercial global) de producto registrado en DNCP.
+     * 
+     * @param String $dncpCodigoGTINProducto Código GTIN (código comercial global) de producto registrado en DNCP (opcional cuando receptor es B2G).
+     * 
+     * @return self
+     */
+    public function setDncpCodigoGTINProducto(String $dncpCodigoGTINProducto) : self {
+        $this->dncpCodigoGTINProducto = $dncpCodigoGTINProducto;
+        return $this;
+    }
+
+    /**
+     * Establece el código GTIN del paquete registrado en DNCP.
+     * 
+     * @param String $dncpCodigoGTINPaquete Código GTIN del paquete registrado en DNCP (opcional cuando receptor es B2G).
+     * 
+     * @return self
+     */
+    public function setDncpCodigoGTINPaquete(String $dncpCodigoGTINPaquete) : self {
+        $this->dncpCodigoGTINPaquete = $dncpCodigoGTINPaquete;
+        return $this;
+    }
+
+    /**
+     * Establece el detalle del vehículo nuevo. Se informa solo en caso de venta de vehiculo automor nuevo.
+     * 
+     * @param GVehNuevo $detalleVehiculoNuevo Detalle del vehículo nuevo.
+     * 
+     * @return self
+     */
+    public function setDetalleVehiculoNuevo(GVehNuevo $detalleVehiculoNuevo) : self {
+        $this->detalleVehiculoNuevo = $detalleVehiculoNuevo;
+        return $this;
+    }   
 
 }
 
