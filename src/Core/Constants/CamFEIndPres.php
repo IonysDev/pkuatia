@@ -55,31 +55,31 @@ enum CamFEIndPres: int {
     public static function toKeyValueArray(): array {
         return [
             [
-                'id' => CamFEIndPres::Presencial,
+                'id' => CamFEIndPres::Presencial->value,
                 'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Presencial->value),
             ],
             [
-                'id' => CamFEIndPres::Electronica,
+                'id' => CamFEIndPres::Electronica->value,
                 'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Electronica->value),
             ],
             [
-                'id' => CamFEIndPres::Telemarketing,
+                'id' => CamFEIndPres::Telemarketing->value,
                 'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Telemarketing->value),
             ],
             [
-                'id' => CamFEIndPres::ADomicilio,
+                'id' => CamFEIndPres::ADomicilio->value,
                 'name' => CamFEIndPres::getDescripcion(CamFEIndPres::ADomicilio->value),
             ],
             [
-                'id' => CamFEIndPres::Bancaria,
+                'id' => CamFEIndPres::Bancaria->value,
                 'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Bancaria->value),
             ],
             [
-                'id' => CamFEIndPres::CiclicaOSuscripcion,
+                'id' => CamFEIndPres::CiclicaOSuscripcion->value,
                 'name' => CamFEIndPres::getDescripcion(CamFEIndPres::CiclicaOSuscripcion->value),
             ],
             [
-                'id' => CamFEIndPres::Otro,
+                'id' => CamFEIndPres::Otro->value,
                 'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Otro->value),
             ],
         ];

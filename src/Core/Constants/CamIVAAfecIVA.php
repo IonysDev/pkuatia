@@ -32,6 +32,27 @@ enum CamIVAAfecIVA: int {
                 throw new Exception("[CamIVAAfecIVA] Tipo de afectación tributaria inválida: $value");
         }
     }
+
+    public static function toKeyValueArray(): array {
+        return [
+            [
+                'id' => CamIVAAfecIVA::Gravado->value,
+                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::Gravado->value),
+            ],
+            [
+                'id' => CamIVAAfecIVA::Exonerado->value,
+                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::Exonerado->value),
+            ],
+            [
+                'id' => CamIVAAfecIVA::Exento->value,
+                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::Exento->value),
+            ],
+            [
+                'id' => CamIVAAfecIVA::GravadoParcial->value,
+                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::GravadoParcial->value),
+            ],
+        ];
+    }
 }
 
 ?>

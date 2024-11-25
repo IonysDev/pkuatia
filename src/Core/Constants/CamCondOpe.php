@@ -24,6 +24,24 @@ enum CamCondOpe: int {
                 throw new Exception("[CamCondOpe] Condición de operación inválida: $value");
         }
     }
+
+    /**
+     * Devuelve un array con los valores de la enumeración.
+     * 
+     * @return array
+     */
+    public static function toKeyValueArray(): array {
+        return [
+            [
+                'id' => CamCondOpe::Contado->value,
+                'name' => CamCondOpe::getDescripcion(CamCondOpe::Contado->value),
+            ],
+            [
+                'id' => CamCondOpe::Credito->value,
+                'name' => CamCondOpe::getDescripcion(CamCondOpe::Credito->value),
+            ],
+        ];
+    }
 }
 
 ?>
