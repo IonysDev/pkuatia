@@ -135,12 +135,19 @@ class Factura extends DocumentoElectronicoComercial
   public function addPago(
     int|PaConEIniTiPago $tipoDePago,
     String $monto,
-    String $moneda = 'PYG') : self
+    String $moneda = 'PYG',
+    String $tasaDeCambio = null) : self
   {
+    if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
+      throw new \Exception('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
+    }
     $gPaConEIni = new GPaConEIni();
     $gPaConEIni->setITiPago($tipoDePago);
     $gPaConEIni->setDMonTiPag($monto);
     $gPaConEIni->setCMoneTiPag($moneda);
+    if(isset($tasaDeCambio)) {
+      $gPaConEIni->setDTiCamTiPag($tasaDeCambio);
+    }
     $this->gCamCond->addGPaConEIni($gPaConEIni);
     return $this;
   }
