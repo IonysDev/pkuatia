@@ -72,9 +72,9 @@ trait ItemValorado {
 
         ?String $precioUnit,
         ?String $totalBruto,
-        ?CamIVAAfecIVA $afectacionIVA,
+        CamIVAAfecIVA|int|null $afectIVA,
         ?String $proporcionGravadaIVA,
-        ?CamIVATasaIVA $tasaIVA,
+        CamIVATasaIVA|int|null $tasaDeIVA,
 
         ?String $descuentoUnitarioParticular = null,
         ?String $descuentoUnitarioGlobal = null,
@@ -101,6 +101,16 @@ trait ItemValorado {
         ?GVehNuevo $detalleVehiculoNuevo = null,
     ) : GCamItem {
 
+        ////////////////////////////////////////////////////////////////////////////
+        // Conversiones de enumeraciones y enteros
+        if(is_int($afectIVA))
+            $afectacionIVA = CamIVAAfecIVA::tryFrom($afectIVA);
+        else
+            $afectacionIVA = $afectIVA;
+        if(is_int($tasaDeIVA))
+            $tasaIVA = CamIVATasaIVA::tryFrom($tasaDeIVA);
+        else
+            $tasaIVA = $tasaDeIVA;
         ////////////////////////////////////////////////////////////////////////////
         // START - GValorItem
         // Calculo de cantidad, precio unitario y total del item según caso
