@@ -166,15 +166,15 @@ class Factura extends DocumentoElectronicoComercial
   public function addPagoPYGPorTarjeta(
     bool $esTarjetaCredito, 
     String $monto, 
-    String|PagTarCDDenTarj $denomTarjeta, 
-    PagTarCDForProPa $formaProc, 
+    String|int|PagTarCDDenTarj $denomTarjeta, 
+    int|PagTarCDForProPa $formaProc, 
     ?int $codAutorizacion, 
     ?String $nombreTitular, 
     ?String $ult4NroTarjeta) : self
   {
     $gPagTarCD = new GPagTarCD();
 
-    if($denomTarjeta instanceof PagTarCDDenTarj) {
+    if($denomTarjeta instanceof PagTarCDDenTarj || is_int($denomTarjeta)) {
       $gPagTarCD->setIDenTarj($denomTarjeta);
     } else {
       $gPagTarCD->setIDenTarj(PagTarCDDenTarj::Otro);
