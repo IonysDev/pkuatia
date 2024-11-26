@@ -202,6 +202,44 @@ class Factura extends DocumentoElectronicoComercial
   }
 
   /**
+   * Agrega un pago por cheque a la factura electrónica.
+   * 
+   * @param String $monto Monto del pago para uso como decimal tipo BCMath.
+   * @param String $numeroCheque Número de cheque (hasta 8 caracteres)
+   * @param String $bancoEmisor Banco emisor del cheque.
+   * @param String $moneda Código de moneda ISO 4217. Valor por defecto: PYG.
+   * @param String $tasaDeCambio Tasa de cambio para la conversión a Guaraníes del monto del pago (Decimal BCMath).
+   * 
+   * @return self
+   */
+  public function addPagoPorCheque(
+    String $monto, 
+    String $numeroCheque, 
+    String $bancoEmisor,
+    String $moneda = 'PYG',
+    String $tasaDeCambio = null) : self
+  {
+    $gPagCheq = new GPagCheq();
+    $gPagCheq->setDNumCheq($numeroCheque);
+    $gPagCheq->setDBcoEmi($bancoEmisor);
+
+    $gPaConEIni = new GPaConEIni();
+    $gPaConEIni->setITiPago(PaConEIniTiPago::Cheque);
+    $gPaConEIni->setDMonTiPag($monto);
+    $gPaConEIni->setCMoneTiPag($moneda);
+    if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
+      throw new \Exception('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
+    }
+    if(isset($tasaDeCambio)) {
+      $gPaConEIni->setDTiCamTiPag($tasaDeCambio);
+    }
+    $gPaConEIni->setGPagCheq($gPagCheq);
+    $this->gCamCond->addGPaConEIni($gPaConEIni);
+
+    return $this;
+  }
+
+  /**
    * Agrega un pago en Guaraníes por cheque a la factura electrónica.
    * 
    * @param String $monto Monto del pago para uso como decimal tipo BCMath.
