@@ -168,9 +168,9 @@ class Factura extends DocumentoElectronicoComercial
     String $monto, 
     String|int|PagTarCDDenTarj $denomTarjeta, 
     int|PagTarCDForProPa $formaProc, 
-    ?int $codAutorizacion, 
-    ?String $nombreTitular, 
-    ?String $ult4NroTarjeta) : self
+    ?int $codAutorizacion = null, 
+    ?String $nombreTitular = null,
+    ?String $ult4NroTarjeta = null) : self
   {
     $gPagTarCD = new GPagTarCD();
 
@@ -328,7 +328,7 @@ class Factura extends DocumentoElectronicoComercial
    * 
    * @return self
    */
-  public function setOperacionCreditoEnCuotas(array $montoCuotas, array $vencimientos, ?String $monedaCuotas, ?String $montoEntregaInicial) : self
+  public function setOperacionCreditoEnCuotas(array $montoCuotas, array $vencimientos, ?String $montoEntregaInicial = null, ?String $monedaCuotas = null) : self
   {
     if(count($montoCuotas) != count($vencimientos)) {
       throw new \Exception('[Factura] La cantidad de montos de cuotas y vencimientos no coinciden.');
