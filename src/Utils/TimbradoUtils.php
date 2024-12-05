@@ -47,10 +47,12 @@ class TimbradoUtils {
      * 
      * @return array con las claves 'serie' y 'numero' que contienen la serie y número siguientes
      */
-    public static function CalcNumSgte(?String $serieActual, int $numeroActual): array
+    public static function CalcNumSgte(?String $serieActual, ?int $numeroActual): array
     {
         if(!self::ValidarSerie($serieActual))
             throw new Exception('[TimbradoUtils] La serie actual no es válida.');
+        if(is_null($numeroActual))
+           return ['serie' => $serieActual, 'numero' => 1];
         if($numeroActual < 1 || $numeroActual > GTimb::MAX_NUMDOC)
             throw new Exception('[TimbradoUtils] El número actual no es válido.');
 
