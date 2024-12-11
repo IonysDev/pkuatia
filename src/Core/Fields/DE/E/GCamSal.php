@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
+use DOMDocument;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMElement;
@@ -269,9 +270,9 @@ class GCamSal
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gCamSal');
+    $res = $doc->createElement('gCamSal');
 
     $res->appendChild(new DOMElement('dDirLocSal', $this->getDDirLocSal()));
 

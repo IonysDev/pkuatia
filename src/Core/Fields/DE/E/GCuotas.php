@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 use IonysDev\Pkuatia\DataMappings\MonedaMapping;
 use IonysDev\Pkuatia\Utils\ValueValidations;
 use DateTime;
+use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
@@ -157,15 +158,13 @@ class GCuotas
    *
    * @return DOMElement
    */
-  public function toDOMElement(): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    $res = new DOMElement('gCuotas');
-
+    $res = $doc->createElement('gCuotas');
     $res->appendChild(new DOMElement('cMoneCuo', $this->getCMoneCuo()));
     $res->appendChild(new DOMElement('dDMoneCuo', $this->getDDMoneCuo()));
     $res->appendChild(new DOMElement('dMonCuota', $this->getDMonCuota()));
     $res->appendChild(new DOMElement('dVencCuo', $this->getDVencCuo()->format("Y-m-d")));
-
     return $res;
   }
   
