@@ -246,7 +246,7 @@ class GPagCred extends BaseSifenField
     } else if ($this->iCondCred == 2) {
       $res->appendChild(new DOMElement('dCuotas', $this->getDCuotas()));
     }
-    if(isset($this->dMonEnt))
+    if(isset($this->dMonEnt) && $this->dMonEnt > 0)
       $res->appendChild(new DOMElement('dMonEnt', $this->getDMonEnt()));
     if(isset($this->gCuotas) && count($this->gCuotas) > 0)
     {
