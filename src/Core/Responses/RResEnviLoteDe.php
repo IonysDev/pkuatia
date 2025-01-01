@@ -5,25 +5,28 @@ namespace IonysDev\Pkuatia\Core\Responses;
 use DateTime;
 use stdClass;
 
-// Nodo Id: BRSch01 
-// Nombre: rResEnviLoteDe
-// Descripción: Clase que representa la respuesta de la recepcion de lote de documentos electronicos.
-// Nodo Padre: Es raíz.
-
+/**
+ * Nodo Id:     BRSch01        
+ * Nombre:      rResEnviLoteDe       
+ * Descripción: Nodo raiz de Respuesta del WS Recepción Lote de Documentos Electrónicos
+ * Nodo Padre:  Es raíz.
+ */
 class RResEnviLoteDe
 {
-    // Id - Longitud - Ocurrencia - Descripción        
-    public DateTime $dFechProc; // BRSch02 - 19 - 1-1 - Fecha y hora de recepción
-    public int $dCodRes;        // BRSch03 - 4  - 1.1 - s Código del resultado de recepción 
-    public string $dMsgRes;     // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
-    public int $dProtConsLote;  // BRSch05 - 1-15 - 0-1 - Número de Lote
-    public int $dTpoProces;     // BRSch06 - 1-5 - 1-1 - Tiempo medio de procesamiento en segundos
+
+    public const COD_RES_ACEPTADO = 300;
+    public const COD_RES_RECHAZADO = 301;
+
+                                    // Id - Longitud - Ocurrencia - Descripción        
+    public DateTime $dFechProc;     // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
+    public int      $dCodRes;       // BRSch03 - 4     - 1.1 - Código del resultado de recepción 
+    public string   $dMsgRes;       // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
+    public int      $dProtConsLote; // BRSch05 - 1-15  - 0-1 - Número de Lote (se genera solo si el estado es Aceptado)
+    public int      $dTpoProces;    // BRSch06 - 1-5   - 1-1 - Tiempo medio de procesamiento en segundos
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
-
-
 
     /**
      * Establece el valor de dFechProc
@@ -103,7 +106,6 @@ class RResEnviLoteDe
     // Getters
     //////////////////////////////////////////////////////////////////////////
 
-
     /**
      * Obtiene el valor de dFechProc
      *
@@ -154,29 +156,39 @@ class RResEnviLoteDe
         return $this->dTpoProces;
     }
 
-  /**
-   * Crea una nueva instancia de RResEnviConsDe a partir de un objeto stdClass.
-   * Pensado para castear la respuesta de una llamada SOAP.
-   * 
-   * @param stdClass $object
-   * 
-   * @return self
-   */
+    //////////////////////////////////////////////////////////////////////////
+    // Instanciadores
+    //////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Crea una nueva instancia de RResEnviConsDe a partir de un objeto stdClass.
+     * Pensado para castear la respuesta de una llamada SOAP.
+     * 
+     * @param stdClass $object
+     * 
+     * @return self
+     */
     public static function FromSifenResponseObject($object)
     {
         if (is_null($object)) {
-            throw new \Exception("Error Processing Request: null", 1);
-            return null;
+            throw new \Exception("[RResEnviLoteDe] Error Processing Request: null", 1);
         }
-
         $res = new RResEnviLoteDe();
-        $res->setdFechProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
-        $res->setDCodRes($object->dCodRes);
-        $res->setDMsgRes($object->dMsgRes);
-        $res->setdProtConsLote($object->dProtConsLote);
-        $res->setDTpoProces($object->dTpoProces);
+        if (isset($object->dFecProc)) $res->setdFechProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
+        
+        if(isset($object->dCodRes)) $res->setDCodRes($object->dCodRes);
+        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 1);
+        
+        if(isset($object->dMsgRes)) $res->setDMsgRes($object->dMsgRes);
+        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 1);
+        
+        if(isset($object->dProtConsLote)) $res->setdProtConsLote($object->dProtConsLote);
+        else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 1);
 
+        if(isset($object->dTpoProces)) $res->setDTpoProces($object->dTpoProces);
+        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 1);
+        
         return $res;
-
     }
 }
