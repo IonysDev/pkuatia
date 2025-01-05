@@ -18,7 +18,7 @@ class RResEnviLoteDe
     public const COD_RES_RECHAZADO = 301;
 
                                     // Id - Longitud - Ocurrencia - Descripción        
-    public DateTime $dFechProc;     // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
+    public DateTime $dFecProc;      // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
     public int      $dCodRes;       // BRSch03 - 4     - 1.1 - Código del resultado de recepción 
     public string   $dMsgRes;       // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
     public int      $dProtConsLote; // BRSch05 - 1-15  - 0-1 - Número de Lote (se genera solo si el estado es Aceptado)
