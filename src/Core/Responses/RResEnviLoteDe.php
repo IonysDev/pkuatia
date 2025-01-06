@@ -18,7 +18,7 @@ class RResEnviLoteDe
     public const COD_RES_RECHAZADO = 301;
 
                                     // Id - Longitud - Ocurrencia - Descripción        
-    public DateTime $dFechProc;     // BRSch02 - 19    - 1-1 - Fecha y hora de recepción (no se ajusta a MT150 pero así se recibe)
+    public DateTime $dFecProc;     // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
     public int      $dCodRes;       // BRSch03 - 4     - 1.1 - Código del resultado de recepción 
     public string   $dMsgRes;       // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
     public int      $dProtConsLote; // BRSch05 - 1-15  - 0-1 - Número de Lote (se genera solo si el estado es Aceptado)
@@ -29,15 +29,15 @@ class RResEnviLoteDe
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Establece el valor de dFechProc
+     * Establece el valor de dFecProc
      *
-     * @param DateTime $dFechProc
+     * @param DateTime $dFecProc
      *
      * @return self
      */
-    public function setDFechProc(DateTime $dFechProc): self
+    public function setDFecProc(DateTime $dFecProc): self
     {
-        $this->dFechProc = $dFechProc;
+        $this->dFecProc = $dFecProc;
 
         return $this;
     }
@@ -107,13 +107,13 @@ class RResEnviLoteDe
     //////////////////////////////////////////////////////////////////////////
 
     /**
-     * Obtiene el valor de dFechProc
+     * Obtiene el valor de dFecProc
      *
      * @return DateTime
      */
-    public function getDFechProc(): DateTime
+    public function getDFecProc(): DateTime
     {
-        return $this->dFechProc;
+        return $this->dFecProc;
     }
 
     /**
@@ -174,8 +174,8 @@ class RResEnviLoteDe
             throw new \Exception("[RResEnviLoteDe] Error Processing Request: null", 1);
         }
         $res = new RResEnviLoteDe();
-        if (isset($object->dFechProc)) $res->setdFechProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFechProc));
-        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFechProc", 1);
+        if (isset($object->dFecProc)) $res->setdFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
         
         if(isset($object->dCodRes)) $res->setDCodRes($object->dCodRes);
         else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 1);
