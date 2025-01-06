@@ -21,21 +21,21 @@ class RResEnviConsLoteDe
   public const COD_RES_RECHAZADO_DIFERENTES_TIPOS_DE = 363;
   
                                  // Id - Longirud - Ocurrencia - Descripción
-  public DateTime $dFecProc;     // CRSch02 - 19    - 1-1  - Fecha y hora del procesamiento del lote
+  public DateTime $dFechProc;    // CRSch02 - 19    - 1-1  - Fecha y hora del procesamiento del lote (nombre no coincide con MT150)
   public int      $dCodResLot;   // CRSch03 - 4     - 1-1  - Código de resultado del procesamiento del lote
   public string   $dMsgResLot;   // CRSch04 - 1-255 - 1-1  - Comentario del resultado del procesamiento del lote
   public array    $gResProcLote; // CRSch05 - G     - 0-50 - Grupo Resultado del procesamiento del lote
 
   /**
-   * Establece el valor de dFecProc
+   * Establece el valor de dFechProc
    *
-   * @param DateTime $dFecProc
+   * @param DateTime $dFechProc
    *
    * @return self
    */
-  public function setDFecProc(DateTime $dFecProc): self
+  public function setdFechProc(DateTime $dFechProc): self
   {
-    $this->dFecProc = $dFecProc;
+    $this->dFechProc = $dFechProc;
 
     return $this;
   }
@@ -86,13 +86,13 @@ class RResEnviConsLoteDe
   }
 
   /**
-   * Obtiene el valor de dFecProc
+   * Obtiene el valor de dFechProc
    *
    * @return DateTime
    */
-  public function getDFecProc(): DateTime
+  public function getdFechProc(): DateTime
   {
-    return $this->dFecProc;
+    return $this->dFechProc;
   }
 
   /**
@@ -134,8 +134,8 @@ class RResEnviConsLoteDe
 
     $res = new RResEnviConsLoteDe();
     
-    if(isset($object->dFecProc)) $res->setDFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
-    else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
+    if(isset($object->dFechProc)) $res->setdFechProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFechProc));
+    else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dFechProc", 1);
     
     if(isset($object->dCodResLot)) $res->setDCodResLot($object->dCodResLot);
     else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dCodResLot", 1);
