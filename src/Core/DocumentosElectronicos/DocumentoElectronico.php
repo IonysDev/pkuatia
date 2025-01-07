@@ -32,6 +32,7 @@ use IonysDev\Pkuatia\Utils\RucUtils;
 use IonysDev\Pkuatia\Utils\TimbradoUtils;
 use DateTime;
 use Exception;
+use IonysDev\Pkuatia\Core\Constants\RecNat;
 
 /**
  * Clase que contiene la estructura básica de un DE, en todos los casos posibles de éste; asi como las validaciones necesarias.
@@ -726,7 +727,7 @@ class DocumentoElectronico
     }
 
     $this->gDatRec = new GDatRec();
-    $this->gDatRec->setINatRec($esContribuyente ? 1 : 0);
+    $this->gDatRec->setINatRec($esContribuyente ? RecNat::Contribuyente : RecNat::NoContribuyente);
     $this->gDatRec->setITiOpe($tipoOperacion);
     $this->gDatRec->setCPaisRec($codPais);
 
