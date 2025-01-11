@@ -522,13 +522,16 @@ class GTotSub
   /**
    * Obtiene el valor de dSubExo que representa el subtotal de la operación exonerada en formato de cadena formateada con separador de miles.
    * 
+   * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
    * 
    */
-  public function getFormattedDSubExe(): ?String
+  public function getFormattedDSubExe(int $precision = 8): ?String
   {
-    if(isset($this->dSubExe))
-      return NumberStringFormatter::FormatBCMAthNumber($this->dSubExe, ',', '.');
+    if(isset($this->dSubExe)) {
+      $rounded = bcadd($this->dSubExe, '0', $precision);
+      return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    }
     else
       return null;
   }
@@ -549,12 +552,15 @@ class GTotSub
   /**
    * Obtiene el valor de dSubExo que representa el subtotal de la operación exonerada en formato de cadena formateada con separador de miles.
    * 
+   * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSubExo(): ?String
+  public function getFormattedDSubExo(int $precision = 8): ?String
   {
-    if(isset($this->dSubExo))
-      return NumberStringFormatter::FormatBCMAthNumber($this->dSubExo, ',', '.');
+    if(isset($this->dSubExo)) {
+      $rounded = bcadd($this->dSubExo, '0', $precision);
+      return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    }
     else
       return null;
   }
@@ -575,12 +581,15 @@ class GTotSub
   /**
    * Obtiene el valor de dSub5 que representa el subtotal de la operación con IVA incluido a la tasa 5% en formato de cadena formateada con separador de miles.
    * 
+   * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSub5(): ?String
+  public function getFormattedDSub5(int $precision = 8): ?String
   {
-    if(isset($this->dSub5))
-      return NumberStringFormatter::FormatBCMAthNumber($this->dSub5, ',', '.');
+    if(isset($this->dSub5)) {
+      $rounded = bcadd($this->dSub5, '0', $precision);
+      return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    }
     else
       return null;
   }
@@ -604,10 +613,12 @@ class GTotSub
    * 
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSub10(): ?String
+  public function getFormattedDSub10(int $precision = 8): ?String
   {
-    if(isset($this->dSub10))
-      return NumberStringFormatter::FormatBCMAthNumber($this->dSub10, ',', '.');
+    if(isset($this->dSub10)) {
+      $rounded = bcadd($this->dSub10, '0', $precision);
+      return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    }
     else
       return null;
   }
@@ -727,9 +738,10 @@ class GTotSub
     return $this->dTotGralOpe;
   }
 
-  public function getFormattedDTotGralOpe(): String
+  public function getFormattedDTotGralOpe(int $precision = 8): String
   {
-    return NumberStringFormatter::FormatBCMAthNumber($this->dTotGralOpe, ',', '.');
+    $rounded = bcadd($this->dTotGralOpe, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
   }
 
   /**
@@ -750,14 +762,15 @@ class GTotSub
    * 
    * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDIVA5(): ?String
+  public function getFormattedDIVA5(int $precision = 8): ?String
   {
-    if(isset($this->dIVA5))
-      return NumberStringFormatter::FormatBCMAthNumber($this->dIVA5, ',', '.');
+    if(isset($this->dIVA5)) {
+      $rounded = bcadd($this->dIVA5, '0', $precision);
+      return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    }
     else
       return null;
   }
-  
 
   /**
    * Obtiene el valor de dIVA10 que representa la liquidación del IVA a la tasa del 10%.
@@ -777,10 +790,12 @@ class GTotSub
    * 
    * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDIVA10(): ?String  
+  public function getFormattedDIVA10(int $precision = 8): ?String  
   {
-    if(isset($this->dIVA10))
-      return NumberStringFormatter::FormatBCMAthNumber($this->dIVA10, ',', '.');
+    if(isset($this->dIVA10)) {
+      $rounded = bcadd($this->dIVA10, '0', $precision);
+      return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    }
     else
       return null;
   }
@@ -842,10 +857,12 @@ class GTotSub
    * 
    * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDTotIVA(): ?String
+  public function getFormattedDTotIVA(int $precision = 8): ?String
   {
-    if(isset($this->dTotIVA))
-      return NumberStringFormatter::FormatBCMAthNumber($this->dTotIVA, ',', '.');
+    if(isset($this->dTotIVA)) {
+      $rounded = bcadd($this->dTotIVA, '0', $precision);
+      return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    }
     else
       return null;
   }
@@ -896,11 +913,13 @@ class GTotSub
   /**
    * Obtiene el valor de dTotalGs que representa el total general de la operación en Guaraníes en formato de cadena formateada con separador de miles.
    * 
+   * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del total general de la operación en Guaraníes expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDTotalGs(): String
+  public function getFormattedDTotalGs(int $precision = 8): String
   {
-    return NumberStringFormatter::FormatBCMAthNumber($this->dTotalGs, ',', '.');
+    $rounded = bcadd($this->dTotalGs, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
   }
 
   ///////////////////////////////////////////////////////////////////////
