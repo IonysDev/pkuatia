@@ -149,14 +149,16 @@ class Sifen
   public static function EnviarDE(String $rdeXML): RRetEnviDe
   {    
     // Realiza el envío del documento electrónico al SIFEN
-    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
-    $rEnviDe = new REnviDe(self::GetDId(), new SoapVar(
-      '<ns1:xDE>' . $rdeXML . '</ns1:xDE>',
-      XSD_ANYXML
-    ));
-    $object = self::$client->rEnviDe($rEnviDe);
-    return RRetEnviDe::FromSifenResponseObject($object);
+    try {
+      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
+      $rEnviDe = new REnviDe(self::GetDId(), new SoapVar('<ns1:xDE>' . $rdeXML . '</ns1:xDE>', XSD_ANYXML ));
+      $object = self::$client->rEnviDe($rEnviDe);
+      return RRetEnviDe::FromSifenResponseObject($object);
+    } catch (\Exception $e) {
+      throw new \Exception("[Sifen] Error al enviar el documento electrónico al SIFEN: " . $e->getMessage());
+    }
   }
+
 
   /**
    * Realiza el envío de un lote de Documentos Electrónicos al SIFEN.
@@ -203,9 +205,15 @@ class Sifen
     unlink("rLoteDE.zip");
 
     // Realiza el envío del lote de documentos electrónicos al SIFEN
-    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
-    $rEnvioLote = new REnvioLote(self::GetDId(), $zipcontent);
-    $object = self::$client->rEnvioLote($rEnvioLote);
+    try {
+      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
+      $rEnvioLote = new REnvioLote(self::GetDId(), $zipcontent);
+      $object = self::$client->rEnvioLote($rEnvioLote);
+    } catch (\Exception $e) {
+      throw new \Exception("[Sifen] Error al enviar el lote de documentos electrónicos al SIFEN: " . $e->getMessage());
+    }
+
+
     return RResEnviLoteDe::FromSifenResponseObject($object);
   }
 
@@ -217,10 +225,14 @@ class Sifen
    */
   public static function ConsultaLote($nroLote): RResEnviConsLoteDe
   {
-    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl", self::$options);
-    $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
-    $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
-    return RResEnviConsLoteDe::FromSifenResponseObject($object);
+    try {
+      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl", self::$options);
+      $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
+      $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
+      return RResEnviConsLoteDe::FromSifenResponseObject($object);
+    } catch (\Exception $e) {
+      throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage());
+    }
   }
   
   /**
@@ -233,19 +245,24 @@ class Sifen
   public static function RegistrarEvento(GGroupGesEve $raiz, $config):RRetEnviEventoDe
   {
     // Firma el documento electrónico
-    $xmlDocument = SignHelper::SingEvents($raiz, $config);
-    $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
+    try{
+      $xmlDocument = SignHelper::SingEvents($raiz, $config);
+      $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
 
-    // Realiza el envío del documento electrónico al SIFEN
-    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl", self::$options);
-    $rEnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(
-      '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
-      XSD_ANYXML
-    ));
-    file_put_contents('rEnviEventoDe.xml', $signedXML);
-    $object = self::$client->rEnviEventoDe($rEnviEventoDe);
-    return RRetEnviEventoDe::FromSifenResponseObject($object);
+      // Realiza el envío del documento electrónico al SIFEN
+      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl", self::$options);
+      $rEnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(
+        '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
+        XSD_ANYXML
+      ));
+      file_put_contents('rEnviEventoDe.xml', $signedXML);
+      $object = self::$client->rEnviEventoDe($rEnviEventoDe);
+      return RRetEnviEventoDe::FromSifenResponseObject($object);
+    } catch (\Exception $e) {
+      throw new \Exception("[Sifen] Error al registrar el evento: " . $e->getMessage());
+    }
   }
+
 
   /**
    * Devuelve la URL base del WS del SIFEN según el entorno.
