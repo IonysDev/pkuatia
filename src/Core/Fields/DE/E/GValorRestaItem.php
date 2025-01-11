@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use SimpleXMLElement;
 
 /**
@@ -170,11 +171,18 @@ class GValorRestaItem extends BaseSifenField
     return $this->dDescItem;
   }
 
+  public function getFormattedDDescItem(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dDescItem, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+  }
+
   /**
    * Obtiene el valor de dPorcDesIt
    *
    * @return String
    */
+
   public function getDPorcDesIt(): String
   {
     if(!isset($this->dPorcDesIt))
@@ -198,6 +206,13 @@ class GValorRestaItem extends BaseSifenField
     return $this->dDescGloItem;
   }
 
+  public function getFormattedDDescGloItem(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dDescGloItem, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+  }
+
+
   /**
    * Obtiene el valor de dAntPreUniIt
    *
@@ -211,6 +226,13 @@ class GValorRestaItem extends BaseSifenField
     }
     return $this->dAntPreUniIt;
   }
+
+  public function getFormattedDAntPreUniIt(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dAntPreUniIt, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+  }
+
 
   /**
    * Obtiene el valor de dAntGloPreUniIt
@@ -226,14 +248,27 @@ class GValorRestaItem extends BaseSifenField
     return $this->dAntGloPreUniIt;
   }
 
+  public function getFormattedDAntGloPreUniIt(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dAntGloPreUniIt, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+  }
+
   /**
    * Obtiene el valor de dTotOpeItem
    *
    * @return String
    */
+
   public function getDTotOpeItem(): String
   {
     return $this->dTotOpeItem;
+  }
+
+  public function getFormattedDTotOpeItem(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dTotOpeItem, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
   }
 
   /**
@@ -241,14 +276,22 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return String
    */
+
   public function getDTotOpeGs(): String
   {
     return $this->dTotOpeGs;
   }
 
+  public function getFormattedDTotOpeGs(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dTotOpeGs, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+  }
+
   ///////////////////////////////////////////////////////////////////////
   ///XML Element
   ///////////////////////////////////////////////////////////////////////
+
 
   /**
    * Instancia un objeto GValorRestaItem desde un SimpleXMLElement
