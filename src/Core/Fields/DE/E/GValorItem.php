@@ -109,9 +109,16 @@ class GValorItem extends BaseSifenField
     return $this->dPUniProSer;
   }
 
-  public function getFormattedDPUniProSer(): String
+  /**
+   * Obtiene el valor de dPUniProSer formateado con separador de miles
+   * 
+   * @param int $precision La precisión decimal a utilizar (por defecto 8)
+   * @return String
+   */
+  public function getFormattedDPUniProSer(int $precision = 8): String
   {
-    return NumberStringFormatter::FormatBCMAthNumber($this->dPUniProSer, ',', '.');
+    $rounded = bcadd($this->dPUniProSer, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
   }
 
   /**
