@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\DataMappings\UnidadMedidaMapping;
 use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Utils\ValueValidations;
 use SimpleXMLElement;
 
 /**
@@ -262,6 +263,10 @@ class GCamItem extends BaseSifenField
    */
   public function setDCantProSer(String $dCantProSer): self
   {
+    if(!ValueValidations::isValidStringDecimal($dCantProSer, 15, 0))
+    {
+      throw new \Exception("Valor inválido de dCantProSer: $dCantProSer");
+    }
     $this->dCantProSer = $dCantProSer;
     return $this;
   }
@@ -371,8 +376,11 @@ class GCamItem extends BaseSifenField
    */
   public function setDCanQuiMer(int $dCanQuiMer): self
   {
+    if(!ValueValidations::isValidStringDecimal($dCanQuiMer, 15, 0))
+    {
+      throw new \Exception("Valor inválido de dCanQuiMer: $dCanQuiMer");
+    }
     $this->dCanQuiMer = $dCanQuiMer;
-
     return $this;
   }
 
@@ -386,8 +394,11 @@ class GCamItem extends BaseSifenField
    */
   public function setDPorQuiMer(int $dPorQuiMer): self
   {
+    if(!ValueValidations::isValidStringDecimal($dPorQuiMer, 15, 0))
+    {
+      throw new \Exception("Valor inválido de dPorQuiMer: $dPorQuiMer");
+    }
     $this->dPorQuiMer = $dPorQuiMer;
-
     return $this;
   }
 
@@ -573,9 +584,15 @@ class GCamItem extends BaseSifenField
    *
    * @return int
    */
-  public function getDCantProSer(): float
+  public function getDCantProSer(): String
   {
     return $this->dCantProSer;
+  }
+
+  public function getFormattedDCantProSer(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dCantProSer, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
   }
 
   /**
@@ -583,6 +600,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
+
   public function getCPaisOrig(): String
   {
     return $this->cPaisOrig;
@@ -639,6 +657,12 @@ class GCamItem extends BaseSifenField
     return $this->dCanQuiMer;
   }
 
+  public function getFormattedDCanQuiMer(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dCanQuiMer, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+  }
+
   /**
    * Obtiene el valor de dPorQuiMer
    *
@@ -647,6 +671,12 @@ class GCamItem extends BaseSifenField
   public function getDPorQuiMer(): String
   {
     return $this->dPorQuiMer;
+  }
+
+  public function getFormattedDPorQuiMer(int $precision = 8): String
+  {
+    $rounded = bcadd($this->dPorQuiMer, '0', $precision);
+    return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
   }
 
   /**
