@@ -2,10 +2,9 @@
 
 namespace IonysDev\Pkuatia\Core\Responses;
 
-use IonysDev\Pkuatia\Core\Fields\Response\DE\gResProcEVe;
-use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
+use IonysDev\Pkuatia\Core\Fields\Response\Event\GResProcEVe;
+
 use DateTime;
-use IonysDev\Pkuatia\Core\Fields\Response\DE\GResProcEVe as DEGResProcEVe;
 use SimpleXMLElement;
 
 //id: GRSch01,respuesta del registro de eventos
