@@ -65,7 +65,7 @@ class RContEv
     /**
      * Obtiene el valor de rResEnviEventoDe
      *
-     * @return TgResProcEVe
+     * @return GResProcEVe
      */
     public function getRResEnviEventoDe(): RRetEnviEventoDe
     {
@@ -105,7 +105,7 @@ class RContEv
     //         $aux->fromDOMElement($xml->getElementsByTagName('xEvento')->item(0)->nodeValue);
     //         $res->setXEvento($aux);
 
-    //         $aux = new TgResProcEVe;
+    //         $aux = new GResProcEVe;
     //         $aux->fromDOMElement($xml->getElementsByTagName('rResEnviEventoDe')->item(0)->nodeValue);
     //         $res->setRResEnviEventoDe($aux);
 

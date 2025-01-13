@@ -7,14 +7,14 @@ use SimpleXMLElement;
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote
 
-class GResProcEve
+class GResProcEVe
 {
-  ///ID - DESC - LONG - OCURRENCIA
-  public string $dEstRes;   ///GRSch030 - Estado del resultado  - 8-30 - 1-1
-  public string $dProtAut;  ///GRSch031 - Número de transacción - 10 - 0-1
-  public string $id;        ///GRSch032 - Identificador del evento - 44 - 1-1
-  public array $gResProc;   ///GRSch033 - Grupo Mensaje de resultado - no tiene - 0-100
-
+                          // Id - Longitud - Ocurrencia - Descripción
+  public String $dEstRes; // GRSch030 - 8-30 - 1-1   - Estado del resultado
+  public int $dProtAut;   // GRSch031 - 10   - 0-1   - Número de transacción
+  public int $id;         // GRSch032 - 10   - 1-1   - Identificador del evento
+  public array $gResProc; // GRSch033 - G    - 1-100 - Grupo Resultado de Procesamiento 
+                        
 
   /**
    * Establece el valor de id
@@ -149,5 +149,42 @@ class GResProcEve
       $res->setGResProc($gResProc);
 
       return $res;
+  }
+
+  /**
+   * Creates a GResProcEVe instance from a Sifen Response Object
+   * 
+   * @param mixed $object The response object from Sifen
+   * @return self
+   * @throws \Exception If object is null or invalid
+   */
+  public static function FromSifenResponseObject($object): self
+  {
+    if (is_null($object)) {
+      throw new \Exception("[GResProcEVe] Error Processing Request: null");
+    }
+
+    $res = new GResProcEVe();
+    $res->setDEstRes($object->dEstRes);
+    if (isset($object->dProtAut)) {
+      $res->setDProtAut($object->dProtAut);
+    }
+    $res->setId($object->id);
+    
+    $gResProc = array();
+    if (isset($object->gResProc)) {
+      if (is_array($object->gResProc)) {
+        foreach ($object->gResProc as $proc) {
+          $aux = GResProc::FromSifenResponseObject($proc);
+          $gResProc[] = $aux;
+        }
+
+      } else {
+        $aux = GResProc::FromSifenResponseObject($object->gResProc);
+        $gResProc[] = $aux;
+      }
+    }
+    $res->setGResProc($gResProc);
+    return $res;
   }
 }
