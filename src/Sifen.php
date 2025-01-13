@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia;
 
 use DateTime;
+use Exception;
 use IonysDev\Pkuatia\Core\Config;
 use IonysDev\Pkuatia\Core\Constants;
 use IonysDev\Pkuatia\Core\Requests\REnviConsRUC;
@@ -13,6 +14,10 @@ use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\DE\I\Signature;
 use IonysDev\Pkuatia\Core\Fields\DE\J\GCamFuFD;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\GGroupTiEvt;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\REve;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeCan;
 use IonysDev\Pkuatia\Core\Requests\REnviConsLoteDe;
 use IonysDev\Pkuatia\Core\Requests\REnviDe;
 use IonysDev\Pkuatia\Core\Requests\REnviEventoDe;
@@ -25,6 +30,7 @@ use IonysDev\Pkuatia\Core\Responses\RRetEnviEventoDe;
 use IonysDev\Pkuatia\Helpers\QRHelper;
 use IonysDev\Pkuatia\Helpers\SignHelper;
 use SoapClient;
+use SoapFault;
 use SoapVar;
 use Stringable;
 use ZipArchive;
@@ -242,11 +248,11 @@ class Sifen
    * @param  mixed $config
    * @return RRetEnviEventoDe
    */
-  public static function RegistrarEvento(GGroupGesEve $raiz, $config):RRetEnviEventoDe
+  public static function RegistrarEvento(GGroupGesEve $raiz):RRetEnviEventoDe
   {
     // Firma el documento electrónico
     try{
-      $xmlDocument = SignHelper::SingEvents($raiz, $config);
+      $xmlDocument = SignHelper::SingEvents($raiz, self::$config);
       $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
 
       // Realiza el envío del documento electrónico al SIFEN
@@ -263,8 +269,48 @@ class Sifen
     }
   }
 
+  public static function CancelarDE(String $cdc, String $motivo ): RRetEnviEventoDe
+  {
+    $evento = new GGroupGesEve();
+    // creamos un array para la raiz de gestion de eventos
+    $rGesEve = [];
+    // creamos una raiz de gestion de eventos
+    $trGesEve = new RGesEve();
+    // creamos el grupo de campos generales del evento
+    $rEve = new REve();
+    $rEve->setId(1);
+    $rEve->setDFecFirma(new DateTime());
+    $rEve->setDVerFor(150);
+    // se crea el grupo de campos del tipo de evento
+    $gGroupTiEvt = new GGroupTiEvt();
+
+    ///////////////////////////////////////////////////////////////
+    ///EVENTO DE CANCELACION
+    ///////////////////////////////////////////////////////////////
+
+    // creamos una raiz de evento de cancelacion
+    $rGeVeCan = new RGeVeCan();
+    $rGeVeCan->setId($cdc); ///poner un cdc
+    $rGeVeCan->setMOtEve($motivo);
+    $gGroupTiEvt->setRGeVeCan($rGeVeCan);
+    // se asigna el grupo de campos  de tipo evento al grupo de campos generales del evento
+    $rEve->setGGroupTiEvt($gGroupTiEvt);
+    // se asigna el grupo de campos generales del evento a la raiz de gestion de eventos
+    $trGesEve->setREve($rEve);
+    // $trGesEve2->setREve($rEve2);
+    ////se asigna la raiz de gestion de eventos al array de raices de gestion de eventos
+    $rGesEve[] = $trGesEve;
+    // $rGesEve[] = $trGesEve2;
+    // se asigna el array al grupo de eventos
+    $evento->setRGesEve($rGesEve);
+
+    $res = Sifen::RegistrarEvento($evento);
+    return $res;
+  }
+
 
   /**
+
    * Devuelve la URL base del WS del SIFEN según el entorno.
    *
    * @return String
