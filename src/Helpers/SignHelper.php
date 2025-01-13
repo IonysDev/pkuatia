@@ -99,7 +99,7 @@ class SignHelper
         $rEve,
         XMLSecurityDSig::SHA256,
         ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
-        ['id_name' => $id, 'overwrite' => true],
+        ['id_name' => 'Id', 'overwrite' => false],
       );
       //sign
       self::$xmlSigner->sign(self::$xmlKey, $xmlDocument->documentElement);
