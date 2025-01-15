@@ -9,6 +9,10 @@ use IonysDev\Pkuatia\Core\Fields\Response\Ruc\RContRuc;
  */
 class RResEnviConsRUC 
 {
+  public const COD_RES_RUC_NOT_FOUND = 500;
+  public const COD_RES_FORBIDDEN = 501;
+  public const COD_RES_RUC_FOUND = 502;
+  
                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public int    $dCodRes;    // RRSch02 - Código del resultado de la consulta RUC  - 4 - 1-1
   public String $dMsgRes;    // RRSch03 - Mensaje del resultado  de  la consulta RUC - 1-255 - 1-1
