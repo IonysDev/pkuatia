@@ -103,11 +103,9 @@ class SignHelper
     $eventNodes = $xmlDocument->getElementsByTagName("rGesEve");
     foreach ($eventNodes as $eventNode) {
       //init signer, para evitar el bug del sobrefirmado
-      self::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFilePath);
+      // self::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFormat, $config->certificateFilePath);
       ///show child node
       $rEve = $eventNode->getElementsByTagName("rEve")->item(0);
-      //get id atribute
-      $id = $rEve->getAttribute("Id");
       //add reference
       self::$xmlSigner->addReference(
         $rEve,
