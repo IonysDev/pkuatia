@@ -14,14 +14,14 @@ class Config
     public String $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
 
     // Parámetros de Firma Digital
-    public String $certificateFormat = "pem";   // Solo se aceptan valores "pem" o "p12".
-    public String $certificateFilePath;         // Ruta del archivo del certificado.
-    public String $privateKeyFilePath;          // Ruta del archivo de la clave privada.
-    public String $privateKeyPassphrase;        // Contraseña de la clave privada.
+    public String $certificateFormat;    // Solo se aceptan valores "pem" o "p12".
+    public ?String $certificateFilePath;  // Ruta del archivo del certificado.
+    public String $privateKeyFilePath;   // Ruta del archivo de la clave privada.
+    public String $privateKeyPassphrase; // Contraseña de la clave privada.
 
     // Parámetros de autenticación ante el SIFEN
     public String $idCsc = '0001'; // Identificador de la CSC entregado por el SIFEN.
-    public String $csc = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
+    public String $csc   = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
 
     // Lugar donde se almacena el archivo JSON que contiene el registro del último valor del dId utilizado.
     public String $dIdFilePath = "PKuatiaDId.dat.json";

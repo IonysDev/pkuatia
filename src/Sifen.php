@@ -51,7 +51,7 @@ class Sifen
    */
   public static function Init(Config $config)
   {
-    if (!file_exists($config->certificateFilePath))
+    if ($config->certificateFilePath && !file_exists($config->certificateFilePath))
       throw new \Exception("[Sifen] El archivo de certificado no ha sido encontrado en: " . $config->certificateFilePath . ".");
     if (!file_exists($config->privateKeyFilePath))
       throw new \Exception("[Sifen] El archivo de clave privada no ha sido encontrado en: " . $config->privateKeyFilePath . ".");
@@ -70,7 +70,7 @@ class Sifen
         ]);
     }
     else if(strcmp($config->certificateFormat, "p12") == 0){
-      $sslContext = self::createStreamContextFromP12($config->certificateFilePath, $config->privateKeyPassphrase);
+      $sslContext = self::createStreamContextFromP12($config->privateKeyFilePath, $config->privateKeyPassphrase);
     }
 
     self::$options = [
@@ -81,7 +81,7 @@ class Sifen
       'stream_context' => $sslContext,
     ];
     
-    SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFilePath);
+    SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFormat, $config->certificateFilePath);
   }
 
   /**

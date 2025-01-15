@@ -27,18 +27,33 @@ class SignHelper
    * 
    * @return void
    */
-  public static function Init(String $keyFilePath, String $passphrase, String $certFilePath)
+  public static function Init(String $keyFilePath, String $passphrase, String $certificateFormat, ?String $certFilePath = null)
   {
     if (!file_exists($keyFilePath))
       throw new \Exception("[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
-    if (!file_exists($certFilePath))
+    if (!is_null($certFilePath) && !file_exists($certFilePath))
       throw new \Exception("[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
+    
     self::$xmlSigner = new XMLSecurityDSig('');
     self::$xmlSigner->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
-    self::$xmlSigner->add509Cert(file_get_contents($certFilePath));
     self::$xmlKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
     self::$xmlKey->passphrase = $passphrase;
-    self::$xmlKey->loadKey($keyFilePath, true);
+    if(strcmp($certificateFormat, 'pem') == 0){      
+      self::$xmlSigner->add509Cert(file_get_contents($certFilePath));
+      self::$xmlKey->loadKey($keyFilePath, true);
+    }
+    else if(strcmp($certificateFormat, 'p12') == 0){
+      $keys = file_get_contents($keyFilePath);
+      openssl_pkcs12_read($keys, $clave, $passphrase);
+      $privateKey  = $clave['pkey'];
+      $certificate = $clave['cert'];      
+      self::$xmlSigner->add509Cert($certificate);
+      self::$xmlKey->passphrase = $passphrase;
+      self::$xmlKey->loadKey($privateKey, false);
+    }
+    else {
+      throw new \Exception("[SignHelper] Formato de certificado no soportado.");
+    }
   }
 
   /**
@@ -62,7 +77,6 @@ class SignHelper
     $deNode = $xmlDocument->getElementsByTagName("DE")->item(0);
 
     $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
-    $cdc = $rde->getDE()->getId();
     self::$xmlSigner->addReference(
       $deNode,
       XMLSecurityDSig::SHA256,
