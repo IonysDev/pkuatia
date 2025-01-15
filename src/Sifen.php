@@ -56,12 +56,10 @@ class Sifen
     if (!file_exists($config->privateKeyFilePath))
       throw new \Exception("[Sifen] El archivo de clave privada no ha sido encontrado en: " . $config->privateKeyFilePath . ".");
     self::$config = $config;
-    self::$options = [
-      'soap_version' => SOAP_1_2,
-      'trace' => true,
-      'exceptions' => true,
-      'cache_wsdl' => WSDL_CACHE_NONE,
-      'stream_context' => stream_context_create([
+
+    $sslContext = null;
+    if(strcmp($config->certificateFormat, "pem") == 0){
+      $sslContext = stream_context_create([
         'ssl' => [
           'local_cert' => $config->certificateFilePath,
           'local_pk' => $config->privateKeyFilePath,
@@ -69,8 +67,20 @@ class Sifen
           'verify_peer' => true,
           'verify_peer_name' => true,
         ]
-      ])
+        ]);
+    }
+    else if(strcmp($config->certificateFormat, "p12") == 0){
+      $sslContext = self::createStreamContextFromP12($config->certificateFilePath, $config->privateKeyPassphrase);
+    }
+
+    self::$options = [
+      'soap_version' => SOAP_1_2,
+      'trace' => true,
+      'exceptions' => true,
+      'cache_wsdl' => WSDL_CACHE_NONE,
+      'stream_context' => $sslContext,
     ];
+    
     SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFilePath);
   }
 
@@ -153,11 +163,11 @@ class Sifen
    * @return RRetEnviDe Respuesta del SIFEN a la solicitud de Envío.
    */
   public static function EnviarDE(String $rdeXML): RRetEnviDe
-  {    
+  {
     // Realiza el envío del documento electrónico al SIFEN
     try {
       self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
-      $rEnviDe = new REnviDe(self::GetDId(), new SoapVar('<ns1:xDE>' . $rdeXML . '</ns1:xDE>', XSD_ANYXML ));
+      $rEnviDe = new REnviDe(self::GetDId(), new SoapVar('<ns1:xDE>' . $rdeXML . '</ns1:xDE>', XSD_ANYXML));
       $object = self::$client->rEnviDe($rEnviDe);
       return RRetEnviDe::FromSifenResponseObject($object);
     } catch (\Exception $e) {
@@ -176,16 +186,16 @@ class Sifen
    */
   public static function EnviarLoteDE(array $lote): RResEnviLoteDe
   {
-    if(!is_array($lote))
+    if (!is_array($lote))
       throw new \Exception("[Sifen] El parámetro lote debe ser un array de documentos electrónicos.");
-    if(count($lote) > 50)
+    if (count($lote) > 50)
       throw new \Exception("[Sifen] El lote no puede contener más de 50 documentos electrónicos.");
-    
+
     // Cabecera del rLoteDE
     $rLotDe = '<rLoteDE>';
 
     foreach ($lote as $rde) {
-      if(!is_string($rde))
+      if (!is_string($rde))
         throw new \Exception("[Sifen] El lote debe contener documentos electrónicos en formato de cadena XML.");
       // Concatenar los documentos electrónicos
       $rLotDe .= $rde;
@@ -240,7 +250,7 @@ class Sifen
       throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage());
     }
   }
-  
+
   /**
    * RegistrarEvento
    *
@@ -248,10 +258,10 @@ class Sifen
    * @param  mixed $config
    * @return RRetEnviEventoDe
    */
-  public static function RegistrarEvento(GGroupGesEve $raiz):RRetEnviEventoDe
+  public static function RegistrarEvento(GGroupGesEve $raiz): RRetEnviEventoDe
   {
     // Firma el documento electrónico
-    try{
+    try {
       $xmlDocument = SignHelper::SingEvents($raiz, self::$config);
       $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
 
@@ -269,7 +279,7 @@ class Sifen
     }
   }
 
-  public static function CancelarDE(String $cdc, String $motivo ): RRetEnviEventoDe
+  public static function CancelarDE(String $cdc, String $motivo): RRetEnviEventoDe
   {
     $evento = new GGroupGesEve();
     // creamos un array para la raiz de gestion de eventos
@@ -347,5 +357,48 @@ class Sifen
     $json = json_encode($data);
     file_put_contents(self::$config->dIdFilePath, $json);
     return $dId;
+  }
+
+  /**
+   * Genera un context SSL para certificados/clave en formato PKCS12 (P12)
+   * 
+   */
+  private static function createStreamContextFromP12($p12FilePath, $password)
+  {
+    // Read PKCS12 file
+    $p12Content = file_get_contents($p12FilePath);
+    $certs = [];
+
+    // Extract certificate and private key from P12
+    if (!openssl_pkcs12_read($p12Content, $certs, $password)) {
+      throw new \Exception("Error reading P12 file: " . openssl_error_string());
+    }
+
+    // Create temporary files for the certificate and private key
+    $certFile = tempnam(sys_get_temp_dir(), 'cert_');
+    $keyFile = tempnam(sys_get_temp_dir(), 'key_');
+
+    // Write the extracted cert and key to temporary files
+    file_put_contents($certFile, $certs['cert']);
+    file_put_contents($keyFile, $certs['pkey']);
+
+    // Create stream context
+    $context = stream_context_create([
+      'ssl' => [
+        'local_cert' => $certFile,
+        'local_pk' => $keyFile,
+        'passphrase' => $password,
+        'verify_peer' => true,
+        'verify_peer_name' => true,
+      ]
+    ]);
+
+    // Clean up temporary files
+    register_shutdown_function(function () use ($certFile, $keyFile) {
+      @unlink($certFile);
+      @unlink($keyFile);
+    });
+
+    return $context;
   }
 }

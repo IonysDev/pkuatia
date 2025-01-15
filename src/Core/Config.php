@@ -14,7 +14,7 @@ class Config
     public String $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
 
     // Parámetros de Firma Digital
-    public String $certificateFormat = "pem";   // Solo se aceptan valores "pfx", "pem" o "der".
+    public String $certificateFormat = "pem";   // Solo se aceptan valores "pem" o "p12".
     public String $certificateFilePath;         // Ruta del archivo del certificado.
     public String $privateKeyFilePath;          // Ruta del archivo de la clave privada.
     public String $privateKeyPassphrase;        // Contraseña de la clave privada.
