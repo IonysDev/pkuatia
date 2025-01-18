@@ -209,7 +209,7 @@ trait ItemValorado {
         
         ////////////////////////////////////////////////////////////////////////////
         // START - GCamIVA
-        if($this->gOpeCom->getITImp() != OpeComTipImp::ISC->value && $this->gTimb->getITiDE() != TimbTiDE::Autofactura->value && $this->gTimb->getITiDE() != TimbTiDE::NotaRemision->value) {
+        if($this->gOpeCom->getITImp() != OpeComTipImp::ISC->value && $this->gTimb->getITiDE() != TimbTiDE::Autofactura->value && $this->gTimb->getITiDE() != TimbTiDE::NotaDeRemision->value) {
             $gCamIVA = new GCamIVA();
             $gCamIVA->setIAfecIVA($afectacionIVA);
             $gCamIVA->setDPropIVA($proporcionGravadaIVA);
@@ -263,6 +263,7 @@ trait ItemValorado {
             $gCamItem->setGVehNuevo($detalleVehiculoNuevo);
         }
         // END - GVehNuevo
+        ////////////////////////////////////////////////////////////////////////////
 
         $this->items[] = $gCamItem;
         return $this->items[count($this->items) - 1];
@@ -277,7 +278,7 @@ trait ItemValorado {
      * @return void
      */
     public function calcTotSub(bool $redondeoSedeco = false, String $comision = null) : GTotSub {
-        if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaRemision->value)
+        if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value)
         {
             $this->gTotSub = null;   
         }

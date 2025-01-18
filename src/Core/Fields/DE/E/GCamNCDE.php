@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Core\Constants\MotEmi;
 
 /**
  * Nodo Id:     E400
@@ -14,28 +15,10 @@ use DOMElement;
  */
 class GCamNCDE extends BaseSifenField
 {
-  public const MOTIVO_EMISION_DEVOLUCION_Y_AJUSTE_PRECIO = 1;
-  public const MOTIVO_EMISION_DEVOLUCION = 2;
-  public const MOTIVO_EMISION_DESCUENTO = 3;
-  public const MOTIVO_EMISION_BONIFICACION = 4;
-  public const MOTIVO_EMISION_CREDITO_INCOBRABLE = 5;
-  public const MOTIVO_EMISION_RECUPERO_DE_COSTO = 6;
-  public const MOTIVO_EMISION_RECUPERO_DE_GASTO = 7;
-  public const MOTIVO_EMISION_AJUSTE_DE_PRECIO = 8;
-
-  public const MOTIVO_EMISION_DESCRIPCIONES = [
-    self::MOTIVO_EMISION_DEVOLUCION_Y_AJUSTE_PRECIO => 'Devolución y Ajuste de precios',
-    self::MOTIVO_EMISION_DEVOLUCION => 'Devolución',
-    self::MOTIVO_EMISION_DESCUENTO => 'Descuento',
-    self::MOTIVO_EMISION_BONIFICACION => 'Bonificación',
-    self::MOTIVO_EMISION_CREDITO_INCOBRABLE => 'Crédito incobrable',
-    self::MOTIVO_EMISION_RECUPERO_DE_COSTO => 'Recupero de costo',
-    self::MOTIVO_EMISION_RECUPERO_DE_GASTO => 'Recupero de gasto',
-    self::MOTIVO_EMISION_AJUSTE_DE_PRECIO => 'Ajuste de precio',
-  ];
+  
 
                               // Id - Longitud - Ocurrencia - Descripción
-  public int $iMotEmi;        // E401 - 1-2  - 1-1 - Motivo de emisión
+  public int    $iMotEmi;     // E401 - 1-2  - 1-1 - Motivo de emisión
   public String $dDesMotEmi;  // E402 - 6-30 - 1-1 - Descripción del motivo de emisión
 
   ///////////////////////////////////////////////////////////////////////
@@ -49,12 +32,11 @@ class GCamNCDE extends BaseSifenField
    *
    * @return self Retorna una instancia del objeto para encadenar métodos.
    */
-  public function setIMotEmi(int $iMotEmi): self
+  public function setIMotEmi(int|MotEmi $iMotEmi): self
   {
-    if($iMotEmi < 1 || $iMotEmi > 8)
-      throw new \Exception('[GCamNCDE] Valor de iMotEmi inválido: ' . $iMotEmi . '. El valor de iMotEmi debe estar entre 1 y 8');
-    $this->iMotEmi = $iMotEmi;
-    $this->dDesMotEmi = self::MOTIVO_EMISION_DESCRIPCIONES[$iMotEmi];    
+    $mEmi = $iMotEmi instanceof MotEmi ? $iMotEmi->value : $iMotEmi;
+    $this->dDesMotEmi = MotEmi::getDescripcion($mEmi);
+    $this->iMotEmi = $mEmi;
     return $this;
   }
 

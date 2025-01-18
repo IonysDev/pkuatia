@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Constants\CamItemRelMerc;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamItem;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GRasMerc;
 use DateTime;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
 
 trait ItemSinValor {
 
@@ -45,22 +46,23 @@ trait ItemSinValor {
         String $descripcion,
         int $codUnidadMedida,
         String $cantidad,
-        ?String $nroLote,
-        ?DateTime $fechaVencimiento,
-        ?String $nroSerie,
-        ?String $nroPedido,
-        ?String $infoEmisor,
-        ?String $cdcFacturaAnticipo,
-        ?int $partidaArancelaria,
-        ?int $ncmMercosur,
-        ?String $codPaisOrigen,
-        ?String $dncpCodigoGeneral,
-        ?String $dncpCodigoEspecifico,
-        ?String $dncpCodigoGTINProducto,
-        ?String $dncpCodigoGTINPaquete,
-        ?CamItemRelMerc $tipoTolerancia,
-        ?String $cantTolerancia,
-        ?String $porcTolerancia,
+        ?String $nroLote = null,
+        ?DateTime $fechaVencimiento = null,
+        ?String $nroSerie = null,
+        ?String $nroPedido = null,
+        ?String $infoEmisor = null,
+        ?String $cdcFacturaAnticipo = null,
+        ?int $partidaArancelaria = null,
+        ?int $ncmMercosur = null,
+        ?String $codPaisOrigen = null,
+        ?String $dncpCodigoGeneral = null,
+        ?String $dncpCodigoEspecifico = null,
+        ?String $dncpCodigoGTINProducto = null,
+        ?String $dncpCodigoGTINPaquete = null,
+        ?CamItemRelMerc $tipoTolerancia = null,
+        ?String $cantTolerancia = null,
+        ?String $porcTolerancia = null,
+        ?GVehNuevo $detalleVehiculoNuevo = null,
     ) : self {
         $gCamItem = new GCamItem();
         $gCamItem->setDCodInt($codigo);
@@ -102,6 +104,15 @@ trait ItemSinValor {
                 $gRasMerc->setDNumPedi($nroPedido);
             $gCamItem->setGRasMerc($gRasMerc);
         }
+
+        ////////////////////////////////////////////////////////////////////////////
+        // START - GVehNuevo
+        if($detalleVehiculoNuevo){
+            $gCamItem->setGVehNuevo($detalleVehiculoNuevo);
+        }
+        // END - GVehNuevo
+        ////////////////////////////////////////////////////////////////////////////
+
         if(!isset($this->items))
             $this->items = [];
         $this->items[] = $gCamItem;

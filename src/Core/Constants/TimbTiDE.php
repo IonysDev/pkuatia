@@ -15,10 +15,10 @@ enum TimbTiDE: int {
     case FacturaExportacion = 2;
     case FacturaImportacion = 3;
     case Autofactura = 4;
-    case NotaCredito = 5;
-    case NotaDebito = 6;
-    case NotaRemision = 7;
-    case ComprobanteRetencion = 8;
+    case NotaDeCredito = 5;
+    case NotaDeDebito = 6;
+    case NotaDeRemision = 7;
+    case ComprobanteDeRetencion = 8;
 
     public static function getDescripcion(int $tipoDE): string {
         switch ($tipoDE) {
