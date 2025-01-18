@@ -43,7 +43,6 @@ class NotaDeCredito extends DocumentoElectronicoComercial
         $this->gTimb->setITiDE(TimbTiDE::NotaDeCredito);
         $this->gCamNCDE = new GCamNCDE();
         $this->gCamNCDE->setIMotEmi($motivoEmision);
-        $this->gCamDEAsoc = new GCamDEAsoc();
         $this->setTipoDeImpuestoAfectado(OpeComTipImp::IVA);
         $this->setMoneda('PYG');
     }
