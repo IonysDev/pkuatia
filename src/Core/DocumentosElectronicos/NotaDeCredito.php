@@ -24,8 +24,7 @@ class NotaDeCredito extends DocumentoElectronicoComercial
     //////////////////////////////////////////
     
     public GCamNCDE $gCamNCDE; // E030 - Campos que componen la nota de crédito electrónica
-    public GCamDEAsoc $gCamDEAsoc; // H - Campos que identifican al documento asociado
-
+    
     //////////////////////////////////////////
     // Constructor
     //////////////////////////////////////////
