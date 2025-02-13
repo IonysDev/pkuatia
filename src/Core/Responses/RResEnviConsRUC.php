@@ -2,7 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\Responses;
 
-use IonysDev\Pkuatia\Core\Fields\Response\Ruc\RContRuc;
+use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRuc;
 
 /**
  * RespuestaConsultaRUC
