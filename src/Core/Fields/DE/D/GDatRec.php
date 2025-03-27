@@ -637,7 +637,9 @@ class GDatRec extends BaseSifenField
             $res->appendChild(new DOMElement('dDTipIDRec', $this->getDDTipIDRec()));
             $res->appendChild(new DOMElement('dNumIDRec', $this->getDNumIDRec()));
         }
-        $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
+        //check is the name get the & character
+        $res->appendChild(new DOMElement('dNomRec', htmlspecialchars($this->getDNomRec())));
+        //$res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
         if(isset($this->dNomFanRec))
             $res->appendChild(new DOMElement('dNomFanRec', $this->getDNomFanRec()));
         if(isset($this->dDirRec))
