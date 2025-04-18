@@ -5,9 +5,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
 use Exception;
 
 /**
- * Enumeración que contiene las condiciones de operación a crédito con facturas y autofacturas electrónicas.
- * Estos valores corresponden al campo iCondCred (E641), asi como a su descripción correspondiente del campo dDCondCred (E642) 
- * del grupo gPagCred (E640).
+ * Enumeración que contiene los códigos de respuesta del WS de envío de lotes de comprobantes electrónicos.
+ * Estos valores corresponden al campo dCodRes (BRSch03), asi como a su descripción correspondiente del campo dMsgRes (BRSch04) del grupo rResEnviLoteDe (BRSch01).
  */
 enum ResEnviLoteDeCodRes: int {
 
