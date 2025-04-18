@@ -848,7 +848,9 @@ class GCamItem extends BaseSifenField
       $res->appendChild(new DOMElement('dGtin', $this->getDGtin()));
     if(isset($this->dGtinPq))
       $res->appendChild(new DOMElement('dGtinPq', $this->getDGtinPq()));
-    $res->appendChild(new DOMElement('dDesProSer', $this->getDDesProSer()));
+    //check is ddDesProSer has the & character
+    $res->appendChild(new DOMElement('dDesProSer', htmlspecialchars($this->getDDesProSer())));
+    //$res->appendChild(new DOMElement('dDesProSer', $this->getDDesProSer()));
     $res->appendChild(new DOMElement('cUniMed', $this->getCUniMed()));
     $res->appendChild(new DOMElement('dDesUniMed', $this->getDDesUniMed()));
     $res->appendChild(new DOMElement('dCantProSer', $this->getDCantProSer()));
