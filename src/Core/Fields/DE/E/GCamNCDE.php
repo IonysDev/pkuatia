@@ -124,6 +124,8 @@ class GCamNCDE extends BaseSifenField
 
   /**
    * Convierte este objeto GCamNCDE a un DOMElement mediante el DOMDocument proporcionado.
+   * 
+   * @param DOMDocument $doc - Documento DOM donde se creará el elemento.
    *
    * @return DOMElement El elemento DOM que representa este objeto GCamNCDE.
    */

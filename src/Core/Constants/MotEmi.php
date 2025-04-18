@@ -40,4 +40,17 @@ enum MotEmi: int {
                 throw new Exception("[MotEmi] Motivo de emisión inválido: $value");
         }
     }
+
+    public static function getList(): array {
+        return [
+            self::DevolucionYAjustePrecio->value => self::getDescripcion(self::DevolucionYAjustePrecio->value),
+            self::Devolucion->value => self::getDescripcion(self::Devolucion->value),
+            self::Descuento->value => self::getDescripcion(self::Descuento->value),
+            self::Bonificacion->value => self::getDescripcion(self::Bonificacion->value),
+            self::CreditoIncobrable->value => self::getDescripcion(self::CreditoIncobrable->value),
+            self::RecuperoDeCosto->value => self::getDescripcion(self::RecuperoDeCosto->value),
+            self::RecuperoDeGasto->value => self::getDescripcion(self::RecuperoDeGasto->value),
+            self::AjusteDePrecio->value => self::getDescripcion(self::AjusteDePrecio->value)
+        ];
+    }
 }

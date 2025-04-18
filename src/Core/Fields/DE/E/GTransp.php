@@ -23,18 +23,18 @@ use Stringable;
 class GTransp extends BaseSifenField
 {
                                    // Id - Longitud - Ocurrencia - Descripción
-  public ?int       $iTipTrans;    // E901 - 1    - 0-1  - Tipo de transporte
-  public ?String    $dDesTipTrans; // E902 - 6-7  - 0-1  - Descripción del tipo de transporte
-  public ?int       $iModTrans;    // E903 - 1    - 1-1  - Modalidad de transporte
-  public ?String    $dDesModTrans; // E904 - 5-10 - 1-1  - Descripción de la modalidad del transporte
-  public ?int       $iRespFlete;   // E905 - 1    - 1-1  - Responsable del costo del flete
-  public String     $cCondNeg;     // E906 - 3    - 0-1  - Condición de la negociación 
-  public String     $dNuManif;     // E907 - 1-15 - 0-1  - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
-  public String     $dNuDespImp;   // E908 - 16   - 0-1  - Número de despacho de importación
+  public int        $iTipTrans;    // E901 - 1    - 0-1  - Tipo de transporte
+  public String     $dDesTipTrans; // E902 - 6-7  - 0-1  - Descripción del tipo de transporte
+  public int        $iModTrans;    // E903 - 1    - 1-1  - Modalidad de transporte
+  public String     $dDesModTrans; // E904 - 5-10 - 1-1  - Descripción de la modalidad del transporte
+  public int        $iRespFlete;   // E905 - 1    - 1-1  - Responsable del costo del flete
+  public ?String    $cCondNeg;     // E906 - 3    - 0-1  - Condición de la negociación 
+  public ?String    $dNuManif;     // E907 - 1-15 - 0-1  - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
+  public ?String    $dNuDespImp;   // E908 - 16   - 0-1  - Número de despacho de importación
   public ?DateTime  $dIniTras;     // E909 - 10   - 0-1  - Fecha estimada de inicio de traslado
   public ?DateTime  $dFinTras;     // E910 - 10   - 0-1  - Fecha estimada de fin  de traslado
-  public String     $cPaisDest;    // E911 - 3    - 0-1  - Código del país de destino
-  public String     $dPaisDest;    // E912 - 5-50 - 0-1  - Descripción del país de destino
+  public ?String    $cPaisDest;    // E911 - 3    - 0-1  - Código del país de destino
+  public ?String    $dPaisDest;    // E912 - 5-50 - 0-1  - Descripción del país de destino
   public ?GCamSal   $gCamSal;      // E920 - G    - 0-1  - Campos que identifican el local de salida de las mercaderías 
   public ?array     $gCamEnt;      // E940 - G    - 0-99 - Campos que identifican el local de la entrega de las mercaderías
   public ?array     $gVehTras;     // E960 - G    - 0-4  - Campos que identifican al vehículo del traslado de mercaderías
@@ -57,8 +57,8 @@ class GTransp extends BaseSifenField
    */
   public function setITipTrans(int|GTranspTipTrans $iTipTrans): self
   {
-    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->value : $iTipTrans;
-    $this->dDesTipTrans = GTranspTipTrans::getDescripcion($this->iTipTrans);
+s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->value : $iTipTrans;
+    $this->dDesTipTrans = GTranspTipTrans::getDescripcionFromInt($this->iTipTrans);
     return $this;
   }
 
