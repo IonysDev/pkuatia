@@ -184,8 +184,12 @@ class RResEnviLoteDe
         else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 1);
         
         if(isset($object->dProtConsLote)) {
-            if(is_int($object->dProtConsLote)) $res->setdProtConsLote($object->dProtConsLote);
-            else $res->setDMsgRes($res->getDMsgRes() . " - dProtConsLote no es un entero. Valor recibido: " . $object->dProtConsLote);
+            if(is_int($object->dProtConsLote)) 
+                $res->setdProtConsLote($object->dProtConsLote);
+            else {
+                $res->setDMsgRes($res->getDMsgRes() . " - dProtConsLote no es un entero. Valor recibido: " . $object->dProtConsLote);
+                $res->setdProtConsLote(0);
+            }
         }
         else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 1);
 
