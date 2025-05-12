@@ -133,7 +133,7 @@ class RResEnviLoteDe
      */
     public function getDMsgRes(): string
     {
-        return $this->dMsgRes;
+        return $this->dMsgRes ?? "";
     }
 
     /**
@@ -183,7 +183,10 @@ class RResEnviLoteDe
         if(isset($object->dMsgRes)) $res->setDMsgRes($object->dMsgRes);
         else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 1);
         
-        if(isset($object->dProtConsLote)) $res->setdProtConsLote($object->dProtConsLote);
+        if(isset($object->dProtConsLote)) {
+            if(is_int($object->dProtConsLote)) $res->setdProtConsLote($object->dProtConsLote);
+            else $res->setDMsgRes($res->getDMsgRes() . " - dProtConsLote no es un entero. Valor recibido: " . $object->dProtConsLote);
+        }
         else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 1);
 
         if(isset($object->dTpoProces)) $res->setDTpoProces($object->dTpoProces);
