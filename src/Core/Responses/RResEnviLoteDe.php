@@ -187,6 +187,7 @@ class RResEnviLoteDe
             if(is_int($object->dProtConsLote)) 
                 $res->setdProtConsLote($object->dProtConsLote);
             else {
+                error_log("[PKUATIA - RResEnviLoteDe] dProtConsLote no es un entero.\n" . var_dump($object));
                 $res->setDMsgRes($res->getDMsgRes() . " - dProtConsLote no es un entero. Valor recibido: " . $object->dProtConsLote);
                 $res->setdProtConsLote(0);
             }
