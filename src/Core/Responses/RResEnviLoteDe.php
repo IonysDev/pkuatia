@@ -186,11 +186,7 @@ class RResEnviLoteDe
         if(isset($object->dProtConsLote)) {
             if(is_int($object->dProtConsLote)) 
                 $res->setdProtConsLote($object->dProtConsLote);
-            else {
-                error_log("[PKUATIA - RResEnviLoteDe] dProtConsLote no es un entero.\n" . var_dump($object));
-                $res->setDMsgRes($res->getDMsgRes() . " - dProtConsLote no es un entero. Valor recibido: " . $object->dProtConsLote);
-                $res->setdProtConsLote(0);
-            }
+            else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un entero. Objeto recibido: " . var_dump($object), 1);
         }
         else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 1);
 
