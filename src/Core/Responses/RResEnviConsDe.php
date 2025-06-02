@@ -17,7 +17,7 @@ class RResEnviConsDe
 {
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
-  public String   $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento 
+  public int      $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento 
   public String   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
   public RContDe  $rContDe;  // ContDE01 - XML   - 0-1 - Objeto del DE consultado
 
@@ -47,7 +47,7 @@ class RResEnviConsDe
    *
    * @return self
    */
-  public function setDCodRes(String $dCodRes): self
+  public function setDCodRes(int $dCodRes): self
   {
     $this->dCodRes = $dCodRes;
 
@@ -102,9 +102,9 @@ class RResEnviConsDe
   /**
    * Obtiene el valor de dCodRes
    *
-   * @return String
+   * @return int
    */
-  public function getDCodRes(): String
+  public function getDCodRes(): int
   {
     return $this->dCodRes;
   }
@@ -149,7 +149,7 @@ class RResEnviConsDe
     }
     $res = new RResEnviConsDe();
     $res->setDFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
-    $res->setDCodRes($object->dCodRes);
+    $res->setDCodRes(intval($object->dCodRes));
     $res->setDMsgRes($object->dMsgRes);
     if (isset($object->xContenDE)) {
       // Al 12/08/2023 el SIFEN responde con un valor que el WS no puede interpretar lo cual deriva en una cadena XML inválida con múltiples elementos raiz.
