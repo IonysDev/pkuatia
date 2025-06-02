@@ -30,7 +30,7 @@ trait ItemValorado {
     public GTotSub $gTotSub;
 
     /**
-     * Agrega un ítem sin valor al documento electrónico. Este método es utilizado en la conformación notas de remisión.
+     * Agrega un ítem con valor al documento electrónico.
      * 
      * @param String $codigo Código interno del ítem.
      * @param String $descripcion Descripción del ítem.
@@ -278,6 +278,7 @@ trait ItemValorado {
      * @return void
      */
     public function calcTotSub(bool $redondeoSedeco = false, String $comision = null) : GTotSub {
+        $sumaSubtBruto = '0';
         if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value)
         {
             $this->gTotSub = null;   
@@ -288,15 +289,18 @@ trait ItemValorado {
             foreach($this->items as $item)
             {
                 // F009
-                $this->gTotSub->setDTotDesc(bcadd($this->gTotSub->getDTotDesc(), $item->getGValorItem()->getGValorRestaItem()->getDDescItem(), 8));
+                $this->gTotSub->setDTotDesc(bcadd($this->gTotSub->getDTotDesc(), bcmul($item->getGValorItem()->getGValorRestaItem()->getDDescItem(), $item->getDCantProSer(), 8), 8));
                 // F033
-                $this->gTotSub->setDTotDescGlotem(bcadd($this->gTotSub->getDTotDescGlotem(), $item->getGValorItem()->getGValorRestaItem()->getDDescGloItem(), 8));
+                $this->gTotSub->setDTotDescGlotem(bcadd($this->gTotSub->getDTotDescGlotem(), bcmul($item->getGValorItem()->getGValorRestaItem()->getDDescGloItem(), $item->getDCantProSer(), 8), 8));
                 // F034
-                $this->gTotSub->setDTotAntItem(bcadd($this->gTotSub->getDTotAntItem(), $item->getGValorItem()->getGValorRestaItem()->getDAntPreUniIt(), 8));
+                $this->gTotSub->setDTotAntItem(bcadd($this->gTotSub->getDTotAntItem(), bcmul($item->getGValorItem()->getGValorRestaItem()->getDAntPreUniIt(), $item->getDCantProSer(), 8), 8));
                 // F035
-                $this->gTotSub->setDTotAnt(bcadd($this->gTotSub->getDTotAnt(), $item->getGValorItem()->getGValorRestaItem()->getDAntGloPreUniIt(), 8));
+                $this->gTotSub->setDTotAnt(bcadd($this->gTotSub->getDTotAnt(), bcmul($item->getGValorItem()->getGValorRestaItem()->getDAntGloPreUniIt(), $item->getDCantProSer(), 8), 8));
+
+                $sumaSubtBruto = bcadd($sumaSubtBruto, $item->getGValorItem()->getDTotBruOpeItem(), 8);
             }
-            // F010
+
+            // F011
             $this->gTotSub->setDDescTotal(bcadd($this->gTotSub->getDTotDesc(), $this->gTotSub->getDTotDescGlotem(), 8));
             
             // F012
@@ -398,8 +402,8 @@ trait ItemValorado {
                 }
             }
             
-            // F011
-            $this->gTotSub->setDPorcDescTotal(bcdiv(bcmul($this->gTotSub->getDDescTotal(), '100', 8), $this->gTotSub->getDTotOpe(), 8));
+            // F010
+            $this->gTotSub->setDPorcDescTotal(bcdiv(bcmul($this->gTotSub->getDTotDescGlotem(), '100', 8), $sumaSubtBruto, 8));
 
             // F013
             if($redondeoSedeco) {
