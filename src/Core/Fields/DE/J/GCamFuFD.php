@@ -72,7 +72,10 @@ class GCamFuFD extends BaseSifenField
    */
   public function getDInfAdic(): String
   {
-    return $this->dInfAdic;
+    if(isset($this->dInfAdic))
+      return $this->dInfAdic;
+    else
+      return '';
   }
 
   ///////////////////////////////////////////////////////////////////////

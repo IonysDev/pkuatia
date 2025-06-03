@@ -36,6 +36,7 @@ trait ItemValorado {
      * @param String $descripcion Descripción del ítem.
      * @param int $codUnidadMedida Código de unidad de medida del ítem.
      * @param String|null $cantidad Cantidad del ítem en la unidad de medida especificada, expresado en cadena de texto decimal BCMath. Si no se especifica es obligatorio informar el precio unitario y el total bruto.
+     * @param int|null $precisionMoneda Precisión de la moneda, expresada en número de decimales. Si no se especifica se asume que la precisión es 0 (PYG).
      * @param String|null $precioUnit Precio unitario del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica es obligatorio informar la cantidad y el total bruto.
      * @param String|null $totalBruto Total bruto del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica es obligatorio informar la cantidad y el precio unitario.
      * @param CamIVAAfecIVA|null $afectacionIVA Afectación de IVA del ítem. Si no se especifica se asume que el ítem no es afectado por el IVA.
@@ -70,6 +71,7 @@ trait ItemValorado {
         int $codUnidadMedida,
         ?String $cantidad,
 
+        ?int $precisionMoneda = 0, // PYG
         ?String $precioUnit,
         ?String $totalBruto,
         CamIVAAfecIVA|int|null $afectIVA,
@@ -194,7 +196,7 @@ trait ItemValorado {
                 $gValorRestaItem->setDAntGloPreUniIt($anticipoUnitarioGlobal);
                 $puFinal = bcsub($puFinal, $anticipoUnitarioGlobal, 8);
             }
-            $totOpeItem = bcmul($puFinal, $cant, 8);
+            $totOpeItem = BC::round(bcmul($puFinal, $cant, $precisionMoneda + 2), $precisionMoneda);
         }
         else if($this->gTimb->getITiDE() == TimbTiDE::Autofactura->value) {
             $totOpeItem = bcmul($pu, $cant, 8);
@@ -277,7 +279,7 @@ trait ItemValorado {
      * 
      * @return void
      */
-    public function calcTotSub(bool $redondeoSedeco = false, String $comision = null) : GTotSub {
+    public function calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, String $comision = null) : GTotSub {
         $sumaSubtBruto = '0';
         if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value)
         {
@@ -421,7 +423,7 @@ trait ItemValorado {
             }
 
             // F14
-            $this->gTotSub->setDTotGralOpe(bcadd(bcsub($this->gTotSub->getDTotOpe(), $this->gTotSub->getDRedon(), 8), $this->gTotSub->getDComi() ?? '0', 8));
+            $this->gTotSub->setDTotGralOpe(BC::round(bcadd(bcsub($this->gTotSub->getDTotOpe(), $this->gTotSub->getDRedon(), 8), $this->gTotSub->getDComi() ?? '0', $precisionMoneda + 2), $precisionMoneda));
             
 
             // F23
