@@ -173,7 +173,10 @@ class GOpeDE extends BaseSifenField
      */
     public function getDInfoEmi(): String
     {
-        return $this->dInfoEmi;
+        if(isset($this->dInfoEmi))
+            return $this->dInfoEmi;
+        else
+            return '';
     }
 
     /**
@@ -183,7 +186,10 @@ class GOpeDE extends BaseSifenField
      */
     public function getDInfoFisc(): String
     {
-        return $this->dInfoFisc;
+        if(isset($this->dInfoFisc))
+            return $this->dInfoFisc;
+        else
+            return '';
     }
 
     ///////////////////////////////////////////////////////////////////////

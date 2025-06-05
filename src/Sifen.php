@@ -121,7 +121,7 @@ class Sifen
    * 
    * @return String XML del DE firmado.
    */
-  public static function FirmarDE(RDE $rde, DateTime $fechaFirma): String
+  public static function FirmarDE(RDE $rde, DateTime $fechaFirma, String $infoAdicionalEmisor = ''): String
   {
     // Firma el documento electrónico
     $xmlDocument = SignHelper::SignRDE($rde, $fechaFirma);
@@ -147,6 +147,10 @@ class Sifen
     // Establece el valor del link para el QR 
     $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent(self::$config, $rde->getDE(), $Signature));
     $gCamFuFDNode = $gCamFuFD->toDOMElement($xmlDocument);
+
+    if (!empty($infoAdicionalEmisor)) {
+      $gCamFuFD->setDInfAdic($infoAdicionalEmisor);
+    }
 
     // Agrega el nodo del QR al documento electrónico
     $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
