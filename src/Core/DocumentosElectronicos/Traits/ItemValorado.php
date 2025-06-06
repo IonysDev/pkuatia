@@ -459,13 +459,13 @@ trait ItemValorado {
     }
 
     /**
-     * Establece el tipo de cambio del documento electrónico.
+     * Establece el tipo de cambio del ítem.
      * 
      * @param String $tipoDeCambioItem valor numerico del tipo de cambio del documento electrónico, expresado en cadena de texto decimal BCMath.
      * 
      * @return self
      */
-    public function setTipoDeCambio(String $tipoDeCambioItem) : self {
+    public function setTipoDeCambioItem(String $tipoDeCambioItem) : self {
         $this->tipoDeCambioItem = $tipoDeCambioItem;
         return $this;
     }
