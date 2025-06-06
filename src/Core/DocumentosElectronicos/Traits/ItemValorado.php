@@ -428,7 +428,7 @@ trait ItemValorado {
 
             // F23
             if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') != 0) {
-                if($this->gOpeCom->getDCondTiCam() == OpeComCondTipCam::Global)
+                if($this->gOpeCom->getDCondTiCam() == OpeComCondTipCam::Global->value)
                     $this->gTotSub->setDTotalGs(bcmul($this->gTotSub->getDTotGralOpe(), $this->gOpeCom->getDTiCam(), 8));
                 else {
                     $this->gTotSub->setDTotalGs('0');
