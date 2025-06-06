@@ -43,7 +43,7 @@ trait ItemValorado {
      * @param String|null $proporcionGravadaIVA Proporción gravada de IVA del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el ítem no es afectado por el IVA.
      * @param CamIVATasaIVA|null $tasaIVA Tasa de IVA del ítem. Si no se especifica se asume que el ítem no es afectado por el IVA.
      * @param bool|null $esTipoCambioPorItem Indica si el tipo de cambio es por ítem. Si no se especifica se asume que el tipo de cambio es por documento.
-     * @param String|null $tipoDeCambio Tipo de cambio del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el tipo de cambio es por documento.
+     * @param String|null $tipoDeCambioItem Tipo de cambio del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el tipo de cambio es por documento.
      * @param String|null $descuentoUnitarioParticular Descuento unitario particular del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el ítem no tiene descuento particular.
      * @param String|null $descuentoUnitarioGlobal Descuento unitario global del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el ítem no tiene descuento global.
      * @param String|null $anticipoUnitarioParticular Anticipo unitario particular del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el ítem no tiene anticipo particular.
@@ -84,7 +84,7 @@ trait ItemValorado {
         ?String $anticipoUnitarioGlobal = null,        
 
         ?bool $esTipoCambioPorItem = null,
-        ?String $tipoDeCambio = null,
+        ?String $tipoDeCambioItem = null,
         
         ?String $nroLote = null,
         ?DateTime $fechaVencimiento = null,
@@ -140,7 +140,7 @@ trait ItemValorado {
         $gValorItem = new GValorItem();
         $gValorItem->setDPUniProSer($pu);
         if($esTipoCambioPorItem)
-            $gValorItem->setDTiCamIt($tipoDeCambio);
+            $gValorItem->setDTiCamIt($tipoDeCambioItem);
         $gValorItem->setDTotBruOpeItem($totalB);
         // END - GValorItem
         ////////////////////////////////////////////////////////////////////////////        
@@ -203,7 +203,7 @@ trait ItemValorado {
         }
         $gValorRestaItem->setDTotOpeItem($totOpeItem);
         if($esTipoCambioPorItem)
-            $gValorRestaItem->setDTotOpeGs(bcmul($totOpeItem, $tipoDeCambio));
+            $gValorRestaItem->setDTotOpeGs(bcmul($totOpeItem, $tipoDeCambioItem));
         $gValorItem->setGValorRestaItem($gValorRestaItem);
         $gCamItem->setGValorItem($gValorItem);
         // END - GValorRestaItem
@@ -461,12 +461,12 @@ trait ItemValorado {
     /**
      * Establece el tipo de cambio del documento electrónico.
      * 
-     * @param String $tipoDeCambio valor numerico del tipo de cambio del documento electrónico, expresado en cadena de texto decimal BCMath.
+     * @param String $tipoDeCambioItem valor numerico del tipo de cambio del documento electrónico, expresado en cadena de texto decimal BCMath.
      * 
      * @return self
      */
-    public function setTipoDeCambio(String $tipoDeCambio) : self {
-        $this->tipoDeCambio = $tipoDeCambio;
+    public function setTipoDeCambio(String $tipoDeCambioItem) : self {
+        $this->tipoDeCambioItem = $tipoDeCambioItem;
         return $this;
     }
 
