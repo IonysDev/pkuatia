@@ -12,6 +12,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;
+use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use SimpleXMLElement;
 
 /**
@@ -281,6 +282,19 @@ class GOpeCom extends BaseSifenField
     public function getDTiCam(): String
     {
         return $this->dTiCam;
+    }
+
+    public function getFormattedDTiCam(int $precision = 0): ?String
+    {
+        if(isset($this->dTiCam))
+        {
+            $rounded = bcadd($this->dTiCam, '0', $precision);
+            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        }
+        else
+        {
+            return '0';
+        }
     }
 
     /**
