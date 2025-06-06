@@ -138,14 +138,14 @@ class GOpeCom extends BaseSifenField
      */
     public function setDCondTiCam(int|OpeComCondTipCam $dCondTiCam): self
     {
-        if($dCondTiCam instanceof int && $dCondTiCam != 1 && $dCondTiCam != 2)
+        if(is_int($dCondTiCam) && $dCondTiCam != 1 && $dCondTiCam != 2)
         {
             unset($this->dCondTiCam);
             throw new InvalidArgumentException("[GOpeCom] El valor del campo dCondTiCam no es válido: " . $dCondTiCam);
         }
         else
         {
-            $this->dCondTiCam = $dCondTiCam instanceof int ? $dCondTiCam : $dCondTiCam->value;
+            $this->dCondTiCam = is_int($dCondTiCam) ? $dCondTiCam : $dCondTiCam->value;
         }
         return $this;
     }
