@@ -6,6 +6,7 @@ use DateTime;
 use Exception;
 use IonysDev\Pkuatia\Core\Config;
 use IonysDev\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 use IonysDev\Pkuatia\Core\Requests\REnviConsRUC;
 use IonysDev\Pkuatia\Core\Requests\REnviConsDe;
 use IonysDev\Pkuatia\Core\Responses\RResEnviConsRUC;
@@ -18,6 +19,7 @@ use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\GGroupTiEvt;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\REve;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeCan;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeInu;
 use IonysDev\Pkuatia\Core\Requests\REnviConsLoteDe;
 use IonysDev\Pkuatia\Core\Requests\REnviDe;
 use IonysDev\Pkuatia\Core\Requests\REnviEventoDe;
@@ -315,6 +317,78 @@ class Sifen
     ////se asigna la raiz de gestion de eventos al array de raices de gestion de eventos
     $rGesEve[] = $trGesEve;
     // $rGesEve[] = $trGesEve2;
+    // se asigna el array al grupo de eventos
+    $evento->setRGesEve($rGesEve);
+
+    $res = Sifen::RegistrarEvento($evento);
+    return $res;
+  }
+
+  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo): RRetEnviEventoDe
+  {
+
+    $tipoDEId = $tipoDE instanceof TimbTiDE ? $tipoDE->value : $tipoDE;
+
+    if($nroDocumentoFinal < $nroDocumentoInicial)
+      throw new \Exception("[Sifen] El número de documento final debe ser mayor al número de documento inicial.");
+    if($nroDocumentoInicial < 1)
+      throw new \Exception("[Sifen] El número de documento inicial debe ser mayor a 0.");
+    if($nroDocumentoFinal < 1)
+      throw new \Exception("[Sifen] El número de documento final debe ser mayor a 0.");
+    if($timbrado < 1)
+      throw new \Exception("[Sifen] El timbrado debe ser mayor a 0.");
+    if($nroEstablecimiento < 1)
+      throw new \Exception("[Sifen] El número de establecimiento debe ser mayor a 0.");
+    if($nroPuntoEmision < 1)
+      throw new \Exception("[Sifen] El número de punto de emisión debe ser mayor a 0.");
+    if($tipoDEId < 1)
+      throw new \Exception("[Sifen] El tipo de documento electrónico debe ser mayor a 0.");
+    if($motivo == '')
+      throw new \Exception("[Sifen] El motivo de la inutilización no puede ser vacío.");
+    if(strlen($motivo) < 5)
+      throw new \Exception("[Sifen] El motivo de la inutilización debe tener al menos 5 caracteres.");
+    if($nroDocumentoFinal - $nroDocumentoInicial > 1000)
+      throw new \Exception("[Sifen] La diferencia entre el número de documento inicial y el número de documento final no puede ser mayor a 1000.");
+    
+    $evento = new GGroupGesEve();
+    // creamos un array para la raiz de gestion de eventos
+    $rGesEve = [];
+    // creamos una raiz de gestion de eventos
+    $trGesEve = new RGesEve();
+    // creamos el grupo de campos generales del evento
+    $rEve = new REve();
+    $rEve->setId(1);
+    $rEve->setDFecFirma(new DateTime());
+    $rEve->setDVerFor(150);
+    // se crea el grupo de campos del tipo de evento
+    $gGroupTiEvt = new GGroupTiEvt();
+
+    ///////////////////////////////////////////////////////////////
+    ///EVENTO DE INUTILIZACION
+    ///////////////////////////////////////////////////////////////
+
+    // se crea el grupo de campos de inutilizacion
+    $rGeVeInu = new RGeVeInu();
+    $rGeVeInu->setDNumTim($timbrado);
+    $rGeVeInu->setDEst(str_pad($nroEstablecimiento, 3, '0', STR_PAD_LEFT));
+    $rGeVeInu->setDPunExp(str_pad($nroPuntoEmision, 3, '0', STR_PAD_LEFT));
+    $rGeVeInu->setDNumIn(str_pad($nroDocumentoInicial, 7, '0', STR_PAD_LEFT));
+    $rGeVeInu->setDNumFin(str_pad($nroDocumentoFinal, 7, '0', STR_PAD_LEFT));
+    $rGeVeInu->setITiDE($tipoDEId);
+    $rGeVeInu->setMOtEve($motivo);
+
+    // se asigna el grupo de campos de inutilizacion al grupo de campos del tipo de evento
+    $gGroupTiEvt->setRGeVeInu($rGeVeInu);
+
+    // se asigna el grupo de campos  de tipo evento al grupo de campos generales del evento
+    $rEve->setGGroupTiEvt($gGroupTiEvt);
+
+    // se asigna el grupo de campos generales del evento a la raiz de gestion de eventos
+    $trGesEve->setREve($rEve);
+
+    ////se asigna la raiz de gestion de eventos al array de raices de gestion de eventos
+    $rGesEve[] = $trGesEve;
+    
     // se asigna el array al grupo de eventos
     $evento->setRGesEve($rGesEve);
 
