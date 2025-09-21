@@ -33,6 +33,7 @@ use IonysDev\Pkuatia\Utils\TimbradoUtils;
 use DateTime;
 use Exception;
 use IonysDev\Pkuatia\Core\Constants\RecNat;
+use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 
 /**
  * Clase que contiene la estructura básica de un DE, en todos los casos posibles de éste; asi como las validaciones necesarias.
@@ -63,7 +64,7 @@ class DocumentoElectronico
    * 
    * @param GTimb $timbrado datos de timbrado del documento electrónico
    */
-  public function __construct(GTimb $timbrado = null)
+  public function __construct(?GTimb $timbrado = null)
   {
     $this->gOpeDE = new GOpeDE();
     $this->gDtipDE = new GDtipDE();
@@ -146,6 +147,11 @@ class DocumentoElectronico
   public function getNumeroDocumentoCompleto(): String
   {
     return $this->gTimb->getDEst() . '-' . $this->gTimb->getDPunExp() . '-' . $this->gTimb->getDNumDoc();
+  }
+
+  public function getTipoDocumentoElectronico(): TimbTiDE
+  {
+    return TimbTiDE::from($this->gTimb->getITiDE());
   }
 
   ///////////////////////////////////////////////////////////////////////

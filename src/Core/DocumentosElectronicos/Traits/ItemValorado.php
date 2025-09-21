@@ -71,7 +71,7 @@ trait ItemValorado {
         int $codUnidadMedida,
         ?String $cantidad,
 
-        ?int $precisionMoneda = 0, // PYG
+        ?int $precisionMoneda,
         ?String $precioUnit,
         ?String $totalBruto,
         CamIVAAfecIVA|int|null $afectIVA,

@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Constants\OpeComCondAnt;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
+use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\DE\D\GOpeCom;
@@ -135,6 +136,9 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
   public function documentoElectronicoComercialToRDE(): RDE
   {
     $rde = $this->documentoElectronicoToRDE();
+    if($this->getTipoDocumentoElectronico() != TimbTiDE::Factura && $this->getTipoDocumentoElectronico() != TimbTiDE::Autofactura) {
+      $this->gOpeCom->setITipTra(null);
+    }
     $rde->DE->gDatGralOpe->gOpeCom = $this->gOpeCom;
     return $rde;
   }
