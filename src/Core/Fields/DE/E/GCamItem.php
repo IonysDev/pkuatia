@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\DataMappings\UnidadMedidaMapping;
 use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
 use IonysDev\Pkuatia\Utils\ValueValidations;
 use SimpleXMLElement;
 
@@ -48,8 +49,14 @@ class GCamItem extends BaseSifenField
   /////////////////////////////////////////////////////////
 
   public function calcSubtEx() {
-    if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
-      return $this->gCamIVA->getDBasExe();
+    if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA)) {
+      if($this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::GravadoParcial)
+        return $this->gCamIVA->getDBasExe();
+      else if($this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::Exento || $this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::Exonerado)
+        return $this->gValorItem->getGValorRestaItem()->getDTotOpeItem();
+      else
+        return 0;
+    }
     else
       return null;
   }
