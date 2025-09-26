@@ -50,9 +50,9 @@ class GCamItem extends BaseSifenField
 
   public function calcSubtEx() {
     if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA)) {
-      if($this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::GravadoParcial)
+      if($this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::GravadoParcial->value)
         return $this->gCamIVA->getDBasExe();
-      else if($this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::Exento || $this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::Exonerado)
+      else if($this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::Exento->value || $this->gCamIVA->getIAfecIVA() == CamIVAAfecIVA::Exonerado->value)
         return $this->gValorItem->getGValorRestaItem()->getDTotOpeItem();
       else
         return 0;
