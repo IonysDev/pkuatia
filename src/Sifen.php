@@ -125,6 +125,11 @@ class Sifen
    */
   public static function FirmarDE(RDE $rde, DateTime $fechaFirma, String $infoAdicionalEmisor = ''): String
   {
+    // Si el ambiente es "dev", se establece el valor de gEmis->dNomEmi a  "DE generado en ambiente de prueba - sin valor comercial ni fiscal
+    if(self::$config->env == Config::ENV_DEV) {
+      $rde->getDE()->getGDatGralOpe()->getGEmis()->setDNomEmi("DE generado en ambiente de prueba - sin valor comercial ni fiscal");
+    }
+
     // Firma el documento electrónico
     $xmlDocument = SignHelper::SignRDE($rde, $fechaFirma);
 
