@@ -18,10 +18,10 @@ class RResEnviLoteDe
     public const COD_RES_RECHAZADO = 301;
 
                                     // Id - Longitud - Ocurrencia - Descripción        
-    public DateTime $dFecProc;     // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
+    public DateTime $dFecProc;      // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
     public int      $dCodRes;       // BRSch03 - 4     - 1.1 - Código del resultado de recepción 
     public string   $dMsgRes;       // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
-    public int      $dProtConsLote; // BRSch05 - 1-15  - 0-1 - Número de Lote (se genera solo si el estado es Aceptado)
+    public string   $dProtConsLote; // BRSch05 - 1-20  - 0-1 - Número de Lote (se genera solo si el estado es Aceptado) como cadena de texto debido a la longitud de la respuesta del WS.
     public int      $dTpoProces;    // BRSch06 - 1-5   - 1-1 - Tiempo medio de procesamiento en segundos
 
     ///////////////////////////////////////////////////////////////////////
@@ -184,8 +184,8 @@ class RResEnviLoteDe
         else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 1);
         
         if(isset($object->dProtConsLote)) {
-            if(is_numeric($object->dProtConsLote)) 
-                $res->setdProtConsLote(intval($object->dProtConsLote));
+            if(ctype_digit($object->dProtConsLote)) 
+                $res->setdProtConsLote($object->dProtConsLote);
             else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
         }
         else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 1);
