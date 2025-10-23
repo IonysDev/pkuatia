@@ -76,11 +76,11 @@ class RResEnviLoteDe
     /**
      * Establece el valor de dProtConsLote
      *
-     * @param int $dProtConsLote
+     * @param string $dProtConsLote
      *
      * @return self
      */
-    public function setdProtConsLote(int $dProtConsLote): self
+    public function setdProtConsLote(string $dProtConsLote): self
     {
         $this->dProtConsLote = $dProtConsLote;
 
