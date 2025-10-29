@@ -174,11 +174,11 @@ class GCamDEAsoc extends BaseSifenField
   {
     if(is_null($dDTipoDocAso) || strlen($dDTipoDocAso) == 0)
     {
-      $this->dDesTipDocAso;
+      $this->dDTipoDocAso;
     }
     else
     {
-      $this->dDesTipDocAso = substr($dDTipoDocAso, 0, 16);
+      $this->dDTipoDocAso = substr($dDTipoDocAso, 0, 16);
     }
     return $this;
   }
@@ -653,9 +653,9 @@ class GCamDEAsoc extends BaseSifenField
     {
       $res->setDNumDocAso(intval($object->dNumDocAso));
     }
-    if(isset($object->iTipDocAso))
+    if(isset($object->iTipoDocAso))
     {
-      $res->setITipDocAso(intval($object->iTipDocAso));
+      $res->setITipoDocAso(intval($object->iTipoDocAso));
     }
     if(isset($object->dFecEmiDI))
     {
@@ -715,7 +715,7 @@ class GCamDEAsoc extends BaseSifenField
       $res->appendChild(new DOMElement('dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(new DOMElement('dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(new DOMElement('dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('iTipoDocAso', $this->getITipDocAso()));
+      $res->appendChild(new DOMElement('iTipoDocAso', $this->getITipoDocAso()));
       $res->appendChild(new DOMElement('dDTipoDocAso', $this->getDDTipoDocAso()));
     }
 
