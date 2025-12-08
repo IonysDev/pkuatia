@@ -296,6 +296,46 @@ class GCamEnt
   }
   
   /**
+   * Instancia un objeto GCamEnt a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto.
+   * 
+   * @return self Objeto instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamEnt') != 0)
+      throw new \Exception('[GCamEnt] El nombre del nodo no corresponde a gCamEnt: ' . $node->nodeName);
+    $res = new GCamEnt();
+    
+    if($node->getElementsByTagName('dDirLocEnt')->length > 0)
+      $res->setDDirLocEnt($node->getElementsByTagName('dDirLocEnt')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dNumCasEnt')->length > 0)
+      $res->setDNumCasEnt(intval($node->getElementsByTagName('dNumCasEnt')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('dComp1Ent')->length > 0)
+      $res->setDComp1Ent($node->getElementsByTagName('dComp1Ent')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dComp2Ent')->length > 0)
+      $res->setDComp2Ent($node->getElementsByTagName('dComp2Ent')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('cDepEnt')->length > 0)
+      $res->setCDepEnt(intval($node->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('cDisEnt')->length > 0)
+      $res->setCDisEnt(intval($node->getElementsByTagName('cDisEnt')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('cCiuEnt')->length > 0)
+      $res->setCCiuEnt(intval($node->getElementsByTagName('cCiuEnt')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('dTelEnt')->length > 0)
+      $res->setDTelEnt($node->getElementsByTagName('dTelEnt')->item(0)->nodeValue);
+    
+    return $res;
+  }
+  
+  /**
    * FromSifenResponseObject
    *
    * @param  mixed $object

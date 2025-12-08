@@ -57,7 +57,7 @@ class GTransp extends BaseSifenField
    */
   public function setITipTrans(int|GTranspTipTrans $iTipTrans): self
   {
-s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->value : $iTipTrans;
+    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->value : $iTipTrans;
     $this->dDesTipTrans = GTranspTipTrans::getDescripcionFromInt($this->iTipTrans);
     return $this;
   }
@@ -87,7 +87,7 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
   public function setIModTrans(int|GTranspModTrans $iModTrans): self
   {
     $this->iModTrans = $iModTrans instanceof GTranspModTrans ? $iModTrans->value : $iModTrans;
-    $this->dDesModTrans = GTranspModTrans::getDescripcion($this->iModTrans);
+    $this->dDesModTrans = GTranspModTrans::getDescripcionFromInt($this->iModTrans);
     return $this;
   }
 
@@ -234,7 +234,7 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
         break;
 
       default:
-        return null;
+        return '';
         break;
     }
   }
@@ -274,7 +274,7 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
         break;
 
       default:
-        return null;
+        return '';
         break;
     }
   }
@@ -298,6 +298,9 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
    */
   public function getCCondNeg(): String
   {
+    if (!isset($this->cCondNeg)) {
+      return '';
+    }
     switch ($this->cCondNeg) {
       case 'CFR':
         return "Costo y flete";
@@ -315,7 +318,7 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
         return "Entregada en lugar convenido";
         break;
       case 'DAT':
-        return "Entregada en terminaL";
+        return "Entregada en terminal";
         break;
       case 'DDP':
         return "Entregada derechos pagados";
@@ -334,7 +337,7 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
         break;
 
       default:
-        return null;
+        return '';
         break;
     }
   }
@@ -346,7 +349,7 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
    */
   public function getDNuManif(): String
   {
-    return $this->dNuManif;
+    return $this->dNuManif ?? '';
   }
 
   /**
@@ -356,27 +359,27 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
    */
   public function getDNuDespImp(): String
   {
-    return $this->dNuDespImp;
+    return $this->dNuDespImp ?? '';
   }
 
   /**
    * Obtiene el valor de dIniTras
    *
-   * @return DateTime
+   * @return DateTime|null
    */
-  public function getDIniTras(): DateTime
+  public function getDIniTras(): ?DateTime
   {
-    return $this->dIniTras;
+    return $this->dIniTras ?? null;
   }
 
   /**
    * Obtiene el valor de dFinTras
    *
-   * @return DateTime
+   * @return DateTime|null
    */
-  public function getDFinTras(): DateTime
+  public function getDFinTras(): ?DateTime
   {
-    return $this->dFinTras;
+    return $this->dFinTras ?? null;
   }
 
   /**
@@ -386,7 +389,7 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
    */
   public function getCPaisDest(): String
   {
-    return $this->cPaisDest;
+    return $this->cPaisDest ?? '';
   }
 
   /**
@@ -396,6 +399,9 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
    */
   public function getDDesPaisDest(): String
   {
+    if (!isset($this->cPaisDest)) {
+      return '';
+    }
     return CountryMapping::getCountryDesc($this->cPaisDest);
   }
 
@@ -411,23 +417,76 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gTransp');
-    $res->appendChild(new DOMElement('iTipTrans', $this->getITipTrans()));
-    if (isset($this->iTipTrans))
+    
+    // E901 - iTipTrans (0-1, obligatorio si C002 = 7)
+    if (isset($this->iTipTrans)) {
+      $res->appendChild(new DOMElement('iTipTrans', $this->getITipTrans()));
       $res->appendChild(new DOMElement('dDesTipTrans', $this->getDDesTipTrans()));
+    }
+    
+    // E903 - iModTrans (1-1, obligatorio)
     $res->appendChild(new DOMElement('iModTrans', $this->getIModTrans()));
     $res->appendChild(new DOMElement('dDesModTrans', $this->getDDesModTrans()));
+    
+    // E905 - iRespFlete (1-1, obligatorio)
     $res->appendChild(new DOMElement('iRespFlete', $this->getIRespFlete()));
-    $res->appendChild(new DOMElement('cCondNeg', $this->getCCondNeg()));
-    $res->appendChild(new DOMElement('dNuManif', $this->getDNuManif()));
-    $res->appendChild(new DOMElement('dNuDespImp', $this->getDNuDespImp()));
-    $res->appendChild(new DOMElement('dIniTras', $this->getDFinTras()->format('Y-m-d')));
-    $res->appendChild(new DOMElement('dFinTras', $this->getDFinTras()->format('Y-m-d')));
-    $res->appendChild(new DOMElement('cPaisDest', $this->getCPaisDest()));
-    $res->appendChild(new DOMElement('dDesPaisDest', $this->getDDesPaisDest()));
-    $res->appendChild($this->gCamSal->toDOMElement($doc));
-    $res->appendChild($this->gCamEnt->toDOMElement($doc));
-    $res->appendChild($this->gVehTras->toDOMElement($doc));
-    $res->appendChild($this->gCamTrans->toDOMElement($doc));
+    
+    // E906 - cCondNeg (0-1, opcional)
+    if (isset($this->cCondNeg)) {
+      $res->appendChild(new DOMElement('cCondNeg', $this->getCCondNeg()));
+    }
+    
+    // E907 - dNuManif (0-1, opcional)
+    if (isset($this->dNuManif)) {
+      $res->appendChild(new DOMElement('dNuManif', $this->getDNuManif()));
+    }
+    
+    // E908 - dNuDespImp (0-1, opcional, obligatorio si E501 = 5)
+    if (isset($this->dNuDespImp)) {
+      $res->appendChild(new DOMElement('dNuDespImp', $this->getDNuDespImp()));
+    }
+    
+    // E909 - dIniTras (0-1, opcional, obligatorio si C002 = 7)
+    if (isset($this->dIniTras)) {
+      $res->appendChild(new DOMElement('dIniTras', $this->getDIniTras()->format('Y-m-d')));
+    }
+    
+    // E910 - dFinTras (0-1, opcional, obligatorio si existe E909)
+    if (isset($this->dFinTras)) {
+      $res->appendChild(new DOMElement('dFinTras', $this->getDFinTras()->format('Y-m-d')));
+    }
+    
+    // E911 - cPaisDest (0-1, opcional)
+    if (isset($this->cPaisDest)) {
+      $res->appendChild(new DOMElement('cPaisDest', $this->getCPaisDest()));
+      // E912 - dDesPaisDest (0-1, obligatorio si existe E911)
+      $res->appendChild(new DOMElement('dDesPaisDest', $this->getDDesPaisDest()));
+    }
+    
+    // E920 - gCamSal (0-1, obligatorio si C002 = 7)
+    if (isset($this->gCamSal)) {
+      $res->appendChild($this->gCamSal->toDOMElement($doc));
+    }
+    
+    // E940 - gCamEnt (0-99, obligatorio si C002 = 7, es un array)
+    if (isset($this->gCamEnt) && is_array($this->gCamEnt)) {
+      foreach ($this->gCamEnt as $gCamEntItem) {
+        $res->appendChild($gCamEntItem->toDOMElement($doc));
+      }
+    }
+    
+    // E960 - gVehTras (0-4, obligatorio si C002 = 7, es un array)
+    if (isset($this->gVehTras) && is_array($this->gVehTras)) {
+      foreach ($this->gVehTras as $gVehTrasItem) {
+        $res->appendChild($gVehTrasItem->toDOMElement($doc));
+      }
+    }
+    
+    // E980 - gCamTrans (0-1, obligatorio si C002 = 7)
+    if (isset($this->gCamTrans)) {
+      $res->appendChild($this->gCamTrans->toDOMElement($doc));
+    }
+    
     return $res;
   }
 
@@ -443,32 +502,62 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
     if(strcmp($node->nodeName, 'gTransp') != 0)
       throw new \Exception('[GTransp] El nombre del nodo no es gTransp: ' . $node->nodeName);
     $res = new self();
+    
     if($node->getElementsByTagName('iTipTrans')->length > 0)
       $res->setITipTrans(intval($node->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
+    
     if($node->getElementsByTagName('iModTrans')->length > 0)
       $res->setIModTrans(intval($node->getElementsByTagName('iModTrans')->item(0)->nodeValue));
+    
     if($node->getElementsByTagName('iRespFlete')->length > 0)
       $res->setIRespFlete(intval($node->getElementsByTagName('iRespFlete')->item(0)->nodeValue));
+    
     if($node->getElementsByTagName('cCondNeg')->length > 0)
       $res->setCCondNeg($node->getElementsByTagName('cCondNeg')->item(0)->nodeValue);
+    
     if($node->getElementsByTagName('dNuManif')->length > 0)
       $res->setDNuManif($node->getElementsByTagName('dNuManif')->item(0)->nodeValue);
+    
     if($node->getElementsByTagName('dNuDespImp')->length > 0)
       $res->setDNuDespImp($node->getElementsByTagName('dNuDespImp')->item(0)->nodeValue);
+    
     if($node->getElementsByTagName('dIniTras')->length > 0)
       $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dIniTras')->item(0)->nodeValue));
+    
     if($node->getElementsByTagName('dFinTras')->length > 0)
       $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFinTras')->item(0)->nodeValue));
+    
     if($node->getElementsByTagName('cPaisDest')->length > 0)
       $res->setCPaisDest($node->getElementsByTagName('cPaisDest')->item(0)->nodeValue);
+    
+    // E920 - gCamSal (0-1, puede haber solo uno)
     if($node->getElementsByTagName('gCamSal')->length > 0)
       $res->setGCamSal(GCamSal::FromDOMElement($node->getElementsByTagName('gCamSal')->item(0)));
-    if($node->getElementsByTagName('gCamEnt')->length > 0)
-      $res->setGCamEnt(GCamEnt::FromDOMElement($node->getElementsByTagName('gCamEnt')->item(0)));
-    if($node->getElementsByTagName('gVehTras')->length > 0)
-      $res->setGVehTras(GVehTras::FromDOMElement($node->getElementsByTagName('gVehTras')->item(0)));
+    
+    // E940 - gCamEnt (0-99, es un array, puede haber múltiples)
+    $gCamEntNodes = $node->getElementsByTagName('gCamEnt');
+    if($gCamEntNodes->length > 0) {
+      $gCamEntArray = [];
+      foreach($gCamEntNodes as $gCamEntNode) {
+        $gCamEntArray[] = GCamEnt::FromDOMElement($gCamEntNode);
+      }
+      $res->setGCamEnt($gCamEntArray);
+    }
+    
+    // E960 - gVehTras (0-4, es un array, puede haber múltiples)
+    $gVehTrasNodes = $node->getElementsByTagName('gVehTras');
+    if($gVehTrasNodes->length > 0) {
+      $gVehTrasArray = [];
+      foreach($gVehTrasNodes as $gVehTrasNode) {
+        $gVehTrasArray[] = GVehTras::FromDOMElement($gVehTrasNode);
+      }
+      $res->setGVehTras($gVehTrasArray);
+    }
+    
+    // E980 - gCamTrans (0-1, puede haber solo uno)
     if($node->getElementsByTagName('gCamTrans')->length > 0)
       $res->setGCamTrans(GCamTrans::FromDOMElement($node->getElementsByTagName('gCamTrans')->item(0)));
+    
     return $res;
   }
 
@@ -503,9 +592,9 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
   /**
    * Obtiene el valor de gVehTras
    *
-   * @return GVehTras
+   * @return array
    */
-  public function getGVehTras(): GVehTras
+  public function getGVehTras(): array
   {
     return $this->gVehTras;
   }
@@ -513,11 +602,11 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
   /**
    * Establece el valor de gVehTras
    *
-   * @param GVehTras $gVehTras
+   * @param array $gVehTras
    *
    * @return self
    */
-  public function setGVehTras(GVehTras $gVehTras): self
+  public function setGVehTras(array $gVehTras): self
   {
     $this->gVehTras = $gVehTras;
 
@@ -551,9 +640,9 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
   /**
    * Obtiene el valor de gCamEnt
    *
-   * @return GCamEnt
+   * @return array
    */
-  public function getGCamEnt(): GCamEnt
+  public function getGCamEnt(): array
   {
     return $this->gCamEnt;
   }
@@ -561,11 +650,11 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
   /**
    * Establece el valor de gCamEnt
    *
-   * @param GCamEnt $gCamEnt
+   * @param array $gCamEnt
    *
    * @return self
    */
-  public function setGCamEnt(GCamEnt $gCamEnt): self
+  public function setGCamEnt(array $gCamEnt): self
   {
     $this->gCamEnt = $gCamEnt;
 
@@ -621,12 +710,32 @@ s    $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->valu
       $res->setGCamSal(GCamSal::FromSifenResponseObject($object->gCamSal));
     }
 
+    // E940 - gCamEnt (0-99, es un array)
     if (isset($object->gCamEnt)) {
-      $res->setGCamEnt(GCamEnt::FromSifenResponseObject($object->gCamEnt));
+      if (is_array($object->gCamEnt)) {
+        $gCamEntArray = [];
+        foreach ($object->gCamEnt as $gCamEntItem) {
+          $gCamEntArray[] = GCamEnt::FromSifenResponseObject($gCamEntItem);
+        }
+        $res->setGCamEnt($gCamEntArray);
+      } else {
+        // Si viene como objeto único, convertirlo a array
+        $res->setGCamEnt([GCamEnt::FromSifenResponseObject($object->gCamEnt)]);
+      }
     }
 
+    // E960 - gVehTras (0-4, es un array)
     if (isset($object->gVehTras)) {
-      $res->setGVehTras(GVehTras::FromSifenResponseObject($object->gVehTras));
+      if (is_array($object->gVehTras)) {
+        $gVehTrasArray = [];
+        foreach ($object->gVehTras as $gVehTrasItem) {
+          $gVehTrasArray[] = GVehTras::FromSifenResponseObject($gVehTrasItem);
+        }
+        $res->setGVehTras($gVehTrasArray);
+      } else {
+        // Si viene como objeto único, convertirlo a array
+        $res->setGVehTras([GVehTras::FromSifenResponseObject($object->gVehTras)]);
+      }
     }
 
     if (isset($object->gCamTrans)) {

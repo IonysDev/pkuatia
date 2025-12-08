@@ -530,16 +530,76 @@ class GCamTrans
    //       return null;
 
    //    }
-   // }
+  // }
 
+  /**
+   * Instancia un objeto GCamTrans a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto.
+   * 
+   * @return self Objeto instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamTrans') != 0)
+      throw new \Exception('[GCamTrans] El nombre del nodo no corresponde a gCamTrans: ' . $node->nodeName);
+    $res = new GCamTrans();
     
-   /**
-    * FromSifenResponseObject
-    *
-    * @param  mixed $object
-    * @return self
-    */
-   public static function FromSifenResponseObject($object):self
+    if($node->getElementsByTagName('iNatTrans')->length > 0)
+      $res->setINatTrans(intval($node->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('dNomTrans')->length > 0)
+      $res->setDNomTrans($node->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dRucTrans')->length > 0)
+      $res->setDRucTrans($node->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dDVTrans')->length > 0)
+      $res->setDDVTrans(intval($node->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('iTipIDTrans')->length > 0)
+      $res->setITipIDTrans(intval($node->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('dNumIDTrans')->length > 0)
+      $res->setDNumIDTrans($node->getElementsByTagName('dNumIDTrans')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('cNacTrans')->length > 0)
+      $res->setCNacTrans($node->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dNumIDChof')->length > 0)
+      $res->setDNumIDChof($node->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dNomChof')->length > 0)
+      $res->setDNomChof($node->getElementsByTagName('dNomChof')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dDomFisc')->length > 0)
+      $res->setDDomFisc($node->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dDirChof')->length > 0)
+      $res->setDDirChof($node->getElementsByTagName('dDirChof')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dNombAg')->length > 0)
+      $res->setDNombAg($node->getElementsByTagName('dNombAg')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dRucAg')->length > 0)
+      $res->setDRucAg($node->getElementsByTagName('dRucAg')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dDVAg')->length > 0)
+      $res->setDDVAg(intval($node->getElementsByTagName('dDVAg')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('dDirAge')->length > 0)
+      $res->setDDirAge($node->getElementsByTagName('dDirAge')->item(0)->nodeValue);
+    
+    return $res;
+  }
+    
+  /**
+   * FromSifenResponseObject
+   *
+   * @param  mixed $object
+   * @return self
+   */
+  public static function FromSifenResponseObject($object):self
    {
       $res = new GCamTrans();
       if(isset($object->iNatTrans)){

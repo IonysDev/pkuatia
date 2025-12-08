@@ -321,6 +321,46 @@ class GCamSal
   // }
 
   /**
+   * Instancia un objeto GCamSal a partir de un DOMElement que representa el nodo XML del objeto.
+   * 
+   * @param DOMElement $node Nodo XML que representa el objeto.
+   * 
+   * @return self Objeto instanciado.
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->nodeName, 'gCamSal') != 0)
+      throw new \Exception('[GCamSal] El nombre del nodo no corresponde a gCamSal: ' . $node->nodeName);
+    $res = new GCamSal();
+    
+    if($node->getElementsByTagName('dDirLocSal')->length > 0)
+      $res->setDDirLocSal($node->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dNumCasSal')->length > 0)
+      $res->setDNumCasSal(intval($node->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('dComp1Sal')->length > 0)
+      $res->setDComp1Sal($node->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('dComp2Sal')->length > 0)
+      $res->setDComp2Sal($node->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
+    
+    if($node->getElementsByTagName('cDepSal')->length > 0)
+      $res->setCDepSal(intval($node->getElementsByTagName('cDepSal')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('cDisSal')->length > 0)
+      $res->setCDisSal(intval($node->getElementsByTagName('cDisSal')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('cCiuSal')->length > 0)
+      $res->setCCiuSal(intval($node->getElementsByTagName('cCiuSal')->item(0)->nodeValue));
+    
+    if($node->getElementsByTagName('dTelSal')->length > 0)
+      $res->setDTelSal($node->getElementsByTagName('dTelSal')->item(0)->nodeValue);
+    
+    return $res;
+  }
+
+  /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
