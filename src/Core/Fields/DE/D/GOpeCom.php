@@ -383,7 +383,8 @@ class GOpeCom extends BaseSifenField
             $res->appendChild(new DOMElement('dCondTiCam', $this->getDCondTiCam()));
         if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2)
             $res->appendChild(new DOMElement('dTiCam', $this->getDTiCam()));
-        if (isset($this->iTipTra) && $this->iTipTra == 9) {
+        if(isset($this->iCondAnt))
+        {
             $res->appendChild(new DOMElement('iCondAnt', $this->getICondAnt()));
             $res->appendChild(new DOMElement('dDesCondAnt', $this->getDDesCondAnt()));
         }
