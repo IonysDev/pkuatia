@@ -10,3 +10,4 @@
 *.log-*
 *.dat.*
 /.vscode
+/vendor
