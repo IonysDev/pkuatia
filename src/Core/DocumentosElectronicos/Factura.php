@@ -101,14 +101,16 @@ class Factura extends DocumentoElectronicoComercial
    * @param String $codigoDNCPEntidad Código de entidad pública emitido por la DNCP.
    * @param int $anho Año de contratación según registros de la DNCP.
    * @param int $nroDNCPSecuencia Número de secuencia del registro de la DNCP.
+   * @param DateTime $fechaEmisionCodigoContratacion Fecha de emisión del código de contratación por la DNCP.
    */
-  public function setDatosComprasPublicas(String $codigoDNCPModalidad, String $codigoDNCPEntidad, int $anho, int $nroDNCPSecuencia) : self
+  public function setDatosComprasPublicas(String $codigoDNCPModalidad, String $codigoDNCPEntidad, int $anho, int $nroDNCPSecuencia, DateTime $fechaEmisionCodigoContratacion) : self
   {
     $this->gCompPub = new GCompPub();
     $this->gCompPub->setDModCont($codigoDNCPModalidad);
     $this->gCompPub->setDEntCont($codigoDNCPEntidad);
     $this->gCompPub->setDAnoCont($anho);
     $this->gCompPub->setDSecCont($nroDNCPSecuencia);
+    $this->gCompPub->setDFeCodCont($fechaEmisionCodigoContratacion);
     return $this;
   }
 
