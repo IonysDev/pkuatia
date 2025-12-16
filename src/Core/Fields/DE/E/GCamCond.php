@@ -128,11 +128,14 @@ class GCamCond extends BaseSifenField
   /**
    * Obtiene el valor de gPagCred
    *
-   * @return GPagCred
+   * @return GPagCred|null
    */
-  public function getGPagCred(): GPagCred
+  public function getGPagCred(): ?GPagCred
   {
-    return $this->gPagCred;
+    if(isset($this->gPagCred))
+      return $this->gPagCred;
+    else
+      return null;
   }
 
   ///////////////////////////////////////////////////////////////////////

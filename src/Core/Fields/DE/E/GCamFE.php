@@ -142,11 +142,14 @@ class GCamFE extends BaseSifenField
   /**
    * Obtiene el valor de gCompPub (E020) que corresponde a los campos que describen las informaciones de compras públicas.
    * 
-   * @return GCompPub Campos que describen las informaciones de compras públicas.
+   * @return GCompPub|null Campos que describen las informaciones de compras públicas.
    */
-  public function getgCompPub(): GCompPub
+  public function getgCompPub(): ?GCompPub
   {
-    return $this->gCompPub;
+    if(isset($this->gCompPub))
+      return $this->gCompPub;
+    else
+      return null;
   }
 
   ///////////////////////////////////////////////////////////////////////

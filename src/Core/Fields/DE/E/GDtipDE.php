@@ -41,11 +41,14 @@ class GDtipDE extends BaseSifenField
   /**
    * Obtiene el valor de gCamFE
    *
-   * @return GCamFE
+   * @return GCamFE|null
    */
-  public function getGCamFE(): GCamFE
+  public function getGCamFE(): ?GCamFE
   {
-    return $this->gCamFE;
+    if(isset($this->gCamFE))
+      return $this->gCamFE;
+    else
+      return null;
   }
 
   /**
@@ -65,11 +68,14 @@ class GDtipDE extends BaseSifenField
   /**
    * Obtiene el valor de gCamAE
    *
-   * @return GCamAE
+   * @return GCamAE|null
    */
-  public function getGCamAE(): GCamAE
+  public function getGCamAE(): ?GCamAE
   {
-    return $this->gCamAE;
+    if(isset($this->gCamAE))
+      return $this->gCamAE;
+    else
+      return null;
   }
 
   /**
@@ -89,11 +95,14 @@ class GDtipDE extends BaseSifenField
   /**
    * Obtiene el valor de gCamNCDE
    *
-   * @return GCamNCDE
+   * @return GCamNCDE|null
    */
-  public function getGCamNCDE(): GCamNCDE
+  public function getGCamNCDE(): ?GCamNCDE
   {
-    return $this->gCamNCDE;
+    if(isset($this->gCamNCDE))
+      return $this->gCamNCDE;
+    else
+      return null;
   }
 
   /**
@@ -115,11 +124,13 @@ class GDtipDE extends BaseSifenField
    *
    * @return GCamNRE
    */
-  public function getGCamNRE(): GCamNRE
+  public function getGCamNRE(): ?GCamNRE
   {
-    return $this->gCamNRE;
+    if(isset($this->gCamNRE))
+      return $this->gCamNRE;
+    else
+      return null;
   }
-
   /**
    * Establece el valor de gCamNRE
    *
@@ -137,11 +148,14 @@ class GDtipDE extends BaseSifenField
   /**
    * Obtiene el valor de gCamCond
    *
-   * @return GCamCond
+   * @return GCamCond|null
    */
-  public function getGCamCond(): GCamCond
+  public function getGCamCond(): ?GCamCond
   {
-    return $this->gCamCond;
+    if(isset($this->gCamCond))
+      return $this->gCamCond;
+    else
+      return null;
   }
 
   /**
