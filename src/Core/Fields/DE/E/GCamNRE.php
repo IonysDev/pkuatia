@@ -213,7 +213,8 @@ class GCamNRE extends BaseSifenField
     $res->appendChild(new DOMElement('iRespEmiNR', $this->getIRespEmiNR()));
     $res->appendChild(new DOMElement('dDesRespEmiNR', $this->getDDesRespEmiNR()));
     $res->appendChild(new DOMElement('dKmR', $this->getDKmR()));
-    $res->appendChild(new DOMElement('dFecEm', $this->getDFecEm()->format('Y-m-d')));
+    if(isset($this->dFecEm))
+      $res->appendChild(new DOMElement('dFecEm', $this->getDFecEm()->format('Y-m-d')));
     return $res;
   }
 
