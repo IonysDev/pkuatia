@@ -243,7 +243,7 @@ class DE extends BaseSifenField
    *
    * @return DateTime Fecha de firma del documento electrónico (DE).
    */
-  public function getDFecFirma(): DateTime
+  public function getDFecFirma(): DateTime | null
   {
     if(isset($this->dFecFirma))
       return $this->dFecFirma;
@@ -350,14 +350,49 @@ class DE extends BaseSifenField
     if(strcmp($node->nodeName, 'DE') != 0)
       throw new \Exception('[DE] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new DE();
+    
+    // Required attribute: Id
+    if(!$node->hasAttribute('Id'))
+      throw new \Exception('[DE] Atributo Id requerido no encontrado.');
     $res->id = $node->getAttribute('Id');
-    $res->dDVId = intval($node->getElementsByTagName('dDVId')->item(0)->nodeValue);
-    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFecFirma')->item(0)->nodeValue));
-    $res->dSisFact = intval($node->getElementsByTagName('dSisFact')->item(0)->nodeValue);
-    $res->gOpeDe = GOpeDE::FromDOMElement($node->getElementsByTagName('gOpeDE')->item(0));
-    $res->gTimb = GTimb::FromDOMElement($node->getElementsByTagName('gTimb')->item(0));
-    $res->gDatGralOpe = GDatGralOpe::FromDOMElement($node->getElementsByTagName('gDatGralOpe')->item(0));
-    $res->gDtipDe = GDtipDE::FromDOMElement($node->getElementsByTagName('gDtipDE')->item(0));
+    
+    // Required elements
+    $dDVIdNode = $node->getElementsByTagName('dDVId')->item(0);
+    if(!$dDVIdNode)
+      throw new \Exception('[DE] Elemento requerido dDVId no encontrado.');
+    $res->dDVId = intval($dDVIdNode->nodeValue);
+    
+    $dFecFirmaNode = $node->getElementsByTagName('dFecFirma')->item(0);
+    if(!$dFecFirmaNode)
+      throw new \Exception('[DE] Elemento requerido dFecFirma no encontrado.');
+    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($dFecFirmaNode->nodeValue));
+    
+    $dSisFactNode = $node->getElementsByTagName('dSisFact')->item(0);
+    if(!$dSisFactNode)
+      throw new \Exception('[DE] Elemento requerido dSisFact no encontrado.');
+    $res->dSisFact = intval($dSisFactNode->nodeValue);
+    
+    $gOpeDENode = $node->getElementsByTagName('gOpeDE')->item(0);
+    if(!$gOpeDENode)
+      throw new \Exception('[DE] Elemento requerido gOpeDE no encontrado.');
+    $res->gOpeDe = GOpeDE::FromDOMElement($gOpeDENode);
+    
+    $gTimbNode = $node->getElementsByTagName('gTimb')->item(0);
+    if(!$gTimbNode)
+      throw new \Exception('[DE] Elemento requerido gTimb no encontrado.');
+    $res->gTimb = GTimb::FromDOMElement($gTimbNode);
+    
+    $gDatGralOpeNode = $node->getElementsByTagName('gDatGralOpe')->item(0);
+    if(!$gDatGralOpeNode)
+      throw new \Exception('[DE] Elemento requerido gDatGralOpe no encontrado.');
+    $res->gDatGralOpe = GDatGralOpe::FromDOMElement($gDatGralOpeNode);
+    
+    $gDtipDENode = $node->getElementsByTagName('gDtipDE')->item(0);
+    if(!$gDtipDENode)
+      throw new \Exception('[DE] Elemento requerido gDtipDE no encontrado.');
+    $res->gDtipDe = GDtipDE::FromDOMElement($gDtipDENode);
+    
+    // Optional elements
     if($node->getElementsByTagName('gTotSub')->length > 0)
       $res->gTotSub = GTotSub::FromDOMElement($node->getElementsByTagName('gTotSub')->item(0));
     if($node->getElementsByTagName('gCamGen')->length > 0)

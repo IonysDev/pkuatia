@@ -975,7 +975,12 @@ class GCamItem extends BaseSifenField
     if(strcmp($node->nodeName, 'gCamItem') != 0)
         throw new \Exception('[GCamItem] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
-    $res->setDCodInt(trim($node->getElementsByTagName('dCodInt')->item(0)->nodeValue));
+    
+    $dCodIntNode = $node->getElementsByTagName('dCodInt')->item(0);
+    if(!$dCodIntNode)
+      throw new \Exception('[GCamItem] Elemento requerido dCodInt no encontrado.');
+    $res->setDCodInt(trim($dCodIntNode->nodeValue));
+    
     if($node->getElementsByTagName('dParAranc')->length > 0)
       $res->setDParAranc(intval(trim($node->getElementsByTagName('dParAranc')->item(0)->nodeValue)));
     if($node->getElementsByTagName('dNCM')->length > 0)
@@ -988,10 +993,28 @@ class GCamItem extends BaseSifenField
       $res->setDGtin(intval(trim($node->getElementsByTagName('dGtin')->item(0)->nodeValue)));
     if($node->getElementsByTagName('dGtinPq')->length > 0)
       $res->setDGtinPq(intval(trim($node->getElementsByTagName('dGtinPq')->item(0)->nodeValue)));
-    $res->setDDesProSer(trim($node->getElementsByTagName('dDesProSer')->item(0)->nodeValue));
-    $res->setCUniMed(intval(trim($node->getElementsByTagName('cUniMed')->item(0)->nodeValue)));
-    $res->setDDesUniMed(trim($node->getElementsByTagName('dDesUniMed')->item(0)->nodeValue));
-    $res->setDCantProSer(floatval(trim($node->getElementsByTagName('dCantProSer')->item(0)->nodeValue)));
+    
+    $dDesProSerNode = $node->getElementsByTagName('dDesProSer')->item(0);
+    if(!$dDesProSerNode)
+      throw new \Exception('[GCamItem] Elemento requerido dDesProSer no encontrado.');
+    $res->setDDesProSer(trim($dDesProSerNode->nodeValue));
+    
+    $cUniMedNode = $node->getElementsByTagName('cUniMed')->item(0);
+    if(!$cUniMedNode)
+      throw new \Exception('[GCamItem] Elemento requerido cUniMed no encontrado.');
+    $res->setCUniMed(intval(trim($cUniMedNode->nodeValue)));
+    
+    $dDesUniMedNode = $node->getElementsByTagName('dDesUniMed')->item(0);
+    if(!$dDesUniMedNode)
+      throw new \Exception('[GCamItem] Elemento requerido dDesUniMed no encontrado.');
+    $res->setDDesUniMed(trim($dDesUniMedNode->nodeValue));
+    
+    $dCantProSerNode = $node->getElementsByTagName('dCantProSer')->item(0);
+    if(!$dCantProSerNode)
+      throw new \Exception('[GCamItem] Elemento requerido dCantProSer no encontrado.');
+    $res->setDCantProSer(floatval(trim($dCantProSerNode->nodeValue)));
+    
+    // Optional elements
     if($node->getElementsByTagName('cPaisOrig')->length > 0)
       $res->setCPaisOrig(trim($node->getElementsByTagName('cPaisOrig')->item(0)->nodeValue));
     if($node->getElementsByTagName('dDesPaisOrig')->length > 0)

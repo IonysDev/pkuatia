@@ -224,25 +224,40 @@ class GCamNRE extends BaseSifenField
    */
   public static function FromDOMElement(DOMElement $node): self
   {
+    if(strcmp($node->nodeName, 'gCamNRE') != 0)
+      throw new \Exception('[GCamNRE] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GCamNRE();
-    if($node->getElementsByTagName('iMotEmiNR')->length > 0){
-      $res->setIMotEmiNR(intval($node->getElementsByTagName('iMotEmiNR')->item(0)->nodeValue));
-    }
-    if($node->getElementsByTagName('dDesMotEmiNR')->length > 0){
-      $res->setDDesMotEmiNR($node->getElementsByTagName('dDesMotEmiNR')->item(0)->nodeValue);
-    }
-    if($node->getElementsByTagName('iRespEmiNR')->length > 0){
-      $res->setIRespEmiNR(intval($node->getElementsByTagName('iRespEmiNR')->item(0)->nodeValue));
-    }
-    if($node->getElementsByTagName('dDesRespEmiNR')->length > 0){
-      $res->setDDesRespEmiNR($node->getElementsByTagName('dDesRespEmiNR')->item(0)->nodeValue);
-    }
-    if($node->getElementsByTagName('dKmR')->length > 0){
-      $res->setDKmR(intval($node->getElementsByTagName('dKmR')->item(0)->nodeValue));
-    }
+    
+    $iMotEmiNRNode = $node->getElementsByTagName('iMotEmiNR')->item(0);
+    if(!$iMotEmiNRNode)
+      throw new \Exception('[GCamNRE] Elemento requerido iMotEmiNR no encontrado.');
+    $res->setIMotEmiNR(intval($iMotEmiNRNode->nodeValue));
+    
+    $dDesMotEmiNRNode = $node->getElementsByTagName('dDesMotEmiNR')->item(0);
+    if(!$dDesMotEmiNRNode)
+      throw new \Exception('[GCamNRE] Elemento requerido dDesMotEmiNR no encontrado.');
+    $res->setDDesMotEmiNR($dDesMotEmiNRNode->nodeValue);
+    
+    $iRespEmiNRNode = $node->getElementsByTagName('iRespEmiNR')->item(0);
+    if(!$iRespEmiNRNode)
+      throw new \Exception('[GCamNRE] Elemento requerido iRespEmiNR no encontrado.');
+    $res->setIRespEmiNR(intval($iRespEmiNRNode->nodeValue));
+    
+    $dDesRespEmiNRNode = $node->getElementsByTagName('dDesRespEmiNR')->item(0);
+    if(!$dDesRespEmiNRNode)
+      throw new \Exception('[GCamNRE] Elemento requerido dDesRespEmiNR no encontrado.');
+    $res->setDDesRespEmiNR($dDesRespEmiNRNode->nodeValue);
+    
+    $dKmRNode = $node->getElementsByTagName('dKmR')->item(0);
+    if(!$dKmRNode)
+      throw new \Exception('[GCamNRE] Elemento requerido dKmR no encontrado.');
+    $res->setDKmR(intval($dKmRNode->nodeValue));
+    
     if($node->getElementsByTagName('dFecEm')->length > 0){
       $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFecEm')->item(0)->nodeValue));
     }
+    
+    // Note: cPreFle is optional (minOccurs="0", maxOccurs="1") but not implemented in this class
     return $res;
   }
 }
