@@ -292,8 +292,8 @@ class GCamEnt extends BaseSifenField
     if (isset($this->dComp2Ent))
       $res->appendChild(new DOMElement('dComp2Ent', $this->getDComp2Ent()));
 
-    $res->appendChild(new DOMElement('cDepEnt', $this->getCDisEnt()));
-    $res->appendChild(new DOMElement('dDesDepEnt', $this->getCDepEnt()));
+    $res->appendChild(new DOMElement('cDepEnt', $this->getCDepEnt()));
+    $res->appendChild(new DOMElement('dDesDepEnt', $this->getDDesDepEnt()));
 
     if (isset($this->cDisEnt)) {
       $res->appendChild(new DOMElement('cDisEnt', $this->getCDisEnt()));

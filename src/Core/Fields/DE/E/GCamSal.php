@@ -290,13 +290,12 @@ class GCamSal extends BaseSifenField
       $res->appendChild(new DOMElement('dComp2Sal', $this->getDComp2Sal()));
 
     $res->appendChild(new DOMElement('cDepSal', $this->getCDisSal()));
-    $res->appendChild(new DOMElement('dDesDepSal', $this->getCDepSal()));
+    $res->appendChild(new DOMElement('dDesDepSal', $this->getDDesDepSal()));
 
-    if (isset($this->cDisSal))
+    if (isset($this->cDisSal)) {
       $res->appendChild(new DOMElement('cDisSal', $this->getCDisSal()));
-
-    if (isset($this->cDisdDesDisSalSal))
       $res->appendChild(new DOMElement('dDesDisSal', $this->getDDesDisSal()));
+    }      
       
     $res->appendChild(new DOMElement('cCiuSal', $this->getCCiuSal()));
     $res->appendChild(new DOMElement('dDesCiuSal', $this->getDDesCiuSal()));
