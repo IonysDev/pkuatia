@@ -185,10 +185,12 @@ class GCamNRE extends BaseSifenField
   /**
    * Obtiene el valor de dFecEm (Fecha futura de emisión de la factura)
    *
-   * @return DateTime
+   * @return DateTime | null
    */
-  public function getDFecEm(): DateTime
+  public function getDFecEm(): DateTime | null
   {
+    if(!isset($this->dFecEm))
+      return null;
     return $this->dFecEm;
   }   
 
