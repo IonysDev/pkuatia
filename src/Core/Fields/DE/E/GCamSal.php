@@ -6,13 +6,14 @@ use DOMDocument;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMElement;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 
 /**
  * ID:E920
  *Campos que identifican el local de salida de las mercaderías 
  *PADRE:E900 
  */
-class GCamSal
+class GCamSal extends BaseSifenField
 {
   public String $dDirLocSal; //E921 Dirección del local de salida
   public ?int $dNumCasSal; //E922 Número de casa de salida

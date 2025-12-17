@@ -177,11 +177,11 @@ class GDtipDE extends BaseSifenField
   /**
    * Establece el valor de gCamItem
    *
-   * @param GCamItem $gCamItem
+   * @param array $gCamItem Array de objetos GCamItem
    *
    * @return self
    */
-  public function setGCamItem(GCamItem $gCamItem): self
+  public function setGCamItem(array $gCamItem): self
   {
     $this->gCamItem = $gCamItem;
 

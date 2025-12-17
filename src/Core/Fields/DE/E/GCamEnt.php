@@ -6,22 +6,25 @@ use DOMDocument;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMElement;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 
 /**
- *ID:E940 
- *Campos que identifican el local de la entrega de las mercaderías
- * PADRE:E900
+ * Nodo Id:     E940    
+ * Nombre:      gCamEnt    
+ * Descripción: Campos que identifican el local de la entrega de las mercaderías
+ * Nodo Padre:  E900 - gTransp - Campos que describen  el transporte de mercaderías
  */
-class GCamEnt
+class GCamEnt extends BaseSifenField
 {
-  public String $dDirLocEnt; // E941 - Dirección del local de la entrega 
-  public ?int $dNumCasEnt;    // E942 - Número de casa de Entrega
-  public String $dComp1Ent;  // E943 - Complemento de dirección 1 Entrega
-  public String $dComp2Ent; // E944 - Complemento de dirección 2 Entrega
-  public ?int $cDepEnt;      // E945 - Código del departamento del local de Entrega
-  public ?int $cDisEnt;      // E947 - Código del distrito del local de Entrega
-  public ?int $cCiuEnt;      // E949 - Código de la ciudad del local de Entrega
-  public String $dTelEnt;   // E951 - Teléfono de contacto del local de Entrega
+                             // Id - Longitud - Ocurrencia - Descripción
+  public String $dDirLocEnt; // E941 - 1-255 - 1-1 - Dirección del local de la entrega 
+  public ?int $dNumCasEnt;   // E942 - 1-6   - 1-1 - Número de casa de Entrega
+  public String $dComp1Ent;  // E943 - 1-255 - 0-1 - Complemento de dirección 1 Entrega
+  public String $dComp2Ent;  // E944 - 1-255 - 0-1 - Complemento de dirección 2 Entrega
+  public ?int $cDepEnt;      // E945 - 1-2   - 1-1 - Código del departamento del local de Entrega
+  public ?int $cDisEnt;      // E947 - 1-4   - 0-1 - Código del distrito del local de Entrega
+  public ?int $cCiuEnt;      // E949 - 1-5   - 1-1 - Código de la ciudad del local de Entrega
+  public String $dTelEnt;    // E951 - 6-15  - 0-1 - Teléfono de contacto del local de Entrega
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -277,20 +280,30 @@ class GCamEnt
     $res->appendChild(new DOMElement('dDirLocEnt', $this->getDDirLocEnt()));
 
     if (isset($this->dNumCasEnt)) {
-      $res->appendChild(new DOMElement('dNumCasEnt', 0));
-    } else {
       $res->appendChild(new DOMElement('dNumCasEnt', $this->getDNumCasEnt()));
     }
+    else {
+      $res->appendChild(new DOMElement('dNumCasEnt', 0));
+    }
 
-    $res->appendChild(new DOMElement('dComp1Ent', $this->getDComp1Ent()));
-    $res->appendChild(new DOMElement('dComp2Ent', $this->getDComp2Ent()));
+    if (isset($this->dComp1Ent))
+      $res->appendChild(new DOMElement('dComp1Ent', $this->getDComp1Ent()));
+
+    if (isset($this->dComp2Ent))
+      $res->appendChild(new DOMElement('dComp2Ent', $this->getDComp2Ent()));
+
     $res->appendChild(new DOMElement('cDepEnt', $this->getCDisEnt()));
     $res->appendChild(new DOMElement('dDesDepEnt', $this->getCDepEnt()));
-    $res->appendChild(new DOMElement('cDisEnt', $this->getCDisEnt()));
+
+    if (isset($this->cDisEnt)) {
+      $res->appendChild(new DOMElement('cDisEnt', $this->getCDisEnt()));
     $res->appendChild(new DOMElement('dDesDisEnt', $this->getDDesDisEnt()));
+    }
     $res->appendChild(new DOMElement('cCiuEnt', $this->getCCiuEnt()));
     $res->appendChild(new DOMElement('dDesCiuEnt', $this->getDDesCiuEnt()));
-    $res->appendChild(new DOMElement('dTelEnt', $this->getDTelEnt()));
+
+    if (isset($this->dTelEnt))
+      $res->appendChild(new DOMElement('dTelEnt', $this->getDTelEnt()));
 
     return $res;
   }
