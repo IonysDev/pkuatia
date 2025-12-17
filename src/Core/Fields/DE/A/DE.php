@@ -306,7 +306,7 @@ class DE extends BaseSifenField
    * 
    * @return GTotSub Campos de subtotales y totales.
    */
-  public function getGTotSub(): GTotSub
+  public function getGTotSub(): GTotSub | null
   {
     if(isset($this->gTotSub))
       return $this->gTotSub;
