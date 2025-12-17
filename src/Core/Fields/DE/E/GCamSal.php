@@ -282,25 +282,25 @@ class GCamSal
       $res->appendChild(new DOMElement('dNumCasSal', 0));
     }
 
-    if (isset($this->dComp1Sal)) {
+    if (isset($this->dComp1Sal))
       $res->appendChild(new DOMElement('dComp1Sal', $this->getDComp1Sal()));
     
-    if (isset($this->dComp2Sal)) {
+    if (isset($this->dComp2Sal))
       $res->appendChild(new DOMElement('dComp2Sal', $this->getDComp2Sal()));
 
     $res->appendChild(new DOMElement('cDepSal', $this->getCDisSal()));
     $res->appendChild(new DOMElement('dDesDepSal', $this->getCDepSal()));
 
-    if (isset($this->cDisSal)) {
+    if (isset($this->cDisSal))
       $res->appendChild(new DOMElement('cDisSal', $this->getCDisSal()));
 
-    if (isset($this->cDisdDesDisSalSal)) {
+    if (isset($this->cDisdDesDisSalSal))
       $res->appendChild(new DOMElement('dDesDisSal', $this->getDDesDisSal()));
       
     $res->appendChild(new DOMElement('cCiuSal', $this->getCCiuSal()));
     $res->appendChild(new DOMElement('dDesCiuSal', $this->getDDesCiuSal()));
 
-    if (isset($this->dTelSal)) {
+    if (isset($this->dTelSal))
       $res->appendChild(new DOMElement('dTelSal', $this->getDTelSal()));
 
     return $res;
