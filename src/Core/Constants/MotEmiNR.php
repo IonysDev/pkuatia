@@ -4,7 +4,7 @@ namespace IonysDev\Pkuatia\Core\Constants;
 
 enum MotEmiNR: int
 {
-    case TrasladoPorVenta = 1;
+    case TrasladoPorVentas = 1;
     case TrasladoPorConsignacion = 2;
     case Exportacion = 3;
     case TrasladoPorCompra = 4;
@@ -23,7 +23,7 @@ enum MotEmiNR: int
     public function getDescripcion(): string
     {
         return match($this) {
-            self::TrasladoPorVenta => 'Traslado por venta',
+            self::TrasladoPorVentas => 'Traslado por ventas',
             self::TrasladoPorConsignacion => 'Traslado por consignación',
             self::Exportacion => 'Exportación',
             self::TrasladoPorCompra => 'Traslado por compra',
@@ -49,7 +49,7 @@ enum MotEmiNR: int
     public static function getList(): array
     {
         return [
-            self::TrasladoPorVenta->value => self::TrasladoPorVenta->getDescripcion(),
+            self::TrasladoPorVentas->value => self::TrasladoPorVentas->getDescripcion(),
             self::TrasladoPorConsignacion->value => self::TrasladoPorConsignacion->getDescripcion(),
             self::Exportacion->value => self::Exportacion->getDescripcion(),
             self::TrasladoPorCompra->value => self::TrasladoPorCompra->getDescripcion(),

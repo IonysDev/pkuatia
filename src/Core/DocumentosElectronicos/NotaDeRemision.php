@@ -103,7 +103,7 @@ class NotaDeRemision extends DocumentoElectronico
      * 
      * @param int|MotEmiNR $motivoEmision Motivo de emisión de la nota de remisión (E501). Obligatorio.
      *                                     Valores posibles:
-     *                                     1=Traslado por venta
+     *                                     1=Traslado por ventas
      *                                     2=Traslado por consignación
      *                                     3=Exportación
      *                                     4=Traslado por compra
