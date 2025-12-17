@@ -181,9 +181,9 @@ class GCompPub extends BaseSifenField
   {
     $res = $doc->createElement('gCompPub');
     $res->appendChild(new DOMElement('dModCont', $this->dModCont));
-    $res->appendChild(new DOMElement('dEntCont', $this->dEntCont));
-    $res->appendChild(new DOMElement('dAnoCont', $this->dAnoCont));
-    $res->appendChild(new DOMElement('dSecCont', $this->dSecCont));
+    $res->appendChild(new DOMElement('dEntCont', str_pad((string)$this->dEntCont, 5, '0', STR_PAD_LEFT)));
+    $res->appendChild(new DOMElement('dAnoCont', str_pad((string)$this->dAnoCont, 2, '0', STR_PAD_LEFT)));
+    $res->appendChild(new DOMElement('dSecCont', str_pad((string)$this->dSecCont, 7, '0', STR_PAD_LEFT)));
     $res->appendChild(new DOMElement('dFeCodCont', $this->dFeCodCont->format('Y-m-d')));
     return $res;
   }
