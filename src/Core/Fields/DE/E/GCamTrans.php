@@ -3,29 +3,38 @@
 namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
 use IonysDev\Pkuatia\DataMappings\CountryMapping;
+use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 
 /**
- * ID:E980 gCamTrans Campos que identifican al transportista PADRE:E900
+ * ID:E980 gCamTrans  PADRE:E900
  * 
  */
-class GCamTrans
+/**
+ * Nodo Id:     E980
+ * Nombre:      gCamTrans
+ * Descripción: Campos que identifican al transportista (E980-E999)
+ * Nodo Padre:  E900 - gTransp - Campos que describen  el transporte de mercaderías
+ */
+class GCamTrans extends BaseSifenField
 {
-   public int $iNatTrans; // E981 - Naturaleza del transportista
-   public String $dNomTrans; // E982 - Nombre o razón social del transportista 
-   public String $dRucTrans; // E983 - RUC del transportista 
-   public int $dDVTrans; //E984 - Dígito verificador del RUC del transportista 
-   public int $iTipIDTrans; // E985 - Tipo de documento de identidad del transportista
-   public String $dNumIDTrans; // E987 - Número de documento de identidad del transportista
-   public String $cNacTrans; // E988 - Nacionalidad del transportista 
-   public String $dNumIDChof; // E990 - Número de documento de identidad del chofer
-   public String $dNomChof; // E991 - Nombre y apellido del chofer
-   public String $dDomFisc; // E992 - Domicilio fiscal del transportista
-   public String $dDirChof; // E993 - Dirección del chofer
-   public String $dNombAg; // E994 - Nombre o razón social del agente 
-   public String $dRucAg; // E995 - RUC del agente
-   public String $dDVAg; // E996 - Dígito verificador del  RUC del agente
-   public String $dDirAge; // E997 - Dirección del agente
+                               // Id - Longitud - Ocurrencia - Descripción
+   public int    $iNatTrans;   // E981 - 1     - 1-1 - Naturaleza del transportista
+   public String $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista 
+   public String $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista 
+   public int    $dDVTrans;    // E984 - 1     - 1-1 - Dígito verificador del RUC del transportista 
+   public int    $iTipIDTrans; // E985 - 1     - 0-1 - Tipo de documento de identidad del transportista
+   public String $dNumIDTrans; // E987 - 1-20  - 0-1 - Número de documento de identidad del transportista
+   public String $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista 
+   public String $dNumIDChof;  // E990 - 1-20  - 0-1 - Número de documento de identidad del chofer
+   public String $dNomChof;    // E991 - 4-60  - 1-1 - Nombre y apellido del chofer
+   public String $dDomFisc;    // E992 - 1-150 - 0-1 - Domicilio fiscal del transportista
+   public String $dDirChof;    // E993 - 1-255 - 0-1 - Dirección del chofer
+   public String $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente 
+   public String $dRucAg;      // E995 - 3-8   - 0-1 - RUC del agente
+   public String $dDVAg;       // E996 - 1     - 0-1 - Dígito verificador del  RUC del agente
+   public String $dDirAge;     // E997 - 1-255 - 0-1 - Dirección del agente
 
    ///////////////////////////////////////////////////////////////////////
    ////SETTERS
@@ -328,9 +337,8 @@ class GCamTrans
          case 4:
             return "Carnet de residencia";
             break;
-
          default:
-            return null;
+            return '';
             break;
       }
    }
@@ -456,9 +464,9 @@ class GCamTrans
     *
     * @return DOMElement
     */
-   public function toDOMElement(): DOMElement
+   public function toDOMElement(DOMDocument $doc): DOMElement
    {
-      $res = new DOMElement('gCamTrans');
+      $res = $doc->createElement('gCamTrans');
 
       $res->appendChild(new DOMElement('iNatTrans', $this->getINatTrans()));
       $res->appendChild(new DOMElement('dNomTrans', $this->getDNomTrans()));
@@ -488,49 +496,27 @@ class GCamTrans
 
       $res->appendChild(new DOMElement('dNumIDChof', $this->getDNumIDChof()));
       $res->appendChild(new DOMElement('dNomChof', $this->getDNomChof()));
-      $res->appendChild(new DOMElement('dDomFisc', $this->getDDomFisc()));
-      $res->appendChild(new DOMElement('dDirChof', $this->getDDirChof()));
-      $res->appendChild(new DOMElement('dNombAg', $this->getDNombAg()));
-      $res->appendChild(new DOMElement('dRucAg', $this->getDRucAg()));
-      $res->appendChild(new DOMElement('dDVAg', $this->getDDVAg()));
-      $res->appendChild(new DOMElement('dDirAge', $this->getDDirAge()));
+
+      if (isset($this->dDomFisc))
+         $res->appendChild(new DOMElement('dDomFisc', $this->getDDomFisc()));
+      
+      if (isset($this->dDirChof))
+         $res->appendChild(new DOMElement('dDirChof', $this->getDDirChof()));
+      
+      if (isset($this->dNombAg))
+         $res->appendChild(new DOMElement('dNombAg', $this->getDNombAg()));
+
+      if (isset($this->dRucAg))
+         $res->appendChild(new DOMElement('dRucAg', $this->getDRucAg()));
+
+      if (isset($this->dDVAg))
+         $res->appendChild(new DOMElement('dDVAg', $this->getDDVAg()));
+
+      if (isset($this->dDirAge))
+         $res->appendChild(new DOMElement('dDirAge', $this->getDDirAge()));
+
       return $res;
    }
-
-   // /**
-   //  * fromDOMElement
-   //  *
-   //  * @param  mixed $xml
-   //  * @return GCamTrans
-   //  */
-   // public static function fromDOMElement(DOMElement $xml): GCamTrans
-   // {
-   //    if (strcmp($xml->tagName, 'gCamTrans') === 0 && $xml->childElementCount >= 11) {
-   //       $res = new GCamTrans();
-   //       $res->setINatTrans(intval($xml->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
-   //       $res->setDNomTrans($xml->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
-   //       $res->setDRucTrans($xml->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
-   //       $res->setDDVTrans(intval($xml->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
-   //       $res->setITipIDTrans(intval($xml->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
-   //       $res->setDNumIDTrans($xml->getElementsByTagName('dDNumIDTrans')->item(0)->nodeValue);
-   //       $res->setCNacTrans($xml->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
-   //       $res->setDNumIDChof($xml->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
-   //       $res->setDNomChof($xml->getElementsByTagName('dNomChof')->item(0)->nodeValue);
-   //       $res->setDDomFisc($xml->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
-   //       $res->setDDirChof($xml->getElementsByTagName('dDirChof')->item(0)->nodeValue);
-   //       $res->setDNombAg($xml->getElementsByTagName('dNombAg')->item(0)->nodeValue);
-   //       $res->setDRucAg($xml->getElementsByTagName('dRucAg')->item(0)->nodeValue);
-   //       $res->setDDVAg(intval($xml->getElementsByTagName('dDVAg')->item(0)->nodeValue));
-   //       $res->setDDirAge($xml->getElementsByTagName('dDirAge')->item(0)->nodeValue);
-
-   //       return $res;
-
-   //    } else {
-   //       throw new \Exception("Invalid XML Element: $xml->tagName");
-   //       return null;
-
-   //    }
-  // }
 
   /**
    * Instancia un objeto GCamTrans a partir de un DOMElement que representa el nodo XML del objeto.
