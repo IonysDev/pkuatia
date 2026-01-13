@@ -639,6 +639,3 @@ trait ItemValorado {
     }   
 
 }
-
-?>
-
