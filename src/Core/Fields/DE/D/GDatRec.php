@@ -574,7 +574,9 @@ class GDatRec extends BaseSifenField
         if(isset($node->dDVRec))
             $res->setDDVRec(intval($node->dDVRec));
         if(isset($node->iTipIDRec))
-            $res->setDNumIDRec(intval($node->iTipIDRec));
+            $res->setITipIDRec(intval($node->iTipIDRec));
+        if(isset($node->dNumIDRec))
+            $res->setDNumIDRec(intval($node->dNumIDRec));
         if(isset($node->dDTipIDRec))
             $res->setDDTipIDRec(strval($node->dDTipIDRec));
         if(isset($node->dNumIDRec))
