@@ -742,8 +742,7 @@ class DocumentoElectronico
       $this->gDatRec->setDRucRec($ruc);
       $this->gDatRec->setDDVRec($dv);
     }
-
-    if (!$esContribuyente && $tipoOpInt !== RecTiOpe::B2F->value) {
+    else {
       $this->gDatRec->setITipIDRec($tipoIdentificacion);
       $this->gDatRec->setDNumIDRec($nroIdentificacion);
     }
