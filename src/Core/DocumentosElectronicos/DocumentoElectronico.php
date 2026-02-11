@@ -714,7 +714,7 @@ class DocumentoElectronico
   ): self {
     // Validación de tipo de operación y país
     $tipoOpInt = $tipoOperacion instanceof RecTiOpe ? $tipoOperacion->value : $tipoOperacion;
-    if ($tipoOpInt == RecTiOpe::B2F && strcmp($codPais, 'PRY') == 0) {
+    if ($tipoOpInt === RecTiOpe::B2F->value && strcmp($codPais, 'PRY') == 0) {
       throw new Exception("[DocumentoElectronico::setReceptor] No se puede emitir un DE de tipo B2F para un receptor en Paraguay.");
     }
     // Validación de tipo de identidad y estado de contribuyente
@@ -743,7 +743,7 @@ class DocumentoElectronico
       $this->gDatRec->setDDVRec($dv);
     }
 
-    if (!$esContribuyente && $tipoOperacion != RecTiOpe::B2F) {
+    if (!$esContribuyente && $tipoOpInt !== RecTiOpe::B2F->value) {
       $this->gDatRec->setITipIDRec($tipoIdentificacion);
       $this->gDatRec->setDNumIDRec($nroIdentificacion);
     }
@@ -757,7 +757,7 @@ class DocumentoElectronico
     if (isset($nombreFantasia))
       $this->gDatRec->setDNomFanRec($nombreFantasia);
 
-    if ($tipoOperacion == RecTiOpe::B2F && $callePrincipal == null) {
+    if ($tipoOpInt === RecTiOpe::B2F->value && $callePrincipal == null) {
       throw new Exception("[DocumentoElectronico::setReceptor] La calle principal es obligatoria para un receptor extranjero.");
     }
 
@@ -766,7 +766,7 @@ class DocumentoElectronico
       if (!isset($numeroCasa))
         throw new Exception("[DocumentoElectronico::setReceptor] El número de casa es obligatorio si se establece la calle principal.");
       $this->gDatRec->setDNumCasRec($numeroCasa);
-      if ($tipoOperacion != RecTiOpe::B2F) {
+      if ($tipoOpInt !== RecTiOpe::B2F->value) {
         if (!isset($codigoDepartamento))
           throw new Exception("[DocumentoElectronico::setReceptor] El código de departamento es obligatorio si se establece la calle principal.");
         $this->gDatRec->setCDepRec($codigoDepartamento);
