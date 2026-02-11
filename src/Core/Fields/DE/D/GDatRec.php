@@ -127,6 +127,7 @@ class GDatRec extends BaseSifenField
     public function setCPaisRec(String $cPaisRec): void
     {
         $this->cPaisRec = $cPaisRec;
+        $this->dDesPaisRe = CountryMapping::getCountryDesc($cPaisRec);
     }
 
     public function setDDesPaisRe(String $dDesPaisRe): void
