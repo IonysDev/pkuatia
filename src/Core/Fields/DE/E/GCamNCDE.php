@@ -118,6 +118,27 @@ class GCamNCDE extends BaseSifenField
     return $res;
   }
 
+    /**
+     * Crea una nueva instancia de GCamNCDE a partir de un objeto SimpleXMLElement.
+     *
+     * @param \SimpleXMLElement $node
+     *
+     * @return self
+     *
+     * @throws \Exception
+     */
+  public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+  {
+    if(strcmp($node->getName(), 'gCamNCDE') != 0)
+    {
+      throw new \Exception("El nodo '" . $node->getName() . "' no corresponde a 'gCamNCDE'");
+    }
+    $res = new GCamNCDE();
+    $res->iMotEmi = intval($node->iMotEmi);
+    $res->dDesMotEmi = strval($node->dDesMotEmi);
+    return $res;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   // Conversores
   ///////////////////////////////////////////////////////////////////////
