@@ -373,5 +373,3 @@ class Factura extends DocumentoElectronicoComercial
     return $rde;
   }
 }
-
-?>
