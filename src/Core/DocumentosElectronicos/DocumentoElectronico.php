@@ -32,6 +32,7 @@ use IonysDev\Pkuatia\Utils\RucUtils;
 use IonysDev\Pkuatia\Utils\TimbradoUtils;
 use DateTime;
 use Exception;
+use IonysDev\Pkuatia\Core\Constants\OpeDETipEmi;
 use IonysDev\Pkuatia\Core\Constants\RecNat;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 
@@ -157,6 +158,15 @@ class DocumentoElectronico
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
+
+  /**
+   * Establece el tipo de emisión del DE (B002): normal (1) o contingencia (2).
+   */
+  public function setTipoEmisionDocumento(int|OpeDETipEmi $tipoEmision): self
+  {
+      $this->gOpeDE->setITipEmi($tipoEmision);
+      return $this;
+  }
 
   /**
    * Establece información y/o comentarios de interés del emisor.

@@ -3,19 +3,19 @@
 namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
- * Enumeraración que contiene las condiciones del tipo de cambio aplicables en una operación comercial.
- * Corresponde a los valores posibles del campo `dCondTiCam` (D017) del grupo `gOpeCom` (D010).
+ * Naturaleza del vendedor en documentos de autofactura electrónica (grupo gCamAE, E300).
+ * Valores del campo iNatVen (E301) y descripciones del campo dDesNatVen (E302).
  */
-enum OpeComCondTipCam: int {
+enum CamAENatVen: int {
 
-    case Global = 1;
-    case PorItem = 2;
+    case NoContribuyente = 1;
+    case Extranjero = 2;
 
     public function getDescription(): string
     {
-        return match($this) {
-            self::Global => 'Global',
-            self::PorItem => 'Por Ítem'
+        return match ($this) {
+            self::NoContribuyente => 'No contribuyente',
+            self::Extranjero => 'Extranjero',
         };
     }
 

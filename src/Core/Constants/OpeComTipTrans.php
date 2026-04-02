@@ -2,11 +2,9 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
- * Enumeración que contiene los tipos de obligaciones afectadas por una operación comercial para los campos
- * iTipTra (D011) y dDesTipTra (D012) del grupo gOpeCom (D010).
+ * Enumeración del tipo de transacción de la operación comercial: campos iTipTra (D011) y dDesTipTra (D012)
+ * del grupo gOpeCom (D010), según Manual Técnico SIFEN v150.
  */
 enum OpeComTipTrans: int {
 
@@ -24,37 +22,56 @@ enum OpeComTipTrans: int {
     case VentaCreditoFiscal = 12;
     case MuestrasMedicas = 13;
 
-    public static function getDescripcion(int $tipTrans): string {
-        switch($tipTrans) {
-            case 1:
-                return 'Venta de mercadería';
-            case 2:
-                return 'Prestación de servicios';
-            case 3:
-                return 'Mixto (Venta de mercadería y servicios)';
-            case 4:
-                return 'Venta de activo fijo';
-            case 5:
-                return 'Venta de divisas';
-            case 6:
-                return 'Compra de divisas';
-            case 7:
-                return 'Promoción o entrega de muestras';
-            case 8:
-                return 'Donación';
-            case 9:
-                return 'Anticipo';
-            case 10:
-                return 'Compra de productos';
-            case 11:
-                return 'Compra de servicios';
-            case 12:
-                return 'Venta de crédito fiscal';
-            case 13:
-                return 'Muestras médicas (Art. 3 RG 24/2014)';
-            default:
-                throw new Exception('[OpeComTipTrans] Tipo de transacción no soportada: ' . $tipTrans);
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::VentaMercaderia => 'Venta de mercadería',
+            self::PrestacionServicios => 'Prestación de servicios',
+            self::MixtoMercaderiaServicios => 'Mixto (Venta de mercadería y servicios)',
+            self::VentaActivoFijo => 'Venta de activo fijo',
+            self::VentaDivisas => 'Venta de divisas',
+            self::CompraDivisas => 'Compra de divisas',
+            self::PromocionOMuestra => 'Promoción o entrega de muestras',
+            self::Donacion => 'Donación',
+            self::Anticipo => 'Anticipo',
+            self::CompraProductos => 'Compra de productos',
+            self::CompraServicios => 'Compra de servicios',
+            self::VentaCreditoFiscal => 'Venta de crédito fiscal',
+            self::MuestrasMedicas => 'Muestras médicas (Art. 3 RG 24/2014)'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $tipTrans): ?string
+    {
+        return self::getDescriptionFromValue($tipTrans);
     }
 }
 

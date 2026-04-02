@@ -2,8 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
  * Enumeración que contiene los indicadores de presencia para la emisión de una factura electrónica.
  * Estos valores corresponden al campo iIndPres (E011), asi como a su descripción correspondiente del campo dDesIndPres (E012) 
@@ -26,62 +24,58 @@ enum CamFEIndPres: int {
      * @return string
      * @throws Exception
      */
-    public static function getDescripcion(int $value): string {
-        switch($value) {
-            case 1:
-                return 'Operación presencial';
-            case 2:
-                return 'Operación electrónica';
-            case 3:
-                return 'Operación telemarketing';
-            case 4:
-                return 'Venta a domicilio';
-            case 5:
-                return 'Operación bancaria';
-            case 6:
-                return 'Operación cíclica';
-            case 9:
-                return 'Otro';
-            default:
-                throw new Exception("[CamFEIndPres] Indicador de presencia inválido: $value");
+
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::Presencial => 'Operación presencial',
+            self::Electronica => 'Operación electrónica',
+            self::Telemarketing => 'Operación telemarketing',
+            self::ADomicilio => 'Venta a domicilio',
+            self::Bancaria => 'Operación bancaria',
+            self::CiclicaOSuscripcion => 'Operación cíclica',
+            self::Otro => 'Otro'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
     }
 
     /**
-     * Devuelve un array con los valores de la enumeración.
-     * 
-     * @return array
+     * @deprecated Use getDescriptionFromValue() instead.
      */
-    public static function toKeyValueArray(): array {
-        return [
-            [
-                'id' => CamFEIndPres::Presencial->value,
-                'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Presencial->value),
-            ],
-            [
-                'id' => CamFEIndPres::Electronica->value,
-                'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Electronica->value),
-            ],
-            [
-                'id' => CamFEIndPres::Telemarketing->value,
-                'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Telemarketing->value),
-            ],
-            [
-                'id' => CamFEIndPres::ADomicilio->value,
-                'name' => CamFEIndPres::getDescripcion(CamFEIndPres::ADomicilio->value),
-            ],
-            [
-                'id' => CamFEIndPres::Bancaria->value,
-                'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Bancaria->value),
-            ],
-            [
-                'id' => CamFEIndPres::CiclicaOSuscripcion->value,
-                'name' => CamFEIndPres::getDescripcion(CamFEIndPres::CiclicaOSuscripcion->value),
-            ],
-            [
-                'id' => CamFEIndPres::Otro->value,
-                'name' => CamFEIndPres::getDescripcion(CamFEIndPres::Otro->value),
-            ],
-        ];
+    public static function getDescripcion(int $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
+    }
+
+    /**
+     * @deprecated Use toIdNameList() instead.
+     */
+    public static function toKeyValueArray(): array
+    {
+        return self::toIdNameList();
     }
 }

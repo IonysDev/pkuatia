@@ -2,10 +2,9 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
- * Enumeración que contiene los tipos de documentos impresos asociados del campo H009.
+ * Enumeración del tipo de documento impreso asociado: campos iTipoDocAso (H009) y dDTipoDocAso (H010)
+ * del grupo gCamDEAsoc, según Manual Técnico SIFEN v150.
  */
 enum TipoDocImpresoAso: int {
 
@@ -15,20 +14,47 @@ enum TipoDocImpresoAso: int {
     case NotaDeRemision = 4;
     case ComprobanteRetencion = 5;
 
-    public static function getDescripcion(int $tipDocImpresoAso): string {
-        switch($tipDocImpresoAso) {
-            case 1:
-                return 'Factura';
-            case 2:
-                return 'Nota de crédito';
-            case 3:
-                return 'Nota de débito';
-            case 4:
-                return 'Nota de remisión';
-            case 5:
-                return 'Comprobante de retención';
-            default:
-                throw new Exception("[TipoDocImpresoAso] Tipo de documento impreso erróneo: $tipDocImpresoAso");
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::Factura => 'Factura',
+            self::NotaDeCredito => 'Nota de crédito',
+            self::NotaDeDebito => 'Nota de débito',
+            self::NotaDeRemision => 'Nota de remisión',
+            self::ComprobanteRetencion => 'Comprobante de retención'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $tipDocImpresoAso): ?string
+    {
+        return self::getDescriptionFromValue($tipDocImpresoAso);
     }
 }

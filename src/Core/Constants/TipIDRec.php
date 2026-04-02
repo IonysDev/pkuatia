@@ -2,12 +2,9 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
- * Enumeración que contiene los tipos de identificación del receptor del documento electrónico.
- * Estos valores corresponden al campo iTipIDRec (D208), asi como a su descripción correspondiente del campo dDTipIDRec (D209) 
- * del grupo gDatRec (D200).
+ * Enumeración del tipo de documento de identidad del receptor: campos iTipIDRec (D208) y dDTipIDRec (D209)
+ * del grupo gDatRec (D200), según Manual Técnico SIFEN v150.
  */
 enum TipIDRec: int {
 
@@ -19,24 +16,49 @@ enum TipIDRec: int {
     case TajetaDiplomatica = 6;
     case Otro = 9;
 
-    public static function getDescripcion(int $tipImp): string {
-        switch($tipImp) {
-            case 1:
-                return 'Cédula paraguaya';
-            case 2:
-                return 'Pasaporte';
-            case 3:
-                return 'Cédula extranjera';
-            case 4:
-                return 'Carnet de residencia';
-            case 5:
-                return 'Innominado';
-            case 6:
-                return 'Tarjeta Diplomática de exoneración fiscal';
-            case 9:
-                return 'Otro';
-            default:
-                throw new Exception("[TipIDRespDE] Tipo de identificación inválida: $tipImp");
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::CedulaParaguaya => 'Cédula paraguaya',
+            self::Pasaporte => 'Pasaporte',
+            self::CedulaExtranjera => 'Cédula extranjera',
+            self::CarnetDeResidencia => 'Carnet de residencia',
+            self::Innominado => 'Innominado',
+            self::TajetaDiplomatica => 'Tarjeta Diplomática de exoneración fiscal',
+            self::Otro => 'Otro'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $tipImp): ?string
+    {
+        return self::getDescriptionFromValue($tipImp);
     }
 }

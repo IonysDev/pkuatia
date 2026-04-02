@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\DE\B;
 
+use IonysDev\Pkuatia\Core\Constants\OpeDETipEmi;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Utils\RNG;
 use DOMDocument;
@@ -19,14 +20,6 @@ use SimpleXMLElement;
 
 class GOpeDE extends BaseSifenField
 {
-    public const TIPO_DE_EMISION_NORMAL = 1;
-    public const TIPO_DE_EMISION_CONTINGENCIA = 2;
-
-    public const TIPO_DE_EMISION_DESCRIPCIONES = [
-        self::TIPO_DE_EMISION_NORMAL => 'Normal',
-        self::TIPO_DE_EMISION_CONTINGENCIA => 'Contingencia'
-    ];
-
                                // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipEmi;    // B002 - 1      - 1-1 - Tipo de emisión: 1 - Normal, 2 - Contingencia
     public String $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
@@ -42,7 +35,7 @@ class GOpeDE extends BaseSifenField
      */
     public function __construct()
     {
-        $this->setITipEmi(1);
+        $this->setITipEmi(OpeDETipEmi::Normal);
         $this->setDCodSeg(RNG::GenerateAsString(0, 999999999, 9));
     }
 
@@ -54,23 +47,18 @@ class GOpeDE extends BaseSifenField
      * Establece el valor de iTipEmi que representa el tipo de emisión del documento y establece el valor de dDesTipEmi
      * que representa la descripción del tipo de emisión del documento de acuerdo al valor de iTipEmi.
      * 
-     * @param int $iTipEmi Tipo de emisión del documento: 1 - Normal, 2 - Contingencia
+     * @param int|OpeDETipEmi $iTipEmi Tipo de emisión del documento: 1 - Normal, 2 - Contingencia
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setITipEmi(int $iTipEmi): self
+    public function setITipEmi(int|OpeDETipEmi $iTipEmi): self
     {
-        switch ($iTipEmi) {
-            case 1:
-            case 2:
-                $this->iTipEmi = $iTipEmi;
-                $this->dDesTipEmi = self::TIPO_DE_EMISION_DESCRIPCIONES[$iTipEmi];
-                break;
-            default:
-                unset($this->dDesTipEmi);
-                unset($this->iTipEmi);
-                throw new \Exception('[GOpeDE] El valor de iTipEmi no es válido: ' . $this->iTipEmi);
+        $case = $iTipEmi instanceof OpeDETipEmi ? $iTipEmi : OpeDETipEmi::tryFrom($iTipEmi);
+        if ($case === null) {
+            throw new \Exception('[GOpeDE] El valor de iTipEmi no es válido: ' . $iTipEmi);
         }
+        $this->iTipEmi = $case->value;
+        $this->dDesTipEmi = $case->getDescription();
         return $this;
     }
 

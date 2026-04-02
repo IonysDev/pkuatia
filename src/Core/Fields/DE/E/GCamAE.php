@@ -4,76 +4,83 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
+use IonysDev\Pkuatia\Core\Constants\CamAENatVen;
+use IonysDev\Pkuatia\Core\Constants\CamAETipIDVen;
 use DOMDocument;
 use DOMElement;
 
 /**
  * Nodo Id:     E300
  * Nombre:      gCamAE
- * Descripción: Campos que componen la Autofactura Electrónica
+ * Descripción: Campos de la Autofactura Electrónica (datos del vendedor no contribuyente o extranjero y lugar de la operación).
  * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico
+ *
+ * Los códigos E3xx corresponden al manual de campos SIFEN. Preferir los setters que reciben códigos numéricos:
+ * suelen rellenar automáticamente la descripción homóloga vía {@see DepartamentoMapping} o {@see PyGeoCodesMapping}.
  */
 
 class GCamAE
 {
+                                   // Id - Longitud - Ocurrencia - Descripción (manual SIFEN)
   public int    $iNatVen;     // E301 - 1     - 1-1 - Naturaleza del vendedor
   public String $dDesNatVen;  // E302 - 10-16 - 1-1 - Descripción de la naturaleza del vendedor
   public int    $iTipIDVen;   // E304 - 1     - 1-1 - Tipo de documento de identidad del vendedor
   public String $dDTipIDVen;  // E305 - 9-20  - 1-1 - Descripción del tipo de documento de identidad del vendedor
   public String $dNumIDVen;   // E306 - 1-20  - 1-1 - Número de documento de identidad del vendedor
-  public String $dNomVen;     // E307 - 4-60  - 1-1 - Nombre y apellido delvendedor
-  public String $dDirVen;     // E308 - 1-255 - 1-1 - Dirección del vendedor
+  public String $dNomVen;     // E307 - 4-60  - 1-1 - Nombre y apellido del vendedor
+  public String $dDirVen;     // E308 - 1-255 - 1-1 - Dirección del vendedor (calle principal)
   public int    $dNumCasVen;  // E309 - 1-6   - 1-1 - Número de casa del vendedor
-  public int    $cDepVen;     // E310 - 1-2   - 1-1 - Código del departamento del vendedor
+  public int    $cDepVen;     // E310 - 1-2   - 1-1 - Código de departamento del vendedor
   public String $dDesDepVen;  // E311 - 6-16  - 1-1 - Descripción del departamento del vendedor
-  public int    $cDisVen;     // E312 - 1-4   - 0-1 - Código del distrito del vendedor
+  public int    $cDisVen;    // E312 - 1-4   - 0-1 - Código de distrito del vendedor
   public String $dDesDisVen;  // E313 - 1-30  - 0-1 - Descripción del distrito del vendedor
-  public int    $cCiuVen;     // E314 - 1-5   - 1-1 - Código de la ciudad del vendedor
+  public int    $cCiuVen;     // E314 - 1-5   - 1-1 - Código de ciudad del vendedor
   public String $dDesCiuVen;  // E315 - 1-30  - 1-1 - Descripción de la ciudad del vendedor
-  public String $dDirProv;    // E316 - 1-255 - 1-1 - Lugar de la transacción
-  public int    $cDepProv;    // E317 - 1-2   - 1-1 - Código del departamento  donde se realiza la  transacción
-  public String $dDesDepProv; // E318 - 6-16  - 1-1 - Descripción del departamento donde se realiza la transacción
-  public int    $cDisProv;    // E319 - 1-4   - 0-1 - cDisProv Código del distrito donde se realiza la transacción
-  public String $dDesDisProv; // E320 - 1-30  - 0-1 - Descripción del distrito donde se realiza la transacción
-  public int    $cCiuProv;    // E321 - 1-5   - 1-1 - cCiuProv Código de la ciudad  donde se realiza la transacción
-  public String $dDesCiuProv; // E322 - 1-30  - 1-1 - Descripción de la ciudad donde se realiza la transacción
+  public String $dDirProv;    // E316 - 1-255 - 1-1 - Lugar donde se realiza la transacción (dirección en el lugar de la operación)
+  public int    $cDepProv;    // E317 - 1-2   - 1-1 - Código de departamento del lugar de la transacción
+  public String $dDesDepProv; // E318 - 6-16  - 1-1 - Descripción del departamento del lugar de la transacción
+  public int    $cDisProv;    // E319 - 1-4   - 0-1 - Código de distrito del lugar de la transacción
+  public String $dDesDisProv; // E320 - 1-30  - 0-1 - Descripción del distrito del lugar de la transacción
+  public int    $cCiuProv;    // E321 - 1-5   - 1-1 - Código de ciudad del lugar de la transacción
+  public String $dDesCiuProv; // E322 - 1-30  - 1-1 - Descripción de la ciudad del lugar de la transacción
 
   ///////////////////////////////////////////////////////////////////////
-  ///Setters
+  // Setters
   ///////////////////////////////////////////////////////////////////////
 
   /**
    * Establece el valor iNatVen (E301) que representa el código de la naturaleza del vendedor.
+   * Actualiza dDesNatVen (E302) según la descripción definida en {@see CamAENatVen}.
    *
-   * @param int $iNatVen Código de la naturaleza del vendedor.
+   * @param int|CamAENatVen $iNatVen Código o caso del enum de la naturaleza del vendedor.
    *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * @return self Encadenamiento fluido.
    */
-  public function setINatVen(int $iNatVen): self
+  public function setINatVen(int|CamAENatVen $iNatVen): self
   {
-    $this->iNatVen = $iNatVen;
-    switch ($iNatVen) {
-      case 1:
-        $this->dDesNatVen = "No contribuyente";
-        break;
-      case 2:
-        $this->dDesNatVen = "Extranjero";
-        break;
-      default:  
-        unset($this->dDesNatVen);
-        throw new \Exception("[GCamAE] iNatVen debe ser 1 o 2, valor dado: $iNatVen");
-        break;
+    $nat = $iNatVen instanceof CamAENatVen
+      ? $iNatVen
+      : CamAENatVen::tryFrom($iNatVen);
+
+    if ($nat === null) {
+      unset($this->iNatVen, $this->dDesNatVen);
+      $dado = $iNatVen instanceof CamAENatVen ? $iNatVen->value : $iNatVen;
+      throw new \Exception("[GCamAE] iNatVen debe ser 1 o 2, valor dado: $dado");
     }
+
+    $this->iNatVen = $nat->value;
+    $this->dDesNatVen = $nat->getDescription();
+
     return $this;
   }
 
   /**
-   * Establece el valor de dDesNatVen (E302) que representa la descripción de la naturaleza del vendedor.
-   * No se debería utilizar este método, ya que el valor de dDesNatVen se establece automáticamente.
-   * 
-   * @param String $dDesNatVen Descripción de la naturaleza del vendedor.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * Establece dDesNatVen (E302). Preferir {@see setINatVen()}; este setter sirve sobre todo para
+   * {@see FromDOMElement()} o valores ya validados contra el manual.
+   *
+   * @param String $dDesNatVen Literal admitido por el esquema: «No contribuyente» o «Extranjero».
+   *
+   * @return self Encadenamiento fluido.
    */
   public function setDDesNatVen(String $dDesNatVen): self
   {
@@ -85,43 +92,37 @@ class GCamAE
 
   /**
    * Establece el valor de iTipIDVen (E304) que representa el código del tipo de documento de identidad del vendedor.
+   * Actualiza dDTipIDVen (E305) según la descripción definida en {@see CamAETipIDVen}.
    *
-   * @param int $iTipIDVen Código del tipo de documento de identidad del vendedor.
+   * @param int|CamAETipIDVen $iTipIDVen Código o caso del enum del tipo de documento de identidad del vendedor.
    *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * @return self Encadenamiento fluido.
    */
-  public function setITipIDVen(int $iTipIDVen): self
+  public function setITipIDVen(int|CamAETipIDVen $iTipIDVen): self
   {
-    $this->iTipIDVen = $iTipIDVen;
-    switch ($this->iTipIDVen) {
-      case 1:
-        $this->dDTipIDVen = "Cédula paraguaya";
-        break;
-      case 2:
-        $this->dDTipIDVen = "Pasaporte";
-        break;
-      case 3:
-        $this->dDTipIDVen = "Cédula extranjera";
-        break;
-      case 4:
-        $this->dDTipIDVen = "Carnet de residencia";
-        break;
-      default:
-        unset($this->iTipIDVen);
-        unset($this->dDTipIDVen);
-        throw new \Exception("[GCamAE] iTipIDVen debe ser 1, 2, 3 o 4, valor dado: $iTipIDVen");
-        break;
+    $tipo = $iTipIDVen instanceof CamAETipIDVen
+      ? $iTipIDVen
+      : CamAETipIDVen::tryFrom($iTipIDVen);
+
+    if ($tipo === null) {
+      unset($this->iTipIDVen, $this->dDTipIDVen);
+      $dado = $iTipIDVen instanceof CamAETipIDVen ? $iTipIDVen->value : $iTipIDVen;
+      throw new \Exception("[GCamAE] iTipIDVen debe ser 1, 2, 3 o 4, valor dado: $dado");
     }
+
+    $this->iTipIDVen = $tipo->value;
+    $this->dDTipIDVen = $tipo->getDescription();
+
     return $this;
   }
 
   /**
-   * Establece el valor de dDTipIDVen (E305) que representa la descripción del tipo de documento de identidad del vendedor.
-   * Este método no debería ser utilizado, ya que el valor de dDTipIDVen se establece automáticamente a partir de setITipIDVen.
-   * 
-   * @param String $dDTipIDVen Descripción del tipo de documento de identidad del vendedor.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * Establece dDTipIDVen (E305). Preferir {@see setITipIDVen()}; este setter complementa
+   * {@see FromDOMElement()} cuando el XML ya trae código y descripción coherentes.
+   *
+   * @param String $dDTipIDVen Texto según manual (p. ej. «Cédula paraguaya», «Pasaporte»).
+   *
+   * @return self Encadenamiento fluido.
    */
   public function setDDTipIDVen(String $dDTipIDVen): self 
   {
@@ -136,7 +137,7 @@ class GCamAE
    * 
    * @param String $dNumIDVen Número de documento de identidad del vendedor.
    *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * @return self Encadenamiento fluido.
    */
   public function setDNumIDVen(String $dNumIDVen): self
   {
@@ -152,7 +153,7 @@ class GCamAE
    * 
    * @param String $dNomVen Nombre y apellido del vendedor.
    *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * @return self Encadenamiento fluido.
    */
   public function setDNomVen(String $dNomVen): self
   {
@@ -164,13 +165,12 @@ class GCamAE
 
 
   /**
-   * Establece el valor de dDirVen (E308) que representa la dirección del vendedor.
-   * Nombre de la calle principal.
-   * En  caso  de  extranjeros,  colocar  la dirección  en  donde  se  realizó  la transacción.
+   * Establece dDirVen (E308): calle principal del vendedor.
+   * Para vendedor extranjero, suele indicarse la dirección donde se realizó la operación (criterio manual SIFEN).
    *
-   * @param String $dDirVen
+   * @param String $dDirVen Entre 1 y 255 caracteres.
    *
-   * @return self
+   * @return self Encadenamiento fluido.
    */
   public function setDDirVen(String $dDirVen): self
   {
@@ -187,7 +187,7 @@ class GCamAE
    *
    * @param int $dNumCasVen Número de casa del vendedor.
    *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * @return self Encadenamiento fluido.
    */
   public function setDNumCasVen(int $dNumCasVen): self
   {
@@ -199,12 +199,12 @@ class GCamAE
 
 
   /**
-   * Establece el valor de cDepVen (E310) que representa el código del departamento del vendedor.
-   * En  caso  de  extranjeros,  colocar  el departamento  en  donde  se  realizó  la transacción.
+   * Establece cDepVen (E310) y valida contra catálogo; rellena dDesDepVen (E311) vía {@see DepartamentoMapping}.
+   * Para vendedor extranjero, usar el departamento donde se realizó la operación (manual SIFEN).
    * 
    * @param int $cDepVen Código del departamento del vendedor.
    *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * @return self Encadenamiento fluido.
    */
   public function setCDepVen(int $cDepVen): self
   {
@@ -218,12 +218,12 @@ class GCamAE
   }
 
   /**
-   * Establece el valor de dDesDepVen (E311) que representa la descripción del departamento del vendedor.
-   * Este método no debería ser utilizado, ya que el valor de dDesDepVen se establece automáticamente a partir de setCDepVen.
-   * 
-   * @param String $dDesDepVen Descripción del departamento del vendedor.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * Asigna dDesDepVen (E311) sin validar contra catálogo. {@see setCDepVen()} calcula la descripción a partir del código;
+   * use este método solo si necesita fijar el texto manualmente (p. ej. deserialización).
+   *
+   * @param String $dDesDepVen Nombre del departamento.
+   *
+   * @return self Encadenamiento fluido.
    */
   public function setDDesDepVen(String $dDesDepVen): self
   {
@@ -232,42 +232,47 @@ class GCamAE
   }
 
   /**
-   * Establece el valor de cDisVen (E312) que representa el código del distrito del vendedor.
-   * En caso de extranjeros, colocar el distrito en donde se realizó la transacción.
+   * Establece cDisVen (E312) y rellena dDesDisVen (E313) vía {@see PyGeoCodesMapping::getDistName()}.
+   * Para vendedor extranjero, distrito donde se realizó la transacción.
    * 
    * @param int $cDisVen Código del distrito del vendedor.
    *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+   * @return self Encadenamiento fluido.
    */
-  public function setCDisVen(int $cDisVen): self
+  public function setCDisVen(int|null $cDisVen): self
   {
-    $this->cDisVen = $cDisVen;
-
+    if($cDisVen !== null) {
+      $this->cDisVen = $cDisVen;
+      $this->dDesDisVen = PyGeoCodesMapping::getDistName(strval($cDisVen));
+    }
+    else {
+      unset($this->cDisVen, $this->dDesDisVen);
+    }
     return $this;
   }
 
 
   /**
-   * Establece el valor de cCiuVen (E314) que representa el código de la ciudad del vendedor.
+   * Establece cCiuVen (E314) y rellena dDesCiuVen (E315) con {@see PyGeoCodesMapping::getCiudName()}.
    *
-   * @param int $cCiuVen
+   * @param int $cCiuVen Código de ciudad según tablas geográficas SIFEN.
    *
-   * @return self
+   * @return self Encadenamiento fluido.
    */
   public function setCCiuVen(int $cCiuVen): self
   {
     $this->cCiuVen = $cCiuVen;
-
+    $this->dDesCiuVen = PyGeoCodesMapping::getCiudName(strval($cCiuVen));
     return $this;
   }
 
 
   /**
-   * Establece el valor de dDirProv
+   * Establece dDirProv (E316): dirección o referencia del lugar donde se realiza la transacción (lugar de la operación).
    *
-   * @param String $dDirProv
+   * @param String $dDirProv Texto libre según longitudes del manual.
    *
-   * @return self
+   * @return self Encadenamiento fluido.
    */
   public function setDDirProv(String $dDirProv): self
   {
@@ -278,72 +283,98 @@ class GCamAE
 
 
   /**
-   * Establece el valor de cDepProv
+   * Establece cDepProv (E317) y rellena dDesDepProv (E318) con {@see DepartamentoMapping::getDepName()}.
    *
-   * @param int $cDepProv
+   * @param int $cDepProv Código de departamento del lugar de la transacción.
    *
-   * @return self
+   * @return self Encadenamiento fluido.
    */
   public function setCDepProv(int $cDepProv): self
   {
     $this->cDepProv = $cDepProv;
-
+    $this->dDesDepProv = DepartamentoMapping::getDepName(strval($cDepProv));
     return $this;
   }
 
 
   /**
-   * Establece el valor de cDisProv
+   * Establece cDisProv (E319) y rellena dDesDisProv (E320) con {@see PyGeoCodesMapping::getDistName()}.
    *
-   * @param int $cDisProv
+   * @param int $cDisProv Código de distrito del lugar de la transacción.
    *
-   * @return self
+   * @return self Encadenamiento fluido.
    */
   public function setCDisProv(int $cDisProv): self
   {
     $this->cDisProv = $cDisProv;
-
+    $this->dDesDisProv = PyGeoCodesMapping::getDistName(strval($cDisProv));
     return $this;
   }
 
 
   /**
-   * Establece el valor de cCiuProv
+   * Establece cCiuProv (E321) y rellena dDesCiuProv (E322) con {@see PyGeoCodesMapping::getCiudName()}.
    *
-   * @param int $cCiuProv
+   * @param int $cCiuProv Código de ciudad del lugar de la transacción.
    *
-   * @return self
+   * @return self Encadenamiento fluido.
    */
   public function setCCiuProv(int $cCiuProv): self
   {
     $this->cCiuProv = $cCiuProv;
+    $this->dDesCiuProv = PyGeoCodesMapping::getCiudName(strval($cCiuProv));
     return $this;
   }
 
+  /**
+   * Asigna dDesDisVen (E313) sin pasar por {@see setCDisVen()}. Uso típico: XML o datos ya validados.
+   *
+   * @return self Encadenamiento fluido.
+   */
   public function setDDesDisVen(String $dDesDisVen): self
   {
     $this->dDesDisVen = $dDesDisVen;
     return $this;
   }
 
+  /**
+   * Asigna dDesCiuVen (E315) sin pasar por {@see setCCiuVen()}. Uso típico: XML o datos ya validados.
+   *
+   * @return self Encadenamiento fluido.
+   */
   public function setDDesCiuVen(String $dDesCiuVen): self
   {
     $this->dDesCiuVen = $dDesCiuVen;
     return $this;
   }
 
+  /**
+   * Asigna dDesDepProv (E318) sin pasar por {@see setCDepProv()}.
+   *
+   * @return self Encadenamiento fluido.
+   */
   public function setDDesDepProv(String $dDesDepProv): self
   {
     $this->dDesDepProv = $dDesDepProv;
     return $this;
   }
 
+  /**
+   * Asigna dDesDisProv (E320) sin pasar por {@see setCDisProv()}.
+   *
+   * @return self Encadenamiento fluido.
+   */
   public function setDDesDisProv(String $dDesDisProv): self
   {
     $this->dDesDisProv = $dDesDisProv;
     return $this;
   }
 
+  /**
+   * Asigna dDesCiuProv (E322) sin pasar por {@see setCCiuProv()}.
+   *
+   * @return self Encadenamiento fluido.
+   */
   public function setDDesCiuProv(String $dDesCiuProv): self
   {
     $this->dDesCiuProv = $dDesCiuProv;
@@ -351,11 +382,11 @@ class GCamAE
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///Getters
+  // Getters
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Obtiene el valor de iNatVen
+   * iNatVen (E301): código de naturaleza del vendedor ({@see CamAENatVen}).
    */
   public function getINatVen(): int
   {
@@ -363,7 +394,7 @@ class GCamAE
   }
 
   /**
-   * E302 dDesNatVen Descripción de la naturaleza del vendedor
+   * dDesNatVen (E302): descripción de la naturaleza del vendedor.
    *
    * @return String
    */
@@ -374,7 +405,7 @@ class GCamAE
 
 
   /**
-   * Obtiene el valor de iTipIDVen
+   * iTipIDVen (E304): tipo de documento del vendedor ({@see CamAETipIDVen}).
    */
   public function getITipIDVen(): int
   {
@@ -383,7 +414,7 @@ class GCamAE
 
 
   /**
-   * E305 Descripción del tipo de documento de identidad del vendedor
+   * dDTipIDVen (E305): descripción del tipo de documento del vendedor.
    *
    * @return String
    */
@@ -394,7 +425,7 @@ class GCamAE
 
 
   /**
-   * Obtiene el valor de dNumIDVen
+   * dNumIDVen (E306): número de documento de identidad del vendedor.
    */
   public function getDNumIDVen(): String
   {
@@ -402,7 +433,7 @@ class GCamAE
   }
 
   /**
-   * Obtiene el valor de dNomVen
+   * dNomVen (E307): nombre y apellido del vendedor.
    */
   public function getDNomVen(): String
   {
@@ -412,7 +443,7 @@ class GCamAE
 
 
   /**
-   * Obtiene el valor de dDirVen
+   * dDirVen (E308): dirección (calle) del vendedor.
    */
   public function getDDirVen(): String
   {
@@ -420,7 +451,7 @@ class GCamAE
   }
 
   /**
-   * Obtiene el valor de dNumCasVen
+   * dNumCasVen (E309): número de casa; sin numeración usar 0.
    */
   public function getDNumCasVen(): int
   {
@@ -428,7 +459,7 @@ class GCamAE
   }
 
   /**
-   * Obtiene el valor de cDepVen
+   * cDepVen (E310): código de departamento del vendedor.
    */
   public function getCDepVen(): int
   {
@@ -436,7 +467,7 @@ class GCamAE
   }
 
   /**
-   * E311 Descripción del departamento del vendedor
+   * dDesDepVen (E311): nombre del departamento del vendedor, obtenido del código `cDepVen` vía {@see DepartamentoMapping}.
    *
    * @return String
    */
@@ -447,7 +478,7 @@ class GCamAE
 
 
   /**
-   * Obtiene el valor de cDisVen
+   * cDisVen (E312): código de distrito del vendedor (opcional en esquema).
    *
    * @return int
    */
@@ -457,7 +488,7 @@ class GCamAE
   }
 
   /**
-   * E313 Descripción del distrito del vendedor
+   * dDesDisVen (E313): nombre del distrito, obtenido del código `cDisVen` vía {@see PyGeoCodesMapping}.
    *
    * @return String
    */
@@ -467,7 +498,7 @@ class GCamAE
   }
 
   /**
-   * Obtiene el valor de cCiuVen
+   * cCiuVen (E314): código de ciudad del vendedor.
    *
    * @return int
    */
@@ -477,7 +508,7 @@ class GCamAE
   }
 
   /**
-   * E315  Descripción de la ciudad del vendedor 
+   * dDesCiuVen (E315): nombre de la ciudad, obtenido del código `cCiuVen` vía {@see PyGeoCodesMapping}.
    *
    * @return String
    */
@@ -498,7 +529,7 @@ class GCamAE
   }
 
   /**
-   * Obtiene el valor de cDepProv
+   * cDepProv (E317): código de departamento del lugar de la transacción.
    *
    * @return int
    */
@@ -508,7 +539,7 @@ class GCamAE
   }
 
   /**
-   * E318 Descripción del departamento donde se realiza la transacción
+   * dDesDepProv (E318): departamento del lugar de la transacción, obtenido del código `cDepProv` vía {@see DepartamentoMapping}.
    *
    * @return String
    */
@@ -519,7 +550,7 @@ class GCamAE
 
 
   /**
-   * Obtiene el valor de cDisProv
+   * cDisProv (E319): código de distrito del lugar de la transacción (opcional en esquema).
    *
    * @return int
    */
@@ -529,7 +560,7 @@ class GCamAE
   }
 
   /**
-   * E320 Descripción del distrito donde se realiza la transacción
+   * dDesDisProv (E320): distrito del lugar de la transacción, obtenido del código `cDisProv` vía {@see PyGeoCodesMapping}.
    *
    * @return String
    */
@@ -539,7 +570,7 @@ class GCamAE
   }
 
   /**
-   * Obtiene el valor de cCiuProv
+   * cCiuProv (E321): código de ciudad del lugar de la transacción.
    *
    * @return int
    */
@@ -549,7 +580,7 @@ class GCamAE
   }
 
   /**
-   * E322 Descripción de la ciudad donde se realiza la transacción
+   * dDesCiuProv (E322): ciudad del lugar de la transacción, obtenido del código `cCiuProv` vía {@see PyGeoCodesMapping}.
    *
    * @return String
    */
@@ -559,15 +590,16 @@ class GCamAE
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element
+  // Serialización XML
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Convierte este GCamAE a un DOMElement mediante un DOMDocument que lo generará.
-   * 
-   * @param  DOMDocument $doc Documento DOM que generará el DOMElement sin insertarlo.
+   * Genera el nodo XML `gCamAE` con hijos en el orden exigido por el esquema SIFEN.
+   * Los campos de descripción geográfica se obtienen con los getters (mapeo desde códigos cuando aplica).
    *
-   * @return DOMElement El DOMElement que representa a este GCamAE en el DOMDocument proporcionado.
+   * @param DOMDocument $doc Documento propietario de los nodos creados.
+   *
+   * @return DOMElement Nodo raíz `gCamAE`.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
@@ -581,7 +613,7 @@ class GCamAE
     $res->appendChild(new DOMElement('dNomVen',    $this->getDNomVen()));
     $res->appendChild(new DOMElement('dDirVen',    $this->getDDirVen()));
 
-    ///Si no tiene numeración colocar 0 (cero)
+    // Manual SIFEN: sin numeración enviar 0
     if (isset($this->dNumCasVen)) {
       $res->appendChild(new DOMElement('dNumCasVen', $this->getDNumCasVen()));
     } else {
@@ -606,11 +638,12 @@ class GCamAE
   }
 
   /**
-   * Instancia un objeto GCamAE a partir de un DOMElement que representa el nodo XML del objeto.
-   * 
-   * @param DOMElement $node Nodo XML que representa el objeto GCamAE
-   * 
-   * @return GCamAE Objeto GCamAE instanciado
+   * Construye una instancia desde un nodo `gCamAE` (p. ej. DE recibido o persistido).
+   * Exige que el nombre local del nodo sea `gCamAE`; usa setters con validación donde existe.
+   *
+   * @param DOMElement $node Nodo cuyo `nodeName` debe ser `gCamAE`.
+   *
+   * @return self Instancia poblada desde el XML.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
@@ -646,10 +679,12 @@ class GCamAE
   }
 
   /**
-   * FromSimpleXMLElement
+   * Hidratación parcial desde un objeto devuelto por la API SIFEN (p. ej. `stdClass` decodificado).
+   * Solo asigna propiedades presentes; no replica la validación completa de {@see FromDOMElement()}.
    *
-   * @param  mixed $object
-   * @return self
+   * @param object $object Objeto con propiedades homónimas a los campos XML (iNatVen, dNomVen, …).
+   *
+   * @return self Instancia con los campos disponibles en la respuesta.
    */
   public static function FromSifenResponseObject($object): self
   {

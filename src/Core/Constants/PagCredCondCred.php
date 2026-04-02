@@ -2,8 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
  * Enumeración que contiene las condiciones de operación a crédito con facturas y autofacturas electrónicas.
  * Estos valores corresponden al campo iCondCred (E641), asi como a su descripción correspondiente del campo dDCondCred (E642) 
@@ -14,15 +12,45 @@ enum PagCredCondCred: int {
     case Plazo = 1;
     case Cuota = 2;
 
-    public static function getDescripcion(int $value): string {
-        switch($value) {
-            case 1:
-                return 'Plazo';
-            case 2:
-                return 'Cuota';
-            default:
-                throw new Exception("[CamCondOpe] Condición de operación a crédito inválida: $value");
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::Plazo => 'Plazo',
+            self::Cuota => 'Cuota'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
     }
 }
 

@@ -3,19 +3,18 @@
 namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
- * Enumeraración que contiene las condiciones del tipo de cambio aplicables en una operación comercial.
- * Corresponde a los valores posibles del campo `dCondTiCam` (D017) del grupo `gOpeCom` (D010).
+ * Enumeración que contiene los tipos de emisión para
+ * iTipEmi (B002) y dDesTipEmi (B003) del grupo gOpeDE (B001).
  */
-enum OpeComCondTipCam: int {
-
-    case Global = 1;
-    case PorItem = 2;
+enum OpeDETipEmi: int {
+    case Normal = 1;
+    case Contingencia = 2;
 
     public function getDescription(): string
     {
         return match($this) {
-            self::Global => 'Global',
-            self::PorItem => 'Por Ítem'
+            self::Normal => 'Normal',
+            self::Contingencia => 'Contingencia'
         };
     }
 
@@ -43,6 +42,12 @@ enum OpeComCondTipCam: int {
 
         return $list;
     }
-}
 
-?>
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
+    }
+}

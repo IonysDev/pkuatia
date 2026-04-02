@@ -2,11 +2,9 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
- * Enumeración que contiene los tipos de pagos soportados en una operación comercial para los campos
- * iTiPago (E606) y dDesTiPag (E607) del grupo gPaConEIni (E605).
+ * Enumeración del tipo de pago al contado / entrega inicial: campos iTiPago (E606) y dDesTiPag (E607)
+ * del grupo gPaConEIni (E605), según Manual Técnico SIFEN v150.
  */
 enum PaConEIniTiPago: int {
 
@@ -33,55 +31,65 @@ enum PaConEIniTiPago: int {
     case PagoElectronico = 21;
     case Otros = 99;
 
-    public static function getDescripcion(int $value): string {
-        switch($value) {
-            case 1:
-                return 'Efectivo';
-            case 2:
-                return 'Cheque';
-            case 3:
-                return 'Tarjeta de crédito';
-            case 4:
-                return 'Tarjeta de débito';
-            case 5:
-                return 'Transferencia';
-            case 6:
-                return 'Giro';
-            case 7:
-                return 'Billetera electrónica';
-            case 8:
-                return 'Tarjeta empresarial';
-            case 9:
-                return 'Vale';
-            case 10:
-                return 'Retención';
-            case 11:
-                return 'Pago por anticipo';
-            case 12:
-                return 'Valor fiscal';
-            case 13:
-                return 'Valor comercial';
-            case 14:
-                return 'Compensación';
-            case 15:
-                return 'Permuta';
-            case 16:
-                return 'Pago bancario';
-            case 17:
-                return 'Pago Móvil';
-            case 18:
-                return 'Donación';
-            case 19:
-                return 'Promoción';
-            case 20:
-                return 'Consumo Interno';
-            case 21:
-                return 'Pago Electrónico';
-            case 99:
-                return 'Otro';
-            default:
-                throw new Exception("[PaConEIniTiPago] Tipo de pago equivocado: $value");
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::Efectivo => 'Efectivo',
+            self::Cheque => 'Cheque',
+            self::TarjetaCredito => 'Tarjeta de crédito',
+            self::TarjetaDebito => 'Tarjeta de débito',
+            self::Transferencia => 'Transferencia',
+            self::Giro => 'Giro',
+            self::BilleteraElec => 'Billetera electrónica',
+            self::TarjetaEmpresarial => 'Tarjeta empresarial',
+            self::Vale => 'Vale',
+            self::Retencion => 'Retención',
+            self::PagoPorAnticipo => 'Pago por anticipo',
+            self::ValorFiscal => 'Valor fiscal',
+            self::ValorComercial => 'Valor comercial',
+            self::Compensacion => 'Compensación',
+            self::Permuta => 'Permuta',
+            self::PagoBancario => 'Pago bancario',
+            self::PagoMovil => 'Pago Móvil',
+            self::Donacion => 'Donación',
+            self::Promocion => 'Promoción',
+            self::ConsumoInterno => 'Consumo Interno',
+            self::PagoElectronico => 'Pago Electrónico',
+            self::Otros => 'Otro'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
     }
 }
 

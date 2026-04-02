@@ -2,8 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
  * Enumeración que contiene los códigos de respuesta del WS de envío de lotes de comprobantes electrónicos.
  * Estos valores corresponden al campo dCodRes (BRSch03), asi como a su descripción correspondiente del campo dMsgRes (BRSch04) del grupo rResEnviLoteDe (BRSch01).
@@ -14,17 +12,46 @@ enum ResEnviLoteDeCodRes: int {
     case LoteRecibidoConExito = 300;
     case LoteNoEncolado = 301;
 
-    public static function getDescripcion(int $value): string {
-        switch($value) {
-            case 270:
-                return 'Mensaje de datos de entrada del WS de envío de lotes de comprobantes electrónicos superior a 10.000 KB.';
-            case 300:
-                return 'Lote recibido con éxito';
-            case 301:
-                return 'Lote no encolado para procesamiento';
-            default:
-                throw new Exception("[ResEnviLoteDeCodRes] Código de respuesta inválido: $value");
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::EntradaSuperiorA100000KB => 'Entrada superior a 100000 KB',
+            self::LoteRecibidoConExito => 'Lote recibido con éxito',
+            self::LoteNoEncolado => 'Lote no encolado'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
     }
 }
 

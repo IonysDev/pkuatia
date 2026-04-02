@@ -2,8 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
  * Enumeración que contiene los tipos de impuestos de una operación comercial para los campos
  * iTipTra (D013) y dDesTipTra (D014) del grupo gOpeCom (D010).
@@ -16,21 +14,48 @@ enum OpeComTipImp: int {
     case Ninguno = 4;
     case IVARenta = 5;
 
-    public static function getDescripcion(int $tipImp): string {
-        switch($tipImp) {
-            case 1:
-                return 'IVA';
-            case 2:
-                return 'ISC';
-            case 3:
-                return 'Renta';
-            case 4:
-                return 'Ninguno';
-            case 5:
-                return 'IVA - Renta';
-            default:
-                throw new Exception("Tipo de impuesto equivocado: $tipImp");
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::IVA => 'IVA',
+            self::ISC => 'ISC',
+            self::Renta => 'Renta',
+            self::Ninguno => 'Ninguno',
+            self::IVARenta => 'IVA – Renta'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $tipImp): ?string
+    {
+        return self::getDescriptionFromValue($tipImp);
     }
 }
 

@@ -2,8 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
  * Enumeración que contiene los tipos de transacción de una operación comercial para los campos
  * cOblAfe (D031) y dDesOblAfe (D032) del grupo GOblAfe (D030).
@@ -21,37 +19,55 @@ enum COblAfe: int {
     case ImpuestoALaRentaPersonalServiciosPersonales = 715;
     case ImpuestoALaRentaPersonalRentaYGananciasDeCapital = 716;
 
-
-    public static function getDescripcion(int $cOblAfe): string
+    public function getDescription(): string
     {
-        switch ($cOblAfe)
-        {
-            case 113:
-                return 'IMPUESTO A LA RENTA IRACIS - REGÍMENES ESPECIALES';
-            case 143:
-                return 'TRIBUTO UNICO MAQUILA';
-            case 211:
-                return 'IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS - EXPORTADORES';
-            case 311:
-                return 'IMPUESTO SELECTIVO AL CONSUMO - GENERAL';
-            case 321:
-                return 'IMPUESTO SELECTIVO AL CONSUMO COMBUSTIBLES';
-            case 700:
-                return 'IMPUESTO A LA RENTA EMPRESARIAL - RÉGIMEN GENERAL';
-            case 701:
-                return 'IMPUESTO A LA RENTA EMPRESARIAL - SIMPLE';
-            case 703:
-                return 'IMPUESTO DE ZONA FRANCA';
-            case 702:
-                return 'IMPUESTO A LA RENTA EMPRESARIAL - RESIMPLE';
-            case 715:
-                return 'IMPUESTO A LA RENTA PERSONAL - SERVICIOS PERSONALES';
-            case 716:
-                return 'IMPUESTO A LA RENTA PERSONAL - RENTAS Y GANANCIAS DE CAPITAL';
-            default:
-                throw new Exception('[COblAfe] Código de obligación afectada no soportada: ' . $cOblAfe);
+        return match($this) {
+            self::ImpuestoALaRentaIracisRegimenEspeciales => 'ImpuestoALaRentaIracisRegimenEspeciales',
+            self::TributoUnicoMaquila => 'TributoUnicoMaquila',
+            self::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores => 'ImpuestoAlValorAgregadoGravadasYExoneradasExportadores',
+            self::ImpuestoSelectivoAlConsumoGeneral => 'ImpuestoSelectivoAlConsumoGeneral',
+            self::ImpuestoSelectivoAlConsumoCombustibles => 'ImpuestoSelectivoAlConsumoCombustibles',
+            self::ImpuestoALaRentaEmpresarialRegimenGeneral => 'ImpuestoALaRentaEmpresarialRegimenGeneral',
+            self::ImpuestoALaRentaEmpresarialSimple => 'ImpuestoALaRentaEmpresarialSimple',
+            self::ImpuestoDeZonaFranca => 'ImpuestoDeZonaFranca',
+            self::ImpuestoALaRentaEmpresarialResimple => 'ImpuestoALaRentaEmpresarialResimple',
+            self::ImpuestoALaRentaPersonalServiciosPersonales => 'ImpuestoALaRentaPersonalServiciosPersonales',
+            self::ImpuestoALaRentaPersonalRentaYGananciasDeCapital => 'ImpuestoALaRentaPersonalRentaYGananciasDeCapital'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
 
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $cOblAfe): ?string
+    {
+        return self::getDescriptionFromValue($cOblAfe);
     }
 }
+
 ?>

@@ -2,15 +2,14 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-enum RespEmiNR: int
-{
+enum RespEmiNR: int {
     case EmisorFactura = 1;
     case PoseedorFacturaYBienes = 2;
     case EmpresaTransportista = 3;
     case DespachanteAduanas = 4;
     case AgenteTransporte = 5;
 
-    public function getDescripcion(): string
+    public function getDescription(): string
     {
         return match($this) {
             self::EmisorFactura => 'Emisor de la factura',
@@ -21,19 +20,52 @@ enum RespEmiNR: int
         };
     }
 
-    public static function getDescripcionFromInt(int $valor): ?string
+    public static function getDescriptionFromValue(int|string $value): ?string
     {
-        return self::from($valor)->getDescripcion();
+        return self::tryFrom($value)?->getDescription();
     }
 
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
+        }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescription() instead.
+     */
+    public function getDescripcion(): string
+    {
+        return $this->getDescription();
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcionFromInt(int $valor): ?string
+    {
+        return self::getDescriptionFromValue($valor);
+    }
+
+    /**
+     * @deprecated Use getValueDescriptionMap() instead.
+     */
     public static function getList(): array
     {
-        return [
-            self::EmisorFactura->value => self::EmisorFactura->getDescripcion(),
-            self::PoseedorFacturaYBienes->value => self::PoseedorFacturaYBienes->getDescripcion(),
-            self::EmpresaTransportista->value => self::EmpresaTransportista->getDescripcion(),
-            self::DespachanteAduanas->value => self::DespachanteAduanas->getDescripcion(),
-            self::AgenteTransporte->value => self::AgenteTransporte->getDescripcion()
-        ];
+        return self::getValueDescriptionMap();
     }
 }

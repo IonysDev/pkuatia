@@ -33,27 +33,6 @@ class Constants
     const SIFEN_PATH_CONSULTA_RUC = "/de/ws/consultas/consulta-ruc.wsdl";
     const SIFEN_PATH_CONSULTA = "/de/ws/consultas/consulta.wsdl";
 
-    // Tipos de Documentos
-    public const TIPO_DOCUMENTO_FACTURA = 1;
-    public const TIPO_DOCUMENTO_FACTURA_EXPORTACION = 2;
-    public const TIPO_DOCUMENTO_FACTURA_IMPORTACION = 3;
-    public const TIPO_DOCUMENTO_AUTOFACTURA = 4;
-    public const TIPO_DOCUMENTO_NOTA_CREDITO = 5;
-    public const TIPO_DOCUMENTO_NOTA_DEBITO = 6;
-    public const TIPO_DOCUMENTO_COMPROBANTE_RETENCION = 7;
-
-    //Tipos de contribuyentes
-    public const TIPO_CONTRIBUYENTE_PERSONA_FISICA = 1;
-    public const TIPO_CONTRIBUYENTE_PERSONA_JURIDICA = 2;
-
-    //Tipos de emisión
-    public const TIPO_EMISION_NORMAL = 1;
-    public const TIPO_EMISION_CONTINGENCIA = 2;
-
-    //Sistema de facturacion
-    public const SISTEMA_FACTURACION_CONTRIBUYENTE = 1;
-    // public const SISTEMA_FACTURACION_SIFEN_GRATUITO = 2;//ELIMINADO NOTA TECNICA 10
-
     //Tipos de transacciones
     public const TIPO_TRANSACCION_VENTA_MERCADERIA = 1;
     public const TIPO_TRANSACCION_PRESTACION_SERVICIOS = 2;

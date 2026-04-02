@@ -2,7 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\DE\A;
 
-use IonysDev\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Constants\DESisFact;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Core\Fields\DE\B\GOpeDE;
 use IonysDev\Pkuatia\Core\Fields\DE\C\GTimb;
@@ -32,7 +32,6 @@ class DE extends BaseSifenField
   public int      $dDVId;          // A003 - 1  - 1-1 - Dígito verificador del dentificador del DE 
   public DateTime $dFecFirma;      // A004 - 19 - 1-1 - Fecha de la firma
   public int      $dSisFact;       // A005 - 1  - 1-1 - Sistema de facturación
-
   public GOpeDE      $gOpeDe;      // B001 - G - 1-1  - Campos inherentes a la operación de DE
   public GTimb       $gTimb;       // C001 - G - 1-1  - Datos del timbrado 
   public GDatGralOpe $gDatGralOpe; // D001 - G - 1-1  - Campos generales del DE
@@ -46,7 +45,7 @@ class DE extends BaseSifenField
    */
   public function __construct()
   {
-    $this->dSisFact = Constants::SISTEMA_FACTURACION_CONTRIBUYENTE;
+    $this->dSisFact = DESisFact::Contribuyente->value;
     $this->gCamDEAsoc = [];
   }
 

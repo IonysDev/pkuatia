@@ -2,11 +2,10 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
- * Enumeración que contiene los motivos de emisión de las notas de crédito y débito.
- * 
+ * Enumeración del parámetro `iMotEmi` (E401) del grupo `gCamNCDE` (E400),
+ * utilizado en notas de crédito y notas de débito electrónicas. *
+ * Cada valor corresponde a la descripción `dDesMotEmi` (E402)
  */
 enum MotEmi: int {
     case DevolucionYAjustePrecio = 1;
@@ -18,39 +17,58 @@ enum MotEmi: int {
     case RecuperoDeGasto = 7;
     case AjusteDePrecio = 8;
 
-    public static function getDescripcion(int $value): string {
-        switch($value) {
-            case 1:
-                return 'Devolución y Ajuste de precios';
-            case 2:
-                return 'Devolución';
-            case 3:
-                return 'Descuento';
-            case 4:
-                return 'Bonificación';
-            case 5:
-                return 'Crédito incobrable';
-            case 6:
-                return 'Recupero de costo';
-            case 7:
-                return 'Recupero de gasto';
-            case 8:
-                return 'Ajuste de precio';
-            default:
-                throw new Exception("[MotEmi] Motivo de emisión inválido: $value");
-        }
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::DevolucionYAjustePrecio => 'Devolución y Ajuste de precios',
+            self::Devolucion => 'Devolución',
+            self::Descuento => 'Descuento',
+            self::Bonificacion => 'Bonificación',
+            self::CreditoIncobrable => 'Crédito incobrable',
+            self::RecuperoDeCosto => 'Recupero de costo',
+            self::RecuperoDeGasto => 'Recupero de gasto',
+            self::AjusteDePrecio => 'Ajuste de precio'
+        };
     }
 
-    public static function getList(): array {
-        return [
-            self::DevolucionYAjustePrecio->value => self::getDescripcion(self::DevolucionYAjustePrecio->value),
-            self::Devolucion->value => self::getDescripcion(self::Devolucion->value),
-            self::Descuento->value => self::getDescripcion(self::Descuento->value),
-            self::Bonificacion->value => self::getDescripcion(self::Bonificacion->value),
-            self::CreditoIncobrable->value => self::getDescripcion(self::CreditoIncobrable->value),
-            self::RecuperoDeCosto->value => self::getDescripcion(self::RecuperoDeCosto->value),
-            self::RecuperoDeGasto->value => self::getDescripcion(self::RecuperoDeGasto->value),
-            self::AjusteDePrecio->value => self::getDescripcion(self::AjusteDePrecio->value)
-        ];
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
+        }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
+    }
+
+    /**
+     * @deprecated Use getValueDescriptionMap() instead.
+     */
+    public static function getList(): array
+    {
+        return self::getValueDescriptionMap();
     }
 }

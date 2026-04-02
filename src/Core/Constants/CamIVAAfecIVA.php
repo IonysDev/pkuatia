@@ -2,8 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
  * Enumeración que contiene los tipos de afectación tributaria de los ítems valorizados.
  * No debe informarse para aquellos items que formen parte de notas de remsión (utilizar ítems no valorizados NoValueItem).
@@ -17,41 +15,56 @@ enum CamIVAAfecIVA: int {
     case Exonerado = 2;
     case Exento = 3;
     case GravadoParcial = 4;
-    
-    public static function getDescripcion(int $value): string {
-        switch($value) {
-            case 1:
-                return 'Gravado IVA';
-            case 2:
-                return 'Exonerado (Art. 100 - Ley 6380/2019)';
-            case 3:
-                return 'Exento';
-            case 4:
-                return 'Gravado parcial (Grav- Exento)';
-            default:
-                throw new Exception("[CamIVAAfecIVA] Tipo de afectación tributaria inválida: $value");
-        }
+
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::Gravado => 'Gravado IVA',
+            self::Exonerado => 'Exonerado (Art. 83- Ley 125/91)',
+            self::Exento => 'Exento',
+            self::GravadoParcial => 'Gravado parcial (Grav-Exento)'
+        };
     }
 
-    public static function toKeyValueArray(): array {
-        return [
-            [
-                'id' => CamIVAAfecIVA::Gravado->value,
-                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::Gravado->value),
-            ],
-            [
-                'id' => CamIVAAfecIVA::Exonerado->value,
-                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::Exonerado->value),
-            ],
-            [
-                'id' => CamIVAAfecIVA::Exento->value,
-                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::Exento->value),
-            ],
-            [
-                'id' => CamIVAAfecIVA::GravadoParcial->value,
-                'name' => CamIVAAfecIVA::getDescripcion(CamIVAAfecIVA::GravadoParcial->value),
-            ],
-        ];
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
+        }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(int $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
+    }
+
+    /**
+     * @deprecated Use toIdNameList() instead.
+     */
+    public static function toKeyValueArray(): array
+    {
+        return self::toIdNameList();
     }
 }
 

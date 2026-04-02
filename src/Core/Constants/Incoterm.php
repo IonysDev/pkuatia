@@ -3,8 +3,6 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-use Exception;
-
 /**
  * Enumeración relacionada a la tabla 10 del MT (v150) que lista los INCOTERMS soportados por el Sifen.
  */
@@ -53,38 +51,56 @@ enum Incoterm: String {
      * Franco a bordo
      */
     case FOB = "FOB";
-    
-    public static function getDescripcion(String $value): string {
-        switch($value) {
-            case "CFR":
-                return "Costo y flete";
-            case "CIF":
-                return "Costo, seguro y flete";
-            case "CIP":
-                return "Transporte y seguro pagados hasta";
-            case "CPT":
-                return "Transporte pagado hasta";
-            case "DAP":
-                return "Entregada en lugar convenido";
-            case "DAT":
-                return "Entregada en terminaL";
-            case "DDP":
-                return "Entregada derechos pagados";
-            case "EXW":
-                return "En fabrica";
-            case "FAS":
-                return "Franco al costado del buque";
-            case "FCA":
-                return "Franco transportista";
-            case "FOB":
-                return "Franco a bordo";
-            default:
-                throw new Exception("[Incoterms] Tipo de incoterm inválido: $value");
+
+    public function getDescription(): string
+    {
+        return match($this) {
+            self::CFR => 'CFR',
+            self::CIF => 'CIF',
+            self::CIP => 'CIP',
+            self::CPT => 'CPT',
+            self::DAP => 'DAP',
+            self::DAT => 'DAT',
+            self::DDP => 'DDP',
+            self::EXW => 'EXW',
+            self::FAS => 'FAS',
+            self::FCA => 'FCA',
+            self::FOB => 'FOB'
+        };
+    }
+
+    public static function getDescriptionFromValue(int|string $value): ?string
+    {
+        return self::tryFrom($value)?->getDescription();
+    }
+
+    public static function getValueDescriptionMap(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[$case->value] = $case->getDescription();
         }
+
+        return $list;
+    }
+
+    public static function toIdNameList(): array
+    {
+        $list = [];
+        foreach (self::cases() as $case) {
+            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @deprecated Use getDescriptionFromValue() instead.
+     */
+    public static function getDescripcion(String $value): ?string
+    {
+        return self::getDescriptionFromValue($value);
     }
 }
 
-
-
-
- ?>
+?>
