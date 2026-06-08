@@ -19,12 +19,12 @@ class GPagTarCD extends BaseSifenField
 {
   public int $iDenTarj;       // E621 - 1-2  - 1-1 - Denominación de la tarjeta
   public String $dDesDenTarj; // E622 - 4-20 - 1-1 - Descripción de la Denominación de la tarjeta
-  public String $dRSProTar;   // E623 - 4-60 - 0-1 - Razón social de la procesadora de tarjeta
-  public String $dRUCProTar;  // E624 - 3-8  - 0-1 - RUC de la procesadora de tarjeta
+  public ?String $dRSProTar = null;   // E623 - 4-60 - 0-1 - Razón social de la procesadora de tarjeta
+  public ?String $dRUCProTar = null;  // E624 - 3-8  - 0-1 - RUC de la procesadora de tarjeta
   public int $dDVProTar;      // E625 - 1    - 0-1 - Dígito verificador del  RUC de la procesadora  de tarjeta
   public int $iForProPa;      // E626 - 1    - 1-1 - Forma de procesamiento de pago: 1 - POS | 2 - Online | 9 - Otro
   public int $dCodAuOpe;      // E627 - 6-10 - 0-1 - Código de autorización de la operación
-  public String $dNomTit;     // E628 - 4-30 - 0-1 - Nombre del titular de la tarjeta 
+  public ?String $dNomTit = null;     // E628 - 4-30 - 0-1 - Nombre del titular de la tarjeta
   public int $dNumTarj;       // E629 - 4    - 0-1 - Ultimos 4 dígitos del número de la tarjeta;
 
   ///////////////////////////////////////////////////////////////////////
@@ -74,17 +74,11 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setDRSProTar(String $dRSProTar): self
+  public function setDRSProTar(?String $dRSProTar): self
   {
-    $this->dRSProTar = $dRSProTar;
-    if(is_null($dRSProTar) || strlen($dRSProTar) == 0)
-    {
-      $this->dRSProTar;
-    }
-    else
-    {
-      $this->dRSProTar = substr($dRSProTar, 0, 60);
-    }
+    $this->dRSProTar = (is_null($dRSProTar) || strlen($dRSProTar) === 0)
+      ? null
+      : substr($dRSProTar, 0, 60);
     return $this;
   }
 
@@ -96,17 +90,11 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setDRUCProTar(String $dRUCProTar): self
+  public function setDRUCProTar(?String $dRUCProTar): self
   {
-    $this->dRUCProTar = $dRUCProTar;
-    if(is_null($dRUCProTar) || strlen($dRUCProTar) == 0)
-    {
-      $this->dRUCProTar;
-    }
-    else
-    {
-      $this->dRUCProTar = substr($dRUCProTar, 0, 8);
-    }
+    $this->dRUCProTar = (is_null($dRUCProTar) || strlen($dRUCProTar) === 0)
+      ? null
+      : substr($dRUCProTar, 0, 8);
     return $this;
   }
 
@@ -163,17 +151,11 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setDNomTit(String $dNomTit): self
+  public function setDNomTit(?String $dNomTit): self
   {
-    $this->dNomTit = $dNomTit;
-    if(is_null($dNomTit) || strlen($dNomTit) == 0)
-    {
-      $this->dNomTit;
-    }
-    else
-    {
-      $this->dNomTit = substr($dNomTit, 0, 30);
-    }
+    $this->dNomTit = (is_null($dNomTit) || strlen($dNomTit) === 0)
+      ? null
+      : substr($dNomTit, 0, 30);
     return $this;
   }
 
@@ -221,8 +203,8 @@ class GPagTarCD extends BaseSifenField
    *
    * @return String
    */
-  public function getDRSProTar(): String
-  { 
+  public function getDRSProTar(): ?String
+  {
     return $this->dRSProTar;
   }
 
@@ -231,7 +213,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return String
    */
-  public function getDRUCProTar(): String
+  public function getDRUCProTar(): ?String
   {
     return $this->dRUCProTar;
   }
@@ -271,7 +253,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return String
    */
-  public function getDNomTit(): String
+  public function getDNomTit(): ?String
   {
     return $this->dNomTit;
   }

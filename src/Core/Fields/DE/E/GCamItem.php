@@ -32,10 +32,10 @@ class GCamItem extends BaseSifenField
   public String     $dDesUniMed;   // E710 - 1-10       - 1-1 - Descripción de la unidad de medida
   public String     $dCantProSer;  // E711 - 1-10p(0-8) - 1-1 - Cantidad del producto y/o servicio (es un decimal BCMAth)
   public String     $cPaisOrig;    // E712 - 3          - 0-1 - Código del país de origen del producto
-  public String     $dDesPaisOrig; // E713 - 4-30       - 0-1 - Descripción del país de origen del producto
+  public ?String    $dDesPaisOrig = null; // E713 - 4-30       - 0-1 - Descripción del país de origen del producto
   public String     $dInfItem;     // E714 - 1-500      - 0-1 - Información de interés  del emisor con respecto al item;
   public int        $cRelMerc;     // E715 - 1          - 0-1 - Código de datos de relevancia de las  mercaderías
-  public String     $dDesRelMerc;  // E716 - 19-21      - 0-1 - Descripción del código de datos de relevancia de las mercaderías	
+  public ?String    $dDesRelMerc  = null; // E716 - 19-21      - 0-1 - Descripción del código de datos de relevancia de las mercaderías
   public String     $dCanQuiMer;   // E717 - 1-10p(0-4) - 0-1 - Cantidad de quiebra o  merma (decimal BCMath)
   public String     $dPorQuiMer;   // E718 - 1-3p(0-8)  - 0-1 - Porcentaje de quiebra o merma (decimal BCMath)
   public String     $dCDCAnticipo; // E719 - 44         - 0-1 - CDC del anticipo
@@ -300,16 +300,11 @@ class GCamItem extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesPaisOrig(String $dDesPaisOrig): self
+  public function setDDesPaisOrig(?String $dDesPaisOrig): self
   {
-    if(is_null($dDesPaisOrig) || strlen($dDesPaisOrig) == 0)
-    {
-      $this->dDesPaisOrig;
-    }
-    else
-    {
-      $this->dDesPaisOrig = substr($dDesPaisOrig, 0, 30);
-    }
+    $this->dDesPaisOrig = (is_null($dDesPaisOrig) || strlen($dDesPaisOrig) === 0)
+      ? null
+      : substr($dDesPaisOrig, 0, 30);
     return $this;
   }
 
@@ -360,16 +355,11 @@ class GCamItem extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesRelMerc(String $dDesRelMerc): self
+  public function setDDesRelMerc(?String $dDesRelMerc): self
   {
-    if(is_null($dDesRelMerc) || strlen($dDesRelMerc) == 0)
-    {
-      $this->dDesRelMerc;
-    }
-    else
-    {
-      $this->dDesRelMerc = substr($dDesRelMerc, 0, 21);
-    }
+    $this->dDesRelMerc = (is_null($dDesRelMerc) || strlen($dDesRelMerc) === 0)
+      ? null
+      : substr($dDesRelMerc, 0, 21);
     return $this;
   }
 
@@ -618,7 +608,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesPaisOrig(): String
+  public function getDDesPaisOrig(): ?String
   {
     return $this->dDesPaisOrig;
   }
@@ -649,7 +639,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesRelMerc(): String
+  public function getDDesRelMerc(): ?String
   {
     return $this->dDesRelMerc;
   }

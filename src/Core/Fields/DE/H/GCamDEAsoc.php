@@ -32,12 +32,12 @@ class GCamDEAsoc extends BaseSifenField
   public String   $dPExpDocAso;   // H007 - 3     - 0-1 - Punto de expedición
   public String   $dNumDocAso;    // H008 - 7     - 0-1 - Número del documento
   public int      $iTipoDocAso;   // H009 - 1     - 0-1 - Tipo de documento  impreso
-  public String   $dDTipoDocAso;  // H010 - 7-16  - 0-1 - Descripción del tipo de documento impreso
+  public ?String  $dDTipoDocAso = null;  // H010 - 7-16  - 0-1 - Descripción del tipo de documento impreso
   public DateTime $dFecEmiDI;     // H011 - 10    - 0-1 - Fecha de emisión del documento impreso de referencia AAAA-MM-DD
   public String   $dNumComRet;    // H012 - 15    - 0-1 - Número de comprobante de retención
   public String   $dNumResCF;     // H013 - 15    - 0-1 - Número de resolución de crédito fiscal
   public int      $iTipCons;      // H014 - 1     - 0-1 - Tipo de constancia
-  public String   $dDesTipCons;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
+  public ?String  $dDesTipCons = null;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
   public int      $dNumCons;      // H016 - 11    - 0-1 - Número de constancia 
   public String   $dNumControl;   // H017 - 8     - 0-1 - Número de control de la constancia 
   public String   $dRucFus;       // H018 - 3-8   - 0-1 - Obligatorio cuando el CDC del DTE  referenciado corresponda a un  RUC fusionado
@@ -170,16 +170,11 @@ class GCamDEAsoc extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDTipoDocAso(String $dDTipoDocAso): self
+  public function setDDTipoDocAso(?String $dDTipoDocAso): self
   {
-    if(is_null($dDTipoDocAso) || strlen($dDTipoDocAso) == 0)
-    {
-      $this->dDTipoDocAso;
-    }
-    else
-    {
-      $this->dDTipoDocAso = substr($dDTipoDocAso, 0, 16);
-    }
+    $this->dDTipoDocAso = (is_null($dDTipoDocAso) || strlen($dDTipoDocAso) === 0)
+      ? null
+      : substr($dDTipoDocAso, 0, 16);
     return $this;
   }
 
@@ -259,16 +254,11 @@ class GCamDEAsoc extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesTipCons(String $dDesTipCons): self
+  public function setDDesTipCons(?String $dDesTipCons): self
   {
-    if(is_null($dDesTipCons) || strlen($dDesTipCons) == 0)
-    {
-      $this->dDesTipCons;
-    }
-    else
-    {
-      $this->dDesTipCons = substr($dDesTipCons, 0, 34);
-    }
+    $this->dDesTipCons = (is_null($dDesTipCons) || strlen($dDesTipCons) === 0)
+      ? null
+      : substr($dDesTipCons, 0, 34);
     return $this;
   }
 
@@ -405,7 +395,7 @@ class GCamDEAsoc extends BaseSifenField
    * 
    * @return String
    */
-  public function getDDTipoDocAso(): String
+  public function getDDTipoDocAso(): ?String
   {
     return $this->dDTipoDocAso;
   }
@@ -455,7 +445,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipCons(): String
+  public function getDDesTipCons(): ?String
   {
     return $this->dDesTipCons;
   }
