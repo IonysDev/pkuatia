@@ -14,10 +14,10 @@ use SimpleXMLElement;
 
 class GCamGen
 {
-  public String   $dOrdCompra; // G002 - 1-15 - 0-1 - Número de orden de compra
-  public String   $dOrdVta;    // G003 - 1-15 - 0-1 - Número de orden de venta 
-  public String   $dAsiento;   // G004 - 1-10 - 0-1 - Número de asiento contable
-  public GCamCarg $gCamCarg;   // G050 -      - 0-1 - Campos generales de la carga
+  public ?String  $dOrdCompra = null; // G002 - 1-15 - 0-1 - Número de orden de compra
+  public ?String  $dOrdVta    = null; // G003 - 1-15 - 0-1 - Número de orden de venta
+  public ?String  $dAsiento   = null; // G004 - 1-10 - 0-1 - Número de asiento contable
+  public GCamCarg $gCamCarg;          // G050 -      - 0-1 - Campos generales de la carga
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -30,12 +30,11 @@ class GCamGen
    *
    * @return self
    */
-  public function setDOrdCompra(String $dOrdCompra): self
+  public function setDOrdCompra(?String $dOrdCompra): self
   {
-    if(isset($dOrdCompra) && strlen($dOrdCompra) > 0)
-    {
-      $this->dOrdCompra = substr($dOrdCompra, 0, 15);
-    }
+    $this->dOrdCompra = (is_null($dOrdCompra) || strlen($dOrdCompra) === 0)
+      ? null
+      : substr($dOrdCompra, 0, 15);
     return $this;
   }
 
@@ -43,20 +42,15 @@ class GCamGen
   /**
    * Establece el valor de dOrdVta
    *
-   * @param String $dOrdVta
+   * @param String|null $dOrdVta
    *
    * @return self
    */
-  public function setDOrdVta(String $dOrdVta): self
+  public function setDOrdVta(?String $dOrdVta): self
   {
-    if(is_null($dOrdVta) || strlen($dOrdVta) == 0)
-    {
-      $this->dOrdVta;
-    }
-    else
-    {
-      $this->dOrdVta = substr($dOrdVta, 0, 15);
-    }
+    $this->dOrdVta = (is_null($dOrdVta) || strlen($dOrdVta) === 0)
+      ? null
+      : substr($dOrdVta, 0, 15);
     return $this;
   }
 
@@ -64,20 +58,15 @@ class GCamGen
   /**
    * Establece el valor de dAsiento
    *
-   * @param String $dAsiento
+   * @param String|null $dAsiento
    *
    * @return self
    */
-  public function setDAsiento(String $dAsiento): self
+  public function setDAsiento(?String $dAsiento): self
   {
-    if(is_null($dAsiento) || strlen($dAsiento) == 0)
-    {
-      $this->dAsiento;
-    }
-    else
-    {
-      $this->dAsiento = substr($dAsiento, 0, 10);
-    }
+    $this->dAsiento = (is_null($dAsiento) || strlen($dAsiento) === 0)
+      ? null
+      : substr($dAsiento, 0, 10);
     return $this;
   }
 
@@ -94,9 +83,9 @@ class GCamGen
   /**
    * Obtiene el valor de dOrdCompra
    *
-   * @return String
+   * @return String|null
    */
-  public function getDOrdCompra(): String
+  public function getDOrdCompra(): ?String
   {
     return $this->dOrdCompra;
   }
@@ -104,9 +93,9 @@ class GCamGen
   /**
    * Obtiene el valor de dOrdVta
    *
-   * @return String
+   * @return String|null
    */
-  public function getDOrdVta(): String
+  public function getDOrdVta(): ?String
   {
     return $this->dOrdVta;
   }
@@ -114,9 +103,9 @@ class GCamGen
   /**
    * Obtiene el valor de dAsiento
    *
-   * @return String
+   * @return String|null
    */
-  public function getDAsiento(): String
+  public function getDAsiento(): ?String
   {
     return $this->dAsiento;
   }
@@ -178,12 +167,16 @@ class GCamGen
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamGen');
-    $res->appendChild(new DOMElement('dOrdCompra', $this->getDOrdCompra()));
-    $res->appendChild(new DOMElement('dOrdVta', $this->getDOrdVta()));
-    $res->appendChild(new DOMElement('dAsiento', $this->getDAsiento()));
-    $res->appendChild($this->gCamCarg->toDOMElement($doc));
+    if(!is_null($this->dOrdCompra) && strlen($this->dOrdCompra) > 0)
+      $res->appendChild(new DOMElement('dOrdCompra', $this->dOrdCompra));
+    if(!is_null($this->dOrdVta) && strlen($this->dOrdVta) > 0)
+      $res->appendChild(new DOMElement('dOrdVta', $this->dOrdVta));
+    if(!is_null($this->dAsiento) && strlen($this->dAsiento) > 0)
+      $res->appendChild(new DOMElement('dAsiento', $this->dAsiento));
+    if(isset($this->gCamCarg))
+      $res->appendChild($this->gCamCarg->toDOMElement($doc));
     return $res;
-  }  
+  }
 
   /**
    * FromSifenResponseObject
