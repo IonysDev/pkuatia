@@ -20,9 +20,9 @@ enum CamIVAAfecIVA: int {
     {
         return match($this) {
             self::Gravado => 'Gravado IVA',
-            self::Exonerado => 'Exonerado (Art. 83- Ley 125/91)',
+            self::Exonerado => 'Exonerado (Art. 100 - Ley 6380/2019)',
             self::Exento => 'Exento',
-            self::GravadoParcial => 'Gravado parcial (Grav-Exento)'
+            self::GravadoParcial => 'Gravado parcial (Grav- Exento)'
         };
     }
 

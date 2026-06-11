@@ -24,7 +24,7 @@ class GCamIVA extends BaseSifenField
   public const AFECTACION_IVA_EXENTO = 3;
   public const AFECTACION_IVA_GRAVADO_PARCIAL = 4;
 
-  public int    $iAfecIVA;    // E731 - 1          - 1-1 - Forma de afectación tributaria del IVA: 1 - Gravado | 2 - Exonerado (Art. 83- Ley 125/91) | 3 - Exento | 4 - Gravado parcial (Grav-Exento)
+  public int    $iAfecIVA;    // E731 - 1          - 1-1 - Forma de afectación tributaria del IVA: 1 - Gravado | 2 - Exonerado (Art. 100 - Ley 6380/2019) | 3 - Exento | 4 - Gravado parcial (Grav- Exento)
   public String $dDesAfecIVA; // E732 - 6-15       - 1-1 - Descripción de la forma de afectación tributaria del IVA
   public String $dPropIVA;    // E733 - 1-3p(0-8)  - 1-1 - Proporción gravada de IVA
   public int    $dTasaIVA;    // E734 - 1-2        - 1-1 - Tasa del IVA (% en número entero)
@@ -44,7 +44,7 @@ class GCamIVA extends BaseSifenField
   public function __construct()
   {
     $this->iAfecIVA = 1;
-    $this->dDesAfecIVA = 'Gravado';
+    $this->dDesAfecIVA = CamIVAAfecIVA::Gravado->getDescription();
     $this->dPropIVA = '100';
     $this->dTasaIVA = 10;
     $this->dBasGravIVA = '0';
