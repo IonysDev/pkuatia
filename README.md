@@ -386,6 +386,8 @@ Puedes encontrar ejemplos de uso en el directorio `test/`:
 
 ## 🤝 Contribución
 
+Mantenedores: pasos para publicar en Packagist en [docs/PUBLICAR.md](docs/PUBLICAR.md).
+
 Las contribuciones son bienvenidas. Por favor:
 
 1. Fork el proyecto

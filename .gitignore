@@ -12,7 +12,8 @@
 *.dat.*
 /.vscode
 /vendor
-/docs
+/docs/**
+!/docs/PUBLICAR.md
 /.cursor
 # composer.lock no se versiona en una librería: cada consumidor resuelve sus propias versiones.
 /composer.lock

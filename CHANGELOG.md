@@ -28,6 +28,8 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
   alias `getGResProcEVe`/`setGResProcEVe` en `RRetEnviEventoDe` (typo legacy deprecado),
   `FromSimpleXMLElement` con foreach para 1–15 `gResProcEVe`, referencias `RContRUC` con casing
   correcto, `GGrupSeg::FromDOMElement` y `RGeVeTr::getdDTipIDTrans` con return en default.
+- **Guía de publicación en Packagist (Fase 3.4).** `docs/PUBLICAR.md` con los pasos manuales
+  (cuenta Packagist, submit del repo, webhook de auto-update y release/tag SemVer).
 - **WS de consulta masiva de RUC (siConsArchivoRUC, NT-011).** Nuevo método de facade
   `Sifen::ConsultarArchivoRUC(string $rucFacturador): RResEnviConsArchivoRUC`, con sus
   clases `REnviConsArchivoRUC` (request) y `RResEnviConsArchivoRUC` (response, con helper
