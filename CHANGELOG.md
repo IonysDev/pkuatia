@@ -85,9 +85,10 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 - Nuevas validaciones que lanzan excepción **antes** de transmitir, en casos que el SIFEN ya
   rechazaba: innominado ≥ 7M (NT-024), lote con tipos C002 mixtos o vacío, y más de 15 eventos
   por transmisión.
-- **Requisito de PHP elevado a `>=8.1`** en `composer.json` (la librería usa enumeraciones y
-  `new` en inicializadores, propios de PHP 8.1). Se declaran explícitamente las extensiones
-  requeridas: `ext-soap`, `ext-dom`, `ext-openssl`, `ext-zip`, `ext-bcmath`.
+- **Requisito de PHP elevado a `^8.1`** en `composer.json` (la librería usa enumeraciones y
+  `new` en inicializadores, propios de PHP 8.1; se excluye PHP 9 hasta auditar compatibilidad).
+  Se declaran explícitamente las extensiones requeridas: `ext-soap`, `ext-dom`, `ext-openssl`,
+  `ext-zip`, `ext-bcmath`.
 - `Constants::PKUATIA_VERSION` actualizado a `0.1.0`.
 
 ### Compatibilidad con versiones en `main`

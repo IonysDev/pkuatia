@@ -134,23 +134,15 @@ class GResProcEVe
       if(isset($node->id)) {
         $res->setId($node->id);
       }
-      ///array for gResProc
+      // gResProc puede ocurrir de 1 a 100 veces: iterar con foreach recorre todos los
+      // hermanos del mismo nombre en SimpleXML (un if is_array() jamás se cumple aquí).
       $gResProc = array();
-      ///check if is an array or an object
-      if(is_array($node->gResProc)) {
-        foreach($node->gResProc as $proc) {
-          $aux = new GResProc();
-          $aux->setDCodRes($proc->dCodRes);
-          $aux->setDMsgRes($proc->dMsgRes);
-          $gResProc[] = $aux;
-        }
-      } else {
+      foreach($node->gResProc as $proc) {
         $aux = new GResProc();
-        $aux->setDCodRes($node->gResProc->dCodRes);
-        $aux->setDMsgRes($node->gResProc->dMsgRes);
+        $aux->setDCodRes($proc->dCodRes);
+        $aux->setDMsgRes($proc->dMsgRes);
         $gResProc[] = $aux;
       }
-      ///set gResProc to res
       $res->setGResProc($gResProc);
 
       return $res;
