@@ -9,7 +9,7 @@ namespace IonysDev\Pkuatia\Core;
 class Constants
 {  
     // Versiones
-    const PKUATIA_VERSION = "0.0.1";
+    const PKUATIA_VERSION = "0.1.0";
     const SIFEN_VERSION = "150";
 
     // Namespaces

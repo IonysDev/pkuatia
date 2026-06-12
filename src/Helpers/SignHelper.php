@@ -55,9 +55,7 @@ class SignHelper
     }
     else if ($format === Config::CERT_FORMAT_PKCS12) {
       $keys = file_get_contents($keyFilePath);
-      if (!openssl_pkcs12_read($keys, $clave, $passphrase)) {
-        throw new \Exception("[SignHelper] Error al leer el archivo PKCS#12: " . openssl_error_string());
-      }
+      $clave = Pkcs12Helper::read($keys, $passphrase);
       $privateKey  = $clave['pkey'];
       $certificate = $clave['cert'];
       self::$xmlSigner->add509Cert($certificate);

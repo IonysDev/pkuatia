@@ -1,7 +1,7 @@
 # 📄 PKuatia
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D7.1.3%20%7C%7C%20%5E8.0-blue.svg)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.1-blue.svg)](https://www.php.net/)
 
 **PKuatia** es una biblioteca PHP para interactuar con el **Sistema Integrado de Facturación Electrónica Nacional (SIFEN)** de Paraguay, implementando la especificación técnica del sistema **EKuatia**.
 
@@ -13,6 +13,7 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 - [Requisitos](#-requisitos)
 - [Instalación](#-instalación)
 - [Configuración](#-configuración)
+- [Recomendaciones para Producción](#-recomendaciones-para-producción)
 - [Uso Básico](#-uso-básico)
 - [Funcionalidades](#-funcionalidades)
 - [Tipos de Documentos Soportados](#-tipos-de-documentos-soportados)
@@ -41,7 +42,8 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 
 ## 📦 Requisitos
 
-- PHP >= 7.1.3 o PHP >= 8.0
+- PHP >= 8.1
+- Extensiones PHP: `soap`, `dom`, `openssl`, `zip`, `bcmath`
 - Composer
 - Certificado digital emitido por la SET (Subsecretaría de Estado de Tributación)
 - Clave privada correspondiente al certificado
@@ -121,9 +123,60 @@ Ejemplo de `config.json`:
     "privateKeyPassphrase": "contraseña",
     "idCsc": "0001",
     "csc": "ABCD0000000000000000000000000000",
-    "dIdFilePath": "PKuatiaDId.dat.json"
+    "dIdFilePath": "PKuatiaDId.dat.json",
+    "wsdlCacheEnabled": true
 }
 ```
+
+## 🏭 Recomendaciones para Producción
+
+### Caché de WSDL
+
+El SIFEN limita la tasa de solicitudes. Descargar el WSDL en cada operación puede provocar
+bloqueos temporales. Se recomienda activar la caché de WSDL en disco:
+
+```php
+$config->wsdlCacheEnabled = true; // usa WSDL_CACHE_DISK
+```
+
+En **Windows**, además, conviene asegurar un directorio de caché válido antes de iniciar Sifen,
+porque el valor por defecto (`/tmp`) no existe:
+
+```php
+ini_set('soap.wsdl_cache_dir', sys_get_temp_dir());
+```
+
+### Tasa de solicitudes (rate limiting)
+
+El ambiente de pruebas (`sifen-test`) es especialmente sensible a la saturación: ante un exceso
+de solicitudes deja de responder por varios minutos. Buenas prácticas:
+
+- Mantener `wsdlCacheEnabled = true`.
+- Espaciar los reintentos (no reintentar en bucle inmediato).
+- Para la consulta de resultado de lote (`ConsultaLote`), implementar reintentos con espera
+  progresiva (backoff): esperar ~1 minuto en el primer intento y aumentar gradualmente.
+
+### Certificados `.p12` / `.pfx` con cifrado heredado (OpenSSL 3)
+
+Los certificados emitidos por las CA de Paraguay suelen venir en un PKCS#12 cifrado con
+algoritmos heredados (RC2-40 / 3DES) que **OpenSSL 3 —incluido en PHP 8— deshabilita por
+omisión**. Si al inicializar obtenés un error del tipo
+`digital envelope routines::unsupported`, tenés tres opciones:
+
+1. **Habilitar el proveedor `legacy` de OpenSSL** antes de iniciar PHP, mediante las variables
+   de entorno `OPENSSL_CONF` (apuntando a un `openssl.cnf` que active los proveedores `default`
+   y `legacy`) y `OPENSSL_MODULES` (apuntando al directorio que contiene `legacy.dll` /
+   `legacy.so`). No alcanza con `putenv()` en tiempo de ejecución: el proveedor se inicializa
+   en el primer uso de OpenSSL.
+2. **Reexportar el certificado** a un PKCS#12 con cifrado moderno:
+   ```bash
+   openssl pkcs12 -in viejo.p12 -legacy -nodes -out tmp.pem
+   openssl pkcs12 -export -in tmp.pem -out nuevo.p12
+   # luego eliminar tmp.pem, que queda sin cifrar
+   ```
+3. **Convertir el `.p12` a PEM** y usar `certificateFormat = "pem"`.
+
+La librería detecta este caso y arroja una excepción con estas mismas instrucciones.
 
 ## 📖 Uso Básico
 

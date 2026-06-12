@@ -41,6 +41,7 @@ use IonysDev\Pkuatia\Core\Responses\RResEnviLoteDe;
 use IonysDev\Pkuatia\Core\Responses\RRetEnviDe;
 use IonysDev\Pkuatia\Core\Responses\RRetEnviEventoDe;
 use IonysDev\Pkuatia\Helpers\PemHelper;
+use IonysDev\Pkuatia\Helpers\Pkcs12Helper;
 use IonysDev\Pkuatia\Helpers\QRHelper;
 use IonysDev\Pkuatia\Helpers\SignHelper;
 use SoapClient;
@@ -735,11 +736,7 @@ class Sifen
   private static function createStreamContextFromPkcs12($pkcs12FilePath, $password)
   {
     $pkcs12Content = file_get_contents($pkcs12FilePath);
-    $certs = [];
-
-    if (!openssl_pkcs12_read($pkcs12Content, $certs, $password)) {
-      throw new \Exception("Error reading PKCS#12 file: " . openssl_error_string());
-    }
+    $certs = Pkcs12Helper::read($pkcs12Content, $password);
 
     // Create temporary files for the certificate and private key
     $certFile = tempnam(sys_get_temp_dir(), 'cert_');

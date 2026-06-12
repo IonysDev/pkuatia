@@ -39,6 +39,14 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 - Soporte de certificados **PKCS#12 (`p12`/`pfx`)** y de **PEM combinado** (certificado y
   clave en un mismo archivo), con los helpers `Config::isPem()`, `Config::isPkcs12()`,
   `Config::usesCombinedCertificateFile()` y la clase `PemHelper`.
+- **Mensaje accionable ante certificados PKCS#12 con cifrado heredado.** Nueva clase
+  `Pkcs12Helper`: cuando el `.p12`/`.pfx` usa algoritmos legacy (RC2-40/3DES) que OpenSSL 3
+  deshabilita —caso habitual en las CA de Paraguay—, la librería ya no falla con el críptico
+  `digital envelope routines::unsupported`, sino con una excepción que explica la causa y las
+  soluciones (habilitar el proveedor `legacy`, reexportar el `.p12`, o convertir a PEM). También
+  distingue el caso de contraseña incorrecta (`mac verify failure`).
+- **Sección "Recomendaciones para producción" en el README**: caché de WSDL, manejo del rate
+  limiting del SIFEN y el problema de los `.p12` con cifrado heredado.
 
 ### Corregido
 
@@ -77,6 +85,10 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 - Nuevas validaciones que lanzan excepción **antes** de transmitir, en casos que el SIFEN ya
   rechazaba: innominado ≥ 7M (NT-024), lote con tipos C002 mixtos o vacío, y más de 15 eventos
   por transmisión.
+- **Requisito de PHP elevado a `>=8.1`** en `composer.json` (la librería usa enumeraciones y
+  `new` en inicializadores, propios de PHP 8.1). Se declaran explícitamente las extensiones
+  requeridas: `ext-soap`, `ext-dom`, `ext-openssl`, `ext-zip`, `ext-bcmath`.
+- `Constants::PKUATIA_VERSION` actualizado a `0.1.0`.
 
 ### Compatibilidad con versiones en `main`
 
