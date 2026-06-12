@@ -108,6 +108,11 @@ firma de ningún método público del facade ni de las clases de campos. Puntos 
 4. **Validaciones tempranas.** `FirmarDE` (NT-024), `EnviarLoteDE` (tipo C002/lote vacío) y
    `RegistrarEvento` (>15 eventos) pueden lanzar una excepción en escenarios que el SIFEN ya
    rechazaba; conviene capturarla como cualquier otra excepción de la librería.
+5. **`SignHelper::$xmlSigner` ya no participa en la firma.** La propiedad pública se conserva y se
+   sigue poblando en `Init`, pero cada firma usa una instancia fresca interna (fix del sobrefirmado).
+   El camino documentado (`Sifen::Init` + `FirmarDE`/`RegistrarEvento`) no cambia en absoluto; solo
+   un hipotético código que poblara `SignHelper::$xmlSigner`/`$xmlKey` a mano sin llamar a `Init`
+   debe pasar a llamar a `SignHelper::Init`.
 
 ### Homologación (jun/2026)
 
