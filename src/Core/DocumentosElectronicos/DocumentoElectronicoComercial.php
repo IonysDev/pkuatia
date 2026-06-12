@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\DocumentosElectronicos;
 
+use IonysDev\Pkuatia\Core\Constants\COblAfe;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondAnt;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
@@ -9,6 +10,7 @@ use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
+use IonysDev\Pkuatia\Core\Fields\DE\D\GOblAfe;
 use IonysDev\Pkuatia\Core\Fields\DE\D\GOpeCom;
 
 /**
@@ -107,14 +109,29 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
 
   /**
    * Establece la condición de aplicación de anticipo. Valor obligatorio para los documentos electrónicos comerciales que contengan anticipos.
-   * 
+   *
    * @param OpeComCondAnt $condAnt Condición de anticipo
-   * 
+   *
    * @return self
    */
   public function setCondicionDeAnticipo(int|OpeComCondAnt $condAnt): self
   {
     $this->gOpeCom->setICondAnt($condAnt);
+    return $this;
+  }
+
+  /**
+   * Agrega una obligación afectada (gOblAfe - D030, NT-018) a la operación comercial.
+   * Las obligaciones afectadas permiten la imputación automática en el módulo RG90 (Marangatu).
+   * Valor opcional. Se admiten hasta 12 obligaciones por documento.
+   *
+   * @param int|COblAfe|GOblAfe $obligacion Código de la obligación afectada según Tabla 12 - NT-018 (o un GOblAfe ya conformado).
+   *
+   * @return self
+   */
+  public function addObligacionAfectada(int|COblAfe|GOblAfe $obligacion): self
+  {
+    $this->gOpeCom->addGOblAfe($obligacion);
     return $this;
   }
 
