@@ -50,7 +50,7 @@ class GCamFE extends BaseSifenField
   public function setIIndPres(int|CamFEIndPres $iIndPres): self
   {
     $this->iIndPres = $iIndPres instanceof CamFEIndPres ? $iIndPres->value : $iIndPres;
-    $this->dDesIndPres = $iIndPres instanceof CamFEIndPres ? $iIndPres : CamFEIndPres::getDescripcion($iIndPres);
+    $this->dDesIndPres = $iIndPres instanceof CamFEIndPres ? $iIndPres->getDescription() : CamFEIndPres::getDescriptionFromValue($iIndPres);
     return $this;
   }
 

@@ -45,7 +45,7 @@ class GRespDE extends BaseSifenField
     public function setITipIDRespDE(int|TipIDRespDE $iTipIDRespDE): self
     {
         $this->iTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE->value : $iTipIDRespDE;
-        $this->dDTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE : TipIDRespDE::getDescripcion($iTipIDRespDE);
+        $this->dDTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE->getDescription() : TipIDRespDE::getDescriptionFromValue($iTipIDRespDE);
         return $this;
     }
 
