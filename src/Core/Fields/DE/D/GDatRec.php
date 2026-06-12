@@ -154,7 +154,7 @@ class GDatRec extends BaseSifenField
     public function setITipIDRec(int|TipIDRec $iTipIDRec): self
     {
         $this->iTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->value : $iTipIDRec;
-        $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec : TipIDRec::getDescripcion($iTipIDRec);
+        $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->getDescription() : TipIDRec::getDescriptionFromValue($iTipIDRec);
         return $this;
     }
 

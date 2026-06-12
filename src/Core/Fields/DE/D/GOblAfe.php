@@ -33,16 +33,24 @@ class GOblAfe extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Establece el tipo de obligación afectada y su descripción
+     * Establece el código de la obligación afectada (D031) y su descripción (D032).
      *
-     * @param  int|COblAfe  $cOblAfe. El código de la obligación afectada o un objeto COblAfe. Para valores ver tabla COblAfe.
-     * 
-     * @return  self
-     */ 
+     * @param int|COblAfe $cOblAfe Código de la obligación afectada o un caso del enum COblAfe (Tabla 12 - NT-018).
+     *
+     * @return self
+     *
+     * @throws \InvalidArgumentException Si el código no pertenece a la Tabla 12 de obligaciones.
+     */
     public function setCOblAfe(int|COblAfe $cOblAfe): self
     {
-        $this->dDesOblAfe = $cOblAfe instanceof COblAfe ? $cOblAfe : COblAfe::getDescripcion($cOblAfe);
-        $this->cOblAfe = $cOblAfe instanceof COblAfe ? $cOblAfe->value : $cOblAfe;
+        $codigo = $cOblAfe instanceof COblAfe ? $cOblAfe->value : $cOblAfe;
+        $descripcion = COblAfe::getDescriptionFromValue($codigo);
+        if(is_null($descripcion))
+        {
+            throw new \InvalidArgumentException("[GOblAfe] Código de obligación afectada inválido: " . $codigo . ". Debe pertenecer a la Tabla 12 - Tipo de obligaciones (NT-018).");
+        }
+        $this->cOblAfe = $codigo;
+        $this->dDesOblAfe = $descripcion;
         return $this;
     }
 
@@ -135,36 +143,40 @@ class GOblAfe extends BaseSifenField
         return $res;
     }
 
-        /**
+    /**
      * Instancia un GOblAfe a partir de un DOMElement que lo representa.
-     * 
+     * Asigna los valores tal cual fueron recibidos, sin validarlos contra la Tabla 12 (deserialización).
+     *
      * @param DOMElement $node Nodo DOM que representa el objeto.
-     * 
+     *
      * @return GOblAfe
      */
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gOblAfe') != 0)
-        throw new \Exception('[GOblAfe] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new \Exception('[GOblAfe] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GOblAfe();
-        $res->setCOblAfe(intval(trim($node->getElementsByTagName('cOblAfe')->item(0)->nodeValue)));
+        $res->cOblAfe = intval(trim($node->getElementsByTagName('cOblAfe')->item(0)->nodeValue));
         $res->setDDesOblAfe(trim(strval($node->getElementsByTagName('dDesOblAfe')->item(0)->nodeValue)));
         return $res;
     }
 
-      /**
-     * FromSifenResponseObject
+    /**
+     * Instancia un GOblAfe a partir de un objeto stdClass proveniente de una respuesta SOAP del SIFEN.
      *
-     * @param  mixed $object
+     * @param mixed $object Objeto de respuesta del SIFEN.
+     *
      * @return self
      */
     public static function FromSifenResponseObject($object): self
     {
         $res = new GOblAfe();
         if (isset($object->cOblAfe)) {
-            $res->setDDesOblAfe(intval($object->cOblAfe));
+            $res->cOblAfe = intval($object->cOblAfe);
         }
-
+        if (isset($object->dDesOblAfe)) {
+            $res->dDesOblAfe = strval($object->dDesOblAfe);
+        }
         return $res;
     }
 }

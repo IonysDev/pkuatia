@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\DE\D;
 
+use IonysDev\Pkuatia\Core\Constants\COblAfe;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondAnt;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
@@ -34,6 +35,10 @@ class GOpeCom extends BaseSifenField
     public String $dTiCam;      // D018 - 1-5p(0-4) - 0-1 - Tipo de cambio de la operación (decimal BCMath)
     public int    $iCondAnt;    // D019 - 1         - 0-1 - Condición del Anticipo
     public String $dDesCondAnt; // D020 - 15-17     - 0-1 - Descripción de la condición del anticipo
+    public array  $gOblAfe = [];// D030 -           - 0-12 - Obligaciones afectadas (GOblAfe, NT-018)
+
+    // Cantidad máxima de nodos gOblAfe según el XSD de producción DE_v150 (maxOccurs = 12).
+    public const MAX_OBLIGACIONES_AFECTADAS = 12;
 
     ///////////////////////////////////////////////////////////////////////
     ///Constructor
@@ -197,14 +202,59 @@ class GOpeCom extends BaseSifenField
     /**
      * Establece la descripción de la condición del anticipo.
      * Este método no debería utilizarse para conformar un nuevo DE. Solo debe usarse para deserializar un DE existente.
-     * 
+     *
      * @param String $dDesCondAnt
-     * 
+     *
      * @return self
      */
     public function setDDesCondAnt(String $dDesCondAnt): self
     {
         $this->dDesCondAnt = $dDesCondAnt;
+        return $this;
+    }
+
+    /**
+     * Establece la lista de obligaciones afectadas (D030, NT-018).
+     *
+     * @param array $gOblAfe Arreglo de objetos GOblAfe (máximo 12).
+     *
+     * @return self
+     */
+    public function setGOblAfe(array $gOblAfe): self
+    {
+        if(count($gOblAfe) > self::MAX_OBLIGACIONES_AFECTADAS)
+        {
+            throw new InvalidArgumentException("[GOpeCom] No se pueden establecer más de " . self::MAX_OBLIGACIONES_AFECTADAS . " obligaciones afectadas (gOblAfe).");
+        }
+        foreach($gOblAfe as $obl)
+        {
+            if(!($obl instanceof GOblAfe))
+                throw new InvalidArgumentException("[GOpeCom] El arreglo gOblAfe solo puede contener objetos GOblAfe.");
+        }
+        $this->gOblAfe = $gOblAfe;
+        return $this;
+    }
+
+    /**
+     * Agrega una obligación afectada (D030, NT-018) a la operación comercial.
+     *
+     * @param GOblAfe|int|COblAfe $oblAfe Objeto GOblAfe ya conformado o código de la obligación (Tabla 12 - NT-018).
+     *
+     * @return self
+     */
+    public function addGOblAfe(GOblAfe|int|COblAfe $oblAfe): self
+    {
+        if(count($this->gOblAfe) >= self::MAX_OBLIGACIONES_AFECTADAS)
+        {
+            throw new InvalidArgumentException("[GOpeCom] No se pueden agregar más de " . self::MAX_OBLIGACIONES_AFECTADAS . " obligaciones afectadas (gOblAfe).");
+        }
+        if(!($oblAfe instanceof GOblAfe))
+        {
+            $codigo = $oblAfe;
+            $oblAfe = new GOblAfe();
+            $oblAfe->setCOblAfe($codigo);
+        }
+        $this->gOblAfe[] = $oblAfe;
         return $this;
     }
 
@@ -317,12 +367,22 @@ class GOpeCom extends BaseSifenField
 
     /**
      * Devuelve la descripción de la condición del anticipo
-     * 
+     *
      * @return String
      */
     public function getDDesCondAnt(): String
     {
         return $this->dDesCondAnt;
+    }
+
+    /**
+     * Devuelve la lista de obligaciones afectadas (D030, NT-018).
+     *
+     * @return array Arreglo de objetos GOblAfe.
+     */
+    public function getGOblAfe(): array
+    {
+        return $this->gOblAfe;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -358,6 +418,13 @@ class GOpeCom extends BaseSifenField
             $res->setICondAnt(intval($node->iCondAnt));
         if(isset($node->dDesCondAnt))
             $res->setDDesCondAnt((String)$node->dDesCondAnt);
+        if(isset($node->gOblAfe))
+        {
+            foreach($node->gOblAfe as $oblAfeNode)
+            {
+                $res->gOblAfe[] = GOblAfe::FromSimpleXMLElement($oblAfeNode);
+            }
+        }
         return $res;
     }
 
@@ -387,6 +454,10 @@ class GOpeCom extends BaseSifenField
         {
             $res->appendChild(new DOMElement('iCondAnt', $this->getICondAnt()));
             $res->appendChild(new DOMElement('dDesCondAnt', $this->getDDesCondAnt()));
+        }
+        foreach($this->gOblAfe as $oblAfe)
+        {
+            $res->appendChild($oblAfe->toDOMElement($doc));
         }
         return $res;
     }
@@ -419,6 +490,10 @@ class GOpeCom extends BaseSifenField
             $res->setICondAnt(intval(trim($node->getElementsByTagName('iCondAnt')->item(0)->nodeValue)));
         if($node->getElementsByTagName('dDesCondAnt')->length > 0)
             $res->setDDesCondAnt(trim(strval($node->getElementsByTagName('dDesCondAnt')->item(0)->nodeValue)));
+        foreach($node->getElementsByTagName('gOblAfe') as $oblAfeNode)
+        {
+            $res->gOblAfe[] = GOblAfe::FromDOMElement($oblAfeNode);
+        }
         return $res;
     }
 
@@ -454,6 +529,14 @@ class GOpeCom extends BaseSifenField
 
         if (isset($object->iCondAnt)) {
             $res->setICondAnt(intval($object->iCondAnt));
+        }
+
+        if (isset($object->gOblAfe)) {
+            // El SIFEN puede devolver un único objeto o un arreglo según la cantidad de ocurrencias.
+            $oblAfes = is_array($object->gOblAfe) ? $object->gOblAfe : [$object->gOblAfe];
+            foreach ($oblAfes as $oblAfe) {
+                $res->gOblAfe[] = GOblAfe::FromSifenResponseObject($oblAfe);
+            }
         }
         return $res;
     }

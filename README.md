@@ -1,7 +1,7 @@
 # 📄 PKuatia
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D7.1.3%20%7C%7C%20%5E8.0-blue.svg)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.1-blue.svg)](https://www.php.net/)
 
 **PKuatia** es una biblioteca PHP para interactuar con el **Sistema Integrado de Facturación Electrónica Nacional (SIFEN)** de Paraguay, implementando la especificación técnica del sistema **EKuatia**.
 
@@ -13,6 +13,7 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 - [Requisitos](#-requisitos)
 - [Instalación](#-instalación)
 - [Configuración](#-configuración)
+- [Recomendaciones para Producción](#-recomendaciones-para-producción)
 - [Uso Básico](#-uso-básico)
 - [Funcionalidades](#-funcionalidades)
 - [Tipos de Documentos Soportados](#-tipos-de-documentos-soportados)
@@ -24,7 +25,7 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 
 ## ✨ Características
 
-- 🔐 **Firma digital de documentos** usando certificados PEM o P12
+- 🔐 **Firma digital de documentos** usando certificados PEM, P12 o PFX
 - 📤 **Envío de documentos electrónicos** individuales o en lotes (hasta 50 documentos)
 - 🔍 **Consultas al SIFEN**:
   - Consulta de RUC (Registro Único del Contribuyente)
@@ -41,9 +42,10 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 
 ## 📦 Requisitos
 
-- PHP >= 7.1.3 o PHP >= 8.0
+- PHP >= 8.1
+- Extensiones PHP: `soap`, `dom`, `openssl`, `zip`, `bcmath`
 - Composer
-- Certificado digital emitido por la SET (Subsecretaría de Estado de Tributación)
+- Certificado digital emitido por una ente prestador de servicios de confianza de Paraguay
 - Clave privada correspondiente al certificado
 - Credenciales de acceso al SIFEN (ID CSC y CSC)
 
@@ -76,13 +78,20 @@ $config = new Config();
 // Ambiente (dev o prod)
 $config->env = Config::ENV_DEV; // o Config::ENV_PROD para producción
 
-// Formato del certificado (pem o p12)
-$config->certificateFormat = "pem"; // o "p12"
-
-// Rutas de los archivos de certificado y clave privada
-$config->certificateFilePath = "/ruta/a/tu/certificado.crt";
-$config->privateKeyFilePath = "/ruta/a/tu/clave_privada.key";
+// Formato del certificado (pem, p12 o pfx)
+$config->certificateFormat = "pem"; // o "p12" / "pfx"
 $config->privateKeyPassphrase = "tu_contraseña";
+
+// PEM en un solo archivo (certificado + clave privada):
+$config->privateKeyFilePath = "/ruta/a/tu/certificado.pem";
+
+// PEM en dos archivos separados:
+// $config->certificateFilePath = "/ruta/a/tu/certificado.crt";
+// $config->privateKeyFilePath = "/ruta/a/tu/clave_privada.key";
+
+// P12/PFX (certificado y clave en un solo archivo):
+// $config->certificateFormat = "pfx";
+// $config->privateKeyFilePath = "/ruta/a/tu/certificado.pfx";
 
 // Credenciales del SIFEN
 $config->idCsc = "0001"; // ID CSC proporcionado por el SIFEN
@@ -110,14 +119,64 @@ Ejemplo de `config.json`:
 {
     "env": "dev",
     "certificateFormat": "pem",
-    "certificateFilePath": "/ruta/a/certificado.crt",
-    "privateKeyFilePath": "/ruta/a/clave_privada.key",
+    "privateKeyFilePath": "/ruta/a/certificado.pem",
     "privateKeyPassphrase": "contraseña",
     "idCsc": "0001",
     "csc": "ABCD0000000000000000000000000000",
-    "dIdFilePath": "PKuatiaDId.dat.json"
+    "dIdFilePath": "PKuatiaDId.dat.json",
+    "wsdlCacheEnabled": true
 }
 ```
+
+## 🏭 Recomendaciones para Producción
+
+### Caché de WSDL
+
+El SIFEN limita la tasa de solicitudes. Descargar el WSDL en cada operación puede provocar
+bloqueos temporales. Se recomienda activar la caché de WSDL en disco:
+
+```php
+$config->wsdlCacheEnabled = true; // usa WSDL_CACHE_DISK
+```
+
+En **Windows**, además, conviene asegurar un directorio de caché válido antes de iniciar Sifen,
+porque el valor por defecto (`/tmp`) no existe:
+
+```php
+ini_set('soap.wsdl_cache_dir', sys_get_temp_dir());
+```
+
+### Tasa de solicitudes (rate limiting)
+
+El ambiente de pruebas (`sifen-test`) es especialmente sensible a la saturación: ante un exceso
+de solicitudes deja de responder por varios minutos. Buenas prácticas:
+
+- Mantener `wsdlCacheEnabled = true`.
+- Espaciar los reintentos (no reintentar en bucle inmediato).
+- Para la consulta de resultado de lote (`ConsultaLote`), implementar reintentos con espera
+  progresiva (backoff): esperar ~1 minuto en el primer intento y aumentar gradualmente.
+
+### Certificados `.p12` / `.pfx` con cifrado heredado (OpenSSL 3)
+
+Los certificados emitidos por las CA de Paraguay suelen venir en un PKCS#12 cifrado con
+algoritmos heredados (RC2-40 / 3DES) que **OpenSSL 3 —incluido en PHP 8— deshabilita por
+omisión**. Si al inicializar obtenés un error del tipo
+`digital envelope routines::unsupported`, tenés tres opciones:
+
+1. **Habilitar el proveedor `legacy` de OpenSSL** antes de iniciar PHP, mediante las variables
+   de entorno `OPENSSL_CONF` (apuntando a un `openssl.cnf` que active los proveedores `default`
+   y `legacy`) y `OPENSSL_MODULES` (apuntando al directorio que contiene `legacy.dll` /
+   `legacy.so`). No alcanza con `putenv()` en tiempo de ejecución: el proveedor se inicializa
+   en el primer uso de OpenSSL.
+2. **Reexportar el certificado** a un PKCS#12 con cifrado moderno:
+   ```bash
+   openssl pkcs12 -in viejo.p12 -legacy -nodes -out tmp.pem
+   openssl pkcs12 -export -in tmp.pem -out nuevo.p12
+   # luego eliminar tmp.pem, que queda sin cifrar
+   ```
+3. **Convertir el `.p12` a PEM** y usar `certificateFormat = "pem"`.
+
+La librería detecta este caso y arroja una excepción con estas mismas instrucciones.
 
 ## 📖 Uso Básico
 
@@ -249,18 +308,23 @@ $respuesta = Sifen::InutilizarNumeros(
 
 ## 📄 Tipos de Documentos Soportados
 
-La biblioteca soporta los siguientes tipos de Documentos Tributarios Electrónicos según el Manual Técnico v150:
+La biblioteca soporta los siguientes tipos de Documentos Tributarios Electrónicos, que son los que
+el XSD de producción del SIFEN acepta actualmente (`iTiDE`):
 
-| Código | Tipo de Documento |
-|--------|-------------------|
-| 1 | Factura Electrónica |
-| 2 | Factura Electrónica de Exportación |
-| 3 | Factura Electrónica de Importación |
-| 4 | Autofactura Electrónica |
-| 5 | Nota de Crédito Electrónica |
-| 6 | Nota de Débito Electrónica |
-| 7 | Nota de Remisión Electrónica |
-| 8 | Comprobante de Retención Electrónico |
+| Código | Tipo de Documento | Builder | Estado |
+|--------|-------------------|---------|--------|
+| 1 | Factura Electrónica | `Factura` | ✅ Soportado (homologado contra SIFEN) |
+| 4 | Autofactura Electrónica | `Autofactura` | ✅ Soportado |
+| 5 | Nota de Crédito Electrónica | `NotaDeCredito` | ✅ Soportado |
+| 6 | Nota de Débito Electrónica | `NotaDeDebito` | ✅ Soportado |
+| 7 | Nota de Remisión Electrónica | `NotaDeRemision` | ✅ Soportado |
+| 9 | Boleta de venta electrónica | — | 🗺️ En el roadmap |
+| 10 | Boleta RESIMPLE | — | 🗺️ En el roadmap |
+
+> **Nota sobre los tipos 2, 3 y 8** (Factura de Exportación, Factura de Importación y Comprobante
+> de Retención): figuran en el Manual Técnico, pero el **XSD de producción del SIFEN los rechaza**
+> (no están habilitados por la DNIT), por lo que ninguna librería del ecosistema puede emitirlos
+> actualmente. La enumeración `TimbTiDE` los conserva para poder identificarlos al deserializar.
 
 Puedes usar la enumeración `TimbTiDE` para referenciar estos tipos:
 
@@ -310,11 +374,11 @@ Puedes encontrar ejemplos de uso en el directorio `test/`:
 
 ## ⚠️ Notas Importantes
 
-1. **Certificados Digitales**: Debes contar con un certificado digital válido emitido por la SET de Paraguay.
+1. **Certificados Digitales**: Debes contar con un certificado digital válido emitido por algún ente prestador de servicios de confianza habilitado por el Ministerio de Industria y Comercio del Paraguay.
 
 2. **Ambiente de Pruebas**: Utiliza `Config::ENV_DEV` para desarrollo y pruebas. Los documentos generados en este ambiente llevarán el texto "DE generado en ambiente de prueba - sin valor comercial ni fiscal".
 
-3. **Credenciales del SIFEN**: El ID CSC y CSC te serán proporcionados por el SIFEN durante el proceso de habilitación.
+3. **Credenciales del SIFEN**: El ID CSC y CSC te serán proporcionados por la DNIT durante el proceso de habilitación.
 
 4. **Límites de Lotes**: Cada lote puede contener un máximo de 50 documentos electrónicos.
 
@@ -343,9 +407,9 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](L
 
 ## 🔗 Enlaces Útiles
 
-- [Manual Técnico SIFEN v150](https://www.set.gov.py/)
-- [Portal del Contribuyente SET](https://www.set.gov.py/)
-- [Documentación del SIFEN](https://ekuatia.set.gov.py/)
+- [Documentos técnicos para desarrollo del software](https://www.dnit.gov.py/web/e-kuatia/documentacion-tecnica)
+- [Portal del Contribuyente DNIT - Marangatu](https://marangatu.set.gov.py/)
+- [Documentación del SIFEN](https://www.dnit.gov.py/web/e-kuatia)
 
 ---
 

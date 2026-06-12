@@ -55,13 +55,9 @@ class GPaConEIni extends BaseSifenField
    */
   public function setDDesTiPag(String $dDesTiPag): self
   {
-    if(is_null($dDesTiPag) || strlen($dDesTiPag) == 0)
+    if(!is_null($dDesTiPag) && strlen($dDesTiPag) != 0)
     {
-      $this->$dDesTiPag;
-    }
-    else
-    {
-      $this->$dDesTiPag = substr($dDesTiPag, 0, 30);
+      $this->dDesTiPag = substr($dDesTiPag, 0, 30);
     }
     return $this;
   }
@@ -112,13 +108,9 @@ class GPaConEIni extends BaseSifenField
    */
   public function setDDMoneTiPag(String $dDMoneTiPag): self
   {
-    if(is_null($dDMoneTiPag) || strlen($dDMoneTiPag) == 0)
+    if(!is_null($dDMoneTiPag) && strlen($dDMoneTiPag) != 0)
     {
-      $this->$dDMoneTiPag;
-    }
-    else
-    {
-      $this->$dDMoneTiPag = substr($dDMoneTiPag, 0, 20);
+      $this->dDMoneTiPag = substr($dDMoneTiPag, 0, 20);
     }
     return $this;
   }
