@@ -104,21 +104,18 @@ class DE extends BaseSifenField
 
   /**
    * Establece el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
-   * Este método no debe ser llamado directamente, ya que el sistema de facturación es fijo y no debe ser modificado.
+   * Según NT-010, el único valor admitido es 1 (Sistema de facturación del contribuyente).
    *
-   * @param int $dSisFact Sistema de facturación del documento electrónico (DE). Solo puede ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET).
+   * @param int|DESisFact $dSisFact Sistema de facturación del documento electrónico (DE). Único valor admitido: 1 (Contribuyente).
    *
    * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
-  public function setDSisFact(int $dSisFact): self
+  public function setDSisFact(int|DESisFact $dSisFact): self
   {
-    // if($dSisFact != Constants::SISTEMA_FACTURACION_CONTRIBUYENTE && $dSisFact != Constants::SISTEMA_FACTURACION_SIFEN_GRATUITO)
-    //   throw new \Exception('[DE] Valor dSisFact inválido: ' . $dSisFact . '. Debe ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET)');
-    // $this->dSisFact = $dSisFact;
-    // return $this;
-    if($dSisFact != Constants::SISTEMA_FACTURACION_CONTRIBUYENTE)
-      throw new \Exception('[DE] Valor dSisFact inválido: ' . $dSisFact . '. Debe ser 1 (Contribuyente)');
-    $this->dSisFact = $dSisFact;
+    $valor = $dSisFact instanceof DESisFact ? $dSisFact->value : $dSisFact;
+    if(is_null(DESisFact::tryFrom($valor)))
+      throw new \Exception('[DE] Valor dSisFact inválido: ' . $valor . '. Debe ser 1 (Contribuyente)');
+    $this->dSisFact = $valor;
     return $this;
   }
 
