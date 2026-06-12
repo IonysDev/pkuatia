@@ -200,16 +200,17 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de iTipIDRec - Tipo de documento de identidad del receptor
+     * Establece el valor de iTipIDRec - Tipo de documento de identidad del receptor.
+     * Así mismo establece la descripción correspondiente (dDTipIDRec).
      *
-     * @param int $iTipIDRec
+     * @param int|TipIDRec $iTipIDRec
      *
      * @return self
      */
     public function setITipIDRec(int|TipIDRec $iTipIDRec): self
     {
         $this->iTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->value : $iTipIDRec;
-        $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec : TipIDRec::getDescripcion($iTipIDRec);
+        $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->getDescription() : TipIDRec::getDescriptionFromValue($iTipIDRec);
         return $this;
     }
 
@@ -321,9 +322,24 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de cDisRec - Código de distrito del receptor
+     * Establece el valor de cDisRec - Código de distrito del receptor.
+     * Así mismo establece la descripción del distrito (dDesDisRec) a partir del mapeo de códigos geográficos.
      *
      * @param int $cDisRec
+     *
+     * @return self
+     */
+    public function setCDisRec(int $cDisRec): self
+    {
+        $this->cDisRec = $cDisRec;
+        $this->dDesDisRec = PyGeoCodesMapping::getDistName(strval($this->cDisRec));
+        return $this;
+    }
+
+    /**
+     * Establece el valor de dDesDisRec - Descripción del distrito del receptor
+     *
+     * @param string $dDesDisRec
      *
      * @return self
      */
@@ -334,9 +350,10 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de cDisRec - Código de distrito del receptor
+     * Establece el valor de cCiuRec - Código de ciudad del receptor.
+     * Así mismo establece la descripción de la ciudad (dDesCiuRec) a partir del mapeo de códigos geográficos.
      *
-     * @param int $cDisRec
+     * @param int $cCiuRec
      *
      * @return self
      */
@@ -705,13 +722,17 @@ class RGEveNom
     }
 
     /**
-     * getDDesDisRec
+     * Obtiene el valor de dDesDisRec - Descripción del distrito del receptor
      *
      * @return String
      */
-    public function getDDesDisRec(): String
+    public function getDDesDisRec(): ?String
     {
-        return PyGeoCodesMapping::getDistName(strval($this->cDisRec));
+        if(isset($this->dDesDisRec))
+            return $this->dDesDisRec;
+        if(isset($this->cDisRec))
+            return PyGeoCodesMapping::getDistName(strval($this->cDisRec));
+        return null;
     }
 
 
@@ -726,13 +747,17 @@ class RGEveNom
     }
 
     /**
-     * getDDesCiuRec
+     * Obtiene el valor de dDesCiuRec - Descripción de la ciudad del receptor
      *
      * @return String
      */
-    public function getDDesCiuRec(): String
+    public function getDDesCiuRec(): ?String
     {
-        return PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
+        if(isset($this->dDesCiuRec))
+            return $this->dDesCiuRec;
+        if(isset($this->cCiuRec))
+            return PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
+        return null;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -741,71 +766,73 @@ class RGEveNom
 
     
   /**
-   * toDOMElement
+   * Convierte este RGEveNom a un DOM Element respetando el orden de campos del XSD Evento_v150 (trGEveNom).
    *
-   * @return DOMElement
+   * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
+   *
+   * @return DOMElement Nodo DOM creado pero no insertado.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGEveNom');
 
-    $res->appendChild($doc->createElement('id', $this->getId()));
+    $res->appendChild($doc->createElement('Id', $this->getId()));
     $res->appendChild($doc->createElement('mOtEve', $this->getMOtEve()));
     $res->appendChild($doc->createElement('iNatRec', $this->getINatRec()));
     $res->appendChild($doc->createElement('iTiOpe', $this->getITiOpe()));
     $res->appendChild($doc->createElement('cPaisRec', $this->getCPaisRec()));
     $res->appendChild($doc->createElement('dDesPaisRe', $this->getDDesPaisRe()));
 
-    if($this->iNatRec == 1)
-    {
+    // Receptor contribuyente: se informan los datos del RUC
+    if(isset($this->iTiContRec))
       $res->appendChild($doc->createElement('iTiContRec', $this->getITiContRec()));
+    if(isset($this->dRucRec))
       $res->appendChild($doc->createElement('dRucRec', $this->getDRucRec()));
-    }
-
-    if($this->dDVRec)
-    {
+    if(isset($this->dDVRec))
       $res->appendChild($doc->createElement('dDVRec', $this->getDDVRec()));
-    }
 
-    if($this->iNatRec == 2)
-    {
-        $res->appendChild($doc->createElement('iTipIDRec', $this->getITipIDRec()));
-        $res->appendChild($doc->createElement('dNumIDRec', $this->getDNumIDRec()));
-    }
-
-    if($this->iTipIDRec)
-    {
+    // Receptor no contribuyente: se informa el documento de identidad
+    if(isset($this->iTipIDRec))
+      $res->appendChild($doc->createElement('iTipIDRec', $this->getITipIDRec()));
+    if(isset($this->dDTipIDRec) || isset($this->iTipIDRec))
       $res->appendChild($doc->createElement('dDTipIDRec', $this->getDDTipIDRec()));
-    }
+    if(isset($this->dNumIDRec))
+      $res->appendChild($doc->createElement('dNumIDRec', $this->getDNumIDRec()));
 
     $res->appendChild($doc->createElement('dNomRec', $this->getDNomRec()));
-    $res->appendChild($doc->createElement('dNomFanRec', $this->getDNomFanRec()));
-    $res->appendChild($doc->createElement('dDirRec', $this->getDDirRec()));
 
-    if($this->dDirRec)
+    if(isset($this->dNomFanRec))
+      $res->appendChild($doc->createElement('dNomFanRec', $this->getDNomFanRec()));
+    if(isset($this->dDirRec))
     {
+      $res->appendChild($doc->createElement('dDirRec', $this->getDDirRec()));
       $res->appendChild($doc->createElement('dNumCasRec', $this->getDNumCasRec()));
     }
-
-    $res->appendChild($doc->createElement('cDepRec', $this->getCDepRec()));
-    $res->appendChild($doc->createElement('dDesDepRec', $this->getDDesDepRec()));
-    $res->appendChild($doc->createElement('cDisRec', $this->getCDisRec()));
-
-    if($this->cDisRec)
+    if(isset($this->cDepRec))
     {
+      $res->appendChild($doc->createElement('cDepRec', $this->getCDepRec()));
+      $res->appendChild($doc->createElement('dDesDepRec', $this->getDDesDepRec()));
+    }
+    if(isset($this->cDisRec))
+    {
+      $res->appendChild($doc->createElement('cDisRec', $this->getCDisRec()));
       $res->appendChild($doc->createElement('dDesDisRec', $this->getDDesDisRec()));
     }
-
-    $res->appendChild($doc->createElement('cCiuRec', $this->getCCiuRec()));
-    $res->appendChild($doc->createElement('dDesCiuRec', $this->getDDesCiuRec()));
-
-    $res->appendChild($doc->createElement('dTelRec', $this->getDTelRec()));
-    $res->appendChild($doc->createElement('dCelRec', $this->getDCelRec()));
-    $res->appendChild($doc->createElement('dEmailRec', $this->getDEmailRec()));
-    $res->appendChild($doc->createElement('dCodCliente', $this->getDCodCliente()));
+    if(isset($this->cCiuRec))
+    {
+      $res->appendChild($doc->createElement('cCiuRec', $this->getCCiuRec()));
+      $res->appendChild($doc->createElement('dDesCiuRec', $this->getDDesCiuRec()));
+    }
+    if(isset($this->dTelRec))
+      $res->appendChild($doc->createElement('dTelRec', $this->getDTelRec()));
+    if(isset($this->dCelRec))
+      $res->appendChild($doc->createElement('dCelRec', $this->getDCelRec()));
+    if(isset($this->dEmailRec))
+      $res->appendChild($doc->createElement('dEmailRec', $this->getDEmailRec()));
+    if(isset($this->dCodCliente))
+      $res->appendChild($doc->createElement('dCodCliente', $this->getDCodCliente()));
 
     return $res;
-
   }
 
     /**
@@ -823,7 +850,7 @@ class RGEveNom
 
     $res = new self();
     $res->setId(strval($node->Id));
-    $res->setMOtEve(intval($node->mOtEve));
+    $res->setMOtEve(strval($node->mOtEve));
 
     if(isset($node->iNatRec))
     {
@@ -907,7 +934,7 @@ class RGEveNom
 
     if(isset($node->cDisRec))
     {
-      $res->setCCiuRec(intval($node->cDisRec));
+      $res->setCDisRec(intval($node->cDisRec));
     }
 
     if(isset($node->dDesDisRec))

@@ -25,13 +25,16 @@ class Constants
     const SIFEN_URL_CONSULTA_QR_DEV = "https://ekuatia.set.gov.py/consultas-test/qr?";
     const SIFEN_URL_CONSULTA_QR_PROD = "https://ekuatia.set.gov.py/consultas/qr?";
 
-    // Paths
-    const SIFEN_PATH_RECIBE = "/de/ws/sync/recibe.wsdl";
-    const SIFEN_PATH_RECIBE_LOTE = "/de/ws/async/recibe-lote.wsdl";
-    const SIFEN_PATH_EVENTO = "/de/ws/eventos/evento.wsdl";
-    const SIFEN_PATH_CONSULTA_LOTE = "/de/ws/consultas/consulta-lote.wsdl";
-    const SIFEN_PATH_CONSULTA_RUC = "/de/ws/consultas/consulta-ruc.wsdl";
-    const SIFEN_PATH_CONSULTA = "/de/ws/consultas/consulta.wsdl";
+    // Paths de los WSDL. OJO: algunos manuales/documentos publican rutas distintas (recepcion.wsdl,
+    // recepcion-lote.wsdl, etc.); las rutas vigentes fueron verificadas empíricamente contra
+    // sifen-test.set.gov.py en junio/2026 y son las siguientes.
+    const SIFEN_PATH_RECIBE = "/de/ws/sync/recibe.wsdl";                             // siRecepDE
+    const SIFEN_PATH_RECIBE_LOTE = "/de/ws/async/recibe-lote.wsdl";                  // siRecepLoteDE
+    const SIFEN_PATH_EVENTO = "/de/ws/eventos/evento.wsdl";                          // siRecepEvento
+    const SIFEN_PATH_CONSULTA_LOTE = "/de/ws/consultas/consulta-lote.wsdl";          // siResultLoteDE
+    const SIFEN_PATH_CONSULTA_RUC = "/de/ws/consultas/consulta-ruc.wsdl";            // siConsRUC
+    const SIFEN_PATH_CONSULTA = "/de/ws/consultas/consulta.wsdl";                    // siConsDE
+    const SIFEN_PATH_CONSULTA_ARCHIVO_RUC = "/de/ws/consultas/consulta-archivo-ruc.wsdl"; // siConsArchivoRUC (NT-011, ruta pendiente de confirmación)
 
     //Tipos de transacciones
     public const TIPO_TRANSACCION_VENTA_MERCADERIA = 1;
@@ -77,6 +80,13 @@ class Constants
     // Valor Máximo del DID
     public const MAX_DID = 999999999999999;
     public const MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE = 50;
+
+    // Cantidad máxima de eventos (rGesEve) por transmisión a siRecepEvento (Evento_v150.xsd)
+    public const MAX_EVENTOS_POR_TRANSMISION = 15;
+
+    // Umbral NT-024 (vigente desde 01/01/2025): el receptor innominado (D208 = 5) no está
+    // permitido cuando el total general de la operación en guaraníes es >= a este monto.
+    public const UMBRAL_INNOMINADO_PYG = '7000000';
 
     
 }
