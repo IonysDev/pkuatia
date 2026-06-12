@@ -125,7 +125,11 @@ firma de ningún método público del facade ni de las clases de campos. Puntos 
 - ✅ **Evento del receptor (`ConformarDE`)**: pipeline validado end-to-end; el SIFEN lo procesa y
   responde con `dCodRes 0143` (la firma debe corresponder al receptor), esperado porque el harness
   firma con el certificado del emisor. Funcional con el certificado del receptor.
-- Pendiente: confirmación del método y la ruta SOAP de `siConsArchivoRUC` (no desplegado en pruebas).
+- ⏳ **`siConsArchivoRUC`**: no se pudo homologar. El WSDL no carga ni en `sifen-test` (cuerpo vacío)
+  ni en **producción** (`failed to load external entity`, consistente). Probablemente requiere un RUC
+  habilitado como facturador electrónico (el de prueba tiene `dRUCFactElec = N`) y/o una ruta no
+  confirmada públicamente. El método queda implementado según NT-011 (`rEnviConsArchivoRUC`),
+  pendiente de verificación con un certificado de facturador electrónico habilitado.
 
 ### Corregido (post-homologación)
 
