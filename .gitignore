@@ -16,3 +16,5 @@
 /.cursor
 # composer.lock no se versiona en una librería: cada consumidor resuelve sus propias versiones.
 /composer.lock
+/memory
+.phpunit.cache

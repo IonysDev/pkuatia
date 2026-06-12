@@ -8,6 +8,14 @@
             "IonysDev\\Pkuatia\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "IonysDev\\Pkuatia\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
     "authors": [
         {
             "name": "Abilio Mancuello Petters",
@@ -28,5 +36,8 @@
         "ext-bcmath": "*",
         "robrichards/xmlseclibs": "^3.1.5",
         "krowinski/bcmath-extended": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5.63"
     }
 }
