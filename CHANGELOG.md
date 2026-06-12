@@ -1,0 +1,104 @@
+# Changelog
+
+Todos los cambios notables de PKuatia se documentan en este archivo.
+
+El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
+y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
+
+## [No publicado] — rama `dev`
+
+Ronda de correcciones de conformidad SIFEN v150 y ampliación de la API. **Para el uso
+habitual de la librería no se requiere ningún cambio en los sistemas consumidores**: todas
+las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
+[Compatibilidad](#compatibilidad-con-versiones-en-main) para los detalles a tener en cuenta.
+
+### Agregado
+
+- **WS de consulta masiva de RUC (siConsArchivoRUC, NT-011).** Nuevo método de facade
+  `Sifen::ConsultarArchivoRUC(string $rucFacturador): RResEnviConsArchivoRUC`, con sus
+  clases `REnviConsArchivoRUC` (request) y `RResEnviConsArchivoRUC` (response, con helper
+  `getArchivoZip()` que decodifica el Base64). _Nota: la ruta del WS devuelve vacío en el
+  ambiente de pruebas; pendiente de confirmación contra producción._
+- **Wrappers de eventos del receptor y de nominación/transporte** en el facade `Sifen`:
+  - `NotificarRecepcionDE(...)` — evento de notificación de recepción (GEN001).
+  - `ConformarDE(string $cdc, int $tipoConformidad = 1, ?DateTime $fechaRecepcion = null)` — conformidad (GCO001).
+  - `DisconformarDE(string $cdc, string $motivo)` — disconformidad (GDI001).
+  - `DesconocerDE(...)` — desconocimiento (GED001).
+  - `NominarFE(RGEveNom $datosNominacion)` — nominación de FE innominada (GENFE001, NT-014).
+  - `ActualizarDatosTransporte(RGeVeTr $datosTransporte)` — actualización de transporte de NRE (GET001).
+- **Obligaciones afectadas (gOblAfe, D030, NT-018).** Integración del grupo en
+  `GOpeCom` (`setGOblAfe`, `addGOblAfe`, `getGOblAfe`, máximo 12 ocurrencias) y nuevo método
+  de builder `DocumentoElectronicoComercial::addObligacionAfectada(int|COblAfe|GOblAfe)` para
+  la imputación automática al módulo RG90 (Marangatu).
+- **Validación de la NT-024** en `Sifen::FirmarDE`: rechaza receptores innominados (D208 = 5)
+  cuando el total general de la operación en guaraníes es ≥ 7.000.000 (excepto muestras médicas),
+  evitando un rechazo seguro del SIFEN (validación 1321).
+- **Caché de WSDL configurable.** `Config::$wsdlCacheEnabled` (y `setWsdlCacheEnabled()`),
+  por defecto `false`. Al activarla se usa `WSDL_CACHE_DISK` para mitigar bloqueos por
+  saturación del WS.
+- Soporte de certificados **PKCS#12 (`p12`/`pfx`)** y de **PEM combinado** (certificado y
+  clave en un mismo archivo), con los helpers `Config::isPem()`, `Config::isPkcs12()`,
+  `Config::usesCombinedCertificateFile()` y la clase `PemHelper`.
+
+### Corregido
+
+- **Patrón de bug enum → string.** Varios setters duales `int|Enum` asignaban el objeto enum
+  a la propiedad de descripción (de tipo `string`), lo que provocaba un `TypeError` fatal al
+  llamarlos con un enum. Corregido en `GCamFE::setIIndPres`, `GDatRec::setITipIDRec`,
+  `GRespDE::setITipIDRespDE` y `RGEveNom::setITipIDRec` (ahora asignan `->getDescription()`).
+  _Las llamadas con `int` no cambian su salida._
+- **`DE::setDSisFact`** ya no referencia una constante inexistente
+  (`Constants::SISTEMA_FACTURACION_CONTRIBUYENTE`) que producía un error fatal; ahora valida
+  contra el enum `DESisFact` (único valor admitido: 1, según NT-010).
+- **`GOblAfe`**: `setCOblAfe` ya no asignaba el enum a la descripción; `FromSifenResponseObject`
+  ya no invertía los campos `cOblAfe`/`dDesOblAfe`. Las descripciones de `COblAfe` ahora son
+  los literales oficiales de la Tabla 12 (NT-018), requeridos por la validación 1221.
+- **`RGEveNom::toDOMElement`**: emite el atributo `Id` (mayúscula) y respeta el orden de campos
+  del XSD `Evento_v150` (`iTipIDRec` → `dDTipIDRec` → `dNumIDRec`), con guardas `isset` para los
+  campos opcionales. Se corrigió además el parseo de `cDisRec` (antes se mapeaba a `cCiuRec`).
+- **Envío de lote (`Sifen::EnviarLoteDE`)**: el ZIP se genera en un archivo temporal del sistema
+  (antes `rLoteDE.zip` en el directorio de trabajo, con riesgo de concurrencia/permisos) y se
+  valida que el lote no esté vacío y que todos los DE sean del mismo tipo (C002).
+- **`Sifen::GetDId`** usa bloqueo de archivo (`flock`) para evitar identificadores duplicados
+  ante accesos concurrentes. El formato del archivo JSON no cambia.
+- Eliminada la escritura de depuración `rEnviEventoDe.xml` en `Sifen::RegistrarEvento`.
+- **`OpeComTipImp::IVARenta`** corrige el literal `dDesTImp` (D014) de `'IVA – Renta'` (guion
+  largo Unicode, rechazado por el XSD) a `'IVA - Renta'` (guion ASCII).
+
+### Cambiado
+
+- **Rutas WSDL**: verificadas empíricamente contra `sifen-test` (jun/2026). Se mantienen las
+  rutas históricas (`recibe.wsdl`, `recibe-lote.wsdl`, `evento.wsdl`, `consulta-lote.wsdl`),
+  ya que las "nuevas" publicadas en el MT (`recepcion.wsdl`, etc.) **no existen** en el servidor.
+- `Config::certificateFormat` ahora se **normaliza** internamente: los valores de entrada
+  `"p12"` y `"pfx"` se almacenan como `"pkcs12"` (ver [Compatibilidad](#compatibilidad-con-versiones-en-main)).
+- `Config::$certificateFilePath` es opcional (`null` por defecto) cuando el certificado está
+  embebido (PKCS#12 o PEM combinado).
+- Nuevas validaciones que lanzan excepción **antes** de transmitir, en casos que el SIFEN ya
+  rechazaba: innominado ≥ 7M (NT-024), lote con tipos C002 mixtos o vacío, y más de 15 eventos
+  por transmisión.
+
+### Compatibilidad con versiones en `main`
+
+Esta entrega es **compatible hacia atrás para el uso habitual**. No se removió ni se cambió la
+firma de ningún método público del facade ni de las clases de campos. Puntos a tener en cuenta:
+
+1. **`Config::certificateFormat` se normaliza a `"pkcs12"`.** Si algún sistema **lee** esa
+   propiedad y la compara con `'p12'`/`'pfx'` en su propio código, debe contemplar también el
+   valor `'pkcs12'` (o usar los helpers `Config::isPkcs12()` / `Config::isPem()`). Configurar
+   `"p12"` o `"pfx"` como entrada sigue funcionando igual.
+2. **Literal `'IVA - Renta'`.** Los DE con impuesto afectado tipo 5 ahora generan el guion ASCII.
+   Es un fix de conformidad (el valor anterior era rechazado por el XSD); solo impacta a pruebas
+   que asserten el string anterior.
+3. **Setters con argumento enum.** Si se los invocaba con un objeto enum, antes fallaban con
+   `TypeError`; ahora funcionan. Las llamadas con `int` producen exactamente la misma salida.
+4. **Validaciones tempranas.** `FirmarDE` (NT-024), `EnviarLoteDE` (tipo C002/lote vacío) y
+   `RegistrarEvento` (>15 eventos) pueden lanzar una excepción en escenarios que el SIFEN ya
+   rechazaba; conviene capturarla como cualquier otra excepción de la librería.
+
+### Pendiente de homologación
+
+- Envío end-to-end de DE/eventos contra `sifen-test` (bloqueado temporalmente por saturación
+  del ambiente al cierre de esta entrega).
+- Confirmación del método y la ruta SOAP de `siConsArchivoRUC` contra producción.
+- `ConsultarRUC` verificado **OK contra producción** (jun/2026).

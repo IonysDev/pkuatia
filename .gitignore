@@ -1,5 +1,6 @@
 *.pem
 *.p12
+*.pfx
 *.crt
 *.csr
 *.srl

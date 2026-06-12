@@ -24,7 +24,7 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 
 ## ✨ Características
 
-- 🔐 **Firma digital de documentos** usando certificados PEM o P12
+- 🔐 **Firma digital de documentos** usando certificados PEM, P12 o PFX
 - 📤 **Envío de documentos electrónicos** individuales o en lotes (hasta 50 documentos)
 - 🔍 **Consultas al SIFEN**:
   - Consulta de RUC (Registro Único del Contribuyente)
@@ -76,13 +76,20 @@ $config = new Config();
 // Ambiente (dev o prod)
 $config->env = Config::ENV_DEV; // o Config::ENV_PROD para producción
 
-// Formato del certificado (pem o p12)
-$config->certificateFormat = "pem"; // o "p12"
-
-// Rutas de los archivos de certificado y clave privada
-$config->certificateFilePath = "/ruta/a/tu/certificado.crt";
-$config->privateKeyFilePath = "/ruta/a/tu/clave_privada.key";
+// Formato del certificado (pem, p12 o pfx)
+$config->certificateFormat = "pem"; // o "p12" / "pfx"
 $config->privateKeyPassphrase = "tu_contraseña";
+
+// PEM en un solo archivo (certificado + clave privada):
+$config->privateKeyFilePath = "/ruta/a/tu/certificado.pem";
+
+// PEM en dos archivos separados:
+// $config->certificateFilePath = "/ruta/a/tu/certificado.crt";
+// $config->privateKeyFilePath = "/ruta/a/tu/clave_privada.key";
+
+// P12/PFX (certificado y clave en un solo archivo):
+// $config->certificateFormat = "pfx";
+// $config->privateKeyFilePath = "/ruta/a/tu/certificado.pfx";
 
 // Credenciales del SIFEN
 $config->idCsc = "0001"; // ID CSC proporcionado por el SIFEN
@@ -110,8 +117,7 @@ Ejemplo de `config.json`:
 {
     "env": "dev",
     "certificateFormat": "pem",
-    "certificateFilePath": "/ruta/a/certificado.crt",
-    "privateKeyFilePath": "/ruta/a/clave_privada.key",
+    "privateKeyFilePath": "/ruta/a/certificado.pem",
     "privateKeyPassphrase": "contraseña",
     "idCsc": "0001",
     "csc": "ABCD0000000000000000000000000000",
