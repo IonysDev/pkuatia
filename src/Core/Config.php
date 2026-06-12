@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core;
 
+use IonysDev\Pkuatia\Helpers\PemHelper;
 
 /**
  * Clase que contiene los parámetros de la instancia del SIFEN utilizada.
@@ -11,12 +12,15 @@ class Config
     public const ENV_DEV = "dev";
     public const ENV_PROD = "prod";
 
+    public const CERT_FORMAT_PEM = "pem";
+    public const CERT_FORMAT_PKCS12 = "pkcs12";
+
     public String $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
 
     // Parámetros de Firma Digital
-    public String $certificateFormat;    // Solo se aceptan valores "pem" o "p12".
-    public ?String $certificateFilePath;  // Ruta del archivo del certificado.
-    public String $privateKeyFilePath;   // Ruta del archivo de la clave privada.
+    public String $certificateFormat;    // Valores de entrada: "pem", "p12" o "pfx". Se normaliza internamente a "pem" o "pkcs12".
+    public ?String $certificateFilePath = null; // Ruta del certificado PEM. Opcional si cert y clave están en privateKeyFilePath.
+    public String $privateKeyFilePath;         // Ruta de la clave privada, o del archivo PEM/P12/PFX combinado.
     public String $privateKeyPassphrase; // Contraseña de la clave privada.
 
     // Parámetros de autenticación ante el SIFEN
@@ -25,6 +29,57 @@ class Config
 
     // Lugar donde se almacena el archivo JSON que contiene el registro del último valor del dId utilizado.
     public String $dIdFilePath = "PKuatiaDId.dat.json";
+
+    // Habilita la caché en disco de los WSDL del SIFEN (WSDL_CACHE_DISK de la extensión SOAP).
+    // Recomendado en producción: el SIFEN limita la tasa de solicitudes y descargar el WSDL en cada
+    // operación puede provocar bloqueos temporales. Por defecto deshabilitado (comportamiento histórico).
+    public bool $wsdlCacheEnabled = false;
+
+    /**
+     * Normaliza el formato de certificado a un valor interno soportado.
+     * Acepta "pem", "p12" y "pfx" (P12 y PFX son PKCS#12). Es idempotente: admite también los
+     * valores internos ya normalizados ("pem", "pkcs12"), de modo que normalizar dos veces no falle.
+     *
+     * @throws \Exception
+     */
+    public static function normalizeCertificateFormat(string $format): string
+    {
+        $format = strtolower($format);
+        if ($format === self::CERT_FORMAT_PEM) {
+            return self::CERT_FORMAT_PEM;
+        }
+        if (in_array($format, ['p12', 'pfx', self::CERT_FORMAT_PKCS12], true)) {
+            return self::CERT_FORMAT_PKCS12;
+        }
+        throw new \Exception(
+            "[Config] Formato de certificado no soportado: $format. Valores aceptados: pem, p12, pfx."
+        );
+    }
+
+    public function isPem(): bool
+    {
+        return self::normalizeCertificateFormat($this->certificateFormat) === self::CERT_FORMAT_PEM;
+    }
+
+    public function isPkcs12(): bool
+    {
+        return self::normalizeCertificateFormat($this->certificateFormat) === self::CERT_FORMAT_PKCS12;
+    }
+
+    /**
+     * Certificado y clave en un solo archivo (PEM combinado o PKCS#12).
+     */
+    public function usesCombinedCertificateFile(): bool
+    {
+        if ($this->isPkcs12()) {
+            return true;
+        }
+
+        return PemHelper::usesCombinedFile(
+            $this->certificateFilePath,
+            $this->privateKeyFilePath
+        );
+    }
 
     public static function ParseObject($config): Config {
         $res = new Config();
@@ -38,13 +93,12 @@ class Config
         }        
         
         if(isset($config->certificateFormat)) {
-            $res->certificateFormat = $config->certificateFormat;
+            $res->setCertificateFormat($config->certificateFormat);
         }
 
-        if(!isset($config->certificateFilePath)) {
-            throw new \Exception("Ruta del archivo del certificado debe ser especificada.");
+        if(isset($config->certificateFilePath)) {
+            $res->certificateFilePath = $config->certificateFilePath;
         }
-        $res->certificateFilePath = $config->certificateFilePath;
 
         if(!isset($config->privateKeyFilePath)) {
             throw new \Exception("Ruta del archivo de la clave privada debe ser especificada.");
@@ -66,6 +120,10 @@ class Config
 
         if(isset($config->dIdFilePath)) {
             $res->dIdFilePath = $config->dIdFilePath;
+        }
+
+        if(isset($config->wsdlCacheEnabled)) {
+            $res->wsdlCacheEnabled = boolval($config->wsdlCacheEnabled);
         }
 
         return $res;
@@ -106,7 +164,7 @@ class Config
      */
     public function setCertificateFormat(String $certificateFormat): self
     {
-        $this->certificateFormat = $certificateFormat;
+        $this->certificateFormat = self::normalizeCertificateFormat($certificateFormat);
 
         return $this;
     }
@@ -191,6 +249,21 @@ class Config
     public function setDIdFilePath(String $dIdFilePath): self
     {
         $this->dIdFilePath = $dIdFilePath;
+
+        return $this;
+    }
+
+    /**
+     * Habilita o deshabilita la caché en disco de los WSDL del SIFEN.
+     * Recomendado en producción para evitar bloqueos por saturación del WS.
+     *
+     * @param bool $wsdlCacheEnabled
+     *
+     * @return self
+     */
+    public function setWsdlCacheEnabled(bool $wsdlCacheEnabled): self
+    {
+        $this->wsdlCacheEnabled = $wsdlCacheEnabled;
 
         return $this;
     }

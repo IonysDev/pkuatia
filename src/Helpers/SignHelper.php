@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Helpers;
 
+use IonysDev\Pkuatia\Core\Config;
 use IonysDev\Pkuatia\Core\Fields\DE\A\DE;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
@@ -31,22 +32,34 @@ class SignHelper
   {
     if (!file_exists($keyFilePath))
       throw new \Exception("[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
-    if (!is_null($certFilePath) && !file_exists($certFilePath))
+
+    $format = Config::normalizeCertificateFormat($certificateFormat);
+    $usesCombinedPem = $format === Config::CERT_FORMAT_PEM
+      && PemHelper::usesCombinedFile($certFilePath, $keyFilePath);
+
+    if (!$usesCombinedPem && !is_null($certFilePath) && !file_exists($certFilePath))
       throw new \Exception("[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
-    
+
     self::$xmlSigner = new XMLSecurityDSig('');
     self::$xmlSigner->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
     self::$xmlKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
     self::$xmlKey->passphrase = $passphrase;
-    if(strcmp($certificateFormat, 'pem') == 0){      
-      self::$xmlSigner->add509Cert(file_get_contents($certFilePath));
+    if ($format === Config::CERT_FORMAT_PEM) {
+      if ($usesCombinedPem) {
+        self::$xmlSigner->add509Cert(PemHelper::extractCertificatePem(file_get_contents($keyFilePath)));
+      }
+      else {
+        self::$xmlSigner->add509Cert(file_get_contents($certFilePath));
+      }
       self::$xmlKey->loadKey($keyFilePath, true);
     }
-    else if(strcmp($certificateFormat, 'p12') == 0){
+    else if ($format === Config::CERT_FORMAT_PKCS12) {
       $keys = file_get_contents($keyFilePath);
-      openssl_pkcs12_read($keys, $clave, $passphrase);
+      if (!openssl_pkcs12_read($keys, $clave, $passphrase)) {
+        throw new \Exception("[SignHelper] Error al leer el archivo PKCS#12: " . openssl_error_string());
+      }
       $privateKey  = $clave['pkey'];
-      $certificate = $clave['cert'];      
+      $certificate = $clave['cert'];
       self::$xmlSigner->add509Cert($certificate);
       self::$xmlKey->passphrase = $passphrase;
       self::$xmlKey->loadKey($privateKey, false);
