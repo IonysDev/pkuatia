@@ -89,6 +89,12 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
   `new` en inicializadores, propios de PHP 8.1; se excluye PHP 9 hasta auditar compatibilidad).
   Se declaran explícitamente las extensiones requeridas: `ext-soap`, `ext-dom`, `ext-openssl`,
   `ext-zip`, `ext-bcmath`.
+- **Seguridad: piso de `robrichards/xmlseclibs` elevado a `^3.1.5`**, que corrige
+  [GHSA-4v26-v6cg-g6f9](https://github.com/robrichards/xmlseclibs/security/advisories/GHSA-4v26-v6cg-g6f9)
+  (severidad alta: falta de validación del authentication tag AES-GCM en el descifrado, `< 3.1.5`).
+  PKuatia solo usa la firma (no el descifrado AES-GCM), por lo que el impacto directo era bajo,
+  pero el piso garantiza la versión parcheada a todos los consumidores. Firmas verificadas
+  sin cambios con 3.1.5.
 - `Constants::PKUATIA_VERSION` actualizado a `0.1.0`.
 
 ### Compatibilidad con versiones en `main`
