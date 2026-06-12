@@ -45,7 +45,7 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 - PHP >= 8.1
 - Extensiones PHP: `soap`, `dom`, `openssl`, `zip`, `bcmath`
 - Composer
-- Certificado digital emitido por la SET (Subsecretaría de Estado de Tributación)
+- Certificado digital emitido por una ente prestador de servicios de confianza de Paraguay
 - Clave privada correspondiente al certificado
 - Credenciales de acceso al SIFEN (ID CSC y CSC)
 
@@ -374,11 +374,11 @@ Puedes encontrar ejemplos de uso en el directorio `test/`:
 
 ## ⚠️ Notas Importantes
 
-1. **Certificados Digitales**: Debes contar con un certificado digital válido emitido por la SET de Paraguay.
+1. **Certificados Digitales**: Debes contar con un certificado digital válido emitido por algún ente prestador de servicios de confianza habilitado por el Ministerio de Industria y Comercio del Paraguay.
 
 2. **Ambiente de Pruebas**: Utiliza `Config::ENV_DEV` para desarrollo y pruebas. Los documentos generados en este ambiente llevarán el texto "DE generado en ambiente de prueba - sin valor comercial ni fiscal".
 
-3. **Credenciales del SIFEN**: El ID CSC y CSC te serán proporcionados por el SIFEN durante el proceso de habilitación.
+3. **Credenciales del SIFEN**: El ID CSC y CSC te serán proporcionados por la DNIT durante el proceso de habilitación.
 
 4. **Límites de Lotes**: Cada lote puede contener un máximo de 50 documentos electrónicos.
 
@@ -407,9 +407,9 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](L
 
 ## 🔗 Enlaces Útiles
 
-- [Manual Técnico SIFEN v150](https://www.set.gov.py/)
-- [Portal del Contribuyente SET](https://www.set.gov.py/)
-- [Documentación del SIFEN](https://ekuatia.set.gov.py/)
+- [Documentos técnicos para desarrollo del software](https://www.dnit.gov.py/web/e-kuatia/documentacion-tecnica)
+- [Portal del Contribuyente DNIT - Marangatu](https://marangatu.set.gov.py/)
+- [Documentación del SIFEN](https://www.dnit.gov.py/web/e-kuatia)
 
 ---
 

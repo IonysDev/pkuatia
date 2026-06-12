@@ -250,7 +250,7 @@ class DE extends BaseSifenField
   /**
    * Obtiene el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
    *
-   * @return int Sistema de facturación del documento electrónico (DE). Solo puede ser 1 (Contribuyente) o 2 (Sifen gratuito de la SET).
+   * @return int Sistema de facturación del documento electrónico (DE). Solo puede ser 1 (Contribuyente) o 2 (Sifen gratuito de la DNIT).
    */
   public function getDSisFact(): int
   {
