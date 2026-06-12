@@ -138,8 +138,12 @@ class GResProcEVe
       $gResProc = array();
       ///check if is an array or an object
       if(is_array($node->gResProc)) {
-        echo "TODO CUANTICO";
-        echo "is array";
+        foreach($node->gResProc as $proc) {
+          $aux = new GResProc();
+          $aux->setDCodRes($proc->dCodRes);
+          $aux->setDMsgRes($proc->dMsgRes);
+          $gResProc[] = $aux;
+        }
       } else {
         $aux = new GResProc();
         $aux->setDCodRes($node->gResProc->dCodRes);
