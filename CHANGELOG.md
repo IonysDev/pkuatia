@@ -30,6 +30,8 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
   correcto, `GGrupSeg::FromDOMElement` y `RGeVeTr::getdDTipIDTrans` con return en default.
 - **Guía de publicación en Packagist (Fase 3.4).** `docs/PUBLICAR.md` con los pasos manuales
   (cuenta Packagist, submit del repo, webhook de auto-update y release/tag SemVer).
+- **Documentación open-source (Fase 3.5).** `CONTRIBUTING.md`, badge de CI, sección Pruebas,
+  ejemplos completos de FE contado y cancelación en README (otros tipos/eventos: iteración siguiente).
 - **WS de consulta masiva de RUC (siConsArchivoRUC, NT-011).** Nuevo método de facade
   `Sifen::ConsultarArchivoRUC(string $rucFacturador): RResEnviConsArchivoRUC`, con sus
   clases `REnviConsArchivoRUC` (request) y `RResEnviConsArchivoRUC` (response, con helper

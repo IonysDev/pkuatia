@@ -1,5 +1,6 @@
 # 📄 PKuatia
 
+[![CI](https://github.com/ionysdev/pkuatia/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ionysdev/pkuatia/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.1-blue.svg)](https://www.php.net/)
 
@@ -18,6 +19,7 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 - [Funcionalidades](#-funcionalidades)
 - [Tipos de Documentos Soportados](#-tipos-de-documentos-soportados)
 - [Ejemplos](#-ejemplos)
+- [Pruebas](#-pruebas)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
 - [Contribución](#-contribución)
 - [Licencia](#-licencia)
@@ -183,128 +185,42 @@ La librería detecta este caso y arroja una excepción con estas mismas instrucc
 ### Consultar un RUC
 
 ```php
+use IonysDev\Pkuatia\Core\Responses\RResEnviConsRUC;
 use IonysDev\Pkuatia\Sifen;
 
-// Consultar información de un contribuyente por su RUC
-$respuesta = Sifen::ConsultarRUC("80012345-7");
+// RUC sin dígito verificador (5 a 8 dígitos)
+$respuesta = Sifen::ConsultarRUC('80012345');
 
-if ($respuesta->getCodRes() == 0100) {
-    echo "RUC encontrado: " . $respuesta->getDRucEm();
+if ((int) $respuesta->getDCodRes() === RResEnviConsRUC::COD_RES_RUC_FOUND) {
+    $ruc = $respuesta->getRContRuc();
+    echo $ruc->dRazCons . ' — facturador electrónico: ' . $ruc->dRUCFactElec;
 } else {
-    echo "Error: " . $respuesta->getDsRes();
+    echo 'Error: ' . $respuesta->getDMsgRes();
 }
 ```
 
 ### Consultar un Documento Electrónico
 
 ```php
-// Consultar un DE por su CDC (Código de Control)
-$cdc = "01800123445001123456701234567890123456789012345678";
+// CDC de 44 dígitos del DE ya autorizado
+$cdc = '01800000005001001000000122026010100000000000001'; // placeholder
 $respuesta = Sifen::ConsultarDE($cdc);
 
-if ($respuesta->getCodRes() == 0100) {
-    echo "Documento encontrado";
-    $respuesta->showData(); // Mostrar información del documento
-}
+echo $respuesta->getDMsgRes();
 ```
 
 ## 🎯 Funcionalidades
 
-### 1. Crear y Firmar un Documento Electrónico
+| Área | Métodos principales |
+|------|---------------------|
+| Consultas | `ConsultarRUC`, `ConsultarDE`, `ConsultaLote`, `ConsultarArchivoRUC` |
+| Emisión | `FirmarDE`, `EnviarDE`, `EnviarLoteDE` |
+| Eventos emisor | `CancelarDE`, `InutilizarNumeros` |
+| Eventos receptor | `ConformarDE`, `DisconformarDE`, `DesconocerDE`, `NotificarRecepcionDE`, `NominarFE` |
+| Builders | `Factura`, `NotaDeCredito`, `NotaDeDebito`, `NotaDeRemision`, `Autofactura` |
 
-```php
-use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
-use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
-use IonysDev\Pkuatia\Sifen;
-use DateTime;
-
-// Crear un nuevo documento electrónico (RDE)
-$rde = new RDE();
-
-// Configurar el documento electrónico según tus necesidades
-$de = new DocumentoElectronico();
-// ... configurar campos del DE ...
-
-$rde->setDE($de);
-
-// Firmar el documento
-$fechaFirma = new DateTime('now', new DateTimeZone('America/Asuncion'));
-$xmlFirmado = Sifen::FirmarDE($rde, $fechaFirma);
-
-// El XML está listo para ser enviado al SIFEN
-```
-
-### 2. Enviar un Documento Electrónico
-
-```php
-// Enviar el documento firmado al SIFEN
-$respuesta = Sifen::EnviarDE($xmlFirmado);
-
-if ($respuesta->getCodRes() == 0100) {
-    $cdc = $respuesta->getCDC();
-    echo "Documento enviado exitosamente. CDC: " . $cdc;
-} else {
-    echo "Error al enviar: " . $respuesta->getDsRes();
-}
-```
-
-### 3. Enviar un Lote de Documentos
-
-```php
-// Preparar el lote de documentos (máximo 50 documentos)
-$lote = [
-    $xmlFirmado1,
-    $xmlFirmado2,
-    // ... más documentos
-];
-
-// Enviar el lote
-$respuesta = Sifen::EnviarLoteDE($lote);
-
-if ($respuesta->getCodRes() == 0100) {
-    $nroLote = $respuesta->getNroLote();
-    echo "Lote enviado. Número de lote: " . $nroLote;
-}
-```
-
-### 4. Consultar un Lote
-
-```php
-// Consultar el estado de un lote por su número
-$nroLote = 123456;
-$respuesta = Sifen::ConsultaLote($nroLote);
-```
-
-### 5. Cancelar un Documento Electrónico
-
-```php
-// Cancelar un documento por su CDC
-$cdc = "01800123445001123456701234567890123456789012345678";
-$motivo = "Error en la información del documento";
-
-$respuesta = Sifen::CancelarDE($cdc, $motivo);
-
-if ($respuesta->getCodRes() == 0100) {
-    echo "Documento cancelado exitosamente";
-}
-```
-
-### 6. Inutilizar Números de Documentos
-
-```php
-use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
-
-// Inutilizar un rango de números de documentos
-$respuesta = Sifen::InutilizarNumeros(
-    timbrado: 123456,
-    nroEstablecimiento: 1,
-    nroPuntoEmision: 1,
-    nroDocumentoInicial: 1,
-    nroDocumentoFinal: 100,
-    tipoDE: TimbTiDE::Factura,
-    motivo: "Documentos dañados o perdidos"
-);
-```
+Los ejemplos completos de **FE contado** y **cancelación** están en [Ejemplos](#-ejemplos). Otros
+tipos de documento y eventos se documentarán en una siguiente iteración.
 
 ## 📄 Tipos de Documentos Soportados
 
@@ -339,23 +255,13 @@ TimbTiDE::NotaDeCredito->value; // 5
 
 ```
 pkuatia/
-├── src/
-│   ├── Core/                  # Clases principales
-│   │   ├── Config.php        # Configuración del sistema
-│   │   ├── Constants/        # Constantes y enumeraciones
-│   │   ├── DocumentosElectronicos/  # Clases de documentos
-│   │   ├── Fields/           # Campos del DE
-│   │   ├── Requests/         # Peticiones al SIFEN
-│   │   └── Responses/        # Respuestas del SIFEN
-│   ├── DataMappings/         # Mapeos de datos (países, monedas, etc.)
-│   ├── Helpers/              # Utilidades auxiliares
-│   │   ├── QRHelper.php     # Generación de códigos QR
-│   │   ├── SignHelper.php   # Firma digital
-│   │   └── ...
-│   ├── Utils/                # Utilidades generales
-│   └── Sifen.php            # Clase principal
-├── test/                     # Ejemplos y pruebas
-├── documentation/            # Documentación técnica
+├── src/                      # Código de la librería (PSR-4)
+├── tests/Unit/               # Suite PHPUnit (offline, sin certificado)
+├── test/                     # Smoke test y scripts de consulta de ejemplo
+├── .github/workflows/        # CI (PHP 8.1–8.3)
+├── docs/PUBLICAR.md          # Guía Packagist (mantenedores)
+├── phpunit.xml.dist
+├── phpstan.neon.dist
 └── composer.json
 ```
 
@@ -366,11 +272,150 @@ pkuatia/
 
 ## 📚 Ejemplos
 
-Puedes encontrar ejemplos de uso en el directorio `test/`:
+Los fragmentos usan **datos genéricos** (RUC `80000000-5`, timbrado `12345678`). Reemplazalos por
+tu timbrado habilitado, certificado y CSC antes de enviar al SIFEN. En ambiente `dev` el nombre del
+emisor se ajusta automáticamente al texto de prueba reglamentario.
 
-- `ConsultaDE.php` - Consulta de documentos electrónicos
-- `ConsultaLote.php` - Consulta de lotes
-- `ConsultaRUC.php` - Consulta de RUC
+### Factura electrónica al contado (emitir y enviar)
+
+```php
+use DateTime;
+use DateTimeZone;
+use IonysDev\Pkuatia\Core\Config;
+use IonysDev\Pkuatia\Core\Constants\CamCondOpe;
+use IonysDev\Pkuatia\Core\Constants\CamFEIndPres;
+use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
+use IonysDev\Pkuatia\Core\Constants\CamIVATasaIVA;
+use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
+use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
+use IonysDev\Pkuatia\Core\Constants\PaConEIniTiPago;
+use IonysDev\Pkuatia\Core\Constants\RecTiOpe;
+use IonysDev\Pkuatia\Core\DocumentosElectronicos\Factura;
+use IonysDev\Pkuatia\Sifen;
+
+// 1. Configuración e inicialización (ver sección Configuración)
+$config = new Config();
+$config->env = Config::ENV_DEV;
+$config->certificateFormat = 'pem';
+$config->privateKeyFilePath = '/ruta/a/certificado.pem';
+$config->privateKeyPassphrase = 'tu_contraseña';
+$config->idCsc = '0001';
+$config->csc = 'ABCD0000000000000000000000000000';
+$config->wsdlCacheEnabled = true;
+Sifen::Init($config);
+
+// 2. Conformar la factura
+$factura = new Factura(CamCondOpe::Contado);
+$factura->setTimbrado(
+    numTimb: 12345678,
+    fechaInicio: new DateTime('2024-01-01'),
+    numEst: 1,
+    numExp: 1,
+    numDoc: 1
+);
+$factura->setFechaEmision(new DateTime('now', new DateTimeZone('America/Asuncion')));
+$factura->setEmisor(
+    rucEmisor: '80000000',
+    dv: 5,
+    tipoContribuyente: EmisRecTipCont::PersonaJuridica,
+    tipoRegimen: null,
+    nombreEmisor: 'Empresa Emisora de Ejemplo SA',
+    nombreFantasia: null,
+    callePrincipal: 'Av. Principal',
+    casaNro: '100',
+    calleSecundaria: null,
+    complementoDir: null,
+    codDep: 1,
+    codDistrito: null,
+    codCiud: 1,
+    telefono: '021000000',
+    email: 'emisor@example.com',
+    nombreSucursal: null
+);
+$factura->addEmisorActividadEconomica(47190, 'Comercio al por menor');
+$factura->setReceptor(
+    nombre: 'Cliente Receptor SA',
+    esContribuyente: true,
+    tipoOperacion: RecTiOpe::B2B,
+    codPais: 'PRY',
+    tipoContribuyente: EmisRecTipCont::PersonaJuridica,
+    ruc: '80012345',
+    dv: 0,
+    tipoIdentificacion: null,
+    nroIdentificacion: null,
+    nombreFantasia: null,
+    callePrincipal: null,
+    numeroCasa: null,
+    codigoDepartamento: null,
+    codigoDistrito: null,
+    codigoCiudad: null,
+    telefono: null,
+    celular: null,
+    email: null,
+    codigoDeCliente: null
+);
+$factura->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
+$factura->setIndicadorPresencia(CamFEIndPres::Presencial);
+$factura->addItem(
+    codigo: 'PROD001',
+    descripcion: 'Producto de ejemplo',
+    codUnidadMedida: 77,           // UNI
+    cantidad: '1',
+    precisionMoneda: 0,
+    precioUnit: '100000',
+    totalBruto: null,
+    afectIVA: CamIVAAfecIVA::Gravado,
+    proporcionGravadaIVA: '100',
+    tasaDeIVA: CamIVATasaIVA::IVA10
+);
+$factura->addPago(PaConEIniTiPago::Efectivo, '100000', 'PYG');
+
+// 3. Firmar y enviar
+$rde = $factura->facturaToRDE();
+$fechaFirma = new DateTime('now', new DateTimeZone('America/Asuncion'));
+$xmlFirmado = Sifen::FirmarDE($rde, $fechaFirma);
+$respuesta = Sifen::EnviarDE($xmlFirmado);
+
+$prot = $respuesta->getRProtDe();
+$cdc = $prot->getId();
+$resultado = $prot->getGResProc()[0];
+echo "CDC: $cdc — {$resultado->dCodRes}: {$resultado->dMsgRes}\n";
+// Aprobación habitual: dCodRes en familia 026x (p. ej. 0260)
+```
+
+### Cancelar un DE aprobado
+
+Solo podés cancelar un CDC que el SIFEN haya **autorizado** previamente. El motivo debe tener
+entre 5 y 500 caracteres.
+
+```php
+use IonysDev\Pkuatia\Sifen;
+
+// $cdc obtenido del envío anterior (44 dígitos)
+$cdc = '01800000005001001000000122026010100000000000001'; // placeholder
+
+$respuesta = Sifen::CancelarDE(
+    $cdc,
+    'Anulación por error en los datos del comprobante'
+);
+
+foreach ($respuesta->getGResProcEVe() as $evento) {
+    foreach ($evento->getGResProc() as $proc) {
+        echo "{$proc->dCodRes}: {$proc->dMsgRes}\n";
+        // Éxito habitual del evento de cancelación: 0600
+    }
+}
+```
+
+### Otros scripts de referencia
+
+En `test/` hay scripts de consulta que requieren certificado y red:
+
+- `ConsultaRUC.php`, `ConsultaDE.php`, `ConsultaLote.php`
+- `SmokeTest.php` — verificación offline rápida (`php test/SmokeTest.php`)
+
+> **Próximamente en esta sección:** FE crédito en cuotas, NC, ND, NR con transporte, autofactura,
+> inutilización y eventos del receptor (`ConformarDE`, etc.).
 
 ## ⚠️ Notas Importantes
 
@@ -384,17 +429,26 @@ Puedes encontrar ejemplos de uso en el directorio `test/`:
 
 5. **Firma Digital**: La biblioteca requiere que el certificado y la clave privada estén disponibles localmente.
 
+## 🧪 Pruebas
+
+Verificaciones offline (no requieren certificado ni conexión al SIFEN):
+
+```bash
+composer install
+php test/SmokeTest.php      # smoke test rápido
+composer test               # PHPUnit (tests/Unit/)
+composer phpstan            # análisis estático nivel 1
+```
+
+El CI en GitHub ejecuta lint (`php -l`), smoke test, PHPUnit y PHPStan en PHP 8.1, 8.2 y 8.3.
+
+Detalle del flujo de contribución, estilo y convención de commits: [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## 🤝 Contribución
 
-Mantenedores: pasos para publicar en Packagist en [docs/PUBLICAR.md](docs/PUBLICAR.md).
+Las contribuciones son bienvenidas. Leé [CONTRIBUTING.md](CONTRIBUTING.md) antes de abrir un PR.
 
-Las contribuciones son bienvenidas. Por favor:
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+Mantenedores: publicación en Packagist → [docs/PUBLICAR.md](docs/PUBLICAR.md).
 
 ## 📝 Licencia
 
