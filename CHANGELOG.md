@@ -108,9 +108,23 @@ firma de ningún método público del facade ni de las clases de campos. Puntos 
    `RegistrarEvento` (>15 eventos) pueden lanzar una excepción en escenarios que el SIFEN ya
    rechazaba; conviene capturarla como cualquier otra excepción de la librería.
 
-### Pendiente de homologación
+### Homologación (jun/2026)
 
-- Envío end-to-end de DE/eventos contra `sifen-test` (bloqueado temporalmente por saturación
-  del ambiente al cierre de esta entrega).
-- Confirmación del método y la ruta SOAP de `siConsArchivoRUC` contra producción.
-- `ConsultarRUC` verificado **OK contra producción** (jun/2026).
+- ✅ **`ConsultarRUC`** verificado contra **producción** y contra `sifen-test`.
+- ✅ **Emisión de Factura Electrónica (`EnviarDE`) end-to-end contra `sifen-test`: APROBADA**
+  (con número de protocolo de autorización). El DE incluía el grupo `gOblAfe` (NT-018), que el
+  SIFEN **aceptó** (validación 1221), confirmando la integración y los literales de la Tabla 12.
+- ✅ **`ConsultarDE`** del DE emitido: devuelve el documento completo y autorizado.
+- ⚠️ **`CancelarDE`**: el evento se firma, transmite y el SIFEN lo procesa, pero lo rechaza con
+  `dCodRes 0100` ("Error Inesperado"). En diagnóstico (posible timing o inestabilidad del
+  ambiente de pruebas).
+- Pendiente: confirmación del método y la ruta SOAP de `siConsArchivoRUC`, y homologación del
+  envío en lote (`EnviarLoteDE` / `ConsultaLote`).
+
+### Corregido (post-homologación)
+
+- **`GPaConEIni::setDDesTiPag` / `setDDMoneTiPag`**: usaban variable-variable (`$this->$prop`)
+  por un `$` de más, creando propiedades dinámicas basura en vez de asignar `dDesTiPag` /
+  `dDMoneTiPag` (deprecación en PHP 8.2, error en PHP 9). Detectado al deserializar un DE.
+- **`GResProcEVe::FromSimpleXMLElement`**: eliminado un `echo` de depuración y completado el
+  manejo del caso en que `gResProc` es un arreglo.
