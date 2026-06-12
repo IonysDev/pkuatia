@@ -17,8 +17,9 @@ use RobRichards\XMLSecLibs\XMLSecurityKey;
  */
 class SignHelper
 {
-  public static XMLSecurityDSig $xmlSigner;
+  public static XMLSecurityDSig $xmlSigner; // Se mantiene por compatibilidad; las firmas usan instancias frescas.
   public static XMLSecurityKey $xmlKey;
+  private static string $x509Cert;          // Certificado X.509 (PEM) para construir firmadores frescos por firma.
 
   /**
    * Inicializa el firmador de XML.
@@ -40,16 +41,14 @@ class SignHelper
     if (!$usesCombinedPem && !is_null($certFilePath) && !file_exists($certFilePath))
       throw new \Exception("[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
 
-    self::$xmlSigner = new XMLSecurityDSig('');
-    self::$xmlSigner->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
     self::$xmlKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
     self::$xmlKey->passphrase = $passphrase;
     if ($format === Config::CERT_FORMAT_PEM) {
       if ($usesCombinedPem) {
-        self::$xmlSigner->add509Cert(PemHelper::extractCertificatePem(file_get_contents($keyFilePath)));
+        self::$x509Cert = PemHelper::extractCertificatePem(file_get_contents($keyFilePath));
       }
       else {
-        self::$xmlSigner->add509Cert(file_get_contents($certFilePath));
+        self::$x509Cert = file_get_contents($certFilePath);
       }
       self::$xmlKey->loadKey($keyFilePath, true);
     }
@@ -57,14 +56,34 @@ class SignHelper
       $keys = file_get_contents($keyFilePath);
       $clave = Pkcs12Helper::read($keys, $passphrase);
       $privateKey  = $clave['pkey'];
-      $certificate = $clave['cert'];
-      self::$xmlSigner->add509Cert($certificate);
+      self::$x509Cert = $clave['cert'];
       self::$xmlKey->passphrase = $passphrase;
       self::$xmlKey->loadKey($privateKey, false);
     }
     else {
       throw new \Exception("[SignHelper] Formato de certificado no soportado.");
     }
+
+    // Se mantiene una instancia en la propiedad pública por compatibilidad hacia atrás,
+    // pero cada firma usa un firmador fresco (ver createSigner) para evitar el sobrefirmado.
+    self::$xmlSigner = self::createSigner();
+  }
+
+  /**
+   * Crea un firmador XMLSecurityDSig nuevo y configurado (canonicalización exclusiva + certificado).
+   *
+   * Es obligatorio usar una instancia nueva por cada firma: XMLSecurityDSig acumula las referencias
+   * y el estado de firma, por lo que reutilizar el mismo objeto para firmar varios documentos en el
+   * mismo proceso (p. ej. un lote de DE o varios eventos) corrompe la firma del segundo en adelante.
+   *
+   * @return XMLSecurityDSig
+   */
+  private static function createSigner(): XMLSecurityDSig
+  {
+    $signer = new XMLSecurityDSig('');
+    $signer->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
+    $signer->add509Cert(self::$x509Cert);
+    return $signer;
   }
 
   /**
@@ -76,7 +95,7 @@ class SignHelper
    */
   public static function SignRDE(RDE $rde, DateTime $fechaFirma = new DateTime('now')): DOMDocument
   {
-    if (!isset(self::$xmlSigner))
+    if (!isset(self::$x509Cert))
       throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
 
     $rde->DE->setDFecFirma($fechaFirma);
@@ -88,46 +107,43 @@ class SignHelper
     $deNode = $xmlDocument->getElementsByTagName("DE")->item(0);
 
     $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
-    self::$xmlSigner->addReference(
+    // Firmador fresco por documento para evitar el sobrefirmado al firmar varios DE en un mismo proceso.
+    $signer = self::createSigner();
+    $signer->addReference(
       $deNode,
       XMLSecurityDSig::SHA256,
       ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
       ['id_name' => 'Id', 'overwrite' => false],
     );
-    self::$xmlSigner->sign(self::$xmlKey, $xmlDocument->documentElement);
-    self::$xmlSigner->appendSignature($rdeNode);
+    $signer->sign(self::$xmlKey, $xmlDocument->documentElement);
+    $signer->appendSignature($rdeNode);
     return $xmlDocument;
   }
 
   public static function SingEvents(GGroupGesEve $raiz, $config)
   {
-    if (!isset(self::$xmlSigner))
+    if (!isset(self::$x509Cert))
       throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
-
 
     $xmlDocument = new DOMDocument('1.0', 'UTF-8');
     $xmlDocument->formatOutput = false;
     $xmlDocument->preserveWhiteSpace = false;
     $xmlDocument->loadXML($raiz->toXMLString());
 
-    //foreach loop for each event
+    // Cada evento (rGesEve) se firma con un firmador fresco: reutilizar el mismo objeto
+    // corrompería la firma del segundo evento en adelante (sobrefirmado).
     $eventNodes = $xmlDocument->getElementsByTagName("rGesEve");
     foreach ($eventNodes as $eventNode) {
-      //init signer, para evitar el bug del sobrefirmado
-      // self::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFormat, $config->certificateFilePath);
-      ///show child node
       $rEve = $eventNode->getElementsByTagName("rEve")->item(0);
-      //add reference
-      self::$xmlSigner->addReference(
+      $signer = self::createSigner();
+      $signer->addReference(
         $rEve,
         XMLSecurityDSig::SHA256,
         ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
         ['id_name' => 'Id', 'overwrite' => false],
       );
-      //sign
-      self::$xmlSigner->sign(self::$xmlKey, $xmlDocument->documentElement);
-      //append signature
-      self::$xmlSigner->appendSignature($eventNode);
+      $signer->sign(self::$xmlKey, $xmlDocument->documentElement);
+      $signer->appendSignature($eventNode);
     }
 
     return $xmlDocument;
