@@ -157,6 +157,21 @@ class GGrupSeg extends BaseSifenField
   // Conversores
   ///////////////////////////////////////////////////////////////////////
 
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if (strcmp($node->nodeName, 'gGrupSeg') != 0) {
+      throw new \Exception('[GGrupSeg] Nodo con nombre inválido: ' . $node->nodeName);
+    }
+    $res = new GGrupSeg();
+    if ($node->getElementsByTagName('dCodEmpSeg')->length > 0) {
+      $res->setDCodEmpSeg(trim($node->getElementsByTagName('dCodEmpSeg')->item(0)->nodeValue));
+    }
+    foreach ($node->getElementsByTagName('gGrupPolSeg') as $polNode) {
+      $res->gGrupPolSeg[] = GGrupPolSeg::FromDOMElement($polNode);
+    }
+    return $res;
+  }
+
   /**
    * Convierte este GGrupSeg en un DOMElement
    *

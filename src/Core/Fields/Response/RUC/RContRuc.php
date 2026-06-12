@@ -216,11 +216,11 @@ class RContRUC
    * FromSifenResponseObject
    *
    * @param  mixed $object
-   * @return RContRuc
+   * @return RContRUC
    */
-  public static function fromStdClassObject($object): RContRuc
+  public static function fromStdClassObject($object): RContRUC
   {
-    $res = new RContRuc();
+    $res = new RContRUC();
     if(isset($object->dRUCCons)){
       $res->setDRUCCons($object->dRUCCons);
     }
@@ -237,19 +237,19 @@ class RContRUC
   }
 
   /**
-   * Instantiates a RContRuc from a SimpleXMLElement.
+   * Instantiates a RContRUC from a SimpleXMLElement.
    * 
    * @param  SimpleXMLElement $xml
    * 
-   * @return RContRuc
+   * @return RContRUC
    */
-  public static function fromSimpleXMLElement(SimpleXMLElement $xml): RContRuc
+  public static function fromSimpleXMLElement(SimpleXMLElement $xml): RContRUC
   {
     if(strcmp($xml->getName(),'rContRUC') != 0) {
       throw new \Exception("Invalid XML Element: $xml->getName()");
       return null;
     }
-    $res = new RContRuc();
+    $res = new RContRUC();
     if(isset($xml->dRUCCons)){
       $res->setDRUCCons((String)$xml->dRUCCons);
     }

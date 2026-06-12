@@ -1,0 +1,589 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$cdcFacturaAnticipo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$codPaisOrigen\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$detalleVehiculoNuevo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$dncpCodigoEspecifico\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$dncpCodigoGTINPaquete\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$dncpCodigoGTINProducto\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$dncpCodigoGeneral\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$esTipoCambioPorItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$fechaVencimiento\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$infoEmisor\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$ncmMercosur\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$nroLote\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$nroPedido\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$nroSerie\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$partidaArancelaria\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Autofactura\:\:\$tipoDeCambioItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Variable \$item might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Core/DocumentosElectronicos/Autofactura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$cdcFacturaAnticipo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$codPaisOrigen\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$detalleVehiculoNuevo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$dncpCodigoEspecifico\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$dncpCodigoGTINPaquete\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$dncpCodigoGTINProducto\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$dncpCodigoGeneral\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$esTipoCambioPorItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$fechaVencimiento\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$infoEmisor\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$ncmMercosur\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$nroLote\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$nroPedido\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$nroSerie\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$partidaArancelaria\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$tipoDeCambioItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Variable \$item might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Core/DocumentosElectronicos/Factura.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$cdcFacturaAnticipo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$codPaisOrigen\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$detalleVehiculoNuevo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$dncpCodigoEspecifico\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$dncpCodigoGTINPaquete\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$dncpCodigoGTINProducto\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$dncpCodigoGeneral\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$esTipoCambioPorItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$fechaVencimiento\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$infoEmisor\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$ncmMercosur\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$nroLote\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$nroPedido\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$nroSerie\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$partidaArancelaria\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeCredito\:\:\$tipoDeCambioItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Variable \$item might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$cdcFacturaAnticipo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$codPaisOrigen\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$detalleVehiculoNuevo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$dncpCodigoEspecifico\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$dncpCodigoGTINPaquete\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$dncpCodigoGTINProducto\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$dncpCodigoGeneral\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$esTipoCambioPorItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$fechaVencimiento\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$infoEmisor\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$ncmMercosur\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$nroLote\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$nroPedido\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$nroSerie\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$partidaArancelaria\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$tipoDeCambioItem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Variable \$item might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeRemision\:\:\$gCamNRE in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/DocumentosElectronicos/NotaDeRemision.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\AA\\RDE\:\:\$dVerFor in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/AA/RDE.php
+
+		-
+			message: '#^Parameter \$object of method IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\GActEco\:\:FromSifenResponseObject\(\) has invalid type IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\stdClass\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Core/Fields/DE/D/GActEco.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\GDatRec\:\:\$cPaisRec in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/D/GDatRec.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\GDatRec\:\:\$dDesPaisRe in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/D/GDatRec.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\GDatRec\:\:\$iNatRec in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/D/GDatRec.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\GDatRec\:\:\$iTiOpe in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/D/GDatRec.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\GDatRec\:\:\$iTipIDRec in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 2
+			path: src/Core/Fields/DE/D/GDatRec.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\D\\GEmis\:\:\$gActEco in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/D/GEmis.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamCond\:\:\$gPaConEIni in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/E/GCamCond.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupAdi\:\:FromDOMElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GCamEsp.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupAdi\:\:FromSimpleXMLElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GCamEsp.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupEner\:\:FromDOMElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GCamEsp.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSup\:\:FromDOMElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GCamEsp.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSup\:\:FromSimpleXMLElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GCamEsp.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamFE\:\:\$dDesIndPres in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/E/GCamFE.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamFE\:\:\$iIndPres in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/E/GCamFE.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamIVA\:\:\$dBasExe in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/E/GCamIVA.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamAE\:\:FromSimpleXMLElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GDtipDE.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamNRE\:\:FromSifenResponseObject\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GDtipDE.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamNRE\:\:FromSimpleXMLElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/DE/E/GDtipDE.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GDtipDE\:\:\$gCamItem in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/E/GDtipDE.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSeg\:\:\$gGrupPolSeg in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/E/GGrupSeg.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GPagCred\:\:\$gCuotas in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/E/GPagCred.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\F\\GTotSub\:\:\$dRedon on left side of \?\? is not nullable nor uninitialized\.$#'
+			identifier: nullCoalesce.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/F/GTotSub.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\F\\GTotSub\:\:\$dTotGralOpe on left side of \?\? is not nullable nor uninitialized\.$#'
+			identifier: nullCoalesce.initializedProperty
+			count: 1
+			path: src/Core/Fields/DE/F/GTotSub.php
+
+		-
+			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\F\\GTotSub\:\:\$dTotOpe on left side of \?\? is not nullable nor uninitialized\.$#'
+			identifier: nullCoalesce.initializedProperty
+			count: 3
+			path: src/Core/Fields/DE/F/GTotSub.php
+
+		-
+			message: '#^Class IonysDev\\Pkuatia\\Core\\Fields\\Request\\Event\\GDE\\RGEveNom referenced with incorrect case\: IonysDev\\Pkuatia\\Core\\Fields\\Request\\Event\\GDE\\RGeVeNom\.$#'
+			identifier: class.nameCase
+			count: 1
+			path: src/Core/Fields/Request/Event/GDE/GGroupTiEvt.php
+
+		-
+			message: '#^Class IonysDev\\Pkuatia\\Core\\Fields\\Response\\DE\\GResProcEve referenced with incorrect case\: IonysDev\\Pkuatia\\Core\\Fields\\Response\\DE\\GResProcEVe\.$#'
+			identifier: class.nameCase
+			count: 1
+			path: src/Core/Fields/Response/DE/GResProcEve.php
+
+		-
+			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\Response\\GResProc\:\:fromSimpleXMLElement\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Core/Fields/Response/RProtDe.php

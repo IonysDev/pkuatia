@@ -2,7 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\Responses;
 
-use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRuc;
+use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRUC;
 
 /**
  * RespuestaConsultaRUC
@@ -16,7 +16,7 @@ class RResEnviConsRUC
                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public int    $dCodRes;    // RRSch02 - Código del resultado de la consulta RUC  - 4 - 1-1
   public String $dMsgRes;    // RRSch03 - Mensaje del resultado  de  la consulta RUC - 1-255 - 1-1
-  public RContRuc $rContRuc; // RRSch04 - Contenedor del RUC consultado - X - 1-1
+  public RContRUC $rContRuc; // RRSch04 - Contenedor del RUC consultado - X - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -53,13 +53,13 @@ class RResEnviConsRUC
 
 
   /**
-   * Establece el valor de RContRuc
+   * Establece el valor de RContRUC
    *
-   * @param RContRuc $rContRuc
+   * @param RContRUC $rContRuc
    *
    * @return self
    */
-  public function setRContRuc(RContRuc $rContRuc): self
+  public function setRContRUC(RContRUC $rContRuc): self
   {
     $this->rContRuc = $rContRuc;
 
@@ -94,9 +94,9 @@ class RResEnviConsRUC
   /**
    * Obtiene el valor de rContRuc
    *
-   * @return RContRuc
+   * @return RContRUC
    */
-  public function getRContRuc(): RContRuc
+  public function getRContRUC(): RContRUC
   {
     if(isset($this->rContRuc))
     {
@@ -104,7 +104,7 @@ class RResEnviConsRUC
     }
     else
     {
-      return new RContRuc();
+      return new RContRUC();
     }
   }
 
@@ -134,9 +134,9 @@ class RResEnviConsRUC
     {
       if(isset($object->xContRUC))
         //  RRSch04 - rContRUC se denomina xContRUC en las respuestas del SIFEN
-        $res->setRContRuc(RContRuc::fromStdClassObject($object->xContRUC));
+        $res->setRContRUC(RContRUC::fromStdClassObject($object->xContRUC));
       else if(isset($object->rContRUC))
-        $res->setRContRuc(RContRuc::fromStdClassObject($object->rContRUC));
+        $res->setRContRUC(RContRUC::fromStdClassObject($object->rContRUC));
     }
     return $res;
   }

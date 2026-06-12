@@ -23,6 +23,11 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
   unitarias (null restaura el comportamiento por defecto).
 - **GitHub Actions (Fase 3.2).** Workflow `.github/workflows/ci.yml`: matrix PHP 8.1–8.3,
   lint (`php -l`), smoke test y PHPUnit en cada push/PR a `main` o `dev`.
+- **PHPStan (Fase 3.3).** Análisis estático nivel 1 en `src/`, `phpstan.neon.dist`,
+  baseline (`phpstan-baseline.neon`) y script `composer phpstan`. Correcciones QA:
+  alias `getGResProcEVe`/`setGResProcEVe` en `RRetEnviEventoDe` (typo legacy deprecado),
+  `FromSimpleXMLElement` con foreach para 1–15 `gResProcEVe`, referencias `RContRUC` con casing
+  correcto, `GGrupSeg::FromDOMElement` y `RGeVeTr::getdDTipIDTrans` con return en default.
 - **WS de consulta masiva de RUC (siConsArchivoRUC, NT-011).** Nuevo método de facade
   `Sifen::ConsultarArchivoRUC(string $rucFacturador): RResEnviConsArchivoRUC`, con sus
   clases `REnviConsArchivoRUC` (request) y `RResEnviConsArchivoRUC` (response, con helper
