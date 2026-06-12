@@ -116,14 +116,24 @@ firma de ningún método público del facade ni de las clases de campos. Puntos 
   (con número de protocolo de autorización). El DE incluía el grupo `gOblAfe` (NT-018), que el
   SIFEN **aceptó** (validación 1221), confirmando la integración y los literales de la Tabla 12.
 - ✅ **`ConsultarDE`** del DE emitido: devuelve el documento completo y autorizado.
-- ⚠️ **`CancelarDE`**: el evento se firma, transmite y el SIFEN lo procesa, pero lo rechaza con
-  `dCodRes 0100` ("Error Inesperado"). En diagnóstico (posible timing o inestabilidad del
-  ambiente de pruebas).
-- Pendiente: confirmación del método y la ruta SOAP de `siConsArchivoRUC`, y homologación del
-  envío en lote (`EnviarLoteDE` / `ConsultaLote`).
+- ✅ **`CancelarDE`** (evento del emisor): **APROBADO** (`dCodRes 0600`, evento registrado). El
+  `0100` observado en la primera prueba fue transitorio (ambiente degradado); el XML del evento es
+  conforme (comparado con la implementación de referencia Java).
+- ✅ **Envío en lote (`EnviarLoteDE` + `ConsultaLote`) end-to-end: AMBOS DE APROBADOS.** Valida que
+  el `xDE` se transmite como binario crudo (SoapClient aplica el Base64). Destapó y corrigió el bug
+  de sobrefirmado (ver más abajo).
+- ✅ **Evento del receptor (`ConformarDE`)**: pipeline validado end-to-end; el SIFEN lo procesa y
+  responde con `dCodRes 0143` (la firma debe corresponder al receptor), esperado porque el harness
+  firma con el certificado del emisor. Funcional con el certificado del receptor.
+- Pendiente: confirmación del método y la ruta SOAP de `siConsArchivoRUC` (no desplegado en pruebas).
 
 ### Corregido (post-homologación)
 
+- **Sobrefirmado al firmar varios documentos en un mismo proceso.** `SignHelper` reutilizaba la
+  instancia estática `XMLSecurityDSig`, que acumula referencias y estado: la firma del segundo DE
+  (o evento) en adelante salía malformada y el SIFEN la rechazaba con `0160` ("XML malformado: El
+  elemento esperado es KeyInfo en lugar de SignatureValue"). **Esto rompía todo envío en lote de 2+
+  DE.** Ahora cada firma usa un firmador fresco. Verificado con un lote de 2 FE aprobado.
 - **`GPaConEIni::setDDesTiPag` / `setDDMoneTiPag`**: usaban variable-variable (`$this->$prop`)
   por un `$` de más, creando propiedades dinámicas basura en vez de asignar `dDesTiPag` /
   `dDMoneTiPag` (deprecación en PHP 8.2, error en PHP 9). Detectado al deserializar un DE.
