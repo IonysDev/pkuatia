@@ -609,8 +609,7 @@ class RGeVeTr
         break;
 
       default:
-        # code...
-        break;
+        throw new \InvalidArgumentException('[RGeVeTr] iTipIDTrans no válido: ' . $this->iTipIDTrans);
     }
   }
 

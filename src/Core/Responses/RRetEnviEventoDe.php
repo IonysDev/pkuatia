@@ -36,6 +36,18 @@ class RRetEnviEventoDe
    *
    * @return self
    */
+  public function setGResProcEVe(array $gResProcEVe): self
+  {
+    return $this->seGResProcEVe($gResProcEVe);
+  }
+
+  /**
+   * @deprecated Usar setGResProcEVe() (typo histórico en el nombre del método).
+   *
+   * @param array $gResProcEVe
+   *
+   * @return self
+   */
   public function seGResProcEVe(array $gResProcEVe): self
   {
     $this->gResProcEVe = $gResProcEVe;
@@ -55,6 +67,16 @@ class RRetEnviEventoDe
 
   /**
    * Obtiene el valor de gResProcEVe
+   *
+   * @return array
+   */
+  public function getGResProcEVe(): array
+  {
+    return $this->geGResProcEVe();
+  }
+
+  /**
+   * @deprecated Usar getGResProcEVe() (typo histórico en el nombre del método).
    *
    * @return array
    */
@@ -98,11 +120,11 @@ class RRetEnviEventoDe
     $res->setDFecProc(DateTime::createFromFormat("Y-m-d\TH:i:s", $node->dFecProc));
     ///create the array
     $gResProcEVe = array();
-    if(isset($node->gResProcEVe))
-    {
-      $aux = gResProcEVe::FromSimpleXMLElement($node->gResProcEVe);
-      array_push($gResProcEVe,$aux);
-      $res->seGResProcEVe($gResProcEVe);
+    if (isset($node->gResProcEVe)) {
+      foreach ($node->gResProcEVe as $procNode) {
+        $gResProcEVe[] = GResProcEVe::FromSimpleXMLElement($procNode);
+      }
+      $res->setGResProcEVe($gResProcEVe);
     }
 
     return $res;

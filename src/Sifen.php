@@ -55,6 +55,8 @@ class Sifen
   private static SoapClient $client;
   private static Config $config;
   private static $options;
+  /** @var callable(string, array): SoapClient|null Factoría de SoapClient para pruebas (null = comportamiento por defecto). */
+  private static $soapClientFactory = null;
 
   /**
    * Inicializa la clase Sifen con la configuración necesaria para realizar las peticiones.
@@ -116,6 +118,33 @@ class Sifen
   }
 
   /**
+   * Inyecta una factoría de SoapClient para pruebas unitarias sin red.
+   * Pasar null restaura el comportamiento por defecto (new SoapClient).
+   *
+   * @param callable(string $wsdl, array $options): SoapClient|null $factory
+   */
+  public static function SetSoapClientFactory(?callable $factory): void
+  {
+    self::$soapClientFactory = $factory;
+  }
+
+  /**
+   * @return SoapClient
+   */
+  private static function createSoapClient(string $wsdl): SoapClient
+  {
+    if (self::$soapClientFactory !== null) {
+      $client = (self::$soapClientFactory)($wsdl, self::$options);
+      if (!$client instanceof SoapClient) {
+        throw new \Exception('[Sifen] La factoría de SoapClient debe devolver una instancia de SoapClient.');
+      }
+      return $client;
+    }
+
+    return new SoapClient($wsdl, self::$options);
+  }
+
+  /**
    * Realiza la consulta de un RUC en el SIFEN.
    * 
    * @param String $ruc RUC a consultar.
@@ -124,7 +153,7 @@ class Sifen
    */
   public static function ConsultarRUC(String $ruc): RResEnviConsRUC
   {
-    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl", self::$options);
+    self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
     $object = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
     return RResEnviConsRUC::fromStdClassObject($object);
   }
@@ -142,7 +171,7 @@ class Sifen
   public static function ConsultarArchivoRUC(String $rucFacturador): RResEnviConsArchivoRUC
   {
     try {
-      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_ARCHIVO_RUC . "?wsdl", self::$options);
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_ARCHIVO_RUC . "?wsdl");
       $object = self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador));
       return RResEnviConsArchivoRUC::FromSifenResponseObject($object);
     } catch (\Exception $e) {
@@ -159,7 +188,7 @@ class Sifen
    */
   public static function ConsultarDE(String $cdc): RResEnviConsDe
   {
-    self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl", self::$options);
+    self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl");
     $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
     return RResEnviConsDe::FromSifenResponseObject($object);
   }
@@ -230,7 +259,7 @@ class Sifen
   {
     // Realiza el envío del documento electrónico al SIFEN
     try {
-      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl", self::$options);
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl");
       $rEnviDe = new REnviDe(self::GetDId(), new SoapVar('<ns1:xDE>' . $rdeXML . '</ns1:xDE>', XSD_ANYXML));
       $object = self::$client->rEnviDe($rEnviDe);
       return RRetEnviDe::FromSifenResponseObject($object);
@@ -296,7 +325,7 @@ class Sifen
     // SoapClient codifica el contenido binario a Base64 automáticamente: NO codificar manualmente
     // (hacerlo produciría doble encoding y el SIFEN no podría descomprimir el ZIP).
     try {
-      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl", self::$options);
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl");
       $rEnvioLote = new REnvioLote(self::GetDId(), $zipContent);
       $object = self::$client->rEnvioLote($rEnvioLote);
     } catch (\Exception $e) {
@@ -315,7 +344,7 @@ class Sifen
   public static function ConsultaLote($nroLote): RResEnviConsLoteDe
   {
     try {
-      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl", self::$options);
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl");
       $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
       $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
       return RResEnviConsLoteDe::FromSifenResponseObject($object);
@@ -342,7 +371,7 @@ class Sifen
       $xmlDocument = SignHelper::SingEvents($raiz, self::$config);
       $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
 
-      self::$client = new SoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl", self::$options);
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl");
       $rEnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(
         '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
         XSD_ANYXML

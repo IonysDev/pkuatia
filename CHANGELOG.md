@@ -14,6 +14,24 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 
 ### Agregado
 
+- **Suite PHPUnit (Fase 3.1).** `phpunit/phpunit` ^10.5, `phpunit.xml.dist`, script
+  `composer test` y tests offline en `tests/Unit/` (sin red, sin certificado real ni harness).
+  Incluye regresión del sobrefirmado en `SignHelperTest`, port del smoke test, mocks SOAP vía
+  `Sifen::SetSoapClientFactory()` y tests de CDCHelper, QRHelper, Pkcs12Helper, PemHelper,
+  GPaConEIni y GResProcEVe.
+- `Sifen::SetSoapClientFactory(?callable $factory)` — inyección de SoapClient para pruebas
+  unitarias (null restaura el comportamiento por defecto).
+- **GitHub Actions (Fase 3.2).** Workflow `.github/workflows/ci.yml`: matrix PHP 8.1–8.3,
+  lint (`php -l`), smoke test y PHPUnit en cada push/PR a `main` o `dev`.
+- **PHPStan (Fase 3.3).** Análisis estático nivel 1 en `src/`, `phpstan.neon.dist`,
+  baseline (`phpstan-baseline.neon`) y script `composer phpstan`. Correcciones QA:
+  alias `getGResProcEVe`/`setGResProcEVe` en `RRetEnviEventoDe` (typo legacy deprecado),
+  `FromSimpleXMLElement` con foreach para 1–15 `gResProcEVe`, referencias `RContRUC` con casing
+  correcto, `GGrupSeg::FromDOMElement` y `RGeVeTr::getdDTipIDTrans` con return en default.
+- **Guía de publicación en Packagist (Fase 3.4).** `docs/PUBLICAR.md` con los pasos manuales
+  (cuenta Packagist, submit del repo, webhook de auto-update y release/tag SemVer).
+- **Documentación open-source (Fase 3.5).** `CONTRIBUTING.md`, badge de CI, sección Pruebas,
+  ejemplos completos de FE contado y cancelación en README (otros tipos/eventos: iteración siguiente).
 - **WS de consulta masiva de RUC (siConsArchivoRUC, NT-011).** Nuevo método de facade
   `Sifen::ConsultarArchivoRUC(string $rucFacturador): RResEnviConsArchivoRUC`, con sus
   clases `REnviConsArchivoRUC` (request) y `RResEnviConsArchivoRUC` (response, con helper
