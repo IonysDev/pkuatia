@@ -14,6 +14,13 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 
 ### Agregado
 
+- **Suite PHPUnit (Fase 3.1).** `phpunit/phpunit` ^10.5, `phpunit.xml.dist`, script
+  `composer test` y tests offline en `tests/Unit/` (sin red, sin certificado real ni harness).
+  Incluye regresión del sobrefirmado en `SignHelperTest`, port del smoke test, mocks SOAP vía
+  `Sifen::SetSoapClientFactory()` y tests de CDCHelper, QRHelper, Pkcs12Helper, PemHelper,
+  GPaConEIni y GResProcEVe.
+- `Sifen::SetSoapClientFactory(?callable $factory)` — inyección de SoapClient para pruebas
+  unitarias (null restaura el comportamiento por defecto).
 - **WS de consulta masiva de RUC (siConsArchivoRUC, NT-011).** Nuevo método de facade
   `Sifen::ConsultarArchivoRUC(string $rucFacturador): RResEnviConsArchivoRUC`, con sus
   clases `REnviConsArchivoRUC` (request) y `RResEnviConsArchivoRUC` (response, con helper
