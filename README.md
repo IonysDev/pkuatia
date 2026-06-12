@@ -308,18 +308,23 @@ $respuesta = Sifen::InutilizarNumeros(
 
 ## 📄 Tipos de Documentos Soportados
 
-La biblioteca soporta los siguientes tipos de Documentos Tributarios Electrónicos según el Manual Técnico v150:
+La biblioteca soporta los siguientes tipos de Documentos Tributarios Electrónicos, que son los que
+el XSD de producción del SIFEN acepta actualmente (`iTiDE`):
 
-| Código | Tipo de Documento |
-|--------|-------------------|
-| 1 | Factura Electrónica |
-| 2 | Factura Electrónica de Exportación |
-| 3 | Factura Electrónica de Importación |
-| 4 | Autofactura Electrónica |
-| 5 | Nota de Crédito Electrónica |
-| 6 | Nota de Débito Electrónica |
-| 7 | Nota de Remisión Electrónica |
-| 8 | Comprobante de Retención Electrónico |
+| Código | Tipo de Documento | Builder | Estado |
+|--------|-------------------|---------|--------|
+| 1 | Factura Electrónica | `Factura` | ✅ Soportado (homologado contra SIFEN) |
+| 4 | Autofactura Electrónica | `Autofactura` | ✅ Soportado |
+| 5 | Nota de Crédito Electrónica | `NotaDeCredito` | ✅ Soportado |
+| 6 | Nota de Débito Electrónica | `NotaDeDebito` | ✅ Soportado |
+| 7 | Nota de Remisión Electrónica | `NotaDeRemision` | ✅ Soportado |
+| 9 | Boleta de venta electrónica | — | 🗺️ En el roadmap |
+| 10 | Boleta RESIMPLE | — | 🗺️ En el roadmap |
+
+> **Nota sobre los tipos 2, 3 y 8** (Factura de Exportación, Factura de Importación y Comprobante
+> de Retención): figuran en el Manual Técnico, pero el **XSD de producción del SIFEN los rechaza**
+> (no están habilitados por la DNIT), por lo que ninguna librería del ecosistema puede emitirlos
+> actualmente. La enumeración `TimbTiDE` los conserva para poder identificarlos al deserializar.
 
 Puedes usar la enumeración `TimbTiDE` para referenciar estos tipos:
 

@@ -97,6 +97,15 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
   sin cambios con 3.1.5.
 - `Constants::PKUATIA_VERSION` actualizado a `0.1.0`.
 
+### Eliminado
+
+- **Archivos de builder vacíos** `FacturaDeExportacion.php`, `FacturaDeImportacion.php` y
+  `ComprobanteDeRetencion.php` (0 líneas, no definían ninguna clase: imposible que algún código
+  los usara). Los tipos 2, 3 y 8 figuran en el MT pero el XSD de producción del SIFEN los rechaza.
+  La enumeración `TimbTiDE` los conserva para deserialización. El README ahora documenta con
+  precisión qué tipos se soportan (1, 4, 5, 6, 7), cuáles están en el roadmap (boletas 9 y 10) y
+  cuáles no están habilitados por la DNIT (2, 3, 8).
+
 ### Compatibilidad con versiones en `main`
 
 Esta entrega es **compatible hacia atrás para el uso habitual**. No se removió ni se cambió la
