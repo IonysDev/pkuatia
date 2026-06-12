@@ -3,8 +3,8 @@
 namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
- * Enumeración que contiene los tipos de transacción de una operación comercial para los campos
- * cOblAfe (D031) y dDesOblAfe (D032) del grupo GOblAfe (D030).
+ * Enumeración del tipo de obligación afectada para los campos cOblAfe (D031) y dDesOblAfe (D032)
+ * del grupo gOblAfe (D030), según Tabla 12 - Tipo de Obligaciones de la NT-018.
  */
 enum COblAfe: int {
     case ImpuestoALaRentaIracisRegimenEspeciales =  113;
@@ -19,20 +19,24 @@ enum COblAfe: int {
     case ImpuestoALaRentaPersonalServiciosPersonales = 715;
     case ImpuestoALaRentaPersonalRentaYGananciasDeCapital = 716;
 
+    /**
+     * Devuelve la descripción oficial de la obligación afectada (D032) según la Tabla 12 de la NT-018.
+     * La validación SIFEN 1221 exige que la descripción coincida exactamente con el código informado en D031.
+     */
     public function getDescription(): string
     {
         return match($this) {
-            self::ImpuestoALaRentaIracisRegimenEspeciales => 'ImpuestoALaRentaIracisRegimenEspeciales',
-            self::TributoUnicoMaquila => 'TributoUnicoMaquila',
-            self::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores => 'ImpuestoAlValorAgregadoGravadasYExoneradasExportadores',
-            self::ImpuestoSelectivoAlConsumoGeneral => 'ImpuestoSelectivoAlConsumoGeneral',
-            self::ImpuestoSelectivoAlConsumoCombustibles => 'ImpuestoSelectivoAlConsumoCombustibles',
-            self::ImpuestoALaRentaEmpresarialRegimenGeneral => 'ImpuestoALaRentaEmpresarialRegimenGeneral',
-            self::ImpuestoALaRentaEmpresarialSimple => 'ImpuestoALaRentaEmpresarialSimple',
-            self::ImpuestoDeZonaFranca => 'ImpuestoDeZonaFranca',
-            self::ImpuestoALaRentaEmpresarialResimple => 'ImpuestoALaRentaEmpresarialResimple',
-            self::ImpuestoALaRentaPersonalServiciosPersonales => 'ImpuestoALaRentaPersonalServiciosPersonales',
-            self::ImpuestoALaRentaPersonalRentaYGananciasDeCapital => 'ImpuestoALaRentaPersonalRentaYGananciasDeCapital'
+            self::ImpuestoALaRentaIracisRegimenEspeciales => 'IMPUESTO A LA RENTA IRACIS - REGÍMENES ESPECIALES',
+            self::TributoUnicoMaquila => 'TRIBUTO UNICO MAQUILA',
+            self::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores => 'IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS - EXPORTADORES',
+            self::ImpuestoSelectivoAlConsumoGeneral => 'IMPUESTO SELECTIVO AL CONSUMO - GENERAL',
+            self::ImpuestoSelectivoAlConsumoCombustibles => 'IMPUESTO SELECTIVO AL CONSUMO COMBUSTIBLES',
+            self::ImpuestoALaRentaEmpresarialRegimenGeneral => 'IMPUESTO A LA RENTA EMPRESARIAL - RÉGIMEN GENERAL',
+            self::ImpuestoALaRentaEmpresarialSimple => 'IMPUESTO A LA RENTA EMPRESARIAL - SIMPLE',
+            self::ImpuestoDeZonaFranca => 'IMPUESTO DE ZONA FRANCA',
+            self::ImpuestoALaRentaEmpresarialResimple => 'IMPUESTO A LA RENTA EMPRESARIAL - RESIMPLE',
+            self::ImpuestoALaRentaPersonalServiciosPersonales => 'IMPUESTO A LA RENTA PERSONAL - SERVICIOS PERSONALES',
+            self::ImpuestoALaRentaPersonalRentaYGananciasDeCapital => 'IMPUESTO A LA RENTA PERSONAL - RENTAS Y GANANCIAS DE CAPITAL'
         };
     }
 

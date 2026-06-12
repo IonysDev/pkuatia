@@ -21,7 +21,8 @@ enum OpeComTipImp: int {
             self::ISC => 'ISC',
             self::Renta => 'Renta',
             self::Ninguno => 'Ninguno',
-            self::IVARenta => 'IVA – Renta'
+            // El XSD de producción exige el guion ASCII simple: "IVA - Renta" (no el guion largo Unicode).
+            self::IVARenta => 'IVA - Renta'
         };
     }
 
