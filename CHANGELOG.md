@@ -51,6 +51,12 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 - **Validación de la NT-024** en `Sifen::FirmarDE`: rechaza receptores innominados (D208 = 5)
   cuando el total general de la operación en guaraníes es ≥ 7.000.000 (excepto muestras médicas),
   evitando un rechazo seguro del SIFEN (validación 1321).
+- **`DocumentoElectronico::setReceptor()` acepta la descripción de D209 (tipo "Otro").** Nuevo
+  parámetro **opcional al final** `?String $descTipoIdentificacion = null`: cuando el tipo de
+  identificación es 9 (`TipIDRec::Otro`) traslada el texto libre a `dDTipIDRec`, validándolo de
+  inmediato (obligatorio, 9–41 caracteres). Es retrocompatible: los llamadores existentes (19
+  argumentos) no requieren cambios y, para los demás tipos de identificación, el parámetro se
+  ignora.
 - **Caché de WSDL configurable.** `Config::$wsdlCacheEnabled` (y `setWsdlCacheEnabled()`),
   por defecto `false`. Al activarla se usa `WSDL_CACHE_DISK` para mitigar bloqueos por
   saturación del WS.
@@ -82,6 +88,13 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 - **`RGEveNom::toDOMElement`**: emite el atributo `Id` (mayúscula) y respeta el orden de campos
   del XSD `Evento_v150` (`iTipIDRec` → `dDTipIDRec` → `dNumIDRec`), con guardas `isset` para los
   campos opcionales. Se corrigió además el parseo de `cDisRec` (antes se mapeaba a `cCiuRec`).
+- **`GDatRec` — descripción del tipo de documento de identidad del receptor (D209 / `dDTipIDRec`).**
+  `getDDTipIDRec()` descartaba el valor almacenado y siempre re-derivaba la descripción a partir
+  del código `iTipIDRec` (D208), por lo que el texto libre requerido para `iTipIDRec = 9` (Otro)
+  nunca llegaba al XML (se emitía `'Otro'`). Además, `setITipIDRec(9)` autocompletaba `'Otro'`,
+  pisando un valor previamente establecido por el usuario. Ahora el getter respeta el valor libre
+  almacenado (con fallback a la descripción estándar) y `setITipIDRec` no sobreescribe la
+  descripción de texto libre para el tipo 9.
 - **Envío de lote (`Sifen::EnviarLoteDE`)**: el ZIP se genera en un archivo temporal del sistema
   (antes `rLoteDE.zip` en el directorio de trabajo, con riesgo de concurrencia/permisos) y se
   valida que el lote no esté vacío y que todos los DE sean del mismo tipo (C002).
@@ -103,6 +116,10 @@ las firmas públicas se mantienen o se ampliaron de forma compatible. Ver
 - Nuevas validaciones que lanzan excepción **antes** de transmitir, en casos que el SIFEN ya
   rechazaba: innominado ≥ 7M (NT-024), lote con tipos C002 mixtos o vacío, y más de 15 eventos
   por transmisión.
+- **`GDatRec` valida D209 (`dDTipIDRec`) al conformar el documento.** Cuando `iTipIDRec` (D208)
+  es 9 (Otro), la descripción del tipo de documento de identidad es de texto libre, obligatoria y
+  de **9 a 41 caracteres** (`mb_strlen`); si falta o no cumple la longitud, `toDOMElement()` lanza
+  `InvalidArgumentException` al conformar/firmar. Para los demás tipos el comportamiento no cambia.
 - **Requisito de PHP elevado a `^8.1`** en `composer.json` (la librería usa enumeraciones y
   `new` en inicializadores, propios de PHP 8.1; se excluye PHP 9 hasta auditar compatibilidad).
   Se declaran explícitamente las extensiones requeridas: `ext-soap`, `ext-dom`, `ext-openssl`,

@@ -19,3 +19,4 @@
 /composer.lock
 /memory
 .phpunit.cache
+/.claude

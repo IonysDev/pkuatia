@@ -698,7 +698,8 @@ class DocumentoElectronico
    * @param String $telefono número de teléfono del receptor (opcional)
    * @param String $email dirección de correo electrónico del receptor (opcional)
    * @param String $codigoDeCliente código de cliente del receptor (opcional)
-   * 
+   * @param String $descTipoIdentificacion descripción de texto libre del tipo de documento de identidad (D209 / dDTipIDRec). Obligatorio y de 9 a 41 caracteres únicamente cuando $tipoIdentificacion es 9 (TipIDRec::Otro); se ignora para los demás tipos. Parámetro opcional para mantener la retrocompatibilidad.
+   *
    * @return self
    */
   public function setReceptor(
@@ -720,10 +721,12 @@ class DocumentoElectronico
     ?String $telefono,
     ?String $celular,
     ?String $email,
-    ?String $codigoDeCliente
+    ?String $codigoDeCliente,
+    ?String $descTipoIdentificacion = null
   ): self {
     // Validación de tipo de operación y país
     $tipoOpInt = $tipoOperacion instanceof RecTiOpe ? $tipoOperacion->value : $tipoOperacion;
+    $tipoIdInt = $tipoIdentificacion instanceof TipIDRec ? $tipoIdentificacion->value : $tipoIdentificacion;
     if ($tipoOpInt === RecTiOpe::B2F->value && strcmp($codPais, 'PRY') == 0) {
       throw new Exception("[DocumentoElectronico::setReceptor] No se puede emitir un DE de tipo B2F para un receptor en Paraguay.");
     }
@@ -740,6 +743,14 @@ class DocumentoElectronico
         throw new Exception("[DocumentoElectronico::setReceptor] El tipo de identificación es obligatorio si el receptor no es contribuyente.");
       if (!$nroIdentificacion)
         throw new Exception("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente.");
+      // Para "Otro" (9), D209 (dDTipIDRec) es de texto libre, obligatorio y de 9 a 41 caracteres.
+      if ($tipoIdInt === TipIDRec::Otro->value) {
+        if (is_null($descTipoIdentificacion) || $descTipoIdentificacion === '')
+          throw new Exception("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) es obligatoria cuando el tipo de identificación es 9 (Otro).");
+        $descLen = mb_strlen($descTipoIdentificacion);
+        if ($descLen < 9 || $descLen > 41)
+          throw new Exception("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) debe tener entre 9 y 41 caracteres cuando el tipo de identificación es 9 (Otro). Se encontraron " . $descLen . ".");
+      }
     }
 
     $this->gDatRec = new GDatRec();
@@ -755,6 +766,9 @@ class DocumentoElectronico
     else {
       $this->gDatRec->setITipIDRec($tipoIdentificacion);
       $this->gDatRec->setDNumIDRec($nroIdentificacion);
+      // Solo para "Otro" (9) se traslada la descripción de texto libre del usuario a D209.
+      if ($tipoIdInt === TipIDRec::Otro->value)
+        $this->gDatRec->setDDTipIDRec($descTipoIdentificacion);
     }
 
     if ($tipoIdentificacion == TipIDRec::Innominado) {
