@@ -154,10 +154,28 @@ class GDatRec extends BaseSifenField
     public function setITipIDRec(int|TipIDRec $iTipIDRec): self
     {
         $this->iTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->value : $iTipIDRec;
-        $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->getDescription() : TipIDRec::getDescriptionFromValue($iTipIDRec);
+        // Para "Otro" (9), la descripción D209 (dDTipIDRec) es de texto libre y debe ser
+        // especificada por el usuario mediante setDDTipIDRec(). No se autocompleta ni se
+        // sobreescribe un valor previamente establecido, para no perderlo si el orden de
+        // las llamadas fuese setDDTipIDRec() antes que setITipIDRec().
+        if ($this->iTipIDRec != self::TIPO_DOCUMENTO_IDENTIDAD_OTRO) {
+            $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec
+                ? $iTipIDRec->getDescription()
+                : TipIDRec::getDescriptionFromValue($this->iTipIDRec);
+        }
         return $this;
     }
 
+    /**
+     * Establece el valor de dDTipIDRec (D209), la descripción del tipo de documento de identidad.
+     * Para iTipIDRec (D208) = 9 (Otro) este valor es de texto libre y obligatorio, con una
+     * longitud de entre 9 y 41 caracteres. La validación de longitud se realiza al conformar el
+     * documento (toDOMElement); aquí solo se almacena el valor sin recortarlo.
+     *
+     * @param String $dDTipIDRec Descripción del tipo de documento de identidad del receptor.
+     *
+     * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
+     */
     public function setDDTipIDRec(String $dDTipIDRec): self
     {
         $this->dDTipIDRec = $dDTipIDRec;
@@ -357,33 +375,14 @@ class GDatRec extends BaseSifenField
      */
     public function getDDTipIDRec(): ?String
     {
-        if(isset($this->iTipIDRec)) {
-            switch ($this->iTipIDRec) {
-                case 1:
-                    return 'Cédula paraguaya';
-                    break;
-                case 2:
-                    return 'Pasaporte';
-                    break;
-                case 3:
-                    return 'Cédula extranjera';
-                    break;
-                case 4:
-                    return 'Carnet de residencia';
-                    break;
-                case 5:
-                    return 'Innominado';
-                    break;
-                case 6:
-                    return 'Tarjeta Diplomática de exoneración fiscal';
-                    break;
-                default:
-                    return 'Otro';
-                    break;
-            }
-        }
-        else
-            return null;
+        // Si hay una descripción establecida (texto libre para "Otro" o asignada automáticamente
+        // para los demás tipos en setITipIDRec) se devuelve tal cual.
+        if(isset($this->dDTipIDRec))
+            return $this->dDTipIDRec;
+        // Compatibilidad: si solo se conoce el código, se deriva la descripción estándar.
+        if(isset($this->iTipIDRec))
+            return TipIDRec::getDescriptionFromValue($this->iTipIDRec);
+        return null;
     }
 
     /**
@@ -613,8 +612,35 @@ class GDatRec extends BaseSifenField
     }
 
     /**
+     * Valida la regla de negocio del campo D209 (dDTipIDRec) cuando D208 (iTipIDRec) es 9 (Otro).
+     * En ese caso la descripción del tipo de documento de identidad es de texto libre, obligatoria,
+     * y debe tener una longitud de entre 9 y 41 caracteres, según el Manual Técnico del SIFEN.
+     * Para el resto de los tipos de identidad la descripción la asigna la propia librería y no se valida aquí.
+     *
+     * @throws \InvalidArgumentException Si iTipIDRec es 9 y dDTipIDRec no fue especificado o no cumple la longitud.
+     *
+     * @return void
+     */
+    private function validarDDTipIDRec(): void
+    {
+        if ($this->getITipIDRec() !== self::TIPO_DOCUMENTO_IDENTIDAD_OTRO)
+            return;
+
+        if (!isset($this->dDTipIDRec) || $this->dDTipIDRec === '')
+            throw new \InvalidArgumentException(
+                '[GDatRec] Cuando iTipIDRec (D208) es 9 (Otro), el campo dDTipIDRec (D209) es obligatorio y debe contener una descripción de texto libre del tipo de documento de identidad del receptor.'
+            );
+
+        $longitud = mb_strlen($this->dDTipIDRec);
+        if ($longitud < 9 || $longitud > 41)
+            throw new \InvalidArgumentException(
+                '[GDatRec] dDTipIDRec (D209) debe tener entre 9 y 41 caracteres cuando iTipIDRec (D208) es 9 (Otro). Se encontraron ' . $longitud . '.'
+            );
+    }
+
+    /**
      * Convierte este GDatRec en un DOMElement que puede ser insertado en el DOMDocument especificado.
-     * 
+     *
      * @param DOMDocument $doc  Documento DOM con el que se creará el nodo sin insertarse en él.
      *
      * @return DOMElement Nodo DOM que representa el objeto
@@ -636,8 +662,9 @@ class GDatRec extends BaseSifenField
         }
 
         if ($this->iNatRec == 2) {
+            $this->validarDDTipIDRec();
             $res->appendChild(new DOMElement('iTipIDRec', $this->getITipIDRec()));
-            $res->appendChild(new DOMElement('dDTipIDRec', $this->getDDTipIDRec()));
+            $res->appendChild(new DOMElement('dDTipIDRec', htmlspecialchars($this->getDDTipIDRec())));
             $res->appendChild(new DOMElement('dNumIDRec', $this->getDNumIDRec()));
         }
         //check is the name get the & character
