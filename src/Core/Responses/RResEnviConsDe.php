@@ -17,9 +17,20 @@ class RResEnviConsDe
 {
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
-  public int      $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento 
+  public int      $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento
   public String   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
   public RContDe  $rContDe;  // ContDE01 - XML   - 0-1 - Objeto del DE consultado
+
+  /**
+   * Cadena XML original del DE tal como la devolvió el SIFEN, sin parsear.
+   *
+   * El objeto $rContDe no permite reconstruir este XML: RDE::toDOMElement() serializa
+   * únicamente dVerFor y DE, dejando fuera Signature y gCamFuFD. Quien necesite persistir
+   * o revalidar el documento firmado debe usar esta cadena y no una re-serialización.
+   *
+   * Sólo está disponible cuando el SIFEN responde xContenDE como cadena de texto.
+   */
+  private ?String $xContenDE = null;
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -84,6 +95,21 @@ class RResEnviConsDe
     return $this;
   }
 
+
+  /**
+   * Establece la cadena XML original del DE devuelta por el SIFEN.
+   *
+   * @param String|null $xContenDE
+   *
+   * @return self
+   */
+  public function setXContenDE(?String $xContenDE): self
+  {
+    $this->xContenDE = $xContenDE;
+
+    return $this;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   ///GETTERS
   ///////////////////////////////////////////////////////////////////////
@@ -129,6 +155,19 @@ class RResEnviConsDe
     return isset($this->rContDe) ? $this->rContDe : null;
   }
 
+  /**
+   * Obtiene la cadena XML original del DE tal como la devolvió el SIFEN.
+   *
+   * Es el único origen fiable del XML firmado: reconstruirlo desde getRContDe()->getRDe()
+   * produciría un documento sin Signature ni gCamFuFD.
+   *
+   * @return String|null Null si el SIFEN no devolvió el contenido como cadena.
+   */
+  public function getXContenDE(): ?String
+  {
+    return $this->xContenDE;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   ///METHODS
   ///////////////////////////////////////////////////////////////////////
@@ -155,6 +194,9 @@ class RResEnviConsDe
       // Al 12/08/2023 el SIFEN responde con un valor que el WS no puede interpretar lo cual deriva en una cadena XML inválida con múltiples elementos raiz.
       // Por este motivo se agrega artificialmente ese elemento raiz.
       if (is_string($object->xContenDE)) {
+        // Se conserva la cadena original intacta: es el XML firmado y no se puede
+        // reconstruir a partir del objeto parseado.
+        $res->setXContenDE($object->xContenDE);
         $xml = str_replace('<rDE ', '<rContDe><rDE ', $object->xContenDE);
         $xml = $xml . '</rContDe>';
         //remove the xml declaration, si no se rompe ahora!
