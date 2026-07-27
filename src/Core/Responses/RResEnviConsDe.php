@@ -168,6 +168,39 @@ class RResEnviConsDe
     return $this->xContenDE;
   }
 
+  /**
+   * Obtiene únicamente el documento electrónico firmado (elemento rDE) del contenido
+   * devuelto por el SIFEN.
+   *
+   * xContenDE NO es un documento XML bien formado: junto al rDE el SIFEN devuelve
+   * elementos hermanos (dProtAut, xContEv), de modo que cargarlo tal cual en un parser
+   * falla con "Extra content at the end of the document". Este método recorta el rDE
+   * respetando los bytes originales, que es lo que exige la validez de la firma.
+   *
+   * Es lo que se debe persistir como XML del documento.
+   *
+   * @return String|null Null si no hay contenido o si no se encuentra el elemento rDE.
+   */
+  public function getRDEXml(): ?String
+  {
+    if ($this->xContenDE === null) {
+      return null;
+    }
+
+    $start = strpos($this->xContenDE, '<rDE');
+    if ($start === false) {
+      return null;
+    }
+
+    // rDE no anida otro rDE, así que el último cierre es el suyo.
+    $end = strrpos($this->xContenDE, '</rDE>');
+    if ($end === false || $end < $start) {
+      return null;
+    }
+
+    return substr($this->xContenDE, $start, $end - $start + strlen('</rDE>'));
+  }
+
   ///////////////////////////////////////////////////////////////////////
   ///METHODS
   ///////////////////////////////////////////////////////////////////////

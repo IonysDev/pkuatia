@@ -17,6 +17,7 @@ use IonysDev\Pkuatia\Core\Responses\RResEnviConsDe;
 use IonysDev\Pkuatia\Sifen;
 use IonysDev\Pkuatia\Tests\Support\TestCertFactory;
 use DateTime;
+use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SoapClient;
 use stdClass;
@@ -76,6 +77,50 @@ final class ConsultarDETest extends TestCase
     $this->assertNotNull($result->getRContDe());
     $this->assertNotNull($result->getRContDe()->getRDe());
     $this->assertSame(150, $result->getRContDe()->getRDe()->getDVerFor());
+  }
+
+  /**
+   * El SIFEN devuelve el rDE junto a elementos hermanos (dProtAut, xContEv), por lo que
+   * xContenDE tiene múltiples raíces y no se puede cargar en un parser tal cual.
+   * getRDEXml() debe entregar sólo el rDE, bien formado y byte a byte.
+   */
+  public function testGetRDEXmlRecortaLosElementosHermanosDelSifen(): void
+  {
+    $rde = self::signedDeXml();
+    // Forma real de la respuesta del SIFEN (ver DE consultado en producción).
+    $xContenDE = $rde . '<dProtAut>3409990272</dProtAut><xContEv></xContEv>';
+    $this->stubConsultaResponse('0422', 'CDC encontrado', $xContenDE);
+
+    $result = Sifen::ConsultarDE('01800695631001001000000612021112410777777771');
+
+    // La cadena cruda no es cargable: es exactamente el fallo que rompía el KUDE.
+    $previous = libxml_use_internal_errors(true);
+    $invalid = new DOMDocument();
+    $this->assertFalse($invalid->loadXML($result->getXContenDE()));
+    libxml_clear_errors();
+    libxml_use_internal_errors($previous);
+
+    // El recorte sí es un documento válido de una sola raíz.
+    $rdeXml = $result->getRDEXml();
+    $valid = new DOMDocument();
+    $this->assertTrue($valid->loadXML($rdeXml));
+    $this->assertSame('rDE', $valid->documentElement->tagName);
+    $this->assertStringNotContainsString('dProtAut', $rdeXml);
+    $this->assertStringNotContainsString('xContEv', $rdeXml);
+
+    // Y conserva la firma intacta.
+    $this->assertStringContainsString('<Signature', $rdeXml);
+    $this->assertStringContainsString('<gCamFuFD>', $rdeXml);
+    $this->assertSame(1, $valid->getElementsByTagName('SignatureValue')->length);
+  }
+
+  public function testGetRDEXmlEsNuloSinContenido(): void
+  {
+    $this->stubConsultaResponse('0420', 'CDC inexistente', null);
+
+    $result = Sifen::ConsultarDE('01800695631001001000000612021112410777777771');
+
+    $this->assertNull($result->getRDEXml());
   }
 
   public function testSinContenidoElXmlCrudoEsNulo(): void
