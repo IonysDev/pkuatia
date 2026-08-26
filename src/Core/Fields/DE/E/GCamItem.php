@@ -403,13 +403,13 @@ class GCamItem extends BaseSifenField
   /**
    * Establece el valor de dCDCAnticipo
    *
-   * @param int $dCDCAnticipo
+   * @param String|int $dCDCAnticipo CDC (44 caracteres) de la FE de anticipo asociada
    *
    * @return self
    */
-  public function setDCDCAnticipo(int $dCDCAnticipo): self
+  public function setDCDCAnticipo(String|int $dCDCAnticipo): self
   {
-    $this->dCDCAnticipo = $dCDCAnticipo;
+    $this->dCDCAnticipo = strval($dCDCAnticipo);
 
     return $this;
   }
