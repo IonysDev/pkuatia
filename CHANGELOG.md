@@ -5,7 +5,7 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
-## [0.1.5] — 2026-09-16
+## [0.1.5] — 2026-09-17
 
 Redondeo explícito del total de la operación. **Compatible hacia atrás**: la firma de
 `calcTotSub` solo se amplía con un parámetro opcional al final y las llamadas existentes producen
