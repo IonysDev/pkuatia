@@ -5,6 +5,40 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [0.1.5] — 2026-09-17
+
+Redondeo explícito del total de la operación. **Compatible hacia atrás**: la firma de
+`calcTotSub` solo se amplía con un parámetro opcional al final y las llamadas existentes producen
+exactamente la misma salida.
+
+### Agregado
+
+- **`ItemValorado::calcTotSub()` acepta un redondeo explícito (F013).** Nuevo parámetro
+  **opcional al final** `?String $redondeo = null`:
+  `calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, ?String $comision = null, ?String $redondeo = null)`.
+  Cuando se informa:
+  - se usa tal cual como `dRedon` (F013);
+  - **no** se informan `dLiqTotIVA5`/`dLiqTotIVA10` (F036/F037): `dTotIVA` (F017) = F015 + F016
+    (+ F026), como exige la validación 2371;
+  - `dTotGralOpe` (F014) = F008 − F013 (+ comisión), redondeado a `$precisionMoneda`;
+  - informarlo junto con `$redondeoSedeco = true` lanza `InvalidArgumentException` (son excluyentes).
+
+  Pensado para consumidores que calculan el redondeo por su cuenta y conservan los decimales de
+  las líneas (`addItem(..., precisionMoneda: 8, ...)` + `calcTotSub(8, false, null, $redondeo)`):
+  los totales por ítem no se redondean a la moneda, de modo que un descuento global repartido
+  como `EA004 = E721 × F010 / 100` (con decimales) produce un `dPorcDescTotal` (F010) derivado
+  consistente con cada `dDescGloItem` (validación 1862: `|EA004 − F010 × E721 / 100| ≤ 0,8`).
+- Test `tests/Unit/Core/ItemValoradoCalcTotSubRedondeoTest.php`: FE de un ítem con descuento
+  global del 10 % y redondeo 0,5; FE de seis ítems con descuento global por monto y redondeo
+  0,0012 (validación 1862 por ítem); exclusión con el modo SEDECO; y la salida sin redondeo
+  explícito, que no cambia.
+
+### Cambiado
+
+- En `calcTotSub`, `$comision` se declara `?String` de forma explícita (el tipo no cambia: ya era
+  implícitamente anulable, forma que PHP 8.4 depreca).
+- `Constants::PKUATIA_VERSION` actualizado a `0.1.5`.
+
 ## [No publicado] — rama `dev`
 
 Ronda de correcciones de conformidad SIFEN v150 y ampliación de la API. **Para el uso
