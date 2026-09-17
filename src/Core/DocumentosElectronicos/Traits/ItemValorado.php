@@ -276,10 +276,15 @@ trait ItemValorado {
      * 
      * @param bool $redondeoSedeco Indica si se debe redondear el total de operación según las reglas de redondeo de la SEDECO (opcional, por defecto FALSO).
      * @param String $comision Comisión (IVA 10% incluido) de la operación comercial, expresado en cadena de texto decimal BCMath (opcional, por defecto NULL).
+     * @param String|null $redondeo Redondeo explícito de la operación (F013), expresado en cadena de texto decimal BCMath de hasta 4 decimales (opcional, por defecto NULL). Si se informa, se usa tal cual como F013, no se calculan F036/F037 y F014 = F008 - F013 + comisión con la precisión indicada. Excluyente con $redondeoSedeco.
      * 
      * @return void
+     * 
+     * @throws \InvalidArgumentException Si se informan $redondeo y $redondeoSedeco a la vez.
      */
-    public function calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, String $comision = null) : GTotSub {
+    public function calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, ?String $comision = null, ?String $redondeo = null) : GTotSub {
+        if($redondeoSedeco && $redondeo !== null)
+            throw new \InvalidArgumentException('[ItemValorado] calcTotSub: los parámetros $redondeo y $redondeoSedeco son excluyentes.');
         $sumaSubtBruto = '0';
         if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value)
         {
@@ -371,7 +376,8 @@ trait ItemValorado {
                         )
                     );
 
-                    if($this->gTotSub->getDRedon() && bccomp($this->gTotSub->getDRedon(), '0', 8) != 0) {
+                    // Con redondeo explícito no se informan F036/F037 (F017 = F015 + F016, validación 2371)
+                    if($redondeo === null && $this->gTotSub->getDRedon() && bccomp($this->gTotSub->getDRedon(), '0', 8) != 0) {
                         // Para el IVA sobre el redondeo se hará un reparto proporcional del valor del redondeo
                         $base = bcsub($this->gTotSub->getDTotOpe(), bcadd($this->gTotSub->getDIVA5() ?? '0', $this->gTotSub->getDIVA10() ?? '0', 8), 8);
                         $prop5 = bcdiv($this->gTotSub->getDBaseGrav5(), $base, 10);
@@ -408,7 +414,10 @@ trait ItemValorado {
             $this->gTotSub->setDPorcDescTotal(bcdiv(bcmul($this->gTotSub->getDTotDescGlotem(), '100', 8), $sumaSubtBruto, 8));
 
             // F013
-            if($redondeoSedeco) {
+            if($redondeo !== null) {
+                $this->gTotSub->setDRedon($redondeo);
+            }
+            else if($redondeoSedeco) {
                 if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') == 0) {
                     $this->gTotSub->setDRedon(bcmod($this->gTotSub->getDTotOpe(), '50', 4));
                 }
