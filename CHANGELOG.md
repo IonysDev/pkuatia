@@ -118,6 +118,22 @@ comportamiento que producía XML inválido o datos erróneos.
   `dTiCamTiPag` (E611) solo se emite si fue informado (antes `Error` con moneda extranjera sin tasa
   en el objeto; la obligatoriedad la sigue exigiendo `Factura::addPago`). Test:
   `tests/Unit/Conformidad/PagosTest`.
+- **PK-11 — Nota de Remisión: transportista y vehículo.** En el XSD de producción `dDomFisc` (E992,
+  `DE_v150.xsd:973`), `dDirChof` (E993, `:986`) y `dNumIDChof` (E990, `:971`) son obligatorios en
+  `gCamTrans`, aunque el MT v150 los listaba como opcionales: la librería los emitía solo si estaban
+  informados y el SIFEN rechazaba la NR por esquema. Ahora `NotaDeRemision::validar()` los exige
+  (junto con E981, E982, E991 y los condicionales E983-E984 / E985-E987 según la naturaleza del
+  transportista) y `GCamTrans::toDOMElement()` lanza `InvalidArgumentException` con la lista de
+  faltantes en lugar de emitir un XML inválido o un `Error` de propiedad sin inicializar.
+  `cNacTrans`/`dDesNacTrans` (E988-E989, `minOccurs="0"`) se emiten solo si fueron informados.
+  La firma de `setTransporteTransportista()` no cambia: `$domicilioFiscal` y `$direccionChofer`
+  conservan su posición y su valor por defecto, y el docblock documenta la obligatoriedad real.
+  `GVehTras`: no se podía identificar el vehículo por matrícula (E967 = 2) porque `dTiVehTras`
+  (E961) se emitía solo si existía `dNroIDVeh`, y `dNroMatVeh` (E965) emitía el número de
+  identificación en lugar de la matrícula. `getDAdicVeh()`, `getDNroMatVeh()` y `getDNroVuelo()`
+  pasan a `?String` (ya devolvían `null`, lo que producía `TypeError`). `validar()` también revisa
+  cada vehículo (E961, E962, E967 y el identificador que corresponda). Test:
+  `tests/Unit/Conformidad/NotaRemisionTest`.
 
 ## [0.1.5] — 2026-09-17
 

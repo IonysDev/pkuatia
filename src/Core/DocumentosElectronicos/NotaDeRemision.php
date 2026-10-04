@@ -372,9 +372,54 @@ class NotaDeRemision extends DocumentoElectronico
             }
             if (!isset($this->gTransp->gVehTras) || !is_array($this->gTransp->gVehTras) || count($this->gTransp->gVehTras) === 0) {
                 $errores[] = 'Al menos un vehículo de traslado (gVehTras - E960) es obligatorio para Nota de Remisión';
+            } else {
+                foreach ($this->gTransp->gVehTras as $i => $vehiculo) {
+                    $n = 'Vehículo ' . ($i + 1) . ': ';
+                    if (!isset($vehiculo->dTiVehTras)) {
+                        $errores[] = $n . 'tipo de vehículo (dTiVehTras - E961) es obligatorio';
+                    }
+                    if (!isset($vehiculo->dMarVeh)) {
+                        $errores[] = $n . 'marca (dMarVeh - E962) es obligatoria';
+                    }
+                    if (!isset($vehiculo->dTipIdenVeh)) {
+                        $errores[] = $n . 'tipo de identificación (dTipIdenVeh - E967) es obligatorio';
+                    } elseif ($vehiculo->dTipIdenVeh === 1 && !isset($vehiculo->dNroIDVeh)) {
+                        $errores[] = $n . 'número de identificación (dNroIDVeh - E963) es obligatorio cuando E967 = 1';
+                    } elseif ($vehiculo->dTipIdenVeh === 2 && !isset($vehiculo->dNroMatVeh)) {
+                        $errores[] = $n . 'número de matrícula (dNroMatVeh - E965) es obligatorio cuando E967 = 2';
+                    }
+                }
             }
             if (!isset($this->gTransp->gCamTrans)) {
                 $errores[] = 'Datos del transportista (gCamTrans - E980) son obligatorios para Nota de Remisión';
+            } else {
+                // Obligatorios en tgCamTrans según el XSD de producción (DE_v150.xsd:958-959, :971-973, :986); el MT v150
+                // listaba E990, E992 y E993 como opcionales, pero el SIFEN rechaza el DE por esquema si faltan.
+                $t = $this->gTransp->gCamTrans;
+                if (!isset($t->iNatTrans)) {
+                    $errores[] = 'Naturaleza del transportista (iNatTrans - E981) es obligatoria';
+                }
+                if (!isset($t->dNomTrans)) {
+                    $errores[] = 'Nombre o razón social del transportista (dNomTrans - E982) es obligatorio';
+                }
+                if (isset($t->iNatTrans) && $t->iNatTrans === 1 && (!isset($t->dRucTrans) || !isset($t->dDVTrans))) {
+                    $errores[] = 'RUC y dígito verificador del transportista (dRucTrans, dDVTrans - E983, E984) son obligatorios cuando el transportista es contribuyente (E981 = 1)';
+                }
+                if (isset($t->iNatTrans) && $t->iNatTrans === 2 && (!isset($t->iTipIDTrans) || !isset($t->dNumIDTrans))) {
+                    $errores[] = 'Tipo y número de documento del transportista (iTipIDTrans, dNumIDTrans - E985, E987) son obligatorios cuando el transportista no es contribuyente (E981 = 2)';
+                }
+                if (!isset($t->dNumIDChof)) {
+                    $errores[] = 'Número de documento de identidad del chofer (dNumIDChof - E990) es obligatorio (DE_v150.xsd:971)';
+                }
+                if (!isset($t->dNomChof)) {
+                    $errores[] = 'Nombre y apellido del chofer (dNomChof - E991) es obligatorio (DE_v150.xsd:972)';
+                }
+                if (!isset($t->dDomFisc)) {
+                    $errores[] = 'Domicilio fiscal del transportista (dDomFisc - E992) es obligatorio (DE_v150.xsd:973): informarlo con setTransporteTransportista(..., domicilioFiscal: ...)';
+                }
+                if (!isset($t->dDirChof)) {
+                    $errores[] = 'Dirección del chofer (dDirChof - E993) es obligatoria (DE_v150.xsd:986): informarla con setTransporteTransportista(..., direccionChofer: ...)';
+                }
             }
             
             // Validación específica: si la modalidad es Aéreo (3), al menos un vehículo debe tener número de vuelo

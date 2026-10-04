@@ -363,8 +363,8 @@ trait CamposDeTransporte
      * @param int|null $tipoDocumentoIdentidad Tipo de documento de identidad (E985). Obligatorio si esContribuyente=false.
      * @param String|null $numeroDocumentoIdentidad Número de documento de identidad (E987). Obligatorio si esContribuyente=false.
      * @param String|null $nacionalidad Código de nacionalidad según ISO 3166-1 Alpha-3 (E988). Opcional.
-     * @param String|null $domicilioFiscal Domicilio fiscal del transportista (E992). Opcional.
-     * @param String|null $direccionChofer Dirección del chofer (E993). Opcional.
+     * @param String|null $domicilioFiscal Domicilio fiscal del transportista (E992). OBLIGATORIO en el XSD de producción (DE_v150.xsd:973, minOccurs="1") aunque el MT v150 lo listaba como opcional: si se omite, validar() y la serialización rechazan el documento. El parámetro conserva su posición y su valor por defecto por compatibilidad.
+     * @param String|null $direccionChofer Dirección del chofer (E993). OBLIGATORIO en el XSD de producción (DE_v150.xsd:986, minOccurs="1"); mismas consideraciones que $domicilioFiscal.
      * 
      * @return self
      * 
