@@ -216,13 +216,22 @@ class GGrupAdi
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gGrupAdi');
-    $res->appendChild(XmlHelper::elemento($doc, 'dCiclo', $this->dCiclo));
-    $res->appendChild(XmlHelper::elemento($doc, 'dFecIniC', $this->dFecIniC->format('yyyy-mm-dd')));
-    $res->appendChild(XmlHelper::elemento($doc, 'dFecFinC', $this->dFecFinC->format('yyyy-mm-dd')));
-    $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $this->dVencPag->format('yyyy-mm-dd')));
-    $res->appendChild(XmlHelper::elemento($doc, 'dContrato', $this->dContrato));
-    $res->appendChild(XmlHelper::elemento($doc, 'dSalAnt', $this->dSalAnt));
-    $res->appendChild(XmlHelper::elemento($doc, 'dCodConDncp', $this->dCodConDncp));
+    // Todos los campos de tgGrupAdi son opcionales (DE_v150.xsd:811-846) y las fechas son tFecAAAAMMDDguion (AAAA-MM-DD).
+    // Hasta v0.1.5 se emitían sin guardas (Error en propiedades sin inicializar) y con el formato 'yyyy-mm-dd' (PK-07).
+    if (isset($this->dCiclo))
+      $res->appendChild(XmlHelper::elemento($doc, 'dCiclo', $this->dCiclo));
+    if (isset($this->dFecIniC))
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecIniC', $this->dFecIniC->format('Y-m-d')));
+    if (isset($this->dFecFinC))
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecFinC', $this->dFecFinC->format('Y-m-d')));
+    if (isset($this->dVencPag))
+      $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $this->dVencPag->format('Y-m-d')));
+    if (isset($this->dContrato))
+      $res->appendChild(XmlHelper::elemento($doc, 'dContrato', $this->dContrato));
+    if (isset($this->dSalAnt))
+      $res->appendChild(XmlHelper::elemento($doc, 'dSalAnt', $this->dSalAnt));
+    if (isset($this->dCodConDncp))
+      $res->appendChild(XmlHelper::elemento($doc, 'dCodConDncp', $this->dCodConDncp));
     return $res;
   }
   

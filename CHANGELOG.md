@@ -96,6 +96,28 @@ comportamiento que producía XML inválido o datos erróneos.
   código: `GCamFE` (E012, 10-30), `GRespDE` (D142, 9-41) y `GCamNRE` (E502, 5-60) lanzan
   `InvalidArgumentException` al serializar si falta o no cumple la longitud (antes emitían `Otro` y
   el SIFEN rechazaba por esquema).
+- **PK-06 — Sector seguros.** `GCamEsp::toDOMElement` emitía `gGrupSup` donde correspondía `gGrupSeg`
+  (typo) y en el orden incorrecto: toda FE del sector seguros fallaba con `Error: Typed property
+  … $gGrupSup must not be accessed before initialization`. Ahora respeta la secuencia de `tgCamEsp`
+  (`DE_v150.xsd:794-800`): `gGrupEner`, `gGrupSeg`, `gGrupSup`, `gGrupAdi`.
+- **PK-07 — Datos adicionales de uso comercial (`gGrupAdi`).** Las fechas se formateaban con
+  `'yyyy-mm-dd'` (producía `26262626-0202-1515`) y los siete campos opcionales se emitían sin
+  comprobar si estaban informados. Ahora usa `Y-m-d` (`tFecAAAAMMDDguion`) y solo emite lo informado.
+- **PK-08 — Opcionales emitidos sin guarda.** `gRasMerc` (trazabilidad: cualquier ítem con lote,
+  serie o pedido abortaba con `Error`), `gGrupSup` (supermercados) y `gCamCarg` (carga) emitían
+  campos `minOccurs="0"` sin verificar su presencia. `GRasMerc::$dNumLote` pasa de `int` a `String`
+  (E751 es texto de 1 a 80: `'LOTE-2026-A'` era rechazado con `TypeError`) y `setDNumLote` acepta
+  `int|String`.
+- **PK-19 — Sector energía.** `GGrupEner::getDConKwh()` devolvía `dLecAct − dLecAct` (siempre 0) e
+  ignoraba el consumo establecido.
+  Test de los cuatro: `tests/Unit/Conformidad/GruposSectorialesTest` (energía, seguros,
+  supermercados, adicionales y trazabilidad válidos contra el XSD).
+- **PK-09 — Monto del pago (E608) truncado.** `GPaConEIni::toDOMElement` emitía `getDMonTiPag(): int`,
+  que convertía `'1500.50'` en `1500` con una deprecación de PHP. Ahora emite el decimal tal como
+  se estableció; nuevo `getDMonTiPagDecimal(): String` y `getDMonTiPag()` queda `@deprecated`.
+  `dTiCamTiPag` (E611) solo se emite si fue informado (antes `Error` con moneda extranjera sin tasa
+  en el objeto; la obligatoriedad la sigue exigiendo `Factura::addPago`). Test:
+  `tests/Unit/Conformidad/PagosTest`.
 
 ## [0.1.5] — 2026-09-17
 

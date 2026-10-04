@@ -18,7 +18,7 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
  */
 class GRasMerc extends BaseSifenField
 {
-  public int      $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote 
+  public String   $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote (texto; hasta v0.1.5 era int y rechazaba lotes alfanuméricos)
   public DateTime $dVencMerc;     // E752 - 10    - 0-1 - Fecha de vencimiento  de la mercadería
   public String   $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
   public String   $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
@@ -39,9 +39,9 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumLote(int $dNumLote): self
+  public function setDNumLote(int|String $dNumLote): self
   {
-    $this->dNumLote = $dNumLote;
+    $this->dNumLote = (string) $dNumLote;
 
     return $this;
   }
@@ -247,14 +247,23 @@ class GRasMerc extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gRasMerc');
-    $res->appendChild(XmlHelper::elemento($doc, 'dNumLote', $this->getDNumLote()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dVencMerc', $this->getDVencMerc()->format('Y-m-d')));
-    $res->appendChild(XmlHelper::elemento($doc, 'dNSerie', $this->getDNSerie()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dNumPedi', $this->getDNumPedi()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dNumSegui', $this->getDNumSegui()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dNumReg', $this->getDNumReg()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dNumRegEntCom', $this->getDNumRegEntCom()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dNomPro', $this->getDNomPro()));
+    // Todos los campos de tgRasMerc son opcionales (DE_v150.xsd:430-495); hasta v0.1.5 se emitían sin guardas (PK-08).
+    if (isset($this->dNumLote))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumLote', $this->dNumLote));
+    if (isset($this->dVencMerc))
+      $res->appendChild(XmlHelper::elemento($doc, 'dVencMerc', $this->dVencMerc->format('Y-m-d')));
+    if (isset($this->dNSerie))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNSerie', $this->dNSerie));
+    if (isset($this->dNumPedi))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumPedi', $this->dNumPedi));
+    if (isset($this->dNumSegui))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumSegui', $this->dNumSegui));
+    if (isset($this->dNumReg))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumReg', $this->dNumReg));
+    if (isset($this->dNumRegEntCom))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumRegEntCom', $this->dNumRegEntCom));
+    if (isset($this->dNomPro))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomPro', $this->dNomPro));
     return $res;
   }
 

@@ -162,11 +162,17 @@ class GGrupSup
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gGrupSup');
-    $res->appendChild(XmlHelper::elemento($doc, 'dNomCaj', $this->getDNomCaj()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dEfectivo', $this->getDEfectivo()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dVuelto', $this->getDVuelto()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDonac', $this->getDDonac()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesDonac', $this->getDDesDonac()));
+    // Todos los campos de tgGrupSup son opcionales (DE_v150.xsd:663-690); hasta v0.1.5 se emitían sin guardas (PK-08).
+    if (isset($this->dNomCaj))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomCaj', $this->getDNomCaj()));
+    if (isset($this->dEfectivo))
+      $res->appendChild(XmlHelper::elemento($doc, 'dEfectivo', $this->getDEfectivo()));
+    if (isset($this->dVuelto))
+      $res->appendChild(XmlHelper::elemento($doc, 'dVuelto', $this->getDVuelto()));
+    if (isset($this->dDonac))
+      $res->appendChild(XmlHelper::elemento($doc, 'dDonac', $this->getDDonac()));
+    if (isset($this->dDesDonac))
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDonac', $this->getDDesDonac()));
     return $res;
   }
 

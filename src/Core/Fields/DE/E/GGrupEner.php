@@ -177,7 +177,8 @@ class GGrupEner
    */
   public function getDConKwh(): String
   {
-    return $this->dLecAct - $this->dLecAct;
+    // Hasta v0.1.5 devolvía dLecAct - dLecAct (siempre 0) e ignoraba el valor establecido (PK-19).
+    return $this->dConKwh;
   }
 
   ///////////////////////////////////////////////////////////////////////

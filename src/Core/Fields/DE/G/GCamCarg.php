@@ -303,15 +303,21 @@ class GCamCarg
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamCarg');
-    $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotVol', $this->getCUniMedTotVol()));
+    // Todos los campos de tgCamCarg son opcionales (DE_v150.xsd:1825-1875); hasta v0.1.5 los numéricos se emitían sin guardas (PK-08).
+    if (isset($this->cUniMedTotVol))
+      $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotVol', $this->getCUniMedTotVol()));
     if(!is_null($this->dDesUniMedTotVol) && strlen($this->dDesUniMedTotVol) > 0)
       $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotVol', $this->dDesUniMedTotVol));
-    $res->appendChild(XmlHelper::elemento($doc, 'dTotVolMerc', $this->getDTotVolMerc()));
-    $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotPes', $this->getCUniMedTotPes()));
+    if (isset($this->dTotVolMerc))
+      $res->appendChild(XmlHelper::elemento($doc, 'dTotVolMerc', $this->getDTotVolMerc()));
+    if (isset($this->cUniMedTotPes))
+      $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotPes', $this->getCUniMedTotPes()));
     if(!is_null($this->dDesUniMedTotPes) && strlen($this->dDesUniMedTotPes) > 0)
       $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotPes', $this->dDesUniMedTotPes));
-    $res->appendChild(XmlHelper::elemento($doc, 'dTotPesMerc', $this->getDTotPesMerc()));
-    $res->appendChild(XmlHelper::elemento($doc, 'iCarCarga', $this->getICarCarga()));
+    if (isset($this->dTotPesMerc))
+      $res->appendChild(XmlHelper::elemento($doc, 'dTotPesMerc', $this->getDTotPesMerc()));
+    if (isset($this->iCarCarga))
+      $res->appendChild(XmlHelper::elemento($doc, 'iCarCarga', $this->getICarCarga()));
     if(!is_null($this->dDesCarCarga) && strlen($this->dDesCarCarga) > 0)
       $res->appendChild(XmlHelper::elemento($doc, 'dDesCarCarga', $this->dDesCarCarga));
     return $res;
