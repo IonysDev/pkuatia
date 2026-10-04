@@ -5,6 +5,30 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [0.2.0] — No publicado (rama `fase-a/p0-emision`)
+
+Fase A del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): correcciones
+P0 de emisión (PK-01 a PK-24). **Compatible hacia atrás**: ninguna firma pública se elimina ni
+cambia; solo se agregan métodos, parámetros opcionales al final, recursos y pruebas, y se corrige
+comportamiento que producía XML inválido o datos erróneos.
+
+### Agregado
+
+- **XSD de producción del SIFEN empaquetados en `src/Resources/xsd/`** (11 archivos, 366 KB):
+  copias de `ekuat-ia/04-schemas-xsd/validacion-local/` con `schemaLocation` relativos (validan
+  sin red) y el único fix `dEntCont ` → `dEntCont` (error del XSD oficial, `DE_v150.xsd:327`).
+  Ver `src/Resources/xsd/README.md`. Base de la validación XSD en las pruebas y de la futura
+  `Sifen::ValidarXSD` (Fase C).
+- Soporte de pruebas: `tests/Support/SifenTestEnvironment` (certificado autofirmado, ambiente
+  `dev`, CSC genérico, `dId` temporal, factoría SOAP que impide llegar a la red),
+  `tests/Support/XsdAssertions` (`assertRdeValido`, `assertEventoValido`, `assertRdeInvalidoPor`,
+  errores de libxml legibles) y `tests/Support/DocumentoFactory` (documentos completos con datos
+  ficticios RUC 80000000-5, timbrado 12345678).
+- `tests/Unit/Resources/XsdResourcesTest`: los 11 XSD existen y están bien formados, los includes
+  son relativos y el fix está aplicado, las copias coinciden con ekuat-ia (normalizando fin de
+  línea; se omite si `docs/sifen-ai` no está disponible, p. ej. en CI), la cadena de includes
+  compila y una FE firmada de referencia valida.
+
 ## [0.1.5] — 2026-09-17
 
 Redondeo explícito del total de la operación. **Compatible hacia atrás**: la firma de
