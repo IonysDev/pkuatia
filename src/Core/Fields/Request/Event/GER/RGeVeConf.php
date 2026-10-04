@@ -113,7 +113,7 @@ class RGeVeConf
     $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
     $res->appendChild(XmlHelper::elemento($doc, 'iTipConf', $this->getITipConf()));
     if ($this->iTipConf == 2) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dFecRecep', $this->dFecRecep->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecRecep', $this->dFecRecep->format('Y-m-d\TH:i:s'))); // GCO004 es fecHhmmss (Evento_v150.xsd:76); antes se emitía solo la fecha
     }
     return $res;
   }

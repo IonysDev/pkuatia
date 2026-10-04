@@ -370,6 +370,14 @@ class Sifen
   {
     if (count($raiz->getRGesEve()) > Constants::MAX_EVENTOS_POR_TRANSMISION)
       throw new \Exception("[Sifen] No se pueden registrar más de " . Constants::MAX_EVENTOS_POR_TRANSMISION . " eventos por transmisión.");
+    // El atributo Id de cada rEve (tdIdEve, Evento_v150.xsd:487) es la URI de su firma: debe ser único dentro del sobre.
+    $ids = [];
+    foreach ($raiz->getRGesEve() as $rGesEve) {
+      $id = $rGesEve->getREve()->getId();
+      if (in_array($id, $ids, true))
+        throw new \Exception("[Sifen] El Id $id de rEve está repetido dentro del sobre: cada evento debe llevar un Id distinto (Evento_v150.xsd:487), porque es la referencia de su firma.");
+      $ids[] = $id;
+    }
 
     // Firma los eventos y realiza el envío al SIFEN
     try {
@@ -399,6 +407,8 @@ class Sifen
    */
   public static function CancelarDE(String $cdc, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
+    self::ValidarCdcEvento($cdc);
+    self::ValidarMotivoEvento($motivo, 'cancelación');
     $rGeVeCan = new RGeVeCan();
     $rGeVeCan->setId($cdc);
     $rGeVeCan->setMOtEve($motivo);
@@ -456,6 +466,7 @@ class Sifen
     $rGeVeInu->setDNumIn(str_pad($nroDocumentoInicial, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setDNumFin(str_pad($nroDocumentoFinal, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setITiDE($tipoDEId);
+    self::ValidarMotivoEvento($motivo, 'inutilización');
     $rGeVeInu->setMOtEve($motivo);
 
     $gGroupTiEvt = new GGroupTiEvt();
@@ -497,6 +508,7 @@ class Sifen
     if (!$esContribuyente && (is_null($tipoDocumentoIdentidad) || is_null($nroDocumentoIdentidad)))
       throw new \Exception("[Sifen] Si el receptor no es contribuyente, debe informarse el tipo y número de documento de identidad.");
 
+    self::ValidarCdcEvento($cdc);
     $rGeVeNotRec = new RGeVeNotRec();
     $rGeVeNotRec->setId($cdc);
     $rGeVeNotRec->setDFecEmi($fechaEmision);
@@ -536,6 +548,7 @@ class Sifen
     if ($tipoConformidad == 2 && is_null($fechaRecepcion))
       throw new \Exception("[Sifen] La fecha estimada de recepción es obligatoria cuando la conformidad es parcial.");
 
+    self::ValidarCdcEvento($cdc);
     $rGeVeConf = new RGeVeConf();
     $rGeVeConf->setId($cdc);
     $rGeVeConf->setITipConf($tipoConformidad);
@@ -559,8 +572,8 @@ class Sifen
    */
   public static function DisconformarDE(String $cdc, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
-    if (strlen($motivo) < 5)
-      throw new \Exception("[Sifen] El motivo de la disconformidad debe tener al menos 5 caracteres.");
+    self::ValidarCdcEvento($cdc);
+    self::ValidarMotivoEvento($motivo, 'disconformidad');
 
     $rGeVeDisconf = new RGeVeDisconf();
     $rGeVeDisconf->setId($cdc);
@@ -601,8 +614,8 @@ class Sifen
     ?DateTime $fechaFirma = null
   ): RRetEnviEventoDe
   {
-    if (strlen($motivo) < 5)
-      throw new \Exception("[Sifen] El motivo del desconocimiento debe tener al menos 5 caracteres.");
+    self::ValidarCdcEvento($cdc);
+    self::ValidarMotivoEvento($motivo, 'desconocimiento');
     $esContribuyente = !is_null($rucReceptor);
     if (!$esContribuyente && (is_null($tipoDocumentoIdentidad) || is_null($nroDocumentoIdentidad)))
       throw new \Exception("[Sifen] Si el receptor no es contribuyente, debe informarse el tipo y número de documento de identidad.");
@@ -661,6 +674,30 @@ class Sifen
     $gGroupTiEvt->setRGeVeTr($datosTransporte);
 
     return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
+  }
+
+  /**
+   * Verifica el formato del CDC de un evento antes de armar el sobre: tId exige 44 caracteres, dígitos salvo la posición
+   * 10 que admite A-D (Evento_Types_v150.xsd:71-80). Evita un viaje a la red que termina en rechazo por esquema.
+   *
+   * @throws Exception Si el CDC no cumple el formato.
+   */
+  private static function ValidarCdcEvento(String $cdc): void
+  {
+    if (!preg_match('/^[0-9]{9}[0-9A-D][0-9]{34}$/', $cdc))
+      throw new \Exception("[Sifen] El CDC debe tener 44 caracteres (dígitos; la posición 10 admite A-D) según tId (Evento_Types_v150.xsd:71-80); se recibió '" . $cdc . "' (" . strlen($cdc) . " caracteres).");
+  }
+
+  /**
+   * Verifica la longitud del motivo de un evento: tmotEve exige de 5 a 500 caracteres (Evento_Types_v150.xsd:86-95).
+   *
+   * @throws Exception Si el motivo no tiene entre 5 y 500 caracteres.
+   */
+  private static function ValidarMotivoEvento(String $motivo, String $evento): void
+  {
+    $largo = mb_strlen($motivo);
+    if ($largo < 5 || $largo > 500)
+      throw new \Exception("[Sifen] El motivo de la $evento debe tener entre 5 y 500 caracteres (tmotEve, Evento_Types_v150.xsd:86-95); se recibieron $largo.");
   }
 
   /**

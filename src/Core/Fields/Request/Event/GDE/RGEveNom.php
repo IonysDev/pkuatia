@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
 use IonysDev\Pkuatia\Core\Constants\RecNat;
 use IonysDev\Pkuatia\Core\Constants\RecTiOpe;
 use IonysDev\Pkuatia\Core\Constants\TipIDRec;
+use IonysDev\Pkuatia\DataMappings\CountryMapping;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
@@ -133,7 +134,11 @@ class RGEveNom
      */
     public function setITiOpe(int|RecTiOpe $iTiOpe): void
     {
-        $this->iTiOpe = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
+        $valor = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
+        // tiTiOpeEv admite 1 (B2B), 2 (B2C) y 4 (B2F): la nominación no aplica a operaciones B2G (Evento_Types_v150.xsd:57-66).
+        if (!in_array($valor, [1, 2, 4], true))
+            throw new \InvalidArgumentException("[RGEveNom] iTiOpe = $valor no está admitido en el evento de nominación: tiTiOpeEv acepta 1 (B2B), 2 (B2C) y 4 (B2F); una FE B2G no puede nominarse (Evento_Types_v150.xsd:57-66).");
+        $this->iTiOpe = $valor;
     }
 
     /**
@@ -146,6 +151,10 @@ class RGEveNom
     public function setCPaisRec(string $cPaisRec): self
     {
         $this->cPaisRec = $cPaisRec;
+        // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec; antes quedaba vacío.
+        $desc = CountryMapping::getCountryDesc($cPaisRec);
+        if ($desc !== null)
+            $this->dDesPaisRe = $desc;
         return $this;
     }
 
@@ -211,6 +220,9 @@ class RGEveNom
     public function setITipIDRec(int|TipIDRec $iTipIDRec): self
     {
         $this->iTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->value : $iTipIDRec;
+        // Para 9 (Otro) la descripción es texto libre de 9 a 41 caracteres (tdDtipDocRec, DE_Types_v150.xsd:699-717); no se pisa si ya fue informada con setDDTipIDRec().
+        if ($this->iTipIDRec === TipIDRec::Otro->value && isset($this->dDTipIDRec) && $this->dDTipIDRec !== TipIDRec::Otro->getDescription())
+            return $this;
         $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->getDescription() : TipIDRec::getDescriptionFromValue($iTipIDRec);
         return $this;
     }
@@ -564,6 +576,8 @@ class RGEveNom
      */
     public function getDDTipIDRec(): ?String
     {
+        if(isset($this->dDTipIDRec))
+            return $this->dDTipIDRec; // lo establecido por setITipIDRec() o el texto libre de setDDTipIDRec()
         if(isset($this->iTipIDRec)) {
             switch ($this->iTipIDRec) {
                 case 1:

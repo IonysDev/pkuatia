@@ -45,7 +45,7 @@ class RGeVeTr
   public String $dMarVeh;      // GET027 - Marca del vehículo - 1-10  - 0-1
   public int    $dTipIdenVeh;  // GET028 - Tipo de identificación del vehículo - 1 - 0-1
   public String $dNroIDVeh;    // GET029 - Número de identificación del vehículo 1-20 - 0-1
-  public String $dNroMatVeh;   // GET030 - Número de matrícula  del vehículo - 6 - 10
+  public String $dNroMatVeh;   // GET030 - Número de matrícula del vehículo - 6 (longitud exacta, tdNroMatVeh) - 0-1
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -436,7 +436,8 @@ class RGeVeTr
    */
   public function getDDesDepEnt(): String
   {
-    return CountryMapping::getCountryDesc(strval($this->cDepEnt));
+    // GET005 es la descripción del departamento (tdDesDepEnt), no de un país: mismo mapeo que GCamEnt.
+    return DepartamentoMapping::getDepName(strval($this->cDepEnt));
   }
 
 
@@ -458,7 +459,7 @@ class RGeVeTr
    */
   public function getDDesDisEnt(): String
   {
-    return CountryMapping::getCountryDesc(strval($this->cDisEnt));
+    return PyGeoCodesMapping::getDistName(strval($this->cDisEnt)); // GET007 descripción del distrito
   }
 
 
@@ -480,7 +481,7 @@ class RGeVeTr
    */
   public function getDDesCiuEnt(): String
   {
-    return CountryMapping::getCountryDesc(strval($this->cCiuEnt));
+    return PyGeoCodesMapping::getCiudName(strval($this->cCiuEnt)); // GET009 descripción de la ciudad
   }
 
 
@@ -749,81 +750,131 @@ class RGeVeTr
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * toDOMElement
+   * Verifica que estén informados los campos que exige cada motivo (GET003) antes de serializar. Fuente: MT v150
+   * (validaciones 4300-4310) y docs/sifen-ai/05-api-sifen/eventos.md.
    *
-   * @return DOMElement
+   * @throws \InvalidArgumentException Si el motivo no es 1-4 o faltan campos del motivo.
+   */
+  public function validar(): void
+  {
+    if (!isset($this->Id) || !isset($this->dMotEv))
+      throw new \InvalidArgumentException('[RGeVeTr] Id (GET002, CDC de la Nota de Remisión) y dMotEv (GET003, motivo) son obligatorios.');
+    $faltan = [];
+    $req = function (string $prop, string $desc) use (&$faltan): void {
+      if (!isset($this->$prop)) $faltan[] = "$prop ($desc)";
+    };
+    switch ($this->dMotEv) {
+      case 1: // Cambio del local de entrega
+        $req('cDepEnt', 'GET004 departamento');
+        $req('cCiuEnt', 'GET008 ciudad');
+        $req('dDirEnt', 'GET010 dirección');
+        $req('dNumCas', 'GET011 número de casa');
+        break;
+      case 2: // Cambio del chofer
+        $req('dNomChof', 'GET013 nombre del chofer');
+        $req('dNumIDChof', 'GET014 documento del chofer');
+        break;
+      case 3: // Cambio del transportista
+        $req('iNatTrans', 'GET015 naturaleza del transportista');
+        $req('dNomTrans', 'GET018 nombre del transportista');
+        if (isset($this->iNatTrans) && $this->iNatTrans == 1) {
+          $req('dRucTrans', 'GET016 RUC del transportista');
+          $req('dDVTrans', 'GET017 dígito verificador');
+        }
+        if (isset($this->iNatTrans) && $this->iNatTrans == 2) {
+          $req('iTipIDTrans', 'GET019 tipo de documento del transportista');
+          $req('dNumIDTrans', 'GET021 número de documento del transportista');
+        }
+        break;
+      case 4: // Cambio de vehículo
+        $req('iTipTrans', 'GET022 tipo de transporte');
+        $req('iModTrans', 'GET024 modalidad del transporte');
+        $req('dTiVehTras', 'GET026 tipo de vehículo');
+        $req('dMarVeh', 'GET027 marca');
+        $req('dTipIdenVeh', 'GET028 tipo de identificación del vehículo');
+        if (isset($this->dTipIdenVeh) && $this->dTipIdenVeh == 1) $req('dNroIDVeh', 'GET029 número de identificación del vehículo');
+        if (isset($this->dTipIdenVeh) && $this->dTipIdenVeh == 2) $req('dNroMatVeh', 'GET030 matrícula');
+        break;
+      default:
+        throw new \InvalidArgumentException("[RGeVeTr] dMotEv (GET003) debe ser 1 cambio del local de entrega, 2 cambio del chofer, 3 cambio del transportista o 4 cambio de vehículo; se recibió {$this->dMotEv}.");
+    }
+    if (count($faltan) > 0)
+      throw new \InvalidArgumentException('[RGeVeTr] Para dMotEv = ' . $this->dMotEv . ' faltan: ' . implode(', ', $faltan) . '.');
+    // tdNroMatVeh exige longitud exacta 6 (Evento_Types_v150.xsd:524-533), a diferencia del DE (hasta 7).
+    if (isset($this->dNroMatVeh) && mb_strlen($this->dNroMatVeh) !== 6)
+      throw new \InvalidArgumentException("[RGeVeTr] dNroMatVeh (GET030) debe tener exactamente 6 caracteres en el evento (tdNroMatVeh, Evento_Types_v150.xsd:524-533); se recibió '{$this->dNroMatVeh}'.");
+  }
+
+  /**
+   * Convierte el objeto a un DOMElement.
+   *
+   * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
+   *
+   * @return DOMElement Nodo DOM creado pero no insertado.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
+    $this->validar();
     $res = $doc->createElement('rGeVeTr');
-    ///Ocurrrencia 1-1
+    // Secuencia de trGeVeTr (Evento_v150.xsd:271-299): Id y dMotEv obligatorios; el resto es minOccurs="0" y se emite
+    // solo si fue informado. Antes se accedían propiedades sin inicializar (cDisEnt, iNatTrans, dTipIdenVeh) según el
+    // motivo, y las descripciones geográficas se buscaban en el catálogo de países.
     $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
     $res->appendChild(XmlHelper::elemento($doc, 'dMotEv', $this->getDMotEv()));
-
-    
-    if ($this->dMotEv == 1) {
+    if (isset($this->cDepEnt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'cDepEnt', $this->getCDepEnt()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesDepEnt', $this->getDDesDepEnt()));
     }
-
-    $res->appendChild(XmlHelper::elemento($doc, 'cDisEnt', $this->getCDisEnt()));
-
     if (isset($this->cDisEnt)) {
+      $res->appendChild(XmlHelper::elemento($doc, 'cDisEnt', $this->getCDisEnt()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesDisEnt', $this->getDDesDisEnt()));
     }
-
-    if ($this->dMotEv == 1) {
+    if (isset($this->cCiuEnt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'cCiuEnt', $this->getCCiuEnt()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEnt', $this->getDDesCiuEnt()));
+    }
+    if (isset($this->dDirEnt))
       $res->appendChild(XmlHelper::elemento($doc, 'dDirEnt', $this->getDDirEnt()));
+    if (isset($this->dNumCas))
       $res->appendChild(XmlHelper::elemento($doc, 'dNumCas', $this->getDNumCas()));
-      if (isset($this->dCompDir1)) {
-        $res->appendChild(XmlHelper::elemento($doc, 'dCompDir1', $this->getDCompDir1()));
-      }
-    }
-
-    if ($this->dMotEv == 2) {
+    if (isset($this->dCompDir1))
+      $res->appendChild(XmlHelper::elemento($doc, 'dCompDir1', $this->getDCompDir1()));
+    if (isset($this->dNomChof))
       $res->appendChild(XmlHelper::elemento($doc, 'dNomChof', $this->getDNomChof()));
+    if (isset($this->dNumIDChof))
       $res->appendChild(XmlHelper::elemento($doc, 'dNumIDChof', $this->getDNumIDChof()));
-    }
-
-    if ($this->dMotEv == 3) {
+    if (isset($this->iNatTrans))
       $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
-    }
-
-    if ($this->iNatTrans == 1) {
+    if (isset($this->dRucTrans))
       $res->appendChild(XmlHelper::elemento($doc, 'dRucTrans', $this->getDRucTrans()));
+    if (isset($this->dDVTrans))
       $res->appendChild(XmlHelper::elemento($doc, 'dDVTrans', $this->getDDVTrans()));
-    }
-
-    if ($this->dMotEv == 3) {
+    if (isset($this->dNomTrans))
       $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
-    }
-
-    if ($this->iNatTrans == 2) {
+    if (isset($this->iTipIDTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getdDTipIDTrans()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
     }
-
-    if ($this->dMotEv == 4) {
+    if (isset($this->dNumIDTrans))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
+    if (isset($this->iTipTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipTrans', $this->getITipTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipTrans', $this->getDDesTipTrans()));
+    }
+    if (isset($this->iModTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iModTrans', $this->getIModTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesModTrans', $this->getDDesModTrans()));
+    }
+    if (isset($this->dTiVehTras))
       $res->appendChild(XmlHelper::elemento($doc, 'dTiVehTras', $this->getDTiVehTras()));
+    if (isset($this->dMarVeh))
       $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
+    if (isset($this->dTipIdenVeh))
       $res->appendChild(XmlHelper::elemento($doc, 'dTipIdenVeh', $this->getDTipIdenVeh()));
-    }
-
-    if ($this->dTipIdenVeh == 1) {
+    if (isset($this->dNroIDVeh))
       $res->appendChild(XmlHelper::elemento($doc, 'dNroIDVeh', $this->getDNroIDVeh()));
-    }
-
-    if ($this->dTipIdenVeh == 2) {
+    if (isset($this->dNroMatVeh))
       $res->appendChild(XmlHelper::elemento($doc, 'dNroMatVeh', $this->getDNroMatVeh()));
-    }
-
     return $res;
   }
 

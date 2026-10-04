@@ -161,6 +161,32 @@ comportamiento que producía XML inválido o datos erróneos.
   un último parámetro opcional `?DateTime $fechaFirma = null` para fijar la fecha de firma. La
   comparación de la fecha futura de emisión (E506) pasa a hacerse por día calendario. Test:
   `tests/Unit/Sifen/EventosFacadeTest` (con un stub del cliente SOAP, sin red).
+- **PK-12 — Desconocimiento (GED009).** `RGeVeDescon::toDOMElement` emitía el tipo de receptor
+  (`iTipRec`) dentro de `dTipIDRec`; ahora emite el tipo de documento establecido.
+- **PK-13 — Conformidad (GCO004).** `dFecRecep` se emitía como fecha (`Y-m-d`) y el XSD exige fecha y
+  hora (`fecHhmmss`, `Evento_v150.xsd:76`).
+- **PK-14 — Actualización de datos del transporte (`RGeVeTr`).** Las descripciones geográficas del
+  local de entrega (GET005/007/009) se buscaban en el catálogo de países; ahora usan los mapeos de
+  departamentos, distritos y ciudades, como el DE. La serialización accedía a propiedades sin
+  inicializar según el motivo (`cDisEnt`, `iNatTrans`, `dTipIdenVeh`) y abortaba con `Error`; ahora
+  emite cada campo solo si fue informado, en el orden de `trGeVeTr` (`Evento_v150.xsd:271-299`), y el
+  nuevo `validar()` (público) exige los campos de cada motivo con un mensaje claro (incluida la
+  matrícula de 6 caracteres exactos, `tdNroMatVeh`, `Evento_Types_v150.xsd:524-533`).
+- **PK-15 — Enumeraciones de eventos.** `RGeVeDescon::setDTipIDRec` y `RGeVeNotRec::setDTipIDRec`
+  aceptan solo 1 a 4 (`tiTipDoc`, `DE_Types_v150.xsd:645-653`): el innominado (5) y "Otro" (9) no
+  existen en los eventos del receptor. `RGEveNom::setITiOpe` rechaza 3 (B2G): `tiTiOpeEv` admite 1, 2
+  y 4 (`Evento_Types_v150.xsd:57-66`). Además `RGEveNom::setCPaisRec` deriva `dDesPaisRe` del
+  catálogo (antes salía vacío y el XSD lo exige, `Evento_v150.xsd:394`) y `setITipIDRec` ya no pisa
+  el texto libre de "Otro" (`tdDtipDocRec`, 9 a 41 caracteres).
+- **PK-24 — Sobres con varios eventos.** `Sifen::RegistrarEvento` rechaza Ids de `rEve` repetidos
+  (cada Id es la URI de su firma, `Evento_v150.xsd:487`) y `GGroupTiEvt::toDOMElement` exige
+  exactamente un evento por `rEve` (`xs:choice`, `Evento_v150.xsd:363-380`).
+- **PK-42 — Validaciones previas a la red en el facade.** `CancelarDE`, `DisconformarDE` y
+  `DesconocerDE` verifican el motivo (5 a 500 caracteres, `tmotEve`, `Evento_Types_v150.xsd:86-95`) y,
+  junto con `ConformarDE` y `NotificarRecepcionDE`, el formato del CDC (`tId`, 44 caracteres,
+  `Evento_Types_v150.xsd:71-80`); `InutilizarNumeros` verifica el motivo. Antes el error llegaba del
+  SIFEN como rechazo por esquema. Tests: `tests/Unit/Conformidad/EventosTest` (12 casos contra
+  `siRecepEvento_v150.xsd`) y `tests/Unit/Sifen/EventosFacadeTest`.
 
 ## [0.1.5] — 2026-09-17
 
