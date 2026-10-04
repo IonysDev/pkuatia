@@ -188,6 +188,25 @@ comportamiento que producía XML inválido o datos erróneos.
   SIFEN como rechazo por esquema. Tests: `tests/Unit/Conformidad/EventosTest` (12 casos contra
   `siRecepEvento_v150.xsd`) y `tests/Unit/Sifen/EventosFacadeTest`.
 
+### Cambiado
+
+- **README**: el ejemplo de FE al contado ahora llama a `calcTotSub(0)` antes del pago (sin esa
+  llamada el snippet terminaba en `Error` al serializar, PK-40); la recomendación de consulta del
+  lote sigue la guía de la DNIT (empezar a los 10 minutos, intervalos no menores a 10 minutos; antes
+  decía ~1 minuto); nueva subsección "Zona horaria y fecha de firma"; `ActualizarDatosTransporte` y
+  `RegistrarEvento` en la tabla de métodos; la tabla de tipos distingue lo homologado (FE) de lo
+  validado contra el XSD de producción con homologación pendiente (AF, NC, ND, NR); la sección de
+  pruebas describe la suite de conformidad contra los XSD.
+- `Constants::PKUATIA_VERSION` pasa a `0.2.0`.
+- `GVehTras::getDAdicVeh()`, `getDNroMatVeh()` y `getDNroVuelo()` declaran `?String` (ya devolvían
+  `null`); `UnidadMedidaMapping::GetDesc()` y `MonedaMapping::GetDescription()` declaran `?String`.
+
+### Obsoleto
+
+- `GPaConEIni::getDMonTiPag(): int` (trunca el monto; usar `getDMonTiPagDecimal()`).
+- `TipoDocImpresoAso::ComprobanteRetencion` (5): no existe en el XSD de producción; se conserva por
+  compatibilidad y `GCamDEAsoc::toDOMElement()` lo rechaza con mensaje.
+
 ## [0.1.5] — 2026-09-17
 
 Redondeo explícito del total de la operación. **Compatible hacia atrás**: la firma de
