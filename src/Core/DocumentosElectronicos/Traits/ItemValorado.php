@@ -314,8 +314,11 @@ trait ItemValorado {
             $this->gTotSub->setDAnticipo(bcadd($this->gTotSub->getDTotAntItem(), $this->gTotSub->getDTotAnt(), 8));
 
             if($this->gTimb->getITiDE() == TimbTiDE::Autofactura->value) {
-                // F008
-                $this->gTotSub->setDTotOpe(bcadd($this->gTotSub->getDTotOpe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
+                // F008: suma de EA008 de TODOS los ítems (hasta v0.1.5 se tomaba solo el último, PK-02)
+                foreach($this->items as $item)
+                {
+                    $this->gTotSub->setDTotOpe(bcadd($this->gTotSub->getDTotOpe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
+                }
             }
             else
             {

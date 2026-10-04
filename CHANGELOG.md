@@ -57,6 +57,21 @@ comportamiento que producía XML inválido o datos erróneos.
   (sector energía). _Solo cambia el resultado para valores que el XSD ya rechazaba_ (más decimales
   o más enteros de los permitidos); los montos que genera `calcTotSub` (escala 8) siguen válidos.
   Tests: `tests/Unit/Utils/ValueValidationsTest` (23 casos de borde).
+- **PK-02 — Autofactura con varios ítems: total de la operación (F008) incorrecto.** `calcTotSub`
+  calculaba `dTotOpe` fuera del bucle de ítems y tomaba solo el último (100.000 + 50.000 daba
+  50.000). Ahora suma `dTotOpeItem` de todos los ítems (validaciones 2362/2365). Test:
+  `tests/Unit/Conformidad/AutofacturaTest`.
+- **PK-03 — Literal de la constancia de no contribuyente.** `TipDocAso::ConstanciaElectronica`
+  describía `Constancia electrónica`; el XSD de producción exige **`Constancia Electrónica`**
+  (`DE_Types_v150.xsd:1831-1842`, `tdDesTipDocAso`). Como la constancia (H002 = 3) es obligatoria en
+  la Autofactura, **toda AF era rechazada por esquema**; también afectaba a las FE que referencian
+  una constancia. Fix de conformidad (mismo criterio que `'IVA - Renta'`).
+- **PK-10 — QR de documentos sin IVA.** `QRHelper` concatenaba `dTotIVA=` vacío cuando el DE no
+  tiene IVA (Autofactura); la NT-010 exige `0`. Ahora el parámetro se informa como `dTotIVA=0`.
+- **PK-04 — Factura o Autofactura a crédito en cuotas sin entrega inicial.** `GPagCred::getDCuotas()`
+  devolvía `null` cuando no estaba informado `dMonEnt`, y el XML salía con `<dCuotas/>` vacío
+  (rechazo de esquema, E643). Ahora devuelve la cantidad de cuotas siempre que esté establecida.
+  Test: `tests/Unit/Conformidad/FacturaCreditoCuotasTest`.
 
 ## [0.1.5] — 2026-09-17
 

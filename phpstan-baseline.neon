@@ -97,12 +97,6 @@ parameters:
 			path: src/Core/DocumentosElectronicos/Autofactura.php
 
 		-
-			message: '#^Variable \$item might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: src/Core/DocumentosElectronicos/Autofactura.php
-
-		-
 			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$cdcFacturaAnticipo\.$#'
 			identifier: property.notFound
 			count: 1
@@ -195,12 +189,6 @@ parameters:
 		-
 			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\Factura\:\:\$tipoDeCambioItem\.$#'
 			identifier: property.notFound
-			count: 1
-			path: src/Core/DocumentosElectronicos/Factura.php
-
-		-
-			message: '#^Variable \$item might not be defined\.$#'
-			identifier: variable.undefined
 			count: 1
 			path: src/Core/DocumentosElectronicos/Factura.php
 
@@ -301,12 +289,6 @@ parameters:
 			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
 
 		-
-			message: '#^Variable \$item might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: src/Core/DocumentosElectronicos/NotaDeCredito.php
-
-		-
 			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$cdcFacturaAnticipo\.$#'
 			identifier: property.notFound
 			count: 1
@@ -399,12 +381,6 @@ parameters:
 		-
 			message: '#^Access to an undefined property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeDebito\:\:\$tipoDeCambioItem\.$#'
 			identifier: property.notFound
-			count: 1
-			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
-
-		-
-			message: '#^Variable \$item might not be defined\.$#'
-			identifier: variable.undefined
 			count: 1
 			path: src/Core/DocumentosElectronicos/NotaDeDebito.php
 

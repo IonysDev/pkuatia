@@ -168,9 +168,8 @@ class GPagCred extends BaseSifenField
    */
   public function getDCuotas(): ?int
   {
-    if(!isset($this->dMonEnt))
-      return null;
-    return $this->dCuotas;
+    // E643 es obligatorio cuando iCondCred = 2 aunque no haya entrega inicial (hasta v0.1.5 dependía de dMonEnt, PK-04)
+    return isset($this->dCuotas) ? $this->dCuotas : null;
   }
 
   /**

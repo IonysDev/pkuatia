@@ -39,9 +39,13 @@ class QRHelper
     if ($de->getGTotSub() != null)
       $dTotGralOpe = $de->getGTotSub()->getDTotGralOpe();
 
+    // NT-010: dTotIVA debe informarse como 0 cuando el DE no tiene IVA (p. ej. Autofactura); hasta v0.1.5 iba vacío (PK-10)
     $dTotIVA = '0';
-    if ($de->getGTotSub() != null)
-      $dTotIVA = $de->getGTotSub()->getDTotIVA();
+    if ($de->getGTotSub() != null) {
+      $iva = $de->getGTotSub()->getDTotIVA();
+      if ($iva !== null && $iva !== '')
+        $dTotIVA = $iva;
+    }
 
     $cItems = '0';
     if ($de->getGDtipDe() != null)
