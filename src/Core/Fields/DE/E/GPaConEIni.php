@@ -195,7 +195,20 @@ class GPaConEIni extends BaseSifenField
    *
    * @return int
    */
+  /**
+   * @deprecated El monto E608 es decimal (tMontoBase4, hasta 4 decimales): este getter lo trunca a entero. Usar getDMonTiPagDecimal().
+   */
   public function getDMonTiPag(): int
+  {
+    return $this->dMonTiPag;
+  }
+
+  /**
+   * Devuelve el monto por tipo de pago (E608) tal como fue establecido, como cadena decimal BCMath.
+   *
+   * @return String
+   */
+  public function getDMonTiPagDecimal(): String
   {
     return $this->dMonTiPag;
   }
@@ -301,10 +314,12 @@ class GPaConEIni extends BaseSifenField
     $res = $doc->createElement('gPaConEIni');
     $res->appendChild(XmlHelper::elemento($doc, 'iTiPago', $this->getITiPago()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesTiPag', $this->getDDesTiPag()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dMonTiPag', $this->getDMonTiPag()));
+    // E608 se emite como decimal (hasta v0.1.5 se usaba el getter int y se perdían los decimales, PK-09)
+    $res->appendChild(XmlHelper::elemento($doc, 'dMonTiPag', $this->dMonTiPag));
     $res->appendChild(XmlHelper::elemento($doc, 'cMoneTiPag', $this->getCMoneTiPag()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDMoneTiPag', $this->getDDMoneTiPag()));
-    if ($this->cMoneTiPag != 'PYG') {
+    // E611 es opcional en el XSD; la obligatoriedad con moneda extranjera la exige el builder (Factura::addPago).
+    if (isset($this->dTiCamTiPag)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTiCamTiPag', $this->getDTiCamTiPag()));
     }
     if(isset($this->gPagTarCD))
