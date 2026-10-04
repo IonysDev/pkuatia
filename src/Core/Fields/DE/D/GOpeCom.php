@@ -174,7 +174,7 @@ class GOpeCom extends BaseSifenField
      */
     public function setDTiCam(String $dTiCam): self
     {
-        if(ValueValidations::isValidStringDecimal($dTiCam, 5, 0))
+        if(ValueValidations::isValidStringDecimal($dTiCam, 5, 0, 4))
         {
             $this->dTiCam = $dTiCam;
         }

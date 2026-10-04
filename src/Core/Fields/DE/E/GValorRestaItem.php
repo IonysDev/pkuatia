@@ -40,7 +40,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDDescItem(String $dDescItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dDescItem, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dDescItem, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dDescItem: $dDescItem");
     }
@@ -57,7 +57,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDPorcDesIt(String $dPorcDesIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0))
+    if(!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0, 8))
     {
       throw new \Exception("Valor inválido de dPorcDesIt: $dPorcDesIt");
     }
@@ -75,7 +75,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDDescGloItem(String $dDescGloItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dDescGloItem: $dDescGloItem");
     }
@@ -93,7 +93,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDAntPreUniIt(String $dAntPreUniIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dAntPreUniIt: $dAntPreUniIt");
     }
@@ -111,7 +111,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDAntGloPreUniIt(String $dAntGloPreUniIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dAntGloPreUniIt: $dAntGloPreUniIt");
     }
@@ -129,7 +129,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDTotOpeItem(String $dTotOpeItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dTotOpeItem: $dTotOpeItem");
     }
@@ -146,7 +146,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDTotOpeGs(String $dTotOpeGs): self
   {
-    if(!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dTotOpeGs: $dTotOpeGs");
     }

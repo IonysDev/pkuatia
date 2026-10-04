@@ -78,7 +78,7 @@ class GGrupEner
    */
   public function setDLecAnt(String $dLecAnt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0))
+    if(!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0, 2))
       throw new \Exception('[GGrupEner] dLecAnt debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAnt, 1);
     $this->dLecAnt = $dLecAnt;
     return $this;
@@ -94,7 +94,7 @@ class GGrupEner
    */
   public function setDLecAct(String $dLecAct): self
   {
-    if(!ValueValidations::isValidStringDecimal($dLecAct, 11, 0))
+    if(!ValueValidations::isValidStringDecimal($dLecAct, 11, 0, 2))
       throw new \Exception('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAct, 1);
     $this->dLecAct = $dLecAct;
     return $this;
@@ -109,7 +109,7 @@ class GGrupEner
    */
   public function setDConKwh(String $dConKwh): self
   {
-    if(!ValueValidations::isValidStringDecimal($dConKwh, 11, 0))
+    if(!ValueValidations::isValidStringDecimal($dConKwh, 11, 0, 2))
       throw new \Exception('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dConKwh, 1);
     $this->dConKwh = $dConKwh;
     return $this;

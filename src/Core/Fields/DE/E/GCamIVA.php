@@ -123,7 +123,7 @@ class GCamIVA extends BaseSifenField
    */
   public function setDBasGravIVA(String $dBasGravIVA): self
   {
-    if(!ValueValidations::isValidStringDecimal($dBasGravIVA, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dBasGravIVA, 15, 0, 8))
       throw new \Exception("Invalid dBasGravIVA: $dBasGravIVA");
     $this->dBasGravIVA = $dBasGravIVA;
     return $this;
@@ -139,7 +139,7 @@ class GCamIVA extends BaseSifenField
    */
   public function setDLiqIVAItem(String $dLiqIVAItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dLiqIVAItem, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dLiqIVAItem, 15, 0, 8))
       throw new \Exception("Invalid dBasGravIVA: $dLiqIVAItem");
     $this->dLiqIVAItem = $dLiqIVAItem;
     return $this;

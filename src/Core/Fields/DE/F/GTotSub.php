@@ -293,7 +293,7 @@ class GTotSub
   public function setDRedon(String $dRedon): self
   {
     $newVal = trim($dRedon);
-    if(!ValueValidations::isValidStringDecimal($newVal, 3, 0))
+    if(!ValueValidations::isValidStringDecimal($newVal, 4, 0, 4))
       throw new \Exception("[GTotSub] Valor no válido para el campo dRedon: $newVal");
     $this->dRedon = $newVal;
     return $this;

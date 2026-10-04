@@ -271,7 +271,7 @@ class GCamItem extends BaseSifenField
    */
   public function setDCantProSer(String $dCantProSer): self
   {
-    if(!ValueValidations::isValidStringDecimal($dCantProSer, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dCantProSer, 10, 0, 8))
     {
       throw new \Exception("Valor inválido de dCantProSer: $dCantProSer");
     }
@@ -374,7 +374,7 @@ class GCamItem extends BaseSifenField
    */
   public function setDCanQuiMer(int $dCanQuiMer): self
   {
-    if(!ValueValidations::isValidStringDecimal($dCanQuiMer, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dCanQuiMer, 10, 0, 4))
     {
       throw new \Exception("Valor inválido de dCanQuiMer: $dCanQuiMer");
     }
@@ -392,7 +392,7 @@ class GCamItem extends BaseSifenField
    */
   public function setDPorQuiMer(int $dPorQuiMer): self
   {
-    if(!ValueValidations::isValidStringDecimal($dPorQuiMer, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dPorQuiMer, 3, 0, 8))
     {
       throw new \Exception("Valor inválido de dPorQuiMer: $dPorQuiMer");
     }

@@ -43,6 +43,20 @@ comportamiento que producía XML inválido o datos erróneos.
   FE, FE en cuotas, NC, sobre de eventos y rDE mínimo con semilla fija).
   Tests: `tests/Unit/Helpers/XmlHelperTest`, `tests/Unit/Conformidad/EscapeXmlTest` (FE y evento
   con `&` y `<` válidos contra el XSD y round-trip íntegro).
+- **PK-16 — Validador de cadenas decimales (`Utils\ValueValidations::isValidStringDecimal`).** La
+  expresión regular `(\.{min,max})` contaba puntos en lugar de decimales: aceptaba `'1000'` con
+  parte entera de 3 dígitos y `'12345678901'` con 15, y rechazaba `'100.50'` cuando se exigían 2
+  decimales. Además devolvía el entero de `preg_match`, por lo que las comparaciones `=== false`
+  de `Factura::setOperacionCreditoEnCuotas` y `Autofactura::setOperacionCreditoEnCuotas` nunca se
+  cumplían. Ahora valida la parte entera y los decimales como las facetas del XSD y devuelve
+  `bool`. Los 21 setters que lo usan sin máximo de decimales pasan a los límites de su tipo XSD
+  (`DE_Types_v150.xsd`): `tMontoBase` 15/8 (`gValorItem`, `gValorRestaItem`, `gCamIVA`),
+  `tMontoBase4` 15/4 (`dMonCuota`), `tdCRed` 4/4 (`dRedon`, antes 3 enteros sin tope de
+  decimales), `tPorcDesc8` 3/8 (`dPorcDesIt`, `dPorQuiMer`), `tTipoCambioBase` 5/4 (`dTiCam`,
+  `dTiCamIt`), `tdCantProSer` 10/8 (`dCantProSer`), `dCanQuiMer` 10/4 y `tLectura` 11/2
+  (sector energía). _Solo cambia el resultado para valores que el XSD ya rechazaba_ (más decimales
+  o más enteros de los permitidos); los montos que genera `calcTotSub` (escala 8) siguen válidos.
+  Tests: `tests/Unit/Utils/ValueValidationsTest` (23 casos de borde).
 
 ## [0.1.5] — 2026-09-17
 

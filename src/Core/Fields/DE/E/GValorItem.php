@@ -37,7 +37,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDPUniProSer(String $dPUniProSer): self
   {
-    if(ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0) === false)
+    if(ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0, 8) === false)
     {
       throw new \Exception("El valor dPUniProSer no es válido:" . $dPUniProSer);
     }
@@ -55,7 +55,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDTiCamIt(String $dTiCamIt): self
   {
-    if(ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0) === false)
+    if(ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0, 4) === false)
     {
       throw new \Exception("El valor dTiCamIt no es válido:" . $dTiCamIt);
     }
@@ -73,7 +73,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDTotBruOpeItem(String $dTotBruOpeItem): self
   {
-    if(ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0) === false)
+    if(ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0, 8) === false)
     {
       throw new \Exception("El valor dTotBruOpeItem no es válido:" . $dTotBruOpeItem);
     }

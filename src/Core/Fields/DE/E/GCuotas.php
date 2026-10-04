@@ -68,7 +68,7 @@ class GCuotas
    */
   public function setDMonCuota(String $dMonCuota): self
   {
-    if(!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0, 4))
       throw new \Exception("[GCuotas] Monto de la cuota (dMonCuota) no válido: " . $dMonCuota, 1);
     $this->dMonCuota = $dMonCuota;
     return $this;
