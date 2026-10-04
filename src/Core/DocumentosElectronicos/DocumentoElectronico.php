@@ -739,10 +739,11 @@ class DocumentoElectronico
       if (is_null($dv))
         throw new Exception("[DocumentoElectronico::setReceptor] El dígito verificador del RUC del receptor es obligatorio si el receptor es contribuyente.");
     } else {
-      if (!$tipoIdentificacion)
+      if ($tipoIdentificacion === null)
         throw new Exception("[DocumentoElectronico::setReceptor] El tipo de identificación es obligatorio si el receptor no es contribuyente.");
-      if (!$nroIdentificacion)
-        throw new Exception("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente.");
+      // '0' es el valor que el MT exige en D210 para el receptor innominado (D208 = 5) y antes se rechazaba por ser falsy.
+      if ($nroIdentificacion === null || $nroIdentificacion === '')
+        throw new Exception("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente (para el innominado, D208 = 5, informar '0').");
       // Para "Otro" (9), D209 (dDTipIDRec) es de texto libre, obligatorio y de 9 a 41 caracteres.
       if ($tipoIdInt === TipIDRec::Otro->value) {
         if (is_null($descTipoIdentificacion) || $descTipoIdentificacion === '')

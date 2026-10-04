@@ -430,7 +430,27 @@ class GOpeCom extends BaseSifenField
     }
 
     /**
-     * Convierte este GOpeCom a un DOM Element.
+     * Verifica la coherencia de la condición y del tipo de cambio con la moneda de la operación.
+     *
+     * Con una moneda distinta de PYG, dCondTiCam (D017) es obligatorio (validación 1207 del MT v150 §12.4) y, si
+     * D017 = 1 (global), también lo es dTiCam (D018, validación 1209). En el XSD de producción ambos son
+     * minOccurs="0" (DE_v150.xsd:210-213, tgOpeCom), por lo que la ausencia no se detecta por esquema: la detecta el SIFEN
+     * al recibir el documento. Antes, la serialización terminaba en un Error de propiedad tipada sin inicializar.
+     *
+     * @throws InvalidArgumentException Si falta D017 o D018 cuando corresponde.
+     */
+    public function validarTipoDeCambio(): void
+    {
+        if (strcmp(strtoupper($this->cMoneOpe), 'PYG') == 0) // cMoneOpe se inicializa en el constructor
+            return;
+        if (!isset($this->dCondTiCam))
+            throw new InvalidArgumentException("[GOpeCom] Con moneda de la operación " . $this->cMoneOpe . " (D015) es obligatoria la condición del tipo de cambio dCondTiCam (D017: 1 = global, 2 = por ítem; validación 1207). En los builders: setCondicionTipoDeCambio().");
+        if ($this->dCondTiCam == 1 && !isset($this->dTiCam))
+            throw new InvalidArgumentException("[GOpeCom] Con dCondTiCam = 1 (tipo de cambio global, D017) es obligatorio el tipo de cambio dTiCam (D018; validación 1209). En los builders: setTipoDeCambio().");
+    }
+
+    /**
+     * Convierte el objeto a un DOMElement.
      * 
      * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
      *
@@ -447,6 +467,7 @@ class GOpeCom extends BaseSifenField
         $res->appendChild(XmlHelper::elemento($doc, 'dDesTImp', $this->getDDesTImp()));
         $res->appendChild(XmlHelper::elemento($doc, 'cMoneOpe', $this->getCMoneOpe()));
         $res->appendChild(XmlHelper::elemento($doc, 'dDesMoneOpe', $this->getDDesMoneOpe()));
+        $this->validarTipoDeCambio();
         if (strcmp($this->cMoneOpe, "PYG") != 0)
             $res->appendChild(XmlHelper::elemento($doc, 'dCondTiCam', $this->getDCondTiCam()));
         if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2)

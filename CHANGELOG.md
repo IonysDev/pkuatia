@@ -134,6 +134,19 @@ comportamiento que producía XML inválido o datos erróneos.
   pasan a `?String` (ya devolvían `null`, lo que producía `TypeError`). `validar()` también revisa
   cada vehículo (E961, E962, E967 y el identificador que corresponda). Test:
   `tests/Unit/Conformidad/NotaRemisionTest`.
+- **PK-17 — Receptor innominado con el builder.** `setReceptor()` rechazaba `'0'`, que es el valor
+  que el MT exige en `dNumIDRec` (D210) para el receptor innominado (D208 = 5), porque la comprobación
+  usaba la falsedad de PHP (`!'0'`). Ahora solo rechaza `null` y `''`, y el mensaje indica que para el
+  innominado se informa `'0'`.
+- **PK-20 — Totales y moneda extranjera.** `calcTotSub()` dividía por la suma de E721 al calcular
+  F010 (`dPorcDescTotal`): con todos los ítems en 0 (donaciones, muestras sin cargo) terminaba en
+  `DivisionByZeroError`; ahora F010 es 0 cuando no hay base. Con moneda distinta de PYG sin condición
+  de tipo de cambio (D017) o sin tipo de cambio global (D018), `calcTotSub()` y
+  `GOpeCom::toDOMElement()` terminaban en un `Error` de propiedad tipada sin inicializar; ahora
+  `GOpeCom::validarTipoDeCambio()` (nuevo, público) lanza `InvalidArgumentException` con el campo
+  faltante y el builder que lo informa (validaciones 1207 y 1209 del MT v150 §12.4; en el XSD ambos son
+  `minOccurs="0"`, `DE_v150.xsd:210-213`, por lo que el esquema no lo detecta). Test:
+  `tests/Unit/Conformidad/BuildersTest`.
 
 ## [0.1.5] — 2026-09-17
 

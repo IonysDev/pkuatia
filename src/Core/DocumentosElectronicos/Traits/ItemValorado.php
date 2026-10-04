@@ -413,8 +413,11 @@ trait ItemValorado {
                 }
             }
             
-            // F010
-            $this->gTotSub->setDPorcDescTotal(bcdiv(bcmul($this->gTotSub->getDTotDescGlotem(), '100', 8), $sumaSubtBruto, 8));
+            // F010: porcentaje del descuento global sobre la suma de E721. Sin base (todos los ítems con valor 0:
+            // donaciones, muestras) el porcentaje es 0 en lugar de DivisionByZeroError.
+            $this->gTotSub->setDPorcDescTotal(bccomp($sumaSubtBruto, '0', 8) === 0
+                ? '0.00000000'
+                : bcdiv(bcmul($this->gTotSub->getDTotDescGlotem(), '100', 8), $sumaSubtBruto, 8));
 
             // F013
             if($redondeo !== null) {
@@ -440,6 +443,7 @@ trait ItemValorado {
 
             // F23
             if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') != 0) {
+                $this->gOpeCom->validarTipoDeCambio(); // D017/D018 obligatorios con moneda distinta de PYG (antes Error de propiedad sin inicializar)
                 if($this->gOpeCom->getDCondTiCam() == OpeComCondTipCam::Global->value)
                     $this->gTotSub->setDTotalGs(bcmul($this->gTotSub->getDTotGralOpe(), $this->gOpeCom->getDTiCam(), 8));
                 else {
