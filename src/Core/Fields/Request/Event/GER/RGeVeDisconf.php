@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GER;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  *  ID:GDI001 Raiz Gestión de Eventos Disconformidad PADRE:GDE007
@@ -89,8 +90,8 @@ class RGeVeDisconf
   {
     $res = $doc->createElement('rGeVeDisconf');
 
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
 
     return $res;
   }

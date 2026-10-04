@@ -13,6 +13,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use Stringable;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E900    
@@ -420,47 +421,47 @@ class GTransp extends BaseSifenField
     
     // E901 - iTipTrans (0-1, obligatorio si C002 = 7)
     if (isset($this->iTipTrans)) {
-      $res->appendChild(new DOMElement('iTipTrans', $this->getITipTrans()));
-      $res->appendChild(new DOMElement('dDesTipTrans', $this->getDDesTipTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipTrans', $this->getITipTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesTipTrans', $this->getDDesTipTrans()));
     }
     
     // E903 - iModTrans (1-1, obligatorio)
-    $res->appendChild(new DOMElement('iModTrans', $this->getIModTrans()));
-    $res->appendChild(new DOMElement('dDesModTrans', $this->getDDesModTrans()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iModTrans', $this->getIModTrans()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesModTrans', $this->getDDesModTrans()));
     
     // E905 - iRespFlete (1-1, obligatorio)
-    $res->appendChild(new DOMElement('iRespFlete', $this->getIRespFlete()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iRespFlete', $this->getIRespFlete()));
     
     // E906 - cCondNeg (0-1, opcional)
     if (isset($this->cCondNeg)) {
-      $res->appendChild(new DOMElement('cCondNeg', $this->getCCondNeg()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cCondNeg', $this->getCCondNeg()));
     }
     
     // E907 - dNuManif (0-1, opcional)
     if (isset($this->dNuManif)) {
-      $res->appendChild(new DOMElement('dNuManif', $this->getDNuManif()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNuManif', $this->getDNuManif()));
     }
     
     // E908 - dNuDespImp (0-1, opcional, obligatorio si E501 = 5)
     if (isset($this->dNuDespImp)) {
-      $res->appendChild(new DOMElement('dNuDespImp', $this->getDNuDespImp()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNuDespImp', $this->getDNuDespImp()));
     }
     
     // E909 - dIniTras (0-1, opcional, obligatorio si C002 = 7)
     if (isset($this->dIniTras)) {
-      $res->appendChild(new DOMElement('dIniTras', $this->getDIniTras()->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dIniTras', $this->getDIniTras()->format('Y-m-d')));
     }
     
     // E910 - dFinTras (0-1, opcional, obligatorio si existe E909)
     if (isset($this->dFinTras)) {
-      $res->appendChild(new DOMElement('dFinTras', $this->getDFinTras()->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFinTras', $this->getDFinTras()->format('Y-m-d')));
     }
     
     // E911 - cPaisDest (0-1, opcional)
     if (isset($this->cPaisDest)) {
-      $res->appendChild(new DOMElement('cPaisDest', $this->getCPaisDest()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cPaisDest', $this->getCPaisDest()));
       // E912 - dDesPaisDest (0-1, obligatorio si existe E911)
-      $res->appendChild(new DOMElement('dDesPaisDest', $this->getDDesPaisDest()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesPaisDest', $this->getDDesPaisDest()));
     }
     
     // E920 - gCamSal (0-1, obligatorio si C002 = 7)

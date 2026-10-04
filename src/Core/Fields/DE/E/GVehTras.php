@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use Exception;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E960
@@ -296,35 +297,35 @@ class GVehTras extends BaseSifenField
     {
         $res = $doc->createElement('gVehTras');
         if(isset($this->dNroIDVeh))
-            $res->appendChild(new DOMElement('dTiVehTras', $this->getDTiVehTras()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dTiVehTras', $this->getDTiVehTras()));
         else            
             throw new Exception('[GVehTras] El campo dNroIDVeh es obligatorio.');
         
         if(isset($this->dMarVeh))
-            $res->appendChild(new DOMElement('dMarVeh', $this->getDMarVeh()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
         else
             throw new Exception('[GVehTras] El campo dMarVeh es obligatorio.');
 
         if(isset($this->dTipIdenVeh))
-            $res->appendChild(new DOMElement('dTipIdenVeh', $this->getDTipIdenVeh()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dTipIdenVeh', $this->getDTipIdenVeh()));
         else
             throw new Exception('[GVehTras] El campo dTipIdenVeh es obligatorio.');
         
         if (isset($this->dNroIDVeh))
-            $res->appendChild(new DOMElement('dNroIDVeh', $this->getDNroIDVeh()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dNroIDVeh', $this->getDNroIDVeh()));
         else if($this->dTipIdenVeh == 1)
             throw new Exception('[GVehTras] El campo dNroIDVeh es obligatorio.');
         
         if(isset($this->dAdicVeh))
-            $res->appendChild(new DOMElement('dAdicVeh', $this->getDAdicVeh()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dAdicVeh', $this->getDAdicVeh()));
         
         if (isset($this->dNroMatVeh))
-            $res->appendChild(new DOMElement('dNroMatVeh', $this->getDNroIDVeh()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dNroMatVeh', $this->getDNroIDVeh()));
         else if($this->dTipIdenVeh == 2)
             throw new Exception('[GVehTras] El campo dNroMatVeh es obligatorio.');
         
         if(isset($this->dNroVuelo))
-            $res->appendChild(new DOMElement('dNroVuelo', $this->getDNroVuelo()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dNroVuelo', $this->getDNroVuelo()));
         
         return $res;
     }    

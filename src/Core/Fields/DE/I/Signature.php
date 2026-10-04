@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\Core\Fields\Signature\SignedInfo;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID I001 - Firma Digital del DTE  PADRE:AA001
@@ -173,7 +174,7 @@ class Signature extends BaseSifenField
   {
     $res = $this->toHeaderOnlyDOMElement($doc);
     $res->appendChild($this->SignedInfo->toDOMElement($doc));
-    $res->appendChild(new DOMElement('SignatureValue', $this->SignatureValue));
+    $res->appendChild(XmlHelper::elemento($doc, 'SignatureValue', $this->SignatureValue));
     $res->appendChild($this->KeyInfo->toDOMElement());
     return $res;
   }

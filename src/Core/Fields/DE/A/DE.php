@@ -16,6 +16,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     A001
@@ -498,9 +499,9 @@ class DE extends BaseSifenField
   {
     $res = $doc->createElement('DE');
     $res->setAttribute('Id', $this->getId());
-    $res->appendChild(new DOMElement('dDVId', $this->getDDVId()));
-    $res->appendChild(new DOMElement('dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('dSisFact', $this->getDSisFact()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDVId', $this->getDDVId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dSisFact', $this->getDSisFact()));
     $res->appendChild($this->gOpeDe->toDOMElement($doc));
     $res->appendChild($this->gTimb->toDOMElement($doc));
     $res->appendChild($this->gDatGralOpe->toDOMElement($doc));

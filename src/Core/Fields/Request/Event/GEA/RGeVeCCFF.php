@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:GECF001 Raíz Gestión de Eventos de créditos fiscales PADRE:GDE007
@@ -111,9 +112,9 @@ class RGeVeCCFF
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeCCFF');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('dNumTraCCFF', $this->getDNumTraCCFF()));
-    $res->appendChild(new DOMElement('dFeAceTraCCFF', $this->getDFeAceTraCCFF()->format('Y-m-d')));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumTraCCFF', $this->getDNumTraCCFF()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFeAceTraCCFF', $this->getDFeAceTraCCFF()->format('Y-m-d')));
     return $res;
   }
 

@@ -8,6 +8,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E010
@@ -245,10 +246,10 @@ class GCamFE extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamFE');
-    $res->appendChild(new DOMElement('iIndPres', $this->iIndPres));
-    $res->appendChild(new DOMElement('dDesIndPres', $this->getDDesIndPres()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iIndPres', $this->iIndPres));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesIndPres', $this->getDDesIndPres()));
     if(isset($this->dFecEmNR))
-      $res->appendChild(new DOMElement('dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecEmNR', $this->dFecEmNR->format('Y-m-d')));
     if(isset($this->gCompPub))
       $res->appendChild($this->gCompPub->toDOMElement($doc));
     return $res;

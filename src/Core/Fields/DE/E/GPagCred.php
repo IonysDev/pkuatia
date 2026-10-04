@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E640
@@ -239,15 +240,15 @@ class GPagCred extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gPagCred');
-    $res->appendChild(new DOMElement('iCondCred', $this->getICondCred()));
-    $res->appendChild(new DOMElement('dDCondCred', $this->getDDCondCred()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iCondCred', $this->getICondCred()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDCondCred', $this->getDDCondCred()));
     if ($this->iCondCred == 1) {
-      $res->appendChild(new DOMElement('dPlazoCre', $this->getDPlazoCre()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPlazoCre', $this->getDPlazoCre()));
     } else if ($this->iCondCred == 2) {
-      $res->appendChild(new DOMElement('dCuotas', $this->getDCuotas()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCuotas', $this->getDCuotas()));
     }
     if(isset($this->dMonEnt) && $this->dMonEnt > 0)
-      $res->appendChild(new DOMElement('dMonEnt', $this->getDMonEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dMonEnt', $this->getDMonEnt()));
     if(isset($this->gCuotas) && count($this->gCuotas) > 0)
     {
       foreach ($this->gCuotas as $g) {

@@ -29,6 +29,21 @@ comportamiento que producía XML inválido o datos erróneos.
   línea; se omite si `docs/sifen-ai` no está disponible, p. ej. en CI), la cadena de includes
   compila y una FE firmada de referencia valida.
 
+### Corregido
+
+- **PK-01 — Escape de caracteres especiales en los textos del XML.** Las 485 construcciones de nodo
+  con valor (`new DOMElement($nombre, $valor)` y `createElement($nombre, $valor)`) no escapaban el
+  contenido: un `&` en la razón social, la dirección, la información adicional, el motivo de un
+  evento, etc. producía el warning `unterminated entity reference` y el elemento salía **vacío**
+  (`<dNomEmi/>`), con rechazo del SIFEN en los campos obligatorios y pérdida silenciosa de datos en
+  los opcionales. Solo `dNomRec`, `dDTipIDRec` y `dDesProSer` estaban protegidos. Ahora todos los
+  textos se emiten como nodos de texto mediante el nuevo helper `Helpers\XmlHelper::elemento()`
+  (`&` → `&amp;`, `<` → `&lt;`), que al leerse devuelven exactamente el valor original. La salida
+  para valores sin caracteres especiales es byte a byte idéntica a la anterior (verificado con
+  FE, FE en cuotas, NC, sobre de eventos y rDE mínimo con semilla fija).
+  Tests: `tests/Unit/Helpers/XmlHelperTest`, `tests/Unit/Conformidad/EscapeXmlTest` (FE y evento
+  con `&` y `<` válidos contra el XSD y round-trip íntegro).
+
 ## [0.1.5] — 2026-09-17
 
 Redondeo explícito del total de la operación. **Compatible hacia atrás**: la firma de

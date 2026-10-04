@@ -8,6 +8,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Core\Constants\MotEmiNR;
 use IonysDev\Pkuatia\Core\Constants\RespEmiNR;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E500
@@ -208,13 +209,13 @@ class GCamNRE extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamNRE');
-    $res->appendChild(new DOMElement('iMotEmiNR', $this->getIMotEmiNR()));
-    $res->appendChild(new DOMElement('dDesMotEmiNR', $this->getDDesMotEmiNR()));
-    $res->appendChild(new DOMElement('iRespEmiNR', $this->getIRespEmiNR()));
-    $res->appendChild(new DOMElement('dDesRespEmiNR', $this->getDDesRespEmiNR()));
-    $res->appendChild(new DOMElement('dKmR', $this->getDKmR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iMotEmiNR', $this->getIMotEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesMotEmiNR', $this->getDDesMotEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iRespEmiNR', $this->getIRespEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesRespEmiNR', $this->getDDesRespEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dKmR', $this->getDKmR()));
     if(isset($this->dFecEm))
-      $res->appendChild(new DOMElement('dFecEm', $this->getDFecEm()->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecEm', $this->getDFecEm()->format('Y-m-d')));
     return $res;
   }
 

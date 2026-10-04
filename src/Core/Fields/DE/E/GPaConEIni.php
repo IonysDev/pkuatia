@@ -9,6 +9,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E605
@@ -298,13 +299,13 @@ class GPaConEIni extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gPaConEIni');
-    $res->appendChild(new DOMElement('iTiPago', $this->getITiPago()));
-    $res->appendChild(new DOMElement('dDesTiPag', $this->getDDesTiPag()));
-    $res->appendChild(new DOMElement('dMonTiPag', $this->getDMonTiPag()));
-    $res->appendChild(new DOMElement('cMoneTiPag', $this->getCMoneTiPag()));
-    $res->appendChild(new DOMElement('dDMoneTiPag', $this->getDDMoneTiPag()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTiPago', $this->getITiPago()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesTiPag', $this->getDDesTiPag()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dMonTiPag', $this->getDMonTiPag()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cMoneTiPag', $this->getCMoneTiPag()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDMoneTiPag', $this->getDDMoneTiPag()));
     if ($this->cMoneTiPag != 'PYG') {
-      $res->appendChild(new DOMElement('dTiCamTiPag', $this->getDTiCamTiPag()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTiCamTiPag', $this->getDTiCamTiPag()));
     }
     if(isset($this->gPagTarCD))
       $res->appendChild($this->gPagTarCD->toDOMElement($doc));

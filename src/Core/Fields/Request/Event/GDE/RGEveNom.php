@@ -11,6 +11,7 @@ use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo: GENFE001 - rGEveNom - Grupos de Campos Generales del Evento 
@@ -776,61 +777,61 @@ class RGEveNom
   {
     $res = $doc->createElement('rGEveNom');
 
-    $res->appendChild($doc->createElement('Id', $this->getId()));
-    $res->appendChild($doc->createElement('mOtEve', $this->getMOtEve()));
-    $res->appendChild($doc->createElement('iNatRec', $this->getINatRec()));
-    $res->appendChild($doc->createElement('iTiOpe', $this->getITiOpe()));
-    $res->appendChild($doc->createElement('cPaisRec', $this->getCPaisRec()));
-    $res->appendChild($doc->createElement('dDesPaisRe', $this->getDDesPaisRe()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iNatRec', $this->getINatRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTiOpe', $this->getITiOpe()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cPaisRec', $this->getCPaisRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesPaisRe', $this->getDDesPaisRe()));
 
     // Receptor contribuyente: se informan los datos del RUC
     if(isset($this->iTiContRec))
-      $res->appendChild($doc->createElement('iTiContRec', $this->getITiContRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTiContRec', $this->getITiContRec()));
     if(isset($this->dRucRec))
-      $res->appendChild($doc->createElement('dRucRec', $this->getDRucRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRucRec', $this->getDRucRec()));
     if(isset($this->dDVRec))
-      $res->appendChild($doc->createElement('dDVRec', $this->getDDVRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDVRec', $this->getDDVRec()));
 
     // Receptor no contribuyente: se informa el documento de identidad
     if(isset($this->iTipIDRec))
-      $res->appendChild($doc->createElement('iTipIDRec', $this->getITipIDRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRec', $this->getITipIDRec()));
     if(isset($this->dDTipIDRec) || isset($this->iTipIDRec))
-      $res->appendChild($doc->createElement('dDTipIDRec', $this->getDDTipIDRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRec', $this->getDDTipIDRec()));
     if(isset($this->dNumIDRec))
-      $res->appendChild($doc->createElement('dNumIDRec', $this->getDNumIDRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDRec', $this->getDNumIDRec()));
 
-    $res->appendChild($doc->createElement('dNomRec', $this->getDNomRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNomRec', $this->getDNomRec()));
 
     if(isset($this->dNomFanRec))
-      $res->appendChild($doc->createElement('dNomFanRec', $this->getDNomFanRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomFanRec', $this->getDNomFanRec()));
     if(isset($this->dDirRec))
     {
-      $res->appendChild($doc->createElement('dDirRec', $this->getDDirRec()));
-      $res->appendChild($doc->createElement('dNumCasRec', $this->getDNumCasRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDirRec', $this->getDDirRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasRec', $this->getDNumCasRec()));
     }
     if(isset($this->cDepRec))
     {
-      $res->appendChild($doc->createElement('cDepRec', $this->getCDepRec()));
-      $res->appendChild($doc->createElement('dDesDepRec', $this->getDDesDepRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cDepRec', $this->getCDepRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDepRec', $this->getDDesDepRec()));
     }
     if(isset($this->cDisRec))
     {
-      $res->appendChild($doc->createElement('cDisRec', $this->getCDisRec()));
-      $res->appendChild($doc->createElement('dDesDisRec', $this->getDDesDisRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cDisRec', $this->getCDisRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisRec', $this->getDDesDisRec()));
     }
     if(isset($this->cCiuRec))
     {
-      $res->appendChild($doc->createElement('cCiuRec', $this->getCCiuRec()));
-      $res->appendChild($doc->createElement('dDesCiuRec', $this->getDDesCiuRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cCiuRec', $this->getCCiuRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuRec', $this->getDDesCiuRec()));
     }
     if(isset($this->dTelRec))
-      $res->appendChild($doc->createElement('dTelRec', $this->getDTelRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTelRec', $this->getDTelRec()));
     if(isset($this->dCelRec))
-      $res->appendChild($doc->createElement('dCelRec', $this->getDCelRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCelRec', $this->getDCelRec()));
     if(isset($this->dEmailRec))
-      $res->appendChild($doc->createElement('dEmailRec', $this->getDEmailRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dEmailRec', $this->getDEmailRec()));
     if(isset($this->dCodCliente))
-      $res->appendChild($doc->createElement('dCodCliente', $this->getDCodCliente()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCodCliente', $this->getDCodCliente()));
 
     return $res;
   }

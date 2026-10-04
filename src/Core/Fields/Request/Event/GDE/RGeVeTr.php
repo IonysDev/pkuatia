@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo: GET001 - rGeVeTr - Grupos de Campos Generales del Evento 
@@ -756,71 +757,71 @@ class RGeVeTr
   {
     $res = $doc->createElement('rGeVeTr');
     ///Ocurrrencia 1-1
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('dMotEv', $this->getDMotEv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dMotEv', $this->getDMotEv()));
 
     
     if ($this->dMotEv == 1) {
-      $res->appendChild(new DOMElement('cDepEnt', $this->getCDepEnt()));
-      $res->appendChild(new DOMElement('dDesDepEnt', $this->getDDesDepEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cDepEnt', $this->getCDepEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDepEnt', $this->getDDesDepEnt()));
     }
 
-    $res->appendChild(new DOMElement('cDisEnt', $this->getCDisEnt()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cDisEnt', $this->getCDisEnt()));
 
     if (isset($this->cDisEnt)) {
-      $res->appendChild(new DOMElement('dDesDisEnt', $this->getDDesDisEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisEnt', $this->getDDesDisEnt()));
     }
 
     if ($this->dMotEv == 1) {
-      $res->appendChild(new DOMElement('cCiuEnt', $this->getCCiuEnt()));
-      $res->appendChild(new DOMElement('dDesCiuEnt', $this->getDDesCiuEnt()));
-      $res->appendChild(new DOMElement('dDirEnt', $this->getDDirEnt()));
-      $res->appendChild(new DOMElement('dNumCas', $this->getDNumCas()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cCiuEnt', $this->getCCiuEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEnt', $this->getDDesCiuEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDirEnt', $this->getDDirEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCas', $this->getDNumCas()));
       if (isset($this->dCompDir1)) {
-        $res->appendChild(new DOMElement('dCompDir1', $this->getDCompDir1()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dCompDir1', $this->getDCompDir1()));
       }
     }
 
     if ($this->dMotEv == 2) {
-      $res->appendChild(new DOMElement('dNomChof', $this->getDNomChof()));
-      $res->appendChild(new DOMElement('dNumIDChof', $this->getDNumIDChof()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomChof', $this->getDNomChof()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDChof', $this->getDNumIDChof()));
     }
 
     if ($this->dMotEv == 3) {
-      $res->appendChild(new DOMElement('iNatTrans', $this->getINatTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
     }
 
     if ($this->iNatTrans == 1) {
-      $res->appendChild(new DOMElement('dRucTrans', $this->getDRucTrans()));
-      $res->appendChild(new DOMElement('dDVTrans', $this->getDDVTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRucTrans', $this->getDRucTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDVTrans', $this->getDDVTrans()));
     }
 
     if ($this->dMotEv == 3) {
-      $res->appendChild(new DOMElement('dNomTrans', $this->getDNomTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
     }
 
     if ($this->iNatTrans == 2) {
-      $res->appendChild(new DOMElement('iTipIDTrans', $this->getITipIDTrans()));
-      $res->appendChild(new DOMElement('dDTipIDTrans', $this->getdDTipIDTrans()));
-      $res->appendChild(new DOMElement('dNumIDTrans', $this->getDNumIDTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getdDTipIDTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
     }
 
     if ($this->dMotEv == 4) {
-      $res->appendChild(new DOMElement('iTipTrans', $this->getITipTrans()));
-      $res->appendChild(new DOMElement('dDesTipTrans', $this->getDDesTipTrans()));
-      $res->appendChild(new DOMElement('iModTrans', $this->getIModTrans()));
-      $res->appendChild(new DOMElement('dDesModTrans', $this->getDDesModTrans()));
-      $res->appendChild(new DOMElement('dTiVehTras', $this->getDTiVehTras()));
-      $res->appendChild(new DOMElement('dMarVeh', $this->getDMarVeh()));
-      $res->appendChild(new DOMElement('dTipIdenVeh', $this->getDTipIdenVeh()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipTrans', $this->getITipTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesTipTrans', $this->getDDesTipTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iModTrans', $this->getIModTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesModTrans', $this->getDDesModTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTiVehTras', $this->getDTiVehTras()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTipIdenVeh', $this->getDTipIdenVeh()));
     }
 
     if ($this->dTipIdenVeh == 1) {
-      $res->appendChild(new DOMElement('dNroIDVeh', $this->getDNroIDVeh()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNroIDVeh', $this->getDNroIDVeh()));
     }
 
     if ($this->dTipIdenVeh == 2) {
-      $res->appendChild(new DOMElement('dNroMatVeh', $this->getDNroMatVeh()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNroMatVeh', $this->getDNroMatVeh()));
     }
 
     return $res;

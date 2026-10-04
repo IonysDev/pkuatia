@@ -15,6 +15,7 @@ use DOMElement;
 use InvalidArgumentException;
 use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     D010
@@ -439,21 +440,21 @@ class GOpeCom extends BaseSifenField
     {
         $res = $doc->createElement('gOpeCom');
         if (isset($this->iTipTra)) {
-            $res->appendChild(new DOMElement('iTipTra', $this->getITipTra()));
-            $res->appendChild(new DOMElement('dDesTipTra', $this->getDDesTipTra()));
+            $res->appendChild(XmlHelper::elemento($doc, 'iTipTra', $this->getITipTra()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesTipTra', $this->getDDesTipTra()));
         }
-        $res->appendChild(new DOMElement('iTImp', $this->getITImp()));
-        $res->appendChild(new DOMElement('dDesTImp', $this->getDDesTImp()));
-        $res->appendChild(new DOMElement('cMoneOpe', $this->getCMoneOpe()));
-        $res->appendChild(new DOMElement('dDesMoneOpe', $this->getDDesMoneOpe()));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTImp', $this->getITImp()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesTImp', $this->getDDesTImp()));
+        $res->appendChild(XmlHelper::elemento($doc, 'cMoneOpe', $this->getCMoneOpe()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesMoneOpe', $this->getDDesMoneOpe()));
         if (strcmp($this->cMoneOpe, "PYG") != 0)
-            $res->appendChild(new DOMElement('dCondTiCam', $this->getDCondTiCam()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dCondTiCam', $this->getDCondTiCam()));
         if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2)
-            $res->appendChild(new DOMElement('dTiCam', $this->getDTiCam()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dTiCam', $this->getDTiCam()));
         if(isset($this->iCondAnt))
         {
-            $res->appendChild(new DOMElement('iCondAnt', $this->getICondAnt()));
-            $res->appendChild(new DOMElement('dDesCondAnt', $this->getDDesCondAnt()));
+            $res->appendChild(XmlHelper::elemento($doc, 'iCondAnt', $this->getICondAnt()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesCondAnt', $this->getDDesCondAnt()));
         }
         foreach($this->gOblAfe as $oblAfe)
         {

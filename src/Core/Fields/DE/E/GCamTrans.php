@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\DataMappings\CountryMapping;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:E980 gCamTrans  PADRE:E900
@@ -468,52 +469,52 @@ class GCamTrans extends BaseSifenField
    {
       $res = $doc->createElement('gCamTrans');
 
-      $res->appendChild(new DOMElement('iNatTrans', $this->getINatTrans()));
-      $res->appendChild(new DOMElement('dNomTrans', $this->getDNomTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
 
       if ($this->iNatTrans == 1) {
-         $res->appendChild(new DOMElement('dRucTrans', $this->getDRucTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dRucTrans', $this->getDRucTrans()));
       }
 
       if (isset($this->dRucTrans)) {
-         $res->appendChild(new DOMElement('dDVTrans', $this->getDDVTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDVTrans', $this->getDDVTrans()));
       }
 
       if ($this->iNatTrans == 2) {
-         $res->appendChild(new DOMElement('iTipIDTrans', $this->getITipIDTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
       }
 
       if (isset($this->iTipIDTrans)) {
-         $res->appendChild(new DOMElement('dDTipIDTrans', $this->getDDTipIDTrans()));
-         $res->appendChild(new DOMElement('dNumIDTrans', $this->getDNumIDTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getDDTipIDTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
       }
 
-      $res->appendChild(new DOMElement('cNacTrans', $this->getCNacTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cNacTrans', $this->getCNacTrans()));
 
       if (isset($this->cNacTrans)) {
-         $res->appendChild(new DOMElement('dDesNacTrans', $this->getDDesNacTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDesNacTrans', $this->getDDesNacTrans()));
       }
 
-      $res->appendChild(new DOMElement('dNumIDChof', $this->getDNumIDChof()));
-      $res->appendChild(new DOMElement('dNomChof', $this->getDNomChof()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDChof', $this->getDNumIDChof()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomChof', $this->getDNomChof()));
 
       if (isset($this->dDomFisc))
-         $res->appendChild(new DOMElement('dDomFisc', $this->getDDomFisc()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDomFisc', $this->getDDomFisc()));
       
       if (isset($this->dDirChof))
-         $res->appendChild(new DOMElement('dDirChof', $this->getDDirChof()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDirChof', $this->getDDirChof()));
       
       if (isset($this->dNombAg))
-         $res->appendChild(new DOMElement('dNombAg', $this->getDNombAg()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dNombAg', $this->getDNombAg()));
 
       if (isset($this->dRucAg))
-         $res->appendChild(new DOMElement('dRucAg', $this->getDRucAg()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dRucAg', $this->getDRucAg()));
 
       if (isset($this->dDVAg))
-         $res->appendChild(new DOMElement('dDVAg', $this->getDDVAg()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDVAg', $this->getDDVAg()));
 
       if (isset($this->dDirAge))
-         $res->appendChild(new DOMElement('dDirAge', $this->getDDirAge()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDirAge', $this->getDDirAge()));
 
       return $res;
    }

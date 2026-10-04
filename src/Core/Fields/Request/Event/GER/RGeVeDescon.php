@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:GED001 Raiz Gestión de Eventos Desconocimiento PADREGDE007
@@ -294,22 +295,22 @@ class RGeVeDescon
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeDescon');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('iTipRec', $this->getITipRec()));
-    $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTipRec', $this->getITipRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNomRec', $this->getDNomRec()));
     if ($this->iTipRec == 1) {
-      $res->appendChild(new DOMElement('dRucRec', $this->getDRucRec()));
-      $res->appendChild(new DOMElement('dDVRec', $this->getDDVRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRucRec', $this->getDRucRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDVRec', $this->getDDVRec()));
     }
 
     if ($this->iTipRec == 2) {
-      $res->appendChild(new DOMElement('dTipIDRec', $this->getITipRec()));
-      $res->appendChild(new DOMElement('dNumID', $this->getDNumID()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTipIDRec', $this->getITipRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumID', $this->getDNumID()));
     }
 
-    $res->appendChild(new DOMElement('mOtEve', $this->getMOtEve()));
+    $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
     return $res;
   }
 

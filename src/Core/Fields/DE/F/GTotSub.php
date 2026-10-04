@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     F001
@@ -1156,45 +1157,45 @@ class GTotSub
   {
     $res = $doc->createElement('gTotSub');
     if(isset($this->dSubExe))
-      $res->appendChild(new DOMElement('dSubExe', $this->getDSubExe()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dSubExe', $this->getDSubExe()));
     if(isset($this->dSubExo))
-      $res->appendChild(new DOMElement('dSubExo', $this->getDSubExo()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dSubExo', $this->getDSubExo()));
     if(isset($this->dSub5))
-      $res->appendChild(new DOMElement('dSub5', $this->getDSub5()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dSub5', $this->getDSub5()));
     if(isset($this->dSub10))
-      $res->appendChild(new DOMElement('dSub10', $this->getDSub10()));
-    $res->appendChild(new DOMElement('dTotOpe', $this->getDTotOpe()));
-    $res->appendChild(new DOMElement('dTotDesc', $this->getDTotDesc()));
-    $res->appendChild(new DOMElement('dTotDescGlotem', $this->getDTotDescGlotem()));
-    $res->appendChild(new DOMElement('dTotAntItem', $this->getDTotAntItem()));
-    $res->appendChild(new DOMElement('dTotAnt', $this->getDTotAnt()));
-    $res->appendChild(new DOMElement('dPorcDescTotal', $this->getDPorcDescTotal()));
-    $res->appendChild(new DOMElement('dDescTotal', $this->getDDescTotal()));
-    $res->appendChild(new DOMElement('dAnticipo', $this->getDAnticipo()));
-    $res->appendChild(new DOMElement('dRedon', $this->getDRedon()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dSub10', $this->getDSub10()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotOpe', $this->getDTotOpe()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotDesc', $this->getDTotDesc()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotDescGlotem', $this->getDTotDescGlotem()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotAntItem', $this->getDTotAntItem()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotAnt', $this->getDTotAnt()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dPorcDescTotal', $this->getDPorcDescTotal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDescTotal', $this->getDDescTotal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dAnticipo', $this->getDAnticipo()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dRedon', $this->getDRedon()));
     if(isset($this->dComi))
-      $res->appendChild(new DOMElement('dComi', $this->getDComi()));
-    $res->appendChild(new DOMElement('dTotGralOpe', $this->getDTotGralOpe()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dComi', $this->getDComi()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotGralOpe', $this->getDTotGralOpe()));
     if(isset($this->dIVA5))
-      $res->appendChild(new DOMElement('dIVA5', $this->getDIVA5()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dIVA5', $this->getDIVA5()));
     if(isset($this->dIVA10))
-      $res->appendChild(new DOMElement('dIVA10', $this->getDIVA10()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dIVA10', $this->getDIVA10()));
     if(isset($this->dLiqTotIVA5))
-      $res->appendChild(new DOMElement('dLiqTotIVA5', $this->getDLiqTotIVA5()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dLiqTotIVA5', $this->getDLiqTotIVA5()));
     if(isset($this->dLiqTotIVA10))
-      $res->appendChild(new DOMElement('dLiqTotIVA10', $this->getDLiqTotIVA10()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dLiqTotIVA10', $this->getDLiqTotIVA10()));
     if(isset($this->dIVAComi))
-      $res->appendChild(new DOMElement('dIVAComi', $this->getDIVAComi()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dIVAComi', $this->getDIVAComi()));
     if(isset($this->dTotIVA))
-      $res->appendChild(new DOMElement('dTotIVA', $this->getDTotIVA()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTotIVA', $this->getDTotIVA()));
     if(isset($this->dBaseGrav5))
-      $res->appendChild(new DOMElement('dBaseGrav5', $this->dBaseGrav5));
+      $res->appendChild(XmlHelper::elemento($doc, 'dBaseGrav5', $this->dBaseGrav5));
     if(isset($this->dBaseGrav10))
-      $res->appendChild(new DOMElement('dBaseGrav10', $this->getDBaseGrav10()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dBaseGrav10', $this->getDBaseGrav10()));
     if(isset($this->dTBasGraIVA))
-      $res->appendChild(new DOMElement('dTBasGraIVA', $this->getDTBasGraIVA()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTBasGraIVA', $this->getDTBasGraIVA()));
     if(isset($this->dTotalGs))
-      $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTotalGs', $this->getDTotalGs()));
     return $res;
   }
 

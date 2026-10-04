@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 
 /**
@@ -192,10 +193,10 @@ class GValorItem extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gValorItem');
-    $res->appendChild(new DOMElement('dPUniProSer', $this->getDPUniProSer()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dPUniProSer', $this->getDPUniProSer()));
     if(isset($this->dTiCamIt))
-      $res->appendChild(new DOMElement('dTiCamIt', $this->getDTiCamIt()));
-    $res->appendChild(new DOMElement('dTotBruOpeItem', $this->getDTotBruOpeItem()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTiCamIt', $this->getDTiCamIt()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotBruOpeItem', $this->getDTotBruOpeItem()));
     $res->appendChild($this->gValorRestaItem->toDOMElement($doc));
     return $res;
   }

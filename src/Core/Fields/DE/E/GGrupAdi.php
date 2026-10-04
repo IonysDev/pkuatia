@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * E820 Grupo de datos adicionales de uso comercial PADRE E790
@@ -215,13 +216,13 @@ class GGrupAdi
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gGrupAdi');
-    $res->appendChild(new DOMElement('dCiclo', $this->dCiclo));
-    $res->appendChild(new DOMElement('dFecIniC', $this->dFecIniC->format('yyyy-mm-dd')));
-    $res->appendChild(new DOMElement('dFecFinC', $this->dFecFinC->format('yyyy-mm-dd')));
-    $res->appendChild(new DOMElement('dVencPag', $this->dVencPag->format('yyyy-mm-dd')));
-    $res->appendChild(new DOMElement('dContrato', $this->dContrato));
-    $res->appendChild(new DOMElement('dSalAnt', $this->dSalAnt));
-    $res->appendChild(new DOMElement('dCodConDncp', $this->dCodConDncp));
+    $res->appendChild(XmlHelper::elemento($doc, 'dCiclo', $this->dCiclo));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFecIniC', $this->dFecIniC->format('yyyy-mm-dd')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFecFinC', $this->dFecFinC->format('yyyy-mm-dd')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $this->dVencPag->format('yyyy-mm-dd')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dContrato', $this->dContrato));
+    $res->appendChild(XmlHelper::elemento($doc, 'dSalAnt', $this->dSalAnt));
+    $res->appendChild(XmlHelper::elemento($doc, 'dCodConDncp', $this->dCodConDncp));
     return $res;
   }
   

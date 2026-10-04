@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:E810 gGrupSup Grupo del sector supermercados
@@ -161,11 +162,11 @@ class GGrupSup
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gGrupSup');
-    $res->appendChild(new DOMElement('dNomCaj', $this->getDNomCaj()));
-    $res->appendChild(new DOMElement('dEfectivo', $this->getDEfectivo()));
-    $res->appendChild(new DOMElement('dVuelto', $this->getDVuelto()));
-    $res->appendChild(new DOMElement('dDonac', $this->getDDonac()));
-    $res->appendChild(new DOMElement('dDesDonac', $this->getDDesDonac()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNomCaj', $this->getDNomCaj()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dEfectivo', $this->getDEfectivo()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dVuelto', $this->getDVuelto()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDonac', $this->getDDonac()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesDonac', $this->getDDesDonac()));
     return $res;
   }
 

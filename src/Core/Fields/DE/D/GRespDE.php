@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     D140
@@ -237,11 +238,11 @@ class GRespDE extends BaseSifenField
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         $res = $doc->createElement('gRespDE');
-        $res->appendChild(new DOMElement('iTipIDRespDE', $this->iTipIDRespDE));
-        $res->appendChild(new DOMElement('dDTipIDRespDE', $this->getDDTipIDRespDE()));
-        $res->appendChild(new DOMElement('dNumIDRespDE', substr($this->dNumIDRespDE, 0, 20)));
-        $res->appendChild(new DOMElement('dNomRespDE', substr($this->dNomRespDE, 0, 255)));
-        $res->appendChild(new DOMElement('dCarRespDE', substr($this->dCarRespDE, 0, 100)));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRespDE', $this->iTipIDRespDE));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRespDE', $this->getDDTipIDRespDE()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNumIDRespDE', substr($this->dNumIDRespDE, 0, 20)));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNomRespDE', substr($this->dNomRespDE, 0, 255)));
+        $res->appendChild(XmlHelper::elemento($doc, 'dCarRespDE', substr($this->dCarRespDE, 0, 100)));
         return $res;
     }
 }

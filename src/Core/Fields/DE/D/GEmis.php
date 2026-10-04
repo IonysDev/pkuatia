@@ -13,6 +13,7 @@ use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     D100        
@@ -546,32 +547,32 @@ class GEmis extends BaseSifenField
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         $res = $doc->createElement('gEmis');
-        $res->appendChild(new DOMElement('dRucEm', $this->dRucEm));
-        $res->appendChild(new DOMElement('dDVEmi', $this->dDVEmi));
-        $res->appendChild(new DOMElement('iTipCont', $this->iTipCont));
+        $res->appendChild(XmlHelper::elemento($doc, 'dRucEm', $this->dRucEm));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDVEmi', $this->dDVEmi));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTipCont', $this->iTipCont));
         if(isset($this->cTipReg))
-            $res->appendChild(new DOMElement('cTipReg', $this->cTipReg));
-        $res->appendChild(new DOMElement('dNomEmi', $this->dNomEmi));
+            $res->appendChild(XmlHelper::elemento($doc, 'cTipReg', $this->cTipReg));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNomEmi', $this->dNomEmi));
         if(isset($this->dNomFanEmi))
-            $res->appendChild(new DOMElement('dNomFanEmi', $this->dNomFanEmi));
-        $res->appendChild(new DOMElement('dDirEmi', $this->dDirEmi));
-        $res->appendChild(new DOMElement('dNumCas', $this->dNumCas));
+            $res->appendChild(XmlHelper::elemento($doc, 'dNomFanEmi', $this->dNomFanEmi));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDirEmi', $this->dDirEmi));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNumCas', $this->dNumCas));
         if(isset($this->dCompDir1))
-            $res->appendChild(new DOMElement('dCompDir1', $this->dCompDir1));
+            $res->appendChild(XmlHelper::elemento($doc, 'dCompDir1', $this->dCompDir1));
         if(isset($this->dCompDir2))
-            $res->appendChild(new DOMElement('dCompDir2', $this->dCompDir2));
-        $res->appendChild(new DOMElement('cDepEmi', $this->cDepEmi));
-        $res->appendChild(new DOMElement('dDesDepEmi', $this->getDDesDepEmi()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dCompDir2', $this->dCompDir2));
+        $res->appendChild(XmlHelper::elemento($doc, 'cDepEmi', $this->cDepEmi));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesDepEmi', $this->getDDesDepEmi()));
         if(isset($this->cDisEmi))
-            $res->appendChild(new DOMElement('cDisEmi', $this->cDisEmi));
+            $res->appendChild(XmlHelper::elemento($doc, 'cDisEmi', $this->cDisEmi));
         if(isset($this->dDesDisEmi))
-            $res->appendChild(new DOMElement('dDesDisEmi', $this->getDDesDisEmi()));
-        $res->appendChild(new DOMElement('cCiuEmi', $this->cCiuEmi));
-        $res->appendChild(new DOMElement('dDesCiuEmi', $this->getDDesCiuEmi()));
-        $res->appendChild(new DOMElement('dTelEmi', $this->dTelEmi));
-        $res->appendChild(new DOMElement('dEmailE', $this->dEmailE));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesDisEmi', $this->getDDesDisEmi()));
+        $res->appendChild(XmlHelper::elemento($doc, 'cCiuEmi', $this->cCiuEmi));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEmi', $this->getDDesCiuEmi()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dTelEmi', $this->dTelEmi));
+        $res->appendChild(XmlHelper::elemento($doc, 'dEmailE', $this->dEmailE));
         if(isset($this->dDenSuc))
-            $res->appendChild(new DOMElement('dDenSuc', $this->dDenSuc));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDenSuc', $this->dDenSuc));
         if(isset($this->gActEco)) {
             foreach ($this->gActEco as $g)
                 $res->appendChild($g->toDOMElement($doc));

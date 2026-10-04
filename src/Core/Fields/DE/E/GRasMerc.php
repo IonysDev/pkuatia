@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E750    
@@ -246,14 +247,14 @@ class GRasMerc extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gRasMerc');
-    $res->appendChild(new DOMElement('dNumLote', $this->getDNumLote()));
-    $res->appendChild(new DOMElement('dVencMerc', $this->getDVencMerc()->format('Y-m-d')));
-    $res->appendChild(new DOMElement('dNSerie', $this->getDNSerie()));
-    $res->appendChild(new DOMElement('dNumPedi', $this->getDNumPedi()));
-    $res->appendChild(new DOMElement('dNumSegui', $this->getDNumSegui()));
-    $res->appendChild(new DOMElement('dNumReg', $this->getDNumReg()));
-    $res->appendChild(new DOMElement('dNumRegEntCom', $this->getDNumRegEntCom()));
-    $res->appendChild(new DOMElement('dNomPro', $this->getDNomPro()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumLote', $this->getDNumLote()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dVencMerc', $this->getDVencMerc()->format('Y-m-d')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNSerie', $this->getDNSerie()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumPedi', $this->getDNumPedi()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumSegui', $this->getDNumSegui()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumReg', $this->getDNumReg()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumRegEntCom', $this->getDNumRegEntCom()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNomPro', $this->getDNomPro()));
     return $res;
   }
 

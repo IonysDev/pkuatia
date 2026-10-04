@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E791 
@@ -272,17 +273,17 @@ class GGrupEner
   {
     $res = $doc->createElement("gGrupEner");
     if(isset($this->dNroMed))
-      $res->appendChild(new DOMElement('dNroMed', $this->getDNroMed()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNroMed', $this->getDNroMed()));
     if(isset($this->dActiv))
-      $res->appendChild(new DOMElement('dActiv', $this->getDActiv()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dActiv', $this->getDActiv()));
     if(isset($this->dCateg))
-      $res->appendChild(new DOMElement('dCateg', $this->getDCateg()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCateg', $this->getDCateg()));
     if(isset($this->dLecAnt))
-      $res->appendChild(new DOMElement('dLecAnt', $this->getDLecAnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dLecAnt', $this->getDLecAnt()));
     if(isset($this->dLecAct))
-      $res->appendChild(new DOMElement('dLecAct', $this->getDLecAct()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dLecAct', $this->getDLecAct()));
     if(isset($this->dConKwh))
-      $res->appendChild(new DOMElement('dConKwh', $this->getDConKwh()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dConKwh', $this->getDConKwh()));
     return $res;
   }
 

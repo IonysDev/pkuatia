@@ -9,6 +9,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E730
@@ -244,13 +245,13 @@ class GCamIVA extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamIVA');
-    $res->appendChild(new DOMElement('iAfecIVA', $this->getIAfecIVA()));
-    $res->appendChild(new DOMElement('dDesAfecIVA', $this->getDDesAfecIVA()));
-    $res->appendChild(new DOMElement('dPropIVA', $this->getDPropIVA()));
-    $res->appendChild(new DOMElement('dTasaIVA', $this->getDTasaIVA()));
-    $res->appendChild(new DOMElement('dBasGravIVA', $this->getDBasGravIVA()));
-    $res->appendChild(new DOMElement('dLiqIVAItem', $this->getDLiqIVAItem()));
-    $res->appendChild(new DOMElement('dBasExe', $this->getDBasExe()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iAfecIVA', $this->getIAfecIVA()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesAfecIVA', $this->getDDesAfecIVA()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dPropIVA', $this->getDPropIVA()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTasaIVA', $this->getDTasaIVA()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dBasGravIVA', $this->getDBasGravIVA()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dLiqIVAItem', $this->getDLiqIVAItem()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dBasExe', $this->getDBasExe()));
     return $res;
   }
 
