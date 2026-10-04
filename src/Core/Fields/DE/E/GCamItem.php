@@ -236,8 +236,11 @@ class GCamItem extends BaseSifenField
    */
   public function setCUniMed(int $cUniMed): self
   {
+    $desc = UnidadMedidaMapping::GetDesc(strval($cUniMed));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamItem] El código de unidad de medida $cUniMed (E709) no existe en Unidades_Medida_v141.xsd del SIFEN.");
     $this->cUniMed = $cUniMed;
-    $this->setDDesUniMed(UnidadMedidaMapping::GetDesc(strval($cUniMed)));
+    $this->setDDesUniMed($desc);
     return $this;
   }
 

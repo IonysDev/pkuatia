@@ -51,6 +51,9 @@ class GCamFE extends BaseSifenField
   public function setIIndPres(int|CamFEIndPres $iIndPres): self
   {
     $this->iIndPres = $iIndPres instanceof CamFEIndPres ? $iIndPres->value : $iIndPres;
+    // E012: para 9 (Otro) la descripción es texto libre de 10 a 30 caracteres (tdDesIndPres, DE_Types_v150.xsd); no se pisa si ya fue informada con setDDesIndPres().
+    if ($this->iIndPres === CamFEIndPres::Otro->value && isset($this->dDesIndPres) && $this->dDesIndPres !== CamFEIndPres::Otro->getDescription())
+      return $this;
     $this->dDesIndPres = $iIndPres instanceof CamFEIndPres ? $iIndPres->getDescription() : CamFEIndPres::getDescriptionFromValue($iIndPres);
     return $this;
   }
@@ -245,6 +248,8 @@ class GCamFE extends BaseSifenField
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
+    if ($this->iIndPres === CamFEIndPres::Otro->value && (mb_strlen($this->getDDesIndPres()) < 10 || mb_strlen($this->getDDesIndPres()) > 30))
+      throw new \InvalidArgumentException("[GCamFE] Con iIndPres = 9 (Otro), dDesIndPres (E012) debe ser un texto libre de 10 a 30 caracteres (tdDesIndPres, DE_Types_v150.xsd): informarlo con setDDesIndPres(). Valor actual: '" . $this->getDDesIndPres() . "'.");
     $res = $doc->createElement('gCamFE');
     $res->appendChild(XmlHelper::elemento($doc, 'iIndPres', $this->iIndPres));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesIndPres', $this->getDDesIndPres()));

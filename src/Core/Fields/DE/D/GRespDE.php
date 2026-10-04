@@ -46,6 +46,9 @@ class GRespDE extends BaseSifenField
     public function setITipIDRespDE(int|TipIDRespDE $iTipIDRespDE): self
     {
         $this->iTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE->value : $iTipIDRespDE;
+        // D142: para 9 (Otro) la descripción es texto libre de 9 a 41 caracteres (tdDTipIDRespDE, DE_Types_v150.xsd); no se pisa si ya fue informada.
+        if ($this->iTipIDRespDE === TipIDRespDE::Otro->value && isset($this->dDTipIDRespDE) && $this->dDTipIDRespDE !== TipIDRespDE::Otro->getDescription())
+            return $this;
         $this->dDTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE->getDescription() : TipIDRespDE::getDescriptionFromValue($iTipIDRespDE);
         return $this;
     }
@@ -237,6 +240,8 @@ class GRespDE extends BaseSifenField
      */
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
+        if ($this->iTipIDRespDE === TipIDRespDE::Otro->value && (mb_strlen($this->getDDTipIDRespDE()) < 9 || mb_strlen($this->getDDTipIDRespDE()) > 41))
+            throw new \InvalidArgumentException("[GRespDE] Con iTipIDRespDE = 9 (Otro), dDTipIDRespDE (D142) debe ser un texto libre de 9 a 41 caracteres (tdDTipIDRespDE, DE_Types_v150.xsd): informarlo con setDDTipIDRespDE(). Valor actual: '" . $this->getDDTipIDRespDE() . "'.");
         $res = $doc->createElement('gRespDE');
         $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRespDE', $this->iTipIDRespDE));
         $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRespDE', $this->getDDTipIDRespDE()));

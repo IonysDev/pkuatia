@@ -16,6 +16,10 @@ enum TimbTiDE: int {
     case NotaDeDebito = 6;
     case NotaDeRemision = 7;
     case ComprobanteDeRetencion = 8;
+    /** C002 = 9, régimen RESIMPLE / e-kuatia'i (existe en el XSD de producción, sin NT ni sección del MT). */
+    case BoletaDeVenta = 9;
+    /** C002 = 10, régimen RESIMPLE / e-kuatia'i (existe en el XSD de producción, sin NT ni sección del MT). */
+    case BoletaResimple = 10;
 
     public function getDescription(): string
     {
@@ -27,7 +31,9 @@ enum TimbTiDE: int {
             self::NotaDeCredito => 'Nota de crédito electrónica',
             self::NotaDeDebito => 'Nota de débito electrónica',
             self::NotaDeRemision => 'Nota de remisión electrónica',
-            self::ComprobanteDeRetencion => 'Comprobante de retención electrónico'
+            self::ComprobanteDeRetencion => 'Comprobante de retención electrónico',
+            self::BoletaDeVenta => 'Boleta de venta electrónica',
+            self::BoletaResimple => 'Boleta resimple electrónica'
         };
     }
 

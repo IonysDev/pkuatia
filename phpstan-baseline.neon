@@ -477,7 +477,7 @@ parameters:
 		-
 			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamFE\:\:\$dDesIndPres in isset\(\) is not nullable nor uninitialized\.$#'
 			identifier: isset.initializedProperty
-			count: 1
+			count: 2
 			path: src/Core/Fields/DE/E/GCamFE.php
 
 		-

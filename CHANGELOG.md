@@ -72,6 +72,30 @@ comportamiento que producía XML inválido o datos erróneos.
   devolvía `null` cuando no estaba informado `dMonEnt`, y el XML salía con `<dCuotas/>` vacío
   (rechazo de esquema, E643). Ahora devuelve la cantidad de cuotas siempre que esté establecida.
   Test: `tests/Unit/Conformidad/FacturaCreditoCuotasTest`.
+- **PK-05 — Unidades de medida de la NT-023 (códigos 111 a 140).** La copia empaquetada de
+  `Unidades_Medida_v141.xsd` era anterior a la NT-023 y `UnidadMedidaMapping::GetDesc` recortaba la
+  documentación en el último guion, produciendo literales inválidos (`'vinas'`, `'rrie'`, `'llar'`).
+  Ahora la copia es la de producción (idéntica a `src/Resources/xsd/`, verificado por test) y el
+  literal de E710 es la abreviatura que exige `tdDesUniMed` (`4A`, `Ci`, `DOC`, …). `GetDesc()` pasa
+  a devolver `?String` y `GCamItem::setCUniMed()` lanza `InvalidArgumentException` con un mensaje
+  claro ante un código inexistente (antes `TypeError`). El catálogo se parsea una sola vez por
+  proceso (caché estática). Test: `tests/Unit/Conformidad/CatalogosYEnumsTest`.
+- **PK-23 — Monedas con nombre de más de 20 caracteres.** `tdDMoneTiPag` (D016, E609, E651) admite
+  3 a 20 caracteres y 15 monedas del catálogo (ANG, BMD, FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD,
+  XBA, XBB, XBC, XTS, XXX) tienen un `CodeName` más largo: `MonedaMapping::GetDescription()`
+  recorta a 20 (`MAX_LONGITUD_DESCRIPCION`) y el nombre completo queda en el nuevo
+  `GetCodeName()`. Qué literal acepta la validación de fondo 1206 para esas monedas:
+  `[PENDIENTE DE VERIFICACIÓN]`. También devuelve `?String` y usa caché estática.
+- **PK-18 — Enumeraciones frente al XSD.** `MotEmiNR` 9 = `Traslado de bienes para reparación` y
+  11 = `Exhibición o Demostración` (`DE_Types_v150.xsd:1953,1955`). `TimbTiDE` incorpora
+  `BoletaDeVenta` (9) y `BoletaResimple` (10), que el XSD acepta (`tiTiDE` `1|[4-7]|9|10`); los
+  builders de boletas quedan para una fase posterior. `TipoDocImpresoAso::ComprobanteRetencion` (5)
+  no existe en el XSD (`tiTIpoDoc` 1-4): se conserva marcado `@deprecated` y
+  `GCamDEAsoc::toDOMElement()` lo rechaza con un mensaje que indica las cuatro opciones válidas.
+  Los códigos "Otro" exigen ahora el texto libre que pide el XSD y ya no se sobreescribe al fijar el
+  código: `GCamFE` (E012, 10-30), `GRespDE` (D142, 9-41) y `GCamNRE` (E502, 5-60) lanzan
+  `InvalidArgumentException` al serializar si falta o no cumple la longitud (antes emitían `Otro` y
+  el SIFEN rechazaba por esquema).
 
 ## [0.1.5] — 2026-09-17
 

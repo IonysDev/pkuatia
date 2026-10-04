@@ -706,6 +706,8 @@ class GCamDEAsoc extends BaseSifenField
       $res->appendChild(XmlHelper::elemento($doc, 'dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(XmlHelper::elemento($doc, 'dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(XmlHelper::elemento($doc, 'dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
+      if ($this->getITipoDocAso() === TipoDocImpresoAso::ComprobanteRetencion->value)
+        throw new \InvalidArgumentException('[GCamDEAsoc] El tipo de documento impreso asociado 5 (Comprobante de retención) no existe en el XSD de producción (tiTIpoDoc admite 1-4, DE_Types_v150.xsd) y el SIFEN lo rechaza. Use 1 Factura, 2 Nota de crédito, 3 Nota de débito o 4 Nota de remisión.');
       $res->appendChild(XmlHelper::elemento($doc, 'iTipoDocAso', $this->getITipoDocAso()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDTipoDocAso', $this->getDDTipoDocAso()));
     }
