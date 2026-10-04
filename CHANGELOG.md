@@ -147,6 +147,20 @@ comportamiento que producía XML inválido o datos erróneos.
   faltante y el builder que lo informa (validaciones 1207 y 1209 del MT v150 §12.4; en el XSD ambos son
   `minOccurs="0"`, `DE_v150.xsd:210-213`, por lo que el esquema no lo detecta). Test:
   `tests/Unit/Conformidad/BuildersTest`.
+- **PK-21 — `Sifen::FirmarDE()` ignoraba la información adicional del emisor.** El parámetro
+  `$infoAdicionalEmisor` se asignaba a `gCamFuFD` después de serializarlo, así que J003 `dInfAdic`
+  (1 a 5000 caracteres, `DE_v150.xsd:1922-1931`) nunca llegaba al XML. Ahora se establece antes y se
+  emite, escapado, a continuación de `dCarQR`. Test: `tests/Unit/Sifen/FirmarDeTest`.
+- **PK-22 — Fechas internas en la zona horaria del servidor.** La fecha de firma de los eventos
+  (`dFecFirma`) y el "hoy" de `NotaDeRemision::setFechaFuturaEmisionFactura()` se generaban con la
+  zona horaria por defecto de PHP; con el servidor en UTC la hora quedaba corrida respecto de la que
+  compara el SIFEN. Nueva constante `Constants::SIFEN_TIMEZONE` (`America/Asuncion`): las fechas que la
+  librería genera por su cuenta se calculan en ella y las que recibe del consumidor se respetan tal
+  cual. Los wrappers de eventos (`CancelarDE`, `InutilizarNumeros`, `NotificarRecepcionDE`,
+  `ConformarDE`, `DisconformarDE`, `DesconocerDE`, `NominarFE`, `ActualizarDatosTransporte`) aceptan
+  un último parámetro opcional `?DateTime $fechaFirma = null` para fijar la fecha de firma. La
+  comparación de la fecha futura de emisión (E506) pasa a hacerse por día calendario. Test:
+  `tests/Unit/Sifen/EventosFacadeTest` (con un stub del cliente SOAP, sin red).
 
 ## [0.1.5] — 2026-09-17
 

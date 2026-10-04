@@ -3,7 +3,9 @@
 namespace IonysDev\Pkuatia\Core\DocumentosElectronicos;
 
 use DateTime;
+use DateTimeZone;
 use Exception;
+use IonysDev\Pkuatia\Core\Constants;
 use IonysDev\Pkuatia\Core\Constants\GTranspModTrans;
 use IonysDev\Pkuatia\Core\Constants\GTranspRespFlete;
 use IonysDev\Pkuatia\Core\Constants\GTranspTipTrans;
@@ -231,8 +233,10 @@ class NotaDeRemision extends DocumentoElectronico
      */
     public function setFechaFuturaEmisionFactura(DateTime $fechaEmision): self
     {
-        $hoy = new DateTime();
-        if ($fechaEmision < $hoy) {
+        // "Hoy" en la zona horaria del SIFEN (antes, la del servidor) y comparación por día calendario: una fecha de hoy a
+        // las 00:00 no es "anterior a la fecha actual".
+        $hoy = new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE));
+        if ($fechaEmision->format('Y-m-d') < $hoy->format('Y-m-d')) {
             throw new Exception('[NotaDeRemision::setFechaFuturaEmisionFactura] La fecha futura de emisión de la factura no puede ser anterior a la fecha actual. Fecha recibida: ' . $fechaEmision->format('Y-m-d'));
         }
         

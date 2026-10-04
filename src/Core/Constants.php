@@ -11,6 +11,8 @@ class Constants
     // Versiones
     const PKUATIA_VERSION = "0.1.5";
     const SIFEN_VERSION = "150";
+    /** Zona horaria del SIFEN: las fechas internas que la librería genera por su cuenta (dFecFirma de los eventos, "hoy") se calculan en ella. Las fechas que recibe del consumidor se respetan tal cual. */
+    const SIFEN_TIMEZONE = "America/Asuncion";
 
     // Namespaces
     const RSA_SHA256 = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";

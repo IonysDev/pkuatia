@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia;
 
 use DateTime;
+use DateTimeZone;
 use Exception;
 use IonysDev\Pkuatia\Core\Config;
 use IonysDev\Pkuatia\Core\Constants;
@@ -199,7 +200,9 @@ class Sifen
    * Este XML estará listo para envío al SIFEN.
    *  
    * @param RDE $rde Contenedor del DE a firmar.
-   * 
+   * @param DateTime $fechaFirma Fecha y hora de la firma (dFecFirma); se respeta tal cual, con la zona horaria que traiga.
+   * @param String $infoAdicionalEmisor Información adicional de interés del emisor (J003 dInfAdic, 1 a 5000 caracteres, DE_v150.xsd:1922-1931); se emite fuera de la firma, en gCamFuFD. Vacío = no se emite.
+   *
    * @return String XML del DE firmado.
    */
   public static function FirmarDE(RDE $rde, DateTime $fechaFirma, String $infoAdicionalEmisor = ''): String
@@ -235,11 +238,13 @@ class Sifen
 
     // Establece el valor del link para el QR 
     $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent(self::$config, $rde->getDE(), $Signature));
-    $gCamFuFDNode = $gCamFuFD->toDOMElement($xmlDocument);
 
+    // J003 dInfAdic (1 a 5000 caracteres, DE_v150.xsd:1922-1931) se establece antes de serializar el grupo;
+    // antes se asignaba después de toDOMElement() y nunca llegaba al XML.
     if (!empty($infoAdicionalEmisor)) {
       $gCamFuFD->setDInfAdic($infoAdicionalEmisor);
     }
+    $gCamFuFDNode = $gCamFuFD->toDOMElement($xmlDocument);
 
     // Agrega el nodo del QR al documento electrónico
     $xmlDocument->getElementsByTagName("rDE")->item(0)->appendChild($gCamFuFDNode);
@@ -388,10 +393,11 @@ class Sifen
    *
    * @param String $cdc CDC del DTE a cancelar.
    * @param String $motivo Motivo de la cancelación (5 a 500 caracteres).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function CancelarDE(String $cdc, String $motivo): RRetEnviEventoDe
+  public static function CancelarDE(String $cdc, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     $rGeVeCan = new RGeVeCan();
     $rGeVeCan->setId($cdc);
@@ -400,7 +406,7 @@ class Sifen
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeCan($rGeVeCan);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
@@ -413,10 +419,11 @@ class Sifen
    * @param int $nroDocumentoFinal Número final del rango a inutilizar.
    * @param TimbTiDE|int $tipoDE Tipo de documento electrónico del rango.
    * @param String $motivo Motivo de la inutilización (5 a 500 caracteres).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo): RRetEnviEventoDe
+  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
 
     $tipoDEId = $tipoDE instanceof TimbTiDE ? $tipoDE->value : $tipoDE;
@@ -454,7 +461,7 @@ class Sifen
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeInu($rGeVeInu);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
@@ -469,6 +476,7 @@ class Sifen
    * @param int|null $dvReceptor Dígito verificador del RUC del receptor (obligatorio si el receptor es contribuyente).
    * @param int|TipIDRec|null $tipoDocumentoIdentidad Tipo de documento de identidad (obligatorio si el receptor no es contribuyente).
    * @param String|null $nroDocumentoIdentidad Número de documento de identidad (obligatorio si el receptor no es contribuyente).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
@@ -481,7 +489,8 @@ class Sifen
     ?String $rucReceptor = null,
     ?int $dvReceptor = null,
     int|TipIDRec|null $tipoDocumentoIdentidad = null,
-    ?String $nroDocumentoIdentidad = null
+    ?String $nroDocumentoIdentidad = null,
+    ?DateTime $fechaFirma = null
   ): RRetEnviEventoDe
   {
     $esContribuyente = !is_null($rucReceptor);
@@ -507,7 +516,7 @@ class Sifen
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeNotRec($rGeVeNotRec);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
@@ -516,10 +525,11 @@ class Sifen
    * @param String $cdc CDC del DE/DTE conformado.
    * @param int $tipoConformidad Tipo de conformidad: 1 (Conformidad total) o 2 (Conformidad parcial).
    * @param DateTime|null $fechaRecepcion Fecha estimada de recepción (obligatoria cuando la conformidad es parcial).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function ConformarDE(String $cdc, int $tipoConformidad = 1, ?DateTime $fechaRecepcion = null): RRetEnviEventoDe
+  public static function ConformarDE(String $cdc, int $tipoConformidad = 1, ?DateTime $fechaRecepcion = null, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     if ($tipoConformidad != 1 && $tipoConformidad != 2)
       throw new \Exception("[Sifen] El tipo de conformidad debe ser 1 (total) o 2 (parcial).");
@@ -535,7 +545,7 @@ class Sifen
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeConf($rGeVeConf);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
@@ -543,10 +553,11 @@ class Sifen
    *
    * @param String $cdc CDC del DE/DTE objetado.
    * @param String $motivo Motivo de la disconformidad (5 a 500 caracteres).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function DisconformarDE(String $cdc, String $motivo): RRetEnviEventoDe
+  public static function DisconformarDE(String $cdc, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     if (strlen($motivo) < 5)
       throw new \Exception("[Sifen] El motivo de la disconformidad debe tener al menos 5 caracteres.");
@@ -558,7 +569,7 @@ class Sifen
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeDisconf($rGeVeDisconf);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
@@ -573,6 +584,7 @@ class Sifen
    * @param int|null $dvReceptor Dígito verificador del RUC del receptor (obligatorio si el receptor es contribuyente).
    * @param int|TipIDRec|null $tipoDocumentoIdentidad Tipo de documento de identidad (obligatorio si el receptor no es contribuyente).
    * @param String|null $nroDocumentoIdentidad Número de documento de identidad (obligatorio si el receptor no es contribuyente).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
@@ -585,7 +597,8 @@ class Sifen
     ?String $rucReceptor = null,
     ?int $dvReceptor = null,
     int|TipIDRec|null $tipoDocumentoIdentidad = null,
-    ?String $nroDocumentoIdentidad = null
+    ?String $nroDocumentoIdentidad = null,
+    ?DateTime $fechaFirma = null
   ): RRetEnviEventoDe
   {
     if (strlen($motivo) < 5)
@@ -613,7 +626,7 @@ class Sifen
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeDescon($rGeVeDescon);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
@@ -621,15 +634,16 @@ class Sifen
    * El objeto RGEveNom debe conformarse previamente con los datos del receptor a nominar.
    *
    * @param RGEveNom $datosNominacion Datos del evento de nominación (CDC, motivo y datos del receptor).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function NominarFE(RGEveNom $datosNominacion): RRetEnviEventoDe
+  public static function NominarFE(RGEveNom $datosNominacion, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeNom($datosNominacion);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
@@ -637,29 +651,32 @@ class Sifen
    * El objeto RGeVeTr debe conformarse previamente con los datos del transporte a actualizar.
    *
    * @param RGeVeTr $datosTransporte Datos del evento de actualización del transporte (CDC, motivo y datos nuevos).
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function ActualizarDatosTransporte(RGeVeTr $datosTransporte): RRetEnviEventoDe
+  public static function ActualizarDatosTransporte(RGeVeTr $datosTransporte, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeTr($datosTransporte);
 
-    return self::RegistrarEventoUnico($gGroupTiEvt);
+    return self::RegistrarEventoUnico($gGroupTiEvt, $fechaFirma);
   }
 
   /**
    * Conforma el sobre de un único evento (rGesEve -> rEve -> gGroupTiEvt) y lo registra en el SIFEN.
    *
    * @param GGroupTiEvt $gGroupTiEvt Grupo del tipo de evento ya conformado.
+   * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  private static function RegistrarEventoUnico(GGroupTiEvt $gGroupTiEvt): RRetEnviEventoDe
+  private static function RegistrarEventoUnico(GGroupTiEvt $gGroupTiEvt, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     $rEve = new REve();
     $rEve->setId(1);
-    $rEve->setDFecFirma(new DateTime());
+    // dFecFirma: el SIFEN la compara con la hora de Asunción; con el servidor en otra zona horaria la fecha quedaba corrida.
+    $rEve->setDFecFirma($fechaFirma ?? new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE)));
     $rEve->setDVerFor(intval(Constants::SIFEN_VERSION));
     $rEve->setGGroupTiEvt($gGroupTiEvt);
 
