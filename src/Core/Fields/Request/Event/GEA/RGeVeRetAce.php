@@ -265,13 +265,13 @@ class RGeVeRetAce
 
 
     $res = new self();
-    $res->Id = $node->Id;
-    $res->dNumTimRet = strval($node->dNumTimRet);
-    $res->dEstRet = strval($node->dEstRet);
-    $res->dPunExpRet = strval($node->dPunExpRet);
-    $res->dNumDocRet = strval($node->dNumDocRet);
-    $res->dCodConRet = strval($node->dCodConRet);
-    $res->dFeEmiRet = DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFeEmiRet));
-    return $res;
+    $res->setId($node->Id);
+    $res->setDNumTimRet(intval($node->dNumTimRet));
+    $res->setDEstRet($node->dEstRet);
+    $res->setDPunExpRet($node->dPunExpRet);
+    $res->setDNumDocRet($node->dNumDocRet);
+    $res->setDCodConRet($node->dCodConRet);
+    $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFeEmiRet)));
+     return $res;
   }
 }
