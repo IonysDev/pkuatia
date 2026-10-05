@@ -223,7 +223,7 @@ class RGeVeRetAce
     $res->appendChild(new DOMElement('dPunExpRet', $this->getDPunExpRet()));
     $res->appendChild(new DOMElement('dNumDocRet', $this->getDNumDocRet()));
     $res->appendChild(new DOMElement('dCodConRet', $this->getDCodConRet()));
-    $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d')));
+    $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
     return $res;
   }
 
