@@ -219,10 +219,12 @@ class GCamEsp extends BaseSifenField
     if (isset($this->gGrupEner)) {
       $res->appendChild($this->gGrupEner->toDOMElement($doc));
     }
-    if (isset($this->gGrupSup)) {
-      $res->appendChild($this->gGrupSup->toDOMElement($doc));
-    }
+    // Orden de tgCamEsp (DE_v150.xsd:794-800): gGrupEner, gGrupSeg, gGrupSup, gGrupAdi. Hasta v0.1.5 el bloque de
+    // seguros emitía gGrupSup por un typo y en el orden incorrecto (PK-06).
     if (isset($this->gGrupSeg)) {
+      $res->appendChild($this->gGrupSeg->toDOMElement($doc));
+    }
+    if (isset($this->gGrupSup)) {
       $res->appendChild($this->gGrupSup->toDOMElement($doc));
     }
     if (isset($this->gGrupAdi)) {

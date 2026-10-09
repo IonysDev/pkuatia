@@ -9,6 +9,7 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     B001        
@@ -265,13 +266,13 @@ class GOpeDE extends BaseSifenField
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         $res = $doc->createElement('gOpeDE');
-        $res->appendChild(new DOMElement('iTipEmi', $this->getITipEmi()));
-        $res->appendChild(new DOMElement('dDesTipEmi', $this->getDDesTipEmi()));
-        $res->appendChild(new DOMElement('dCodSeg', $this->getDCodSeg()));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTipEmi', $this->getITipEmi()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesTipEmi', $this->getDDesTipEmi()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dCodSeg', $this->getDCodSeg()));
         if(isset($this->dInfoEmi))
-            $res->appendChild(new DOMElement('dInfoEmi', $this->getDInfoEmi()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dInfoEmi', $this->getDInfoEmi()));
         if(isset($this->dInfoFisc))
-            $res->appendChild(new DOMElement('dInfoFisc', $this->getDInfoFisc()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dInfoFisc', $this->getDInfoFisc()));
         return $res;
     }
 }

@@ -10,6 +10,7 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     H001
@@ -694,43 +695,45 @@ class GCamDEAsoc extends BaseSifenField
   {
     $res = $doc->createElement('gCamDEAsoc');
 
-    $res->appendChild(new DOMElement('iTipDocAso', $this->getITipDocAso()));
-    $res->appendChild(new DOMElement('dDesTipDocAso', $this->getDDesTipDocAso()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTipDocAso', $this->getITipDocAso()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesTipDocAso', $this->getDDesTipDocAso()));
 
     if ($this->iTipDocAso == 1) {
-      $res->appendChild(new DOMElement('dCdCDERef', $this->getDCdCDERef()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCdCDERef', $this->getDCdCDERef()));
     }
     else if ($this->iTipDocAso == 2) {
-      $res->appendChild(new DOMElement('dNTimDI', $this->getDNTimDI()));
-      $res->appendChild(new DOMElement('dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
-      $res->appendChild(new DOMElement('iTipoDocAso', $this->getITipoDocAso()));
-      $res->appendChild(new DOMElement('dDTipoDocAso', $this->getDDTipoDocAso()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNTimDI', $this->getDNTimDI()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
+      if ($this->getITipoDocAso() === TipoDocImpresoAso::ComprobanteRetencion->value)
+        throw new \InvalidArgumentException('[GCamDEAsoc] El tipo de documento impreso asociado 5 (Comprobante de retención) no existe en el XSD de producción (tiTIpoDoc admite 1-4, DE_Types_v150.xsd) y el SIFEN lo rechaza. Use 1 Factura, 2 Nota de crédito, 3 Nota de débito o 4 Nota de remisión.');
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipoDocAso', $this->getITipoDocAso()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDTipoDocAso', $this->getDDTipoDocAso()));
     }
 
     if (isset($this->dNTimDI)) {
-      $res->appendChild(new DOMElement('dFecEmiDI', $this->getDFecEmiDI()->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecEmiDI', $this->getDFecEmiDI()->format('Y-m-d')));
     }
 
     if(isset($this->dNumComRet))
-      $res->appendChild(new DOMElement('dNumComRet', $this->getDNumComRet()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumComRet', $this->getDNumComRet()));
     
     if(isset($this->dNumResCF))
-      $res->appendChild(new DOMElement('dNumResCF', $this->getDNumResCF()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumResCF', $this->getDNumResCF()));
 
     if($this->iTipDocAso == 3) {
-      $res->appendChild(new DOMElement('iTipCons', $this->getITipCons()));
-      $res->appendChild(new DOMElement('dDesTipCons', $this->getDDesTipCons()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipCons', $this->getITipCons()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesTipCons', $this->getDDesTipCons()));
     }
 
     if ($this->iTipDocAso == 3 && $this->iTipCons == 2) {
-      $res->appendChild(new DOMElement('dNumCons', $this->getDNumCons()));
-      $res->appendChild(new DOMElement('dNumControl', $this->getDNumControl()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCons', $this->getDNumCons()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumControl', $this->getDNumControl()));
     }
 
     if(isset($this->dRucFus))
-      $res->appendChild(new DOMElement('dRucFus', $this->getDRucFus()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRucFus', $this->getDRucFus()));
 
     return $res;
   }

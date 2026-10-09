@@ -36,6 +36,9 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 - 🎫 **Gestión de eventos**:
   - Cancelación de documentos electrónicos
   - Inutilización de números de documentos
+  - Actualización de los datos del transporte de una Nota de Remisión
+  - Nominación de facturas emitidas como innominadas
+  - Eventos del receptor: conformidad, disconformidad, desconocimiento y notificación de recepción
 - 📱 **Generación automática de códigos QR** para validación de documentos
 - 🏗️ **Arquitectura orientada a objetos** con clases tipadas
 - ✅ **Validaciones** según especificaciones del Manual Técnico
@@ -155,9 +158,25 @@ de solicitudes deja de responder por varios minutos. Buenas prácticas:
 
 - Mantener `wsdlCacheEnabled = true`.
 - Espaciar los reintentos (no reintentar en bucle inmediato).
-- Para la consulta de resultado de lote (`ConsultaLote`), implementar reintentos con espera
-  progresiva (backoff): esperar ~1 minuto en el primer intento y aumentar gradualmente.
+- Para la consulta de resultado de lote (`ConsultaLote`), seguir la guía de la DNIT: **empezar a
+  consultar 10 minutos después** de recibir el código 0300 y repetir **a intervalos no menores a
+  10 minutos** mientras la respuesta sea 0361 (lote en procesamiento). Consultar antes dispara el
+  bloqueo por saturación. Fuente: "Mejores prácticas para el envío de DE" de la DNIT, §3.
 
+### Zona horaria y fecha de firma
+
+El SIFEN compara las fechas del documento y de la firma con la hora de Asunción: una firma con
+fecha **posterior** a la hora del SIFEN se rechaza (validación 1004) y la transmisión tardía
+respecto de la fecha de firma se aprueba con observación (1005). Recomendaciones:
+
+- Sincronizar el reloj del servidor por NTP (MT §7.11).
+- Generar `dFeEmiDE` y la fecha de firma con `new DateTime('now', new DateTimeZone('America/Asuncion'))`,
+  sobre todo en servidores configurados en UTC. La librería **respeta tal cual** las fechas que recibe
+  (`setFechaEmision`, `FirmarDE`), sin convertirlas.
+- Las fechas que la librería genera por su cuenta (la `dFecFirma` de los eventos registrados con
+  `CancelarDE`, `ConformarDE`, etc., y el "hoy" de las validaciones internas) se calculan en
+  `Constants::SIFEN_TIMEZONE` (`America/Asuncion`), cualquiera sea la zona horaria por defecto de PHP.
+  Todos los wrappers de eventos aceptan un último parámetro opcional `?DateTime $fechaFirma` para fijarla.
 ### Certificados `.p12` / `.pfx` con cifrado heredado (OpenSSL 3)
 
 Los certificados emitidos por las CA de Paraguay suelen venir en un PKCS#12 cifrado con
@@ -215,7 +234,8 @@ echo $respuesta->getDMsgRes();
 |------|---------------------|
 | Consultas | `ConsultarRUC`, `ConsultarDE`, `ConsultaLote`, `ConsultarArchivoRUC` |
 | Emisión | `FirmarDE`, `EnviarDE`, `EnviarLoteDE` |
-| Eventos emisor | `CancelarDE`, `InutilizarNumeros` |
+| Eventos emisor | `CancelarDE`, `InutilizarNumeros`, `ActualizarDatosTransporte` (NR) |
+| Eventos (varios por sobre) | `RegistrarEvento` (hasta 15 eventos firmados por transmisión) |
 | Eventos receptor | `ConformarDE`, `DisconformarDE`, `DesconocerDE`, `NotificarRecepcionDE`, `NominarFE` |
 | Builders | `Factura`, `NotaDeCredito`, `NotaDeDebito`, `NotaDeRemision`, `Autofactura` |
 
@@ -230,10 +250,10 @@ el XSD de producción del SIFEN acepta actualmente (`iTiDE`):
 | Código | Tipo de Documento | Builder | Estado |
 |--------|-------------------|---------|--------|
 | 1 | Factura Electrónica | `Factura` | ✅ Soportado (homologado contra SIFEN) |
-| 4 | Autofactura Electrónica | `Autofactura` | ✅ Soportado |
-| 5 | Nota de Crédito Electrónica | `NotaDeCredito` | ✅ Soportado |
-| 6 | Nota de Débito Electrónica | `NotaDeDebito` | ✅ Soportado |
-| 7 | Nota de Remisión Electrónica | `NotaDeRemision` | ✅ Soportado |
+| 4 | Autofactura Electrónica | `Autofactura` | ✅ Soportado (válido contra el XSD de producción; homologación en `sifen-test` pendiente) |
+| 5 | Nota de Crédito Electrónica | `NotaDeCredito` | ✅ Soportado (válido contra el XSD de producción; homologación en `sifen-test` pendiente) |
+| 6 | Nota de Débito Electrónica | `NotaDeDebito` | ✅ Soportado (válido contra el XSD de producción; homologación en `sifen-test` pendiente) |
+| 7 | Nota de Remisión Electrónica | `NotaDeRemision` | ✅ Soportado (válido contra el XSD de producción; homologación en `sifen-test` pendiente) |
 | 9 | Boleta de venta electrónica | — | 🗺️ En el roadmap |
 | 10 | Boleta RESIMPLE | — | 🗺️ En el roadmap |
 
@@ -368,6 +388,8 @@ $factura->addItem(
     proporcionGravadaIVA: '100',
     tasaDeIVA: CamIVATasaIVA::IVA10
 );
+// Totales (gTotSub): obligatorio antes de serializar. El argumento es la precisión de la moneda (0 para PYG).
+$factura->calcTotSub(0);
 $factura->addPago(PaConEIniTiPago::Efectivo, '100000', 'PYG');
 
 // 3. Firmar y enviar
@@ -439,6 +461,10 @@ php test/SmokeTest.php      # smoke test rápido
 composer test               # PHPUnit (tests/Unit/)
 composer phpstan            # análisis estático nivel 1
 ```
+
+Los tests de `tests/Unit/Conformidad/` construyen documentos y eventos con los builders, los firman con un
+certificado autofirmado y los validan contra los **XSD de producción del SIFEN** incluidos en
+`src/Resources/xsd/` (sin red). Es la referencia más fiel disponible sin homologar.
 
 El CI en GitHub ejecuta lint (`php -l`), smoke test, PHPUnit y PHPStan en PHP 8.1, 8.2 y 8.3.
 

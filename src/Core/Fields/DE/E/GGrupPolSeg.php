@@ -7,6 +7,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     EA790   
@@ -291,16 +292,16 @@ class GGrupPolSeg extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gGrupPolSeg');
-    $res->appendChild(new DOMElement('dPoliza', $this->getDPoliza()));
-    $res->appendChild(new DOMElement('dUnidVig', $this->getDUnidVig()));
-    $res->appendChild(new DOMElement('dVigencia', $this->getDVigencia()));
-    $res->appendChild(new DOMElement('dNumPoliza', $this->getDNumPoliza()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dPoliza', $this->getDPoliza()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dUnidVig', $this->getDUnidVig()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dVigencia', $this->getDVigencia()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumPoliza', $this->getDNumPoliza()));
     if($this->getDFecIniVig() != null)
-      $res->appendChild(new DOMElement('dFecIniVig', $this->getDFecIniVig()->format('Y-m-d\TH:i:s')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecIniVig', $this->getDFecIniVig()->format('Y-m-d\TH:i:s')));
     if($this->getDFecFinVig() != null)
-      $res->appendChild(new DOMElement('dFecFinVig', $this->getDFecFinVig()->format('Y-m-d\TH:i:s')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecFinVig', $this->getDFecFinVig()->format('Y-m-d\TH:i:s')));
     if($this->getDCodInt() != null)
-      $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCodInt', $this->getDCodInt()));
     return $res;
   }
 }

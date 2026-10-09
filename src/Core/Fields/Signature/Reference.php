@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia\Core\Fields\Signature;
 
 use DOMElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 class Reference 
 {
@@ -200,7 +201,7 @@ class Reference
         $importNode = $doc->importNode($this->getDigestMethod()->toDOMElement(), true);
         $res->appendChild($importNode);
 
-        $res->appendChild($doc->createElement('DigestValue', $this->getDigestValue()));
+        $res->appendChild(XmlHelper::elemento($doc, 'DigestValue', $this->getDigestValue()));
         return $res;
     }
 

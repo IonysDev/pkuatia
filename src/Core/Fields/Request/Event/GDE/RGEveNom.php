@@ -6,11 +6,13 @@ use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
 use IonysDev\Pkuatia\Core\Constants\RecNat;
 use IonysDev\Pkuatia\Core\Constants\RecTiOpe;
 use IonysDev\Pkuatia\Core\Constants\TipIDRec;
+use IonysDev\Pkuatia\DataMappings\CountryMapping;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo: GENFE001 - rGEveNom - Grupos de Campos Generales del Evento 
@@ -132,7 +134,11 @@ class RGEveNom
      */
     public function setITiOpe(int|RecTiOpe $iTiOpe): void
     {
-        $this->iTiOpe = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
+        $valor = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
+        // tiTiOpeEv admite 1 (B2B), 2 (B2C) y 4 (B2F): la nominación no aplica a operaciones B2G (Evento_Types_v150.xsd:57-66).
+        if (!in_array($valor, [1, 2, 4], true))
+            throw new \InvalidArgumentException("[RGEveNom] iTiOpe = $valor no está admitido en el evento de nominación: tiTiOpeEv acepta 1 (B2B), 2 (B2C) y 4 (B2F); una FE B2G no puede nominarse (Evento_Types_v150.xsd:57-66).");
+        $this->iTiOpe = $valor;
     }
 
     /**
@@ -145,6 +151,10 @@ class RGEveNom
     public function setCPaisRec(string $cPaisRec): self
     {
         $this->cPaisRec = $cPaisRec;
+        // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec; antes quedaba vacío.
+        $desc = CountryMapping::getCountryDesc($cPaisRec);
+        if ($desc !== null)
+            $this->dDesPaisRe = $desc;
         return $this;
     }
 
@@ -210,6 +220,9 @@ class RGEveNom
     public function setITipIDRec(int|TipIDRec $iTipIDRec): self
     {
         $this->iTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->value : $iTipIDRec;
+        // Para 9 (Otro) la descripción es texto libre de 9 a 41 caracteres (tdDtipDocRec, DE_Types_v150.xsd:699-717); no se pisa si ya fue informada con setDDTipIDRec().
+        if ($this->iTipIDRec === TipIDRec::Otro->value && isset($this->dDTipIDRec) && $this->dDTipIDRec !== TipIDRec::Otro->getDescription())
+            return $this;
         $this->dDTipIDRec = $iTipIDRec instanceof TipIDRec ? $iTipIDRec->getDescription() : TipIDRec::getDescriptionFromValue($iTipIDRec);
         return $this;
     }
@@ -563,6 +576,8 @@ class RGEveNom
      */
     public function getDDTipIDRec(): ?String
     {
+        if(isset($this->dDTipIDRec))
+            return $this->dDTipIDRec; // lo establecido por setITipIDRec() o el texto libre de setDDTipIDRec()
         if(isset($this->iTipIDRec)) {
             switch ($this->iTipIDRec) {
                 case 1:
@@ -776,61 +791,61 @@ class RGEveNom
   {
     $res = $doc->createElement('rGEveNom');
 
-    $res->appendChild($doc->createElement('Id', $this->getId()));
-    $res->appendChild($doc->createElement('mOtEve', $this->getMOtEve()));
-    $res->appendChild($doc->createElement('iNatRec', $this->getINatRec()));
-    $res->appendChild($doc->createElement('iTiOpe', $this->getITiOpe()));
-    $res->appendChild($doc->createElement('cPaisRec', $this->getCPaisRec()));
-    $res->appendChild($doc->createElement('dDesPaisRe', $this->getDDesPaisRe()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iNatRec', $this->getINatRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTiOpe', $this->getITiOpe()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cPaisRec', $this->getCPaisRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesPaisRe', $this->getDDesPaisRe()));
 
     // Receptor contribuyente: se informan los datos del RUC
     if(isset($this->iTiContRec))
-      $res->appendChild($doc->createElement('iTiContRec', $this->getITiContRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTiContRec', $this->getITiContRec()));
     if(isset($this->dRucRec))
-      $res->appendChild($doc->createElement('dRucRec', $this->getDRucRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRucRec', $this->getDRucRec()));
     if(isset($this->dDVRec))
-      $res->appendChild($doc->createElement('dDVRec', $this->getDDVRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDVRec', $this->getDDVRec()));
 
     // Receptor no contribuyente: se informa el documento de identidad
     if(isset($this->iTipIDRec))
-      $res->appendChild($doc->createElement('iTipIDRec', $this->getITipIDRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRec', $this->getITipIDRec()));
     if(isset($this->dDTipIDRec) || isset($this->iTipIDRec))
-      $res->appendChild($doc->createElement('dDTipIDRec', $this->getDDTipIDRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRec', $this->getDDTipIDRec()));
     if(isset($this->dNumIDRec))
-      $res->appendChild($doc->createElement('dNumIDRec', $this->getDNumIDRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDRec', $this->getDNumIDRec()));
 
-    $res->appendChild($doc->createElement('dNomRec', $this->getDNomRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNomRec', $this->getDNomRec()));
 
     if(isset($this->dNomFanRec))
-      $res->appendChild($doc->createElement('dNomFanRec', $this->getDNomFanRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomFanRec', $this->getDNomFanRec()));
     if(isset($this->dDirRec))
     {
-      $res->appendChild($doc->createElement('dDirRec', $this->getDDirRec()));
-      $res->appendChild($doc->createElement('dNumCasRec', $this->getDNumCasRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDirRec', $this->getDDirRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasRec', $this->getDNumCasRec()));
     }
     if(isset($this->cDepRec))
     {
-      $res->appendChild($doc->createElement('cDepRec', $this->getCDepRec()));
-      $res->appendChild($doc->createElement('dDesDepRec', $this->getDDesDepRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cDepRec', $this->getCDepRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDepRec', $this->getDDesDepRec()));
     }
     if(isset($this->cDisRec))
     {
-      $res->appendChild($doc->createElement('cDisRec', $this->getCDisRec()));
-      $res->appendChild($doc->createElement('dDesDisRec', $this->getDDesDisRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cDisRec', $this->getCDisRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisRec', $this->getDDesDisRec()));
     }
     if(isset($this->cCiuRec))
     {
-      $res->appendChild($doc->createElement('cCiuRec', $this->getCCiuRec()));
-      $res->appendChild($doc->createElement('dDesCiuRec', $this->getDDesCiuRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cCiuRec', $this->getCCiuRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuRec', $this->getDDesCiuRec()));
     }
     if(isset($this->dTelRec))
-      $res->appendChild($doc->createElement('dTelRec', $this->getDTelRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTelRec', $this->getDTelRec()));
     if(isset($this->dCelRec))
-      $res->appendChild($doc->createElement('dCelRec', $this->getDCelRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCelRec', $this->getDCelRec()));
     if(isset($this->dEmailRec))
-      $res->appendChild($doc->createElement('dEmailRec', $this->getDEmailRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dEmailRec', $this->getDEmailRec()));
     if(isset($this->dCodCliente))
-      $res->appendChild($doc->createElement('dCodCliente', $this->getDCodCliente()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCodCliente', $this->getDCodCliente()));
 
     return $res;
   }

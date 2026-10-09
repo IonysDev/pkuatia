@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GEA;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  *  ID:GERE001  Raíz Gestión de Eventos remisión PADRE:GDE007
@@ -60,7 +61,7 @@ class RGeVeRem
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeRem');
-    $res->appendChild(new DOMElement('Id',$this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
 
     return $res;
   }

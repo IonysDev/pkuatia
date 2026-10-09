@@ -8,6 +8,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     C001        
@@ -319,15 +320,15 @@ class GTimb extends BaseSifenField
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         $res = $doc->createElement('gTimb');
-        $res->appendChild(new DOMElement('iTiDE', $this->iTiDE));
-        $res->appendChild(new DOMElement('dDesTiDE', $this->getDDesTiDE()));
-        $res->appendChild(new DOMElement('dNumTim', str_pad(($this->dNumTim % 100000000), 8, "0", STR_PAD_LEFT)));
-        $res->appendChild(new DOMElement('dEst', str_pad($this->dEst, 3, "0", STR_PAD_LEFT)));
-        $res->appendChild(new DOMElement('dPunExp', str_pad($this->dPunExp, 3, "0", STR_PAD_LEFT)));
-        $res->appendChild(new DOMElement('dNumDoc', str_pad($this->dNumDoc, 7, "0", STR_PAD_LEFT)));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTiDE', $this->iTiDE));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesTiDE', $this->getDDesTiDE()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNumTim', str_pad(($this->dNumTim % 100000000), 8, "0", STR_PAD_LEFT)));
+        $res->appendChild(XmlHelper::elemento($doc, 'dEst', str_pad($this->dEst, 3, "0", STR_PAD_LEFT)));
+        $res->appendChild(XmlHelper::elemento($doc, 'dPunExp', str_pad($this->dPunExp, 3, "0", STR_PAD_LEFT)));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNumDoc', str_pad($this->dNumDoc, 7, "0", STR_PAD_LEFT)));
         if(isset($this->dSerieNum))
-            $res->appendChild(new DOMElement('dSerieNum', str_pad($this->dSerieNum, 2, "0", STR_PAD_LEFT)));
-        $res->appendChild(new DOMElement('dFeIniT', $this->dFeIniT->format('Y-m-d')));
+            $res->appendChild(XmlHelper::elemento($doc, 'dSerieNum', str_pad($this->dSerieNum, 2, "0", STR_PAD_LEFT)));
+        $res->appendChild(XmlHelper::elemento($doc, 'dFeIniT', $this->dFeIniT->format('Y-m-d')));
         return $res;
     }
 }

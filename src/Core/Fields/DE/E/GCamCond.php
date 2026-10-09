@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E600
@@ -179,9 +180,9 @@ class GCamCond extends BaseSifenField
   {
     $res = $doc->createElement('gCamCond');
     if(isset($this->iCondOpe))
-      $res->appendChild(new DOMElement('iCondOpe', $this->getICondOpe()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iCondOpe', $this->getICondOpe()));
     if(isset($this->dDCondOpe))
-      $res->appendChild(new DOMElement('dDCondOpe', $this->getDDCondOpe()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDCondOpe', $this->getDDCondOpe()));
     if(isset($this->gPaConEIni) && count($this->getGPaConEIni()) > 0){
       foreach ($this->getGPaConEIni() as $g) {
         $res->appendChild($g->toDOMElement($doc));

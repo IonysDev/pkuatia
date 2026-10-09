@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     EA001 
@@ -39,7 +40,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDDescItem(String $dDescItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dDescItem, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dDescItem, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dDescItem: $dDescItem");
     }
@@ -56,7 +57,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDPorcDesIt(String $dPorcDesIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0))
+    if(!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0, 8))
     {
       throw new \Exception("Valor inválido de dPorcDesIt: $dPorcDesIt");
     }
@@ -74,7 +75,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDDescGloItem(String $dDescGloItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dDescGloItem: $dDescGloItem");
     }
@@ -92,7 +93,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDAntPreUniIt(String $dAntPreUniIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dAntPreUniIt: $dAntPreUniIt");
     }
@@ -110,7 +111,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDAntGloPreUniIt(String $dAntGloPreUniIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dAntGloPreUniIt: $dAntGloPreUniIt");
     }
@@ -128,7 +129,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDTotOpeItem(String $dTotOpeItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dTotOpeItem: $dTotOpeItem");
     }
@@ -145,7 +146,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDTotOpeGs(String $dTotOpeGs): self
   {
-    if(!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0, 8))
     {
       throw new \Exception("Valor inválido de dTotOpeGs: $dTotOpeGs");
     }
@@ -358,18 +359,18 @@ class GValorRestaItem extends BaseSifenField
   {
     $res = $doc->createElement('gValorRestaItem');
     if(isset($this->dDescItem))
-      $res->appendChild(new DOMElement('dDescItem', $this->dDescItem));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDescItem', $this->dDescItem));
     if(isset($this->dPorcDesIt))
-      $res->appendChild(new DOMElement('dPorcDesIt', $this->getDPorcDesIt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPorcDesIt', $this->getDPorcDesIt()));
     if(isset($this->dDescGloItem))
-      $res->appendChild(new DOMElement('dDescGloItem', $this->getDDescGloItem()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDescGloItem', $this->getDDescGloItem()));
     if(isset($this->dAntPreUniIt))
-      $res->appendChild(new DOMElement('dAntPreUniIt', $this->getDAntPreUniIt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dAntPreUniIt', $this->getDAntPreUniIt()));
     if(isset($this->dAntGloPreUniIt))
-      $res->appendChild(new DOMElement('dAntGloPreUniIt', $this->getDAntGloPreUniIt()));
-    $res->appendChild(new DOMElement('dTotOpeItem', $this->getDTotOpeItem()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dAntGloPreUniIt', $this->getDAntGloPreUniIt()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotOpeItem', $this->getDTotOpeItem()));
     if(isset($this->dTotOpeGs))
-      $res->appendChild(new DOMElement('dTotOpeGs', $this->getDTotOpeGs()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTotOpeGs', $this->getDTotOpeGs()));
     return $res;
   }
   

@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:GEDD001 Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto PADRE:GDE007
@@ -219,13 +220,13 @@ class RGeDevCCFFDev
   {
     $res = $doc->createElement('rGeDevCCFFDev');
 
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('dNumDevSol', $this->getDNumDevSol()));
-    $res->appendChild(new DOMElement('dNumDevInf', $this->getDNumDevInf()));
-    $res->appendChild(new DOMElement('dNumDevRes', $this->getDNumDevRes()));
-    $res->appendChild(new DOMElement('dFeEmiSol', $this->getDFeEmiSol()->format('Y-m-d')));
-    $res->appendChild(new DOMElement('dFeEmiInf', $this->getDFeEmiInf()->format('Y-m-d')));
-    $res->appendChild(new DOMElement('dFeEmiRes', $this->getDFeEmiRes()->format('Y-m-d')));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumDevSol', $this->getDNumDevSol()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumDevInf', $this->getDNumDevInf()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumDevRes', $this->getDNumDevRes()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiSol', $this->getDFeEmiSol()->format('Y-m-d')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiInf', $this->getDFeEmiInf()->format('Y-m-d')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiRes', $this->getDFeEmiRes()->format('Y-m-d')));
 
     return $res;
   }

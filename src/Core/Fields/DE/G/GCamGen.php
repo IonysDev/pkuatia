@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\G;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id: G001
@@ -168,11 +169,11 @@ class GCamGen
   {
     $res = $doc->createElement('gCamGen');
     if(!is_null($this->dOrdCompra) && strlen($this->dOrdCompra) > 0)
-      $res->appendChild(new DOMElement('dOrdCompra', $this->dOrdCompra));
+      $res->appendChild(XmlHelper::elemento($doc, 'dOrdCompra', $this->dOrdCompra));
     if(!is_null($this->dOrdVta) && strlen($this->dOrdVta) > 0)
-      $res->appendChild(new DOMElement('dOrdVta', $this->dOrdVta));
+      $res->appendChild(XmlHelper::elemento($doc, 'dOrdVta', $this->dOrdVta));
     if(!is_null($this->dAsiento) && strlen($this->dAsiento) > 0)
-      $res->appendChild(new DOMElement('dAsiento', $this->dAsiento));
+      $res->appendChild(XmlHelper::elemento($doc, 'dAsiento', $this->dAsiento));
     if(isset($this->gCamCarg))
       $res->appendChild($this->gCamCarg->toDOMElement($doc));
     return $res;

@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Constants\MotEmi;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E400
@@ -153,8 +154,8 @@ class GCamNCDE extends BaseSifenField
   public  function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamNCDE');
-    $res->appendChild(new DOMElement('iMotEmi', $this->getIMotEmi()));
-    $res->appendChild(new DOMElement('dDesMotEmi', $this->getDDesMotEmi()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iMotEmi', $this->getIMotEmi()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesMotEmi', $this->getDDesMotEmi()));
     return $res;
   }
 }

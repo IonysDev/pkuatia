@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo: GEC001 - rGeVeCan - Campos generales del DE
@@ -83,8 +84,8 @@ class RGeVeCan
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeCan');
-    $res->appendChild($doc->createElement('Id', $this->Id));
-    $res->appendChild($doc->createElement('mOtEve', $this->mOtEve));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->Id));
+    $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->mOtEve));
     return $res;
   }
 

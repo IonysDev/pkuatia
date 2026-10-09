@@ -2,6 +2,8 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\Signature;
 
+use IonysDev\Pkuatia\Helpers\XmlHelper;
+
 /**
  * Clase que representa el campo X509Data de la firma
  */
@@ -84,7 +86,7 @@ class X509Data
     {
         $dom = new \DOMDocument();
         $X509Data = $dom->createElement('X509Data');
-        $X509Certificate = $dom->createElement('X509Certificate', $this->getX509Certificate());
+        $X509Certificate = XmlHelper::elemento($dom, 'X509Certificate', $this->getX509Certificate());
         $X509Data->appendChild($X509Certificate);
         return $X509Data;
     }

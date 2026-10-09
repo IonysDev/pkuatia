@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:E630 
@@ -113,8 +114,8 @@ class GPagCheq extends BaseSifenField
   {
     $res = $doc->createElement('gPagCheq');
     //Completar con 0 (cero) a la izquierda hasta alcanzar 8 (ocho) cifras
-    $res->appendChild(new DOMElement('dNumCheq', str_pad($this->dNumCheq, 8, "0", STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dBcoEmi', $this->getDBcoEmi()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumCheq', str_pad($this->dNumCheq, 8, "0", STR_PAD_LEFT)));
+    $res->appendChild(XmlHelper::elemento($doc, 'dBcoEmi', $this->getDBcoEmi()));
 
     return $res;
   }

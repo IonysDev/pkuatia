@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\DataMappings\CountryMapping;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:E980 gCamTrans  PADRE:E900
@@ -23,14 +24,14 @@ class GCamTrans extends BaseSifenField
    public int    $iNatTrans;   // E981 - 1     - 1-1 - Naturaleza del transportista
    public String $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista 
    public String $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista 
-   public int    $dDVTrans;    // E984 - 1     - 1-1 - Dígito verificador del RUC del transportista 
+   public int    $dDVTrans;    // E984 - 1     - 0-1 - Dígito verificador del RUC del transportista (obligatorio si E981 = 1)
    public int    $iTipIDTrans; // E985 - 1     - 0-1 - Tipo de documento de identidad del transportista
    public String $dNumIDTrans; // E987 - 1-20  - 0-1 - Número de documento de identidad del transportista
    public String $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista 
-   public String $dNumIDChof;  // E990 - 1-20  - 0-1 - Número de documento de identidad del chofer
+   public String $dNumIDChof;  // E990 - 1-20  - 1-1 - Número de documento de identidad del chofer (DE_v150.xsd:971)
    public String $dNomChof;    // E991 - 4-60  - 1-1 - Nombre y apellido del chofer
-   public String $dDomFisc;    // E992 - 1-150 - 0-1 - Domicilio fiscal del transportista
-   public String $dDirChof;    // E993 - 1-255 - 0-1 - Dirección del chofer
+   public String $dDomFisc;    // E992 - 1-150 - 1-1 - Domicilio fiscal del transportista (DE_v150.xsd:973; el MT v150 lo listaba como opcional)
+   public String $dDirChof;    // E993 - 1-255 - 1-1 - Dirección del chofer (DE_v150.xsd:986; el MT v150 lo listaba como opcional)
    public String $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente 
    public String $dRucAg;      // E995 - 3-8   - 0-1 - RUC del agente
    public String $dDVAg;       // E996 - 1     - 0-1 - Dígito verificador del  RUC del agente
@@ -468,52 +469,71 @@ class GCamTrans extends BaseSifenField
    {
       $res = $doc->createElement('gCamTrans');
 
-      $res->appendChild(new DOMElement('iNatTrans', $this->getINatTrans()));
-      $res->appendChild(new DOMElement('dNomTrans', $this->getDNomTrans()));
+      // Obligatorios en tgCamTrans (DE_v150.xsd:958-959, :971-973, :986). El MT v150 listaba E990, E992 y E993 como
+      // opcionales, pero el XSD de producción los exige (minOccurs="1") y el SIFEN rechaza el DE por esquema si faltan.
+      $faltantes = [];
+      if (!isset($this->iNatTrans))
+         $faltantes[] = 'iNatTrans (E981, naturaleza del transportista)';
+      if (!isset($this->dNomTrans))
+         $faltantes[] = 'dNomTrans (E982, nombre o razón social del transportista)';
+      if (isset($this->iNatTrans) && $this->iNatTrans == 1 && (!isset($this->dRucTrans) || !isset($this->dDVTrans)))
+         $faltantes[] = 'dRucTrans y dDVTrans (E983-E984, obligatorios cuando E981 = 1 contribuyente)';
+      if (isset($this->iNatTrans) && $this->iNatTrans == 2 && (!isset($this->iTipIDTrans) || !isset($this->dNumIDTrans)))
+         $faltantes[] = 'iTipIDTrans y dNumIDTrans (E985 y E987, obligatorios cuando E981 = 2 no contribuyente)';
+      if (!isset($this->dNumIDChof))
+         $faltantes[] = 'dNumIDChof (E990, documento de identidad del chofer)';
+      if (!isset($this->dNomChof))
+         $faltantes[] = 'dNomChof (E991, nombre y apellido del chofer)';
+      if (!isset($this->dDomFisc))
+         $faltantes[] = 'dDomFisc (E992, domicilio fiscal del transportista; DE_v150.xsd:973)';
+      if (!isset($this->dDirChof))
+         $faltantes[] = 'dDirChof (E993, dirección del chofer; DE_v150.xsd:986)';
+      if (count($faltantes) > 0)
+         throw new \InvalidArgumentException('[GCamTrans] Faltan campos obligatorios del transportista (E980): ' . implode('; ', $faltantes) . '. Con los builders se informan en setTransporteTransportista().');
+
+      $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
 
       if ($this->iNatTrans == 1) {
-         $res->appendChild(new DOMElement('dRucTrans', $this->getDRucTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dRucTrans', $this->getDRucTrans()));
       }
 
       if (isset($this->dRucTrans)) {
-         $res->appendChild(new DOMElement('dDVTrans', $this->getDDVTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDVTrans', $this->getDDVTrans()));
       }
 
       if ($this->iNatTrans == 2) {
-         $res->appendChild(new DOMElement('iTipIDTrans', $this->getITipIDTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
       }
 
       if (isset($this->iTipIDTrans)) {
-         $res->appendChild(new DOMElement('dDTipIDTrans', $this->getDDTipIDTrans()));
-         $res->appendChild(new DOMElement('dNumIDTrans', $this->getDNumIDTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getDDTipIDTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
       }
 
-      $res->appendChild(new DOMElement('cNacTrans', $this->getCNacTrans()));
-
-      if (isset($this->cNacTrans)) {
-         $res->appendChild(new DOMElement('dDesNacTrans', $this->getDDesNacTrans()));
+      if (isset($this->cNacTrans)) { // E988-E989 minOccurs="0" (DE_v150.xsd:968-970): antes se emitía sin guarda
+         $res->appendChild(XmlHelper::elemento($doc, 'cNacTrans', $this->getCNacTrans()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDesNacTrans', $this->getDDesNacTrans()));
       }
 
-      $res->appendChild(new DOMElement('dNumIDChof', $this->getDNumIDChof()));
-      $res->appendChild(new DOMElement('dNomChof', $this->getDNomChof()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDChof', $this->getDNumIDChof()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomChof', $this->getDNomChof()));
 
-      if (isset($this->dDomFisc))
-         $res->appendChild(new DOMElement('dDomFisc', $this->getDDomFisc()));
-      
-      if (isset($this->dDirChof))
-         $res->appendChild(new DOMElement('dDirChof', $this->getDDirChof()));
+      // E992 y E993: obligatorios en el XSD (ya verificados arriba)
+      $res->appendChild(XmlHelper::elemento($doc, 'dDomFisc', $this->getDDomFisc()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDirChof', $this->getDDirChof()));
       
       if (isset($this->dNombAg))
-         $res->appendChild(new DOMElement('dNombAg', $this->getDNombAg()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dNombAg', $this->getDNombAg()));
 
       if (isset($this->dRucAg))
-         $res->appendChild(new DOMElement('dRucAg', $this->getDRucAg()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dRucAg', $this->getDRucAg()));
 
       if (isset($this->dDVAg))
-         $res->appendChild(new DOMElement('dDVAg', $this->getDDVAg()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDVAg', $this->getDDVAg()));
 
       if (isset($this->dDirAge))
-         $res->appendChild(new DOMElement('dDirAge', $this->getDDirAge()));
+         $res->appendChild(XmlHelper::elemento($doc, 'dDirAge', $this->getDDirAge()));
 
       return $res;
    }

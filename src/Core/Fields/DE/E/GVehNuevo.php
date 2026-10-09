@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use stdClass;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:E770 Grupo de detalle de vehículos nuevos
@@ -494,37 +495,37 @@ class GVehNuevo extends BaseSifenField
   {
     $res = $doc->createElement('gVehNuevo');
     if(isset($this->iTipOpVN)) {
-      $res->appendChild(new DOMElement('iTipOpVN', $this->getDDesTipOpVN()));
-      $res->appendChild(new DOMElement('dDesTipOpVN', $this->getDDesTipOpVN()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipOpVN', $this->getDDesTipOpVN()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesTipOpVN', $this->getDDesTipOpVN()));
     }
     if(isset($this->dChasis))
-      $res->appendChild(new DOMElement('dChasis', $this->getDChasis()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dChasis', $this->getDChasis()));
     if(isset($this->dColor))
-      $res->appendChild(new DOMElement('dColor', $this->getDColor()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dColor', $this->getDColor()));
     if(isset($this->dPotencia))
-      $res->appendChild(new DOMElement('dPotencia', $this->getDPotencia()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPotencia', $this->getDPotencia()));
     if(isset($this->dCapMot))
-      $res->appendChild(new DOMElement('dCapMot', $this->getDCapMot()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCapMot', $this->getDCapMot()));
     if(isset($this->dPNet))
-      $res->appendChild(new DOMElement('dPNet', $this->getDPNet()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPNet', $this->getDPNet()));
     if(isset($this->dPBruto))
-      $res->appendChild(new DOMElement('dPBruto', $this->getDPBruto()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPBruto', $this->getDPBruto()));
     if(isset($this->iTipCom)) {
-      $res->appendChild(new DOMElement('iTipCom', $this->getITipCom()));
-      $res->appendChild(new DOMElement('dDesTipCom', $this->getDDesTipCom()));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipCom', $this->getITipCom()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesTipCom', $this->getDDesTipCom()));
     }
     if(isset($this->dNroMotor))
-      $res->appendChild(new DOMElement('dNroMotor', $this->getDNroMotor()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNroMotor', $this->getDNroMotor()));
     if(isset($this->dCapTracc))
-      $res->appendChild(new DOMElement('dCapTracc', $this->getDCapTracc()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCapTracc', $this->getDCapTracc()));
     if(isset($this->dAnoFab))
-      $res->appendChild(new DOMElement('dAnoFab', $this->getDAnoFab()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dAnoFab', $this->getDAnoFab()));
     if(isset($this->cTipVeh))
-      $res->appendChild(new DOMElement('cTipVeh', $this->getCTipVeh()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cTipVeh', $this->getCTipVeh()));
     if(isset($this->dCapac))
-      $res->appendChild(new DOMElement('dCapac', $this->getDCapac()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCapac', $this->getDCapac()));
     if(isset($this->dCilin))
-      $res->appendChild(new DOMElement('dCilin', $this->getDCilin()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCilin', $this->getDCilin()));
     return $res;
   }
 

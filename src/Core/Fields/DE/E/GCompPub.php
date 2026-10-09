@@ -7,6 +7,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 
 /**
@@ -180,11 +181,11 @@ class GCompPub extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCompPub');
-    $res->appendChild(new DOMElement('dModCont', $this->dModCont));
-    $res->appendChild(new DOMElement('dEntCont', str_pad((string)$this->dEntCont, 5, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dAnoCont', str_pad((string)$this->dAnoCont, 2, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dSecCont', str_pad((string)$this->dSecCont, 7, '0', STR_PAD_LEFT)));
-    $res->appendChild(new DOMElement('dFeCodCont', $this->dFeCodCont->format('Y-m-d')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dModCont', $this->dModCont));
+    $res->appendChild(XmlHelper::elemento($doc, 'dEntCont', str_pad((string)$this->dEntCont, 5, '0', STR_PAD_LEFT)));
+    $res->appendChild(XmlHelper::elemento($doc, 'dAnoCont', str_pad((string)$this->dAnoCont, 2, '0', STR_PAD_LEFT)));
+    $res->appendChild(XmlHelper::elemento($doc, 'dSecCont', str_pad((string)$this->dSecCont, 7, '0', STR_PAD_LEFT)));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFeCodCont', $this->dFeCodCont->format('Y-m-d')));
     return $res;
   }
   
