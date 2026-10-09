@@ -223,7 +223,7 @@ class RGeVeRetAce
     $res->appendChild(new DOMElement('dPunExpRet', $this->getDPunExpRet()));
     $res->appendChild(new DOMElement('dNumDocRet', $this->getDNumDocRet()));
     $res->appendChild(new DOMElement('dCodConRet', $this->getDCodConRet()));
-    $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d')));
+    $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
     return $res;
   }
 
@@ -266,12 +266,12 @@ class RGeVeRetAce
 
     $res = new self();
     $res->setId($node->Id);
-    $res->setDNumTimRet($node->dNumTimRet);
+    $res->setDNumTimRet(intval($node->dNumTimRet));
     $res->setDEstRet($node->dEstRet);
     $res->setDPunExpRet($node->dPunExpRet);
     $res->setDNumDocRet($node->dNumDocRet);
     $res->setDCodConRet($node->dCodConRet);
-    $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d', $node->dFeEmiRet));
+    $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFeEmiRet)));
      return $res;
   }
 }

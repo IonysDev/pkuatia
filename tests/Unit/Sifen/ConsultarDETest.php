@@ -123,6 +123,60 @@ final class ConsultarDETest extends TestCase
     $this->assertNull($result->getRDEXml());
   }
 
+  /**
+   * Un DE al que el receptor le registró una retención y luego la anuló. El SIFEN
+   * devuelve los eventos en xContEv con las fechas en AAAA-MM-DDThh:mm:ss
+   * (fecHhmmss); leerlas como AAAA-MM-DD hacía fallar toda la consulta.
+   */
+  public function testConsultarDEConEventoDeAnulacionDeRetencion(): void
+  {
+    $this->stubConsultaResponse('0422', 'CDC encontrado', self::signedDeXml() . self::eventosXml(
+      '<rGeVeRetAnu>'
+      . '<Id>01800695631001001000000612021112410777777771</Id>'
+      . '<dRuc>80000000</dRuc>'
+      . '<dNumTimRet>12345678</dNumTimRet>'
+      . '<dEstRet>001</dEstRet>'
+      . '<dPunExpRet>002</dPunExpRet>'
+      . '<dNumDocRet>0000123</dNumDocRet>'
+      . '<dCodConRet>a1b2c3d4</dCodConRet>'
+      . '<dFeEmiRet>2026-01-20T00:00:00</dFeEmiRet>'
+      . '<dFecAnRet>2026-01-21T09:15:00</dFecAnRet>'
+      . '<dMonRet>100000.0</dMonRet>'
+      . '</rGeVeRetAnu>'
+    ));
+
+    $result = Sifen::ConsultarDE('01800695631001001000000612021112410777777771');
+
+    $this->assertNotNull($result->getRContDe()->getRDe());
+    $anulacion = $result->getRContDe()->getRContEv()->getXEvento()->getREve()->getGGroupTiEvt()->getrGeVeRetAnu();
+    $this->assertSame('2026-01-20T00:00:00', $anulacion->getDFeEmiRet()->format('Y-m-d\TH:i:s'));
+    $this->assertSame('2026-01-21T09:15:00', $anulacion->getDFecAnRet()->format('Y-m-d\TH:i:s'));
+  }
+
+  public function testConsultarDEConEventoDeRetencion(): void
+  {
+    $this->stubConsultaResponse('0422', 'CDC encontrado', self::signedDeXml() . self::eventosXml(
+      '<rGeVeRetAce>'
+      . '<Id>01800695631001001000000612021112410777777771</Id>'
+      . '<dRuc>80000000</dRuc>'
+      . '<dNumTimRet>12345678</dNumTimRet>'
+      . '<dEstRet>001</dEstRet>'
+      . '<dPunExpRet>002</dPunExpRet>'
+      . '<dNumDocRet>0000123</dNumDocRet>'
+      . '<dCodConRet>a1b2c3d4</dCodConRet>'
+      . '<dFeEmiRet>2026-01-20T00:00:00</dFeEmiRet>'
+      . '<dMonRet>100000.0</dMonRet>'
+      . '</rGeVeRetAce>'
+    ));
+
+    $result = Sifen::ConsultarDE('01800695631001001000000612021112410777777771');
+
+    $this->assertNotNull($result->getRContDe()->getRDe());
+    $retencion = $result->getRContDe()->getRContEv()->getXEvento()->getREve()->getGGroupTiEvt()->getrGeVeRetAce();
+    $this->assertSame(12345678, $retencion->getDNumTimRet());
+    $this->assertSame('2026-01-20T00:00:00', $retencion->getDFeEmiRet()->format('Y-m-d\TH:i:s'));
+  }
+
   public function testSinContenidoElXmlCrudoEsNulo(): void
   {
     // 0420 - CDC inexistente: el SIFEN no devuelve xContenDE.
@@ -173,6 +227,28 @@ final class ConsultarDETest extends TestCase
   private static function signedDeXml(): string
   {
     return Sifen::FirmarDE(self::buildFactura()->facturaToRDE(), new DateTime('2026-07-26T10:00:00'));
+  }
+
+  /**
+   * dProtAut y xContEv con un evento, en la forma en que el SIFEN los devuelve
+   * junto al rDE en xContenDE.
+   */
+  private static function eventosXml(string $grupoEvento): string
+  {
+    return '<dProtAut>3409990272</dProtAut>'
+      . '<xContEv><rContEv>'
+      . '<xEvento><rGesEve xmlns="http://ekuatia.set.gov.py/sifen/xsd"><rEve>'
+      . '<dFecFirma>2026-01-21T09:15:30</dFecFirma>'
+      . '<dVerFor>150</dVerFor>'
+      . '<gGroupTiEvt>' . $grupoEvento . '</gGroupTiEvt>'
+      . '</rEve></rGesEve></xEvento>'
+      . '<rResEnviEventoDe><rRetEnviEventoDe>'
+      . '<dFecProc>2026-01-21T09:15:30</dFecProc>'
+      . '<gResProcEVe><dEstRes>Aprobado</dEstRes><dProtAut>10000001</dProtAut>'
+      . '<gResProc><dCodRes>0600</dCodRes><dMsgRes>Se encontro el evento</dMsgRes></gResProc>'
+      . '</gResProcEVe>'
+      . '</rRetEnviEventoDe></rResEnviEventoDe>'
+      . '</rContEv></xContEv>';
   }
 
   /**
