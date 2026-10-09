@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  *  ID:GER001 rGeVeRetAce Raíz Gestión de Eventos de retención PADRE:GDE007
@@ -217,13 +218,13 @@ class RGeVeRetAce
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeRetAce');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('dNumTimRet', $this->getDNumTimRet()));
-    $res->appendChild(new DOMElement('dEstRet', $this->getDEstRet()));
-    $res->appendChild(new DOMElement('dPunExpRet', $this->getDPunExpRet()));
-    $res->appendChild(new DOMElement('dNumDocRet', $this->getDNumDocRet()));
-    $res->appendChild(new DOMElement('dCodConRet', $this->getDCodConRet()));
-    $res->appendChild(new DOMElement('dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumTimRet', $this->getDNumTimRet()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dEstRet', $this->getDEstRet()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dPunExpRet', $this->getDPunExpRet()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumDocRet', $this->getDNumDocRet()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dCodConRet', $this->getDCodConRet()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
     return $res;
   }
 

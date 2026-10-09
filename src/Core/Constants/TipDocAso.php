@@ -16,7 +16,7 @@ enum TipDocAso: int {
         return match($this) {
             self::Electronico => 'Electrónico',
             self::Impreso => 'Impreso',
-            self::ConstanciaElectronica => 'Constancia electrónica'
+            self::ConstanciaElectronica => 'Constancia Electrónica'
         };
     }
 

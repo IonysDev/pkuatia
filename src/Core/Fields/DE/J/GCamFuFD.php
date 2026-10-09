@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     J001 
@@ -162,7 +163,7 @@ class GCamFuFD extends BaseSifenField
     $qr->textContent = $this->getDCarQR();    
     $res->appendChild($qr);
     if (isset($this->dInfAdic))
-      $res->appendChild(new DOMElement('dInfAdic', $this->getDInfAdic()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dInfAdic', $this->getDInfAdic()));
     return $res;
   }  
 }

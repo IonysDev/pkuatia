@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 
 /**
@@ -36,7 +37,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDPUniProSer(String $dPUniProSer): self
   {
-    if(ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0) === false)
+    if(ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0, 8) === false)
     {
       throw new \Exception("El valor dPUniProSer no es válido:" . $dPUniProSer);
     }
@@ -54,7 +55,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDTiCamIt(String $dTiCamIt): self
   {
-    if(ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0) === false)
+    if(ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0, 4) === false)
     {
       throw new \Exception("El valor dTiCamIt no es válido:" . $dTiCamIt);
     }
@@ -72,7 +73,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDTotBruOpeItem(String $dTotBruOpeItem): self
   {
-    if(ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0) === false)
+    if(ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0, 8) === false)
     {
       throw new \Exception("El valor dTotBruOpeItem no es válido:" . $dTotBruOpeItem);
     }
@@ -192,10 +193,10 @@ class GValorItem extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gValorItem');
-    $res->appendChild(new DOMElement('dPUniProSer', $this->getDPUniProSer()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dPUniProSer', $this->getDPUniProSer()));
     if(isset($this->dTiCamIt))
-      $res->appendChild(new DOMElement('dTiCamIt', $this->getDTiCamIt()));
-    $res->appendChild(new DOMElement('dTotBruOpeItem', $this->getDTotBruOpeItem()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTiCamIt', $this->getDTiCamIt()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotBruOpeItem', $this->getDTotBruOpeItem()));
     $res->appendChild($this->gValorRestaItem->toDOMElement($doc));
     return $res;
   }

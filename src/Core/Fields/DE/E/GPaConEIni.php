@@ -9,6 +9,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E605
@@ -194,7 +195,20 @@ class GPaConEIni extends BaseSifenField
    *
    * @return int
    */
+  /**
+   * @deprecated El monto E608 es decimal (tMontoBase4, hasta 4 decimales): este getter lo trunca a entero. Usar getDMonTiPagDecimal().
+   */
   public function getDMonTiPag(): int
+  {
+    return $this->dMonTiPag;
+  }
+
+  /**
+   * Devuelve el monto por tipo de pago (E608) tal como fue establecido, como cadena decimal BCMath.
+   *
+   * @return String
+   */
+  public function getDMonTiPagDecimal(): String
   {
     return $this->dMonTiPag;
   }
@@ -298,13 +312,15 @@ class GPaConEIni extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gPaConEIni');
-    $res->appendChild(new DOMElement('iTiPago', $this->getITiPago()));
-    $res->appendChild(new DOMElement('dDesTiPag', $this->getDDesTiPag()));
-    $res->appendChild(new DOMElement('dMonTiPag', $this->getDMonTiPag()));
-    $res->appendChild(new DOMElement('cMoneTiPag', $this->getCMoneTiPag()));
-    $res->appendChild(new DOMElement('dDMoneTiPag', $this->getDDMoneTiPag()));
-    if ($this->cMoneTiPag != 'PYG') {
-      $res->appendChild(new DOMElement('dTiCamTiPag', $this->getDTiCamTiPag()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTiPago', $this->getITiPago()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesTiPag', $this->getDDesTiPag()));
+    // E608 se emite como decimal (hasta v0.1.5 se usaba el getter int y se perdían los decimales, PK-09)
+    $res->appendChild(XmlHelper::elemento($doc, 'dMonTiPag', $this->dMonTiPag));
+    $res->appendChild(XmlHelper::elemento($doc, 'cMoneTiPag', $this->getCMoneTiPag()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDMoneTiPag', $this->getDDMoneTiPag()));
+    // E611 es opcional en el XSD; la obligatoriedad con moneda extranjera la exige el builder (Factura::addPago).
+    if (isset($this->dTiCamTiPag)) {
+      $res->appendChild(XmlHelper::elemento($doc, 'dTiCamTiPag', $this->getDTiCamTiPag()));
     }
     if(isset($this->gPagTarCD))
       $res->appendChild($this->gPagTarCD->toDOMElement($doc));

@@ -8,6 +8,8 @@ use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\GGroupGesEve;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use DateTime;
+use DateTimeZone;
+use IonysDev\Pkuatia\Core\Constants;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use DOMDocument;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
@@ -93,7 +95,7 @@ class SignHelper
    * 
    * @return DOMDocument  Documento XML firmado.
    */
-  public static function SignRDE(RDE $rde, DateTime $fechaFirma = new DateTime('now')): DOMDocument
+  public static function SignRDE(RDE $rde, DateTime $fechaFirma = new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE))): DOMDocument
   {
     if (!isset(self::$x509Cert))
       throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");

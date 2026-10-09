@@ -7,6 +7,7 @@ use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:E920
@@ -275,33 +276,33 @@ class GCamSal extends BaseSifenField
   {
     $res = $doc->createElement('gCamSal');
 
-    $res->appendChild(new DOMElement('dDirLocSal', $this->getDDirLocSal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDirLocSal', $this->getDDirLocSal()));
 
     if (isset($this->dNumCasSal)) {
-      $res->appendChild(new DOMElement('dNumCasSal', $this->getDNumCasSal()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasSal', $this->getDNumCasSal()));
     } else {
-      $res->appendChild(new DOMElement('dNumCasSal', 0));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasSal', 0));
     }
 
     if (isset($this->dComp1Sal))
-      $res->appendChild(new DOMElement('dComp1Sal', $this->getDComp1Sal()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dComp1Sal', $this->getDComp1Sal()));
     
     if (isset($this->dComp2Sal))
-      $res->appendChild(new DOMElement('dComp2Sal', $this->getDComp2Sal()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dComp2Sal', $this->getDComp2Sal()));
 
-    $res->appendChild(new DOMElement('cDepSal', $this->getCDisSal()));
-    $res->appendChild(new DOMElement('dDesDepSal', $this->getDDesDepSal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cDepSal', $this->getCDisSal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesDepSal', $this->getDDesDepSal()));
 
     if (isset($this->cDisSal)) {
-      $res->appendChild(new DOMElement('cDisSal', $this->getCDisSal()));
-      $res->appendChild(new DOMElement('dDesDisSal', $this->getDDesDisSal()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cDisSal', $this->getCDisSal()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisSal', $this->getDDesDisSal()));
     }      
       
-    $res->appendChild(new DOMElement('cCiuSal', $this->getCCiuSal()));
-    $res->appendChild(new DOMElement('dDesCiuSal', $this->getDDesCiuSal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cCiuSal', $this->getCCiuSal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuSal', $this->getDDesCiuSal()));
 
     if (isset($this->dTelSal))
-      $res->appendChild(new DOMElement('dTelSal', $this->getDTelSal()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTelSal', $this->getDTelSal()));
 
     return $res;
   }

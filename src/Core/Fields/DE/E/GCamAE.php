@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\Core\Constants\CamAENatVen;
 use IonysDev\Pkuatia\Core\Constants\CamAETipIDVen;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E300
@@ -605,34 +606,34 @@ class GCamAE
   {
     $res = $doc->createElement("gCamAE");
 
-    $res->appendChild(new DOMElement('iNatVen',    $this->getINatVen()));
-    $res->appendChild(new DOMElement('dDesNatVen', $this->getDDesNatVen()));
-    $res->appendChild(new DOMElement('iTipIDVen',  $this->getITipIDVen()));
-    $res->appendChild(new DOMElement('dDTipIDVen', $this->getDDTipIDVen()));
-    $res->appendChild(new DOMElement('dNumIDVen',  $this->getDNumIDVen()));
-    $res->appendChild(new DOMElement('dNomVen',    $this->getDNomVen()));
-    $res->appendChild(new DOMElement('dDirVen',    $this->getDDirVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iNatVen', $this->getINatVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesNatVen', $this->getDDesNatVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTipIDVen', $this->getITipIDVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDVen', $this->getDDTipIDVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNumIDVen', $this->getDNumIDVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNomVen', $this->getDNomVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDirVen', $this->getDDirVen()));
 
     // Manual SIFEN: sin numeración enviar 0
     if (isset($this->dNumCasVen)) {
-      $res->appendChild(new DOMElement('dNumCasVen', $this->getDNumCasVen()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasVen', $this->getDNumCasVen()));
     } else {
-      $res->appendChild(new DOMElement('dNumCasVen', 0));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasVen', 0));
     }
 
-    $res->appendChild(new DOMElement('cDepVen',     $this->getCDepVen()));
-    $res->appendChild(new DOMElement('dDesDepVen',  $this->getDDesDepVen()));
-    $res->appendChild(new DOMElement('cDisVen',     $this->getCDisVen()));
-    $res->appendChild(new DOMElement('dDesDisVen',  $this->getDDesDisVen()));
-    $res->appendChild(new DOMElement('cCiuVen',     $this->getCCiuVen()));
-    $res->appendChild(new DOMElement('dDesCiuVen',  $this->getDDesCiuVen()));
-    $res->appendChild(new DOMElement('dDirProv',    $this->getDDirProv()));
-    $res->appendChild(new DOMElement('cDepProv',    $this->getCDepProv()));
-    $res->appendChild(new DOMElement('dDesDepProv', $this->getDDesDepProv()));
-    $res->appendChild(new DOMElement('cDisProv',    $this->getCDisProv()));
-    $res->appendChild(new DOMElement('dDesDisProv', $this->getDDesDisProv()));
-    $res->appendChild(new DOMElement('cCiuProv',    $this->getCCiuProv()));
-    $res->appendChild(new DOMElement('dDesCiuProv', $this->getDDesCiuProv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cDepVen', $this->getCDepVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesDepVen', $this->getDDesDepVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cDisVen', $this->getCDisVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesDisVen', $this->getDDesDisVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cCiuVen', $this->getCCiuVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuVen', $this->getDDesCiuVen()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDirProv', $this->getDDirProv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cDepProv', $this->getCDepProv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesDepProv', $this->getDDesDepProv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cDisProv', $this->getCDisProv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesDisProv', $this->getDDesDisProv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cCiuProv', $this->getCCiuProv()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuProv', $this->getDDesCiuProv()));
 
     return $res;
   }

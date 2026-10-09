@@ -8,6 +8,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E650 
@@ -67,7 +68,7 @@ class GCuotas
    */
   public function setDMonCuota(String $dMonCuota): self
   {
-    if(!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0, 4))
       throw new \Exception("[GCuotas] Monto de la cuota (dMonCuota) no válido: " . $dMonCuota, 1);
     $this->dMonCuota = $dMonCuota;
     return $this;
@@ -161,10 +162,10 @@ class GCuotas
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCuotas');
-    $res->appendChild(new DOMElement('cMoneCuo', $this->getCMoneCuo()));
-    $res->appendChild(new DOMElement('dDMoneCuo', $this->getDDMoneCuo()));
-    $res->appendChild(new DOMElement('dMonCuota', $this->getDMonCuota()));
-    $res->appendChild(new DOMElement('dVencCuo', $this->getDVencCuo()->format("Y-m-d")));
+    $res->appendChild(XmlHelper::elemento($doc, 'cMoneCuo', $this->getCMoneCuo()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDMoneCuo', $this->getDDMoneCuo()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dMonCuota', $this->getDMonCuota()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dVencCuo', $this->getDVencCuo()->format("Y-m-d")));
     return $res;
   }
   

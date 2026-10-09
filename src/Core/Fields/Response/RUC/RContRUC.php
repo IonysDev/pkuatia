@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response\RUC;
 
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ContRUC01 Elemento raiz de la respuesta a la consulta de RUC
@@ -202,11 +203,11 @@ class RContRUC
   {
     $res = new DOMElement('rContRuc');
 
-    $res->appendChild(new DOMElement('dRUCCons', $this->dRUCCons));
-    $res->appendChild(new DOMElement('dRazCons', $this->dRazCons));
-    $res->appendChild(new DOMElement('dCodEstCons', $this->dCodEstCons));
-    $res->appendChild(new DOMElement('dDesEstCons', $this->getDDesEstCons()));
-    $res->appendChild(new DOMElement('dRUCFactElec', $this->dRUCFactElec));
+    $res->appendChild(XmlHelper::elementoSuelto('dRUCCons', $this->dRUCCons));
+    $res->appendChild(XmlHelper::elementoSuelto('dRazCons', $this->dRazCons));
+    $res->appendChild(XmlHelper::elementoSuelto('dCodEstCons', $this->dCodEstCons));
+    $res->appendChild(XmlHelper::elementoSuelto('dDesEstCons', $this->getDDesEstCons()));
+    $res->appendChild(XmlHelper::elementoSuelto('dRUCFactElec', $this->dRUCFactElec));
 
     return $res;
   }

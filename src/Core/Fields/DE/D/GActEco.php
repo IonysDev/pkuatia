@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     D130
@@ -160,8 +161,8 @@ class GActEco extends BaseSifenField
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         $res = $doc->createElement('gActEco');
-        $res->appendChild(new DOMElement('cActEco', $this->getCActEco()));
-        $res->appendChild(new DOMElement('dDesActEco', $this->getDDesActEco()));
+        $res->appendChild(XmlHelper::elemento($doc, 'cActEco', $this->getCActEco()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesActEco', $this->getDDesActEco()));
         return $res;
     }    
 }

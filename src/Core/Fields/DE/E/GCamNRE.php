@@ -8,6 +8,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Core\Constants\MotEmiNR;
 use IonysDev\Pkuatia\Core\Constants\RespEmiNR;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     E500
@@ -38,13 +39,12 @@ class GCamNRE extends BaseSifenField
    */
   public function setIMotEmiNR(int|MotEmiNR $iMotEmiNR): self
   {
-    if(is_int($iMotEmiNR)){
-      $this->dDesMotEmiNR = MotEmiNR::getDescripcionFromInt($iMotEmiNR);
-      $this->iMotEmiNR = $iMotEmiNR;
-    } else {
-      $this->iMotEmiNR = $iMotEmiNR->value;
-      $this->dDesMotEmiNR = $iMotEmiNR->getDescripcion();
-    }
+    $valor = is_int($iMotEmiNR) ? $iMotEmiNR : $iMotEmiNR->value;
+    $this->iMotEmiNR = $valor;
+    // E502: para 99 (Otro) la descripción es texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd); no se pisa si ya fue informada con setDDesMotEmiNR().
+    if ($valor === MotEmiNR::Otro->value && isset($this->dDesMotEmiNR) && $this->dDesMotEmiNR !== MotEmiNR::Otro->getDescripcion())
+      return $this;
+    $this->dDesMotEmiNR = is_int($iMotEmiNR) ? MotEmiNR::getDescripcionFromInt($iMotEmiNR) : $iMotEmiNR->getDescripcion();
     return $this;
   }
 
@@ -207,14 +207,16 @@ class GCamNRE extends BaseSifenField
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
+    if ($this->getIMotEmiNR() === MotEmiNR::Otro->value && (mb_strlen($this->getDDesMotEmiNR()) < 5 || mb_strlen($this->getDDesMotEmiNR()) > 60))
+      throw new \InvalidArgumentException("[GCamNRE] Con iMotEmiNR = 99 (Otro), dDesMotEmiNR (E502) debe ser un texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd): informarlo con setDDesMotEmiNR(). Valor actual: '" . $this->getDDesMotEmiNR() . "'.");
     $res = $doc->createElement('gCamNRE');
-    $res->appendChild(new DOMElement('iMotEmiNR', $this->getIMotEmiNR()));
-    $res->appendChild(new DOMElement('dDesMotEmiNR', $this->getDDesMotEmiNR()));
-    $res->appendChild(new DOMElement('iRespEmiNR', $this->getIRespEmiNR()));
-    $res->appendChild(new DOMElement('dDesRespEmiNR', $this->getDDesRespEmiNR()));
-    $res->appendChild(new DOMElement('dKmR', $this->getDKmR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iMotEmiNR', $this->getIMotEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesMotEmiNR', $this->getDDesMotEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iRespEmiNR', $this->getIRespEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesRespEmiNR', $this->getDDesRespEmiNR()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dKmR', $this->getDKmR()));
     if(isset($this->dFecEm))
-      $res->appendChild(new DOMElement('dFecEm', $this->getDFecEm()->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecEm', $this->getDFecEm()->format('Y-m-d')));
     return $res;
   }
 

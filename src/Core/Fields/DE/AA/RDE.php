@@ -11,6 +11,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     AA001
@@ -237,7 +238,7 @@ class RDE extends BaseSifenField
     $res->setAttribute('xmlns', Constants::SIFEN_NS_URI);
     $res->setAttribute('xmlns:xsi', Constants::SIFEN_NS_XSI);
     $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_DE);
-    $res->appendChild(new DOMElement('dVerFor', $this->getDVerFor()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dVerFor', $this->getDVerFor()));
     $res->appendChild($this->DE->toDOMElement($doc));
     return $res;
   }

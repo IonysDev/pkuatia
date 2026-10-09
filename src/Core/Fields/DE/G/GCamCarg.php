@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\DataMappings\UnidadMedidaMapping;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:G050
@@ -302,17 +303,23 @@ class GCamCarg
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamCarg');
-    $res->appendChild(new DOMElement('cUniMedTotVol', $this->getCUniMedTotVol()));
+    // Todos los campos de tgCamCarg son opcionales (DE_v150.xsd:1825-1875); hasta v0.1.5 los numéricos se emitían sin guardas (PK-08).
+    if (isset($this->cUniMedTotVol))
+      $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotVol', $this->getCUniMedTotVol()));
     if(!is_null($this->dDesUniMedTotVol) && strlen($this->dDesUniMedTotVol) > 0)
-      $res->appendChild(new DOMElement('dDesUniMedTotVol', $this->dDesUniMedTotVol));
-    $res->appendChild(new DOMElement('dTotVolMerc', $this->getDTotVolMerc()));
-    $res->appendChild(new DOMElement('cUniMedTotPes', $this->getCUniMedTotPes()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotVol', $this->dDesUniMedTotVol));
+    if (isset($this->dTotVolMerc))
+      $res->appendChild(XmlHelper::elemento($doc, 'dTotVolMerc', $this->getDTotVolMerc()));
+    if (isset($this->cUniMedTotPes))
+      $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotPes', $this->getCUniMedTotPes()));
     if(!is_null($this->dDesUniMedTotPes) && strlen($this->dDesUniMedTotPes) > 0)
-      $res->appendChild(new DOMElement('dDesUniMedTotPes', $this->dDesUniMedTotPes));
-    $res->appendChild(new DOMElement('dTotPesMerc', $this->getDTotPesMerc()));
-    $res->appendChild(new DOMElement('iCarCarga', $this->getICarCarga()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotPes', $this->dDesUniMedTotPes));
+    if (isset($this->dTotPesMerc))
+      $res->appendChild(XmlHelper::elemento($doc, 'dTotPesMerc', $this->getDTotPesMerc()));
+    if (isset($this->iCarCarga))
+      $res->appendChild(XmlHelper::elemento($doc, 'iCarCarga', $this->getICarCarga()));
     if(!is_null($this->dDesCarCarga) && strlen($this->dDesCarCarga) > 0)
-      $res->appendChild(new DOMElement('dDesCarCarga', $this->dDesCarCarga));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesCarCarga', $this->dDesCarCarga));
     return $res;
   }
   

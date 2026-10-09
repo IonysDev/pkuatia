@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     D001
@@ -211,7 +212,7 @@ class GDatGralOpe extends BaseSifenField
     if(!isset($this->gDatRec))
       throw new Exception('[GDatGralOpe] El campo gDatRec no puede ser nulo');
     $res = $doc->createElement('gDatGralOpe');
-    $res->appendChild(new DOMElement('dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
     if(isset($this->gOpeCom)) 
       $res->appendChild($this->gOpeCom->toDOMElement($doc));
     $res->appendChild($this->gEmis->toDOMElement($doc));

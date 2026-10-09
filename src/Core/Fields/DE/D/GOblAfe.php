@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Constants\COblAfe;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     D030
@@ -136,8 +137,8 @@ class GOblAfe extends BaseSifenField
         $res = $doc->createElement('gOblAfe');
         if(isset($this->cOblAfe))
         {
-           $res->appendChild($doc->createElement('cOblAfe', $this->getCOblAfe()));
-           $res->appendChild($doc->createElement('dDesOblAfe', $this->getDDesOblAfe()));
+           $res->appendChild(XmlHelper::elemento($doc, 'cOblAfe', $this->getCOblAfe()));
+           $res->appendChild(XmlHelper::elemento($doc, 'dDesOblAfe', $this->getDDesOblAfe()));
         }
 
         return $res;

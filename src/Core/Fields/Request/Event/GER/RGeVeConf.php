@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo: GCO001 - rGeVeConf - Raiz Gestión de Eventos Conformidad
@@ -109,10 +110,10 @@ class RGeVeConf
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeConf');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('iTipConf', $this->getITipConf()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTipConf', $this->getITipConf()));
     if ($this->iTipConf == 2) {
-      $res->appendChild(new DOMElement('dFecRecep', $this->dFecRecep->format('Y-m-d')));
+      $res->appendChild(XmlHelper::elemento($doc, 'dFecRecep', $this->dFecRecep->format('Y-m-d\TH:i:s'))); // GCO004 es fecHhmmss (Evento_v150.xsd:76); antes se emitía solo la fecha
     }
     return $res;
   }

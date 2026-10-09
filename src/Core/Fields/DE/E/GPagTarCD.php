@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id: E620 
@@ -326,28 +327,28 @@ class GPagTarCD extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gPagTarCD');
-    $res->appendChild(new DOMElement('iDenTarj', $this->getIDenTarj()));
-    $res->appendChild(new DOMElement('dDesDenTarj', $this->getDDesDenTarj()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iDenTarj', $this->getIDenTarj()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesDenTarj', $this->getDDesDenTarj()));
     
     if(isset($this->dRSProTar) && strlen($this->getDRSProTar()) > 0)
-      $res->appendChild(new DOMElement('dRSProTar', $this->getDRSProTar()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRSProTar', $this->getDRSProTar()));
     
     if(isset($this->dRUCProTar) && strlen($this->getDRUCProTar()) > 0)
-      $res->appendChild(new DOMElement('dRUCProTar', $this->getDRUCProTar()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRUCProTar', $this->getDRUCProTar()));
     
     if(isset($this->dDVProTar))
-      $res->appendChild(new DOMElement('dDVProTar', $this->getDDVProTar()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDVProTar', $this->getDDVProTar()));
     
-    $res->appendChild(new DOMElement('iForProPa', $this->getIForProPa()));
+    $res->appendChild(XmlHelper::elemento($doc, 'iForProPa', $this->getIForProPa()));
 
     if(isset($this->dCodAuOpe))
-      $res->appendChild(new DOMElement('dCodAuOpe', $this->getDCodAuOpe()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCodAuOpe', $this->getDCodAuOpe()));
     
     if(isset($this->dNomTit) && strlen($this->getDNomTit()) > 0)
-      $res->appendChild(new DOMElement('dNomTit', $this->getDNomTit()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNomTit', $this->getDNomTit()));
     
     if(isset($this->dNumTarj))
-      $res->appendChild(new DOMElement('dNumTarj', $this->getDNumTarj()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumTarj', $this->getDNumTarj()));
     return $res;
   }
   

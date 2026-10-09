@@ -11,6 +11,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
 use IonysDev\Pkuatia\Utils\ValueValidations;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id: E700
@@ -235,8 +236,11 @@ class GCamItem extends BaseSifenField
    */
   public function setCUniMed(int $cUniMed): self
   {
+    $desc = UnidadMedidaMapping::GetDesc(strval($cUniMed));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamItem] El código de unidad de medida $cUniMed (E709) no existe en Unidades_Medida_v141.xsd del SIFEN.");
     $this->cUniMed = $cUniMed;
-    $this->setDDesUniMed(UnidadMedidaMapping::GetDesc(strval($cUniMed)));
+    $this->setDDesUniMed($desc);
     return $this;
   }
 
@@ -270,7 +274,7 @@ class GCamItem extends BaseSifenField
    */
   public function setDCantProSer(String $dCantProSer): self
   {
-    if(!ValueValidations::isValidStringDecimal($dCantProSer, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dCantProSer, 10, 0, 8))
     {
       throw new \Exception("Valor inválido de dCantProSer: $dCantProSer");
     }
@@ -373,7 +377,7 @@ class GCamItem extends BaseSifenField
    */
   public function setDCanQuiMer(int $dCanQuiMer): self
   {
-    if(!ValueValidations::isValidStringDecimal($dCanQuiMer, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dCanQuiMer, 10, 0, 4))
     {
       throw new \Exception("Valor inválido de dCanQuiMer: $dCanQuiMer");
     }
@@ -391,7 +395,7 @@ class GCamItem extends BaseSifenField
    */
   public function setDPorQuiMer(int $dPorQuiMer): self
   {
-    if(!ValueValidations::isValidStringDecimal($dPorQuiMer, 15, 0))
+    if(!ValueValidations::isValidStringDecimal($dPorQuiMer, 3, 0, 8))
     {
       throw new \Exception("Valor inválido de dPorQuiMer: $dPorQuiMer");
     }
@@ -832,41 +836,41 @@ class GCamItem extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamItem');
-    $res->appendChild(new DOMElement('dCodInt', $this->getDCodInt()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dCodInt', $this->getDCodInt()));
     if(isset($this->dParAranc))
-      $res->appendChild(new DOMElement('dParAranc', $this->getDParAranc()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dParAranc', $this->getDParAranc()));
     if(isset($this->dNCM))
-      $res->appendChild(new DOMElement('dNCM', $this->getDNCM()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNCM', $this->getDNCM()));
     if(isset($this->dDncpG))
-      $res->appendChild(new DOMElement('dDncpG', str_pad($this->dDncpG, 8, '0', STR_PAD_RIGHT)));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDncpG', str_pad($this->dDncpG, 8, '0', STR_PAD_RIGHT)));
     if(isset($this->dDncpE))
-      $res->appendChild(new DOMElement('dDncpE', $this->getDDncpE()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDncpE', $this->getDDncpE()));
     if(isset($this->dGtin))
-      $res->appendChild(new DOMElement('dGtin', $this->getDGtin()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dGtin', $this->getDGtin()));
     if(isset($this->dGtinPq))
-      $res->appendChild(new DOMElement('dGtinPq', $this->getDGtinPq()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dGtinPq', $this->getDGtinPq()));
     //check is ddDesProSer has the & character
-    $res->appendChild(new DOMElement('dDesProSer', htmlspecialchars($this->getDDesProSer())));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesProSer', $this->getDDesProSer()));
     //$res->appendChild(new DOMElement('dDesProSer', $this->getDDesProSer()));
-    $res->appendChild(new DOMElement('cUniMed', $this->getCUniMed()));
-    $res->appendChild(new DOMElement('dDesUniMed', $this->getDDesUniMed()));
-    $res->appendChild(new DOMElement('dCantProSer', $this->getDCantProSer()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cUniMed', $this->getCUniMed()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMed', $this->getDDesUniMed()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dCantProSer', $this->getDCantProSer()));
     if(isset($this->cPaisOrig))
-      $res->appendChild(new DOMElement('cPaisOrig', $this->getCPaisOrig()));
+      $res->appendChild(XmlHelper::elemento($doc, 'cPaisOrig', $this->getCPaisOrig()));
     if(isset($this->dDesPaisOrig))
-      $res->appendChild(new DOMElement('dDesPaisOrig', $this->getDDesPaisOrig()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesPaisOrig', $this->getDDesPaisOrig()));
     if(isset($this->dInfItem))
-      $res->appendChild(new DOMElement('dInfItem', $this->getDInfItem()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dInfItem', $this->getDInfItem()));
     if(isset($this->cRelMerc))
-      $res->appendChild(new DOMElement('cRelMerc', $this->cRelMerc));
+      $res->appendChild(XmlHelper::elemento($doc, 'cRelMerc', $this->cRelMerc));
     if(isset($this->dDesRelMerc))
-      $res->appendChild(new DOMElement('dDesRelMerc', $this->getDDesRelMerc()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesRelMerc', $this->getDDesRelMerc()));
     if(isset($this->dCanQuiMer))
-      $res->appendChild(new DOMElement('dCanQuiMer', $this->getDCanQuiMer()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCanQuiMer', $this->getDCanQuiMer()));
     if(isset($this->dPorQuiMer))
-      $res->appendChild(new DOMElement('dPorQuiMer', $this->getDPorQuiMer()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPorQuiMer', $this->getDPorQuiMer()));
     if(isset($this->dCDCAnticipo))
-      $res->appendChild(new DOMElement('dCDCAnticipo', $this->getDCDCAnticipo()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCDCAnticipo', $this->getDCDCAnticipo()));
     
     if(isset($this->gValorItem))
       $res->appendChild($this->gValorItem->toDOMElement($doc));

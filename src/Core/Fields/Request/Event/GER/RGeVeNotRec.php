@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo: GEN001 - rGeVeNotRec - Raíz Gestión de Eventos Notificación: Recepción DE o DTE
@@ -137,6 +138,10 @@ class RGeVeNotRec
    */
   public function setDTipIDRec(int $dTipIDRec): self
   {
+    // tiTipDoc admite solo 1 a 4 (DE_Types_v150.xsd:645-653; lo usa Evento_v150.xsd para dTipIDRec): en los eventos del
+    // receptor no existen el innominado (5) ni "Otro" (9) del DE.
+    if ($dTipIDRec < 1 || $dTipIDRec > 4)
+      throw new \InvalidArgumentException("[RGeVeNotRec] dTipIDRec (tipo de documento de identidad del receptor) debe ser 1 Cédula paraguaya, 2 Pasaporte, 3 Cédula extranjera o 4 Carnet de residencia (tiTipDoc, DE_Types_v150.xsd:645-653); se recibió $dTipIDRec.");
     $this->dTipIDRec = $dTipIDRec;
 
     return $this;
@@ -288,22 +293,22 @@ class RGeVeNotRec
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeNotRec');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
-    $res->appendChild(new DOMElement('dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(new DOMElement('iTipRec', $this->getITipRec()));
-    $res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFecEmi', $this->getDFecEmi()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(XmlHelper::elemento($doc, 'dFecRecep', $this->getDFecRecep()->format('Y-m-d\TH:i:s')));
+    $res->appendChild(XmlHelper::elemento($doc, 'iTipRec', $this->getITipRec()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dNomRec', $this->getDNomRec()));
     if ($this->iTipRec == 1) {
-      $res->appendChild(new DOMElement('dRucRec', $this->getDRucRec()));
-      $res->appendChild(new DOMElement('dDVRec', $this->getDDVRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dRucRec', $this->getDRucRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDVRec', $this->getDDVRec()));
     }
 
     if ($this->iTipRec == 2) {
-      $res->appendChild(new DOMElement('dTipIDRec', $this->getDTipIDRec()));
-      $res->appendChild(new DOMElement('dNumID', $this->getDNumID()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dTipIDRec', $this->getDTipIDRec()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumID', $this->getDNumID()));
     }
 
-    $res->appendChild(new DOMElement('dTotalGs', $this->getDTotalGs()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dTotalGs', $this->getDTotalGs()));
     return $res;
   }
 

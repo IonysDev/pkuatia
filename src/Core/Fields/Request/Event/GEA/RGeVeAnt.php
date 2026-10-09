@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GEA;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * ID:GEA001 Raíz Gestión de Eventos anticipo PADRE:GDE007
@@ -59,7 +60,7 @@ class RGeVeAnt
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('rGeVeAnt');
-    $res->appendChild(new DOMElement('Id', $this->getId()));
+    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
 
     return $res;
   }

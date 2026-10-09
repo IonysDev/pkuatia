@@ -12,6 +12,7 @@ enum TipoDocImpresoAso: int {
     case NotaDeCredito = 2;
     case NotaDeDebito = 3;
     case NotaDeRemision = 4;
+    /** @deprecated No existe en el XSD de producción (tiTIpoDoc admite 1-4, DE_Types_v150.xsd): el SIFEN lo rechaza. Se conserva solo por compatibilidad; GCamDEAsoc::toDOMElement lo bloquea. */
     case ComprobanteRetencion = 5;
 
     public function getDescription(): string

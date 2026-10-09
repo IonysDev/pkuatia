@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo: GEI001 - rGeVeInu - Campos generales del DE
@@ -205,15 +206,15 @@ class RGeVeInu
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
       $res = $doc->createElement('rGeVeInu');
-      $res->appendChild($doc->createElement('dNumTim', $this->dNumTim));
-      $res->appendChild($doc->createElement('dEst', $this->dEst));
-      $res->appendChild($doc->createElement('dPunExp', $this->dPunExp));
-      $res->appendChild($doc->createElement('dNumIn', $this->dNumIn));
-      $res->appendChild($doc->createElement('dNumFin', $this->dNumFin));
-      $res->appendChild($doc->createElement('iTiDE', $this->iTiDE));
-      $res->appendChild($doc->createElement('mOtEve', $this->mOtEve));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumTim', $this->dNumTim));
+      $res->appendChild(XmlHelper::elemento($doc, 'dEst', $this->dEst));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPunExp', $this->dPunExp));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumIn', $this->dNumIn));
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumFin', $this->dNumFin));
+      $res->appendChild(XmlHelper::elemento($doc, 'iTiDE', $this->iTiDE));
+      $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->mOtEve));
       if (isset($this->dSerieNum)) {
-        $res->appendChild($doc->createElement('dSerieNum', $this->dSerieNum));
+        $res->appendChild(XmlHelper::elemento($doc, 'dSerieNum', $this->dSerieNum));
       }
       return $res;
   }

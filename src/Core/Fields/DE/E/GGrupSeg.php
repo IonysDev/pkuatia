@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo:        E800  
@@ -180,7 +181,7 @@ class GGrupSeg extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gGrupSeg');
-    $res->appendChild(new DOMElement('dCodEmpSeg', $this->getDCodEmpSeg()));
+    $res->appendChild(XmlHelper::elemento($doc, 'dCodEmpSeg', $this->getDCodEmpSeg()));
     if(isset($this->gGrupPolSeg) && count($this->gGrupPolSeg) > 0)
     {
       foreach($this->gGrupPolSeg as $gGrupPolSeg)

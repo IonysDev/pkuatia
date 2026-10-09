@@ -15,6 +15,7 @@ use DOMElement;
 use InvalidArgumentException;
 use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 /**
  * Nodo Id:     D010
@@ -173,7 +174,7 @@ class GOpeCom extends BaseSifenField
      */
     public function setDTiCam(String $dTiCam): self
     {
-        if(ValueValidations::isValidStringDecimal($dTiCam, 5, 0))
+        if(ValueValidations::isValidStringDecimal($dTiCam, 5, 0, 4))
         {
             $this->dTiCam = $dTiCam;
         }
@@ -429,7 +430,27 @@ class GOpeCom extends BaseSifenField
     }
 
     /**
-     * Convierte este GOpeCom a un DOM Element.
+     * Verifica la coherencia de la condición y del tipo de cambio con la moneda de la operación.
+     *
+     * Con una moneda distinta de PYG, dCondTiCam (D017) es obligatorio (validación 1207 del MT v150 §12.4) y, si
+     * D017 = 1 (global), también lo es dTiCam (D018, validación 1209). En el XSD de producción ambos son
+     * minOccurs="0" (DE_v150.xsd:210-213, tgOpeCom), por lo que la ausencia no se detecta por esquema: la detecta el SIFEN
+     * al recibir el documento. Antes, la serialización terminaba en un Error de propiedad tipada sin inicializar.
+     *
+     * @throws InvalidArgumentException Si falta D017 o D018 cuando corresponde.
+     */
+    public function validarTipoDeCambio(): void
+    {
+        if (strcmp(strtoupper($this->cMoneOpe), 'PYG') == 0) // cMoneOpe se inicializa en el constructor
+            return;
+        if (!isset($this->dCondTiCam))
+            throw new InvalidArgumentException("[GOpeCom] Con moneda de la operación " . $this->cMoneOpe . " (D015) es obligatoria la condición del tipo de cambio dCondTiCam (D017: 1 = global, 2 = por ítem; validación 1207). En los builders: setCondicionTipoDeCambio().");
+        if ($this->dCondTiCam == 1 && !isset($this->dTiCam))
+            throw new InvalidArgumentException("[GOpeCom] Con dCondTiCam = 1 (tipo de cambio global, D017) es obligatorio el tipo de cambio dTiCam (D018; validación 1209). En los builders: setTipoDeCambio().");
+    }
+
+    /**
+     * Convierte el objeto a un DOMElement.
      * 
      * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
      *
@@ -439,21 +460,22 @@ class GOpeCom extends BaseSifenField
     {
         $res = $doc->createElement('gOpeCom');
         if (isset($this->iTipTra)) {
-            $res->appendChild(new DOMElement('iTipTra', $this->getITipTra()));
-            $res->appendChild(new DOMElement('dDesTipTra', $this->getDDesTipTra()));
+            $res->appendChild(XmlHelper::elemento($doc, 'iTipTra', $this->getITipTra()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesTipTra', $this->getDDesTipTra()));
         }
-        $res->appendChild(new DOMElement('iTImp', $this->getITImp()));
-        $res->appendChild(new DOMElement('dDesTImp', $this->getDDesTImp()));
-        $res->appendChild(new DOMElement('cMoneOpe', $this->getCMoneOpe()));
-        $res->appendChild(new DOMElement('dDesMoneOpe', $this->getDDesMoneOpe()));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTImp', $this->getITImp()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesTImp', $this->getDDesTImp()));
+        $res->appendChild(XmlHelper::elemento($doc, 'cMoneOpe', $this->getCMoneOpe()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesMoneOpe', $this->getDDesMoneOpe()));
+        $this->validarTipoDeCambio();
         if (strcmp($this->cMoneOpe, "PYG") != 0)
-            $res->appendChild(new DOMElement('dCondTiCam', $this->getDCondTiCam()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dCondTiCam', $this->getDCondTiCam()));
         if (strcmp($this->cMoneOpe, "PYG") != 0 && $this->dCondTiCam != 2)
-            $res->appendChild(new DOMElement('dTiCam', $this->getDTiCam()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dTiCam', $this->getDTiCam()));
         if(isset($this->iCondAnt))
         {
-            $res->appendChild(new DOMElement('iCondAnt', $this->getICondAnt()));
-            $res->appendChild(new DOMElement('dDesCondAnt', $this->getDDesCondAnt()));
+            $res->appendChild(XmlHelper::elemento($doc, 'iCondAnt', $this->getICondAnt()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesCondAnt', $this->getDDesCondAnt()));
         }
         foreach($this->gOblAfe as $oblAfe)
         {
