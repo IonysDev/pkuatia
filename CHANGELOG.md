@@ -5,7 +5,7 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
-## [0.2.0] — No publicado (rama `fase-a/p0-emision`)
+## [0.2.0] — 2026-10-09
 
 Fase A del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): correcciones
 P0 de emisión (PK-01 a PK-24). **Compatible hacia atrás**: ninguna firma pública se elimina ni
