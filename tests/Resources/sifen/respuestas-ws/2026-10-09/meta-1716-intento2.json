@@ -1,0 +1,52 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsDe-previo",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl",
+            "action": "",
+            "ms": 308,
+            "resp_len": 11014,
+            "ts": "2026-10-09T17:16:45-03:00"
+        },
+        {
+            "op": "rEnviEventoDe",
+            "location": "https://sifen-test.set.gov.py/de/ws/eventos/evento.wsdl",
+            "action": "",
+            "ms": 471,
+            "resp_len": 543,
+            "ts": "2026-10-09T17:16:56-03:00"
+        },
+        {
+            "op": "rEnviConsDe",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl",
+            "action": "",
+            "ms": 440,
+            "resp_len": 15697,
+            "ts": "2026-10-09T17:17:06-03:00"
+        }
+    ],
+    "resumen": {
+        "consultarDE_previo": {
+            "dCodRes": 422,
+            "dMsgRes": "CDC encontrado"
+        },
+        "cancelarDE": {
+            "dFecProc": "2026-10-09T17:16:57-03:00",
+            "eventos": [
+                {
+                    "dEstRes": "Aprobado",
+                    "gResProc": [
+                        "0600 Evento registrado correctamente"
+                    ],
+                    "dProtAut": "1167531"
+                }
+            ]
+        },
+        "consultarDE": {
+            "dCodRes": 422,
+            "dMsgRes": "CDC encontrado",
+            "xContenDE_len": 13935,
+            "xContEv_con_contenido": true
+        }
+    }
+}

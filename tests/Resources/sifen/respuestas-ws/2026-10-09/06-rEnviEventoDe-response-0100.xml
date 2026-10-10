@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"><env:Header/><env:Body><ns2:rRetEnviEventoDe xmlns:ns2="http://ekuatia.set.gov.py/sifen/xsd"><ns2:dFecProc>2026-10-09T17:16:21-03:00</ns2:dFecProc><ns2:gResProcEVe><ns2:dEstRes>Rechazado</ns2:dEstRes><ns2:id>0</ns2:id><ns2:gResProc><ns2:dCodRes>0100</ns2:dCodRes><ns2:dMsgRes>Error Inesperado</ns2:dMsgRes></ns2:gResProc></ns2:gResProcEVe></ns2:rRetEnviEventoDe></env:Body></env:Envelope>

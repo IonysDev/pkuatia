@@ -5,6 +5,33 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [0.2.1] — No publicado
+
+Fase B del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): deserialización,
+respuestas del SIFEN y robustez (PK-25 a PK-43). **Compatible hacia atrás**: ninguna firma pública se
+elimina ni cambia; solo se agregan métodos, parámetros opcionales al final, propiedades y pruebas, los
+retornos que ya podían devolver `null` se declaran anulables, y se corrige comportamiento que producía
+`Error`, `TypeError`, pérdida de datos o XML inválido. El formato de las respuestas se fija contra
+capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual Técnico.
+
+### Agregado
+
+- **Capturas reales de las respuestas del SIFEN en `tests/Resources/sifen/respuestas-ws/`** (32
+  archivos de `sifen-test`, 06 y 09/10/2026, anonimizados): envío aprobado 0260 y rechazo genérico
+  0160, eventos 0600, 4009 y 0100, consultas de DE 0420 y 0422 (con y sin eventos) y consultas de RUC
+  0502 y 0160. Son copias byte a byte de `ekuat-ia/06-ejemplos/respuestas-ws/` (`16070af`),
+  versionadas sin conversión de fin de línea (`.gitattributes`). No forman parte de la API.
+- Soporte de pruebas: `tests/Support/CapturaSoapClient` (cliente SOAP sin red que responde con una
+  captura y la decodifica con `ext/soap`, como en producción; `__getLastResponse()` devuelve los
+  bytes exactos), `tests/Support/RespuestasSifenFactory` (cada captura por nombre) y
+  `tests/Support/RoundTrip` (ida y vuelta byte a byte: `toDOMElement` → `FromDOMElement` o
+  `FromSimpleXMLElement` → `toDOMElement`).
+- Tests: `tests/Unit/Resources/RespuestasWsSincroniaTest` (las copias siguen iguales a ekuat-ia; se
+  omite sin `docs/sifen-ai`), `tests/Unit/Responses/CapturasRealesTest` (formato real: `Id` con
+  mayúscula en `rRetEnviDe`, `id` en minúscula en `rRetEnviEventoDe`, `xContenDE` como texto con
+  varias raíces) y `tests/Unit/Deserializacion/IdaYVueltaDocumentosTest` (ida y vuelta por DOM
+  idéntica en FE, NC, ND y NR).
+
 ## [0.2.0] — 2026-10-09
 
 Fase A del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): correcciones

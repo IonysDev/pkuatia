@@ -20,3 +20,5 @@
 /memory
 .phpunit.cache
 /.claude
+# Capturas reales (anonimizadas) del SIFEN para los tests; solo XML, un certificado ahí seguiría ignorado.
+!/tests/Resources/**/*.xml
