@@ -143,9 +143,9 @@ class GGrupAdi
    *
    * @return String
    */
-  public function getDCiclo(): String
+  public function getDCiclo(): ?String
   {
-    return $this->dCiclo;
+    return $this->dCiclo ?? null;
   }
 
   /**
@@ -215,9 +215,9 @@ class GGrupAdi
    *
    * @return String
    */
-  public function getDContrato(): String
+  public function getDContrato(): ?String
   {
-    return $this->dContrato;
+    return $this->dContrato ?? null;
   }
 
   /**

@@ -133,8 +133,11 @@ class GDatRec extends BaseSifenField
      */
     public function setCPaisRec(String $cPaisRec): void
     {
+        $desc = CountryMapping::getCountryDesc($cPaisRec);
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
         $this->cPaisRec = $cPaisRec;
-        $this->dDesPaisRe = CountryMapping::getCountryDesc($cPaisRec);
+        $this->dDesPaisRe = $desc;
     }
 
     /**
@@ -275,10 +278,11 @@ class GDatRec extends BaseSifenField
      */
     public function setCDepRec(int $cDepRec): void
     {
+        $desc = DepartamentoMapping::getDepName(strval($cDepRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         $this->cDepRec = $cDepRec;
-        if(!is_null($cDepRec)) {
-            $this->dDesDepRec = DepartamentoMapping::getDepName(strval($this->cDepRec));
-        }
+        $this->dDesDepRec = $desc;
     }
 
     public function setDDesDepRec(String $dDesDepRec): self
@@ -289,10 +293,11 @@ class GDatRec extends BaseSifenField
 
     public function setCDisRec(int $cDisRec): self
     {
+        $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cDisRec = $cDisRec;
-        if(!is_null($cDisRec)) {
-            $this->dDesDisRec = PyGeoCodesMapping::getDistName(strval($this->cDisRec));
-        }
+        $this->dDesDisRec = $desc;
         return $this;
     }
 
@@ -304,10 +309,11 @@ class GDatRec extends BaseSifenField
 
     public function setCCiuRec(int $cCiuRec): self
     {
+        $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cCiuRec = $cCiuRec;
-        if(!is_null($cCiuRec)) {
-            $this->dDesCiuRec = PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
-        }
+        $this->dDesCiuRec = $desc;
         return $this;
     }
 

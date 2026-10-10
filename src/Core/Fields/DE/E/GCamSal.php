@@ -166,9 +166,9 @@ class GCamSal extends BaseSifenField
    *
    * @return int
    */
-  public function getDNumCasSal(): int
+  public function getDNumCasSal(): ?int
   {
-    return $this->dNumCasSal;
+    return $this->dNumCasSal ?? null;
   }
 
   /**
@@ -196,9 +196,9 @@ class GCamSal extends BaseSifenField
    *
    * @return int
    */
-  public function getCDepSal(): int
+  public function getCDepSal(): ?int
   {
-    return $this->cDepSal;
+    return $this->cDepSal ?? null;
   }
 
   /**
@@ -217,9 +217,9 @@ class GCamSal extends BaseSifenField
    *
    * @return int
    */
-  public function getCDisSal(): int
+  public function getCDisSal(): ?int
   {
-    return $this->cDisSal;
+    return $this->cDisSal ?? null;
   }
 
   /**
@@ -237,9 +237,9 @@ class GCamSal extends BaseSifenField
    *
    * @return int
    */
-  public function getCCiuSal(): int
+  public function getCCiuSal(): ?int
   {
-    return $this->cCiuSal;
+    return $this->cCiuSal ?? null;
   }
 
 

@@ -23,7 +23,7 @@ class DepartamentoMapping
     return $array['simpleType'][0]['restriction']['enumeration'];
   }
 
-  public static function getDepName($code): String
+  public static function getDepName($code): ?String
   {
     $depCode = strtoupper($code);
     $array = self::getArray();

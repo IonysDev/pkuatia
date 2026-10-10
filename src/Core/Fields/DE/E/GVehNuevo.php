@@ -283,9 +283,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getITipOpVN(): int
+  public function getITipOpVN(): ?int
   {
-    return $this->iTipOpVN;
+    return $this->iTipOpVN ?? null;
   }
 
   /**
@@ -294,9 +294,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipOpVN(): String
+  public function getDDesTipOpVN(): ?String
   {
-    switch ($this->iTipOpVN) {
+    switch ($this->iTipOpVN ?? null) {
       case 1:
         return "Venta a representante";
         break;
@@ -322,9 +322,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDChasis(): String
+  public function getDChasis(): ?String
   {
-    return $this->dChasis;
+    return $this->dChasis ?? null;
   }
 
   /**
@@ -332,9 +332,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDColor(): String
+  public function getDColor(): ?String
   {
-    return $this->dColor;
+    return $this->dColor ?? null;
   }
 
   /**
@@ -342,9 +342,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDPotencia(): int
+  public function getDPotencia(): ?int
   {
-    return $this->dPotencia;
+    return $this->dPotencia ?? null;
   }
 
   /**
@@ -352,9 +352,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDCapMot(): int
+  public function getDCapMot(): ?int
   {
-    return $this->dCapMot;
+    return $this->dCapMot ?? null;
   }
 
   /**
@@ -362,9 +362,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDPNet(): int
+  public function getDPNet(): ?int
   {
-    return $this->dPNet;
+    return $this->dPNet ?? null;
   }
 
   /**
@@ -372,9 +372,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDPBruto(): int
+  public function getDPBruto(): ?int
   {
-    return $this->dPBruto;
+    return $this->dPBruto ?? null;
   }
 
   /**
@@ -382,9 +382,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getITipCom(): int
+  public function getITipCom(): ?int
   {
-    return $this->iTipCom;
+    return $this->iTipCom ?? null;
   }
 
   /**
@@ -392,9 +392,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipCom(): String
+  public function getDDesTipCom(): ?String
   {
-    switch ($this->iTipCom) {
+    switch ($this->iTipCom ?? null) {
       case 1:
         return "Gasolina";
         break;
@@ -435,9 +435,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDCapTracc(): int
+  public function getDCapTracc(): ?int
   {
-    return $this->dCapTracc;
+    return $this->dCapTracc ?? null;
   }
 
   /**
@@ -445,9 +445,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDAnoFab(): int
+  public function getDAnoFab(): ?int
   {
-    return $this->dAnoFab;
+    return $this->dAnoFab ?? null;
   }
 
   /**
@@ -465,9 +465,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDCapac(): int
+  public function getDCapac(): ?int
   {
-    return $this->dCapac;
+    return $this->dCapac ?? null;
   }
 
   /**

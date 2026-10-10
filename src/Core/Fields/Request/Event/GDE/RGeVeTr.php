@@ -640,9 +640,9 @@ class RGeVeTr
    *
    * @return String
    */
-  public function getDDesTipTrans(): String
+  public function getDDesTipTrans(): ?String
   {
-    switch ($this->iTipTrans) {
+    switch ($this->iTipTrans ?? null) {
       case 1:
         return "Propio";
         break;
@@ -671,9 +671,9 @@ class RGeVeTr
    *
    * @return String
    */
-  public function getDDesModTrans(): String
+  public function getDDesModTrans(): ?String
   {
-    switch ($this->iModTrans) {
+    switch ($this->iModTrans ?? null) {
       case 1:
         return "Terrestre";
         break;

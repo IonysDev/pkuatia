@@ -149,6 +149,21 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   - `RContRUC` descartaba `dDesEstCons`, y su lector SimpleXML lo guardaba en `dRUCFactElec`. La propiedad
     pública conserva el literal del SIFEN (`ACTIVO`); `getDDesEstCons()` sigue derivándolo del código.
   - `RProtDe::setGResProc()` acepta un `GResProc` o un arreglo; antes daba `TypeError`.
+- **Getters que terminaban en `TypeError` o `Error` cuando no había dato** (PK-30, decisión Q-B3). 37 getters
+  declaraban un tipo no anulable y podían devolver `null` o leer una propiedad opcional sin cargar. Ahora
+  declaran el tipo anulable (`?String`, `?int`, `?array`…) y devuelven `null`: los catálogos
+  `CountryMapping::getCountryDesc()`, `DepartamentoMapping::getDepName()` y `PyGeoCodesMapping::getDistName()`,
+  `getCiudName()` y `getBarrName()` ante un código inexistente, y getters de `GCamEnt` y `GCamSal` (4 cada
+  uno), `GGrupAdi` (2), `GTransp` (4), `GVehNuevo` (13), `RGeVeTr` (2), `RContRUC` (2) y `TxContenEv` (1).
+  Con dato no cambia nada. Los ~460 getters del modelo de emisión que leen propiedades sin cargar quedan
+  para la validación previa a serializar de la Fase C, según la misma decisión.
+- **Setters de catálogo con mensaje** (PK-30, decisión Q-B3). Ante un código de país, departamento, distrito
+  o ciudad inexistente lanzan `InvalidArgumentException` con el código y el catálogo, en lugar de `TypeError`:
+  `GDatRec::setCPaisRec()`, `setCDepRec()`, `setCDisRec()` y `setCCiuRec()`; `GEmis::setCDepEmi()`,
+  `setCDisEmi()` y `setCCiuEmi()` (los dos primeros ya tenían el chequeo, pero nunca llegaba a ejecutarse);
+  los seis de `GCamAE` (vendedor y lugar de la transacción); `GCamItem::setCPaisOrig()`; y
+  `RGEveNom::setCPaisRec()`, `setCDepRec()`, `setCDisRec()` y `setCCiuRec()`. Validan antes de asignar, así
+  que un código inválido no deja el objeto a medias, y consultan el catálogo una sola vez.
 
 ### Obsoleto
 

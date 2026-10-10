@@ -151,11 +151,12 @@ class RGEveNom
      */
     public function setCPaisRec(string $cPaisRec): self
     {
-        $this->cPaisRec = $cPaisRec;
-        // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec; antes quedaba vacío.
+        // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec.
         $desc = CountryMapping::getCountryDesc($cPaisRec);
-        if ($desc !== null)
-            $this->dDesPaisRe = $desc;
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+        $this->cPaisRec = $cPaisRec;
+        $this->dDesPaisRe = $desc;
         return $this;
     }
 
@@ -317,10 +318,11 @@ class RGEveNom
      */
     public function setCDepRec(int $cDepRec): void
     {
+        $desc = DepartamentoMapping::getDepName(strval($cDepRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         $this->cDepRec = $cDepRec;
-        if(!is_null($cDepRec)) {
-            $this->dDesDepRec = DepartamentoMapping::getDepName(strval($this->cDepRec));
-        }
+        $this->dDesDepRec = $desc;
     }
 
     
@@ -347,8 +349,11 @@ class RGEveNom
      */
     public function setCDisRec(int $cDisRec): self
     {
+        $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cDisRec = $cDisRec;
-        $this->dDesDisRec = PyGeoCodesMapping::getDistName(strval($this->cDisRec));
+        $this->dDesDisRec = $desc;
         return $this;
     }
 
@@ -375,10 +380,11 @@ class RGEveNom
      */
     public function setCCiuRec(int $cCiuRec): self
     {
+        $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cCiuRec = $cCiuRec;
-        if(!is_null($cCiuRec)) {
-            $this->dDesCiuRec = PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
-        }
+        $this->dDesCiuRec = $desc;
         return $this;
     }
 

@@ -571,9 +571,9 @@ class GTransp extends BaseSifenField
    *
    * @return GCamSal
    */
-  public function getGCamSal(): GCamSal
+  public function getGCamSal(): ?GCamSal
   {
-    return $this->gCamSal;
+    return $this->gCamSal ?? null;
   }
 
   /**
@@ -595,9 +595,9 @@ class GTransp extends BaseSifenField
    *
    * @return array
    */
-  public function getGVehTras(): array
+  public function getGVehTras(): ?array
   {
-    return $this->gVehTras;
+    return $this->gVehTras ?? null;
   }
 
   /**
@@ -619,9 +619,9 @@ class GTransp extends BaseSifenField
    *
    * @return GCamTrans
    */
-  public function getGCamTrans(): GCamTrans
+  public function getGCamTrans(): ?GCamTrans
   {
-    return $this->gCamTrans;
+    return $this->gCamTrans ?? null;
   }
 
   /**
@@ -643,9 +643,9 @@ class GTransp extends BaseSifenField
    *
    * @return array
    */
-  public function getGCamEnt(): array
+  public function getGCamEnt(): ?array
   {
-    return $this->gCamEnt;
+    return $this->gCamEnt ?? null;
   }
 
   /**

@@ -210,11 +210,10 @@ class GCamAE
    */
   public function setCDepVen(int $cDepVen): self
   {
-    $this->dDesDepVen = DepartamentoMapping::getDepName(strval($cDepVen));
-    if(is_null($this->dDesDepVen)) {
-      unset($this->dDesDepVen);
-      throw new \Exception("[GCamAE] cDepVen debe ser un código de departamento válido, valor dado: $cDepVen");
-    }
+    $desc = DepartamentoMapping::getDepName(strval($cDepVen));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamAE] cDepVen debe ser un código de departamento válido, valor dado: $cDepVen");
+    $this->dDesDepVen = $desc;
     $this->cDepVen = $cDepVen;
     return $this;
   }
@@ -243,13 +242,15 @@ class GCamAE
    */
   public function setCDisVen(int|null $cDisVen): self
   {
-    if($cDisVen !== null) {
-      $this->cDisVen = $cDisVen;
-      $this->dDesDisVen = PyGeoCodesMapping::getDistName(strval($cDisVen));
-    }
-    else {
+    if($cDisVen === null) {
       unset($this->cDisVen, $this->dDesDisVen);
+      return $this;
     }
+    $desc = PyGeoCodesMapping::getDistName(strval($cDisVen));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamAE] cDisVen debe ser un código de distrito válido, valor dado: $cDisVen");
+    $this->cDisVen = $cDisVen;
+    $this->dDesDisVen = $desc;
     return $this;
   }
 
@@ -263,8 +264,11 @@ class GCamAE
    */
   public function setCCiuVen(int $cCiuVen): self
   {
+    $desc = PyGeoCodesMapping::getCiudName(strval($cCiuVen));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamAE] cCiuVen debe ser un código de ciudad válido, valor dado: $cCiuVen");
     $this->cCiuVen = $cCiuVen;
-    $this->dDesCiuVen = PyGeoCodesMapping::getCiudName(strval($cCiuVen));
+    $this->dDesCiuVen = $desc;
     return $this;
   }
 
@@ -293,8 +297,11 @@ class GCamAE
    */
   public function setCDepProv(int $cDepProv): self
   {
+    $desc = DepartamentoMapping::getDepName(strval($cDepProv));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamAE] cDepProv debe ser un código de departamento válido, valor dado: $cDepProv");
     $this->cDepProv = $cDepProv;
-    $this->dDesDepProv = DepartamentoMapping::getDepName(strval($cDepProv));
+    $this->dDesDepProv = $desc;
     return $this;
   }
 
@@ -314,8 +321,11 @@ class GCamAE
       unset($this->cDisProv, $this->dDesDisProv);
       return $this;
     }
+    $desc = PyGeoCodesMapping::getDistName(strval($cDisProv));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamAE] cDisProv debe ser un código de distrito válido, valor dado: $cDisProv");
     $this->cDisProv = $cDisProv;
-    $this->dDesDisProv = PyGeoCodesMapping::getDistName(strval($cDisProv));
+    $this->dDesDisProv = $desc;
     return $this;
   }
 
@@ -329,8 +339,11 @@ class GCamAE
    */
   public function setCCiuProv(int $cCiuProv): self
   {
+    $desc = PyGeoCodesMapping::getCiudName(strval($cCiuProv));
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamAE] cCiuProv debe ser un código de ciudad válido, valor dado: $cCiuProv");
     $this->cCiuProv = $cCiuProv;
-    $this->dDesCiuProv = PyGeoCodesMapping::getCiudName(strval($cCiuProv));
+    $this->dDesCiuProv = $desc;
     return $this;
   }
 

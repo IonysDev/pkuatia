@@ -169,9 +169,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getDNumCasEnt(): int
+  public function getDNumCasEnt(): ?int
   {
-    return $this->dNumCasEnt;
+    return $this->dNumCasEnt ?? null;
   }
 
   /**
@@ -199,9 +199,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getCDepEnt(): int
+  public function getCDepEnt(): ?int
   {
-    return $this->cDepEnt;
+    return $this->cDepEnt ?? null;
   }
 
   /**
@@ -220,9 +220,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getCDisEnt(): int
+  public function getCDisEnt(): ?int
   {
-    return $this->cDisEnt;
+    return $this->cDisEnt ?? null;
   }
 
   /**
@@ -240,9 +240,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getCCiuEnt(): int
+  public function getCCiuEnt(): ?int
   {
-    return $this->cCiuEnt;
+    return $this->cCiuEnt ?? null;
   }
 
   /**

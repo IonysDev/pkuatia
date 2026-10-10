@@ -135,9 +135,9 @@ class RContRUC
    *
    * @return String
    */
-  public function getDDesEstCons(): String
+  public function getDDesEstCons(): ?String
   {
-    switch ($this->dCodEstCons) {
+    switch ($this->dCodEstCons ?? null) {
       case 'ACT':
         return "Activo";
         break;
@@ -175,9 +175,9 @@ class RContRUC
   }
 
   //get the description of dRUCFactElec
-  public function getDRUCFactElecDesc(): String
+  public function getDRUCFactElecDesc(): ?String
   {
-    switch ($this->dRUCFactElec) {
+    switch ($this->dRUCFactElec ?? null) {
       case 'S':
         return "Es facturador electrónico";
         break;

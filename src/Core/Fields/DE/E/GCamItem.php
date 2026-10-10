@@ -303,8 +303,11 @@ class GCamItem extends BaseSifenField
    */
   public function setCPaisOrig(String $cPaisOrig): self
   {
+    $desc = CountryMapping::getCountryDesc($cPaisOrig);
+    if ($desc === null)
+      throw new \InvalidArgumentException("[GCamItem] El código de país $cPaisOrig (cPaisOrig) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
     $this->cPaisOrig = $cPaisOrig;
-    $this->setDDesPaisOrig(CountryMapping::getCountryDesc($cPaisOrig));
+    $this->setDDesPaisOrig($desc);
     return $this;
   }
 
