@@ -10,6 +10,7 @@ use IonysDev\Pkuatia\Core\Constants\CamCondOpe;
 use IonysDev\Pkuatia\Core\Constants\CamFEIndPres;
 use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
 use IonysDev\Pkuatia\Core\Constants\CamIVATasaIVA;
+use IonysDev\Pkuatia\Core\Constants\COblAfe;
 use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
 use IonysDev\Pkuatia\Core\Constants\GTranspModTrans;
 use IonysDev\Pkuatia\Core\Constants\GTranspRespFlete;
@@ -19,9 +20,12 @@ use IonysDev\Pkuatia\Core\Constants\MotEmiNR;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
 use IonysDev\Pkuatia\Core\Constants\PaConEIniTiPago;
+use IonysDev\Pkuatia\Core\Constants\PagTarCDDenTarj;
+use IonysDev\Pkuatia\Core\Constants\PagTarCDForProPa;
 use IonysDev\Pkuatia\Core\Constants\RecTiOpe;
 use IonysDev\Pkuatia\Core\Constants\RespEmiNR;
 use IonysDev\Pkuatia\Core\Constants\TipIDRec;
+use IonysDev\Pkuatia\Core\Constants\TipIDRespDE;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\Autofactura;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\Factura;
@@ -29,6 +33,8 @@ use IonysDev\Pkuatia\Core\DocumentosElectronicos\NotaDeCredito;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\NotaDeDebito;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\NotaDeRemision;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
+use IonysDev\Pkuatia\Core\Fields\DE\G\GCamCarg;
 use IonysDev\Pkuatia\Sifen;
 
 /**
@@ -242,6 +248,38 @@ final class DocumentoFactory
     $af = self::autofactura(32, 1);
     $af->setLugarTransaccion('Lugar de la transaccion', 1, null, 1);
     return $af;
+  }
+
+  /**
+   * FE con los grupos opcionales que no cubren los demás documentos (B12): responsable del DE (gRespDE), obligación
+   * afectada (gOblAfe), compras públicas (gCompPub), vehículo nuevo vendido al consumidor final en un ítem (gVehNuevo),
+   * pagos con tarjeta y con cheque (gPagTarCD, gPagCheq) y campos generales con los datos de la carga (gCamGen,
+   * gCamCarg). Sin dCilin: su patrón en el XSD es el texto literal "/d" (DE_v150.xsd, tgVehNuevo).
+   */
+  public static function facturaConTodosLosOpcionales(int $numDoc = 70): Factura
+  {
+    $fe = new Factura(CamCondOpe::Contado);
+    self::configurarBase($fe, $numDoc);
+    self::receptorContribuyente($fe);
+    $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
+    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
+    $fe->setEmisorResponsableDelDE(TipIDRespDE::CedulaParaguaya, '1234567', 'Responsable de Prueba', 'Gerente');
+    $fe->addObligacionAfectada(COblAfe::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores);
+    $fe->setDatosComprasPublicas('01', '00001', 26, 1234567, new DateTime('2026-01-02')); // dAnoCont: 2 dígitos (tdAnoCont)
+    $vehiculo = (new GVehNuevo())->setITipOpVN(2)->setDChasis('9BWZZZ377VT004251')->setDColor('Blanco')
+      ->setDPotencia(150)->setDCapMot(1600)->setDPNet(1200)->setDPBruto(1500)->setITipCom(1)->setDNroMotor('MOT-0001')
+      ->setDCapTracc(1500)->setDAnoFab(2026)->setCTipVeh('SEDAN')->setDCapac(5);
+    $fe->addItem('VEH001', 'Automóvil nuevo', 77, '1', 0, '150000000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10,
+      detalleVehiculoNuevo: $vehiculo);
+    $fe->calcTotSub(0);
+    $fe->addPagoPYGPorTarjeta(true, '100000000', PagTarCDDenTarj::Visa, PagTarCDForProPa::POS, 123456, 'Titular de Prueba', '1234');
+    $fe->addPagoPYGPorCheque('50000000', '00012345', 'Banco de Prueba');
+    $fe->setNroDeOrdenDeCompra('OC-0001');
+    $fe->setNroDeOrdenDeVenta('OV-0001');
+    $fe->setNroDeAsientoContable('AS-0001');
+    $fe->gCamGen->setGCamCarg((new GCamCarg())->setCUniMedTotVol(110)->setDTotVolMerc(10)->setCUniMedTotPes(83)
+      ->setDTotPesMerc(1500)->setICarCarga(1));
+    return $fe;
   }
 
   /**

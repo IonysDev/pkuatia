@@ -301,7 +301,8 @@ class GVehNuevo extends BaseSifenField
         return "Venta a representante";
         break;
       case 2:
-        return "Venta al consumidor final";
+        // Literal del XSD con C mayúscula (tdDesTipOpVN, DE_Types_v150.xsd:1500); hasta 0.2.0 iba con minúscula (B12).
+        return "Venta al Consumidor final";
         break;
       case 3:
         return "Venta a gobierno";
@@ -495,7 +496,8 @@ class GVehNuevo extends BaseSifenField
   {
     $res = $doc->createElement('gVehNuevo');
     if(isset($this->iTipOpVN)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'iTipOpVN', $this->getDDesTipOpVN()));
+      // E771 lleva el código (tiTipOpVN, DE_Types_v150.xsd:1470-1487); hasta 0.2.0 se emitía la descripción (B12).
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipOpVN', $this->getITipOpVN()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipOpVN', $this->getDDesTipOpVN()));
     }
     if(isset($this->dChasis))
@@ -576,10 +578,49 @@ class GVehNuevo extends BaseSifenField
         return $res;
     }
 
+  /**
+   * Instancia un GVehNuevo a partir del objeto que entrega SoapClient. Hasta 0.2.0 lanzaba "Not implemented", y con él
+   * fallaba la lectura SOAP de cualquier ítem con vehículo nuevo (B12).
+   *
+   * @param stdClass $object Objeto respuesta del SIFEN.
+   *
+   * @return self
+   */
   public static function FromSifenResponseObject(stdClass $object): self
   {
-    throw new \Exception("Not implemented");
     $res = new self();
+    if(isset($object->iTipOpVN))
+      $res->setITipOpVN(intval($object->iTipOpVN));
+    if(isset($object->dDesTipOpVN))
+      $res->setDDesTipOpVN(strval($object->dDesTipOpVN));
+    if(isset($object->dChasis))
+      $res->setDChasis(strval($object->dChasis));
+    if(isset($object->dColor))
+      $res->setDColor(strval($object->dColor));
+    if(isset($object->dPotencia))
+      $res->setDPotencia(intval($object->dPotencia));
+    if(isset($object->dCapMot))
+      $res->setDCapMot(intval($object->dCapMot));
+    if(isset($object->dPNet))
+      $res->setDPNet(intval($object->dPNet));
+    if(isset($object->dPBruto))
+      $res->setDPBruto(intval($object->dPBruto));
+    if(isset($object->iTipCom))
+      $res->setITipCom(intval($object->iTipCom));
+    if(isset($object->dDesTipCom))
+      $res->setDDesTipCom(strval($object->dDesTipCom));
+    if(isset($object->dNroMotor))
+      $res->setDNroMotor(strval($object->dNroMotor));
+    if(isset($object->dCapTracc))
+      $res->setDCapTracc(intval($object->dCapTracc));
+    if(isset($object->dAnoFab))
+      $res->setDAnoFab(intval($object->dAnoFab));
+    if(isset($object->cTipVeh))
+      $res->setCTipVeh(strval($object->cTipVeh));
+    if(isset($object->dCapac))
+      $res->setDCapac(intval($object->dCapac));
+    if(isset($object->dCilin))
+      $res->setDCilin(strval($object->dCilin));
     return $res;
   }
 

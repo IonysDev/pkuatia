@@ -1064,8 +1064,8 @@ class GTotSub
     if (isset($object->dSubExe)) {
       $res->setDSubExe($object->dSubExe);
     }
-    if (isset($object->dSubEx)) {
-      $res->setDSubExo($object->dSubEx);
+    if (isset($object->dSubExo)) { // hasta 0.2.0 buscaba "dSubEx" y perdía el subtotal exonerado (F003) (B12)
+      $res->setDSubExo($object->dSubExo);
     }
     if (isset($object->dSub5)) {
       $res->setDSub5($object->dSub5);
@@ -1091,11 +1091,10 @@ class GTotSub
     if (isset($object->dPorcDescTotal)) {
       $res->setDPorcDescTotal($object->dPorcDescTotal);
     }
-    if (isset($object->dPorcDesc)) {
-      $res->setDPorcDescTotal($object->dPorcDesc);
-    }
-    if (isset($object->dDesc)) {
-      $res->setDDescTotal($object->dDesc);
+    // F011 es dDescTotal; hasta 0.2.0 se buscaban "dPorcDesc" y "dDesc", que no existen, y el total de descuentos se
+    // perdía (B12).
+    if (isset($object->dDescTotal)) {
+      $res->setDDescTotal($object->dDescTotal);
     }
     if (isset($object->dAnticipo)) {
       $res->setDAnticipo($object->dAnticipo);
@@ -1133,8 +1132,8 @@ class GTotSub
     if (isset($object->dBaseGrav10)) {
       $res->setDBaseGrav10($object->dBaseGrav10);
     }
-    if (isset($object->dTBaseGraIVA)) {
-      $res->setDTbasGraIVA($object->dTBaseGraIVA);
+    if (isset($object->dTBasGraIVA)) { // hasta 0.2.0 buscaba "dTBaseGraIVA" y perdía F035 (B12)
+      $res->setDTbasGraIVA($object->dTBasGraIVA);
     }
     if (isset($object->dTotalGs)) {
       $res->setDTotalGs($object->dTotalGs);

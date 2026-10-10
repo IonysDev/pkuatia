@@ -62,4 +62,18 @@ final class DocumentosValidosTest extends TestCase
     XsdAssertions::assertRdeValido($xml, 'FE crédito en cuotas con entrega inicial');
     $this->assertStringContainsString('<dCuotas>2</dCuotas>', $xml);
   }
+
+  /**
+   * Fase B/B12: FE con los grupos opcionales que no cubren los demás documentos (gRespDE, gOblAfe, gCompPub,
+   * gVehNuevo, gPagTarCD, gPagCheq, gCamGen y gCamCarg). Hasta 0.2.0 era inválida por gVehNuevo: emitía en iTipOpVN
+   * la descripción en lugar del código (tiTipOpVN, DE_Types_v150.xsd:1470-1487) y escribía el código 2 con c
+   * minúscula (tdDesTipOpVN exige "Venta al Consumidor final", DE_Types_v150.xsd:1489-1508; ekuat-ia
+   * 04-schemas-xsd/xsd-produccion-vs-manual.md §6).
+   */
+  public function testFacturaConTodosLosOpcionalesValida(): void
+  {
+    $xml = DocumentoFactory::firmar(DocumentoFactory::facturaConTodosLosOpcionales()->facturaToRDE());
+    XsdAssertions::assertRdeValido($xml, 'FE con todos los opcionales');
+    $this->assertStringContainsString('<iTipOpVN>2</iTipOpVN><dDesTipOpVN>Venta al Consumidor final</dDesTipOpVN>', $xml);
+  }
 }

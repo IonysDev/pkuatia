@@ -6,6 +6,7 @@ use DateTime;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\GGroupTiEvt;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGEveNom;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeInu;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GEA\RGeDevCCFFCue;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GEA\RGeDevCCFFDev;
@@ -81,6 +82,17 @@ final class EventosIdaYVueltaTest extends TestCase
   public function testIdaYVueltaPorSimpleXml(callable $crear): void
   {
     RoundTrip::assertIdaYVueltaIdentica($crear(), RoundTrip::VIA_SIMPLEXML, GGroupTiEvt::class);
+  }
+
+  /**
+   * B12: el rGesEve completo (rEve con su Id, dFecFirma, dVerFor y el grupo del evento) también hace ida y vuelta
+   * idéntica. Los eventos solo tienen lector SimpleXML, que es la vía real: vuelven del SIFEN como texto dentro de
+   * xContEv (ver testCancelacionRealDentroDeXContEv).
+   */
+  #[DataProvider('eventos')]
+  public function testIdaYVueltaDelRGesEveCompletoPorSimpleXml(callable $crear): void
+  {
+    RoundTrip::assertIdaYVueltaIdentica(E::rGesEve($crear(), 3), RoundTrip::VIA_SIMPLEXML, RGesEve::class);
   }
 
   /**

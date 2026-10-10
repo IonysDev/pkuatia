@@ -82,6 +82,13 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
 - `phpunit.xml.dist` hace fallar la corrida si un test imprime algo (`beStrictAboutOutputDuringTests` y
   `failOnRisky`), y `tests/Unit/Core/LimpiezaTest` comprueba que cada archivo de `src/` declara el tipo de su
   nombre y que no queda código inalcanzable después de un `throw` (PK-43).
+- `tests/Unit/Deserializacion/IdaYVueltaGruposTest`: los 46 grupos del DE (cada clase de `src/Core/Fields/DE`)
+  hacen ida y vuelta idéntica por DOM, por SimpleXML y por objeto SOAP, con instancias tomadas de todos los
+  documentos de prueba y de una FE firmada; un test aparte exige que los 46 tengan instancias. Quedan fuera rDE y
+  DE por la vía SOAP (tienen atributos, que `ext/soap` descarta) y `Signature` como grupo suelto (ver "Pendiente"
+  en el plan de la Fase D). `DocumentoFactory::facturaConTodosLosOpcionales()` cubre gRespDE, gOblAfe, gCompPub,
+  gVehNuevo, gPagTarCD, gPagCheq, gCamGen y gCamCarg, y valida contra el XSD. `EventosIdaYVueltaTest` suma la ida y
+  vuelta del `rGesEve` completo de los 18 casos de evento.
 
 ### Corregido
 
@@ -208,6 +215,18 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   imprimía su nombre con `echo` en cada llamada. `GResProcEve` (espacio `Fields\Response\DE`) tenía una rama con
   `echo "TODO CUANTICO"` y leía solo el primer `gResProc`: ahora lee todos los mensajes. Se quitaron además 21
   `return null;` inalcanzables después de un `throw` (sin efecto en el comportamiento).
+- **Vehículo nuevo (`gVehNuevo`) inválido contra el XSD.** `GVehNuevo::toDOMElement()` escribía en `iTipOpVN` la
+  descripción ("Venta a representante", etc.) en lugar del código (`tiTipOpVN`, del 1 al 4,
+  `DE_Types_v150.xsd:1470-1487`), así que toda FE con vehículo nuevo y tipo de operación salía inválida. Además
+  el código 2 se describía "Venta al consumidor final" y el XSD exige "Venta al Consumidor final", con C
+  mayúscula (`DE_Types_v150.xsd:1500`). Este cambio modifica el XML de esos documentos, que antes el SIFEN
+  rechazaba.
+- **Lectores del objeto SOAP.** `GCamCond::FromSifenResponseObject()` terminaba en `TypeError` con un único pago
+  (`ext/soap` entrega un objeto y no un arreglo); `GTotSub::FromSifenResponseObject()` buscaba `dSubEx`, `dDesc` y
+  `dTBaseGraIVA`, que no existen, y perdía el subtotal exonerado (F003), el total de descuentos (F011) y la base
+  gravada total (F035); `GVehNuevo::FromSifenResponseObject()` lanzaba "Not implemented".
+- La documentación de `Factura::setDatosComprasPublicas()` aclara que el año de contratación va con dos dígitos
+  (`tdAnoCont`): con cuatro, el XML no valida.
 - **Código de seguridad predecible** (PK-38). `RNG::GenerateAsString()`, con el que `GOpeDE` genera `dCodSeg`
   (B004, que entra en el CDC y en el QR), usaba `rand()`: desde PHP 7.1 es `mt_rand()` y con la misma semilla
   de `mt_srand()` repetía los códigos. Ahora usa `random_int()`, del generador criptográfico del sistema. Como
