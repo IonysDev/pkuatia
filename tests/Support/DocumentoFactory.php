@@ -199,6 +199,41 @@ final class DocumentoFactory
     return $af;
   }
 
+  /** @return array<string, callable(Factura): mixed> Un builder por grupo de tgCamEsp (DE_v150.xsd:794-806). */
+  public static function sectores(): array
+  {
+    return [
+      'energía' => fn (Factura $fe) => $fe->setDatosComplementariosSectorEnergia('MED-001', 1, 'R', '100.00', '250.00', '150.00'),
+      'seguros' => fn (Factura $fe) => $fe->addDatosComplementariosSectorSegurosPoliza('SEG01', 'POL-2026-001', 'Meses', '12', '0001234567', new DateTime('2026-01-01'), new DateTime('2026-12-31'), 'PROD001'),
+      'supermercados' => fn (Factura $fe) => $fe->setDatosComplementariosSectorSupermercados('Cajero 1', '100000', '0', null, null),
+      'datos adicionales' => fn (Factura $fe) => $fe->setDatosAdicionalesDeUsoComercial('202601', new DateTime('2026-01-01'), new DateTime('2026-01-31'), new DateTime('2026-02-15'), 'CONTR-0001', '0'),
+    ];
+  }
+
+  /** FE con un grupo sectorial (clave de sectores()) y un ítem con gRasMerc (lote, vencimiento, serie y pedido). */
+  public static function facturaSectorial(string $sector, int $numDoc = 60): Factura
+  {
+    $fe = new Factura(CamCondOpe::Contado);
+    self::configurarBase($fe, $numDoc);
+    self::receptorContribuyente($fe);
+    $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
+    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
+    $fe->addItem('MED001', 'Medicamento', 77, '1', 0, '5000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10,
+      null, null, null, null, null, null, 'LOTE-2026-A', new DateTime('2027-06-30'), 'SERIE-001', 'PED-77');
+    $fe->calcTotSub(0);
+    $fe->addPago(PaConEIniTiPago::Efectivo, '5000', 'PYG');
+    (self::sectores()[$sector])($fe);
+    return $fe;
+  }
+
+  /** Autofactura cuyo lugar de la transacción no informa distrito (cDisProv es 0-1 en tgCamAE, DE_v150.xsd:1351). */
+  public static function autofacturaSinDistrito(): Autofactura
+  {
+    $af = self::autofactura(32, 1);
+    $af->setLugarTransaccion('Lugar de la transaccion', 1, null, 1);
+    return $af;
+  }
+
   /**
    * RDE sin firmar y determinista, para comparar serializaciones: código de seguridad y fecha de firma
    * fijos. El código por defecto no empieza con cero; el cero inicial (PK-26) se prueba pasándolo.

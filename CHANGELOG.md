@@ -36,6 +36,10 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
   (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
   objeto SOAP y `DocumentoFactory::rde()` arma RDE deterministas.
+- `tests/Unit/Deserializacion/CadenasYRellenosTest` (código de seguridad con cero inicial, documento
+  alfanumérico del receptor, serie del timbrado, código DNCP y subtotales exactos) e
+  `IdaYVueltaDocumentosTest` ampliado: 15 documentos (FE, NC, ND, NR, AF y FE de cada sector) hacen ida y
+  vuelta idéntica por DOM y por SimpleXML, la vía que usa `Sifen::ConsultarDE`.
 
 ### Corregido
 
@@ -63,6 +67,23 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   terminaba en `TypeError`, y `GCamAE::toDOMElement()` emitía siempre `cDisVen` y `cDisProv`, que son
   0-1 (`tgCamAE`, `DE_v150.xsd:1351`), con `Error` si no estaban. `GCamAE::setCDisProv()` acepta `null`
   (como `setCDisVen()`) y los distritos se emiten solo si existen. Las AF con distrito no cambian.
+- **Ceros iniciales y letras que se perdían al leer** (PK-26). Los tres lectores de `GOpeDE` aplicaban
+  `intval()` a `dCodSeg`: un código de seguridad que empieza con cero (aleatorio, uno de cada diez
+  documentos) volvía con 8 dígitos y el documento ya no coincidía con su CDC. `GDatRec::FromSimpleXMLElement`
+  hacía lo mismo con `dNumIDRec`, que es alfanumérico (`tdNumDocId`): un pasaporte quedaba en `0`. Esa es
+  la vía que usa `Sifen::ConsultarDE`. El lector de objetos SOAP de `GOpeDE` completa `dCodSeg` a 9 dígitos
+  por si el SOAP lo entrega como número (`tiCodSe` deriva de `xs:integer`).
+- **Datos agregados o alterados** (PK-36). `GTimb::FromSimpleXMLElement` agregaba `<dSerieNum>00</dSerieNum>`
+  a todo documento sin serie (inválido contra `[A-Z]{2}`, `DE_v150.xsd:46`) y `GTimb::toDOMElement`
+  rellenaba la serie con ceros. `GDatRec::FromSimpleXMLElement` copiaba el número de documento en el nombre
+  de fantasía, no leía `dNumCasRec` y condicionaba `dDesDepRec` a la ciudad; ahora delega en el lector DOM.
+  `GCamItem` completaba `dDncpG` con ceros a la derecha (`1234567` pasaba a `12345670`, otro código); el
+  Manual Técnico (E704) manda completar a la izquierda y así se emite ahora (`01234567`). Los códigos de 8
+  dígitos no cambian.
+- **Subtotales por tasa exactos** (PK-37). `GCamItem::calcSubt05()` y `calcSubt10()` sumaban dos montos
+  BCMath con `+` y perdían decimales por encima de 14 cifras significativas. Ahora usan `bcadd` y devuelven
+  texto numérico sin ceros decimales finales: `getFormattedSubt05()` y `getFormattedSubt10()` muestran lo
+  mismo que antes para montos normales.
 
 ### Obsoleto
 

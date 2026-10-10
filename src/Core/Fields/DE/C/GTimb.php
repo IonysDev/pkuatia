@@ -257,7 +257,9 @@ class GTimb extends BaseSifenField
         $res->setDEst($xml->dEst);
         $res->setDPunExp($xml->dPunExp);
         $res->setDNumDoc($xml->dNumDoc);
-        $res->setDSerieNum($xml->dSerieNum);
+        // dSerieNum es 0-1 (DE_v150.xsd:46): hasta 0.2.0 se asignaba siempre y todo DE sin serie volvía con <dSerieNum>00</dSerieNum> (PK-36).
+        if(isset($xml->dSerieNum))
+            $res->setDSerieNum((string) $xml->dSerieNum);
         $res->setDFeIniT(DateTime::createFromFormat('Y-m-d', $xml->dFeIniT));
         return $res;
     }
@@ -327,7 +329,7 @@ class GTimb extends BaseSifenField
         $res->appendChild(XmlHelper::elemento($doc, 'dPunExp', str_pad($this->dPunExp, 3, "0", STR_PAD_LEFT)));
         $res->appendChild(XmlHelper::elemento($doc, 'dNumDoc', str_pad($this->dNumDoc, 7, "0", STR_PAD_LEFT)));
         if(isset($this->dSerieNum))
-            $res->appendChild(XmlHelper::elemento($doc, 'dSerieNum', str_pad($this->dSerieNum, 2, "0", STR_PAD_LEFT)));
+            $res->appendChild(XmlHelper::elemento($doc, 'dSerieNum', $this->dSerieNum)); // tdSerieNum [A-Z]{2}: rellenar con "0" nunca da un valor válido (PK-36)
         $res->appendChild(XmlHelper::elemento($doc, 'dFeIniT', $this->dFeIniT->format('Y-m-d')));
         return $res;
     }

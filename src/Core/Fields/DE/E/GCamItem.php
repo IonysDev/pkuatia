@@ -72,7 +72,7 @@ class GCamItem extends BaseSifenField
   public function calcSubt05() {
     if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
       if($this->gCamIVA->getDTasaIVA() == 5)
-        return $this->gCamIVA->getDBasGravIVA() + $this->gCamIVA->getDLiqIVAItem();
+        return self::sumaExacta($this->gCamIVA->getDBasGravIVA(), $this->gCamIVA->getDLiqIVAItem());
       else
         return 0;
     else
@@ -89,11 +89,22 @@ class GCamItem extends BaseSifenField
   public function calcSubt10() {
     if(isset($this->gValorItem) && isset($this->gValorItem->gValorRestaItem) && isset($this->gCamIVA))
       if($this->gCamIVA->getDTasaIVA() == 10)
-        return $this->gCamIVA->getDBasGravIVA() + $this->gCamIVA->getDLiqIVAItem();
+        return self::sumaExacta($this->gCamIVA->getDBasGravIVA(), $this->gCamIVA->getDLiqIVAItem());
       else
         return 0;
     else
       return null;
+  }
+
+  /**
+   * Suma exacta de dos montos BCMath (PK-37). Hasta 0.2.0 se sumaban con "+" (float) y un subtotal con más
+   * de 14 cifras significativas perdía decimales. Se quitan los ceros decimales finales para que el formato
+   * de getFormattedSubt05/10 no cambie: 5000.00000000 se sigue mostrando como 5.000.
+   */
+  private static function sumaExacta(String $a, String $b): String
+  {
+    $suma = bcadd($a, $b, 8);
+    return str_contains($suma, '.') ? rtrim(rtrim($suma, '0'), '.') : $suma;
   }
 
   public function getFormattedSubt10() {
@@ -842,7 +853,8 @@ class GCamItem extends BaseSifenField
     if(isset($this->dNCM))
       $res->appendChild(XmlHelper::elemento($doc, 'dNCM', $this->getDNCM()));
     if(isset($this->dDncpG))
-      $res->appendChild(XmlHelper::elemento($doc, 'dDncpG', str_pad($this->dDncpG, 8, '0', STR_PAD_RIGHT)));
+      // tdDncpG [0-9]{8}; el MT (E704) manda completar con ceros a la izquierda. Hasta 0.2.0 se rellenaba a la derecha y el código cambiaba (PK-36).
+      $res->appendChild(XmlHelper::elemento($doc, 'dDncpG', str_pad($this->dDncpG, 8, '0', STR_PAD_LEFT)));
     if(isset($this->dDncpE))
       $res->appendChild(XmlHelper::elemento($doc, 'dDncpE', $this->getDDncpE()));
     if(isset($this->dGtin))

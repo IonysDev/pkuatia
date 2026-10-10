@@ -2,16 +2,7 @@
 
 namespace IonysDev\Pkuatia\Tests\Unit\Deserializacion;
 
-use DateTime;
 use DOMDocument;
-use IonysDev\Pkuatia\Core\Constants\CamCondOpe;
-use IonysDev\Pkuatia\Core\Constants\CamFEIndPres;
-use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
-use IonysDev\Pkuatia\Core\Constants\CamIVATasaIVA;
-use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
-use IonysDev\Pkuatia\Core\Constants\PaConEIniTiPago;
-use IonysDev\Pkuatia\Core\DocumentosElectronicos\Autofactura;
-use IonysDev\Pkuatia\Core\DocumentosElectronicos\Factura;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamAE;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamEsp;
@@ -28,7 +19,8 @@ use PHPUnit\Framework\TestCase;
  * Hasta 0.2.0 la autofactura, la nota de remisión y todo DE con gCamEsp no se podían deserializar
  * (Error: Call to undefined method; 9 entradas staticMethod.notFound en phpstan-baseline.neon).
  * Fuentes: DE_v150.xsd tgCamAE, tgCamNRE (dKmR minOccurs=1), tgGrupSup (:663), tgGrupAdi (:811),
- * tgCamEsp (:794, orden gGrupEner, gGrupSeg, gGrupSup, gGrupAdi).
+ * tgCamEsp (:794, orden gGrupEner, gGrupSeg, gGrupSup, gGrupAdi). La ida y vuelta de documentos
+ * completos por las dos vías está en IdaYVueltaDocumentosTest.
  */
 final class CamposEspecificosIdaYVueltaTest extends TestCase
 {
@@ -42,53 +34,18 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
     ];
   }
 
-  /** @return array<string, callable(Factura): mixed> Un builder por grupo de tgCamEsp. */
-  public static function sectores(): array
-  {
-    return [
-      'energía' => fn (Factura $fe) => $fe->setDatosComplementariosSectorEnergia('MED-001', 1, 'R', '100.00', '250.00', '150.00'),
-      'seguros' => fn (Factura $fe) => $fe->addDatosComplementariosSectorSegurosPoliza('SEG01', 'POL-2026-001', 'Meses', '12', '0001234567', new DateTime('2026-01-01'), new DateTime('2026-12-31'), 'PROD001'),
-      'supermercados' => fn (Factura $fe) => $fe->setDatosComplementariosSectorSupermercados('Cajero 1', '100000', '0', null, null),
-      'datos adicionales' => fn (Factura $fe) => $fe->setDatosAdicionalesDeUsoComercial('202601', new DateTime('2026-01-01'), new DateTime('2026-01-31'), new DateTime('2026-02-15'), 'CONTR-0001', '0'),
-    ];
-  }
-
   /**
    * gCamEsp con los cuatro grupos, armado a mano: los builders de DocumentoElectronico emiten uno
-   * solo aunque se informen varios (DocumentoElectronico.php:104-119, decisión pendiente).
+   * solo aunque se informen varios (DocumentoElectronico.php:104-119, decisión Q-B8 pendiente).
    */
   public static function gCamEspCompleto(): GCamEsp
   {
-    $esp = fn (string $sector): GCamEsp => F::rde(self::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp();
+    $esp = fn (string $sector): GCamEsp => F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp();
     return (new GCamEsp())
       ->setgGrupEner($esp('energía')->getgGrupEner())
       ->setGGrupSeg($esp('seguros')->getGGrupSeg())
       ->setGGrupSup($esp('supermercados')->getGGrupSup())
       ->setGGrupAdi($esp('datos adicionales')->getGGrupAdi());
-  }
-
-  /** FE con un grupo sectorial y un ítem con gRasMerc (lote, vencimiento, serie y pedido). */
-  public static function facturaSectorial(string $sector): Factura
-  {
-    $fe = new Factura(CamCondOpe::Contado);
-    F::configurarBase($fe, 60);
-    F::receptorContribuyente($fe);
-    $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
-    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
-    $fe->addItem('MED001', 'Medicamento', 77, '1', 0, '5000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10,
-      null, null, null, null, null, null, 'LOTE-2026-A', new DateTime('2027-06-30'), 'SERIE-001', 'PED-77');
-    $fe->calcTotSub(0);
-    $fe->addPago(PaConEIniTiPago::Efectivo, '5000', 'PYG');
-    (self::sectores()[$sector])($fe);
-    return $fe;
-  }
-
-  /** Autofactura cuyo lugar de la transacción no informa distrito (cDisProv es 0-1 en tgCamAE). */
-  public static function autofacturaSinDistrito(): Autofactura
-  {
-    $af = F::autofactura(32, 1);
-    $af->setLugarTransaccion('Lugar de la transaccion', 1, null, 1);
-    return $af;
   }
 
   #[DataProvider('vias')]
@@ -113,7 +70,7 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
   #[DataProvider('gruposPorVia')]
   public function testCadaGrupoSectorialHaceIdaYVuelta(string $sector, string $getter, string $via): void
   {
-    $grupo = F::rde(self::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp()->$getter();
+    $grupo = F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp()->$getter();
     RoundTrip::assertIdaYVueltaIdentica($grupo, $via);
   }
 
@@ -121,13 +78,13 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
   public static function documentosConCamposEspecificos(): array
   {
     return [
-      'FE sector energía' => [fn (): RDE => F::rde(self::facturaSectorial('energía'))],
-      'FE sector seguros' => [fn (): RDE => F::rde(self::facturaSectorial('seguros'))],
-      'FE sector supermercados' => [fn (): RDE => F::rde(self::facturaSectorial('supermercados'))],
-      'FE con datos adicionales de uso comercial' => [fn (): RDE => F::rde(self::facturaSectorial('datos adicionales'))],
+      'FE sector energía' => [fn (): RDE => F::rde(F::facturaSectorial('energía'))],
+      'FE sector seguros' => [fn (): RDE => F::rde(F::facturaSectorial('seguros'))],
+      'FE sector supermercados' => [fn (): RDE => F::rde(F::facturaSectorial('supermercados'))],
+      'FE con datos adicionales de uso comercial' => [fn (): RDE => F::rde(F::facturaSectorial('datos adicionales'))],
       'Autofactura, 2 ítems' => [fn (): RDE => F::rde(F::autofactura())],
       'Autofactura, 1 ítem' => [fn (): RDE => F::rde(F::autofactura(31, 1))],
-      'Autofactura, lugar sin distrito' => [fn (): RDE => F::rde(self::autofacturaSinDistrito())],
+      'Autofactura, lugar sin distrito' => [fn (): RDE => F::rde(F::autofacturaSinDistrito())],
       'Nota de remisión' => [fn (): RDE => F::rde(F::notaDeRemision())],
     ];
   }
@@ -138,16 +95,13 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
     RoundTrip::assertIdaYVueltaIdentica($crear(), RoundTrip::VIA_DOM);
   }
 
-  /**
-   * Por SimpleXML el documento ya se puede leer y el grupo específico vuelve idéntico. La identidad del
-   * documento completo por SimpleXML llega en B2 (hoy GTimb agrega un dSerieNum espurio, PK-36).
-   */
+  /** Por SimpleXML el documento se puede leer y cada grupo específico vuelve idéntico. */
   #[DataProvider('documentosConCamposEspecificos')]
   public function testDocumentoCompletoPorSimpleXmlConservaLosCamposEspecificos(callable $crear): void
   {
     $ida = RoundTrip::serializar($crear());
     $vuelta = RoundTrip::serializar(RoundTrip::leer($ida, RDE::class, RoundTrip::VIA_SIMPLEXML));
-    foreach (['gCamFE', 'gCamAE', 'gCamNRE', 'gCamEsp', 'gCamItem'] as $grupo) {
+    foreach (['gCamFE', 'gCamAE', 'gCamNRE', 'gCamEsp', 'gCamItem', 'gTransp'] as $grupo) {
       $this->assertSame(self::subarbol($ida, $grupo), self::subarbol($vuelta, $grupo), $grupo);
     }
   }
@@ -158,7 +112,7 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
     $res = [];
     $casos = [
       'gCamAE' => [fn () => F::rde(F::autofactura())->getDE()->getGDtipDe()->getGCamAE(), GCamAE::class],
-      'gCamAE sin distrito' => [fn () => F::rde(self::autofacturaSinDistrito())->getDE()->getGDtipDe()->getGCamAE(), GCamAE::class],
+      'gCamAE sin distrito' => [fn () => F::rde(F::autofacturaSinDistrito())->getDE()->getGDtipDe()->getGCamAE(), GCamAE::class],
       'gCamNRE' => [fn () => F::rde(F::notaDeRemision())->getDE()->getGDtipDe()->getGCamNRE(), GCamNRE::class],
     ];
     foreach ($casos as $nombre => [$crear, $clase]) {
@@ -200,9 +154,8 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
   {
     $doc = new DOMDocument();
     $doc->loadXML($xml);
-    $nodos = $doc->getElementsByTagName($grupo);
     $res = '';
-    foreach ($nodos as $nodo) {
+    foreach ($doc->getElementsByTagName($grupo) as $nodo) {
       $res .= $doc->saveXML($nodo);
     }
     return $res;

@@ -562,54 +562,11 @@ class GDatRec extends BaseSifenField
         if(strcmp($node->getName(), 'gDatRec') != 0){
             throw new \InvalidArgumentException("El nombre del elemento no es gDatRec");
         }
-
-        $res = new GDatRec();
-        $res->setINatRec(intval($node->iNatRec));
-        $res->setITiOpe(intval($node->iTiOpe));
-        $res->setCPaisRec(strval($node->cPaisRec));
-        $res->setDDesPaisRe(strval($node->dDesPaisRe));
-        if(isset($node->iTiContRec))
-            $res->setITiContRec(intval($node->iTiContRec));
-        if(isset($node->dRucRec))
-            $res->setDRucRec(strval($node->dRucRec));
-        if(isset($node->dDVRec))
-            $res->setDDVRec(intval($node->dDVRec));
-        if(isset($node->iTipIDRec))
-            $res->setITipIDRec(intval($node->iTipIDRec));
-        if(isset($node->dNumIDRec))
-            $res->setDNumIDRec(intval($node->dNumIDRec));
-        if(isset($node->dDTipIDRec))
-            $res->setDDTipIDRec(strval($node->dDTipIDRec));
-        if(isset($node->dNumIDRec))
-            $res->setDNomFanRec(strval($node->dNumIDRec));
-        $res->setDNomRec(strval($node->dNomRec));
-        if(isset($node->dNomFanRec))
-            $res->setDNomFanRec(strval($node->dNomFanRec));
-        if(isset($node->dDirRec))
-            $res->setDDirRec(strval($node->dDirRec));
-        if(isset($node->getDNumCasRec))
-            $res->setDNumCasRec(intval($node->getDNumCasRec));
-        if(isset($node->cDepRec))
-            $res->setCDepRec(intval($node->cDepRec));
-        if(isset($node->cCiuRec))
-            $res->setDDesDepRec(strval($node->dDesDepRec));
-        if(isset($node->cDisRec))
-            $res->setCDisRec(intval($node->cDisRec));
-        if(isset($node->dDesDisRec))
-            $res->setDDesDisRec(strval($node->dDesDisRec));
-        if(isset($node->cCiuRec))
-            $res->setCCiuRec(intval($node->cCiuRec));
-        if(isset($node->dDesCiuRec))
-            $res->setDDesCiuRec(strval($node->dDesCiuRec));
-        if(isset($node->dTelRec))
-            $res->setDTelRec(strval($node->dTelRec));
-        if(isset($node->dCelRec))
-            $res->setDCelRec(strval($node->dCelRec));
-        if(isset($node->dEmailRec))
-            $res->setDEmailRec(strval($node->dEmailRec));
-        if(isset($node->dCodCliente))
-            $res->setDCodCliente(strval($node->dCodCliente));
-        return $res;
+        // Hasta 0.2.0 esta vía tenía su propia lectura con cuatro defectos: intval() sobre dNumIDRec (tdNumDocId es
+        // alfanumérico, un pasaporte quedaba en 0; PK-26), copia de dNumIDRec en dNomFanRec (PK-36), dNumCasRec
+        // buscado como "getDNumCasRec" y dDesDepRec condicionado a cCiuRec. Ahora delega en FromDOMElement sobre
+        // el mismo nodo para que las dos vías lean exactamente igual.
+        return self::FromDOMElement(dom_import_simplexml($node));
     }
 
     /**
