@@ -5,6 +5,8 @@ namespace IonysDev\Pkuatia\Tests\Support;
 use DOMDocument;
 use DOMElement;
 use PHPUnit\Framework\Assert;
+use RobRichards\XMLSecLibs\XMLSecEnc;
+use RobRichards\XMLSecLibs\XMLSecurityDSig;
 
 final class SignatureAssertions
 {
@@ -33,6 +35,24 @@ final class SignatureAssertions
       }
       Assert::assertEquals($expectedOrder, $actualOrder, "$label orden de hijos");
     }
+  }
+
+  /**
+   * Verificación criptográfica de la primera firma del XML con xmlseclibs: el digest de la referencia (el DE
+   * por su Id) y la firma de SignedInfo con el certificado de KeyInfo.
+   */
+  public static function assertFirmaVerifica(string $xml, string $contexto = ''): void
+  {
+    $doc = new DOMDocument();
+    Assert::assertTrue($doc->loadXML($xml), trim("$contexto XML mal formado"));
+    $dsig = new XMLSecurityDSig();
+    $firma = $dsig->locateSignature($doc);
+    Assert::assertNotNull($firma, trim("$contexto sin Signature"));
+    $dsig->canonicalizeSignedInfo();
+    Assert::assertTrue($dsig->validateReference(), trim("$contexto el digest del DE no coincide"));
+    $clave = $dsig->locateKey();
+    XMLSecEnc::staticLocateKeyInfo($clave, $firma);
+    Assert::assertSame(1, $dsig->verify($clave), trim("$contexto la firma de SignedInfo no verifica"));
   }
 
   public static function assertReferenceUri(DOMElement $signature, string $expectedUri): void

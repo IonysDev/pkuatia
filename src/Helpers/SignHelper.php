@@ -106,6 +106,13 @@ class SignHelper
     $xmlDocument->formatOutput = false;
     $xmlDocument->preserveWhiteSpace = false;
     $xmlDocument->loadXML($rde->toXMLString());
+    // Un rDE leído de un XML ya firmado reemite su Signature y su gCamFuFD (PK-32, 0.2.1): se quitan para firmar
+    // de nuevo; FirmarDE() agrega después el gCamFuFD con el QR nuevo. En un rDE armado a mano no hay nada que quitar.
+    $rdeLeido = $xmlDocument->getElementsByTagName("rDE")->item(0);
+    foreach (iterator_to_array($rdeLeido->childNodes) as $hijo) {
+      if ($hijo instanceof \DOMElement && in_array($hijo->localName, ['Signature', 'gCamFuFD'], true))
+        $rdeLeido->removeChild($hijo);
+    }
     $deNode = $xmlDocument->getElementsByTagName("DE")->item(0);
 
     $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);

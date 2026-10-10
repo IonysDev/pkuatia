@@ -51,6 +51,8 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `tests/Unit/Responses/RespuestasRealesTest`, con las capturas reales llamadas a través del facade.
 - `Sifen::GetLastRequest()` y `Sifen::GetLastResponse()` (PK-31): el XML de la última solicitud y de la última
   respuesta, también cuando el parseo falla, para auditar o guardar la respuesta cruda.
+- `tests/Support/SignatureAssertions::assertFirmaVerifica()`: verificación criptográfica de la firma con
+  xmlseclibs (digest del DE y firma de `SignedInfo`), usada por `tests/Unit/Deserializacion/IdaYVueltaFirmadoTest`.
 - `Config::$soapConnectionTimeout` y `Config::$soapUserAgent` (PK-31), con sus setters y sus claves en
   `ParseObject()`/JSON: las opciones `connection_timeout` y `user_agent` de `SoapClient`. Sin configurar, no
   se agregan y el comportamiento no cambia. Test: `tests/Unit/Sifen/ErroresDelFacadeTest`.
@@ -169,6 +171,12 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   los seis de `GCamAE` (vendedor y lugar de la transacción); `GCamItem::setCPaisOrig()`; y
   `RGEveNom::setCPaisRec()`, `setCDepRec()`, `setCDisRec()` y `setCCiuRec()`. Validan antes de asignar, así
   que un código inválido no deja el objeto a medias, y consultan el catálogo una sola vez.
+- **Documento firmado que perdía la firma al volver a serializarse** (PK-32). `RDE::toDOMElement()` emitía
+  solo `dVerFor` y `DE`. Un `rDE` leído de un XML firmado (`FromSimpleXMLElement` o `FromDOMElement`) reemite
+  ahora su `Signature` tal como vino y su `gCamFuFD`, en el orden de `DE_v150.xsd:1939-1960`: la ida y vuelta
+  es byte a byte y la firma sigue verificando, también con la FE real de la captura del 09/10/2026. Un `rDE`
+  armado a mano se serializa como antes (es lo que firma `FirmarDE()`), y volver a firmar un `rDE` leído
+  reemplaza la firma anterior en lugar de agregar una segunda.
 
 ### Cambiado
 
