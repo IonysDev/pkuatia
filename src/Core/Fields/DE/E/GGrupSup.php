@@ -14,10 +14,19 @@ use SimpleXMLElement;
 class GGrupSup
 {
   public String $dNomCaj; ///E811 Nombre del cajero
+  /** @deprecated 0.2.1 Parte entera del monto (E812 admite 4 decimales): usar getDEfectivoDecimal(). */
   public int $dEfectivo; /// E812 Efectivo
+  /** @deprecated 0.2.1 Parte entera del monto (E813 admite 4 decimales): usar getDVueltoDecimal(). */
   public int $dVuelto; //E813 Vuelto
+  /** @deprecated 0.2.1 Parte entera del monto (E814 admite 4 decimales): usar getDDonacDecimal(). */
   public int $dDonac; ///E814 Monto de la donación
   public String $dDesDonac; ///E815 Descripción de la donación
+
+  // Montos exactos (dEfectivo tMontoBase4; dVuelto y dDonac tMontoBase6; hasta 4 decimales, DE_Types_v150.xsd).
+  // Hasta 0.2.0 solo existían las propiedades int y los centavos se truncaban (Q-B10).
+  private ?String $dEfectivoDecimal = null;
+  private ?String $dVueltoDecimal = null;
+  private ?String $dDonacDecimal = null;
 
   ///////////////////////////////////////////////////////////////////////
   ////Setters
@@ -39,45 +48,57 @@ class GGrupSup
 
 
   /**
-   * Establece el valor de dEfectivo
+   * Establece el valor de dEfectivo (E812, tMontoBase4: hasta 19 dígitos, 4 de ellos decimales).
+   * Desde 0.2.1 acepta texto con decimales y lo emite exacto; hasta 0.2.0 se truncaba a entero (Q-B10).
    *
-   * @param int $dEfectivo
+   * @param int|String $dEfectivo
+   *
+   * @throws \InvalidArgumentException Si no es un número válido para el XSD.
    *
    * @return self
    */
-  public function setDEfectivo(int $dEfectivo): self
+  public function setDEfectivo(int|String $dEfectivo): self
   {
-    $this->dEfectivo = $dEfectivo;
+    $this->dEfectivoDecimal = self::monto($dEfectivo, 'dEfectivo', 19);
+    $this->dEfectivo = intval($this->dEfectivoDecimal);
 
     return $this;
   }
 
 
   /**
-   * Establece el valor de dVuelto
+   * Establece el valor de dVuelto (E813, tMontoBase6: hasta 10 dígitos, 4 de ellos decimales).
+   * Desde 0.2.1 acepta texto con decimales y lo emite exacto; hasta 0.2.0 se truncaba a entero (Q-B10).
    *
-   * @param int $dVuelto
+   * @param int|String $dVuelto
+   *
+   * @throws \InvalidArgumentException Si no es un número válido para el XSD.
    *
    * @return self
    */
-  public function setDVuelto(int $dVuelto): self
+  public function setDVuelto(int|String $dVuelto): self
   {
-    $this->dVuelto = $dVuelto;
+    $this->dVueltoDecimal = self::monto($dVuelto, 'dVuelto', 10);
+    $this->dVuelto = intval($this->dVueltoDecimal);
 
     return $this;
   }
 
 
   /**
-   * Establece el valor de dDonac
+   * Establece el valor de dDonac (E814, tMontoBase6: hasta 10 dígitos, 4 de ellos decimales).
+   * Desde 0.2.1 acepta texto con decimales y lo emite exacto; hasta 0.2.0 se truncaba a entero (Q-B10).
    *
-   * @param int $dDonac
+   * @param int|String $dDonac
+   *
+   * @throws \InvalidArgumentException Si no es un número válido para el XSD.
    *
    * @return self
    */
-  public function setDDonac(int $dDonac): self
+  public function setDDonac(int|String $dDonac): self
   {
-    $this->dDonac = $dDonac;
+    $this->dDonacDecimal = self::monto($dDonac, 'dDonac', 10);
+    $this->dDonac = intval($this->dDonacDecimal);
 
     return $this;
   }
@@ -114,6 +135,8 @@ class GGrupSup
   /**
    * Obtiene el valor de dEfectivo
    *
+   * @deprecated 0.2.1 Trunca el monto (E812 admite 4 decimales): usar getDEfectivoDecimal().
+   *
    * @return int
    */
   public function getDEfectivo(): int
@@ -123,6 +146,8 @@ class GGrupSup
 
   /**
    * Obtiene el valor de dVuelto
+   *
+   * @deprecated 0.2.1 Trunca el monto (E813 admite 4 decimales): usar getDVueltoDecimal().
    *
    * @return int
    */
@@ -134,11 +159,43 @@ class GGrupSup
   /**
    * Obtiene el valor de dDonac
    *
+   * @deprecated 0.2.1 Trunca el monto (E814 admite 4 decimales): usar getDDonacDecimal().
+   *
    * @return int
    */
   public function getDDonac(): int
   {
     return $this->dDonac;
+  }
+
+  /**
+   * Monto exacto de dEfectivo (E812) como texto, o null si no se informó. Nuevo en 0.2.1 (Q-B10).
+   *
+   * @return String|null
+   */
+  public function getDEfectivoDecimal(): ?String
+  {
+    return isset($this->dEfectivo) ? self::exacto($this->dEfectivoDecimal, $this->dEfectivo) : null;
+  }
+
+  /**
+   * Monto exacto de dVuelto (E813) como texto, o null si no se informó. Nuevo en 0.2.1 (Q-B10).
+   *
+   * @return String|null
+   */
+  public function getDVueltoDecimal(): ?String
+  {
+    return isset($this->dVuelto) ? self::exacto($this->dVueltoDecimal, $this->dVuelto) : null;
+  }
+
+  /**
+   * Monto exacto de dDonac (E814) como texto, o null si no se informó. Nuevo en 0.2.1 (Q-B10).
+   *
+   * @return String|null
+   */
+  public function getDDonacDecimal(): ?String
+  {
+    return isset($this->dDonac) ? self::exacto($this->dDonacDecimal, $this->dDonac) : null;
   }
 
   /**
@@ -167,11 +224,11 @@ class GGrupSup
     if (isset($this->dNomCaj))
       $res->appendChild(XmlHelper::elemento($doc, 'dNomCaj', $this->getDNomCaj()));
     if (isset($this->dEfectivo))
-      $res->appendChild(XmlHelper::elemento($doc, 'dEfectivo', $this->getDEfectivo()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dEfectivo', $this->getDEfectivoDecimal()));
     if (isset($this->dVuelto))
-      $res->appendChild(XmlHelper::elemento($doc, 'dVuelto', $this->getDVuelto()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dVuelto', $this->getDVueltoDecimal()));
     if (isset($this->dDonac))
-      $res->appendChild(XmlHelper::elemento($doc, 'dDonac', $this->getDDonac()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDonac', $this->getDDonacDecimal()));
     if (isset($this->dDesDonac))
       $res->appendChild(XmlHelper::elemento($doc, 'dDesDonac', $this->getDDesDonac()));
     return $res;
@@ -247,11 +304,34 @@ class GGrupSup
   {
     match ($campo) {
       'dNomCaj' => $res->setDNomCaj($valor),
-      'dEfectivo' => $res->setDEfectivo(intval($valor)),
-      'dVuelto' => $res->setDVuelto(intval($valor)),
-      'dDonac' => $res->setDDonac(intval($valor)),
+      'dEfectivo' => $res->setDEfectivo($valor),
+      'dVuelto' => $res->setDVuelto($valor),
+      'dDonac' => $res->setDDonac($valor),
       'dDesDonac' => $res->setDDesDonac($valor),
       default => null,
     };
+  }
+
+  /**
+   * Valida un monto contra tMontoBase4/tMontoBase6 (xs:decimal con fractionDigits 4 y totalDigits 19 o 10,
+   * DE_Types_v150.xsd) y lo devuelve como texto, sin redondear. Como en xs:decimal, los ceros a la izquierda
+   * y los decimales finales en cero no cuentan.
+   */
+  private static function monto(int|String $valor, String $campo, int $totalDigitos): String
+  {
+    $texto = trim((string) $valor);
+    if (!preg_match('/^-?(\d+)(?:\.(\d+))?$/', $texto, $m))
+      throw new \InvalidArgumentException("[GGrupSup] $campo debe ser un número decimal: '$texto'");
+    $enteros = ltrim($m[1], '0');
+    $decimales = rtrim($m[2] ?? '', '0');
+    if (strlen($decimales) > 4 || strlen($enteros) + strlen($decimales) > $totalDigitos)
+      throw new \InvalidArgumentException("[GGrupSup] $campo admite hasta $totalDigitos dígitos, de los cuales hasta 4 decimales (DE_Types_v150.xsd): '$texto'");
+    return $texto;
+  }
+
+  /** Monto exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */
+  private static function exacto(?String $decimal, int $entero): String
+  {
+    return ($decimal !== null && intval($decimal) === $entero) ? $decimal : (string) $entero;
   }
 }

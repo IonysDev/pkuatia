@@ -39,6 +39,8 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `addDatosComplementariosSectorEnergia()` y `addVencimientoDePagoDeUsoComercial()`. Las propiedades y
   los getters existentes siguen devolviendo la primera ocurrencia, y los `set…` siguen reemplazando todas.
   Superar el máximo lanza `InvalidArgumentException`. Test: `tests/Unit/Conformidad/OcurrenciasMultiplesTest`.
+- `GGrupSup::getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()` (decisión Q-B10): el
+  monto exacto como texto, con sus decimales.
 - `tests/Unit/Deserializacion/CamposEspecificosIdaYVueltaTest`: ida y vuelta por DOM, SimpleXML y
   objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
   (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
@@ -100,10 +102,18 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
 - **Ocurrencias que se perdían al leer** (Q-B9). Al leer un DE con varios `gGrupEner` o varias `dVencPag`
   se conservaba solo una. Ahora las tres vías de lectura (DOM, SimpleXML y objeto SOAP) conservan todas y
   la emisión las escribe todas, en orden.
+- **Montos del sector supermercados con centavos** (decisión Q-B10). `GGrupSup` guardaba `dEfectivo`,
+  `dVuelto` y `dDonac` como enteros, aunque el XSD admite 4 decimales (`tMontoBase4` y `tMontoBase6`,
+  `DE_Types_v150.xsd`): `150.75` se emitía como `150` y PHP mostraba un aviso de conversión con pérdida.
+  Los setters aceptan texto (`int|String`, ampliación) y validan contra el XSD: más de 4 decimales o más
+  dígitos que los del tipo lanzan `InvalidArgumentException`, igual que un texto no numérico, que antes
+  daba `TypeError`. El XML lleva el monto exacto, también al leer. Los montos enteros no cambian.
 
 ### Obsoleto
 
 - `GCamEsp::getGGrupoSeg()`: nombre con errata; usar `getGGrupSeg()`. Sigue funcionando.
+- `GGrupSup::getDEfectivo()`, `getDVuelto()`, `getDDonac()` y sus propiedades públicas `int`: devuelven la
+  parte entera del monto; usar `getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()`.
 
 ## [0.2.0] — 2026-10-09
 
