@@ -8,11 +8,15 @@ y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semve
 ## [0.2.1] — No publicado
 
 Fase B del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): deserialización,
-respuestas del SIFEN y robustez (PK-25 a PK-43). **Compatible hacia atrás**: ninguna firma pública se
-elimina ni cambia; solo se agregan métodos, parámetros opcionales al final, propiedades y pruebas, los
-retornos que ya podían devolver `null` se declaran anulables, y se corrige comportamiento que producía
-`Error`, `TypeError`, pérdida de datos o XML inválido. El formato de las respuestas se fija contra
-capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual Técnico.
+respuestas del SIFEN y robustez (PK-25 a PK-43). **Compatible hacia atrás para el uso habitual**: no se
+elimina ningún método público; se agregan métodos, parámetros opcionales al final, propiedades y
+pruebas; algunos setters amplían el tipo que aceptan (`int` → `int|String`) y los retornos que ya podían
+devolver `null` se declaran anulables. Se corrige comportamiento que producía `Error`, `TypeError`,
+pérdida de datos o XML inválido. Algunas correcciones cambian el XML emitido (grupos sectoriales
+combinados, constancia de no ser contribuyente, vehículo nuevo) o lanzan una excepción con mensaje donde
+antes se seguía en silencio: están detalladas en "Corregido" y en "Cambiado". El formato de las
+respuestas se fija contra capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual
+Técnico.
 
 ### Agregado
 
@@ -271,6 +275,9 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   0301). Fuente: guía de mejores prácticas de envío de la DNIT, §4 y §5. Hasta 0.2.0 un documento sin
   `iTiDE` se enviaba sin control de tipo.
 - `Sifen::ConsultaLote()` declara el tipo del parámetro: `string|int $nroLote` (antes sin tipo).
+- `Constants::PKUATIA_VERSION` actualizado a `0.2.1`. README: consulta y deserialización de un DE, lote con
+  `EsperarResultadoLote`, diagnóstico con `GetLastResponse` y la espera de 3 minutos antes de cancelar en
+  `sifen-test`.
 - **Formato de la constancia validado al cargarlo** (PK-35, decisión Q-B11). `GCamDEAsoc::setDNumCons()` exige un
   entero positivo de hasta 11 dígitos y `setDNumControl()` 8 caracteres entre letras, números y guion (`tgCamDEAsoc`,
   `DE_v150.xsd:1688`); si no se cumple lanzan `InvalidArgumentException`, y con ellos
