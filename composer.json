@@ -1,7 +1,18 @@
 {
     "name": "ionysdev/pkuatia",
-    "description": "Implementacion en PHP de la interfaz con el sistema EKuatia de faturacion electronica de Paraguay",
+    "description": "Implementación en PHP de la interfaz con el sistema e-Kuatia (SIFEN) de facturación electrónica de Paraguay",
     "type": "library",
+    "keywords": [
+        "sifen",
+        "e-kuatia",
+        "ekuatia",
+        "facturacion-electronica",
+        "factura-electronica",
+        "documento-electronico",
+        "dnit",
+        "paraguay"
+    ],
+    "homepage": "https://github.com/IonysDev/pkuatia",
     "license": "MIT",
     "autoload": {
         "psr-4": {
