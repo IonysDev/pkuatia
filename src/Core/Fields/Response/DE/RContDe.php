@@ -143,7 +143,6 @@ class RContDe
 
     if(strcmp($xml->getName(),'rContDe') != 0) {
       throw new \Exception("Invalid XML Element:". $xml->getName());
-      return null;
     }
     
     $res = new self();

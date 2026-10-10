@@ -929,7 +929,6 @@ class RGeVeTr
   {
     if (strcmp($node->getName(), 'rGeVeTr') != 0) {
       throw new \Exception("Invalid XML Element: $node->getName()");
-      return null;
     }
 
     $res = new self();

@@ -91,7 +91,6 @@ class RRetEnviEventoDe
   {
     if (is_null($object)) {
       throw new \Exception("Error Processing Request: null", 1);
-      return null;
     }
     $res = new RRetEnviEventoDe();
     // Rechazo genérico: el SIFEN responde con el sobre rRetEnviDe > rProtDe (capturado para recepción y
@@ -126,7 +125,6 @@ class RRetEnviEventoDe
   {
     if(strcmp($node->getName(),'rRetEnviEventoDe') != 0) {
       throw new \Exception("Invalid XML Element:" . $node->getName());
-      return null;
     }
 
     $res = new RRetEnviEventoDe();

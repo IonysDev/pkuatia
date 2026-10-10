@@ -578,7 +578,6 @@ class GGroupTiEvt
   {
       if(strcmp($node->getName(),'gGroupTiEvt') != 0) {
           throw new \Exception("Invalid XML Element:". $node->getName());
-          return null;
       }
 
       $res = new GGroupTiEvt();

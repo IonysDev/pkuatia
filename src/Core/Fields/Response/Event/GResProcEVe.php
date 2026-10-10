@@ -125,7 +125,6 @@ class GResProcEVe
   {
       if(strcmp($node->getName(),'gResProcEVe') != 0) {
         throw new \Exception("Invalid XML Element: $node->getName()");
-        return null;
       }
 
       $res = new GResProcEVe();

@@ -251,7 +251,6 @@ class RProtDe
   {
     if (strcmp($xml->getName(), 'rProtDe') != 0) {
       throw new \Exception("Invalid XML Element: $xml->getName()");
-      return null;
     }
     $res = new RProtDe();
     // Hasta 0.2.0: se leía "id" (el SIFEN manda Id), la fecha con un formato que nunca coincide ("Y-m-d H:i:s")

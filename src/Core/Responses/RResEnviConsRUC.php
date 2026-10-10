@@ -127,7 +127,6 @@ class RResEnviConsRUC
   {
     if (is_null($object)) {
       throw new \Exception("Error Processing Request: null", 1);
-      return null;
     }
     $res = new RResEnviConsRUC();
     // Rechazo genérico: la consulta de RUC responde con el sobre rRetEnviDe > rProtDe (respuestas-ws/2026-10-06/03 y

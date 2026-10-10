@@ -86,7 +86,6 @@ class RGesEve
     {
         if(strcmp($node->getName(),'rGesEve') != 0) {
             throw new \Exception("Invalid XML Element: " . $node->getName());
-            return null;
         }
 
         $res = new self();

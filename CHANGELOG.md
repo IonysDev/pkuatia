@@ -79,6 +79,9 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   horas; hay que consultar cada CDC con `ConsultarDE()` (guía, §7; no figura en el MT v150).
 - `Constants::MAX_BYTES_MENSAJE_LOTE` (1 000 000) y `Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG` (600).
   Test: `tests/Unit/Sifen/LoteTest`.
+- `phpunit.xml.dist` hace fallar la corrida si un test imprime algo (`beStrictAboutOutputDuringTests` y
+  `failOnRisky`), y `tests/Unit/Core/LimpiezaTest` comprueba que cada archivo de `src/` declara el tipo de su
+  nombre y que no queda código inalcanzable después de un `throw` (PK-43).
 
 ### Corregido
 
@@ -201,6 +204,10 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `ItemValorado` (`setNroLote()`, `setNroSerie()`, `setDncpCodigoGeneral()`, `setDetalleVehiculoNuevo()`,
   etc.) asignaban propiedades no declaradas: cada llamada emitía `Creation of dynamic property` en PHP 8.2+,
   que será un error en PHP 9. Las propiedades ahora están declaradas. Ver "Obsoleto".
+- **Salida de depuración en producción** (PK-43). `RespuestaConsultaLoteDE::FromSifenResponseObject()`
+  imprimía su nombre con `echo` en cada llamada. `GResProcEve` (espacio `Fields\Response\DE`) tenía una rama con
+  `echo "TODO CUANTICO"` y leía solo el primer `gResProc`: ahora lee todos los mensajes. Se quitaron además 21
+  `return null;` inalcanzables después de un `throw` (sin efecto en el comportamiento).
 - **Código de seguridad predecible** (PK-38). `RNG::GenerateAsString()`, con el que `GOpeDE` genera `dCodSeg`
   (B004, que entra en el CDC y en el QR), usaba `rand()`: desde PHP 7.1 es `mt_rand()` y con la misma semilla
   de `mt_srand()` repetía los códigos. Ahora usa `random_int()`, del generador criptográfico del sistema. Como
@@ -246,6 +253,18 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `setDetalleVehiculoNuevo()`. Nunca tuvieron efecto en el documento: el dato se informa con el parámetro del
   mismo nombre de `addItem()`, que lo asigna al ítem. Siguen guardando el valor en su propiedad, ahora
   declarada y también obsoleta, y avisan con `E_USER_DEPRECATED` qué parámetro usar. El XML no cambia.
+- Código sin uso en la librería (PK-43): `Core\Fields\Response\DE\GResProcEve` (duplicado de
+  `Core\Fields\Response\Event\GResProcEVe`, que es el que usan las respuestas de eventos),
+  `Core\Responses\RespuestaConsultaLoteDE` (usar `RResEnviConsLoteDe`, que devuelve `Sifen::ConsultaLote()`),
+  `Helpers\RequestXMLHelper` y `Utils\NumberFunctions`. Siguen funcionando.
+- `RResEnviConsDe::showData()`: imprime con `echo`. Usar los getters de la respuesta.
+- `TxContenEv::fromDOMElement()`: nunca funcionó (busca un elemento `contentEv` que no existe y llama a un
+  método comentado). Para los eventos de una consulta de DE usar `RContDe::FromXContenDE()` y `getRContEvs()`.
+
+### Eliminado
+
+- `src/Core/Responses/RespuestaRecepcionEvento.php` y `RespuestaRecepcionLoteDE.php` (decisión Q-B6): archivos
+  de 0 bytes desde 09/2023, sin ninguna clase, así que ningún código podía usarlos.
 
 ## [0.2.0] — 2026-10-09
 

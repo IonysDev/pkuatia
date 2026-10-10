@@ -63,6 +63,10 @@ class TxContenEv
    *
    * @param  mixed $xml
    * @return TxContenEv
+   *
+   * @deprecated 0.2.1 Nunca funcionó: espera un elemento contentEv, que no existe en el XSD, y llama a
+   *             RContEv::fromDOMElement(), que está comentado (PK-43). Para los eventos de una consulta de DE usar
+   *             RContDe::FromXContenDE() y RContDe::getRContEvs().
    */
   public static function fromDOMElement(DOMElement $xml): TxContenEv
   {
@@ -76,7 +80,6 @@ class TxContenEv
       return $res;
     } else {
       throw new \Exception("Invalid XML Element: $xml->tagName");
-      return null;
     }
   }
   

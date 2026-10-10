@@ -219,7 +219,6 @@ class RResEnviConsDe
   {
     if (is_null($object)) {
       throw new \Exception("Error Processing Request: null", 1);
-      return null;
     }
     $res = new RResEnviConsDe();
     // Rechazo genérico: el SIFEN responde con el sobre rRetEnviDe > rProtDe (capturado para recepción y consulta
@@ -259,6 +258,9 @@ class RResEnviConsDe
    * showData
    *
    * @return void
+   *
+   * @deprecated 0.2.1 Imprime con echo, una salida de depuración que no corresponde a una librería (PK-43). Usar los
+   *             getters de la respuesta, o json_encode() sobre lo que se quiera volcar.
    */
   public function showData()
   {

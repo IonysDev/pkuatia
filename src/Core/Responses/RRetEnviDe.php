@@ -64,7 +64,6 @@ class RRetEnviDe {
         if(is_null($object))
         {
             throw new \Exception("Error Processing Request: null", 1);
-            return null;
         }
         
         $res = new RRetEnviDe();

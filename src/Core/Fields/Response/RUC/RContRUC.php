@@ -253,7 +253,6 @@ class RContRUC
   {
     if(strcmp($xml->getName(),'rContRUC') != 0) {
       throw new \Exception("Invalid XML Element: $xml->getName()");
-      return null;
     }
     $res = new RContRUC();
     if(isset($xml->dRUCCons)){
