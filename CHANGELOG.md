@@ -186,6 +186,10 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `ItemValorado` (`setNroLote()`, `setNroSerie()`, `setDncpCodigoGeneral()`, `setDetalleVehiculoNuevo()`,
   etc.) asignaban propiedades no declaradas: cada llamada emitía `Creation of dynamic property` en PHP 8.2+,
   que será un error en PHP 9. Las propiedades ahora están declaradas. Ver "Obsoleto".
+- **Código de seguridad predecible** (PK-38). `RNG::GenerateAsString()`, con el que `GOpeDE` genera `dCodSeg`
+  (B004, que entra en el CDC y en el QR), usaba `rand()`: desde PHP 7.1 es `mt_rand()` y con la misma semilla
+  de `mt_srand()` repetía los códigos. Ahora usa `random_int()`, del generador criptográfico del sistema. Como
+  `rand()`, sigue aceptando un máximo menor que el mínimo.
 
 ### Cambiado
 
@@ -197,6 +201,12 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `TypeError` alrededor de esos métodos debe capturar `\Exception` y revisar `getPrevious()`. En
   `EnviarLoteDE()` el parseo de la respuesta quedó dentro del `try`. `ConsultarRUC()` y `ConsultarDE()`
   siguen dejando pasar el `SoapFault` tal cual y solo envuelven los `\Error` del parseo.
+- **CDC inválido con excepción** (PK-38). `CDCHelper::Generate()` devolvía el texto
+  `"ERROR: El codigo de control no tiene 44 caracteres"` cuando el CDC salía corto, y uno largo o con letras
+  fuera de lugar tal cual: los dos terminaban en el atributo `Id` del DE y el SIFEN lo rechazaba. Ahora lanza
+  `InvalidArgumentException` con el CDC obtenido cuando no cumple el tipo `tCDC` del XSD (44 caracteres; el
+  RUC puede terminar en una letra de la A a la D). La conversión del documento (`facturaToRDE()` y las
+  demás) propaga la excepción. Quien comparaba el resultado con `"ERROR"` debe capturar la excepción.
 
 ### Obsoleto
 
