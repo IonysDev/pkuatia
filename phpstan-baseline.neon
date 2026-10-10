@@ -499,12 +499,6 @@ parameters:
 			path: src/Core/Fields/DE/F/GTotSub.php
 
 		-
-			message: '#^Class IonysDev\\Pkuatia\\Core\\Fields\\Request\\Event\\GDE\\RGEveNom referenced with incorrect case\: IonysDev\\Pkuatia\\Core\\Fields\\Request\\Event\\GDE\\RGeVeNom\.$#'
-			identifier: class.nameCase
-			count: 1
-			path: src/Core/Fields/Request/Event/GDE/GGroupTiEvt.php
-
-		-
 			message: '#^Class IonysDev\\Pkuatia\\Core\\Fields\\Response\\DE\\GResProcEve referenced with incorrect case\: IonysDev\\Pkuatia\\Core\\Fields\\Response\\DE\\GResProcEVe\.$#'
 			identifier: class.nameCase
 			count: 1

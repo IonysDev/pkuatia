@@ -126,11 +126,12 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de iTiOpe - Tipo de operación
+     * Establece el valor de iTiOpe - Tipo de operación.
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      *
      * @param int $iTiOpe
      *
-     * @return self
+     * @return void
      */
     public function setITiOpe(int|RecTiOpe $iTiOpe): void
     {
@@ -172,11 +173,12 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de iTiContRec - Tipo de contribuyente receptor
+     * Establece el valor de iTiContRec - Tipo de contribuyente receptor.
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      *
      * @param int $iTiContRec
      *
-     * @return self
+     * @return void
      */
     public function setITiContRec(int|EmisRecTipCont $iTiContRec): void
     {
@@ -306,11 +308,12 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de cDepRec - Código de departamento del receptor
+     * Establece el valor de cDepRec - Código de departamento del receptor.
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      *
      * @param int $cDepRec
      *
-     * @return self
+     * @return void
      */
     public function setCDepRec(int $cDepRec): void
     {

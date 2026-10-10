@@ -355,17 +355,18 @@ class RGeVeDescon
     $res->setId($node->Id);
     $res->setDFecEmi(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecEmi));
     $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecRecep));
-    $res->setITipRec($node->iTipRec);
-    $res->setDNomRec($node->dNomRec);
+    // Hasta 0.2.0 los tres campos enteros recibían el SimpleXMLElement: TypeError al leer cualquier desconocimiento (PK-28).
+    $res->setITipRec(intval((string) $node->iTipRec));
+    $res->setDNomRec((string) $node->dNomRec);
     if(isset($node->dRucRec))
     {
-      $res->setDRucRec($node->dRucRec);
-      $res->setDDVRec($node->dDVRec);
+      $res->setDRucRec((string) $node->dRucRec);
+      $res->setDDVRec(intval((string) $node->dDVRec));
     }
     if(isset($node->dTipIDRec))
     {
-      $res->setDTipIDRec($node->dTipIDRec);
-      $res->setDNumID($node->dNumID);
+      $res->setDTipIDRec(intval((string) $node->dTipIDRec));
+      $res->setDNumID((string) $node->dNumID);
     }
     $res->setMOtEve($node->mOtEve);
 

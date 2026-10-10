@@ -41,6 +41,10 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   Superar el máximo lanza `InvalidArgumentException`. Test: `tests/Unit/Conformidad/OcurrenciasMultiplesTest`.
 - `GGrupSup::getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()` (decisión Q-B10): el
   monto exacto como texto, con sus decimales.
+- Eventos (PK-42): `GGroupTiEvt::getRGeDevCCFFCue()` y `getRGeDevCCFFDev()`; en `RGeVeRetAce` y
+  `RGeVeRetAnu`, `dRuc` y `dMonRet` con sus setters y getters; `Sifen::InutilizarNumeros()` con el parámetro
+  opcional final `?String $serie = null` (`dSerieNum`). Test: `tests/Unit/Deserializacion/EventosIdaYVueltaTest`,
+  con los 15 tipos de evento por SimpleXML y la cancelación real de la captura del 09/10/2026.
 - `tests/Unit/Deserializacion/CamposEspecificosIdaYVueltaTest`: ida y vuelta por DOM, SimpleXML y
   objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
   (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
@@ -108,12 +112,28 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   Los setters aceptan texto (`int|String`, ampliación) y validan contra el XSD: más de 4 decimales o más
   dígitos que los del tipo lanzan `InvalidArgumentException`, igual que un texto no numérico, que antes
   daba `TypeError`. El XML lleva el monto exacto, también al leer. Los montos enteros no cambian.
+- **La nominación nunca se leía** (PK-27). `GGroupTiEvt` buscaba el nodo `rGeVeNom`, pero el XSD lo llama
+  `rGEveNom` (`Evento_v150.xsd:379`), y declaraba la clase como `RGeVeNom`, cuando la real es `RGEveNom`:
+  en Linux, con la clase sin cargar, el autoload no encontraba el archivo. Se quitó la entrada
+  `class.nameCase` de `phpstan-baseline.neon` (85 → 84).
+- **Eventos que terminaban en `TypeError` al leerlos** (PK-28). Conformidad: `iTipConf` recibía el nodo y
+  `dFecRecep` se leía sin hora, aunque es `fecHhmmss` y se emite con hora desde 0.2.0. Desconocimiento:
+  `iTipRec`, `dDVRec` y `dTipIDRec` recibían el nodo. Los afectaba `Sifen::ConsultarDE` de cualquier DE con
+  esos eventos.
+- **Retenciones sin RUC ni monto** (PK-42). `dRuc` y `dMonRet` son obligatorios en `trGeVeRetAce` y
+  `trGeVeRetAnu` (`Evento_v150.xsd:120-147`) aunque el Manual Técnico no los lista; se perdían al leer.
+- **Inutilización** (PK-42). `InutilizarNumeros()` acepta la serie (dos letras, `tserieNum`) y rechaza,
+  antes de llamar al SIFEN, un tipo de documento fuera de 1 a 9 (`tiTiDEEv`), como el 10 de `TimbTiDE`.
+- Los 18 setters que devuelven `void` documentan que no se pueden encadenar (decisión Q-B2); los tres de
+  `RGEveNom` decían `@return self`.
 
 ### Obsoleto
 
 - `GCamEsp::getGGrupoSeg()`: nombre con errata; usar `getGGrupSeg()`. Sigue funcionando.
 - `GGrupSup::getDEfectivo()`, `getDVuelto()`, `getDDonac()` y sus propiedades públicas `int`: devuelven la
   parte entera del monto; usar `getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()`.
+- `GGroupTiEvt::getGeDevCCFFCue()`: pese a su nombre devuelve el grupo "devuelto"; se conserva por
+  compatibilidad. Usar `getRGeDevCCFFCue()` o `getRGeDevCCFFDev()`.
 
 ## [0.2.0] — 2026-10-09
 

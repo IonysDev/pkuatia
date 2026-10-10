@@ -430,10 +430,11 @@ class Sifen
    * @param TimbTiDE|int $tipoDE Tipo de documento electrónico del rango.
    * @param String $motivo Motivo de la inutilización (5 a 500 caracteres).
    * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
+   * @param String|null $serie Serie de la numeración (dSerieNum, dos letras mayúsculas, tserieNum de Evento_v150.xsd; 0-1). Nuevo en 0.2.1.
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
+  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo, ?DateTime $fechaFirma = null, ?String $serie = null): RRetEnviEventoDe
   {
 
     $tipoDEId = $tipoDE instanceof TimbTiDE ? $tipoDE->value : $tipoDE;
@@ -452,6 +453,12 @@ class Sifen
       throw new \Exception("[Sifen] El número de punto de emisión debe ser mayor a 0.");
     if($tipoDEId < 1)
       throw new \Exception("[Sifen] El tipo de documento electrónico debe ser mayor a 0.");
+    // iTiDE del evento es tiTiDEEv, de 1 a 9 (Evento_Types_v150.xsd); el 10 de TimbTiDE (boleta resimple) no aplica (PK-42).
+    if($tipoDEId > 9)
+      throw new \InvalidArgumentException("[Sifen] El tipo de documento a inutilizar debe estar entre 1 y 9 (tiTiDEEv, Evento_Types_v150.xsd); se recibió $tipoDEId.");
+    // dSerieNum de trGeVeInu es 0-1 y tserieNum es [A-Z][A-Z] (Evento_v150.xsd); hasta 0.2.0 no se podía informar (PK-42).
+    if($serie !== null && !preg_match('/^[A-Z]{2}$/', $serie))
+      throw new \InvalidArgumentException("[Sifen] La serie debe tener dos letras mayúsculas (tserieNum); se recibió '$serie'.");
     if($motivo == '')
       throw new \Exception("[Sifen] El motivo de la inutilización no puede ser vacío.");
     if(strlen($motivo) < 5)
@@ -466,6 +473,8 @@ class Sifen
     $rGeVeInu->setDNumIn(str_pad($nroDocumentoInicial, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setDNumFin(str_pad($nroDocumentoFinal, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setITiDE($tipoDEId);
+    if($serie !== null)
+      $rGeVeInu->setDSerieNum($serie);
     self::ValidarMotivoEvento($motivo, 'inutilización');
     $rGeVeInu->setMOtEve($motivo);
 

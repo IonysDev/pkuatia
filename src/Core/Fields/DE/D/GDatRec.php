@@ -120,27 +120,42 @@ class GDatRec extends BaseSifenField
         return $this;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setITiOpe(int|RecTiOpe $iTiOpe): void
     {
         $this->iTiOpe = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setCPaisRec(String $cPaisRec): void
     {
         $this->cPaisRec = $cPaisRec;
         $this->dDesPaisRe = CountryMapping::getCountryDesc($cPaisRec);
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDDesPaisRe(String $dDesPaisRe): void
     {
         $this->dDesPaisRe = $dDesPaisRe;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setITiContRec(int|EmisRecTipCont $iTiContRec): void
     {
         $this->iTiContRec = $iTiContRec instanceof EmisRecTipCont ? $iTiContRec->value : $iTiContRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDRucRec(String $dRucRec): void
     {
         $this->dRucRec = $dRucRec;
@@ -183,51 +198,81 @@ class GDatRec extends BaseSifenField
         return $this;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNumIDRec(String $dNumIDRec): void
     {
         $this->dNumIDRec = $dNumIDRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNomRec(String $dNomRec): void
     {
         $this->dNomRec = $dNomRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNomFanRec(String $dNomFanRec): void
     {
         $this->dNomFanRec = $dNomFanRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDDirRec(String $dDirRec): void
     {
         $this->dDirRec = $dDirRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDTelRec(String $dTelRec): void
     {
         $this->dTelRec = $dTelRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDCelRec(String $dCelRec): void
     {
         $this->dCelRec = $dCelRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDEmailRec(String $dEmailRec): void
     {
         $this->dEmailRec = $dEmailRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDCodCliente(String $dCodCliente): void
     {
         $this->dCodCliente = $dCodCliente;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNumCasRec(int $dNumCasRec): void
     {
         $this->dNumCasRec = $dNumCasRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setCDepRec(int $cDepRec): void
     {
         $this->cDepRec = $cDepRec;
