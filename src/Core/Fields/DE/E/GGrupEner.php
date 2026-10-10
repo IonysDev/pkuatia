@@ -197,29 +197,60 @@ class GGrupEner
     if(strcmp($node->getName(), 'gGrupEner') != 0)
       throw new \Exception('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->getName(), 1);
     $res = new GGrupEner();
+    // Hasta 0.2.0 se pasaba el SimpleXMLElement a setDActiv(int): TypeError con cualquier dActiv (PK-25).
     if(isset($node->dNroMed))
     {
-      $res->setDNroMed($node->dNroMed);
+      $res->setDNroMed((string) $node->dNroMed);
     }
     if(isset($node->dActiv))
     {
-      $res->setDActiv($node->dActiv);
+      $res->setDActiv(intval((string) $node->dActiv));
     }
     if(isset($node->dCateg))
     {
-      $res->setDCateg($node->dCateg);
+      $res->setDCateg((string) $node->dCateg);
     }
     if(isset($node->dLecAnt))
     {
-      $res->setDLecAnt($node->dLecAnt);
+      $res->setDLecAnt((string) $node->dLecAnt);
     }
     if(isset($node->dLecAct))
     {
-      $res->setDLecAct($node->dLecAct);
+      $res->setDLecAct((string) $node->dLecAct);
     }
     if(isset($node->dConKwh))
     {
-      $res->setDConKwh($node->dConKwh);
+      $res->setDConKwh((string) $node->dConKwh);
+    }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GGrupEner a partir de un DOMElement (E791, tgGrupEner, DE_v150.xsd; todos los
+   * campos son opcionales). No existía hasta 0.2.0 y GCamEsp::FromDOMElement fallaba con Error (PK-25).
+   *
+   * @param DOMElement $node Nodo gGrupEner.
+   *
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if(strcmp($node->localName, 'gGrupEner') != 0)
+      throw new \InvalidArgumentException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->localName);
+    $res = new GGrupEner();
+    foreach($node->childNodes as $hijo)
+    {
+      if(!$hijo instanceof DOMElement)
+        continue;
+      match($hijo->localName) {
+        'dNroMed' => $res->setDNroMed($hijo->nodeValue),
+        'dActiv'  => $res->setDActiv(intval($hijo->nodeValue)),
+        'dCateg'  => $res->setDCateg($hijo->nodeValue),
+        'dLecAnt' => $res->setDLecAnt($hijo->nodeValue),
+        'dLecAct' => $res->setDLecAct($hijo->nodeValue),
+        'dConKwh' => $res->setDConKwh($hijo->nodeValue),
+        default   => null,
+      };
     }
     return $res;
   }

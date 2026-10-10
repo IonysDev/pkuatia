@@ -14,6 +14,8 @@ final class RoundTrip
 {
   public const VIA_DOM = 'FromDOMElement';
   public const VIA_SIMPLEXML = 'FromSimpleXMLElement';
+  /** FromSifenResponseObject sobre el objeto que entregaría SoapClient (ver objetoSoap); solo grupos sin atributos. */
+  public const VIA_SOAP = 'FromSifenResponseObject';
 
   /** XML del elemento que produce toDOMElement() en un documento nuevo. */
   public static function serializar(object $grupo): string
@@ -41,7 +43,25 @@ final class RoundTrip
     if ($via === self::VIA_SIMPLEXML) {
       return $clase::FromSimpleXMLElement(simplexml_load_string($xml));
     }
+    if ($via === self::VIA_SOAP) {
+      return $clase::FromSifenResponseObject(self::objetoSoap($xml));
+    }
     throw new \InvalidArgumentException("RoundTrip: vía desconocida $via");
+  }
+
+  /**
+   * Objeto que entregaría SoapClient si el elemento llegara dentro de una respuesta del SIFEN: el XML se
+   * envuelve en un sobre SOAP 1.2 y lo decodifica ext/soap (ver CapturaSoapClient). Los atributos se pierden.
+   */
+  public static function objetoSoap(string $xmlElemento): \stdClass
+  {
+    $sobre = '<?xml version="1.0" encoding="UTF-8"?>'
+      . '<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"><env:Body>'
+      . '<ns2:r xmlns:ns2="http://ekuatia.set.gov.py/sifen/xsd">' . $xmlElemento . '</ns2:r>'
+      . '</env:Body></env:Envelope>';
+    $doc = new DOMDocument();
+    $doc->loadXML($xmlElemento);
+    return (new CapturaSoapClient($sobre))->r()->{$doc->documentElement->localName};
   }
 
   /**

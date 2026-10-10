@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use SimpleXMLElement;
 
 /**
  * ID:E810 gGrupSup Grupo del sector supermercados
@@ -201,5 +202,56 @@ class GGrupSup
       $res->setDDesDonac($object->dDesDonac);
     }
     return $res;
+  }
+
+  /**
+   * Instancia un objeto GGrupSup a partir de un DOMElement (E810, tgGrupSup, DE_v150.xsd:663-690; todos los
+   * campos son opcionales). No existía hasta 0.2.0 y GCamEsp::FromDOMElement fallaba con Error (PK-25).
+   * Los montos se guardan como int, igual que en los setters: si el XML trae decimales, se truncan.
+   *
+   * @param DOMElement $node Nodo gGrupSup.
+   *
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if (strcmp($node->localName, 'gGrupSup') != 0)
+      throw new \InvalidArgumentException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->localName);
+    $res = new GGrupSup();
+    foreach ($node->childNodes as $hijo) {
+      if ($hijo instanceof DOMElement)
+        self::asignar($res, $hijo->localName, $hijo->nodeValue);
+    }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GGrupSup a partir de un SimpleXMLElement. No existía hasta 0.2.0 y
+   * GCamEsp::FromSimpleXMLElement fallaba con Error (PK-25).
+   *
+   * @param SimpleXMLElement $node Nodo gGrupSup.
+   *
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    if (strcmp($node->getName(), 'gGrupSup') != 0)
+      throw new \InvalidArgumentException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->getName());
+    $res = new GGrupSup();
+    foreach ($node->children() as $hijo)
+      self::asignar($res, $hijo->getName(), (string) $hijo);
+    return $res;
+  }
+
+  private static function asignar(GGrupSup $res, string $campo, string $valor): void
+  {
+    match ($campo) {
+      'dNomCaj' => $res->setDNomCaj($valor),
+      'dEfectivo' => $res->setDEfectivo(intval($valor)),
+      'dVuelto' => $res->setDVuelto(intval($valor)),
+      'dDonac' => $res->setDDonac(intval($valor)),
+      'dDesDonac' => $res->setDDesDonac($valor),
+      default => null,
+    };
   }
 }

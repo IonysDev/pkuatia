@@ -746,10 +746,17 @@ class GTransp extends BaseSifenField
     return $res;
   }
 
+  /**
+   * Instancia un GTransp a partir de un SimpleXMLElement. Hasta 0.2.0 lanzaba "Not implemented": ninguna
+   * nota de remisión se podía deserializar por esta vía, tampoco la que devuelve Sifen::ConsultarDE (PK-25).
+   * Delega en FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
+   *
+   * @param SimpleXMLElement $node Nodo gTransp.
+   *
+   * @return self
+   */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    throw new \Exception("[GTransp] Function FromSimpleXMLElement Not implemented");
-    $res = new self();
-    return $res;
+    return self::FromDOMElement(dom_import_simplexml($node));
   }
 }

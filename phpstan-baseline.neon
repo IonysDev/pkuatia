@@ -445,36 +445,6 @@ parameters:
 			path: src/Core/Fields/DE/E/GCamCond.php
 
 		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupAdi\:\:FromDOMElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GCamEsp.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupAdi\:\:FromSimpleXMLElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GCamEsp.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupEner\:\:FromDOMElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GCamEsp.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSup\:\:FromDOMElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GCamEsp.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSup\:\:FromSimpleXMLElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GCamEsp.php
-
-		-
 			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamFE\:\:\$dDesIndPres in isset\(\) is not nullable nor uninitialized\.$#'
 			identifier: isset.initializedProperty
 			count: 2
@@ -491,24 +461,6 @@ parameters:
 			identifier: isset.initializedProperty
 			count: 1
 			path: src/Core/Fields/DE/E/GCamIVA.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamAE\:\:FromSimpleXMLElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GDtipDE.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamNRE\:\:FromSifenResponseObject\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GDtipDE.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GCamNRE\:\:FromSimpleXMLElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/DE/E/GDtipDE.php
 
 		-
 			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GDtipDE\:\:\$gCamItem in isset\(\) is not nullable nor uninitialized\.$#'
@@ -557,9 +509,3 @@ parameters:
 			identifier: class.nameCase
 			count: 1
 			path: src/Core/Fields/Response/DE/GResProcEve.php
-
-		-
-			message: '#^Call to an undefined static method IonysDev\\Pkuatia\\Core\\Fields\\Response\\GResProc\:\:fromSimpleXMLElement\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Core/Fields/Response/RProtDe.php

@@ -257,7 +257,7 @@ class RProtDe
     $res->setDProtAut($xml->dProtAut);
     $res->gResProc = [];
     foreach ($xml->gResProc as $gResProc) {
-      $res->gResProc[] = GResProc::fromSimpleXMLElement($gResProc);
+      $res->gResProc[] = GResProc::FromSimpleXMLElement($gResProc);
     }
     return $res;
   }

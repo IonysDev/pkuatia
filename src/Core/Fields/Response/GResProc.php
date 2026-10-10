@@ -92,4 +92,24 @@ class GResProc
     return $res;
   }
 
+  /**
+   * Instancia un GResProc a partir de un SimpleXMLElement (PP05: dCodRes y dMsgRes, ambos 1-1). No existía
+   * hasta 0.2.0: RProtDe::FromSimpleXMLElement lo invocaba y fallaba con Error (PK-25).
+   *
+   * @param SimpleXMLElement $node Nodo gResProc.
+   *
+   * @return GResProc
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): GResProc
+  {
+    if (strcmp($node->getName(), 'gResProc') != 0)
+      throw new \InvalidArgumentException('[GResProc] El nombre del nodo no corresponde a gResProc: ' . $node->getName());
+    if (!isset($node->dCodRes) || !isset($node->dMsgRes))
+      throw new \InvalidArgumentException('[GResProc] gResProc debe contener dCodRes y dMsgRes.');
+    $res = new GResProc();
+    $res->setDCodRes((string) $node->dCodRes);
+    $res->setDMsgRes((string) $node->dMsgRes);
+    return $res;
+  }
+
 }

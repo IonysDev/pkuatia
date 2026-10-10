@@ -421,7 +421,9 @@ class DE extends BaseSifenField
     $res->gTimb = GTimb::FromSimpleXMLElement($node->gTimb);
     $res->gDatGralOpe = GDatGralOpe::FromSimpleXMLElement($node->gDatGralOpe);
     $res->gDtipDe = GDtipDE::FromSimpleXMLElement($node->gDtipDE);
-    $res->gTotSub = GTotSub::FromSimpleXMLElement($node->gTotSub);
+    // gTotSub es 0-1 (la NRE no lo lleva): hasta 0.2.0 se leía siempre y la NR no se podía deserializar (PK-25).
+    if(isset($node->gTotSub))
+      $res->gTotSub = GTotSub::FromSimpleXMLElement($node->gTotSub);
     if(isset($node->gCamGen))
       $res->gCamGen = GCamGen::FromSimpleXMLElement($node->gCamGen);
     if(isset($node->gCamDEAsoc) && count($node->gCamDEAsoc) > 0)

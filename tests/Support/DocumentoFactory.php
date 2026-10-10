@@ -199,6 +199,25 @@ final class DocumentoFactory
     return $af;
   }
 
+  /**
+   * RDE sin firmar y determinista, para comparar serializaciones: código de seguridad y fecha de firma
+   * fijos. El código por defecto no empieza con cero; el cero inicial (PK-26) se prueba pasándolo.
+   */
+  public static function rde(DocumentoElectronico $doc, string $codSeg = '123456789'): RDE
+  {
+    $doc->gOpeDE->setDCodSeg($codSeg);
+    $rde = match (true) {
+      $doc instanceof Autofactura => $doc->autofacturaToRDE(),
+      $doc instanceof Factura => $doc->facturaToRDE(),
+      $doc instanceof NotaDeCredito => $doc->notaDeCreditoToRDE(),
+      $doc instanceof NotaDeDebito => $doc->notaDeDebitoToRDE(),
+      $doc instanceof NotaDeRemision => $doc->notaDeRemisionToRDE(),
+      default => $doc->documentoElectronicoToRDE(),
+    };
+    $rde->getDE()->setDFecFirma(new DateTime('2026-01-15T10:05:00', new DateTimeZone('America/Asuncion')));
+    return $rde;
+  }
+
   /** Firma un RDE con el entorno de prueba ya inicializado (SifenTestEnvironment::init()). */
   public static function firmar(RDE $rde): string
   {

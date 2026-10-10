@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use SimpleXMLElement;
 
 /**
  * E820 Grupo de datos adicionales de uso comercial PADRE E790
@@ -243,43 +244,78 @@ class GGrupAdi
    */
   public static function FromSifenResponseObject($object):self
   {
+    // Hasta 0.2.0 se buscaba "ciclo" (el elemento es dCiclo) y las fechas llegaban como texto a setters
+    // DateTime: TypeError en cuanto había una fecha (PK-25).
     $res = new GGrupAdi();
-
-    if(isset($object->ciclo))
+    foreach(get_object_vars($object) as $campo => $valor)
     {
-      $res->setDCiclo($object->ciclo);
+      // dVencPag admite hasta 3 ocurrencias en el XSD y la clase guarda una: se conserva la primera.
+      if(is_array($valor))
+        $valor = reset($valor);
+      if(is_scalar($valor))
+        self::asignar($res, $campo, (string) $valor);
     }
-
-    if(isset($object->dFecIniC))
-    {
-      $res->setDFecIniC($object->dFecIniC);
-    }
-
-    if(isset($object->dFecFinC))
-    {
-      $res->setDFecFinC($object->dFecFinC);
-    }
-
-    if(isset($object->dVencPag))
-    {
-      $res->setDVencPag($object->dVencPag);
-    }
-
-    if(isset($object->dContrato))
-    {
-      $res->setDContrato($object->dContrato);
-    }
-
-    if(isset($object->dSalAnt))
-    {
-      $res->setDSalAnt($object->dSalAnt);
-    }
-
-    if(isset($object->dCodConDncp))
-    {
-      $res->setdCodConDncp($object->dCodConDncp);
-    }
-
     return $res;
+  }
+
+  /**
+   * Instancia un objeto GGrupAdi a partir de un DOMElement (E820, tgGrupAdi, DE_v150.xsd:811-846; todos los
+   * campos son opcionales). No existía hasta 0.2.0 y GCamEsp::FromDOMElement fallaba con Error (PK-25).
+   *
+   * @param DOMElement $node Nodo gGrupAdi.
+   *
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if (strcmp($node->localName, 'gGrupAdi') != 0)
+      throw new \InvalidArgumentException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->localName);
+    $res = new GGrupAdi();
+    foreach ($node->childNodes as $hijo) {
+      if ($hijo instanceof DOMElement)
+        self::asignar($res, $hijo->localName, $hijo->nodeValue);
+    }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GGrupAdi a partir de un SimpleXMLElement. No existía hasta 0.2.0 y
+   * GCamEsp::FromSimpleXMLElement fallaba con Error (PK-25).
+   *
+   * @param SimpleXMLElement $node Nodo gGrupAdi.
+   *
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    if (strcmp($node->getName(), 'gGrupAdi') != 0)
+      throw new \InvalidArgumentException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->getName());
+    $res = new GGrupAdi();
+    foreach ($node->children() as $hijo)
+      self::asignar($res, $hijo->getName(), (string) $hijo);
+    return $res;
+  }
+
+  private static function asignar(GGrupAdi $res, string $campo, string $valor): void
+  {
+    match ($campo) {
+      'dCiclo' => $res->setDCiclo($valor),
+      'dFecIniC' => $res->setDFecIniC(self::fecha($valor, $campo)),
+      'dFecFinC' => $res->setDFecFinC(self::fecha($valor, $campo)),
+      'dVencPag' => $res->setDVencPag(self::fecha($valor, $campo)),
+      'dContrato' => $res->setDContrato($valor),
+      'dSalAnt' => $res->setDSalAnt($valor),
+      'dCodConDncp' => $res->setdCodConDncp($valor),
+      default => null,
+    };
+  }
+
+  /** tFecAAAAMMDDguion (AAAA-MM-DD), con la hora en cero para que la ida y vuelta sea exacta. */
+  private static function fecha(string $valor, string $campo): DateTime
+  {
+    $fecha = DateTime::createFromFormat('!Y-m-d', trim($valor));
+    if ($fecha === false)
+      throw new \InvalidArgumentException("[GGrupAdi] $campo debe tener el formato AAAA-MM-DD (tFecAAAAMMDDguion): '$valor'");
+    return $fecha;
   }
 }

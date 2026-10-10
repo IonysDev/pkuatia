@@ -92,13 +92,25 @@ class GCamEsp extends BaseSifenField
   }
 
   /**
-   * Obtiene el valor de gGrupSeg
+   * Obtiene el valor de gGrupSeg (E800, campos del sector de seguros).
+   *
+   * @return GGrupSeg
+   */
+  public function getGGrupSeg(): GGrupSeg
+  {
+    return $this->gGrupSeg;
+  }
+
+  /**
+   * Obtiene el valor de gGrupSeg.
+   *
+   * @deprecated 0.2.1 Nombre con errata; usar getGGrupSeg().
    *
    * @return GGrupSeg
    */
   public function getGGrupoSeg(): GGrupSeg
   {
-    return $this->gGrupSeg;
+    return $this->getGGrupSeg();
   }
 
   /**
@@ -126,7 +138,10 @@ class GCamEsp extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Instancia un objeto GCamEsp a partir de un SimpleXMLElement
+   * Instancia un objeto GCamEsp a partir de un SimpleXMLElement.
+   * Hasta 0.2.0 los tres lectores llamaban a setGGrupoSeg() (inexistente) y a lectores inexistentes de
+   * gGrupSup y gGrupAdi (PK-25): ningún DE con gCamEsp se podía deserializar. Secuencia de tgCamEsp:
+   * gGrupEner, gGrupSeg, gGrupSup, gGrupAdi (DE_v150.xsd:794-806).
    * 
    * @param  SimpleXMLElement $node
    * 
@@ -143,7 +158,7 @@ class GCamEsp extends BaseSifenField
     }
     if(isset($node->gGrupSeg))
     {
-      $res->setGGrupoSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupSeg));
+      $res->setGGrupSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupSeg));
     }
     if(isset($node->gGrupSup))
     {
@@ -173,12 +188,13 @@ class GCamEsp extends BaseSifenField
 
     if(isset($object->gGrupSeg))
     {
-      $res->setGGrupoSeg(GGrupSeg::FromSifenResponseObject($object->gGrupSeg));
+      $res->setGGrupSeg(GGrupSeg::FromSifenResponseObject($object->gGrupSeg));
     }
 
-    if(isset($object->gGrupoSup))
+    if(isset($object->gGrupSup))
     {
-      $res->setGGrupSup(GGrupSup::FromSifenResponseObject($object->gGrupoSup));
+      // Hasta 0.2.0 se buscaba "gGrupoSup" (errata) y el grupo de supermercados nunca se leía (PK-25).
+      $res->setGGrupSup(GGrupSup::FromSifenResponseObject($object->gGrupSup));
     }
 
     if(isset($object->gGrupAdi))
@@ -196,7 +212,7 @@ class GCamEsp extends BaseSifenField
     if($node->getElementsByTagName('gGrupEner')->length > 0)
       $res->setgGrupEner(GGrupEner::FromDOMElement($node->getElementsByTagName('gGrupEner')->item(0)));
     if($node->getElementsByTagName('gGrupSeg')->length > 0)
-      $res->setGGrupoSeg(GGrupSeg::FromDOMElement($node->getElementsByTagName('gGrupSup')->item(0)));
+      $res->setGGrupSeg(GGrupSeg::FromDOMElement($node->getElementsByTagName('gGrupSeg')->item(0))); // hasta 0.2.0 recibía el nodo gGrupSup (PK-25)
     if($node->getElementsByTagName('gGrupSup')->length > 0)
       $res->setGGrupSup(GGrupSup::FromDOMElement($node->getElementsByTagName('gGrupSup')->item(0)));
     if($node->getElementsByTagName('gGrupAdi')->length > 0)

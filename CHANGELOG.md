@@ -31,6 +31,42 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   mayúscula en `rRetEnviDe`, `id` en minúscula en `rRetEnviEventoDe`, `xContenDE` como texto con
   varias raíces) y `tests/Unit/Deserializacion/IdaYVueltaDocumentosTest` (ida y vuelta por DOM
   idéntica en FE, NC, ND y NR).
+- `GCamEsp::getGGrupSeg()`, el getter con el nombre correcto de `gGrupSeg`.
+- `tests/Unit/Deserializacion/CamposEspecificosIdaYVueltaTest`: ida y vuelta por DOM, SimpleXML y
+  objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
+  (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
+  objeto SOAP y `DocumentoFactory::rde()` arma RDE deterministas.
+
+### Corregido
+
+- **Autofactura, nota de remisión y documentos con campos sectoriales (`gCamEsp`) no se podían
+  deserializar** (PK-25). Se implementaron los lectores que el código ya invocaba:
+  `GGrupEner::FromDOMElement`, `GGrupSup::FromDOMElement` y `FromSimpleXMLElement`,
+  `GGrupAdi::FromDOMElement` y `FromSimpleXMLElement`, `GCamAE::FromSimpleXMLElement`,
+  `GCamNRE::FromSimpleXMLElement` y `FromSifenResponseObject` y `GResProc::FromSimpleXMLElement`.
+  También `GTransp::FromSimpleXMLElement`, que lanzaba "Not implemented", y `FromSimpleXMLElement` de
+  `GCamSal`, `GCamEnt`, `GVehTras` y `GCamTrans`, que delegan en su lector DOM. Antes terminaban en
+  `Error: Call to undefined method` o en "Not implemented", también al consultar con
+  `Sifen::ConsultarDE` una NR o una AF. Se quitaron las 9 entradas de `phpstan-baseline.neon` que lo
+  silenciaban (94 → 85).
+- Lectores existentes que perdían datos o terminaban en `Error` (PK-25): `GCamAE::FromDOMElement`
+  pasaba el nodo, no su valor, a `intval()` y `strval()`; `GCamEsp` llamaba a `setGGrupoSeg()`
+  (inexistente), su lector DOM le pasaba el nodo de supermercados al lector de seguros y su lector de
+  objetos SOAP buscaba `gGrupoSup`; `GGrupSeg` buscaba `gGrupoPolSeg` y perdía las pólizas;
+  `GGrupEner::FromSimpleXMLElement` le pasaba un objeto a `setDActiv(int)`;
+  `GGrupAdi::FromSifenResponseObject` buscaba `ciclo` y pasaba las fechas como texto;
+  `GRasMerc::FromDOMElement` convertía `dNumLote` (texto de 1 a 80, `DE_v150.xsd:437`) en `0` y su
+  lector de objetos SOAP lanzaba "Not implemented"; `DE::FromSimpleXMLElement` exigía `gTotSub`, que la
+  NR no lleva (`DE_v150.xsd:1678`). Los lectores nuevos o reescritos lanzan `InvalidArgumentException`
+  (subclase de `Exception`) cuando falta un campo obligatorio.
+- **Autofactura sin distrito.** `Autofactura::setLugarTransaccion()` declara el distrito opcional pero
+  terminaba en `TypeError`, y `GCamAE::toDOMElement()` emitía siempre `cDisVen` y `cDisProv`, que son
+  0-1 (`tgCamAE`, `DE_v150.xsd:1351`), con `Error` si no estaban. `GCamAE::setCDisProv()` acepta `null`
+  (como `setCDisVen()`) y los distritos se emiten solo si existen. Las AF con distrito no cambian.
+
+### Obsoleto
+
+- `GCamEsp::getGGrupoSeg()`: nombre con errata; usar `getGGrupSeg()`. Sigue funcionando.
 
 ## [0.2.0] — 2026-10-09
 

@@ -657,4 +657,17 @@ class GCamTrans extends BaseSifenField
 
       return $res;
    }
+
+  /**
+   * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
+   * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
+   *
+   * @param \SimpleXMLElement $node Nodo gCamTrans.
+   *
+   * @return self
+   */
+  public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+  {
+    return self::FromDOMElement(dom_import_simplexml($node));
+  }
 }

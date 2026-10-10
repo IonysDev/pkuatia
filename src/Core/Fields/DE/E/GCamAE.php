@@ -9,6 +9,7 @@ use IonysDev\Pkuatia\Core\Constants\CamAETipIDVen;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use SimpleXMLElement;
 
 /**
  * Nodo Id:     E300
@@ -305,8 +306,14 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setCDisProv(int $cDisProv): self
+  public function setCDisProv(int|null $cDisProv): self
   {
+    // cDisProv es 0-1 (tgCamAE, DE_v150.xsd:1351). Autofactura::setLugarTransaccion() declara el distrito
+    // como opcional y hasta 0.2.0 terminaba en TypeError al pasarle null; ahora null lo quita, como setCDisVen().
+    if($cDisProv === null) {
+      unset($this->cDisProv, $this->dDesDisProv);
+      return $this;
+    }
     $this->cDisProv = $cDisProv;
     $this->dDesDisProv = PyGeoCodesMapping::getDistName(strval($cDisProv));
     return $this;
@@ -623,15 +630,20 @@ class GCamAE
 
     $res->appendChild(XmlHelper::elemento($doc, 'cDepVen', $this->getCDepVen()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesDepVen', $this->getDDesDepVen()));
-    $res->appendChild(XmlHelper::elemento($doc, 'cDisVen', $this->getCDisVen()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesDisVen', $this->getDDesDisVen()));
+    // Distritos 0-1 (DE_v150.xsd:1351): hasta 0.2.0 se emitían siempre y sin distrito la serialización terminaba en Error.
+    if (isset($this->cDisVen)) {
+      $res->appendChild(XmlHelper::elemento($doc, 'cDisVen', $this->getCDisVen()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisVen', $this->getDDesDisVen()));
+    }
     $res->appendChild(XmlHelper::elemento($doc, 'cCiuVen', $this->getCCiuVen()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuVen', $this->getDDesCiuVen()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDirProv', $this->getDDirProv()));
     $res->appendChild(XmlHelper::elemento($doc, 'cDepProv', $this->getCDepProv()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesDepProv', $this->getDDesDepProv()));
-    $res->appendChild(XmlHelper::elemento($doc, 'cDisProv', $this->getCDisProv()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesDisProv', $this->getDDesDisProv()));
+    if (isset($this->cDisProv)) {
+      $res->appendChild(XmlHelper::elemento($doc, 'cDisProv', $this->getCDisProv()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisProv', $this->getDDesDisProv()));
+    }
     $res->appendChild(XmlHelper::elemento($doc, 'cCiuProv', $this->getCCiuProv()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuProv', $this->getDDesCiuProv()));
 
@@ -648,34 +660,77 @@ class GCamAE
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamAE') != 0)
-      throw new \Exception('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->nodeName, 1);
+    if(strcmp($node->localName, 'gCamAE') != 0)
+      throw new \InvalidArgumentException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->localName);
+    // Hasta 0.2.0 se pasaba el DOMElement (no su valor) a intval()/strval(): Error en toda autofactura (PK-25).
+    $valores = [];
+    foreach($node->childNodes as $hijo)
+    {
+      if($hijo instanceof DOMElement)
+        $valores[$hijo->localName] = $hijo->nodeValue;
+    }
+    return self::desdeValores($valores);
+  }
+
+  /**
+   * Construye una instancia desde un nodo `gCamAE` leído con SimpleXML. No existía hasta 0.2.0:
+   * GDtipDE::FromSimpleXMLElement lo invocaba y ninguna autofactura se podía deserializar (PK-25).
+   *
+   * @param SimpleXMLElement $node Nodo cuyo nombre debe ser `gCamAE`.
+   *
+   * @return self Instancia poblada desde el XML.
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    if(strcmp($node->getName(), 'gCamAE') != 0)
+      throw new \InvalidArgumentException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->getName());
+    $valores = [];
+    foreach($node->children() as $hijo)
+      $valores[$hijo->getName()] = (string) $hijo;
+    return self::desdeValores($valores);
+  }
+
+  /**
+   * Valores de los hijos de gCamAE por nombre. Obligatorios según tgCamAE (DE_v150.xsd:1351) todos salvo
+   * cDisVen, dDesDisVen, cDisProv y dDesDisProv.
+   *
+   * @param array<string, string> $v
+   */
+  private static function desdeValores(array $v): self
+  {
+    $obligatorios = ['iNatVen', 'dDesNatVen', 'iTipIDVen', 'dDTipIDVen', 'dNumIDVen', 'dNomVen', 'dDirVen', 'dNumCasVen',
+      'cDepVen', 'dDesDepVen', 'cCiuVen', 'dDesCiuVen', 'dDirProv', 'cDepProv', 'dDesDepProv', 'cCiuProv', 'dDesCiuProv'];
+    foreach($obligatorios as $campo)
+    {
+      if(!isset($v[$campo]))
+        throw new \InvalidArgumentException("[GCamAE] Falta el elemento obligatorio $campo (tgCamAE, DE_v150.xsd:1351).");
+    }
     $res = new GCamAE();
-    $res->setINatVen(intval($node->getElementsByTagName('iNatVen')->item(0)));
-    $res->setDDesNatVen(strval($node->getElementsByTagName('dDesNatVen')->item(0)));
-    $res->setITipIDVen(intval($node->getElementsByTagName('iTipIDVen')->item(0)));
-    $res->setDDTipIDVen(strval($node->getElementsByTagName('dDTipIDVen')->item(0)));
-    $res->setDNumIDVen(strval($node->getElementsByTagName('dNumIDVen')->item(0)));
-    $res->setDNomVen(strval($node->getElementsByTagName('dNomVen')->item(0)));
-    $res->setDDirVen(strval($node->getElementsByTagName('dDirVen')->item(0)));
-    $res->setDNumCasVen(intval($node->getElementsByTagName('dNumCasVen')->item(0)));
-    $res->setCDepVen(intval($node->getElementsByTagName('cDepVen')->item(0)));
-    $res->setDDesDepVen(strval($node->getElementsByTagName('dDesDepVen')->item(0)));
-    if($node->getElementsByTagName('cDisVen')->length > 0)
-      $res->setCDisVen(intval($node->getElementsByTagName('cDisVen')->item(0)));
-    if($node->getElementsByTagName('dDesDisVen')->length > 0)
-      $res->setDDesDisVen(strval($node->getElementsByTagName('dDesDisVen')->item(0)));
-    $res->setCCiuVen(intval($node->getElementsByTagName('cCiuVen')->item(0)));
-    $res->setDDesCiuVen(strval($node->getElementsByTagName('dDesCiuVen')->item(0)));
-    $res->setDDirProv(strval($node->getElementsByTagName('dDirProv')->item(0)));
-    $res->setCDepProv(intval($node->getElementsByTagName('cDepProv')->item(0)));
-    $res->setDDesDepProv(strval($node->getElementsByTagName('dDesDepProv')->item(0)));
-    if($node->getElementsByTagName('cDisProv')->length > 0)
-      $res->setCDisProv(intval($node->getElementsByTagName('cDisProv')->item(0)));
-    if($node->getElementsByTagName('dDesDisProv')->length > 0)
-      $res->setDDesDisProv(strval($node->getElementsByTagName('dDesDisProv')->item(0)));
-    $res->setCCiuProv(intval($node->getElementsByTagName('cCiuProv')->item(0)));
-    $res->setDDesCiuProv(strval($node->getElementsByTagName('dDesCiuProv')->item(0)));
+    $res->setINatVen(intval($v['iNatVen']));
+    $res->setDDesNatVen($v['dDesNatVen']);
+    $res->setITipIDVen(intval($v['iTipIDVen']));
+    $res->setDDTipIDVen($v['dDTipIDVen']);
+    $res->setDNumIDVen($v['dNumIDVen']);
+    $res->setDNomVen($v['dNomVen']);
+    $res->setDDirVen($v['dDirVen']);
+    $res->setDNumCasVen(intval($v['dNumCasVen']));
+    $res->setCDepVen(intval($v['cDepVen']));
+    $res->setDDesDepVen($v['dDesDepVen']);
+    if(isset($v['cDisVen']))
+      $res->setCDisVen(intval($v['cDisVen']));
+    if(isset($v['dDesDisVen']))
+      $res->setDDesDisVen($v['dDesDisVen']);
+    $res->setCCiuVen(intval($v['cCiuVen']));
+    $res->setDDesCiuVen($v['dDesCiuVen']);
+    $res->setDDirProv($v['dDirProv']);
+    $res->setCDepProv(intval($v['cDepProv']));
+    $res->setDDesDepProv($v['dDesDepProv']);
+    if(isset($v['cDisProv']))
+      $res->setCDisProv(intval($v['cDisProv']));
+    if(isset($v['dDesDisProv']))
+      $res->setDDesDisProv($v['dDesDisProv']);
+    $res->setCCiuProv(intval($v['cCiuProv']));
+    $res->setDDesCiuProv($v['dDesCiuProv']);
     return $res;
   }
 

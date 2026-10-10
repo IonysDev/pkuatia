@@ -9,6 +9,7 @@ use IonysDev\Pkuatia\Core\Constants\MotEmiNR;
 use IonysDev\Pkuatia\Core\Constants\RespEmiNR;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use SimpleXMLElement;
 
 /**
  * Nodo Id:     E500
@@ -23,7 +24,7 @@ class GCamNRE extends BaseSifenField
   public String $dDesMotEmiNR;  // E502 - 5-60  - 1-1 - Descripción del motivo de emisión
   public int $iRespEmiNR;       // E503 - 1-1   - 1-1 - Responsable de la emisión de la Nota Remisión Electrónica
   public String $dDesRespEmiNR; // E504 - 20-36 - 1-1 - Descripción del responsable de la emisión de la Nota Remisión Electrónica
-  public int $dKmR;             // E505 - 1-5   - 0-1 - Kilómetros estimados de recorrido
+  public int $dKmR;             // E505 - 1-5   - 1-1 - Kilómetros estimados de recorrido (minOccurs=1 en tgCamNRE, DE_v150.xsd; NT-010)
   public DateTime $dFecEm;      // E506 - 10    - 0-1 - Fecha futura de emisión de la factura
   
   ///////////////////////////////////////////////////////////////////////
@@ -231,38 +232,79 @@ class GCamNRE extends BaseSifenField
   {
     if(strcmp($node->nodeName, 'gCamNRE') != 0)
       throw new \Exception('[GCamNRE] Nodo con nombre inválido: ' . $node->nodeName);
-    $res = new GCamNRE();
-    
-    $iMotEmiNRNode = $node->getElementsByTagName('iMotEmiNR')->item(0);
-    if(!$iMotEmiNRNode)
-      throw new \Exception('[GCamNRE] Elemento requerido iMotEmiNR no encontrado.');
-    $res->setIMotEmiNR(intval($iMotEmiNRNode->nodeValue));
-    
-    $dDesMotEmiNRNode = $node->getElementsByTagName('dDesMotEmiNR')->item(0);
-    if(!$dDesMotEmiNRNode)
-      throw new \Exception('[GCamNRE] Elemento requerido dDesMotEmiNR no encontrado.');
-    $res->setDDesMotEmiNR($dDesMotEmiNRNode->nodeValue);
-    
-    $iRespEmiNRNode = $node->getElementsByTagName('iRespEmiNR')->item(0);
-    if(!$iRespEmiNRNode)
-      throw new \Exception('[GCamNRE] Elemento requerido iRespEmiNR no encontrado.');
-    $res->setIRespEmiNR(intval($iRespEmiNRNode->nodeValue));
-    
-    $dDesRespEmiNRNode = $node->getElementsByTagName('dDesRespEmiNR')->item(0);
-    if(!$dDesRespEmiNRNode)
-      throw new \Exception('[GCamNRE] Elemento requerido dDesRespEmiNR no encontrado.');
-    $res->setDDesRespEmiNR($dDesRespEmiNRNode->nodeValue);
-    
-    $dKmRNode = $node->getElementsByTagName('dKmR')->item(0);
-    if(!$dKmRNode)
-      throw new \Exception('[GCamNRE] Elemento requerido dKmR no encontrado.');
-    $res->setDKmR(intval($dKmRNode->nodeValue));
-    
-    if($node->getElementsByTagName('dFecEm')->length > 0){
-      $res->setDFecEm(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFecEm')->item(0)->nodeValue));
+    $valores = [];
+    foreach($node->childNodes as $hijo)
+    {
+      if($hijo instanceof DOMElement)
+        $valores[$hijo->localName] = $hijo->nodeValue;
     }
-    
-    // Note: cPreFle is optional (minOccurs="0", maxOccurs="1") but not implemented in this class
+    return self::desdeValores($valores);
+  }
+
+  /**
+   * Instancia un objeto GCamNRE a partir de un SimpleXMLElement. No existía hasta 0.2.0:
+   * GDtipDE::FromSimpleXMLElement lo invocaba y ninguna nota de remisión se podía deserializar (PK-25).
+   *
+   * @param SimpleXMLElement $node Nodo gCamNRE.
+   *
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    if(strcmp($node->getName(), 'gCamNRE') != 0)
+      throw new \InvalidArgumentException('[GCamNRE] Nodo con nombre inválido: ' . $node->getName());
+    $valores = [];
+    foreach($node->children() as $hijo)
+      $valores[$hijo->getName()] = (string) $hijo;
+    return self::desdeValores($valores);
+  }
+
+  /**
+   * Instancia un objeto GCamNRE a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al
+   * SIFEN. No existía hasta 0.2.0: GDtipDE::FromSifenResponseObject lo invocaba y fallaba con Error (PK-25).
+   *
+   * @param \stdClass $object
+   *
+   * @return self
+   */
+  public static function FromSifenResponseObject($object): self
+  {
+    $valores = [];
+    foreach(get_object_vars($object) as $campo => $valor)
+    {
+      if(is_scalar($valor))
+        $valores[$campo] = (string) $valor;
+    }
+    return self::desdeValores($valores);
+  }
+
+  /**
+   * Valores de los hijos de gCamNRE por nombre. Obligatorios según tgCamNRE (DE_v150.xsd): iMotEmiNR,
+   * dDesMotEmiNR, iRespEmiNR, dDesRespEmiNR y dKmR (minOccurs=1). cPreFle (0-1) no está modelado.
+   *
+   * @param array<string, string> $v
+   */
+  private static function desdeValores(array $v): self
+  {
+    foreach(['iMotEmiNR', 'dDesMotEmiNR', 'iRespEmiNR', 'dDesRespEmiNR', 'dKmR'] as $campo)
+    {
+      if(!isset($v[$campo]))
+        throw new \InvalidArgumentException("[GCamNRE] Elemento requerido $campo no encontrado.");
+    }
+    $res = new GCamNRE();
+    $res->setIMotEmiNR(intval($v['iMotEmiNR']));
+    $res->setDDesMotEmiNR($v['dDesMotEmiNR']);
+    $res->setIRespEmiNR(intval($v['iRespEmiNR']));
+    $res->setDDesRespEmiNR($v['dDesRespEmiNR']);
+    $res->setDKmR(intval($v['dKmR']));
+    if(isset($v['dFecEm']))
+    {
+      // tFecAAAAMMDDguion; '!' deja la hora en cero (antes quedaba la hora actual).
+      $fecha = DateTime::createFromFormat('!Y-m-d', trim($v['dFecEm']));
+      if($fecha === false)
+        throw new \InvalidArgumentException("[GCamNRE] dFecEm debe tener el formato AAAA-MM-DD: '{$v['dFecEm']}'");
+      $res->setDFecEm($fecha);
+    }
     return $res;
   }
 }
