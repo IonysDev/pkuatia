@@ -231,6 +231,11 @@ class RContRUC
     if(isset($object->dCodEstCons)){
       $res->setDCodEstCons($object->dCodEstCons);
     }
+    // ContRUC05: hasta 0.2.0 se descartaba (PK-29). Queda en la propiedad con el literal del SIFEN (p. ej. "ACTIVO",
+    // respuestas-ws/2026-10-09/01-rEnviConsRUC-response.xml); getDDesEstCons() sigue derivándolo del código.
+    if(isset($object->dDesEstCons)){
+      $res->setDDesEstCons((string) $object->dDesEstCons);
+    }
     if(isset($object->dRUCFactElec)){
       $res->setDRUCFactElec($object->dRUCFactElec);
     }
@@ -261,7 +266,7 @@ class RContRUC
       $res->setDCodEstCons((String)$xml->dCodEstCons);
     }
     if(isset($xml->dDesEstCons)){
-      $res->setDRUCFactElec((String)$xml->dDesEstCons);
+      $res->setDDesEstCons((String)$xml->dDesEstCons); // hasta 0.2.0 se guardaba en dRUCFactElec (PK-29)
     }
     if(isset($xml->dRUCFactElec)){
       $res->setDRUCFactElec((String)$xml->dRUCFactElec);

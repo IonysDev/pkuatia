@@ -3,6 +3,8 @@
 namespace IonysDev\Pkuatia\Core\Responses;
 
 use IonysDev\Pkuatia\Core\Fields\Response\DE\RContDe;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use IonysDev\Pkuatia\Helpers\FechaHelper;
 use DateTime;
 use stdClass;
 
@@ -220,21 +222,29 @@ class RResEnviConsDe
       return null;
     }
     $res = new RResEnviConsDe();
-    $res->setDFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+    // Rechazo genérico: el SIFEN responde con el sobre rRetEnviDe > rProtDe (capturado para recepción y consulta
+    // de RUC, respuestas-ws/2026-10-06; para la consulta de DE [PENDIENTE DE VERIFICACIÓN]).
+    if (isset($object->rProtDe)) {
+      $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+      if (isset($prot->dFecProc))
+        $res->setDFecProc($prot->getDFecProc());
+      $proc = $prot->getGResProc()[0] ?? null;
+      if ($proc !== null) {
+        $res->setDCodRes(intval($proc->getDCodRes()));
+        $res->setDMsgRes($proc->getDMsgRes());
+      }
+      return $res;
+    }
+    $res->setDFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
     $res->setDCodRes(intval($object->dCodRes));
     $res->setDMsgRes($object->dMsgRes);
     if (isset($object->xContenDE)) {
-      // Al 12/08/2023 el SIFEN responde con un valor que el WS no puede interpretar lo cual deriva en una cadena XML inválida con múltiples elementos raiz.
-      // Por este motivo se agrega artificialmente ese elemento raiz.
       if (is_string($object->xContenDE)) {
-        // Se conserva la cadena original intacta: es el XML firmado y no se puede
-        // reconstruir a partir del objeto parseado.
+        // xContenDE es texto, no XML anidado: declaración, rDE firmado, dProtAut y xContEv (respuestas-ws/2026-10-09,
+        // observaciones 4 y 5). Se conserva la cadena original intacta, porque es el XML firmado, y se interpreta
+        // con RContDe::FromXContenDE(), que conserva todos los eventos (hasta 0.2.0, solo el primero; PK-29).
         $res->setXContenDE($object->xContenDE);
-        $xml = str_replace('<rDE ', '<rContDe><rDE ', $object->xContenDE);
-        $xml = $xml . '</rContDe>';
-        //remove the xml declaration, si no se rompe ahora!
-        $xml = preg_replace('/<\?xml.*\?>/', '', $xml);
-        $res->setRContDe(RContDe::FromSimpleXMLElement(simplexml_load_string($xml)));
+        $res->setRContDe(RContDe::FromXContenDE($object->xContenDE));
       } else {
         // DRSch05 - rContDe se denomina xContenDE en la respuesta de consulta SOAP.
         $res->setRContDe(RContDe::FromSifenResponseObject($object->xContenDE));

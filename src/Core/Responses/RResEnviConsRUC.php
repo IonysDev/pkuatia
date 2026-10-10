@@ -2,6 +2,7 @@
 
 namespace IonysDev\Pkuatia\Core\Responses;
 
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRUC;
 
 /**
@@ -128,6 +129,16 @@ class RResEnviConsRUC
       return null;
     }
     $res = new RResEnviConsRUC();
+    // Rechazo genérico: la consulta de RUC responde con el sobre rRetEnviDe > rProtDe (respuestas-ws/2026-10-06/03 y
+    // 04, observación 2 del 06/10). Hasta 0.2.0 terminaba en Warning y TypeError (PK-29).
+    if (isset($object->rProtDe)) {
+      $proc = RProtDe::FromSifenResponseObject($object->rProtDe)->getGResProc()[0] ?? null;
+      if ($proc !== null) {
+        $res->setDCodRes(intval($proc->getDCodRes()));
+        $res->setDMsgRes($proc->getDMsgRes());
+      }
+      return $res;
+    }
     $res->setDCodRes($object->dCodRes);
     $res->setDMsgRes($object->dMsgRes);
     if ($object->dCodRes == "0502")

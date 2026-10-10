@@ -45,6 +45,10 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `RGeVeRetAnu`, `dRuc` y `dMonRet` con sus setters y getters; `Sifen::InutilizarNumeros()` con el parámetro
   opcional final `?String $serie = null` (`dSerieNum`). Test: `tests/Unit/Deserializacion/EventosIdaYVueltaTest`,
   con los 15 tipos de evento por SimpleXML y la cancelación real de la captura del 09/10/2026.
+- Respuestas (PK-29): `RContDe::FromXContenDE()` interpreta el contenido de una consulta de DE según su
+  formato real; `RContDe::getRContEvs()` y `addRContEv()` manejan todos los eventos del DE consultado (ContDE04
+  es 0-n); `Helpers\FechaHelper::FromSifen()` lee las fechas del SIFEN con o sin zona horaria. Test:
+  `tests/Unit/Responses/RespuestasRealesTest`, con las capturas reales llamadas a través del facade.
 - `tests/Unit/Deserializacion/CamposEspecificosIdaYVueltaTest`: ida y vuelta por DOM, SimpleXML y
   objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
   (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
@@ -126,6 +130,25 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   antes de llamar al SIFEN, un tipo de documento fuera de 1 a 9 (`tiTiDEEv`), como el 10 de `TimbTiDE`.
 - Los 18 setters que devuelven `void` documentan que no se pueden encadenar (decisión Q-B2); los tres de
   `RGEveNom` decían `@return self`.
+- **Respuestas reales del SIFEN** (PK-29), verificadas contra las capturas de `sifen-test` del 06 y 09/10/2026:
+  - El CDC del DE aprobado se perdía: el SIFEN envía `Id` con mayúscula y `RProtDe` leía `id`, así que
+    `getId()` terminaba en `Error`.
+  - `Sifen::ConsultarDE` guardaba solo el primer evento de `xContEv`. Ahora `getRContEvs()` los devuelve
+    todos y `getRContEv()` sigue devolviendo el primero. `xContenDE` es texto, no XML anidado: se interpreta
+    con `RContDe::FromXContenDE()`, que ya no exige un espacio después de `<rDE`. `getRDEXml()` no cambia.
+  - Fechas: `dFecProc` llega con zona en las respuestas directas y sin zona dentro de `xContEv`. Las clases
+    aceptaban un solo formato y terminaban en `TypeError` con el otro; `RProtDe::FromSimpleXMLElement` usaba
+    uno que nunca coincidía. Una fecha inválida ahora lanza `InvalidArgumentException` con el valor recibido.
+  - Rechazo genérico: con el ambiente degradado, la consulta de RUC responde 0160 con un sobre `rRetEnviDe`
+    y terminaba en `TypeError`; ahora devuelve el código y el mensaje. Las consultas de DE y de lote y los
+    eventos aceptan ese sobre del mismo modo; para ellos no hay captura (pendiente de verificación).
+  - Los getters de campos que una respuesta real puede no traer devuelven `null` en vez de terminar en
+    `Error`: `RProtDe::getId()`, `getDDigVal()` y `getDProtAut()` (el rechazo genérico no los trae) y
+    `GResProcEVe::getId()` y `getDProtAut()` (un evento rechazado no tiene protocolo y la copia en `xContEv`
+    no tiene `id`).
+  - `RContRUC` descartaba `dDesEstCons`, y su lector SimpleXML lo guardaba en `dRUCFactElec`. La propiedad
+    pública conserva el literal del SIFEN (`ACTIVO`); `getDDesEstCons()` sigue derivándolo del código.
+  - `RProtDe::setGResProc()` acepta un `GResProc` o un arreglo; antes daba `TypeError`.
 
 ### Obsoleto
 

@@ -4,6 +4,8 @@ namespace IonysDev\Pkuatia\Core\Responses;
 
 use DateTime;
 use stdClass;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use IonysDev\Pkuatia\Helpers\FechaHelper;
 
 /**
  * Nodo Id:     BRSch01        
@@ -174,7 +176,19 @@ class RResEnviLoteDe
             throw new \Exception("[RResEnviLoteDe] Error Processing Request: null", 1);
         }
         $res = new RResEnviLoteDe();
-        if (isset($object->dFecProc)) $res->setdFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+        // Rechazo genérico: sobre rRetEnviDe > rProtDe (capturado para recepción y consulta de RUC,
+        // respuestas-ws/2026-10-06; para lotes [PENDIENTE DE VERIFICACIÓN]).
+        if (isset($object->rProtDe)) {
+            $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+            if (isset($prot->dFecProc)) $res->setdFecProc($prot->getDFecProc());
+            $proc = $prot->getGResProc()[0] ?? null;
+            if ($proc !== null) {
+                $res->setDCodRes(intval($proc->getDCodRes()));
+                $res->setDMsgRes($proc->getDMsgRes());
+            }
+            return $res;
+        }
+        if (isset($object->dFecProc)) $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc')); // con o sin zona (PK-29)
         else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
         
         if(isset($object->dCodRes)) $res->setDCodRes($object->dCodRes);

@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response;
 
 use DateTime;
 use DOMElement;
+use IonysDev\Pkuatia\Helpers\FechaHelper;
 use SimpleXMLElement;
 
 /**
@@ -105,10 +106,10 @@ class RProtDe
    *
    * @return self
    */
-  public function setGResProc(GResProc $gResProc): self
+  public function setGResProc(array|GResProc $gResProc): self
   {
-    $this->gResProc = $gResProc;
-
+    // gResProc es 1-100 y la propiedad es array: hasta 0.2.0 se asignaba el objeto suelto (TypeError, PK-29).
+    $this->gResProc = is_array($gResProc) ? $gResProc : [$gResProc];
     return $this;
   }
 
@@ -118,13 +119,15 @@ class RProtDe
 
 
   /**
-   * Obtiene el valor de id
+   * Obtiene el CDC del DE procesado (PP02, elemento Id), o null si la respuesta no lo trae: el rechazo
+   * genérico no incluye Id, dDigVal ni dProtAut (respuestas-ws/2026-10-06/02-rEnviDe-response-0160.xml).
+   * Hasta 0.2.0 terminaba en Error en esos casos.
    *
-   * @return String
+   * @return String|null
    */
-  public function getId(): String
+  public function getId(): ?String
   {
-    return $this->id;
+    return $this->id ?? null;
   }
 
   /**
@@ -138,13 +141,13 @@ class RProtDe
   }
 
   /**
-   * Obtiene el valor de dDigVal
+   * Obtiene el valor de dDigVal, o null si la respuesta no lo trae (rechazo genérico).
    *
-   * @return String
+   * @return String|null
    */
-  public function getDDigVal(): String
+  public function getDDigVal(): ?String
   {
-    return $this->dDigVal;
+    return $this->dDigVal ?? null;
   }
 
   /**
@@ -158,13 +161,13 @@ class RProtDe
   }
 
   /**
-   * Obtiene el valor de dProtAut
+   * Obtiene el número de transacción (PP051), o null si la respuesta no lo trae: solo existe cuando el DE fue aprobado.
    *
-   * @return String
+   * @return String|null
    */
-  public function getDProtAut(): String
+  public function getDProtAut(): ?String
   {
-    return $this->dProtAut;
+    return $this->dProtAut ?? null;
   }
 
   /**
@@ -250,11 +253,19 @@ class RProtDe
       return null;
     }
     $res = new RProtDe();
-    $res->setId($xml->id);
-    $res->setDFecProc(DateTime::createFromFormat('Y-m-d H:i:s', $xml->dFecProc));
-    $res->setDDigVal($xml->dDigVal);
-    $res->setDEstRes($xml->dEstRes);
-    $res->setDProtAut($xml->dProtAut);
+    // Hasta 0.2.0: se leía "id" (el SIFEN manda Id), la fecha con un formato que nunca coincide ("Y-m-d H:i:s")
+    // y los campos ausentes en un rechazo quedaban como cadenas vacías (PK-29).
+    if (isset($xml->Id))
+      $res->setId((string) $xml->Id);
+    elseif (isset($xml->id))
+      $res->setId((string) $xml->id);
+    if (isset($xml->dFecProc))
+      $res->setDFecProc(FechaHelper::FromSifen($xml->dFecProc, 'dFecProc'));
+    if (isset($xml->dDigVal))
+      $res->setDDigVal((string) $xml->dDigVal);
+    $res->setDEstRes((string) $xml->dEstRes);
+    if (isset($xml->dProtAut))
+      $res->setDProtAut((string) $xml->dProtAut);
     $res->gResProc = [];
     foreach ($xml->gResProc as $gResProc) {
       $res->gResProc[] = GResProc::FromSimpleXMLElement($gResProc);
@@ -272,10 +283,14 @@ class RProtDe
   public static function FromSifenResponseObject($node): RProtDe
   {
     $res = new RProtDe();
-    if (isset($node->id))
-      $res->setId($node->id);
+    // El CDC llega como "Id" con mayúscula (respuestas-ws/2026-10-09/03-rEnviDe-response.xml, observación 1);
+    // hasta 0.2.0 se leía "id" y se perdía (PK-29). Se acepta también "id".
+    if (isset($node->Id))
+      $res->setId((string) $node->Id);
+    elseif (isset($node->id))
+      $res->setId((string) $node->id);
     if (isset($node->dFecProc))
-      $res->setDFecProc(DateTime::createFromFormat('Y-m-d\TH:i:sP', $node->dFecProc));
+      $res->setDFecProc(FechaHelper::FromSifen($node->dFecProc, 'dFecProc'));
     if (isset($node->dDigVal))
       $res->setDDigVal($node->dDigVal);
     $res->setDEstRes($node->dEstRes);

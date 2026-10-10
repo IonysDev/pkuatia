@@ -6,6 +6,8 @@ namespace IonysDev\Pkuatia\Core\Responses;
 use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use DateTime;
 use IonysDev\Pkuatia\Core\Fields\Response\Batch\GResProcLote;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use IonysDev\Pkuatia\Helpers\FechaHelper;
 
 /**
  * Nodo Id:     CRSch01        
@@ -134,7 +136,20 @@ class RResEnviConsLoteDe
 
     $res = new RResEnviConsLoteDe();
     
-    if(isset($object->dFecProc)) $res->setdFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+    // Rechazo genérico: sobre rRetEnviDe > rProtDe (capturado para recepción y consulta de RUC,
+    // respuestas-ws/2026-10-06; para la consulta de lote [PENDIENTE DE VERIFICACIÓN]).
+    if (isset($object->rProtDe)) {
+      $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+      if (isset($prot->dFecProc)) $res->setdFecProc($prot->getDFecProc());
+      $proc = $prot->getGResProc()[0] ?? null;
+      if ($proc !== null) {
+        $res->setDCodResLot(intval($proc->getDCodRes()));
+        $res->setDMsgResLot($proc->getDMsgRes());
+      }
+      $res->gResProcLote = array();
+      return $res;
+    }
+    if(isset($object->dFecProc)) $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc')); // con o sin zona (PK-29)
     else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
     
     if(isset($object->dCodResLot)) $res->setDCodResLot($object->dCodResLot);
