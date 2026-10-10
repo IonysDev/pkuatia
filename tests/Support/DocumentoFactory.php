@@ -268,8 +268,8 @@ final class DocumentoFactory
     $fe->addObligacionAfectada(COblAfe::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores);
     $fe->setDatosComprasPublicas('01', '00001', 26, 1234567, new DateTime('2026-01-02')); // dAnoCont: 2 dígitos (tdAnoCont)
     $vehiculo = (new GVehNuevo())->setITipOpVN(2)->setDChasis('9BWZZZ377VT004251')->setDColor('Blanco')
-      ->setDPotencia(150)->setDCapMot(1600)->setDPNet(1200)->setDPBruto(1500)->setITipCom(1)->setDNroMotor('MOT-0001')
-      ->setDCapTracc(1500)->setDAnoFab(2026)->setCTipVeh('SEDAN')->setDCapac(5);
+      ->setDPotencia(150)->setDCapMot(1600)->setDPNet('1200.5')->setDPBruto('1500.25')->setITipCom(1)->setDNroMotor('MOT-0001')
+      ->setDCapTracc('1500.75')->setDAnoFab(2026)->setCTipVeh('SEDAN')->setDCapac(5); // medidas con decimales (Q-B12)
     $fe->addItem('VEH001', 'Automóvil nuevo', 77, '1', 0, '150000000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10,
       detalleVehiculoNuevo: $vehiculo);
     $fe->calcTotSub(0);

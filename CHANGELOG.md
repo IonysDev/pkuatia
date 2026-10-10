@@ -41,6 +41,8 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   Superar el máximo lanza `InvalidArgumentException`. Test: `tests/Unit/Conformidad/OcurrenciasMultiplesTest`.
 - `GGrupSup::getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()` (decisión Q-B10): el
   monto exacto como texto, con sus decimales.
+- `GVehNuevo::getDPNetDecimal()`, `getDPBrutoDecimal()` y `getDCapTraccDecimal()` (decisión Q-B12): el peso neto,
+  el peso bruto y la capacidad máxima de tracción exactos, como texto con sus decimales.
 - Eventos (PK-42): `GGroupTiEvt::getRGeDevCCFFCue()` y `getRGeDevCCFFDev()`; en `RGeVeRetAce` y
   `RGeVeRetAnu`, `dRuc` y `dMonRet` con sus setters y getters; `Sifen::InutilizarNumeros()` con el parámetro
   opcional final `?String $serie = null` (`dSerieNum`). Test: `tests/Unit/Deserializacion/EventosIdaYVueltaTest`,
@@ -149,6 +151,12 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   Los setters aceptan texto (`int|String`, ampliación) y validan contra el XSD: más de 4 decimales o más
   dígitos que los del tipo lanzan `InvalidArgumentException`, igual que un texto no numérico, que antes
   daba `TypeError`. El XML lleva el monto exacto, también al leer. Los montos enteros no cambian.
+- **Medidas del vehículo nuevo con decimales** (decisión Q-B12). `GVehNuevo` guardaba `dPNet`, `dPBruto` y
+  `dCapTracc` como enteros, aunque el XSD admite 4 decimales (`tMontoBase6`, `DE_Types_v150.xsd:1308-1314`): un
+  peso con decimales no se podía informar y al leerlo se truncaba. Los setters aceptan texto (`int|String`,
+  ampliación) y validan contra el XSD: más de 4 decimales, más de 10 dígitos o un texto no numérico lanzan
+  `InvalidArgumentException`. El XML lleva el valor exacto, también al leer por las tres vías. Los valores
+  enteros no cambian.
 - **La nominación nunca se leía** (PK-27). `GGroupTiEvt` buscaba el nodo `rGeVeNom`, pero el XSD lo llama
   `rGEveNom` (`Evento_v150.xsd:379`), y declaraba la clase como `RGeVeNom`, cuando la real es `RGEveNom`:
   en Linux, con la clase sin cargar, el autoload no encontraba el archivo. Se quitó la entrada
@@ -274,6 +282,8 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
 - `GCamEsp::getGGrupoSeg()`: nombre con errata; usar `getGGrupSeg()`. Sigue funcionando.
 - `GGrupSup::getDEfectivo()`, `getDVuelto()`, `getDDonac()` y sus propiedades públicas `int`: devuelven la
   parte entera del monto; usar `getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()`.
+- `GVehNuevo::getDPNet()`, `getDPBruto()`, `getDCapTracc()` y sus propiedades públicas `int`: devuelven la parte
+  entera de la medida; usar `getDPNetDecimal()`, `getDPBrutoDecimal()` y `getDCapTraccDecimal()`.
 - `GGroupTiEvt::getGeDevCCFFCue()`: pese a su nombre devuelve el grupo "devuelto"; se conserva por
   compatibilidad. Usar `getRGeDevCCFFCue()` o `getRGeDevCCFFDev()`.
 - Los 16 setters de ítem de `Factura`, `Autofactura`, `NotaDeCredito` y `NotaDeDebito` (trait
