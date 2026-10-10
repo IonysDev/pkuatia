@@ -336,19 +336,36 @@ class Sifen
     if (count($lote) > Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE)
       throw new \Exception("[Sifen] El lote no puede contener más de " . Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE . " documentos electrónicos.");
 
-    // Conforma el contenedor rLoteDE validando que todos los DE sean del mismo tipo (C002),
-    // ya que el SIFEN rechaza los lotes con tipos de documento mixtos.
+    // Conforma el contenedor rLoteDE validando, antes de la red, lo que el SIFEN rechaza (0301) o castiga con un
+    // bloqueo temporal de 10 a 60 minutos de la recepción del RUC emisor (guía de mejores prácticas de envío de la
+    // DNIT, §4 y §5): tipos de documento (C002) o RUC emisores distintos, CDC repetido y documentos sin CDC, sin tipo
+    // o sin RUC emisor, que el SIFEN trata como contenido inválido (PK-41, 0.2.1).
     $tipoLote = null;
+    $rucLote = null;
+    $cdcs = [];
     $rLotDe = '<rLoteDE>';
-    foreach ($lote as $rde) {
+    foreach (array_values($lote) as $i => $rde) {
+      $n = $i + 1;
       if (!is_string($rde))
         throw new \Exception("[Sifen] El lote debe contener documentos electrónicos en formato de cadena XML.");
-      if (preg_match('/<iTiDE>\s*(\d+)\s*<\/iTiDE>/', $rde, $matches) === 1) {
-        if (is_null($tipoLote))
-          $tipoLote = $matches[1];
-        else if (strcmp($tipoLote, $matches[1]) != 0)
-          throw new \Exception("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo tipo (C002). Se encontraron documentos de tipo " . $tipoLote . " y tipo " . $matches[1] . ".");
-      }
+      if (preg_match('/<(?:[\w.-]+:)?DE\s[^>]*?\bId\s*=\s*(["\'])([^"\']*)\1/', $rde, $matches) !== 1)
+        throw new \Exception("[Sifen] El documento $n del lote no tiene el CDC (atributo Id de DE). Enviar documentos firmados y completos: el SIFEN bloquea temporalmente la recepción del RUC emisor ante un lote con contenido inválido.");
+      $cdc = $matches[2];
+      if (isset($cdcs[$cdc]))
+        throw new \Exception("[Sifen] El CDC $cdc está repetido en el lote (documentos " . $cdcs[$cdc] . " y $n). El SIFEN bloquea la recepción del RUC emisor de 10 a 60 minutos ante un CDC repetido.");
+      $cdcs[$cdc] = $n;
+      if (preg_match('/<(?:[\w.-]+:)?iTiDE>\s*(\d+)\s*<\/(?:[\w.-]+:)?iTiDE>/', $rde, $matches) !== 1)
+        throw new \Exception("[Sifen] El documento $n del lote ($cdc) no tiene el tipo de documento (iTiDE).");
+      if (is_null($tipoLote))
+        $tipoLote = $matches[1];
+      else if (strcmp($tipoLote, $matches[1]) != 0)
+        throw new \Exception("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo tipo (C002). Se encontraron documentos de tipo " . $tipoLote . " y tipo " . $matches[1] . ".");
+      if (preg_match('/<(?:[\w.-]+:)?dRucEm>\s*([^<]*?)\s*<\/(?:[\w.-]+:)?dRucEm>/', $rde, $matches) !== 1)
+        throw new \Exception("[Sifen] El documento $n del lote ($cdc) no tiene el RUC emisor (dRucEm).");
+      if (is_null($rucLote))
+        $rucLote = $matches[1];
+      else if (strcmp($rucLote, $matches[1]) != 0)
+        throw new \Exception("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo RUC emisor. Se encontraron los RUC " . $rucLote . " y " . $matches[1] . ".");
       $rLotDe .= $rde;
     }
     $rLotDe .= '</rLoteDE>';
@@ -368,6 +385,10 @@ class Sifen
     } finally {
       @unlink($zipFilePath);
     }
+    // El mensaje de entrada del WS no debe superar 1000 KB (guía, §4 motivo e): ZIP en Base64 más el sobre SOAP.
+    $tamanoMensaje = 4 * intdiv(strlen($zipContent) + 2, 3) + 1024;
+    if ($tamanoMensaje > Constants::MAX_BYTES_MENSAJE_LOTE)
+      throw new \Exception("[Sifen] El lote supera el tamaño máximo del mensaje del WS (1000 KB): con el ZIP en Base64 son unos " . ceil($tamanoMensaje / 1000) . " KB. Dividirlo en lotes más chicos.");
 
     // Realiza el envío del lote de documentos electrónicos al SIFEN.
     // El WSDL declara xDE como base64Binary (verificado contra sifen-test en junio/2026), por lo que
@@ -385,12 +406,14 @@ class Sifen
   }
 
   /**
-   * Realiza la consulta de un lote de Documentos Electrónicos en el SIFEN.
+   * Realiza la consulta de un lote de Documentos Electrónicos en el SIFEN. La guía de la DNIT pide consultar pasados
+   * 10 minutos de la recepción y luego a intervalos no menores a 10 minutos: ver EsperarResultadoLote().
    *
-   * @param  mixed $nroLote, nro del lote provisto por el SIFEN
+   * @param string|int $nroLote Número de lote (dProtConsLote) que devolvió EnviarLoteDE(). Conviene guardarlo como texto
+   *                            con RResEnviLoteDe::getDProtConsLoteString(): tiene 17 dígitos en la práctica y hasta 20.
    * @return RResEnviConsLoteDe
    */
-  public static function ConsultaLote($nroLote): RResEnviConsLoteDe
+  public static function ConsultaLote(string|int $nroLote): RResEnviConsLoteDe
   {
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl");
@@ -399,6 +422,52 @@ class Sifen
       return RResEnviConsLoteDe::FromSifenResponseObject($object);
     } catch (\Throwable $e) {
       throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage(), 0, $e);
+    }
+  }
+
+  /**
+   * Espera el resultado de un lote con la política de la DNIT (guía de mejores prácticas de envío, §3.4 y §7): la
+   * primera consulta pasados al menos 10 minutos y las siguientes a intervalos no menores a 10 minutos, mientras el lote
+   * siga en procesamiento (0361). Pensado para llamarse después de EnviarLoteDE(): nunca consulta antes del plazo, y una
+   * espera menor lanza InvalidArgumentException sin consultar. Bloquea el proceso mientras espera (PK-41, 0.2.1).
+   *
+   * @param string|int    $nroLote          Número de lote (dProtConsLote) que devolvió EnviarLoteDE().
+   * @param int           $esperaInicialSeg Segundos antes de la primera consulta (mínimo 600).
+   * @param int           $intervaloSeg     Segundos entre consultas (mínimo 600).
+   * @param int           $maxIntentos      Cantidad máxima de consultas (mínimo 1).
+   * @param callable|null $onIntento        Se llama después de cada consulta con (int $intento, RResEnviConsLoteDe $respuesta).
+   * @param callable|null $esperar          Recibe los segundos a esperar; por defecto sleep(). Permite integrarlo con un
+   *                                        planificador o probarlo sin esperar.
+   *
+   * @return RResEnviConsLoteDe La primera respuesta que no es 0361 (0362 concluido, 0360 inexistente, 0364 consulta
+   *                            extemporánea o un rechazo), o la última si tras $maxIntentos consultas sigue en 0361.
+   * @throws \InvalidArgumentException si una espera es menor a 600 segundos o $maxIntentos es menor a 1.
+   * @throws \Exception los errores de ConsultaLote().
+   */
+  public static function EsperarResultadoLote(
+    string|int $nroLote,
+    int $esperaInicialSeg = Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG,
+    int $intervaloSeg = Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG,
+    int $maxIntentos = 6,
+    ?callable $onIntento = null,
+    ?callable $esperar = null
+  ): RResEnviConsLoteDe {
+    $minimo = Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG;
+    if ($esperaInicialSeg < $minimo || $intervaloSeg < $minimo)
+      throw new \InvalidArgumentException("[Sifen] La guía de la DNIT pide consultar el lote pasados $minimo segundos de la recepción y luego a intervalos no menores a $minimo segundos; se recibió una espera inicial de $esperaInicialSeg y un intervalo de $intervaloSeg.");
+    if ($maxIntentos < 1)
+      throw new \InvalidArgumentException("[Sifen] La cantidad máxima de consultas del lote debe ser al menos 1; se recibió $maxIntentos.");
+    $esperar ??= static function (int $segundos): void {
+      sleep($segundos);
+    };
+    $esperar($esperaInicialSeg);
+    for ($intento = 1; ; $intento++) {
+      $respuesta = self::ConsultaLote($nroLote);
+      if ($onIntento !== null)
+        $onIntento($intento, $respuesta);
+      if ($respuesta->getDCodResLot() !== RResEnviConsLoteDe::COD_RES_EN_PROCESAMIENTO || $intento >= $maxIntentos)
+        return $respuesta;
+      $esperar($intervaloSeg);
     }
   }
 

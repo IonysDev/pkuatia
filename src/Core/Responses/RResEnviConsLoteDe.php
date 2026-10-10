@@ -21,6 +21,9 @@ class RResEnviConsLoteDe
   public const COD_RES_EN_PROCESAMIENTO = 361;
   public const COD_RES_ACEPTADO = 362;
   public const COD_RES_RECHAZADO_DIFERENTES_TIPOS_DE = 363;
+  // Consulta extemporánea: pasaron más de 48 horas desde el envío y hay que consultar cada CDC con ConsultarDE(). No figura
+  // en el MT v150 (12.x); lo agrega la guía de mejores prácticas de envío de la DNIT, §7 (PK-41, 0.2.1).
+  public const COD_RES_CONSULTA_EXTEMPORANEA = 364;
   
                                  // Id - Longirud - Ocurrencia - Descripción
   public DateTime $dFecProc;    // CRSch02 - 19    - 1-1  - Fecha y hora del procesamiento del lote (nombre no coincide con MT150)

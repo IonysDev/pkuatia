@@ -64,6 +64,21 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   alfanumérico del receptor, serie del timbrado, código DNCP y subtotales exactos) e
   `IdaYVueltaDocumentosTest` ampliado: 15 documentos (FE, NC, ND, NR, AF y FE de cada sector) hacen ida y
   vuelta idéntica por DOM y por SimpleXML, la vía que usa `Sifen::ConsultarDE`.
+- **`Sifen::EsperarResultadoLote()`** (PK-41). Espera el resultado de un lote con la política de la guía de
+  mejores prácticas de envío de la DNIT (§3.4 y §7): la primera consulta pasados al menos 10 minutos y las
+  siguientes cada 10 minutos o más, mientras el lote siga en procesamiento (0361). Devuelve la primera
+  respuesta distinta de 0361, o la última tras `$maxIntentos` consultas. Una espera menor a 600 segundos
+  lanza `InvalidArgumentException` sin consultar. Bloquea el proceso mientras espera; el parámetro opcional
+  `$esperar` permite reemplazar `sleep()` (un planificador, una cola o un test) y `$onIntento` recibe cada
+  respuesta. Firma: `EsperarResultadoLote(string|int $nroLote, int $esperaInicialSeg = 600,
+  int $intervaloSeg = 600, int $maxIntentos = 6, ?callable $onIntento = null, ?callable $esperar = null)`.
+- `RResEnviLoteDe::getDProtConsLoteString()` (PK-41): el número de lote tal como lo devolvió el SIFEN (17
+  dígitos en la práctica, hasta 20), o null si el lote no fue aceptado. `getdProtConsLote()` lo convierte a
+  `int` y falla con más de 19 dígitos.
+- `RResEnviConsLoteDe::COD_RES_CONSULTA_EXTEMPORANEA` (0364): consulta de un lote enviado hace más de 48
+  horas; hay que consultar cada CDC con `ConsultarDE()` (guía, §7; no figura en el MT v150).
+- `Constants::MAX_BYTES_MENSAJE_LOTE` (1 000 000) y `Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG` (600).
+  Test: `tests/Unit/Sifen/LoteTest`.
 
 ### Corregido
 
@@ -207,6 +222,14 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `InvalidArgumentException` con el CDC obtenido cuando no cumple el tipo `tCDC` del XSD (44 caracteres; el
   RUC puede terminar en una letra de la A a la D). La conversión del documento (`facturaToRDE()` y las
   demás) propaga la excepción. Quien comparaba el resultado con `"ERROR"` debe capturar la excepción.
+- **Validaciones del lote antes de la red** (PK-41). Además del lote vacío, de más de 50 documentos o con
+  tipos distintos, `EnviarLoteDE()` lanza una excepción, sin llamar al SIFEN, cuando los documentos son de
+  RUC emisores distintos (rechazo 0301), cuando un CDC se repite (el SIFEN bloquea la recepción del RUC
+  emisor de 10 a 60 minutos), cuando un documento no tiene CDC, tipo de documento o RUC emisor (contenido
+  inválido, que también bloquea), y cuando el mensaje supera 1000 KB (ZIP en Base64 más el sobre; rechazo
+  0301). Fuente: guía de mejores prácticas de envío de la DNIT, §4 y §5. Hasta 0.2.0 un documento sin
+  `iTiDE` se enviaba sin control de tipo.
+- `Sifen::ConsultaLote()` declara el tipo del parámetro: `string|int $nroLote` (antes sin tipo).
 
 ### Obsoleto
 

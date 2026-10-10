@@ -139,13 +139,25 @@ class RResEnviLoteDe
     }
 
     /**
-     * Obtiene el valor de dProtConsLote
+     * Obtiene el valor de dProtConsLote convertido a int. Falla con números de más de 19 dígitos (el WS admite hasta 20)
+     * y con un lote rechazado, que no trae número: preferir getDProtConsLoteString().
      *
      * @return int
      */
     public function getdProtConsLote(): int
     {
         return $this->dProtConsLote;
+    }
+
+    /**
+     * Obtiene dProtConsLote tal como lo devolvió el SIFEN (17 dígitos en la práctica, hasta 20), o null si el lote no fue
+     * aceptado (0301). Es el valor para guardar y pasar a Sifen::ConsultaLote() o Sifen::EsperarResultadoLote() (PK-41, 0.2.1).
+     *
+     * @return String|null
+     */
+    public function getDProtConsLoteString(): ?String
+    {
+        return $this->dProtConsLote ?? null;
     }
 
     /**

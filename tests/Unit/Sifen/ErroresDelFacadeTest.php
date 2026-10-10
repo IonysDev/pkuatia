@@ -41,7 +41,8 @@ final class ErroresDelFacadeTest extends TestCase
   {
     return [
       'EnviarDE' => [fn () => Sifen::EnviarDE('<rDE/>'), 'rEnviDe'],
-      'EnviarLoteDE' => [fn () => Sifen::EnviarLoteDE(['<rDE><DE><gTimb><iTiDE>1</iTiDE></gTimb></DE></rDE>']), 'rEnvioLote'],
+      // rDE mínimo con lo que EnviarLoteDE valida antes de la red desde B10 (CDC, tipo de documento y RUC emisor).
+      'EnviarLoteDE' => [fn () => Sifen::EnviarLoteDE(['<rDE><DE Id="01800000000001001000000122026011510123456781"><gTimb><iTiDE>1</iTiDE></gTimb><gEmis><dRucEm>80000000</dRucEm></gEmis></DE></rDE>']), 'rEnvioLote'],
       'ConsultaLote' => [fn () => Sifen::ConsultaLote('123456789012345'), 'rEnviConsLoteDe'],
       'CancelarDE (RegistrarEvento)' => [fn () => Sifen::CancelarDE(E::CDC, 'Motivo de prueba'), 'rEnviEventoDe'],
       'ConsultarArchivoRUC' => [fn () => Sifen::ConsultarArchivoRUC('80000000'), 'rEnviConsArchivoRUC'],
