@@ -80,4 +80,34 @@ final class GruposSectorialesTest extends TestCase
     $this->assertStringContainsString('<dVencMerc>2027-06-30</dVencMerc>', $xml);
     XsdAssertions::assertRdeValido($xml, 'FE con trazabilidad de mercaderías');
   }
+
+  /**
+   * Q-B8 (decisión del 10/10/2026): se emiten todos los grupos sectoriales informados, en el orden de
+   * tgCamEsp (DE_v150.xsd:794-806: gGrupEner, gGrupSeg, gGrupSup, gGrupAdi). Hasta 0.2.0 la cadena
+   * if/else if de DocumentoElectronico::documentoElectronicoToRDE() emitía solo el primero.
+   */
+  public function testLosCuatroGruposSectorialesSeEmitenEnOrdenYValidan(): void
+  {
+    $xml = DocumentoFactory::firmar(DocumentoFactory::facturaConTodosLosSectores()->facturaToRDE());
+    $posiciones = [];
+    foreach (['gGrupEner', 'gGrupSeg', 'gGrupSup', 'gGrupAdi'] as $grupo) {
+      $this->assertSame(1, substr_count($xml, "<$grupo>"), $grupo);
+      $posiciones[] = strpos($xml, "<$grupo>");
+    }
+    $ordenadas = $posiciones;
+    sort($ordenadas);
+    $this->assertSame($ordenadas, $posiciones, 'orden de tgCamEsp');
+    XsdAssertions::assertRdeValido($xml, 'FE con los cuatro grupos sectoriales');
+  }
+
+  /** El caso habitual: supermercados con datos adicionales de uso comercial. Antes se perdían los adicionales. */
+  public function testSupermercadosConDatosAdicionalesNoPierdeNingunGrupo(): void
+  {
+    $fe = DocumentoFactory::facturaSectorial('supermercados', 62);
+    (DocumentoFactory::sectores()['datos adicionales'])($fe);
+    $xml = DocumentoFactory::firmar($fe->facturaToRDE());
+    $this->assertStringContainsString('<dNomCaj>Cajero 1</dNomCaj>', $xml);
+    $this->assertStringContainsString('<dContrato>CONTR-0001</dContrato>', $xml);
+    XsdAssertions::assertRdeValido($xml, 'FE supermercados con datos adicionales');
+  }
 }

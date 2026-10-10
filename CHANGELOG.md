@@ -84,6 +84,12 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   BCMath con `+` y perdían decimales por encima de 14 cifras significativas. Ahora usan `bcadd` y devuelven
   texto numérico sin ceros decimales finales: `getFormattedSubt05()` y `getFormattedSubt10()` muestran lo
   mismo que antes para montos normales.
+- **Grupos sectoriales combinados** (decisión Q-B8). `DocumentoElectronico::documentoElectronicoToRDE()`
+  emitía un solo grupo de `gCamEsp` aunque se informaran varios (prioridad energía, seguros, supermercados,
+  datos adicionales) y descartaba el resto sin aviso. Ahora emite todos los informados, en el orden de
+  `tgCamEsp` (`DE_v150.xsd:794-806`). **Cambia el XML** de quien combina grupos: incluye datos que ya
+  cargaba y que antes se perdían. Una FE con los cuatro grupos valida contra el XSD de producción; el
+  Manual Técnico no tiene reglas que limiten la combinación.
 
 ### Obsoleto
 

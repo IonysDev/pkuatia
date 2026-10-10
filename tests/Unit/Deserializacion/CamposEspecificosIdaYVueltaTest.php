@@ -35,8 +35,8 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
   }
 
   /**
-   * gCamEsp con los cuatro grupos, armado a mano: los builders de DocumentoElectronico emiten uno
-   * solo aunque se informen varios (DocumentoElectronico.php:104-119, decisión Q-B8 pendiente).
+   * gCamEsp con los cuatro grupos, armado a mano para probar la clase sola. Desde la decisión Q-B8 los
+   * builders también emiten los cuatro juntos (ver GruposSectorialesTest).
    */
   public static function gCamEspCompleto(): GCamEsp
   {

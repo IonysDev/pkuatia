@@ -35,6 +35,7 @@ final class IdaYVueltaDocumentosTest extends TestCase
     foreach (array_keys(F::sectores()) as $sector) {
       $res["FE sector $sector"] = fn (): RDE => F::rde(F::facturaSectorial($sector));
     }
+    $res['FE con los cuatro grupos sectoriales'] = fn (): RDE => F::rde(F::facturaConTodosLosSectores());
     return $res;
   }
 

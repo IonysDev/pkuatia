@@ -226,6 +226,16 @@ final class DocumentoFactory
     return $fe;
   }
 
+  /** FE con los cuatro grupos de tgCamEsp a la vez (Q-B8: se emiten todos, en el orden del XSD). */
+  public static function facturaConTodosLosSectores(int $numDoc = 61): Factura
+  {
+    $fe = self::facturaSectorial('energía', $numDoc);
+    foreach (['seguros', 'supermercados', 'datos adicionales'] as $sector) {
+      (self::sectores()[$sector])($fe);
+    }
+    return $fe;
+  }
+
   /** Autofactura cuyo lugar de la transacción no informa distrito (cDisProv es 0-1 en tgCamAE, DE_v150.xsd:1351). */
   public static function autofacturaSinDistrito(): Autofactura
   {

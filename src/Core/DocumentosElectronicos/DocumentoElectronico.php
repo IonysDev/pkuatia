@@ -101,21 +101,19 @@ class DocumentoElectronico
 
     // E. Campos específicos por tipo de Documento Electrónico (E001-E009) 
     $de->setGDtipDE($this->gDtipDE);
-    if(isset($this->gGrupEner)){
-      $de->gDtipDe->setGCamEsp(new GCamEsp());
-      $de->gDtipDe->gCamEsp->setGGrupEner($this->gGrupEner);
-    }
-    else if(isset($this->gGrupSeg)){
-      $de->gDtipDe->setGCamEsp(new GCamEsp());
-      $de->gDtipDe->gCamEsp->setGGrupSeg($this->gGrupSeg);
-    }
-    else if(isset($this->gGrupSup)){
-      $de->gDtipDe->setGCamEsp(new GCamEsp());
-      $de->gDtipDe->gCamEsp->setGGrupSup($this->gGrupSup);
-    }
-    else if(isset($this->gGrupAdi)){
-      $de->gDtipDe->setGCamEsp(new GCamEsp());
-      $de->gDtipDe->gCamEsp->setGGrupAdi($this->gGrupAdi);
+    // E790 gCamEsp: se emiten todos los grupos sectoriales informados, en el orden de tgCamEsp (DE_v150.xsd:794-806).
+    // Hasta 0.2.0 una cadena if/else if emitía solo el primero y descartaba el resto sin aviso (decisión Q-B8, 0.2.1).
+    if(isset($this->gGrupEner) || isset($this->gGrupSeg) || isset($this->gGrupSup) || isset($this->gGrupAdi)){
+      $gCamEsp = new GCamEsp();
+      if(isset($this->gGrupEner))
+        $gCamEsp->setGGrupEner($this->gGrupEner);
+      if(isset($this->gGrupSeg))
+        $gCamEsp->setGGrupSeg($this->gGrupSeg);
+      if(isset($this->gGrupSup))
+        $gCamEsp->setGGrupSup($this->gGrupSup);
+      if(isset($this->gGrupAdi))
+        $gCamEsp->setGGrupAdi($this->gGrupAdi);
+      $de->gDtipDe->setGCamEsp($gCamEsp);
     }    
     if(isset($this->gTransp)){
       $de->gDtipDe->setGTransp($this->gTransp);
