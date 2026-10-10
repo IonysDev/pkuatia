@@ -53,7 +53,7 @@ use ZipArchive;
 
 class Sifen
 {
-  private static SoapClient $client;
+  private static ?SoapClient $client = null; // último cliente usado: fuente de GetLastRequest()/GetLastResponse()
   private static Config $config;
   private static $options;
   /** @var callable(string, array): SoapClient|null Factoría de SoapClient para pruebas (null = comportamiento por defecto). */
@@ -114,6 +114,12 @@ class Sifen
       'cache_wsdl' => $config->wsdlCacheEnabled ? WSDL_CACHE_DISK : WSDL_CACHE_NONE,
       'stream_context' => $sslContext,
     ];
+    // Opcionales (PK-31, 0.2.1): sin configurar no se agregan y rige el comportamiento de PHP, como hasta 0.2.0.
+    if ($config->soapConnectionTimeout !== null)
+      self::$options['connection_timeout'] = $config->soapConnectionTimeout;
+    if ($config->soapUserAgent !== null)
+      self::$options['user_agent'] = $config->soapUserAgent;
+    self::$client = null;
     
     SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFormat, $config->certificateFilePath);
   }
@@ -132,6 +138,30 @@ class Sifen
   /**
    * @return SoapClient
    */
+  /**
+   * XML de la última solicitud SOAP enviada al SIFEN, o null si todavía no hubo ninguna desde Init().
+   * Útil para auditar y para diagnosticar un rechazo. Nuevo en 0.2.1 (PK-31).
+   *
+   * @return String|null
+   */
+  public static function GetLastRequest(): ?String
+  {
+    return self::$client?->__getLastRequest();
+  }
+
+  /**
+   * XML crudo de la última respuesta del SIFEN, o null si todavía no hubo ninguna desde Init(). Sigue
+   * disponible aunque el parseo haya fallado: si una llamada lanza una excepción con un TypeError como
+   * causa, la respuesta (por ejemplo, con el dProtAut de un DE ya aprobado) se puede guardar desde aquí.
+   * Nuevo en 0.2.1 (PK-31).
+   *
+   * @return String|null
+   */
+  public static function GetLastResponse(): ?String
+  {
+    return self::$client?->__getLastResponse();
+  }
+
   private static function createSoapClient(string $wsdl): SoapClient
   {
     if (self::$soapClientFactory !== null) {
@@ -154,9 +184,16 @@ class Sifen
    */
   public static function ConsultarRUC(String $ruc): RResEnviConsRUC
   {
-    self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
-    $object = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
-    return RResEnviConsRUC::fromStdClassObject($object);
+    // Decisión Q-B4 (b): el SoapFault y las demás excepciones siguen llegando tal cual, como hasta 0.2.0; solo
+    // los errores de programa (\Error, p. ej. un TypeError del parseo) llegan envueltos, con la causa, y la
+    // respuesta cruda queda disponible en GetLastResponse() (PK-31).
+    try {
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
+      $object = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
+      return RResEnviConsRUC::fromStdClassObject($object);
+    } catch (\Error $e) {
+      throw new \Exception("[Sifen] Error al procesar la respuesta de la consulta de RUC: " . $e->getMessage(), 0, $e);
+    }
   }
 
   /**
@@ -175,8 +212,8 @@ class Sifen
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_ARCHIVO_RUC . "?wsdl");
       $object = self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador));
       return RResEnviConsArchivoRUC::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al consultar el archivo de RUC en el SIFEN: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al consultar el archivo de RUC en el SIFEN: " . $e->getMessage(), 0, $e);
     }
   }
 
@@ -189,9 +226,14 @@ class Sifen
    */
   public static function ConsultarDE(String $cdc): RResEnviConsDe
   {
-    self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl");
-    $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
-    return RResEnviConsDe::FromSifenResponseObject($object);
+    // Decisión Q-B4 (b): como en ConsultarRUC, solo se envuelven los \Error (PK-31).
+    try {
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl");
+      $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
+      return RResEnviConsDe::FromSifenResponseObject($object);
+    } catch (\Error $e) {
+      throw new \Exception("[Sifen] Error al procesar la respuesta de la consulta del documento electrónico: " . $e->getMessage(), 0, $e);
+    }
   }
 
   /**
@@ -268,8 +310,10 @@ class Sifen
       $rEnviDe = new REnviDe(self::GetDId(), new SoapVar('<ns1:xDE>' . $rdeXML . '</ns1:xDE>', XSD_ANYXML));
       $object = self::$client->rEnviDe($rEnviDe);
       return RRetEnviDe::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al enviar el documento electrónico al SIFEN: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      // Decisión Q-B4: \Throwable para que un TypeError del parseo también llegue como la excepción del
+      // facade; la causa queda en getPrevious() (antes se perdía el SoapFault) y la respuesta cruda en GetLastResponse() (PK-31).
+      throw new \Exception("[Sifen] Error al enviar el documento electrónico al SIFEN: " . $e->getMessage(), 0, $e);
     }
   }
 
@@ -333,11 +377,11 @@ class Sifen
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl");
       $rEnvioLote = new REnvioLote(self::GetDId(), $zipContent);
       $object = self::$client->rEnvioLote($rEnvioLote);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al enviar el lote de documentos electrónicos al SIFEN: " . $e->getMessage());
+      // El parseo entra al try desde 0.2.1 (Q-B4), como en los demás métodos.
+      return RResEnviLoteDe::FromSifenResponseObject($object);
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al enviar el lote de documentos electrónicos al SIFEN: " . $e->getMessage(), 0, $e);
     }
-
-    return RResEnviLoteDe::FromSifenResponseObject($object);
   }
 
   /**
@@ -353,8 +397,8 @@ class Sifen
       $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
       $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
       return RResEnviConsLoteDe::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage(), 0, $e);
     }
   }
 
@@ -391,8 +435,8 @@ class Sifen
       ));
       $object = self::$client->rEnviEventoDe($rEnviEventoDe);
       return RRetEnviEventoDe::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al registrar el evento: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al registrar el evento: " . $e->getMessage(), 0, $e);
     }
   }
 

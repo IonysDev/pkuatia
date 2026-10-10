@@ -49,6 +49,11 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   formato real; `RContDe::getRContEvs()` y `addRContEv()` manejan todos los eventos del DE consultado (ContDE04
   es 0-n); `Helpers\FechaHelper::FromSifen()` lee las fechas del SIFEN con o sin zona horaria. Test:
   `tests/Unit/Responses/RespuestasRealesTest`, con las capturas reales llamadas a través del facade.
+- `Sifen::GetLastRequest()` y `Sifen::GetLastResponse()` (PK-31): el XML de la última solicitud y de la última
+  respuesta, también cuando el parseo falla, para auditar o guardar la respuesta cruda.
+- `Config::$soapConnectionTimeout` y `Config::$soapUserAgent` (PK-31), con sus setters y sus claves en
+  `ParseObject()`/JSON: las opciones `connection_timeout` y `user_agent` de `SoapClient`. Sin configurar, no
+  se agregan y el comportamiento no cambia. Test: `tests/Unit/Sifen/ErroresDelFacadeTest`.
 - `tests/Unit/Deserializacion/CamposEspecificosIdaYVueltaTest`: ida y vuelta por DOM, SimpleXML y
   objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
   (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
@@ -164,6 +169,17 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   los seis de `GCamAE` (vendedor y lugar de la transacción); `GCamItem::setCPaisOrig()`; y
   `RGEveNom::setCPaisRec()`, `setCDepRec()`, `setCDisRec()` y `setCCiuRec()`. Validan antes de asignar, así
   que un código inválido no deja el objeto a medias, y consultan el catálogo una sola vez.
+
+### Cambiado
+
+- **Errores del facade con su causa** (PK-31, decisión Q-B4). `EnviarDE()`, `EnviarLoteDE()`,
+  `ConsultaLote()`, `RegistrarEvento()` (y con él todos los métodos de eventos) y `ConsultarArchivoRUC()`
+  conservan la excepción original en `getPrevious()`; antes se perdía el `SoapFault` (código, detalle y
+  traza). Además capturan `\Throwable`: un `TypeError` del parseo llega como la excepción del facade en vez
+  de como `Error`, con la respuesta cruda disponible en `GetLastResponse()`. Quien hoy capture `\Error` o
+  `TypeError` alrededor de esos métodos debe capturar `\Exception` y revisar `getPrevious()`. En
+  `EnviarLoteDE()` el parseo de la respuesta quedó dentro del `try`. `ConsultarRUC()` y `ConsultarDE()`
+  siguen dejando pasar el `SoapFault` tal cual y solo envuelven los `\Error` del parseo.
 
 ### Obsoleto
 
