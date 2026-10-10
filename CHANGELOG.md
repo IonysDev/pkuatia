@@ -32,6 +32,13 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   varias raíces) y `tests/Unit/Deserializacion/IdaYVueltaDocumentosTest` (ida y vuelta por DOM
   idéntica en FE, NC, ND y NR).
 - `GCamEsp::getGGrupSeg()`, el getter con el nombre correcto de `gGrupSeg`.
+- **Ocurrencias múltiples que el XSD permite** (decisión Q-B9): hasta 9 grupos de energía eléctrica, uno
+  por medidor (`gGrupEner`, `DE_v150.xsd:802`, NT-023), y hasta 3 vencimientos de pago en los datos
+  adicionales (`dVencPag`, `DE_v150.xsd:829`). Métodos nuevos: `GCamEsp::addGGrupEner()` y
+  `getGGrupEners()`, `GGrupAdi::addDVencPag()` y `getDVencPags()`, y en los documentos
+  `addDatosComplementariosSectorEnergia()` y `addVencimientoDePagoDeUsoComercial()`. Las propiedades y
+  los getters existentes siguen devolviendo la primera ocurrencia, y los `set…` siguen reemplazando todas.
+  Superar el máximo lanza `InvalidArgumentException`. Test: `tests/Unit/Conformidad/OcurrenciasMultiplesTest`.
 - `tests/Unit/Deserializacion/CamposEspecificosIdaYVueltaTest`: ida y vuelta por DOM, SimpleXML y
   objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
   (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
@@ -90,6 +97,9 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   `tgCamEsp` (`DE_v150.xsd:794-806`). **Cambia el XML** de quien combina grupos: incluye datos que ya
   cargaba y que antes se perdían. Una FE con los cuatro grupos valida contra el XSD de producción; el
   Manual Técnico no tiene reglas que limiten la combinación.
+- **Ocurrencias que se perdían al leer** (Q-B9). Al leer un DE con varios `gGrupEner` o varias `dVencPag`
+  se conservaba solo una. Ahora las tres vías de lectura (DOM, SimpleXML y objeto SOAP) conservan todas y
+  la emisión las escribe todas, en orden.
 
 ### Obsoleto
 

@@ -21,6 +21,9 @@ class GGrupAdi
   public ?String $dSalAnt;   //E826 Saldo anterior
   public ?String $dCodConDncp; //E827 Código de contratación de la DNCP
 
+  /** @var list<DateTime> Ocurrencias de dVencPag después de la primera: hasta 3 en total (tgGrupAdi, DE_v150.xsd:829; Q-B9). */
+  private array $dVencPagAdicionales = [];
+
   /////////////////////////////////////////////
   //setters
   /////////////////////////////////////////////
@@ -81,6 +84,7 @@ class GGrupAdi
   public function setDVencPag(?DateTime $dVencPag): self
   {
     $this->dVencPag = $dVencPag;
+    $this->dVencPagAdicionales = []; // set reemplaza todas las ocurrencias, como hasta 0.2.0 (Q-B9)
 
     return $this;
   }
@@ -175,6 +179,38 @@ class GGrupAdi
   }
 
   /**
+   * Agrega una fecha de vencimiento de pago: dVencPag admite hasta 3 ocurrencias (tgGrupAdi,
+   * DE_v150.xsd:829). Si no hay ninguna, equivale a setDVencPag(). Nuevo en 0.2.1 (Q-B9).
+   *
+   * @param DateTime $dVencPag
+   *
+   * @throws \InvalidArgumentException Si ya hay 3 fechas.
+   *
+   * @return self
+   */
+  public function addDVencPag(DateTime $dVencPag): self
+  {
+    if (!isset($this->dVencPag)) {
+      $this->dVencPag = $dVencPag;
+      return $this;
+    }
+    if (1 + count($this->dVencPagAdicionales) >= 3)
+      throw new \InvalidArgumentException('[GGrupAdi] dVencPag admite como máximo 3 ocurrencias (tgGrupAdi, DE_v150.xsd:829).');
+    $this->dVencPagAdicionales[] = $dVencPag;
+    return $this;
+  }
+
+  /**
+   * Todas las fechas de vencimiento de pago, en orden (la primera es la de getDVencPag()). Nuevo en 0.2.1 (Q-B9).
+   *
+   * @return list<DateTime>
+   */
+  public function getDVencPags(): array
+  {
+    return array_merge(isset($this->dVencPag) ? [$this->dVencPag] : [], $this->dVencPagAdicionales);
+  }
+
+  /**
    * Obtiene el valor de dContrato
    *
    * @return String
@@ -225,8 +261,8 @@ class GGrupAdi
       $res->appendChild(XmlHelper::elemento($doc, 'dFecIniC', $this->dFecIniC->format('Y-m-d')));
     if (isset($this->dFecFinC))
       $res->appendChild(XmlHelper::elemento($doc, 'dFecFinC', $this->dFecFinC->format('Y-m-d')));
-    if (isset($this->dVencPag))
-      $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $this->dVencPag->format('Y-m-d')));
+    foreach ($this->getDVencPags() as $vencimiento) // hasta 3 ocurrencias (DE_v150.xsd:829; Q-B9)
+      $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $vencimiento->format('Y-m-d')));
     if (isset($this->dContrato))
       $res->appendChild(XmlHelper::elemento($doc, 'dContrato', $this->dContrato));
     if (isset($this->dSalAnt))
@@ -249,11 +285,12 @@ class GGrupAdi
     $res = new GGrupAdi();
     foreach(get_object_vars($object) as $campo => $valor)
     {
-      // dVencPag admite hasta 3 ocurrencias en el XSD y la clase guarda una: se conserva la primera.
-      if(is_array($valor))
-        $valor = reset($valor);
-      if(is_scalar($valor))
-        self::asignar($res, $campo, (string) $valor);
+      // Los elementos repetidos (dVencPag, hasta 3) llegan como arreglo (Q-B9).
+      foreach((is_array($valor) ? $valor : [$valor]) as $unValor)
+      {
+        if(is_scalar($unValor))
+          self::asignar($res, $campo, (string) $unValor);
+      }
     }
     return $res;
   }
@@ -302,7 +339,7 @@ class GGrupAdi
       'dCiclo' => $res->setDCiclo($valor),
       'dFecIniC' => $res->setDFecIniC(self::fecha($valor, $campo)),
       'dFecFinC' => $res->setDFecFinC(self::fecha($valor, $campo)),
-      'dVencPag' => $res->setDVencPag(self::fecha($valor, $campo)),
+      'dVencPag' => $res->addDVencPag(self::fecha($valor, $campo)),
       'dContrato' => $res->setDContrato($valor),
       'dSalAnt' => $res->setDSalAnt($valor),
       'dCodConDncp' => $res->setdCodConDncp($valor),

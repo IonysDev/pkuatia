@@ -54,6 +54,8 @@ class DocumentoElectronico
   public GGrupSeg $gGrupSeg; // E800 - Campos que describen datos específicos para el sector seguros
   public GGrupSup $gGrupSup; // E810 - Campos que describen datos específicos para el sector supermercados
   public GGrupAdi $gGrupAdi; // E820 - Campos que describen datos adicionales de uso comercial en general
+  /** @var list<GGrupEner> Medidores después del primero: gGrupEner admite hasta 9 (DE_v150.xsd:802, NT-023; Q-B9). */
+  private array $gGrupEnerAdicionales = [];
   public GTransp $gTransp; // E900 - Campos que describen el transporte de las mercaderías
 
   public GCamGen $gCamGen; // G001 - Campos de uso general
@@ -105,8 +107,11 @@ class DocumentoElectronico
     // Hasta 0.2.0 una cadena if/else if emitía solo el primero y descartaba el resto sin aviso (decisión Q-B8, 0.2.1).
     if(isset($this->gGrupEner) || isset($this->gGrupSeg) || isset($this->gGrupSup) || isset($this->gGrupAdi)){
       $gCamEsp = new GCamEsp();
-      if(isset($this->gGrupEner))
+      if(isset($this->gGrupEner)) {
         $gCamEsp->setGGrupEner($this->gGrupEner);
+        foreach($this->gGrupEnerAdicionales as $gGrupEner) // Q-B9: hasta 9 medidores
+          $gCamEsp->addGGrupEner($gGrupEner);
+      }
       if(isset($this->gGrupSeg))
         $gCamEsp->setGGrupSeg($this->gGrupSeg);
       if(isset($this->gGrupSup))
@@ -836,14 +841,51 @@ class DocumentoElectronico
     String $lecturaActual,
     String $consumoKwh
   ): self {
-    $this->gGrupEner = new GGrupEner();
-    $this->gGrupEner->setDNroMed($nroMedidor);
-    $this->gGrupEner->setDActiv($codActividad);
-    $this->gGrupEner->setDCateg($codCategoria);
-    $this->gGrupEner->setDLecAnt($lecturaAnterior);
-    $this->gGrupEner->setDLecAct($lecturaActual);
-    $this->gGrupEner->setDConKwh($consumoKwh);
+    $this->gGrupEner = self::crearGGrupEner($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
+    $this->gGrupEnerAdicionales = []; // set reemplaza todos los medidores, como hasta 0.2.0 (Q-B9)
     return $this;
+  }
+
+  /**
+   * Agrega un medidor más al sector de energía eléctrica: gGrupEner admite hasta 9 ocurrencias, una por
+   * medidor (DE_v150.xsd:802, NT-023). Si todavía no hay ninguno, equivale a
+   * setDatosComplementariosSectorEnergia(). Nuevo en 0.2.1 (Q-B9).
+   *
+   * @param String $nroMedidor número de medidor
+   * @param int $codActividad código de actividad
+   * @param String $codCategoria código de categoría
+   * @param String $lecturaAnterior lectura anterior (decimal BCMath, 2 decimales)
+   * @param String $lecturaActual lectura actual (decimal BCMath, 2 decimales)
+   * @param String $consumoKwh consumo en kWh (decimal BCMath, 2 decimales)
+   *
+   * @throws \InvalidArgumentException Si ya hay 9 medidores.
+   */
+  public function addDatosComplementariosSectorEnergia(
+    String $nroMedidor,
+    int $codActividad,
+    String $codCategoria,
+    String $lecturaAnterior,
+    String $lecturaActual,
+    String $consumoKwh
+  ): self {
+    if (!isset($this->gGrupEner))
+      return $this->setDatosComplementariosSectorEnergia($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
+    if (1 + count($this->gGrupEnerAdicionales) >= 9)
+      throw new \InvalidArgumentException('[DocumentoElectronico] El sector de energía eléctrica admite como máximo 9 medidores (gGrupEner, DE_v150.xsd:802; NT-023).');
+    $this->gGrupEnerAdicionales[] = self::crearGGrupEner($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
+    return $this;
+  }
+
+  private static function crearGGrupEner(String $nroMedidor, int $codActividad, String $codCategoria, String $lecturaAnterior, String $lecturaActual, String $consumoKwh): GGrupEner
+  {
+    $gGrupEner = new GGrupEner();
+    $gGrupEner->setDNroMed($nroMedidor);
+    $gGrupEner->setDActiv($codActividad);
+    $gGrupEner->setDCateg($codCategoria);
+    $gGrupEner->setDLecAnt($lecturaAnterior);
+    $gGrupEner->setDLecAct($lecturaActual);
+    $gGrupEner->setDConKwh($consumoKwh);
+    return $gGrupEner;
   }
 
   /**
@@ -907,6 +949,23 @@ class DocumentoElectronico
       $this->gGrupAdi->setDContrato($numeroContrato);
     if (isset($saldoAnteriorAdeudado))
       $this->gGrupAdi->setDSalAnt($saldoAnteriorAdeudado);
+    return $this;
+  }
+
+  /**
+   * Agrega una fecha de vencimiento de pago a los datos adicionales de uso comercial: dVencPag admite hasta 3
+   * ocurrencias (tgGrupAdi, DE_v150.xsd:829). Llamarlo después de setDatosAdicionalesDeUsoComercial(), que
+   * reemplaza el grupo completo; si el grupo no existe, lo crea. Nuevo en 0.2.1 (Q-B9).
+   *
+   * @param DateTime $fechaVencimiento fecha de vencimiento para el pago.
+   *
+   * @throws \InvalidArgumentException Si ya hay 3 fechas de vencimiento.
+   */
+  public function addVencimientoDePagoDeUsoComercial(DateTime $fechaVencimiento): self
+  {
+    if (!isset($this->gGrupAdi))
+      $this->gGrupAdi = new GGrupAdi();
+    $this->gGrupAdi->addDVencPag($fechaVencimiento);
     return $this;
   }
 
