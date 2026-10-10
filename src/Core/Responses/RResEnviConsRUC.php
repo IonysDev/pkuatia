@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Responses;
 
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRUC;
+use stdClass;
 
 /**
  * RespuestaConsultaRUC

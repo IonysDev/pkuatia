@@ -29,6 +29,42 @@ trait ItemValorado {
      */
     public GTotSub $gTotSub;
 
+    // Valores de los setters obsoletos de ítem (setNroLote(), setNroSerie(), etc.). Se siguen guardando, pero no llegan
+    // al documento: cada dato se informa con el parámetro del mismo nombre de addItem(). Hasta 0.2.0 no estaban
+    // declaradas y cada setter creaba una propiedad dinámica (aviso en PHP 8.2+, error en PHP 9; PK-34).
+    /** @deprecated 0.2.1 Usar el parámetro $esTipoCambioPorItem de addItem(). */
+    public ?bool $esTipoCambioPorItem = null;
+    /** @deprecated 0.2.1 Usar el parámetro $tipoDeCambioItem de addItem(). */
+    public ?String $tipoDeCambioItem = null;
+    /** @deprecated 0.2.1 Usar el parámetro $nroLote de addItem(). */
+    public ?String $nroLote = null;
+    /** @deprecated 0.2.1 Usar el parámetro $fechaVencimiento de addItem(). */
+    public ?DateTime $fechaVencimiento = null;
+    /** @deprecated 0.2.1 Usar el parámetro $nroSerie de addItem(). */
+    public ?String $nroSerie = null;
+    /** @deprecated 0.2.1 Usar el parámetro $nroPedido de addItem(). */
+    public ?String $nroPedido = null;
+    /** @deprecated 0.2.1 Usar el parámetro $infoEmisor de addItem(). */
+    public ?String $infoEmisor = null;
+    /** @deprecated 0.2.1 Usar el parámetro $cdcFacturaAnticipo de addItem(). */
+    public ?String $cdcFacturaAnticipo = null;
+    /** @deprecated 0.2.1 Usar el parámetro $partidaArancelaria de addItem(). */
+    public ?int $partidaArancelaria = null;
+    /** @deprecated 0.2.1 Usar el parámetro $ncmMercosur de addItem(). */
+    public ?int $ncmMercosur = null;
+    /** @deprecated 0.2.1 Usar el parámetro $codPaisOrigen de addItem(). */
+    public ?String $codPaisOrigen = null;
+    /** @deprecated 0.2.1 Usar el parámetro $dncpCodigoGeneral de addItem(). */
+    public ?String $dncpCodigoGeneral = null;
+    /** @deprecated 0.2.1 Usar el parámetro $dncpCodigoEspecifico de addItem(). */
+    public ?String $dncpCodigoEspecifico = null;
+    /** @deprecated 0.2.1 Usar el parámetro $dncpCodigoGTINProducto de addItem(). */
+    public ?String $dncpCodigoGTINProducto = null;
+    /** @deprecated 0.2.1 Usar el parámetro $dncpCodigoGTINPaquete de addItem(). */
+    public ?String $dncpCodigoGTINPaquete = null;
+    /** @deprecated 0.2.1 Usar el parámetro $detalleVehiculoNuevo de addItem(). */
+    public ?GVehNuevo $detalleVehiculoNuevo = null;
+
     /**
      * Agrega un ítem con valor al documento electrónico.
      * 
@@ -463,13 +499,24 @@ trait ItemValorado {
     ///////////////////////////////////////////////////////////
 
     /**
+     * Avisa (E_USER_DEPRECATED) que un setter de ítem está obsoleto y qué parámetro de addItem() lo reemplaza (PK-34).
+     */
+    private function avisarSetterObsoleto(String $setter, String $parametro): void {
+        trigger_error(static::class . "::$setter() está obsoleto desde 0.2.1 y no tiene efecto en el documento: el valor se "
+            . "informa con el parámetro \$$parametro de addItem().", E_USER_DEPRECATED);
+    }
+
+    /**
      * Establece el si el tipo de cambio es por ítem (true) o global (false).
      * 
      * @param bool $esTipoCambioPorItem Indica si el tipo de cambio es por ítem.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: si el tipo de cambio es por ítem se informa con el parámetro $esTipoCambioPorItem de addItem().
      */
     public function setEsTipoCambioPorItem(bool $esTipoCambioPorItem) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'esTipoCambioPorItem');
         $this->esTipoCambioPorItem = $esTipoCambioPorItem;
         return $this;
     }
@@ -480,8 +527,11 @@ trait ItemValorado {
      * @param String $tipoDeCambioItem valor numerico del tipo de cambio del documento electrónico, expresado en cadena de texto decimal BCMath.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el tipo de cambio del ítem se informa con el parámetro $tipoDeCambioItem de addItem().
      */
     public function setTipoDeCambioItem(String $tipoDeCambioItem) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'tipoDeCambioItem');
         $this->tipoDeCambioItem = $tipoDeCambioItem;
         return $this;
     }
@@ -492,8 +542,11 @@ trait ItemValorado {
      * @param String $nroLote Número de lote del ítem.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el número de lote se informa con el parámetro $nroLote de addItem().
      */
     public function setNroLote(String $nroLote) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'nroLote');
         $this->nroLote = $nroLote;
         return $this;
     }
@@ -504,8 +557,11 @@ trait ItemValorado {
      * @param DateTime $fechaVencimiento Fecha de vencimiento del ítem.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: la fecha de vencimiento se informa con el parámetro $fechaVencimiento de addItem().
      */
     public function setFechaVencimiento(DateTime $fechaVencimiento) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'fechaVencimiento');
         $this->fechaVencimiento = $fechaVencimiento;
         return $this;
     }
@@ -516,8 +572,11 @@ trait ItemValorado {
      * @param String $nroSerie Número de serie del ítem.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el número de serie se informa con el parámetro $nroSerie de addItem().
      */
     public function setNroSerie(String $nroSerie) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'nroSerie');
         $this->nroSerie = $nroSerie;
         return $this;
     }
@@ -528,8 +587,11 @@ trait ItemValorado {
      * @param String $nroPedido Número de pedido del ítem.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el número de pedido se informa con el parámetro $nroPedido de addItem().
      */
     public function setNroPedido(String $nroPedido) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'nroPedido');
         $this->nroPedido = $nroPedido;
         return $this;
     }
@@ -540,8 +602,11 @@ trait ItemValorado {
      * @param String $infoEmisor Información adicional del ítem de interés del emisor.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: la información de interés del emisor se informa con el parámetro $infoEmisor de addItem().
      */
     public function setInfoEmisor(String $infoEmisor) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'infoEmisor');
         $this->infoEmisor = $infoEmisor;
         return $this;
     }
@@ -552,8 +617,11 @@ trait ItemValorado {
      * @param String $cdcFacturaAnticipo Código de la factura de anticipo. Es obligatorio cuando exista anticipo particular o global, o cuando el tipo de pago de la factura sea anticipo.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el CDC de la factura de anticipo se informa con el parámetro $cdcFacturaAnticipo de addItem().
      */
     public function setCDCFacturaAnticipo(String $cdcFacturaAnticipo) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'cdcFacturaAnticipo');
         $this->cdcFacturaAnticipo = $cdcFacturaAnticipo;
         return $this;
     }
@@ -564,8 +632,11 @@ trait ItemValorado {
      * @param int $partidaArancelaria Código de la partida arancelaria aduanera del ítem (4 dígitos).
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: la partida arancelaria se informa con el parámetro $partidaArancelaria de addItem().
      */
     public function setPartidaArancelaria(int $partidaArancelaria) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'partidaArancelaria');
         $this->partidaArancelaria = $partidaArancelaria;
         return $this;
     }
@@ -576,8 +647,11 @@ trait ItemValorado {
      * @param int $ncmMercosur Código del Nomenclador Común del Mercosur del ítem (6 a 8 dígitos).
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el código NCM se informa con el parámetro $ncmMercosur de addItem().
      */
     public function setNcmMercosur(int $ncmMercosur) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'ncmMercosur');
         $this->ncmMercosur = $ncmMercosur;
         return $this;
     }
@@ -588,8 +662,11 @@ trait ItemValorado {
      * @param String $codPaisOrigen Código ISO3166 del país de origen del ítem.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el país de origen se informa con el parámetro $codPaisOrigen de addItem().
      */
     public function setCodPaisOrigen(String $codPaisOrigen) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'codPaisOrigen');
         $this->codPaisOrigen = $codPaisOrigen;
         return $this;
     }
@@ -600,8 +677,11 @@ trait ItemValorado {
      * @param String $dncpCodigoGeneral Código general del ítem según el Catálogo de Bienes y Servicios de la DNCP (obligatorio solo cuando receptor es B2G).
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el código general DNCP se informa con el parámetro $dncpCodigoGeneral de addItem().
      */
     public function setDncpCodigoGeneral(String $dncpCodigoGeneral) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoGeneral');
         $this->dncpCodigoGeneral = $dncpCodigoGeneral;
         return $this;
     }
@@ -612,8 +692,11 @@ trait ItemValorado {
      * @param String $dncpCodigoEspecifico Código específico del ítem según el Catálogo de Bienes y Servicios de la DNCP (obligatorio solo cuando receptor es B2G).
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el código específico DNCP se informa con el parámetro $dncpCodigoEspecifico de addItem().
      */
     public function setDncpCodigoEspecifico(String $dncpCodigoEspecifico) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoEspecifico');
         $this->dncpCodigoEspecifico = $dncpCodigoEspecifico;
         return $this;
     }
@@ -624,8 +707,11 @@ trait ItemValorado {
      * @param String $dncpCodigoGTINProducto Código GTIN (código comercial global) de producto registrado en DNCP (opcional cuando receptor es B2G).
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el GTIN del producto se informa con el parámetro $dncpCodigoGTINProducto de addItem().
      */
     public function setDncpCodigoGTINProducto(String $dncpCodigoGTINProducto) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoGTINProducto');
         $this->dncpCodigoGTINProducto = $dncpCodigoGTINProducto;
         return $this;
     }
@@ -636,8 +722,11 @@ trait ItemValorado {
      * @param String $dncpCodigoGTINPaquete Código GTIN del paquete registrado en DNCP (opcional cuando receptor es B2G).
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el GTIN del paquete se informa con el parámetro $dncpCodigoGTINPaquete de addItem().
      */
     public function setDncpCodigoGTINPaquete(String $dncpCodigoGTINPaquete) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoGTINPaquete');
         $this->dncpCodigoGTINPaquete = $dncpCodigoGTINPaquete;
         return $this;
     }
@@ -648,8 +737,11 @@ trait ItemValorado {
      * @param GVehNuevo $detalleVehiculoNuevo Detalle del vehículo nuevo.
      * 
      * @return self
+     *
+     * @deprecated 0.2.1 No tiene efecto en el documento: el detalle del vehículo nuevo se informa con el parámetro $detalleVehiculoNuevo de addItem().
      */
     public function setDetalleVehiculoNuevo(GVehNuevo $detalleVehiculoNuevo) : self {
+        $this->avisarSetterObsoleto(__FUNCTION__, 'detalleVehiculoNuevo');
         $this->detalleVehiculoNuevo = $detalleVehiculoNuevo;
         return $this;
     }   

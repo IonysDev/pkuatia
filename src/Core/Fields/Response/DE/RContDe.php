@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response\DE;;
 
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * ContDE01 - Contenedor de la respuesta del DE consultado

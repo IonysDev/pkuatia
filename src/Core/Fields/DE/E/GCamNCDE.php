@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Constants\MotEmi;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo Id:     E400

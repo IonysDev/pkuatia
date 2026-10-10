@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response;
 
 use DOMElement;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01 

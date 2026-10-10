@@ -177,6 +177,15 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   es byte a byte y la firma sigue verificando, también con la FE real de la captura del 09/10/2026. Un `rDE`
   armado a mano se serializa como antes (es lo que firma `FirmarDE()`), y volver a firmar un `rDE` leído
   reemplaza la firma anterior en lugar de agregar una segunda.
+- **Actividad económica leída del objeto SOAP** (PK-33). `GActEco::FromSifenResponseObject()` declaraba el
+  tipo `stdClass` sin importarlo: PHP lo resolvía como una clase inexistente del propio espacio de nombres y
+  la llamada terminaba en `TypeError`. La alcanza `RDE::FromSifenResponseObject()` a través de `GEmis`. Los
+  24 archivos que nombraban `stdClass` en sus docblocks sin importarlo ahora lo importan, para que el IDE y
+  el análisis estático resuelvan el tipo correcto.
+- **Aviso de propiedad dinámica en los setters de ítem** (PK-34, decisión Q-B5). Los 16 setters del trait
+  `ItemValorado` (`setNroLote()`, `setNroSerie()`, `setDncpCodigoGeneral()`, `setDetalleVehiculoNuevo()`,
+  etc.) asignaban propiedades no declaradas: cada llamada emitía `Creation of dynamic property` en PHP 8.2+,
+  que será un error en PHP 9. Las propiedades ahora están declaradas. Ver "Obsoleto".
 
 ### Cambiado
 
@@ -196,6 +205,14 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   parte entera del monto; usar `getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()`.
 - `GGroupTiEvt::getGeDevCCFFCue()`: pese a su nombre devuelve el grupo "devuelto"; se conserva por
   compatibilidad. Usar `getRGeDevCCFFCue()` o `getRGeDevCCFFDev()`.
+- Los 16 setters de ítem de `Factura`, `Autofactura`, `NotaDeCredito` y `NotaDeDebito` (trait
+  `ItemValorado`): `setEsTipoCambioPorItem()`, `setTipoDeCambioItem()`, `setNroLote()`,
+  `setFechaVencimiento()`, `setNroSerie()`, `setNroPedido()`, `setInfoEmisor()`, `setCDCFacturaAnticipo()`,
+  `setPartidaArancelaria()`, `setNcmMercosur()`, `setCodPaisOrigen()`, `setDncpCodigoGeneral()`,
+  `setDncpCodigoEspecifico()`, `setDncpCodigoGTINProducto()`, `setDncpCodigoGTINPaquete()` y
+  `setDetalleVehiculoNuevo()`. Nunca tuvieron efecto en el documento: el dato se informa con el parámetro del
+  mismo nombre de `addItem()`, que lo asigna al ítem. Siguen guardando el valor en su propiedad, ahora
+  declarada y también obsoleta, y avisan con `E_USER_DEPRECATED` qué parámetro usar. El XML no cambia.
 
 ## [0.2.0] — 2026-10-09
 

@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia\Core\Responses;
 
 use DateTime;
+use stdClass;
 
 /**
  * Clase que representa la respuesta del SIFEN a la consulta masiva de RUC (WS siConsArchivoRUC, NT-011).

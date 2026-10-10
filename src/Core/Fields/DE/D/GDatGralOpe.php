@@ -9,6 +9,7 @@ use DOMElement;
 use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo Id:     D001

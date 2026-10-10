@@ -10,6 +10,7 @@ use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * Nodo Id:     E300

@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * Nodo Id:     E790 

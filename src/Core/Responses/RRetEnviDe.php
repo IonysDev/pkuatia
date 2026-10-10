@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia\Core\Responses;
 
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use stdClass;
 
 /**
  * Nodo Id:     ARSch01

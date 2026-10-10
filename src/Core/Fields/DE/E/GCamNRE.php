@@ -10,6 +10,7 @@ use IonysDev\Pkuatia\Core\Constants\RespEmiNR;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * Nodo Id:     E500

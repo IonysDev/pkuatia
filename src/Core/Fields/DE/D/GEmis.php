@@ -14,6 +14,7 @@ use DOMElement;
 use InvalidArgumentException;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo Id:     D100        

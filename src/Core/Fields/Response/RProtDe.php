@@ -6,6 +6,7 @@ use DateTime;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\FechaHelper;
 use SimpleXMLElement;
+use stdClass;
 
 /**
  * ID PP01: Protocolo  de procesamiento del DE

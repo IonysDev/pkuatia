@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo Id:     E960
