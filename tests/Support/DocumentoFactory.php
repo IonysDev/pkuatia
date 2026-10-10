@@ -201,7 +201,8 @@ final class DocumentoFactory
     }
     $af->calcTotSub(0);
     $af->addPago(PaConEIniTiPago::Efectivo, $af->gTotSub->getDTotGralOpe(), 'PYG');
-    $af->addConstanciaDeNoSerContribuyente(12345, '1234567890');
+    // Valores inventados con el formato de la constancia real (Q-B11): número de 11 dígitos y control de 8 caracteres.
+    $af->addConstanciaDeNoSerContribuyente(12345678901, 'A1B2C3D4');
     return $af;
   }
 

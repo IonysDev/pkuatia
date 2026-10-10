@@ -1124,6 +1124,19 @@ class DocumentoElectronico
     return $this;
   }
 
+  /**
+   * Asocia al documento la constancia de no ser contribuyente (H002 = 3, H014 = 1), obligatoria en la autofactura.
+   * El número y el número de control son los del formulario de la DNIT (el "NUMERO" del encabezado y el "NÚMERO DE
+   * CONTROL" del pie) y se emiten en dNumCons (H016) y dNumControl (H017). Hasta 0.2.0 se descartaban sin aviso (PK-35,
+   * decisión Q-B11).
+   *
+   * @param int    $numero     Número de la constancia: entero positivo de hasta 11 dígitos; se emite con 11, con ceros a la izquierda.
+   * @param String $numControl Número de control: 8 caracteres entre letras, números y guion.
+   *
+   * @return self
+   *
+   * @throws \InvalidArgumentException si alguno de los dos no cumple el formato del XSD (desde 0.2.1).
+   */
   public function addConstanciaDeNoSerContribuyente(
     int $numero,
     String $numControl

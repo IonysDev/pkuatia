@@ -85,8 +85,9 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
 - `tests/Unit/Deserializacion/IdaYVueltaGruposTest`: los 46 grupos del DE (cada clase de `src/Core/Fields/DE`)
   hacen ida y vuelta idéntica por DOM, por SimpleXML y por objeto SOAP, con instancias tomadas de todos los
   documentos de prueba y de una FE firmada; un test aparte exige que los 46 tengan instancias. Quedan fuera rDE y
-  DE por la vía SOAP (tienen atributos, que `ext/soap` descarta) y `Signature` como grupo suelto (ver "Pendiente"
-  en el plan de la Fase D). `DocumentoFactory::facturaConTodosLosOpcionales()` cubre gRespDE, gOblAfe, gCompPub,
+  DE por la vía SOAP (tienen atributos, que `ext/soap` descarta) y `Signature` como grupo suelto: sus
+  serializadores tipados no funcionan y un `rDE` leído la reemite desde el XML original (PK-32).
+  `DocumentoFactory::facturaConTodosLosOpcionales()` cubre gRespDE, gOblAfe, gCompPub,
   gVehNuevo, gPagTarCD, gPagCheq, gCamGen y gCamCarg, y valida contra el XSD. `EventosIdaYVueltaTest` suma la ida y
   vuelta del `rGesEve` completo de los 18 casos de evento.
 
@@ -215,6 +216,12 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   imprimía su nombre con `echo` en cada llamada. `GResProcEve` (espacio `Fields\Response\DE`) tenía una rama con
   `echo "TODO CUANTICO"` y leía solo el primer `gResProc`: ahora lee todos los mensajes. Se quitaron además 21
   `return null;` inalcanzables después de un `throw` (sin efecto en el comportamiento).
+- **Constancia de no ser contribuyente sin número** (PK-35, decisión Q-B11). `addConstanciaDeNoSerContribuyente()`
+  recibe el número y el número de control de la constancia, pero `GCamDEAsoc::toDOMElement()` solo los emitía con la
+  constancia de microproductores: con la de no ser contribuyente se descartaban sin aviso. Ahora van en `dNumCons` y
+  `dNumControl` cuando se informan; son los dos números del formulario de la DNIT. El número se completa con ceros a
+  la izquierda hasta 11 dígitos (patrón `[0-9]{11}`), también con microproductores, donde un número corto hacía
+  inválido el documento. Cambia el XML de toda autofactura con constancia de no ser contribuyente.
 - **Vehículo nuevo (`gVehNuevo`) inválido contra el XSD.** `GVehNuevo::toDOMElement()` escribía en `iTipOpVN` la
   descripción ("Venta a representante", etc.) en lugar del código (`tiTipOpVN`, del 1 al 4,
   `DE_Types_v150.xsd:1470-1487`), así que toda FE con vehículo nuevo y tipo de operación salía inválida. Además
@@ -256,6 +263,11 @@ capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual T�
   0301). Fuente: guía de mejores prácticas de envío de la DNIT, §4 y §5. Hasta 0.2.0 un documento sin
   `iTiDE` se enviaba sin control de tipo.
 - `Sifen::ConsultaLote()` declara el tipo del parámetro: `string|int $nroLote` (antes sin tipo).
+- **Formato de la constancia validado al cargarlo** (PK-35, decisión Q-B11). `GCamDEAsoc::setDNumCons()` exige un
+  entero positivo de hasta 11 dígitos y `setDNumControl()` 8 caracteres entre letras, números y guion (`tgCamDEAsoc`,
+  `DE_v150.xsd:1688`); si no se cumple lanzan `InvalidArgumentException`, y con ellos
+  `addConstanciaDeNoSerContribuyente()`. Quien pase valores fuera de formato recibe la excepción donde antes el
+  documento salía sin esos datos.
 
 ### Obsoleto
 
