@@ -104,6 +104,28 @@ final class MontosSupermercadosTest extends TestCase
     (new GGrupSup())->$setter($valor);
   }
 
+  /**
+   * QA de la Fase B: hasta 0.2.0 el setter era int y PHP convertía cualquier texto numérico ("+5", "5.", ".5", "1e3").
+   * Desde 0.2.1 se aceptan igual y se normalizan: las tres primeras son formas válidas de xs:decimal y la notación
+   * exponencial, que no lo es, se convierte a decimal.
+   *
+   * @return array<string, array{0: string, 1: string}>
+   */
+  public static function textosNumericos(): array
+  {
+    return ['signo +' => ['+5', '5'], 'punto final' => ['5.', '5'], 'punto inicial' => ['.5', '0.5'], 'exponencial' => ['1e3', '1000'],
+      'exponencial con decimales' => ['1.5e-1', '0.15'], 'negativo' => ['-2.5', '-2.5']];
+  }
+
+  #[DataProvider('textosNumericos')]
+  public function testTextosNumericosQueAceptabaLaVersionAnterior(string $valor, string $esperado): void
+  {
+    $g = (new GGrupSup())->setDEfectivo($valor);
+
+    $this->assertSame($esperado, $g->getDEfectivoDecimal());
+    $this->assertStringContainsString("<dEfectivo>$esperado</dEfectivo>", RoundTrip::serializar($g));
+  }
+
   /** xs:decimal: los ceros finales de la parte decimal no cuentan (1.23450 tiene 4 decimales) y el signo se admite. */
   public function testLimitesDelXsd(): void
   {

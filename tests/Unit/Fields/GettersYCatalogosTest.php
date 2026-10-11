@@ -18,6 +18,8 @@ use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRUC;
 use IonysDev\Pkuatia\DataMappings\CountryMapping;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GRasMerc;
+use IonysDev\Pkuatia\Tests\Support\RoundTrip;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -117,5 +119,19 @@ final class GettersYCatalogosTest extends TestCase
     $rec->setCDepRec(1);
     $this->assertSame('CAPITAL', $rec->dDesDepRec);
     $this->assertSame('Paraguay', (new RGEveNom())->setCPaisRec('PRY')->dDesPaisRe);
+  }
+
+  /**
+   * QA de la Fase B: E751 (dNumLote) es texto de 1 a 80 caracteres. Desde B1 la lectura por DOM conserva un lote
+   * alfanumérico, y getDNumLote(): int terminaba en TypeError (hasta 0.2.0 devolvía 0). Vuelve a devolver la parte
+   * numérica y getDNumLoteString() devuelve el lote exacto.
+   */
+  public function testElLoteAlfanumericoLeidoNoRompeElGetterEntero(): void
+  {
+    $lote = RoundTrip::leer('<gRasMerc><dNumLote>LOTE-A1</dNumLote></gRasMerc>', GRasMerc::class, RoundTrip::VIA_DOM);
+
+    $this->assertSame(0, $lote->getDNumLote());
+    $this->assertSame('LOTE-A1', $lote->getDNumLoteString());
+    $this->assertNull((new GRasMerc())->getDNumLoteString());
   }
 }

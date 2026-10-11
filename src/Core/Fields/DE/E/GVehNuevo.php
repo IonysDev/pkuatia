@@ -742,18 +742,30 @@ class GVehNuevo extends BaseSifenField
   /**
    * Valida una medida contra tMontoBase6 (xs:decimal con fractionDigits 4 y totalDigits 10, DE_Types_v150.xsd:1308-1314)
    * y la devuelve como texto, sin redondear. Como en xs:decimal, los ceros a la izquierda y los decimales finales en
-   * cero no cuentan. Mismo criterio que GGrupSup (Q-B10).
+   * cero no cuentan. Mismo criterio que GGrupSup (Q-B10): también acepta, normalizados, los textos numéricos que hasta
+   * 0.2.0 entraban por la conversión de PHP a int ("+5" y "5." como "5", ".5" como "0.5", "1e3" como "1000").
    */
   private static function monto(int|String $valor, String $campo): String
   {
-    $texto = trim((string) $valor);
-    if (!preg_match('/^-?(\d+)(?:\.(\d+))?$/D', $texto, $m))
-      throw new \InvalidArgumentException("[GVehNuevo] $campo debe ser un número decimal: '$texto'");
-    $enteros = ltrim($m[1], '0');
-    $decimales = rtrim($m[2] ?? '', '0');
+    $original = trim((string) $valor);
+    $texto = $original;
+    if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
+      if (!is_numeric($texto))
+        throw new \InvalidArgumentException("[GVehNuevo] $campo debe ser un número decimal: '$original'");
+      $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
+    }
+    $signo = str_starts_with($texto, '-') ? '-' : '';
+    $texto = ltrim($texto, '+-');
+    if (str_starts_with($texto, '.'))
+      $texto = '0' . $texto;
+    if (str_ends_with($texto, '.'))
+      $texto = substr($texto, 0, -1);
+    [$enteros, $decimales] = array_pad(explode('.', $texto, 2), 2, '');
+    $enteros = ltrim($enteros, '0');
+    $decimales = rtrim($decimales, '0');
     if (strlen($decimales) > 4 || strlen($enteros) + strlen($decimales) > 10)
-      throw new \InvalidArgumentException("[GVehNuevo] $campo admite hasta 10 dígitos, de los cuales hasta 4 decimales (tMontoBase6): '$texto'");
-    return $texto;
+      throw new \InvalidArgumentException("[GVehNuevo] $campo admite hasta 10 dígitos, de los cuales hasta 4 decimales (tMontoBase6): '$original'");
+    return $signo . $texto;
   }
 
   /** Valor exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */

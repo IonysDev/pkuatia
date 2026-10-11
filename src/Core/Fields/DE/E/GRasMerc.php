@@ -35,7 +35,7 @@ class GRasMerc extends BaseSifenField
   /**
    * Establece el valor de dNumLote
    *
-   * @param int $dNumLote
+   * @param int|String $dNumLote
    *
    * @return self
    */
@@ -154,13 +154,27 @@ class GRasMerc extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Obtiene el valor de dNumLote
+   * Obtiene el valor de dNumLote como entero. E751 es texto de 1 a 80 caracteres y puede ser alfanumérico: devuelve la
+   * parte numérica inicial, o 0, como hasta 0.2.0. Desde 0.2.1 la lectura conserva el lote exacto, y este getter
+   * terminaba en TypeError con un lote alfanumérico (QA de la Fase B).
    *
    * @return int
+   *
+   * @deprecated 0.2.1 E751 es texto: usar getDNumLoteString().
    */
   public function getDNumLote(): int
   {
-    return $this->dNumLote;
+    return intval($this->dNumLote);
+  }
+
+  /**
+   * Obtiene el número de lote (E751) tal como se informó, o null si no se informó (QA de la Fase B, 0.2.1).
+   *
+   * @return String|null
+   */
+  public function getDNumLoteString(): ?String
+  {
+    return $this->dNumLote ?? null;
   }
 
   /**

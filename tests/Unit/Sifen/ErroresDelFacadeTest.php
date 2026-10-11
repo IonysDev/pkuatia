@@ -129,6 +129,41 @@ final class ErroresDelFacadeTest extends TestCase
     $this->assertStringContainsString('rEnviDe', Sifen::GetLastRequest());
   }
 
+  /**
+   * QA de la Fase B: si crear el cliente falla (por ejemplo, el WSDL no responde), GetLastRequest() y
+   * GetLastResponse() no deben devolver la petición y la respuesta de la llamada anterior.
+   */
+  public function testSiFallaCrearElClienteNoQuedaLaRespuestaAnterior(): void
+  {
+    R::instalar(R::RUC_0502);
+    Sifen::ConsultarRUC('80000000');
+    $this->assertNotNull(Sifen::GetLastResponse());
+
+    Sifen::SetSoapClientFactory(static fn (): SoapClient => throw new SoapFault('Receiver', 'WSDL no disponible'));
+    try {
+      Sifen::ConsultarDE('01800000000001001000000122026011510123456781');
+      $this->fail('Se esperaba el SoapFault.');
+    } catch (SoapFault $e) {
+      $this->assertNull(Sifen::GetLastResponse());
+      $this->assertNull(Sifen::GetLastRequest());
+    }
+  }
+
+  /**
+   * QA de la Fase B: la consulta masiva de RUC pasa por la lectura del rechazo genérico (B13b), así que su respuesta
+   * tiene que leer rProtDe como las demás; si no, devolvía una respuesta vacía en lugar del 0160.
+   */
+  public function testConsultarArchivoRucLeeElRechazoGenerico(): void
+  {
+    R::instalar(R::RUC_0160);
+
+    $respuesta = Sifen::ConsultarArchivoRUC('80000000');
+
+    $this->assertSame(160, $respuesta->getDCodRes());
+    $this->assertSame('XML Mal Formado.', $respuesta->getDMsgRes());
+    $this->assertNull($respuesta->getArchivoZip());
+  }
+
   public function testOpcionesDeConexionConfigurables(): void
   {
     $opciones = null;

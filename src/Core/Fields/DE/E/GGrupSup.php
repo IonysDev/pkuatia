@@ -264,7 +264,7 @@ class GGrupSup
   /**
    * Instancia un objeto GGrupSup a partir de un DOMElement (E810, tgGrupSup, DE_v150.xsd:663-690; todos los
    * campos son opcionales). No existía hasta 0.2.0 y GCamEsp::FromDOMElement fallaba con Error (PK-25).
-   * Los montos se guardan como int, igual que en los setters: si el XML trae decimales, se truncan.
+   * Los montos se leen exactos, con sus decimales (Q-B10); las propiedades enteras guardan la parte entera.
    *
    * @param DOMElement $node Nodo gGrupSup.
    *
@@ -315,18 +315,31 @@ class GGrupSup
   /**
    * Valida un monto contra tMontoBase4/tMontoBase6 (xs:decimal con fractionDigits 4 y totalDigits 19 o 10,
    * DE_Types_v150.xsd) y lo devuelve como texto, sin redondear. Como en xs:decimal, los ceros a la izquierda
-   * y los decimales finales en cero no cuentan.
+   * y los decimales finales en cero no cuentan. También acepta, normalizados, los textos numéricos que hasta 0.2.0
+   * entraban por la conversión de PHP a int: "+5" y "5." como "5", ".5" como "0.5" y la notación exponencial
+   * ("1e3") como decimal.
    */
   private static function monto(int|String $valor, String $campo, int $totalDigitos): String
   {
-    $texto = trim((string) $valor);
-    if (!preg_match('/^-?(\d+)(?:\.(\d+))?$/', $texto, $m))
-      throw new \InvalidArgumentException("[GGrupSup] $campo debe ser un número decimal: '$texto'");
-    $enteros = ltrim($m[1], '0');
-    $decimales = rtrim($m[2] ?? '', '0');
+    $original = trim((string) $valor);
+    $texto = $original;
+    if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
+      if (!is_numeric($texto))
+        throw new \InvalidArgumentException("[GGrupSup] $campo debe ser un número decimal: '$original'");
+      $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
+    }
+    $signo = str_starts_with($texto, '-') ? '-' : '';
+    $texto = ltrim($texto, '+-');
+    if (str_starts_with($texto, '.'))
+      $texto = '0' . $texto;
+    if (str_ends_with($texto, '.'))
+      $texto = substr($texto, 0, -1);
+    [$enteros, $decimales] = array_pad(explode('.', $texto, 2), 2, '');
+    $enteros = ltrim($enteros, '0');
+    $decimales = rtrim($decimales, '0');
     if (strlen($decimales) > 4 || strlen($enteros) + strlen($decimales) > $totalDigitos)
-      throw new \InvalidArgumentException("[GGrupSup] $campo admite hasta $totalDigitos dígitos, de los cuales hasta 4 decimales (DE_Types_v150.xsd): '$texto'");
-    return $texto;
+      throw new \InvalidArgumentException("[GGrupSup] $campo admite hasta $totalDigitos dígitos, de los cuales hasta 4 decimales (DE_Types_v150.xsd): '$original'");
+    return $signo . $texto;
   }
 
   /** Monto exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */

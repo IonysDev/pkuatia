@@ -83,6 +83,26 @@ final class VehiculoNuevoTest extends TestCase
     self::vehiculo()->$setter($valor);
   }
 
+  /**
+   * QA de la Fase B: los textos numéricos que 0.2.0 aceptaba al convertir a int ("+5", "5.", ".5", "1e3") se aceptan y
+   * se normalizan, como en GGrupSup.
+   *
+   * @return array<string, array{0: string, 1: string}>
+   */
+  public static function textosNumericos(): array
+  {
+    return ['signo +' => ['+5', '5'], 'punto final' => ['5.', '5'], 'punto inicial' => ['.5', '0.5'], 'exponencial' => ['1e3', '1000']];
+  }
+
+  #[DataProvider('textosNumericos')]
+  public function testTextosNumericosQueAceptabaLaVersionAnterior(string $valor, string $esperado): void
+  {
+    $vehiculo = self::vehiculo()->setDPNet($valor);
+
+    $this->assertSame($esperado, $vehiculo->getDPNetDecimal());
+    $this->assertStringContainsString("<dPNet>$esperado</dPNet>", RoundTrip::serializar($vehiculo));
+  }
+
   private static function vehiculo(): GVehNuevo
   {
     return (new GVehNuevo())->setITipOpVN(2)->setDChasis('9BWZZZ377VT004251')->setITipCom(1);

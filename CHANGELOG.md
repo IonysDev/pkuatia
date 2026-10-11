@@ -56,7 +56,9 @@ Técnico.
   es 0-n); `Helpers\FechaHelper::FromSifen()` lee las fechas del SIFEN con o sin zona horaria. Test:
   `tests/Unit/Responses/RespuestasRealesTest`, con las capturas reales llamadas a través del facade.
 - `Sifen::GetLastRequest()` y `Sifen::GetLastResponse()` (PK-31): el XML de la última solicitud y de la última
-  respuesta, también cuando el parseo falla, para auditar o guardar la respuesta cruda.
+  respuesta, también cuando el parseo falla, para auditar o guardar la respuesta cruda. Si la llamada falla al
+  crear el cliente, por ejemplo porque el WSDL no responde, devuelven `null` y no los datos de la llamada anterior.
+- `GRasMerc::getDNumLoteString()`: el número de lote (E751, texto de 1 a 80 caracteres) tal como se informó.
 - `tests/Support/SignatureAssertions::assertFirmaVerifica()`: verificación criptográfica de la firma con
   xmlseclibs (digest del DE y firma de `SignedInfo`), usada por `tests/Unit/Deserializacion/IdaYVueltaFirmadoTest`.
 - `Config::$soapConnectionTimeout` y `Config::$soapUserAgent` (PK-31), con sus setters y sus claves en
@@ -116,7 +118,8 @@ Técnico.
   `GGrupEner::FromSimpleXMLElement` le pasaba un objeto a `setDActiv(int)`;
   `GGrupAdi::FromSifenResponseObject` buscaba `ciclo` y pasaba las fechas como texto;
   `GRasMerc::FromDOMElement` convertía `dNumLote` (texto de 1 a 80, `DE_v150.xsd:437`) en `0` y su
-  lector de objetos SOAP lanzaba "Not implemented"; `DE::FromSimpleXMLElement` exigía `gTotSub`, que la
+  lector de objetos SOAP lanzaba "Not implemented" (con un lote alfanumérico, `getDNumLote()` sigue devolviendo la
+  parte numérica, o 0, como antes; el lote exacto está en `getDNumLoteString()`); `DE::FromSimpleXMLElement` exigía `gTotSub`, que la
   NR no lleva (`DE_v150.xsd:1678`). Los lectores nuevos o reescritos lanzan `InvalidArgumentException`
   (subclase de `Exception`) cuando falta un campo obligatorio.
 - **Autofactura sin distrito.** `Autofactura::setLugarTransaccion()` declara el distrito opcional pero
@@ -154,13 +157,16 @@ Técnico.
   `DE_Types_v150.xsd`): `150.75` se emitía como `150` y PHP mostraba un aviso de conversión con pérdida.
   Los setters aceptan texto (`int|String`, ampliación) y validan contra el XSD: más de 4 decimales o más
   dígitos que los del tipo lanzan `InvalidArgumentException`, igual que un texto no numérico, que antes
-  daba `TypeError`. El XML lleva el monto exacto, también al leer. Los montos enteros no cambian.
+  daba `TypeError`. El XML lleva el monto exacto, también al leer. Los montos enteros no cambian. Los textos
+  numéricos que hasta 0.2.0 entraban convertidos a entero se aceptan y se normalizan: `"+5"` y `"5."` como `5`,
+  `".5"` como `0.5` y la notación exponencial (`"1e3"`) como decimal.
 - **Medidas del vehículo nuevo con decimales** (decisión Q-B12). `GVehNuevo` guardaba `dPNet`, `dPBruto` y
   `dCapTracc` como enteros, aunque el XSD admite 4 decimales (`tMontoBase6`, `DE_Types_v150.xsd:1308-1314`): un
   peso con decimales no se podía informar y al leerlo se truncaba. Los setters aceptan texto (`int|String`,
   ampliación) y validan contra el XSD: más de 4 decimales, más de 10 dígitos o un texto no numérico lanzan
   `InvalidArgumentException`. El XML lleva el valor exacto, también al leer por las tres vías. Los valores
-  enteros no cambian.
+  enteros no cambian, y los textos numéricos que antes entraban convertidos a entero se normalizan como en
+  `GGrupSup`.
 - **La nominación nunca se leía** (PK-27). `GGroupTiEvt` buscaba el nodo `rGeVeNom`, pero el XSD lo llama
   `rGEveNom` (`Evento_v150.xsd:379`), y declaraba la clase como `RGeVeNom`, cuando la real es `RGEveNom`:
   en Linux, con la clase sin cargar, el autoload no encontraba el archivo. Se quitó la entrada
@@ -248,7 +254,8 @@ Técnico.
   (`tdAnoCont`): con cuatro, el XML no valida.
 - **Rechazo genérico con el WSDL real.** Con el WSDL del SIFEN, `SoapClient` devuelve `null` cuando la respuesta no
   es la que declara la operación, y así llega el rechazo genérico (`rRetEnviDe > rProtDe`, por ejemplo 0160 "XML
-  Mal Formado.") en la consulta de RUC, de DE y de lote, en la recepción de lote y en los eventos: la librería
+  Mal Formado.") en la consulta de RUC, en la consulta masiva de RUC, en la consulta de DE y de lote, en la
+  recepción de lote y en los eventos: la librería
   terminaba en `Exception: Error Processing Request: null`. Ahora el facade decodifica ese rechazo de la respuesta
   cruda y devuelve la respuesta con su código, como ya describía la entrada de PK-29. Quien capturaba esa
   excepción recibe ahora la respuesta con `getDCodRes()` (o `getDCodResLot()`) en 160. Lo destaparon las capturas
@@ -283,6 +290,9 @@ Técnico.
   0301). Fuente: guía de mejores prácticas de envío de la DNIT, §4 y §5. Hasta 0.2.0 un documento sin
   `iTiDE` se enviaba sin control de tipo.
 - `Sifen::ConsultaLote()` declara el tipo del parámetro: `string|int $nroLote` (antes sin tipo).
+- **Fechas del SIFEN sin zona horaria** (PK-29). Las que llegan sin zona, como el `dFecProc` de los eventos dentro
+  de `xContEv` en `ConsultarDE()`, se interpretan en `America/Asuncion`, la hora del SIFEN. Hasta 0.2.0 tomaban la
+  zona por defecto de PHP, así que con otra zona configurada el instante quedaba corrido unas horas.
 - `Constants::PKUATIA_VERSION` actualizado a `0.2.1`. README: consulta y deserialización de un DE, lote con
   `EsperarResultadoLote`, diagnóstico con `GetLastResponse` y la espera de 3 minutos antes de cancelar en
   `sifen-test`.
@@ -299,6 +309,7 @@ Técnico.
   parte entera del monto; usar `getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()`.
 - `GVehNuevo::getDPNet()`, `getDPBruto()`, `getDCapTracc()` y sus propiedades públicas `int`: devuelven la parte
   entera de la medida; usar `getDPNetDecimal()`, `getDPBrutoDecimal()` y `getDCapTraccDecimal()`.
+- `GRasMerc::getDNumLote()`: el lote es texto y el getter devuelve su parte numérica; usar `getDNumLoteString()`.
 - `GGroupTiEvt::getGeDevCCFFCue()`: pese a su nombre devuelve el grupo "devuelto"; se conserva por
   compatibilidad. Usar `getRGeDevCCFFCue()` o `getRGeDevCCFFDev()`.
 - Los 16 setters de ítem de `Factura`, `Autofactura`, `NotaDeCredito` y `NotaDeDebito` (trait

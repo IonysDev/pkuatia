@@ -164,6 +164,9 @@ class Sifen
 
   private static function createSoapClient(string $wsdl): SoapClient
   {
+    // GetLastRequest() y GetLastResponse() se refieren a esta llamada: si crear el cliente falla (por ejemplo, el WSDL
+    // no responde), no queda el cliente de la llamada anterior (QA de la Fase B).
+    self::$client = null;
     if (self::$soapClientFactory !== null) {
       $client = (self::$soapClientFactory)($wsdl, self::$options);
       if (!$client instanceof SoapClient) {
