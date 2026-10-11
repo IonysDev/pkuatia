@@ -509,6 +509,8 @@ En `test/` hay scripts de consulta que requieren certificado y red:
 
 5. **Firma Digital**: La biblioteca requiere que el certificado y la clave privada estén disponibles localmente.
 
+6. **Monedas con nombre largo**: 15 monedas del catálogo ISO 4217 (ANG, BMD, FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD, XBA, XBB, XBC, XTS y XXX) tienen un nombre de más de 20 caracteres, el máximo que admite el XSD para la descripción de la moneda. La librería la recorta a 20, pero el SIFEN rechaza esa descripción con el código 1206 (verificado en `sifen-test` con ANG el 11/10/2026). No hay una descripción conocida que el SIFEN acepte para estas monedas: por ahora no se pueden usar en un DE.
+
 ## 🧪 Pruebas
 
 Verificaciones offline (no requieren certificado ni conexión al SIFEN):

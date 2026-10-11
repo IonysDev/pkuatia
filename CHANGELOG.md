@@ -5,6 +5,22 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [No publicado]
+
+### Agregado
+
+- Capturas de `sifen-test` del 11/10/2026, de la homologación de la 0.2.1, en
+  `tests/Resources/sifen/respuestas-ws/2026-10-11/`: 46 archivos copiados byte a byte de ekuat-ia (`cf55702`).
+  `tests/Unit/Responses/CapturasHomologacionFaseBTest` las lee a través del facade: los siete envíos (0260, 2562 y
+  1206), la consulta de la autofactura con su constancia y la de la FE con vehículo nuevo, la consulta 0420 de un
+  envío cortado, el rechazo genérico de la consulta de RUC, la recepción y la consulta del lote (0300 y 0362) y la
+  respuesta con cinco eventos. Los nueve rDE enviados validan contra el XSD y hacen ida y vuelta byte a byte. Solo
+  cambian las pruebas: la librería no cambia.
+- Advertencia sobre las 15 monedas cuyo nombre supera los 20 caracteres que admite el XSD (deuda D-A3, sin
+  solución conocida): el SIFEN rechaza la descripción recortada con 1206 y no hay una descripción conocida que
+  acepte, así que esas monedas no se pueden usar en un DE. Está en el README (Notas importantes, punto 6) y en el
+  docblock de `MonedaMapping::GetDescription()`.
+
 ## [0.2.1] — 2026-10-11
 
 Fase B del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): deserialización,

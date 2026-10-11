@@ -1,0 +1,77 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 210,
+            "resp_len": 541,
+            "ts": "2026-10-11T11:40:54-03:00"
+        },
+        {
+            "op": "rEnviConsDe-fe-cuotas-previa",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl",
+            "action": "",
+            "ms": 223,
+            "resp_len": 413,
+            "ts": "2026-10-11T11:41:15-03:00"
+        },
+        {
+            "op": "rEnviDe-fe-cuotas",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 515,
+            "resp_len": 645,
+            "ts": "2026-10-11T11:41:36-03:00"
+        },
+        {
+            "op": "rEnviDe-nr",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 746,
+            "resp_len": 645,
+            "ts": "2026-10-11T11:41:57-03:00"
+        },
+        {
+            "op": "rEnviDe-af",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 442,
+            "resp_len": 615,
+            "ts": "2026-10-11T11:42:18-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 1,
+        "seco": false,
+        "canario": {
+            "dCodRes": 502,
+            "dMsgRes": "RUC encontrado"
+        },
+        "consulta-fe-cuotas-previa": {
+            "dCodRes": 420,
+            "dMsgRes": "Documento No Existe en SIFEN o ha sido Rechazado"
+        },
+        "fe-cuotas": {
+            "dEstRes": "Aprobado",
+            "dProtAut": "50222125",
+            "gResProc": [
+                "0260 Autorización del DE satisfactoria"
+            ]
+        },
+        "nr": {
+            "dEstRes": "Aprobado",
+            "dProtAut": "50222127",
+            "gResProc": [
+                "0260 Autorización del DE satisfactoria"
+            ]
+        },
+        "af": {
+            "dEstRes": "Rechazado",
+            "dProtAut": null,
+            "gResProc": [
+                "2562 TEST - El vendedor no debe ser contribuyente"
+            ]
+        }
+    }
+}
