@@ -1,0 +1,49 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 209,
+            "resp_len": 541,
+            "ts": "2026-10-11T11:49:42-03:00"
+        },
+        {
+            "op": "rEnvioLote",
+            "location": "https://sifen-test.set.gov.py/de/ws/async/recibe-lote.wsdl",
+            "action": "",
+            "ms": 252,
+            "resp_len": 473,
+            "ts": "2026-10-11T11:49:59-03:00"
+        },
+        {
+            "op": "rEnviConsLoteDe",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-lote.wsdl",
+            "action": "",
+            "ms": 216,
+            "resp_len": 956,
+            "ts": "2026-10-11T11:59:59-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 3,
+        "seco": false,
+        "canario": {
+            "dCodRes": 502,
+            "dMsgRes": "RUC encontrado"
+        },
+        "lote": {
+            "dCodRes": 300,
+            "dMsgRes": "Lote recibido con éxito",
+            "dProtConsLote": "85929997107567388"
+        },
+        "consulta-lote-1": {
+            "dCodResLot": 362,
+            "dMsgResLot": "Procesamiento de lote {85929997107567388} concluido",
+            "documentos": [
+                "01800000005001001000012222026101119201069504 Aprobado",
+                "01800000005001001000012322026101114949681755 Aprobado"
+            ]
+        }
+    }
+}

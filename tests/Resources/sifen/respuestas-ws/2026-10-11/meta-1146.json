@@ -1,0 +1,47 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 204,
+            "resp_len": 541,
+            "ts": "2026-10-11T11:46:47-03:00"
+        },
+        {
+            "op": "rEnviDe-af",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 463,
+            "resp_len": 645,
+            "ts": "2026-10-11T11:47:03-03:00"
+        },
+        {
+            "op": "rEnviConsDe-af",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl",
+            "action": "",
+            "ms": 245,
+            "resp_len": 10065,
+            "ts": "2026-10-11T11:47:18-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 1,
+        "seco": false,
+        "canario": {
+            "dCodRes": 502,
+            "dMsgRes": "RUC encontrado"
+        },
+        "af": {
+            "dEstRes": "Aprobado",
+            "dProtAut": "50222132",
+            "gResProc": [
+                "0260 Autorización del DE satisfactoria"
+            ]
+        },
+        "consulta-af": {
+            "dCodRes": 422,
+            "dMsgRes": "CDC encontrado"
+        }
+    }
+}

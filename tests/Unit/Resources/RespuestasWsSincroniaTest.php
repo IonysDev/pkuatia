@@ -19,7 +19,7 @@ final class RespuestasWsSincroniaTest extends TestCase
   {
     $constantes = (new ReflectionClass(RespuestasSifenFactory::class))->getConstants();
     unset($constantes['DIR']);
-    $this->assertCount(15, $constantes);
+    $this->assertCount(29, $constantes);
     foreach ($constantes as $nombre => $captura) {
       $this->assertFileExists(RespuestasSifenFactory::DIR . '/' . $captura, $nombre);
     }
@@ -39,7 +39,7 @@ final class RespuestasWsSincroniaTest extends TestCase
   public function testLasRespuestasSonSobresSoap12BienFormados(): void
   {
     $respuestas = array_filter(self::archivos(RespuestasSifenFactory::DIR), fn (string $r): bool => str_contains($r, '-response'));
-    $this->assertCount(13, $respuestas);
+    $this->assertCount(28, $respuestas);
     foreach ($respuestas as $relativo) {
       $doc = new DOMDocument();
       $this->assertTrue($doc->loadXML(file_get_contents(RespuestasSifenFactory::DIR . '/' . $relativo)), $relativo);
