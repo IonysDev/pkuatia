@@ -189,7 +189,7 @@ class Sifen
     // respuesta cruda queda disponible en GetLastResponse() (PK-31).
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
-      $object = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
+      $object = self::RespuestaOGenerica(self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc)));
       return RResEnviConsRUC::fromStdClassObject($object);
     } catch (\Error $e) {
       throw new \Exception("[Sifen] Error al procesar la respuesta de la consulta de RUC: " . $e->getMessage(), 0, $e);
@@ -210,7 +210,7 @@ class Sifen
   {
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_ARCHIVO_RUC . "?wsdl");
-      $object = self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador));
+      $object = self::RespuestaOGenerica(self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador)));
       return RResEnviConsArchivoRUC::FromSifenResponseObject($object);
     } catch (\Throwable $e) {
       throw new \Exception("[Sifen] Error al consultar el archivo de RUC en el SIFEN: " . $e->getMessage(), 0, $e);
@@ -229,7 +229,7 @@ class Sifen
     // Decisión Q-B4 (b): como en ConsultarRUC, solo se envuelven los \Error (PK-31).
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl");
-      $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
+      $object = self::RespuestaOGenerica(self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc)));
       return RResEnviConsDe::FromSifenResponseObject($object);
     } catch (\Error $e) {
       throw new \Exception("[Sifen] Error al procesar la respuesta de la consulta del documento electrónico: " . $e->getMessage(), 0, $e);
@@ -397,7 +397,7 @@ class Sifen
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl");
       $rEnvioLote = new REnvioLote(self::GetDId(), $zipContent);
-      $object = self::$client->rEnvioLote($rEnvioLote);
+      $object = self::RespuestaOGenerica(self::$client->rEnvioLote($rEnvioLote));
       // El parseo entra al try desde 0.2.1 (Q-B4), como en los demás métodos.
       return RResEnviLoteDe::FromSifenResponseObject($object);
     } catch (\Throwable $e) {
@@ -418,7 +418,7 @@ class Sifen
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl");
       $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
-      $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
+      $object = self::RespuestaOGenerica(self::$client->rEnviConsLoteDe($rEnviConsLoteDe));
       return RResEnviConsLoteDe::FromSifenResponseObject($object);
     } catch (\Throwable $e) {
       throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage(), 0, $e);
@@ -502,7 +502,7 @@ class Sifen
         '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
         XSD_ANYXML
       ));
-      $object = self::$client->rEnviEventoDe($rEnviEventoDe);
+      $object = self::RespuestaOGenerica(self::$client->rEnviEventoDe($rEnviEventoDe));
       return RRetEnviEventoDe::FromSifenResponseObject($object);
     } catch (\Throwable $e) {
       throw new \Exception("[Sifen] Error al registrar el evento: " . $e->getMessage(), 0, $e);
@@ -830,6 +830,61 @@ class Sifen
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
+  /**
+   * Con el WSDL, SoapClient devuelve null cuando el elemento de respuesta no es el que declara la operación. Es lo que
+   * pasa con el rechazo genérico del SIFEN (rRetEnviDe > rProtDe, p. ej. 0160 "XML Mal Formado."), que el ambiente
+   * manda también a la consulta de RUC, de DE y de lote y a los eventos: hasta B13 la librería terminaba en
+   * "Error Processing Request: null" (capturas reales del 06/10/2026, respuestas-ws/2026-10-06/meta-0704.json, y del
+   * 11/10/2026). En ese caso se decodifica el rRetEnviDe de la respuesta cruda con la misma forma que daría SoapClient,
+   * y la clase de respuesta lo lee como un rechazo con su código.
+   */
+  private static function RespuestaOGenerica(mixed $object): mixed
+  {
+    if ($object !== null || self::$client === null)
+      return $object;
+    try {
+      $crudo = self::$client->__getLastResponse();
+    } catch (\Throwable $e) {
+      return $object;
+    }
+    if (!is_string($crudo) || trim($crudo) === '')
+      return $object;
+    $doc = new \DOMDocument();
+    $previo = libxml_use_internal_errors(true);
+    $leido = $doc->loadXML($crudo);
+    libxml_clear_errors();
+    libxml_use_internal_errors($previo);
+    if (!$leido)
+      return $object;
+    $generico = $doc->getElementsByTagNameNS('*', 'rRetEnviDe')->item(0);
+    return $generico instanceof \DOMElement ? self::NodoComoObjeto($generico) : $object;
+  }
+
+  /**
+   * Decodifica un elemento como lo hace SoapClient: cada hijo es una propiedad (si se repite, un arreglo) y las hojas
+   * son texto.
+   */
+  private static function NodoComoObjeto(\DOMElement $nodo): \stdClass|String
+  {
+    $res = new \stdClass();
+    $conHijos = false;
+    foreach ($nodo->childNodes as $hijo) {
+      if (!$hijo instanceof \DOMElement)
+        continue;
+      $conHijos = true;
+      $nombre = $hijo->localName;
+      $valor = self::NodoComoObjeto($hijo);
+      if (!property_exists($res, $nombre)) {
+        $res->{$nombre} = $valor;
+      } else {
+        if (!is_array($res->{$nombre}))
+          $res->{$nombre} = [$res->{$nombre}];
+        $res->{$nombre}[] = $valor;
+      }
+    }
+    return $conHijos ? $res : $nodo->textContent;
+  }
+
   private static function RegistrarEventoUnico(GGroupTiEvt $gGroupTiEvt, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     $rEve = new REve();

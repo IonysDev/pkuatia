@@ -246,6 +246,14 @@ Técnico.
   gravada total (F035); `GVehNuevo::FromSifenResponseObject()` lanzaba "Not implemented".
 - La documentación de `Factura::setDatosComprasPublicas()` aclara que el año de contratación va con dos dígitos
   (`tdAnoCont`): con cuatro, el XML no valida.
+- **Rechazo genérico con el WSDL real.** Con el WSDL del SIFEN, `SoapClient` devuelve `null` cuando la respuesta no
+  es la que declara la operación, y así llega el rechazo genérico (`rRetEnviDe > rProtDe`, por ejemplo 0160 "XML
+  Mal Formado.") en la consulta de RUC, de DE y de lote, en la recepción de lote y en los eventos: la librería
+  terminaba en `Exception: Error Processing Request: null`. Ahora el facade decodifica ese rechazo de la respuesta
+  cruda y devuelve la respuesta con su código, como ya describía la entrada de PK-29. Quien capturaba esa
+  excepción recibe ahora la respuesta con `getDCodRes()` (o `getDCodResLot()`) en 160. Lo destaparon las capturas
+  de `sifen-test` del 11/10/2026; las del 06/10 ya lo mostraban, pero el cliente de captura de los tests no
+  reproducía el `null` y ahora sí.
 - **Código de seguridad predecible** (PK-38). `RNG::GenerateAsString()`, con el que `GOpeDE` genera `dCodSeg`
   (B004, que entra en el CDC y en el QR), usaba `rand()`: desde PHP 7.1 es `mt_rand()` y con la misma semilla
   de `mt_srand()` repetía los códigos. Ahora usa `random_int()`, del generador criptográfico del sistema. Como

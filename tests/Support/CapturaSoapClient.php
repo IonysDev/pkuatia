@@ -18,10 +18,31 @@ use stdClass;
  * conocida: sin WSDL todas las hojas llegan como string; con el WSDL real algunas podrían llegar como
  * int según su tipo [PENDIENTE DE VERIFICACIÓN]. Las clases de respuesta deben aceptar ambas formas.
  *
+ * Como con el WSDL real, si el elemento de respuesta no es el que declara la operación (p. ej. el rechazo
+ * genérico rRetEnviDe > rProtDe, 0160, que el SIFEN manda también a la consulta de RUC, de DE, de lote y a los
+ * eventos), la llamada devuelve null: ext/soap no encuentra la parte de salida. Lo registran las capturas reales
+ * del 06/10/2026 (respuestas-ws/2026-10-06/meta-0704.json y meta-0740.json: "Error Processing Request: null"
+ * en la consulta de RUC) y del 11/10/2026. Hasta B13 este cliente devolvía igual el objeto y lo ocultaba.
+ *
  * Con trace activado, __getLastRequest() y __getLastResponse() funcionan como en el cliente real.
  */
 final class CapturaSoapClient extends SoapClient
 {
+  /**
+   * Elemento de respuesta que declara cada operación del WSDL del SIFEN (en minúsculas, como las resuelve ext/soap).
+   * Fuentes: capturas reales de respuestas-ws y la guía de mejores prácticas de la DNIT (§6-§8). El de
+   * rEnviConsArchivoRUC no está verificado: el WS no respondió en ningún ambiente.
+   */
+  public const RESPUESTA_POR_OPERACION = [
+    'renvide' => 'rRetEnviDe',
+    'renviolote' => 'rResEnviLoteDe',
+    'renviconslotede' => 'rResEnviConsLoteDe',
+    'renviconsde' => 'rEnviConsDeResponse',
+    'renviconsruc' => 'rResEnviConsRUC',
+    'renvieventode' => 'rRetEnviEventoDe',
+    'renviconsarchivoruc' => 'rResEnviConsArchivoRUC',
+  ];
+
   /** @var list<string> Operaciones invocadas, en orden. */
   public array $operaciones = [];
 
@@ -53,7 +74,12 @@ final class CapturaSoapClient extends SoapClient
   public function __call($name, $args): mixed
   {
     $this->operaciones[] = $name;
-    return self::comoModoWsdl($this->__soapCall($name, $args), $this->respuestaCruda);
+    $valor = $this->__soapCall($name, $args); // también deja __getLastRequest() y __getLastResponse() como el cliente real
+    $esperado = self::RESPUESTA_POR_OPERACION[strtolower($name)] ?? null;
+    if ($esperado !== null && self::elementoRespuesta($this->respuestaCruda)->localName !== $esperado) {
+      return null;
+    }
+    return self::comoModoWsdl($valor, $this->respuestaCruda);
   }
 
   /**

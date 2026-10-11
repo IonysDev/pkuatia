@@ -183,6 +183,8 @@ final class RespuestasRealesTest extends TestCase
   /**
    * El sobre de rechazo genérico (rRetEnviDe > rProtDe) se capturó para recepción y consulta de RUC; para
    * consulta de DE, eventos y lote se asume igual [PENDIENTE DE VERIFICACIÓN]. Se reutiliza la captura 0160.
+   * Con el WSDL real ese sobre llega como null (no es la respuesta que declara la operación): desde B13 el facade
+   * lo decodifica de la respuesta cruda. CapturaSoapClient reproduce ese null.
    */
   public function testRechazoGenericoEnConsultaDEEventosYLote(): void
   {
@@ -199,5 +201,18 @@ final class RespuestasRealesTest extends TestCase
     $lote = Sifen::ConsultaLote('123456789012345');
     $this->assertSame(160, $lote->getDCodResLot());
     $this->assertSame('XML Mal Formado.', $lote->getDMsgResLot());
+  }
+
+  /** B13: la recepción de lote también lee el rechazo genérico en lugar de terminar en "Error Processing Request: null". */
+  public function testRechazoGenericoEnLaRecepcionDeLote(): void
+  {
+    R::instalar(R::ENVIO_DE_0160);
+
+    $lote = Sifen::EnviarLoteDE(['<rDE><DE Id="01800000000001001000000122026011510123456781"><gTimb><iTiDE>1</iTiDE></gTimb>'
+      . '<gEmis><dRucEm>80000000</dRucEm></gEmis></DE></rDE>']);
+
+    $this->assertSame(160, $lote->getDCodRes());
+    $this->assertSame('XML Mal Formado.', $lote->getDMsgRes());
+    $this->assertNull($lote->getDProtConsLoteString());
   }
 }
