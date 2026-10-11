@@ -144,10 +144,16 @@ class RGeVeConf
       throw new \Exception("Invalid XML Element: $node->getName()");
 
     $res = new RGeVeConf();
-    $res->setId($node->Id);
-    $res->setITipConf($node->iTipConf);
-    if (isset($node->dFecRecep))
-      $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $node->dFecRecep));
+    $res->setId((string) $node->Id);
+    // Hasta 0.2.0: setITipConf() recibía el SimpleXMLElement (TypeError, PK-28) y dFecRecep se leía como
+    // AAAA-MM-DD aunque es fecHhmmss (Evento_v150.xsd:67-78) y se emite con hora desde 0.2.0 (PK-13).
+    $res->setITipConf(intval((string) $node->iTipConf));
+    if (isset($node->dFecRecep)) {
+      $fecha = DateTime::createFromFormat('Y-m-d\TH:i:s', trim((string) $node->dFecRecep));
+      if ($fecha === false)
+        throw new \InvalidArgumentException("[RGeVeConf] dFecRecep debe tener el formato AAAA-MM-DDThh:mm:ss (fecHhmmss): '" . $node->dFecRecep . "'");
+      $res->setDFecRecep($fecha);
+    }
 
     return $res;
   }

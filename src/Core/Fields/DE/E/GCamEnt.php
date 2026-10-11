@@ -169,9 +169,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getDNumCasEnt(): int
+  public function getDNumCasEnt(): ?int
   {
-    return $this->dNumCasEnt;
+    return $this->dNumCasEnt ?? null;
   }
 
   /**
@@ -199,9 +199,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getCDepEnt(): int
+  public function getCDepEnt(): ?int
   {
-    return $this->cDepEnt;
+    return $this->cDepEnt ?? null;
   }
 
   /**
@@ -220,9 +220,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getCDisEnt(): int
+  public function getCDisEnt(): ?int
   {
-    return $this->cDisEnt;
+    return $this->cDisEnt ?? null;
   }
 
   /**
@@ -240,9 +240,9 @@ class GCamEnt extends BaseSifenField
    *
    * @return int
    */
-  public function getCCiuEnt(): int
+  public function getCCiuEnt(): ?int
   {
-    return $this->cCiuEnt;
+    return $this->cCiuEnt ?? null;
   }
 
   /**
@@ -393,5 +393,18 @@ class GCamEnt extends BaseSifenField
     
     return $res;
     
+  }
+
+  /**
+   * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
+   * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
+   *
+   * @param \SimpleXMLElement $node Nodo gCamEnt.
+   *
+   * @return self
+   */
+  public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+  {
+    return self::FromDOMElement(dom_import_simplexml($node));
   }
 }

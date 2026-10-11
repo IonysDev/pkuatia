@@ -30,6 +30,12 @@ class RDE extends BaseSifenField
   public Signature $Signature; // I001  - G - 1-1 - Firma Digital del DTE
   public GCamFuFD $gCamFuFD;   // J001  - G - 1-1 - Campos fuera de la firma digital
 
+  // PK-32 (0.2.1): un rDE leído de un XML firmado (FromSimpleXMLElement/FromDOMElement) guarda su Signature tal
+  // como vino y toDOMElement() la reemite junto con gCamFuFD, para que la ida y vuelta sea exacta y la firma siga
+  // verificando (SignedInfo se firma con sus espacios). Un rDE armado a mano se serializa como hasta 0.2.0.
+  private ?String $signatureXml = null;
+  private bool $leidoDeXml = false;
+
   /**
    * Constructor de la clase RDE
    *
@@ -80,6 +86,9 @@ class RDE extends BaseSifenField
   public function setSignature(Signature $Signature): self
   {
     $this->Signature = $Signature;
+    // Una firma armada a mano no se reemite: la serialización de los objetos de firma no reproduce los espacios
+    // de SignedInfo y no verificaría. Para reemitir una firma, leer el rDE con FromSimpleXMLElement/FromDOMElement.
+    $this->signatureXml = null;
     return $this;
   }
 
@@ -162,10 +171,13 @@ class RDE extends BaseSifenField
       $res->setDVerFor(intval($node->dVerFor));
     if(isset($node->DE))
       $res->setDE(DE::FromSimpleXMLElement($node->DE));
-    if(isset($node->Signature))
+    if(isset($node->Signature)) {
       $res->setSignature(Signature::FromSimpleXMLElement($node->Signature));
+      $res->signatureXml = $node->Signature->asXML();
+    }
     if(isset($node->gCamFuFD))
       $res->setGCamFuFD(GCamFuFD::FromSimpleXMLElement($node->gCamFuFD));
+    $res->leidoDeXml = true;
     return $res;
   }
 
@@ -185,10 +197,14 @@ class RDE extends BaseSifenField
       $res->setDVerFor(intval($node->getElementsByTagName('dVerFor')->item(0)->nodeValue));
     if($node->getElementsByTagName('DE')->length > 0)
       $res->setDE(DE::FromDOMElement($node->getElementsByTagName('DE')->item(0)));
-    if($node->getElementsByTagName('Signature')->length > 0)
-      $res->setSignature(Signature::FromDOMElement($node->getElementsByTagName('Signature')->item(0)));
+    if($node->getElementsByTagName('Signature')->length > 0) {
+      $firma = $node->getElementsByTagName('Signature')->item(0);
+      $res->setSignature(Signature::FromDOMElement($firma));
+      $res->signatureXml = $firma->ownerDocument->saveXML($firma);
+    }
     if($node->getElementsByTagName('gCamFuFD')->length > 0)
       $res->setGCamFuFD(GCamFuFD::FromDOMElement($node->getElementsByTagName('gCamFuFD')->item(0)));
+    $res->leidoDeXml = true;
     return $res;
   }
 
@@ -240,7 +256,40 @@ class RDE extends BaseSifenField
     $res->setAttribute('xsi:schemaLocation', Constants::SIFEN_NS_URI_RECEP_DE);
     $res->appendChild(XmlHelper::elemento($doc, 'dVerFor', $this->getDVerFor()));
     $res->appendChild($this->DE->toDOMElement($doc));
+    // Orden de rDE: dVerFor, DE, Signature, gCamFuFD (DE_v150.xsd:1939-1960). Hasta 0.2.0 se perdían Signature y
+    // gCamFuFD al re-serializar un rDE leído (PK-32). Ver $signatureXml.
+    if($this->signatureXml !== null)
+      $res->appendChild(self::copiarFirma($doc, $this->signatureXml));
+    if($this->leidoDeXml && isset($this->gCamFuFD))
+      $res->appendChild($this->gCamFuFD->toDOMElement($doc));
     return $res;
+  }
+
+  /**
+   * Copia la Signature original en $doc con el mismo estilo que el resto del rDE: elementos sin espacio de nombres
+   * y xmlns como atributo. Insertarla con su espacio de nombres real hace que libxml declare un prefijo "default"
+   * en rDE, lo que cambia los bytes y contagia el prefijo a una firma nueva. Los nodos de texto (los espacios de
+   * SignedInfo, que forman parte de lo firmado) se copian tal cual.
+   */
+  private static function copiarFirma(DOMDocument $doc, String $xml): DOMElement
+  {
+    $origen = new DOMDocument();
+    $origen->loadXML($xml);
+    return self::copiarNodo($doc, $origen->documentElement, null);
+  }
+
+  private static function copiarNodo(DOMDocument $doc, \DOMNode $nodo, ?String $nsPadre): \DOMNode
+  {
+    if(!$nodo instanceof DOMElement)
+      return $doc->importNode($nodo, true);
+    $copia = $doc->createElement($nodo->nodeName);
+    if($nodo->namespaceURI !== null && $nodo->namespaceURI !== $nsPadre)
+      $copia->setAttribute($nodo->prefix ? 'xmlns:' . $nodo->prefix : 'xmlns', $nodo->namespaceURI);
+    foreach($nodo->attributes as $atributo)
+      $copia->setAttribute($atributo->nodeName, $atributo->nodeValue);
+    foreach($nodo->childNodes as $hijo)
+      $copia->appendChild(self::copiarNodo($doc, $hijo, $nodo->namespaceURI));
+    return $copia;
   }
 
   /**

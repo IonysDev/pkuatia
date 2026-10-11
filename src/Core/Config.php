@@ -35,6 +35,13 @@ class Config
     // operación puede provocar bloqueos temporales. Por defecto deshabilitado (comportamiento histórico).
     public bool $wsdlCacheEnabled = false;
 
+    // Tiempo máximo, en segundos, para establecer la conexión con el SIFEN (opción connection_timeout de
+    // SoapClient). Null: el valor por defecto de PHP (default_socket_timeout). Nuevo en 0.2.1 (PK-31).
+    public ?int $soapConnectionTimeout = null;
+
+    // Cabecera User-Agent de las solicitudes SOAP. Null: la de PHP. Nuevo en 0.2.1 (PK-31).
+    public ?String $soapUserAgent = null;
+
     /**
      * Normaliza el formato de certificado a un valor interno soportado.
      * Acepta "pem", "p12" y "pfx" (P12 y PFX son PKCS#12). Es idempotente: admite también los
@@ -124,6 +131,14 @@ class Config
 
         if(isset($config->wsdlCacheEnabled)) {
             $res->wsdlCacheEnabled = boolval($config->wsdlCacheEnabled);
+        }
+
+        if(isset($config->soapConnectionTimeout)) {
+            $res->soapConnectionTimeout = intval($config->soapConnectionTimeout);
+        }
+
+        if(isset($config->soapUserAgent)) {
+            $res->soapUserAgent = strval($config->soapUserAgent);
         }
 
         return $res;
@@ -264,6 +279,36 @@ class Config
     public function setWsdlCacheEnabled(bool $wsdlCacheEnabled): self
     {
         $this->wsdlCacheEnabled = $wsdlCacheEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Establece el tiempo máximo, en segundos, para establecer la conexión con el SIFEN (connection_timeout de
+     * SoapClient). Null deja el valor por defecto de PHP. Se aplica en el siguiente Sifen::Init(). Nuevo en 0.2.1.
+     *
+     * @param int|null $soapConnectionTimeout
+     *
+     * @return self
+     */
+    public function setSoapConnectionTimeout(?int $soapConnectionTimeout): self
+    {
+        $this->soapConnectionTimeout = $soapConnectionTimeout;
+
+        return $this;
+    }
+
+    /**
+     * Establece la cabecera User-Agent de las solicitudes SOAP. Null deja la de PHP. Se aplica en el siguiente
+     * Sifen::Init(). Nuevo en 0.2.1.
+     *
+     * @param String|null $soapUserAgent
+     *
+     * @return self
+     */
+    public function setSoapUserAgent(?String $soapUserAgent): self
+    {
+        $this->soapUserAgent = $soapUserAgent;
 
         return $this;
     }

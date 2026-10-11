@@ -4,6 +4,8 @@ namespace IonysDev\Pkuatia\Core\Responses;
 
 use DateTime;
 use stdClass;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use IonysDev\Pkuatia\Helpers\FechaHelper;
 
 /**
  * Nodo Id:     BRSch01        
@@ -137,13 +139,25 @@ class RResEnviLoteDe
     }
 
     /**
-     * Obtiene el valor de dProtConsLote
+     * Obtiene el valor de dProtConsLote convertido a int. Falla con números de más de 19 dígitos (el WS admite hasta 20)
+     * y con un lote rechazado, que no trae número: preferir getDProtConsLoteString().
      *
      * @return int
      */
     public function getdProtConsLote(): int
     {
         return $this->dProtConsLote;
+    }
+
+    /**
+     * Obtiene dProtConsLote tal como lo devolvió el SIFEN (17 dígitos en la práctica, hasta 20), o null si el lote no fue
+     * aceptado (0301). Es el valor para guardar y pasar a Sifen::ConsultaLote() o Sifen::EsperarResultadoLote() (PK-41, 0.2.1).
+     *
+     * @return String|null
+     */
+    public function getDProtConsLoteString(): ?String
+    {
+        return $this->dProtConsLote ?? null;
     }
 
     /**
@@ -174,7 +188,19 @@ class RResEnviLoteDe
             throw new \Exception("[RResEnviLoteDe] Error Processing Request: null", 1);
         }
         $res = new RResEnviLoteDe();
-        if (isset($object->dFecProc)) $res->setdFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+        // Rechazo genérico: sobre rRetEnviDe > rProtDe (capturado para recepción y consulta de RUC,
+        // respuestas-ws/2026-10-06; para lotes [PENDIENTE DE VERIFICACIÓN]).
+        if (isset($object->rProtDe)) {
+            $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+            if (isset($prot->dFecProc)) $res->setdFecProc($prot->getDFecProc());
+            $proc = $prot->getGResProc()[0] ?? null;
+            if ($proc !== null) {
+                $res->setDCodRes(intval($proc->getDCodRes()));
+                $res->setDMsgRes($proc->getDMsgRes());
+            }
+            return $res;
+        }
+        if (isset($object->dFecProc)) $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc')); // con o sin zona (PK-29)
         else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
         
         if(isset($object->dCodRes)) $res->setDCodRes($object->dCodRes);

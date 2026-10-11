@@ -3,6 +3,8 @@
 namespace IonysDev\Pkuatia\Core\Responses;
 
 use DateTime;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use stdClass;
 
 /**
  * Clase que representa la respuesta del SIFEN a la consulta masiva de RUC (WS siConsArchivoRUC, NT-011).
@@ -176,6 +178,19 @@ class RResEnviConsArchivoRUC
       throw new \Exception("[RResEnviConsArchivoRUC] La respuesta del SIFEN es nula.");
     }
     $res = new RResEnviConsArchivoRUC();
+    // Rechazo genérico (rRetEnviDe > rProtDe, p. ej. 0160): el facade lo decodifica de la respuesta cruda cuando el WSDL
+    // da null (B13b); se devuelve con su código y su mensaje, como en las demás respuestas (QA de la Fase B).
+    if (isset($object->rProtDe)) {
+      $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+      if (isset($prot->dFecProc))
+        $res->setDFecProc($prot->getDFecProc());
+      $proc = $prot->getGResProc()[0] ?? null;
+      if ($proc !== null) {
+        $res->setDCodRes(intval($proc->getDCodRes()));
+        $res->setDMsgRes($proc->getDMsgRes());
+      }
+      return $res;
+    }
     if (isset($object->dFecProc)) {
       $res->setDFecProc(new DateTime($object->dFecProc));
     }

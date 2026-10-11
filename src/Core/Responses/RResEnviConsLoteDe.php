@@ -6,6 +6,8 @@ namespace IonysDev\Pkuatia\Core\Responses;
 use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use DateTime;
 use IonysDev\Pkuatia\Core\Fields\Response\Batch\GResProcLote;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use IonysDev\Pkuatia\Helpers\FechaHelper;
 
 /**
  * Nodo Id:     CRSch01        
@@ -19,6 +21,9 @@ class RResEnviConsLoteDe
   public const COD_RES_EN_PROCESAMIENTO = 361;
   public const COD_RES_ACEPTADO = 362;
   public const COD_RES_RECHAZADO_DIFERENTES_TIPOS_DE = 363;
+  // Consulta extemporánea: pasaron más de 48 horas desde el envío y hay que consultar cada CDC con ConsultarDE(). No figura
+  // en el MT v150 (12.x); lo agrega la guía de mejores prácticas de envío de la DNIT, §7 (PK-41, 0.2.1).
+  public const COD_RES_CONSULTA_EXTEMPORANEA = 364;
   
                                  // Id - Longirud - Ocurrencia - Descripción
   public DateTime $dFecProc;    // CRSch02 - 19    - 1-1  - Fecha y hora del procesamiento del lote (nombre no coincide con MT150)
@@ -134,7 +139,20 @@ class RResEnviConsLoteDe
 
     $res = new RResEnviConsLoteDe();
     
-    if(isset($object->dFecProc)) $res->setdFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+    // Rechazo genérico: sobre rRetEnviDe > rProtDe (capturado para recepción y consulta de RUC,
+    // respuestas-ws/2026-10-06; para la consulta de lote [PENDIENTE DE VERIFICACIÓN]).
+    if (isset($object->rProtDe)) {
+      $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+      if (isset($prot->dFecProc)) $res->setdFecProc($prot->getDFecProc());
+      $proc = $prot->getGResProc()[0] ?? null;
+      if ($proc !== null) {
+        $res->setDCodResLot(intval($proc->getDCodRes()));
+        $res->setDMsgResLot($proc->getDMsgRes());
+      }
+      $res->gResProcLote = array();
+      return $res;
+    }
+    if(isset($object->dFecProc)) $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc')); // con o sin zona (PK-29)
     else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
     
     if(isset($object->dCodResLot)) $res->setDCodResLot($object->dCodResLot);

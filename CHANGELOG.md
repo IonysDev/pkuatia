@@ -5,6 +5,354 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [0.2.1] — No publicado
+
+Fase B del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): deserialización,
+respuestas del SIFEN y robustez (PK-25 a PK-43). **Compatible hacia atrás para el uso habitual**: no se
+elimina ningún método público; se agregan métodos, parámetros opcionales al final, propiedades y
+pruebas; algunos setters amplían el tipo que aceptan (`int` → `int|String`) y los retornos que ya podían
+devolver `null` se declaran anulables. Se corrige comportamiento que producía `Error`, `TypeError`,
+pérdida de datos o XML inválido. Algunas correcciones cambian el XML emitido (grupos sectoriales
+combinados, constancia de no ser contribuyente, vehículo nuevo) o lanzan una excepción con mensaje donde
+antes se seguía en silencio: están detalladas en "Corregido" y en "Cambiado". El formato de las
+respuestas se fija contra capturas reales de `sifen-test` (06 y 09/10/2026), que mandan sobre el Manual
+Técnico.
+
+### Agregado
+
+- **Capturas reales de las respuestas del SIFEN en `tests/Resources/sifen/respuestas-ws/`** (32
+  archivos de `sifen-test`, 06 y 09/10/2026, anonimizados): envío aprobado 0260 y rechazo genérico
+  0160, eventos 0600, 4009 y 0100, consultas de DE 0420 y 0422 (con y sin eventos) y consultas de RUC
+  0502 y 0160. Son copias byte a byte de `ekuat-ia/06-ejemplos/respuestas-ws/` (`16070af`),
+  versionadas sin conversión de fin de línea (`.gitattributes`). No forman parte de la API.
+- Soporte de pruebas: `tests/Support/CapturaSoapClient` (cliente SOAP sin red que responde con una
+  captura y la decodifica con `ext/soap`, como en producción; `__getLastResponse()` devuelve los
+  bytes exactos), `tests/Support/RespuestasSifenFactory` (cada captura por nombre) y
+  `tests/Support/RoundTrip` (ida y vuelta byte a byte: `toDOMElement` → `FromDOMElement` o
+  `FromSimpleXMLElement` → `toDOMElement`).
+- Tests: `tests/Unit/Resources/RespuestasWsSincroniaTest` (las copias siguen iguales a ekuat-ia; se
+  omite sin `docs/sifen-ai`), `tests/Unit/Responses/CapturasRealesTest` (formato real: `Id` con
+  mayúscula en `rRetEnviDe`, `id` en minúscula en `rRetEnviEventoDe`, `xContenDE` como texto con
+  varias raíces) y `tests/Unit/Deserializacion/IdaYVueltaDocumentosTest` (ida y vuelta por DOM
+  idéntica en FE, NC, ND y NR).
+- `GCamEsp::getGGrupSeg()`, el getter con el nombre correcto de `gGrupSeg`.
+- **Ocurrencias múltiples que el XSD permite** (decisión Q-B9): hasta 9 grupos de energía eléctrica, uno
+  por medidor (`gGrupEner`, `DE_v150.xsd:802`, NT-023), y hasta 3 vencimientos de pago en los datos
+  adicionales (`dVencPag`, `DE_v150.xsd:829`). Métodos nuevos: `GCamEsp::addGGrupEner()` y
+  `getGGrupEners()`, `GGrupAdi::addDVencPag()` y `getDVencPags()`, y en los documentos
+  `addDatosComplementariosSectorEnergia()` y `addVencimientoDePagoDeUsoComercial()`. Las propiedades y
+  los getters existentes siguen devolviendo la primera ocurrencia, y los `set…` siguen reemplazando todas.
+  Superar el máximo lanza `InvalidArgumentException`. Test: `tests/Unit/Conformidad/OcurrenciasMultiplesTest`.
+- `GGrupSup::getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()` (decisión Q-B10): el
+  monto exacto como texto, con sus decimales.
+- `GVehNuevo::getDPNetDecimal()`, `getDPBrutoDecimal()` y `getDCapTraccDecimal()` (decisión Q-B12): el peso neto,
+  el peso bruto y la capacidad máxima de tracción exactos, como texto con sus decimales.
+- Eventos (PK-42): `GGroupTiEvt::getRGeDevCCFFCue()` y `getRGeDevCCFFDev()`; en `RGeVeRetAce` y
+  `RGeVeRetAnu`, `dRuc` y `dMonRet` con sus setters y getters; `Sifen::InutilizarNumeros()` con el parámetro
+  opcional final `?String $serie = null` (`dSerieNum`). Test: `tests/Unit/Deserializacion/EventosIdaYVueltaTest`,
+  con los 15 tipos de evento por SimpleXML y la cancelación real de la captura del 09/10/2026.
+- Respuestas (PK-29): `RContDe::FromXContenDE()` interpreta el contenido de una consulta de DE según su
+  formato real; `RContDe::getRContEvs()` y `addRContEv()` manejan todos los eventos del DE consultado (ContDE04
+  es 0-n); `Helpers\FechaHelper::FromSifen()` lee las fechas del SIFEN con o sin zona horaria. Test:
+  `tests/Unit/Responses/RespuestasRealesTest`, con las capturas reales llamadas a través del facade.
+- `Sifen::GetLastRequest()` y `Sifen::GetLastResponse()` (PK-31): el XML de la última solicitud y de la última
+  respuesta, también cuando el parseo falla, para auditar o guardar la respuesta cruda. Si la llamada falla al
+  crear el cliente, por ejemplo porque el WSDL no responde, devuelven `null` y no los datos de la llamada anterior.
+- `GRasMerc::getDNumLoteString()`: el número de lote (E751, texto de 1 a 80 caracteres) tal como se informó.
+- `tests/Support/SignatureAssertions::assertFirmaVerifica()`: verificación criptográfica de la firma con
+  xmlseclibs (digest del DE y firma de `SignedInfo`), usada por `tests/Unit/Deserializacion/IdaYVueltaFirmadoTest`.
+- `Config::$soapConnectionTimeout` y `Config::$soapUserAgent` (PK-31), con sus setters y sus claves en
+  `ParseObject()`/JSON: las opciones `connection_timeout` y `user_agent` de `SoapClient`. Sin configurar, no
+  se agregan y el comportamiento no cambia. Test: `tests/Unit/Sifen/ErroresDelFacadeTest`.
+- `tests/Unit/Deserializacion/CamposEspecificosIdaYVueltaTest`: ida y vuelta por DOM, SimpleXML y
+  objeto SOAP de `gCamEsp` (con sus cuatro grupos), `gCamAE` y `gCamNRE`, y de documentos completos
+  (FE de cada sector con `gRasMerc`, autofacturas y nota de remisión). `RoundTrip` suma la vía de
+  objeto SOAP y `DocumentoFactory::rde()` arma RDE deterministas.
+- `tests/Unit/Deserializacion/CadenasYRellenosTest` (código de seguridad con cero inicial, documento
+  alfanumérico del receptor, serie del timbrado, código DNCP y subtotales exactos) e
+  `IdaYVueltaDocumentosTest` ampliado: 15 documentos (FE, NC, ND, NR, AF y FE de cada sector) hacen ida y
+  vuelta idéntica por DOM y por SimpleXML, la vía que usa `Sifen::ConsultarDE`.
+- **`Sifen::EsperarResultadoLote()`** (PK-41). Espera el resultado de un lote con la política de la guía de
+  mejores prácticas de envío de la DNIT (§3.4 y §7): la primera consulta pasados al menos 10 minutos y las
+  siguientes cada 10 minutos o más, mientras el lote siga en procesamiento (0361). Devuelve la primera
+  respuesta distinta de 0361, o la última tras `$maxIntentos` consultas. Una espera menor a 600 segundos
+  lanza `InvalidArgumentException` sin consultar. Bloquea el proceso mientras espera; el parámetro opcional
+  `$esperar` permite reemplazar `sleep()` (un planificador, una cola o un test) y `$onIntento` recibe cada
+  respuesta. Firma: `EsperarResultadoLote(string|int $nroLote, int $esperaInicialSeg = 600,
+  int $intervaloSeg = 600, int $maxIntentos = 6, ?callable $onIntento = null, ?callable $esperar = null)`.
+- `RResEnviLoteDe::getDProtConsLoteString()` (PK-41): el número de lote tal como lo devolvió el SIFEN (17
+  dígitos en la práctica, hasta 20), o null si el lote no fue aceptado. `getdProtConsLote()` lo convierte a
+  `int` y falla con más de 19 dígitos.
+- `RResEnviConsLoteDe::COD_RES_CONSULTA_EXTEMPORANEA` (0364): consulta de un lote enviado hace más de 48
+  horas; hay que consultar cada CDC con `ConsultarDE()` (guía, §7; no figura en el MT v150).
+- `Constants::MAX_BYTES_MENSAJE_LOTE` (1 000 000) y `Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG` (600).
+  Test: `tests/Unit/Sifen/LoteTest`.
+- `phpunit.xml.dist` hace fallar la corrida si un test imprime algo (`beStrictAboutOutputDuringTests` y
+  `failOnRisky`), y `tests/Unit/Core/LimpiezaTest` comprueba que cada archivo de `src/` declara el tipo de su
+  nombre y que no queda código inalcanzable después de un `throw` (PK-43).
+- `tests/Unit/Deserializacion/IdaYVueltaGruposTest`: los 46 grupos del DE (cada clase de `src/Core/Fields/DE`)
+  hacen ida y vuelta idéntica por DOM, por SimpleXML y por objeto SOAP, con instancias tomadas de todos los
+  documentos de prueba y de una FE firmada; un test aparte exige que los 46 tengan instancias. Quedan fuera rDE y
+  DE por la vía SOAP (tienen atributos, que `ext/soap` descarta) y `Signature` como grupo suelto: sus
+  serializadores tipados no funcionan y un `rDE` leído la reemite desde el XML original (PK-32).
+  `DocumentoFactory::facturaConTodosLosOpcionales()` cubre gRespDE, gOblAfe, gCompPub,
+  gVehNuevo, gPagTarCD, gPagCheq, gCamGen y gCamCarg, y valida contra el XSD. `EventosIdaYVueltaTest` suma la ida y
+  vuelta del `rGesEve` completo de los 18 casos de evento.
+
+### Corregido
+
+- **Autofactura, nota de remisión y documentos con campos sectoriales (`gCamEsp`) no se podían
+  deserializar** (PK-25). Se implementaron los lectores que el código ya invocaba:
+  `GGrupEner::FromDOMElement`, `GGrupSup::FromDOMElement` y `FromSimpleXMLElement`,
+  `GGrupAdi::FromDOMElement` y `FromSimpleXMLElement`, `GCamAE::FromSimpleXMLElement`,
+  `GCamNRE::FromSimpleXMLElement` y `FromSifenResponseObject` y `GResProc::FromSimpleXMLElement`.
+  También `GTransp::FromSimpleXMLElement`, que lanzaba "Not implemented", y `FromSimpleXMLElement` de
+  `GCamSal`, `GCamEnt`, `GVehTras` y `GCamTrans`, que delegan en su lector DOM. Antes terminaban en
+  `Error: Call to undefined method` o en "Not implemented", también al consultar con
+  `Sifen::ConsultarDE` una NR o una AF. Se quitaron las 9 entradas de `phpstan-baseline.neon` que lo
+  silenciaban (94 → 85).
+- Lectores existentes que perdían datos o terminaban en `Error` (PK-25): `GCamAE::FromDOMElement`
+  pasaba el nodo, no su valor, a `intval()` y `strval()`; `GCamEsp` llamaba a `setGGrupoSeg()`
+  (inexistente), su lector DOM le pasaba el nodo de supermercados al lector de seguros y su lector de
+  objetos SOAP buscaba `gGrupoSup`; `GGrupSeg` buscaba `gGrupoPolSeg` y perdía las pólizas;
+  `GGrupEner::FromSimpleXMLElement` le pasaba un objeto a `setDActiv(int)`;
+  `GGrupAdi::FromSifenResponseObject` buscaba `ciclo` y pasaba las fechas como texto;
+  `GRasMerc::FromDOMElement` convertía `dNumLote` (texto de 1 a 80, `DE_v150.xsd:437`) en `0` y su
+  lector de objetos SOAP lanzaba "Not implemented" (con un lote alfanumérico, `getDNumLote()` sigue devolviendo la
+  parte numérica, o 0, como antes; el lote exacto está en `getDNumLoteString()`); `DE::FromSimpleXMLElement` exigía `gTotSub`, que la
+  NR no lleva (`DE_v150.xsd:1678`). Los lectores nuevos o reescritos lanzan `InvalidArgumentException`
+  (subclase de `Exception`) cuando falta un campo obligatorio.
+- **Autofactura sin distrito.** `Autofactura::setLugarTransaccion()` declara el distrito opcional pero
+  terminaba en `TypeError`, y `GCamAE::toDOMElement()` emitía siempre `cDisVen` y `cDisProv`, que son
+  0-1 (`tgCamAE`, `DE_v150.xsd:1351`), con `Error` si no estaban. `GCamAE::setCDisProv()` acepta `null`
+  (como `setCDisVen()`) y los distritos se emiten solo si existen. Las AF con distrito no cambian.
+- **Ceros iniciales y letras que se perdían al leer** (PK-26). Los tres lectores de `GOpeDE` aplicaban
+  `intval()` a `dCodSeg`: un código de seguridad que empieza con cero (aleatorio, uno de cada diez
+  documentos) volvía con 8 dígitos y el documento ya no coincidía con su CDC. `GDatRec::FromSimpleXMLElement`
+  hacía lo mismo con `dNumIDRec`, que es alfanumérico (`tdNumDocId`): un pasaporte quedaba en `0`. Esa es
+  la vía que usa `Sifen::ConsultarDE`. El lector de objetos SOAP de `GOpeDE` completa `dCodSeg` a 9 dígitos
+  por si el SOAP lo entrega como número (`tiCodSe` deriva de `xs:integer`).
+- **Datos agregados o alterados** (PK-36). `GTimb::FromSimpleXMLElement` agregaba `<dSerieNum>00</dSerieNum>`
+  a todo documento sin serie (inválido contra `[A-Z]{2}`, `DE_v150.xsd:46`) y `GTimb::toDOMElement`
+  rellenaba la serie con ceros. `GDatRec::FromSimpleXMLElement` copiaba el número de documento en el nombre
+  de fantasía, no leía `dNumCasRec` y condicionaba `dDesDepRec` a la ciudad; ahora delega en el lector DOM.
+  `GCamItem` completaba `dDncpG` con ceros a la derecha (`1234567` pasaba a `12345670`, otro código); el
+  Manual Técnico (E704) manda completar a la izquierda y así se emite ahora (`01234567`). Los códigos de 8
+  dígitos no cambian.
+- **Subtotales por tasa exactos** (PK-37). `GCamItem::calcSubt05()` y `calcSubt10()` sumaban dos montos
+  BCMath con `+` y perdían decimales por encima de 14 cifras significativas. Ahora usan `bcadd` y devuelven
+  texto numérico sin ceros decimales finales: `getFormattedSubt05()` y `getFormattedSubt10()` muestran lo
+  mismo que antes para montos normales.
+- **Grupos sectoriales combinados** (decisión Q-B8). `DocumentoElectronico::documentoElectronicoToRDE()`
+  emitía un solo grupo de `gCamEsp` aunque se informaran varios (prioridad energía, seguros, supermercados,
+  datos adicionales) y descartaba el resto sin aviso. Ahora emite todos los informados, en el orden de
+  `tgCamEsp` (`DE_v150.xsd:794-806`). **Cambia el XML** de quien combina grupos: incluye datos que ya
+  cargaba y que antes se perdían. Una FE con los cuatro grupos valida contra el XSD de producción; el
+  Manual Técnico no tiene reglas que limiten la combinación.
+- **Ocurrencias que se perdían al leer** (Q-B9). Al leer un DE con varios `gGrupEner` o varias `dVencPag`
+  se conservaba solo una. Ahora las tres vías de lectura (DOM, SimpleXML y objeto SOAP) conservan todas y
+  la emisión las escribe todas, en orden.
+- **Montos del sector supermercados con centavos** (decisión Q-B10). `GGrupSup` guardaba `dEfectivo`,
+  `dVuelto` y `dDonac` como enteros, aunque el XSD admite 4 decimales (`tMontoBase4` y `tMontoBase6`,
+  `DE_Types_v150.xsd`): `150.75` se emitía como `150` y PHP mostraba un aviso de conversión con pérdida.
+  Los setters aceptan texto (`int|String`, ampliación) y validan contra el XSD: más de 4 decimales o más
+  dígitos que los del tipo lanzan `InvalidArgumentException`, igual que un texto no numérico, que antes
+  daba `TypeError`. El XML lleva el monto exacto, también al leer. Los montos enteros no cambian. Los textos
+  numéricos que hasta 0.2.0 entraban convertidos a entero se aceptan y se normalizan: `"+5"` y `"5."` como `5`,
+  `".5"` como `0.5` y la notación exponencial (`"1e3"`) como decimal.
+- **Medidas del vehículo nuevo con decimales** (decisión Q-B12). `GVehNuevo` guardaba `dPNet`, `dPBruto` y
+  `dCapTracc` como enteros, aunque el XSD admite 4 decimales (`tMontoBase6`, `DE_Types_v150.xsd:1308-1314`): un
+  peso con decimales no se podía informar y al leerlo se truncaba. Los setters aceptan texto (`int|String`,
+  ampliación) y validan contra el XSD: más de 4 decimales, más de 10 dígitos o un texto no numérico lanzan
+  `InvalidArgumentException`. El XML lleva el valor exacto, también al leer por las tres vías. Los valores
+  enteros no cambian, y los textos numéricos que antes entraban convertidos a entero se normalizan como en
+  `GGrupSup`.
+- **La nominación nunca se leía** (PK-27). `GGroupTiEvt` buscaba el nodo `rGeVeNom`, pero el XSD lo llama
+  `rGEveNom` (`Evento_v150.xsd:379`), y declaraba la clase como `RGeVeNom`, cuando la real es `RGEveNom`:
+  en Linux, con la clase sin cargar, el autoload no encontraba el archivo. Se quitó la entrada
+  `class.nameCase` de `phpstan-baseline.neon` (85 → 84).
+- **Eventos que terminaban en `TypeError` al leerlos** (PK-28). Conformidad: `iTipConf` recibía el nodo y
+  `dFecRecep` se leía sin hora, aunque es `fecHhmmss` y se emite con hora desde 0.2.0. Desconocimiento:
+  `iTipRec`, `dDVRec` y `dTipIDRec` recibían el nodo. Los afectaba `Sifen::ConsultarDE` de cualquier DE con
+  esos eventos.
+- **Retenciones sin RUC ni monto** (PK-42). `dRuc` y `dMonRet` son obligatorios en `trGeVeRetAce` y
+  `trGeVeRetAnu` (`Evento_v150.xsd:120-147`) aunque el Manual Técnico no los lista; se perdían al leer.
+- **Inutilización** (PK-42). `InutilizarNumeros()` acepta la serie (dos letras, `tserieNum`) y rechaza,
+  antes de llamar al SIFEN, un tipo de documento fuera de 1 a 9 (`tiTiDEEv`), como el 10 de `TimbTiDE`.
+- Los 18 setters que devuelven `void` documentan que no se pueden encadenar (decisión Q-B2); los tres de
+  `RGEveNom` decían `@return self`.
+- **Respuestas reales del SIFEN** (PK-29), verificadas contra las capturas de `sifen-test` del 06 y 09/10/2026:
+  - El CDC del DE aprobado se perdía: el SIFEN envía `Id` con mayúscula y `RProtDe` leía `id`, así que
+    `getId()` terminaba en `Error`.
+  - `Sifen::ConsultarDE` guardaba solo el primer evento de `xContEv`. Ahora `getRContEvs()` los devuelve
+    todos y `getRContEv()` sigue devolviendo el primero. `xContenDE` es texto, no XML anidado: se interpreta
+    con `RContDe::FromXContenDE()`, que ya no exige un espacio después de `<rDE`. `getRDEXml()` no cambia.
+  - Fechas: `dFecProc` llega con zona en las respuestas directas y sin zona dentro de `xContEv`. Las clases
+    aceptaban un solo formato y terminaban en `TypeError` con el otro; `RProtDe::FromSimpleXMLElement` usaba
+    uno que nunca coincidía. Una fecha inválida ahora lanza `InvalidArgumentException` con el valor recibido.
+  - Rechazo genérico: con el ambiente degradado, la consulta de RUC responde 0160 con un sobre `rRetEnviDe`
+    y terminaba en `TypeError`; ahora devuelve el código y el mensaje. Las consultas de DE y de lote y los
+    eventos aceptan ese sobre del mismo modo; para ellos no hay captura (pendiente de verificación).
+  - Los getters de campos que una respuesta real puede no traer devuelven `null` en vez de terminar en
+    `Error`: `RProtDe::getId()`, `getDDigVal()` y `getDProtAut()` (el rechazo genérico no los trae) y
+    `GResProcEVe::getId()` y `getDProtAut()` (un evento rechazado no tiene protocolo y la copia en `xContEv`
+    no tiene `id`).
+  - `RContRUC` descartaba `dDesEstCons`, y su lector SimpleXML lo guardaba en `dRUCFactElec`. La propiedad
+    pública conserva el literal del SIFEN (`ACTIVO`); `getDDesEstCons()` sigue derivándolo del código.
+  - `RProtDe::setGResProc()` acepta un `GResProc` o un arreglo; antes daba `TypeError`.
+- **Getters que terminaban en `TypeError` o `Error` cuando no había dato** (PK-30, decisión Q-B3). 37 getters
+  declaraban un tipo no anulable y podían devolver `null` o leer una propiedad opcional sin cargar. Ahora
+  declaran el tipo anulable (`?String`, `?int`, `?array`…) y devuelven `null`: los catálogos
+  `CountryMapping::getCountryDesc()`, `DepartamentoMapping::getDepName()` y `PyGeoCodesMapping::getDistName()`,
+  `getCiudName()` y `getBarrName()` ante un código inexistente, y getters de `GCamEnt` y `GCamSal` (4 cada
+  uno), `GGrupAdi` (2), `GTransp` (4), `GVehNuevo` (13), `RGeVeTr` (2), `RContRUC` (2) y `TxContenEv` (1).
+  Con dato no cambia nada. Los ~460 getters del modelo de emisión que leen propiedades sin cargar quedan
+  para la validación previa a serializar de la Fase C, según la misma decisión.
+- **Setters de catálogo con mensaje** (PK-30, decisión Q-B3). Ante un código de país, departamento, distrito
+  o ciudad inexistente lanzan `InvalidArgumentException` con el código y el catálogo, en lugar de `TypeError`:
+  `GDatRec::setCPaisRec()`, `setCDepRec()`, `setCDisRec()` y `setCCiuRec()`; `GEmis::setCDepEmi()`,
+  `setCDisEmi()` y `setCCiuEmi()` (los dos primeros ya tenían el chequeo, pero nunca llegaba a ejecutarse);
+  los seis de `GCamAE` (vendedor y lugar de la transacción); `GCamItem::setCPaisOrig()`; y
+  `RGEveNom::setCPaisRec()`, `setCDepRec()`, `setCDisRec()` y `setCCiuRec()`. Validan antes de asignar, así
+  que un código inválido no deja el objeto a medias, y consultan el catálogo una sola vez.
+- **Documento firmado que perdía la firma al volver a serializarse** (PK-32). `RDE::toDOMElement()` emitía
+  solo `dVerFor` y `DE`. Un `rDE` leído de un XML firmado (`FromSimpleXMLElement` o `FromDOMElement`) reemite
+  ahora su `Signature` tal como vino y su `gCamFuFD`, en el orden de `DE_v150.xsd:1939-1960`: la ida y vuelta
+  es byte a byte y la firma sigue verificando, también con la FE real de la captura del 09/10/2026. Un `rDE`
+  armado a mano se serializa como antes (es lo que firma `FirmarDE()`), y volver a firmar un `rDE` leído
+  reemplaza la firma anterior en lugar de agregar una segunda.
+- **Actividad económica leída del objeto SOAP** (PK-33). `GActEco::FromSifenResponseObject()` declaraba el
+  tipo `stdClass` sin importarlo: PHP lo resolvía como una clase inexistente del propio espacio de nombres y
+  la llamada terminaba en `TypeError`. La alcanza `RDE::FromSifenResponseObject()` a través de `GEmis`. Los
+  24 archivos que nombraban `stdClass` en sus docblocks sin importarlo ahora lo importan, para que el IDE y
+  el análisis estático resuelvan el tipo correcto.
+- **Aviso de propiedad dinámica en los setters de ítem** (PK-34, decisión Q-B5). Los 16 setters del trait
+  `ItemValorado` (`setNroLote()`, `setNroSerie()`, `setDncpCodigoGeneral()`, `setDetalleVehiculoNuevo()`,
+  etc.) asignaban propiedades no declaradas: cada llamada emitía `Creation of dynamic property` en PHP 8.2+,
+  que será un error en PHP 9. Las propiedades ahora están declaradas. Ver "Obsoleto".
+- **Salida de depuración en producción** (PK-43). `RespuestaConsultaLoteDE::FromSifenResponseObject()`
+  imprimía su nombre con `echo` en cada llamada. `GResProcEve` (espacio `Fields\Response\DE`) tenía una rama con
+  `echo "TODO CUANTICO"` y leía solo el primer `gResProc`: ahora lee todos los mensajes. Se quitaron además 21
+  `return null;` inalcanzables después de un `throw` (sin efecto en el comportamiento).
+- **Constancia de no ser contribuyente sin número** (PK-35, decisión Q-B11). `addConstanciaDeNoSerContribuyente()`
+  recibe el número y el número de control de la constancia, pero `GCamDEAsoc::toDOMElement()` solo los emitía con la
+  constancia de microproductores: con la de no ser contribuyente se descartaban sin aviso. Ahora van en `dNumCons` y
+  `dNumControl` cuando se informan; son los dos números del formulario de la DNIT. El número se completa con ceros a
+  la izquierda hasta 11 dígitos (patrón `[0-9]{11}`), también con microproductores, donde un número corto hacía
+  inválido el documento. Cambia el XML de toda autofactura con constancia de no ser contribuyente.
+- **Vehículo nuevo (`gVehNuevo`) inválido contra el XSD.** `GVehNuevo::toDOMElement()` escribía en `iTipOpVN` la
+  descripción ("Venta a representante", etc.) en lugar del código (`tiTipOpVN`, del 1 al 4,
+  `DE_Types_v150.xsd:1470-1487`), así que toda FE con vehículo nuevo y tipo de operación salía inválida. Además
+  el código 2 se describía "Venta al consumidor final" y el XSD exige "Venta al Consumidor final", con C
+  mayúscula (`DE_Types_v150.xsd:1500`). Este cambio modifica el XML de esos documentos, que antes el SIFEN
+  rechazaba.
+- **Lectores del objeto SOAP.** `GCamCond::FromSifenResponseObject()` terminaba en `TypeError` con un único pago
+  (`ext/soap` entrega un objeto y no un arreglo); `GTotSub::FromSifenResponseObject()` buscaba `dSubEx`, `dDesc` y
+  `dTBaseGraIVA`, que no existen, y perdía el subtotal exonerado (F003), el total de descuentos (F011) y la base
+  gravada total (F035); `GVehNuevo::FromSifenResponseObject()` lanzaba "Not implemented".
+- La documentación de `Factura::setDatosComprasPublicas()` aclara que el año de contratación va con dos dígitos
+  (`tdAnoCont`): con cuatro, el XML no valida.
+- **Rechazo genérico con el WSDL real.** Con el WSDL del SIFEN, `SoapClient` devuelve `null` cuando la respuesta no
+  es la que declara la operación, y así llega el rechazo genérico (`rRetEnviDe > rProtDe`, por ejemplo 0160 "XML
+  Mal Formado.") en la consulta de RUC, en la consulta masiva de RUC, en la consulta de DE y de lote, en la
+  recepción de lote y en los eventos: la librería
+  terminaba en `Exception: Error Processing Request: null`. Ahora el facade decodifica ese rechazo de la respuesta
+  cruda y devuelve la respuesta con su código, como ya describía la entrada de PK-29. Quien capturaba esa
+  excepción recibe ahora la respuesta con `getDCodRes()` (o `getDCodResLot()`) en 160. Lo destaparon las capturas
+  de `sifen-test` del 11/10/2026; las del 06/10 ya lo mostraban, pero el cliente de captura de los tests no
+  reproducía el `null` y ahora sí.
+- **Código de seguridad predecible** (PK-38). `RNG::GenerateAsString()`, con el que `GOpeDE` genera `dCodSeg`
+  (B004, que entra en el CDC y en el QR), usaba `rand()`: desde PHP 7.1 es `mt_rand()` y con la misma semilla
+  de `mt_srand()` repetía los códigos. Ahora usa `random_int()`, del generador criptográfico del sistema. Como
+  `rand()`, sigue aceptando un máximo menor que el mínimo.
+
+### Cambiado
+
+- **Errores del facade con su causa** (PK-31, decisión Q-B4). `EnviarDE()`, `EnviarLoteDE()`,
+  `ConsultaLote()`, `RegistrarEvento()` (y con él todos los métodos de eventos) y `ConsultarArchivoRUC()`
+  conservan la excepción original en `getPrevious()`; antes se perdía el `SoapFault` (código, detalle y
+  traza). Además capturan `\Throwable`: un `TypeError` del parseo llega como la excepción del facade en vez
+  de como `Error`, con la respuesta cruda disponible en `GetLastResponse()`. Quien hoy capture `\Error` o
+  `TypeError` alrededor de esos métodos debe capturar `\Exception` y revisar `getPrevious()`. En
+  `EnviarLoteDE()` el parseo de la respuesta quedó dentro del `try`. `ConsultarRUC()` y `ConsultarDE()`
+  siguen dejando pasar el `SoapFault` tal cual y solo envuelven los `\Error` del parseo.
+- **CDC inválido con excepción** (PK-38). `CDCHelper::Generate()` devolvía el texto
+  `"ERROR: El codigo de control no tiene 44 caracteres"` cuando el CDC salía corto, y uno largo o con letras
+  fuera de lugar tal cual: los dos terminaban en el atributo `Id` del DE y el SIFEN lo rechazaba. Ahora lanza
+  `InvalidArgumentException` con el CDC obtenido cuando no cumple el tipo `tCDC` del XSD (44 caracteres; el
+  RUC puede terminar en una letra de la A a la D). La conversión del documento (`facturaToRDE()` y las
+  demás) propaga la excepción. Quien comparaba el resultado con `"ERROR"` debe capturar la excepción.
+- **Validaciones del lote antes de la red** (PK-41). Además del lote vacío, de más de 50 documentos o con
+  tipos distintos, `EnviarLoteDE()` lanza una excepción, sin llamar al SIFEN, cuando los documentos son de
+  RUC emisores distintos (rechazo 0301), cuando un CDC se repite (el SIFEN bloquea la recepción del RUC
+  emisor de 10 a 60 minutos), cuando un documento no tiene CDC, tipo de documento o RUC emisor (contenido
+  inválido, que también bloquea), y cuando el mensaje supera 1000 KB (ZIP en Base64 más el sobre; rechazo
+  0301). Fuente: guía de mejores prácticas de envío de la DNIT, §4 y §5. Hasta 0.2.0 un documento sin
+  `iTiDE` se enviaba sin control de tipo.
+- `Sifen::ConsultaLote()` declara el tipo del parámetro: `string|int $nroLote` (antes sin tipo).
+- **Fechas del SIFEN sin zona horaria** (PK-29). Las que llegan sin zona, como el `dFecProc` de los eventos dentro
+  de `xContEv` en `ConsultarDE()`, se interpretan en `America/Asuncion`, la hora del SIFEN. Hasta 0.2.0 tomaban la
+  zona por defecto de PHP, así que con otra zona configurada el instante quedaba corrido unas horas.
+- `Constants::PKUATIA_VERSION` actualizado a `0.2.1`. README: consulta y deserialización de un DE, lote con
+  `EsperarResultadoLote`, diagnóstico con `GetLastResponse` y la espera de 3 minutos antes de cancelar en
+  `sifen-test`.
+- **Formato de la constancia validado al cargarlo** (PK-35, decisión Q-B11). `GCamDEAsoc::setDNumCons()` exige un
+  entero positivo de hasta 11 dígitos y `setDNumControl()` 8 caracteres entre letras, números y guion (`tgCamDEAsoc`,
+  `DE_v150.xsd:1688`); si no se cumple lanzan `InvalidArgumentException`, y con ellos
+  `addConstanciaDeNoSerContribuyente()`. Quien pase valores fuera de formato recibe la excepción donde antes el
+  documento salía sin esos datos.
+
+### Obsoleto
+
+- `GCamEsp::getGGrupoSeg()`: nombre con errata; usar `getGGrupSeg()`. Sigue funcionando.
+- `GGrupSup::getDEfectivo()`, `getDVuelto()`, `getDDonac()` y sus propiedades públicas `int`: devuelven la
+  parte entera del monto; usar `getDEfectivoDecimal()`, `getDVueltoDecimal()` y `getDDonacDecimal()`.
+- `GVehNuevo::getDPNet()`, `getDPBruto()`, `getDCapTracc()` y sus propiedades públicas `int`: devuelven la parte
+  entera de la medida; usar `getDPNetDecimal()`, `getDPBrutoDecimal()` y `getDCapTraccDecimal()`.
+- `GRasMerc::getDNumLote()`: el lote es texto y el getter devuelve su parte numérica; usar `getDNumLoteString()`.
+- `GGroupTiEvt::getGeDevCCFFCue()`: pese a su nombre devuelve el grupo "devuelto"; se conserva por
+  compatibilidad. Usar `getRGeDevCCFFCue()` o `getRGeDevCCFFDev()`.
+- Los 16 setters de ítem de `Factura`, `Autofactura`, `NotaDeCredito` y `NotaDeDebito` (trait
+  `ItemValorado`): `setEsTipoCambioPorItem()`, `setTipoDeCambioItem()`, `setNroLote()`,
+  `setFechaVencimiento()`, `setNroSerie()`, `setNroPedido()`, `setInfoEmisor()`, `setCDCFacturaAnticipo()`,
+  `setPartidaArancelaria()`, `setNcmMercosur()`, `setCodPaisOrigen()`, `setDncpCodigoGeneral()`,
+  `setDncpCodigoEspecifico()`, `setDncpCodigoGTINProducto()`, `setDncpCodigoGTINPaquete()` y
+  `setDetalleVehiculoNuevo()`. Nunca tuvieron efecto en el documento: el dato se informa con el parámetro del
+  mismo nombre de `addItem()`, que lo asigna al ítem. Siguen guardando el valor en su propiedad, ahora
+  declarada y también obsoleta, y avisan con `E_USER_DEPRECATED` qué parámetro usar. El XML no cambia.
+- Código sin uso en la librería (PK-43): `Core\Fields\Response\DE\GResProcEve` (duplicado de
+  `Core\Fields\Response\Event\GResProcEVe`, que es el que usan las respuestas de eventos),
+  `Core\Responses\RespuestaConsultaLoteDE` (usar `RResEnviConsLoteDe`, que devuelve `Sifen::ConsultaLote()`),
+  `Helpers\RequestXMLHelper` y `Utils\NumberFunctions`. Siguen funcionando.
+- `RResEnviConsDe::showData()`: imprime con `echo`. Usar los getters de la respuesta.
+- `TxContenEv::fromDOMElement()`: nunca funcionó (busca un elemento `contentEv` que no existe y llama a un
+  método comentado). Para los eventos de una consulta de DE usar `RContDe::FromXContenDE()` y `getRContEvs()`.
+
+### Eliminado
+
+- `src/Core/Responses/RespuestaRecepcionEvento.php` y `RespuestaRecepcionLoteDE.php` (decisión Q-B6): archivos
+  de 0 bytes desde 09/2023, sin ninguna clase, así que ningún código podía usarlos.
+
+### Homologación en `sifen-test` (11/10/2026)
+
+- ✅ **FE a crédito en cuotas sin entrega inicial** y **NR asociada a esa FE**: aprobadas (0260).
+- ✅ **AF con constancia de no ser contribuyente con número y número de control** (PK-35): aprobada (0260), y la
+  consulta del CDC devuelve los dos datos tal como se emitieron. Si la cédula del vendedor es un RUC registrado, el
+  SIFEN la rechaza con 2562 "El vendedor no debe ser contribuyente".
+- ✅ **FE con los cuatro grupos sectoriales combinados** (decisión Q-B8): aprobada.
+- ✅ **FE con vehículo nuevo**, con el código de operación y medidas con decimales (decisión Q-B12): aprobada, y la
+  consulta devuelve las medidas exactas.
+- ✅ **Lote de 2 FE**: 0300 con un número de lote de 17 dígitos; `EsperarResultadoLote` consultó a los 10 minutos y
+  obtuvo 0362 con las dos FE aprobadas.
+- ✅ **Cinco eventos del receptor en un sobre** (conformidad total y parcial, disconformidad, desconocimiento y
+  notificación de recepción): cada uno respondió 0143, "la firma digital del evento debe corresponder al receptor",
+  lo esperado al firmarlos con el certificado del emisor. Los cinco pasan el esquema y la respuesta con varios
+  eventos se lee completa.
+- ❌ **FE en ANG**: 1206 con la descripción de la moneda recortada a 20 caracteres. Para las 15 monedas cuyo nombre
+  supera los 20 caracteres que admite el XSD, sigue sin verificarse qué descripción acepta el SIFEN.
+- El ambiente alternó respuestas correctas con el rechazo genérico 0160, que ahora la librería devuelve como
+  respuesta (ver "Corregido"). Las capturas anonimizadas quedan en ekuat-ia, `06-ejemplos/respuestas-ws/2026-10-11/`.
+
 ## [0.2.0] — 2026-10-09
 
 Fase A del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): correcciones

@@ -2,6 +2,9 @@
 
 namespace IonysDev\Pkuatia\Utils;
 
+/**
+ * @deprecated 0.2.1 Sin uso en la librería (PK-43): el redondeo de montos usa BCMathExtended\BC.
+ */
 class NumberFunctions
 {
 

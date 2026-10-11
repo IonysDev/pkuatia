@@ -4,6 +4,9 @@ namespace IonysDev\Pkuatia\Core\Responses;
 
 /**
  * RespuestaConsultaLoteDE
+ *
+ * @deprecated 0.2.1 Versión anterior de la respuesta de la consulta de lote, sin uso en la librería: Sifen::ConsultaLote()
+ *             devuelve RResEnviConsLoteDe, que además lee el detalle por documento (gResProcLote) (PK-43).
  */
 class RespuestaConsultaLoteDE
 {
@@ -100,12 +103,9 @@ class RespuestaConsultaLoteDE
 
   public static function FromSifenResponseObject($object): self
   {
-    echo "RespuestaConsultaLoteDE::FromSifenResponseObject" . PHP_EOL;
-
     ///is is null
     if (is_null($object)) {
       throw new \Exception("Error Processing Request: null", 1);
-      return null;
     }
 
     ///check response codes

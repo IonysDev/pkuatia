@@ -135,9 +135,9 @@ class RContRUC
    *
    * @return String
    */
-  public function getDDesEstCons(): String
+  public function getDDesEstCons(): ?String
   {
-    switch ($this->dCodEstCons) {
+    switch ($this->dCodEstCons ?? null) {
       case 'ACT':
         return "Activo";
         break;
@@ -175,9 +175,9 @@ class RContRUC
   }
 
   //get the description of dRUCFactElec
-  public function getDRUCFactElecDesc(): String
+  public function getDRUCFactElecDesc(): ?String
   {
-    switch ($this->dRUCFactElec) {
+    switch ($this->dRUCFactElec ?? null) {
       case 'S':
         return "Es facturador electrónico";
         break;
@@ -231,6 +231,11 @@ class RContRUC
     if(isset($object->dCodEstCons)){
       $res->setDCodEstCons($object->dCodEstCons);
     }
+    // ContRUC05: hasta 0.2.0 se descartaba (PK-29). Queda en la propiedad con el literal del SIFEN (p. ej. "ACTIVO",
+    // respuestas-ws/2026-10-09/01-rEnviConsRUC-response.xml); getDDesEstCons() sigue derivándolo del código.
+    if(isset($object->dDesEstCons)){
+      $res->setDDesEstCons((string) $object->dDesEstCons);
+    }
     if(isset($object->dRUCFactElec)){
       $res->setDRUCFactElec($object->dRUCFactElec);
     }
@@ -248,7 +253,6 @@ class RContRUC
   {
     if(strcmp($xml->getName(),'rContRUC') != 0) {
       throw new \Exception("Invalid XML Element: $xml->getName()");
-      return null;
     }
     $res = new RContRUC();
     if(isset($xml->dRUCCons)){
@@ -261,7 +265,7 @@ class RContRUC
       $res->setDCodEstCons((String)$xml->dCodEstCons);
     }
     if(isset($xml->dDesEstCons)){
-      $res->setDRUCFactElec((String)$xml->dDesEstCons);
+      $res->setDDesEstCons((String)$xml->dDesEstCons); // hasta 0.2.0 se guardaba en dRUCFactElec (PK-29)
     }
     if(isset($xml->dRUCFactElec)){
       $res->setDRUCFactElec((String)$xml->dRUCFactElec);

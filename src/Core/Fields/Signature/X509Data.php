@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia\Core\Fields\Signature;
 
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Clase que representa el campo X509Data de la firma

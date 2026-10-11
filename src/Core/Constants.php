@@ -9,7 +9,7 @@ namespace IonysDev\Pkuatia\Core;
 class Constants
 {  
     // Versiones
-    const PKUATIA_VERSION = "0.2.0";
+    const PKUATIA_VERSION = "0.2.1";
     const SIFEN_VERSION = "150";
     /** Zona horaria del SIFEN: las fechas internas que la librería genera por su cuenta (dFecFirma de los eventos, "hoy") se calculan en ella. Las fechas que recibe del consumidor se respetan tal cual. */
     const SIFEN_TIMEZONE = "America/Asuncion";
@@ -82,6 +82,11 @@ class Constants
     // Valor Máximo del DID
     public const MAX_DID = 999999999999999;
     public const MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE = 50;
+    // Tamaño máximo del mensaje de entrada del WS recibe-lote: "no debe superar 1000 KB" (guía de mejores prácticas de
+    // envío de la DNIT, §4 motivo e). Se toma la lectura más estricta, 1 000 000 bytes, para el ZIP en Base64 más el sobre.
+    public const MAX_BYTES_MENSAJE_LOTE = 1000000;
+    // Espera mínima antes de la primera consulta de un lote y entre consultas: 10 minutos (guía, §3.4).
+    public const ESPERA_MINIMA_CONSULTA_LOTE_SEG = 600;
 
     // Cantidad máxima de eventos (rGesEve) por transmisión a siRecepEvento (Evento_v150.xsd)
     public const MAX_EVENTOS_POR_TRANSMISION = 15;

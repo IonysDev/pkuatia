@@ -1,0 +1,83 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 272,
+            "resp_len": 541,
+            "ts": "2026-10-09T17:04:23-03:00"
+        },
+        {
+            "op": "rEnviConsDe-previo",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl",
+            "action": "",
+            "ms": 271,
+            "resp_len": 413,
+            "ts": "2026-10-09T17:04:34-03:00"
+        },
+        {
+            "op": "rEnviDe",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 633,
+            "resp_len": 645,
+            "ts": "2026-10-09T17:04:44-03:00"
+        },
+        {
+            "op": "rEnviEventoDe",
+            "location": "https://sifen-test.set.gov.py/de/ws/eventos/evento.wsdl",
+            "action": "",
+            "ms": 463,
+            "resp_len": 550,
+            "ts": "2026-10-09T17:04:56-03:00"
+        },
+        {
+            "op": "rEnviConsDe",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl",
+            "action": "",
+            "ms": 293,
+            "resp_len": 11014,
+            "ts": "2026-10-09T17:05:06-03:00"
+        }
+    ],
+    "resumen": {
+        "canario": {
+            "dCodRes": "502",
+            "dMsgRes": "RUC encontrado"
+        },
+        "consultarDE_previo": {
+            "dCodRes": 420,
+            "dMsgRes": "Documento No Existe en SIFEN o ha sido Rechazado"
+        },
+        "fe": {
+            "numDoc": 113,
+            "cdc": "01800000005001001000011322026100915495718099"
+        },
+        "enviarDE": {
+            "dEstRes": "Aprobado",
+            "dProtAut": "50219661",
+            "dFecProc": "2026-10-09T17:07:15-03:00",
+            "gResProc": [
+                "0260 Autorización del DE satisfactoria"
+            ]
+        },
+        "cancelarDE": {
+            "dFecProc": "2026-10-09T17:04:57-03:00",
+            "eventos": [
+                {
+                    "dEstRes": "Rechazado",
+                    "gResProc": [
+                        "4009 TEST - Plazo de solicitud de cancelación de una FE extemporáneo"
+                    ]
+                }
+            ]
+        },
+        "consultarDE": {
+            "dCodRes": 422,
+            "dMsgRes": "CDC encontrado",
+            "xContenDE_len": 9438,
+            "xContEv_con_contenido": true
+        }
+    }
+}

@@ -218,28 +218,57 @@ if ((int) $respuesta->getDCodRes() === RResEnviConsRUC::COD_RES_RUC_FOUND) {
 }
 ```
 
-### Consultar un Documento Electrónico
+### Consultar y deserializar un Documento Electrónico
+
+`ConsultarDE` devuelve el DE aprobado, su protocolo de autorización y los eventos que tenga registrados,
+ya convertidos a objetos:
 
 ```php
+use IonysDev\Pkuatia\Sifen;
+
 // CDC de 44 dígitos del DE ya autorizado
 $cdc = '01800000005001001000000122026010100000000000001'; // placeholder
 $respuesta = Sifen::ConsultarDE($cdc);
 
-echo $respuesta->getDMsgRes();
+if ($respuesta->getDCodRes() === 422) { // 0422: existe y está aprobado; 0420: no existe o no está aprobado
+    $contenido = $respuesta->getRContDe();
+    $de = $contenido->getRDe()->getDE(); // el DE completo, como objetos
+    echo $de->getGDatGralOpe()->getGEmis()->getDNomEmi() . ', protocolo ' . $contenido->getDProtAut() . "\n";
+
+    // Cancelación, conformidad y demás eventos registrados sobre el DE, con la respuesta del SIFEN a cada uno
+    foreach ($contenido->getRContEvs() as $evento) {
+        echo $evento->getRResEnviEventoDe()->getGResProcEVe()[0]->getDEstRes() . "\n";
+    }
+} else {
+    echo $respuesta->getDCodRes() . ': ' . $respuesta->getDMsgRes() . "\n";
+}
+
+// La respuesta tal como llegó, para guardarla o auditarla, también cuando el parseo falla
+$xmlCrudo = Sifen::GetLastResponse();
+```
+
+Un `rDE` firmado y guardado como XML se puede leer y volver a escribir sin perder la firma:
+
+```php
+use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
+
+$rde = RDE::FromSimpleXMLElement(simplexml_load_string($xmlFirmado));
+$xml = $rde->toXMLString(); // el mismo rDE, con Signature y gCamFuFD; la firma sigue verificando
 ```
 
 ## 🎯 Funcionalidades
 
 | Área | Métodos principales |
 |------|---------------------|
-| Consultas | `ConsultarRUC`, `ConsultarDE`, `ConsultaLote`, `ConsultarArchivoRUC` |
+| Consultas | `ConsultarRUC`, `ConsultarDE`, `ConsultaLote`, `EsperarResultadoLote`, `ConsultarArchivoRUC` |
 | Emisión | `FirmarDE`, `EnviarDE`, `EnviarLoteDE` |
 | Eventos emisor | `CancelarDE`, `InutilizarNumeros`, `ActualizarDatosTransporte` (NR) |
 | Eventos (varios por sobre) | `RegistrarEvento` (hasta 15 eventos firmados por transmisión) |
 | Eventos receptor | `ConformarDE`, `DisconformarDE`, `DesconocerDE`, `NotificarRecepcionDE`, `NominarFE` |
 | Builders | `Factura`, `NotaDeCredito`, `NotaDeDebito`, `NotaDeRemision`, `Autofactura` |
+| Diagnóstico | `GetLastRequest`, `GetLastResponse` (el XML de la última solicitud y de la última respuesta) |
 
-Los ejemplos completos de **FE contado** y **cancelación** están en [Ejemplos](#-ejemplos). Otros
+Los ejemplos completos de **FE contado**, **cancelación** y **lote** están en [Ejemplos](#-ejemplos). Otros
 tipos de documento y eventos se documentarán en una siguiente iteración.
 
 ## 📄 Tipos de Documentos Soportados
@@ -410,6 +439,10 @@ echo "CDC: $cdc — {$resultado->dCodRes}: {$resultado->dMsgRes}\n";
 Solo podés cancelar un CDC que el SIFEN haya **autorizado** previamente. El motivo debe tener
 entre 5 y 500 caracteres.
 
+> En `sifen-test`, esperá **al menos 3 minutos** entre la aprobación del DE y la cancelación. El reloj del
+> servicio de recepción del ambiente de pruebas va adelantado, y una cancelación inmediata se rechaza con
+> 4009 ("plazo de solicitud de cancelación extemporáneo"). En producción no está verificado.
+
 ```php
 use IonysDev\Pkuatia\Sifen;
 
@@ -429,6 +462,31 @@ foreach ($respuesta->getGResProcEVe() as $evento) {
 }
 ```
 
+### Enviar un lote y esperar el resultado
+
+```php
+use IonysDev\Pkuatia\Core\Responses\RResEnviLoteDe;
+use IonysDev\Pkuatia\Sifen;
+
+// Hasta 50 rDE firmados con FirmarDE, del mismo tipo y del mismo RUC emisor, sin CDC repetidos.
+// EnviarLoteDE lo valida antes de enviar: el SIFEN rechaza esos lotes o bloquea temporalmente al RUC.
+$recepcion = Sifen::EnviarLoteDE([$xmlFirmado1, $xmlFirmado2]);
+
+if ($recepcion->getDCodRes() === RResEnviLoteDe::COD_RES_ACEPTADO) { // 0300
+    $nroLote = $recepcion->getDProtConsLoteString(); // guardarlo como texto: tiene 17 dígitos o más
+
+    // Bloquea el proceso: primera consulta a los 10 minutos y después cada 10, mientras siga en 0361
+    $resultado = Sifen::EsperarResultadoLote($nroLote);
+    foreach ($resultado->getGResProcLote() as $documento) {
+        echo $documento->getId() . ': ' . $documento->getDEstRes() . "\n"; // Aprobado, Aprobado con observación o Rechazado
+    }
+}
+```
+
+`EsperarResultadoLote` nunca consulta antes de los 10 minutos que pide la DNIT. Para no bloquear el proceso,
+acepta en `$esperar` una función propia en lugar de `sleep()`, por ejemplo para reprogramar la consulta en una
+cola, y `$onIntento` recibe cada respuesta.
+
 ### Otros scripts de referencia
 
 En `test/` hay scripts de consulta que requieren certificado y red:
@@ -447,7 +505,7 @@ En `test/` hay scripts de consulta que requieren certificado y red:
 
 3. **Credenciales del SIFEN**: El ID CSC y CSC te serán proporcionados por la DNIT durante el proceso de habilitación.
 
-4. **Límites de Lotes**: Cada lote puede contener un máximo de 50 documentos electrónicos.
+4. **Límites de Lotes**: Cada lote puede contener un máximo de 50 documentos electrónicos, todos del mismo tipo y del mismo RUC emisor y sin CDC repetidos. `EnviarLoteDE` lo valida antes de enviar.
 
 5. **Firma Digital**: La biblioteca requiere que el certificado y la clave privada estén disponibles localmente.
 

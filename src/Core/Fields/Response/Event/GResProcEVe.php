@@ -65,13 +65,14 @@ class GResProcEVe
 
 
   /**
-   * Obtiene el valor de id
+   * Obtiene el id del evento (GRSch032), o null si no viene: la copia de la respuesta dentro de xContEv no
+   * lo trae (respuestas-ws/2026-10-09/09, observación 5). Hasta 0.2.0 terminaba en Error.
    *
-   * @return string
+   * @return string|null
    */
-  public function getId(): string
+  public function getId(): ?string
   {
-    return $this->id;
+    return isset($this->id) ? (string) $this->id : null;
   }
 
   /**
@@ -85,13 +86,14 @@ class GResProcEVe
   }
 
   /**
-   * Obtiene el valor de dProtAut
+   * Obtiene el número de transacción (GRSch031, 0-1), o null si el evento no fue aprobado (4009, 0100...).
+   * Hasta 0.2.0 terminaba en Error en esos casos.
    *
-   * @return string
+   * @return string|null
    */
-  public function getDProtAut(): string
+  public function getDProtAut(): ?string
   {
-    return $this->dProtAut;
+    return isset($this->dProtAut) ? (string) $this->dProtAut : null;
   }
 
   /**
@@ -123,7 +125,6 @@ class GResProcEVe
   {
       if(strcmp($node->getName(),'gResProcEVe') != 0) {
         throw new \Exception("Invalid XML Element: $node->getName()");
-        return null;
       }
 
       $res = new GResProcEVe();

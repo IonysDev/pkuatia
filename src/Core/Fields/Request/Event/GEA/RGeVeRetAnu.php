@@ -24,6 +24,57 @@ class RGeVeRetAnu
   public DateTime $dFeEmiRet; // GERA008 - Fecha de emisión de la retención - 19 - 1-1
   public DateTime $dFecAnRet; // GERA009 - Fecha de anulación  de la retención - 19 - 1-1
 
+  // dRuc y dMonRet son obligatorios en el XSD (Evento_v150.xsd:139 y :147) aunque el MT no los lista; hasta
+  // 0.2.0 la clase no los modelaba y se perdían al consultar un DE con retenciones (PK-42). Nuevos en 0.2.1.
+  public String $dRuc;        // RUC (tRuc, Evento_v150.xsd:139); el XSD no documenta de quién es
+  public String $dMonRet;     // Monto de la retención (tMontoBase, Evento_v150.xsd:147)
+
+  /**
+   * Establece dRuc (tRuc, Evento_v150.xsd:139). Nuevo en 0.2.1 (PK-42).
+   *
+   * @param String $dRuc
+   *
+   * @return self
+   */
+  public function setDRuc(String $dRuc): self
+  {
+    $this->dRuc = $dRuc;
+    return $this;
+  }
+
+  /**
+   * Establece dMonRet, el monto de la retención (tMontoBase, decimal BCMath; Evento_v150.xsd:147). Nuevo en 0.2.1 (PK-42).
+   *
+   * @param String $dMonRet
+   *
+   * @return self
+   */
+  public function setDMonRet(String $dMonRet): self
+  {
+    $this->dMonRet = $dMonRet;
+    return $this;
+  }
+
+  /**
+   * Obtiene dRuc, o null si no se informó. Nuevo en 0.2.1 (PK-42).
+   *
+   * @return String|null
+   */
+  public function getDRuc(): ?String
+  {
+    return $this->dRuc ?? null;
+  }
+
+  /**
+   * Obtiene dMonRet, o null si no se informó. Nuevo en 0.2.1 (PK-42).
+   *
+   * @return String|null
+   */
+  public function getDMonRet(): ?String
+  {
+    return $this->dMonRet ?? null;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   //SETTERS
   ///////////////////////////////////////////////////////////////////////
@@ -244,6 +295,8 @@ class RGeVeRetAnu
   {
     $res = $doc->createElement('rGeVeRetAnu');
     $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    if (isset($this->dRuc))
+      $res->appendChild(XmlHelper::elemento($doc, 'dRuc', $this->dRuc)); // orden de trGeVeRetAnu (Evento_v150.xsd:131-150)
     $res->appendChild(XmlHelper::elemento($doc, 'dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dEstRet', $this->getDEstRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dPunExpRet', $this->getDPunExpRet()));
@@ -251,6 +304,8 @@ class RGeVeRetAnu
     $res->appendChild(XmlHelper::elemento($doc, 'dCodConRet', $this->getDCodConRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
     $res->appendChild(XmlHelper::elemento($doc, 'dFecAnRet', $this->getDFecAnRet()->format('Y-m-d\TH:i:s')));
+    if (isset($this->dMonRet))
+      $res->appendChild(XmlHelper::elemento($doc, 'dMonRet', $this->dMonRet));
 
     return $res;
   }
@@ -288,6 +343,8 @@ class RGeVeRetAnu
 
     $res = new RGeVeRetAnu();
     $res->setId($node->Id);
+    if (isset($node->dRuc))
+      $res->setDRuc((string) $node->dRuc);
     $res->setDNumTimRet(intval($node->dNumTimRet));
     $res->setDEstRet($node->dEstRet);
     $res->setDPunExpRet($node->dPunExpRet);
@@ -295,6 +352,8 @@ class RGeVeRetAnu
     $res->setDCodConRet($node->dCodConRet);
     $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFeEmiRet)));
     $res->setDFecAnRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFecAnRet)));
+    if (isset($node->dMonRet))
+      $res->setDMonRet((string) $node->dMonRet);
 
     return $res;
   }

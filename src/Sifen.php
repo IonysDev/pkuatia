@@ -53,7 +53,7 @@ use ZipArchive;
 
 class Sifen
 {
-  private static SoapClient $client;
+  private static ?SoapClient $client = null; // último cliente usado: fuente de GetLastRequest()/GetLastResponse()
   private static Config $config;
   private static $options;
   /** @var callable(string, array): SoapClient|null Factoría de SoapClient para pruebas (null = comportamiento por defecto). */
@@ -114,6 +114,12 @@ class Sifen
       'cache_wsdl' => $config->wsdlCacheEnabled ? WSDL_CACHE_DISK : WSDL_CACHE_NONE,
       'stream_context' => $sslContext,
     ];
+    // Opcionales (PK-31, 0.2.1): sin configurar no se agregan y rige el comportamiento de PHP, como hasta 0.2.0.
+    if ($config->soapConnectionTimeout !== null)
+      self::$options['connection_timeout'] = $config->soapConnectionTimeout;
+    if ($config->soapUserAgent !== null)
+      self::$options['user_agent'] = $config->soapUserAgent;
+    self::$client = null;
     
     SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFormat, $config->certificateFilePath);
   }
@@ -132,8 +138,35 @@ class Sifen
   /**
    * @return SoapClient
    */
+  /**
+   * XML de la última solicitud SOAP enviada al SIFEN, o null si todavía no hubo ninguna desde Init().
+   * Útil para auditar y para diagnosticar un rechazo. Nuevo en 0.2.1 (PK-31).
+   *
+   * @return String|null
+   */
+  public static function GetLastRequest(): ?String
+  {
+    return self::$client?->__getLastRequest();
+  }
+
+  /**
+   * XML crudo de la última respuesta del SIFEN, o null si todavía no hubo ninguna desde Init(). Sigue
+   * disponible aunque el parseo haya fallado: si una llamada lanza una excepción con un TypeError como
+   * causa, la respuesta (por ejemplo, con el dProtAut de un DE ya aprobado) se puede guardar desde aquí.
+   * Nuevo en 0.2.1 (PK-31).
+   *
+   * @return String|null
+   */
+  public static function GetLastResponse(): ?String
+  {
+    return self::$client?->__getLastResponse();
+  }
+
   private static function createSoapClient(string $wsdl): SoapClient
   {
+    // GetLastRequest() y GetLastResponse() se refieren a esta llamada: si crear el cliente falla (por ejemplo, el WSDL
+    // no responde), no queda el cliente de la llamada anterior (QA de la Fase B).
+    self::$client = null;
     if (self::$soapClientFactory !== null) {
       $client = (self::$soapClientFactory)($wsdl, self::$options);
       if (!$client instanceof SoapClient) {
@@ -154,9 +187,16 @@ class Sifen
    */
   public static function ConsultarRUC(String $ruc): RResEnviConsRUC
   {
-    self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
-    $object = self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc));
-    return RResEnviConsRUC::fromStdClassObject($object);
+    // Decisión Q-B4 (b): el SoapFault y las demás excepciones siguen llegando tal cual, como hasta 0.2.0; solo
+    // los errores de programa (\Error, p. ej. un TypeError del parseo) llegan envueltos, con la causa, y la
+    // respuesta cruda queda disponible en GetLastResponse() (PK-31).
+    try {
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
+      $object = self::RespuestaOGenerica(self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc)));
+      return RResEnviConsRUC::fromStdClassObject($object);
+    } catch (\Error $e) {
+      throw new \Exception("[Sifen] Error al procesar la respuesta de la consulta de RUC: " . $e->getMessage(), 0, $e);
+    }
   }
 
   /**
@@ -173,10 +213,10 @@ class Sifen
   {
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_ARCHIVO_RUC . "?wsdl");
-      $object = self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador));
+      $object = self::RespuestaOGenerica(self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador)));
       return RResEnviConsArchivoRUC::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al consultar el archivo de RUC en el SIFEN: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al consultar el archivo de RUC en el SIFEN: " . $e->getMessage(), 0, $e);
     }
   }
 
@@ -189,9 +229,14 @@ class Sifen
    */
   public static function ConsultarDE(String $cdc): RResEnviConsDe
   {
-    self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl");
-    $object = self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc));
-    return RResEnviConsDe::FromSifenResponseObject($object);
+    // Decisión Q-B4 (b): como en ConsultarRUC, solo se envuelven los \Error (PK-31).
+    try {
+      self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl");
+      $object = self::RespuestaOGenerica(self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc)));
+      return RResEnviConsDe::FromSifenResponseObject($object);
+    } catch (\Error $e) {
+      throw new \Exception("[Sifen] Error al procesar la respuesta de la consulta del documento electrónico: " . $e->getMessage(), 0, $e);
+    }
   }
 
   /**
@@ -268,8 +313,10 @@ class Sifen
       $rEnviDe = new REnviDe(self::GetDId(), new SoapVar('<ns1:xDE>' . $rdeXML . '</ns1:xDE>', XSD_ANYXML));
       $object = self::$client->rEnviDe($rEnviDe);
       return RRetEnviDe::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al enviar el documento electrónico al SIFEN: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      // Decisión Q-B4: \Throwable para que un TypeError del parseo también llegue como la excepción del
+      // facade; la causa queda en getPrevious() (antes se perdía el SoapFault) y la respuesta cruda en GetLastResponse() (PK-31).
+      throw new \Exception("[Sifen] Error al enviar el documento electrónico al SIFEN: " . $e->getMessage(), 0, $e);
     }
   }
 
@@ -292,19 +339,36 @@ class Sifen
     if (count($lote) > Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE)
       throw new \Exception("[Sifen] El lote no puede contener más de " . Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE . " documentos electrónicos.");
 
-    // Conforma el contenedor rLoteDE validando que todos los DE sean del mismo tipo (C002),
-    // ya que el SIFEN rechaza los lotes con tipos de documento mixtos.
+    // Conforma el contenedor rLoteDE validando, antes de la red, lo que el SIFEN rechaza (0301) o castiga con un
+    // bloqueo temporal de 10 a 60 minutos de la recepción del RUC emisor (guía de mejores prácticas de envío de la
+    // DNIT, §4 y §5): tipos de documento (C002) o RUC emisores distintos, CDC repetido y documentos sin CDC, sin tipo
+    // o sin RUC emisor, que el SIFEN trata como contenido inválido (PK-41, 0.2.1).
     $tipoLote = null;
+    $rucLote = null;
+    $cdcs = [];
     $rLotDe = '<rLoteDE>';
-    foreach ($lote as $rde) {
+    foreach (array_values($lote) as $i => $rde) {
+      $n = $i + 1;
       if (!is_string($rde))
         throw new \Exception("[Sifen] El lote debe contener documentos electrónicos en formato de cadena XML.");
-      if (preg_match('/<iTiDE>\s*(\d+)\s*<\/iTiDE>/', $rde, $matches) === 1) {
-        if (is_null($tipoLote))
-          $tipoLote = $matches[1];
-        else if (strcmp($tipoLote, $matches[1]) != 0)
-          throw new \Exception("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo tipo (C002). Se encontraron documentos de tipo " . $tipoLote . " y tipo " . $matches[1] . ".");
-      }
+      if (preg_match('/<(?:[\w.-]+:)?DE\s[^>]*?\bId\s*=\s*(["\'])([^"\']*)\1/', $rde, $matches) !== 1)
+        throw new \Exception("[Sifen] El documento $n del lote no tiene el CDC (atributo Id de DE). Enviar documentos firmados y completos: el SIFEN bloquea temporalmente la recepción del RUC emisor ante un lote con contenido inválido.");
+      $cdc = $matches[2];
+      if (isset($cdcs[$cdc]))
+        throw new \Exception("[Sifen] El CDC $cdc está repetido en el lote (documentos " . $cdcs[$cdc] . " y $n). El SIFEN bloquea la recepción del RUC emisor de 10 a 60 minutos ante un CDC repetido.");
+      $cdcs[$cdc] = $n;
+      if (preg_match('/<(?:[\w.-]+:)?iTiDE>\s*(\d+)\s*<\/(?:[\w.-]+:)?iTiDE>/', $rde, $matches) !== 1)
+        throw new \Exception("[Sifen] El documento $n del lote ($cdc) no tiene el tipo de documento (iTiDE).");
+      if (is_null($tipoLote))
+        $tipoLote = $matches[1];
+      else if (strcmp($tipoLote, $matches[1]) != 0)
+        throw new \Exception("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo tipo (C002). Se encontraron documentos de tipo " . $tipoLote . " y tipo " . $matches[1] . ".");
+      if (preg_match('/<(?:[\w.-]+:)?dRucEm>\s*([^<]*?)\s*<\/(?:[\w.-]+:)?dRucEm>/', $rde, $matches) !== 1)
+        throw new \Exception("[Sifen] El documento $n del lote ($cdc) no tiene el RUC emisor (dRucEm).");
+      if (is_null($rucLote))
+        $rucLote = $matches[1];
+      else if (strcmp($rucLote, $matches[1]) != 0)
+        throw new \Exception("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo RUC emisor. Se encontraron los RUC " . $rucLote . " y " . $matches[1] . ".");
       $rLotDe .= $rde;
     }
     $rLotDe .= '</rLoteDE>';
@@ -324,6 +388,10 @@ class Sifen
     } finally {
       @unlink($zipFilePath);
     }
+    // El mensaje de entrada del WS no debe superar 1000 KB (guía, §4 motivo e): ZIP en Base64 más el sobre SOAP.
+    $tamanoMensaje = 4 * intdiv(strlen($zipContent) + 2, 3) + 1024;
+    if ($tamanoMensaje > Constants::MAX_BYTES_MENSAJE_LOTE)
+      throw new \Exception("[Sifen] El lote supera el tamaño máximo del mensaje del WS (1000 KB): con el ZIP en Base64 son unos " . ceil($tamanoMensaje / 1000) . " KB. Dividirlo en lotes más chicos.");
 
     // Realiza el envío del lote de documentos electrónicos al SIFEN.
     // El WSDL declara xDE como base64Binary (verificado contra sifen-test en junio/2026), por lo que
@@ -332,29 +400,77 @@ class Sifen
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl");
       $rEnvioLote = new REnvioLote(self::GetDId(), $zipContent);
-      $object = self::$client->rEnvioLote($rEnvioLote);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al enviar el lote de documentos electrónicos al SIFEN: " . $e->getMessage());
+      $object = self::RespuestaOGenerica(self::$client->rEnvioLote($rEnvioLote));
+      // El parseo entra al try desde 0.2.1 (Q-B4), como en los demás métodos.
+      return RResEnviLoteDe::FromSifenResponseObject($object);
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al enviar el lote de documentos electrónicos al SIFEN: " . $e->getMessage(), 0, $e);
     }
-
-    return RResEnviLoteDe::FromSifenResponseObject($object);
   }
 
   /**
-   * Realiza la consulta de un lote de Documentos Electrónicos en el SIFEN.
+   * Realiza la consulta de un lote de Documentos Electrónicos en el SIFEN. La guía de la DNIT pide consultar pasados
+   * 10 minutos de la recepción y luego a intervalos no menores a 10 minutos: ver EsperarResultadoLote().
    *
-   * @param  mixed $nroLote, nro del lote provisto por el SIFEN
+   * @param string|int $nroLote Número de lote (dProtConsLote) que devolvió EnviarLoteDE(). Conviene guardarlo como texto
+   *                            con RResEnviLoteDe::getDProtConsLoteString(): tiene 17 dígitos en la práctica y hasta 20.
    * @return RResEnviConsLoteDe
    */
-  public static function ConsultaLote($nroLote): RResEnviConsLoteDe
+  public static function ConsultaLote(string|int $nroLote): RResEnviConsLoteDe
   {
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl");
       $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
-      $object = self::$client->rEnviConsLoteDe($rEnviConsLoteDe);
+      $object = self::RespuestaOGenerica(self::$client->rEnviConsLoteDe($rEnviConsLoteDe));
       return RResEnviConsLoteDe::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN: " . $e->getMessage(), 0, $e);
+    }
+  }
+
+  /**
+   * Espera el resultado de un lote con la política de la DNIT (guía de mejores prácticas de envío, §3.4 y §7): la
+   * primera consulta pasados al menos 10 minutos y las siguientes a intervalos no menores a 10 minutos, mientras el lote
+   * siga en procesamiento (0361). Pensado para llamarse después de EnviarLoteDE(): nunca consulta antes del plazo, y una
+   * espera menor lanza InvalidArgumentException sin consultar. Bloquea el proceso mientras espera (PK-41, 0.2.1).
+   *
+   * @param string|int    $nroLote          Número de lote (dProtConsLote) que devolvió EnviarLoteDE().
+   * @param int           $esperaInicialSeg Segundos antes de la primera consulta (mínimo 600).
+   * @param int           $intervaloSeg     Segundos entre consultas (mínimo 600).
+   * @param int           $maxIntentos      Cantidad máxima de consultas (mínimo 1).
+   * @param callable|null $onIntento        Se llama después de cada consulta con (int $intento, RResEnviConsLoteDe $respuesta).
+   * @param callable|null $esperar          Recibe los segundos a esperar; por defecto sleep(). Permite integrarlo con un
+   *                                        planificador o probarlo sin esperar.
+   *
+   * @return RResEnviConsLoteDe La primera respuesta que no es 0361 (0362 concluido, 0360 inexistente, 0364 consulta
+   *                            extemporánea o un rechazo), o la última si tras $maxIntentos consultas sigue en 0361.
+   * @throws \InvalidArgumentException si una espera es menor a 600 segundos o $maxIntentos es menor a 1.
+   * @throws \Exception los errores de ConsultaLote().
+   */
+  public static function EsperarResultadoLote(
+    string|int $nroLote,
+    int $esperaInicialSeg = Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG,
+    int $intervaloSeg = Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG,
+    int $maxIntentos = 6,
+    ?callable $onIntento = null,
+    ?callable $esperar = null
+  ): RResEnviConsLoteDe {
+    $minimo = Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG;
+    if ($esperaInicialSeg < $minimo || $intervaloSeg < $minimo)
+      throw new \InvalidArgumentException("[Sifen] La guía de la DNIT pide consultar el lote pasados $minimo segundos de la recepción y luego a intervalos no menores a $minimo segundos; se recibió una espera inicial de $esperaInicialSeg y un intervalo de $intervaloSeg.");
+    if ($maxIntentos < 1)
+      throw new \InvalidArgumentException("[Sifen] La cantidad máxima de consultas del lote debe ser al menos 1; se recibió $maxIntentos.");
+    $esperar ??= static function (int $segundos): void {
+      sleep($segundos);
+    };
+    $esperar($esperaInicialSeg);
+    for ($intento = 1; ; $intento++) {
+      $respuesta = self::ConsultaLote($nroLote);
+      if ($onIntento !== null)
+        $onIntento($intento, $respuesta);
+      if ($respuesta->getDCodResLot() !== RResEnviConsLoteDe::COD_RES_EN_PROCESAMIENTO || $intento >= $maxIntentos)
+        return $respuesta;
+      $esperar($intervaloSeg);
     }
   }
 
@@ -389,10 +505,10 @@ class Sifen
         '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
         XSD_ANYXML
       ));
-      $object = self::$client->rEnviEventoDe($rEnviEventoDe);
+      $object = self::RespuestaOGenerica(self::$client->rEnviEventoDe($rEnviEventoDe));
       return RRetEnviEventoDe::FromSifenResponseObject($object);
-    } catch (\Exception $e) {
-      throw new \Exception("[Sifen] Error al registrar el evento: " . $e->getMessage());
+    } catch (\Throwable $e) {
+      throw new \Exception("[Sifen] Error al registrar el evento: " . $e->getMessage(), 0, $e);
     }
   }
 
@@ -430,10 +546,11 @@ class Sifen
    * @param TimbTiDE|int $tipoDE Tipo de documento electrónico del rango.
    * @param String $motivo Motivo de la inutilización (5 a 500 caracteres).
    * @param DateTime|null $fechaFirma Fecha y hora de la firma del evento (dFecFirma). Por defecto, la hora actual en America/Asuncion (Constants::SIFEN_TIMEZONE).
+   * @param String|null $serie Serie de la numeración (dSerieNum, dos letras mayúsculas, tserieNum de Evento_v150.xsd; 0-1). Nuevo en 0.2.1.
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
+  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo, ?DateTime $fechaFirma = null, ?String $serie = null): RRetEnviEventoDe
   {
 
     $tipoDEId = $tipoDE instanceof TimbTiDE ? $tipoDE->value : $tipoDE;
@@ -452,6 +569,12 @@ class Sifen
       throw new \Exception("[Sifen] El número de punto de emisión debe ser mayor a 0.");
     if($tipoDEId < 1)
       throw new \Exception("[Sifen] El tipo de documento electrónico debe ser mayor a 0.");
+    // iTiDE del evento es tiTiDEEv, de 1 a 9 (Evento_Types_v150.xsd); el 10 de TimbTiDE (boleta resimple) no aplica (PK-42).
+    if($tipoDEId > 9)
+      throw new \InvalidArgumentException("[Sifen] El tipo de documento a inutilizar debe estar entre 1 y 9 (tiTiDEEv, Evento_Types_v150.xsd); se recibió $tipoDEId.");
+    // dSerieNum de trGeVeInu es 0-1 y tserieNum es [A-Z][A-Z] (Evento_v150.xsd); hasta 0.2.0 no se podía informar (PK-42).
+    if($serie !== null && !preg_match('/^[A-Z]{2}$/', $serie))
+      throw new \InvalidArgumentException("[Sifen] La serie debe tener dos letras mayúsculas (tserieNum); se recibió '$serie'.");
     if($motivo == '')
       throw new \Exception("[Sifen] El motivo de la inutilización no puede ser vacío.");
     if(strlen($motivo) < 5)
@@ -466,6 +589,8 @@ class Sifen
     $rGeVeInu->setDNumIn(str_pad($nroDocumentoInicial, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setDNumFin(str_pad($nroDocumentoFinal, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setITiDE($tipoDEId);
+    if($serie !== null)
+      $rGeVeInu->setDSerieNum($serie);
     self::ValidarMotivoEvento($motivo, 'inutilización');
     $rGeVeInu->setMOtEve($motivo);
 
@@ -708,6 +833,61 @@ class Sifen
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
+  /**
+   * Con el WSDL, SoapClient devuelve null cuando el elemento de respuesta no es el que declara la operación. Es lo que
+   * pasa con el rechazo genérico del SIFEN (rRetEnviDe > rProtDe, p. ej. 0160 "XML Mal Formado."), que el ambiente
+   * manda también a la consulta de RUC, de DE y de lote y a los eventos: hasta B13 la librería terminaba en
+   * "Error Processing Request: null" (capturas reales del 06/10/2026, respuestas-ws/2026-10-06/meta-0704.json, y del
+   * 11/10/2026). En ese caso se decodifica el rRetEnviDe de la respuesta cruda con la misma forma que daría SoapClient,
+   * y la clase de respuesta lo lee como un rechazo con su código.
+   */
+  private static function RespuestaOGenerica(mixed $object): mixed
+  {
+    if ($object !== null || self::$client === null)
+      return $object;
+    try {
+      $crudo = self::$client->__getLastResponse();
+    } catch (\Throwable $e) {
+      return $object;
+    }
+    if (!is_string($crudo) || trim($crudo) === '')
+      return $object;
+    $doc = new \DOMDocument();
+    $previo = libxml_use_internal_errors(true);
+    $leido = $doc->loadXML($crudo);
+    libxml_clear_errors();
+    libxml_use_internal_errors($previo);
+    if (!$leido)
+      return $object;
+    $generico = $doc->getElementsByTagNameNS('*', 'rRetEnviDe')->item(0);
+    return $generico instanceof \DOMElement ? self::NodoComoObjeto($generico) : $object;
+  }
+
+  /**
+   * Decodifica un elemento como lo hace SoapClient: cada hijo es una propiedad (si se repite, un arreglo) y las hojas
+   * son texto.
+   */
+  private static function NodoComoObjeto(\DOMElement $nodo): \stdClass|String
+  {
+    $res = new \stdClass();
+    $conHijos = false;
+    foreach ($nodo->childNodes as $hijo) {
+      if (!$hijo instanceof \DOMElement)
+        continue;
+      $conHijos = true;
+      $nombre = $hijo->localName;
+      $valor = self::NodoComoObjeto($hijo);
+      if (!property_exists($res, $nombre)) {
+        $res->{$nombre} = $valor;
+      } else {
+        if (!is_array($res->{$nombre}))
+          $res->{$nombre} = [$res->{$nombre}];
+        $res->{$nombre}[] = $valor;
+      }
+    }
+    return $conHijos ? $res : $nodo->textContent;
+  }
+
   private static function RegistrarEventoUnico(GGroupTiEvt $gGroupTiEvt, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     $rEve = new REve();

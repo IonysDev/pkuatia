@@ -7,6 +7,10 @@ use SimpleXMLElement;
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote
 
+/**
+ * @deprecated 0.2.1 Duplicado de IonysDev\Pkuatia\Core\Fields\Response\Event\GResProcEVe, que es el que usan las
+ *             respuestas de eventos (RRetEnviEventoDe). Ninguna clase de la librería usa esta copia (PK-43).
+ */
 class GResProcEve
 {
   ///ID - DESC - LONG - OCURRENCIA
@@ -122,7 +126,6 @@ class GResProcEve
   {
       if(strcmp($node->getName(),'gResProcEVe') != 0) {
         throw new \Exception("Invalid XML Element: $node->getName()");
-        return null;
       }
 
       $res = new GResProcEVe();
@@ -135,14 +138,12 @@ class GResProcEve
       }
       ///array for gResProc
       $gResProc = array();
-      ///check if is an array or an object
-      if(is_array($node->gResProc)) {
-        echo "TODO CUANTICO";
-        echo "is array";
-      } else {
+      // Un gResProc por mensaje (0-100). Hasta 0.2.0 había una rama con "echo" de depuración (inalcanzable: un
+      // SimpleXMLElement nunca es un array) y se leía solo el primer mensaje (PK-43).
+      foreach ($node->gResProc as $g) {
         $aux = new GResProc();
-        $aux->setDCodRes($node->gResProc->dCodRes);
-        $aux->setDMsgRes($node->gResProc->dMsgRes);
+        $aux->setDCodRes((string) $g->dCodRes);
+        $aux->setDMsgRes((string) $g->dMsgRes);
         $gResProc[] = $aux;
       }
       ///set gResProc to res

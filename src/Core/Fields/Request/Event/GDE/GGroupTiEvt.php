@@ -45,7 +45,10 @@ class GGroupTiEvt
   public RGeVeRem      $rGeVeRem;     // GERE001 - Raíz Gestión de Eventos remisión 
 
   // Eventos de Nominación
-  public RGeVeNom      $rGeVeNom;     // GENFE001 - Raíz Gestión de Eventos de Nominación
+  // La clase es RGEveNom (como el elemento rGEveNom de Evento_v150.xsd:379). Hasta 0.2.0 se declaraba "RGeVeNom":
+  // PHP no distingue mayúsculas, pero el autoload PSR-4 en un sistema de archivos que sí distingue (Linux) no
+  // encontraba RGeVeNom.php (PK-27). La propiedad conserva su nombre.
+  public RGEveNom      $rGeVeNom;     // GENFE001 - Raíz Gestión de Eventos de Nominación
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -255,13 +258,13 @@ class GGroupTiEvt
 
   
   /**
-   * Establece el valor de rGeVeNom
+   * Establece el valor de rGeVeNom (elemento rGEveNom)
    *
-   * @param RGeVeNom $rGeVeNom
+   * @param RGEveNom $rGeVeNom
    *
    * @return self
    */
-  public function setRGeVeNom(RGeVeNom $rGeVeNom): self
+  public function setRGeVeNom(RGEveNom $rGeVeNom): self
   {
     $this->rGeVeNom = $rGeVeNom;
     return $this;
@@ -372,13 +375,36 @@ class GGroupTiEvt
   }
 
   /**
-   * Obtiene el valor de rGeDevCCFFDev
+   * Obtiene el valor de rGeDevCCFFDev.
+   *
+   * @deprecated 0.2.1 Pese a su nombre, devuelve el grupo "devuelto" (rGeDevCCFFDev), no el "cuestionado"
+   *             (PK-42). Se conserva por compatibilidad: usar getRGeDevCCFFCue() o getRGeDevCCFFDev().
    *
    * @return RGeDevCCFFDev
    */
   public function getGeDevCCFFCue(): RGeDevCCFFDev
   {
     return $this->rGeDevCCFFDev;
+  }
+
+  /**
+   * Obtiene el valor de rGeDevCCFFCue (devolución de créditos fiscales, cuestionado). Nuevo en 0.2.1 (PK-42).
+   *
+   * @return RGeDevCCFFCue|null
+   */
+  public function getRGeDevCCFFCue(): ?RGeDevCCFFCue
+  {
+    return $this->rGeDevCCFFCue ?? null;
+  }
+
+  /**
+   * Obtiene el valor de rGeDevCCFFDev (devolución de créditos fiscales, devuelto). Nuevo en 0.2.1 (PK-42).
+   *
+   * @return RGeDevCCFFDev|null
+   */
+  public function getRGeDevCCFFDev(): ?RGeDevCCFFDev
+  {
+    return $this->rGeDevCCFFDev ?? null;
   }
 
   /**
@@ -402,11 +428,11 @@ class GGroupTiEvt
   }
 
   /**
-   * Obtiene el valor de rGeVeNom
+   * Obtiene el valor de rGeVeNom (elemento rGEveNom)
    *
-   * @return RGeVeNom
+   * @return RGEveNom
    */
-  public function getRGeVeNom(): RGeVeNom
+  public function getRGeVeNom(): RGEveNom
   {
     return $this->rGeVeNom;
   }
@@ -552,7 +578,6 @@ class GGroupTiEvt
   {
       if(strcmp($node->getName(),'gGroupTiEvt') != 0) {
           throw new \Exception("Invalid XML Element:". $node->getName());
-          return null;
       }
 
       $res = new GGroupTiEvt();
@@ -629,9 +654,10 @@ class GGroupTiEvt
           $res->setRGeVeRem(RGeVeRem::FromSimpleXMLElement($node->rGeVeRem));
       }
 
-      if(isset($node->rGeVeNom))
+      // El elemento es rGEveNom (Evento_v150.xsd:379); hasta 0.2.0 se buscaba rGeVeNom y la nominación nunca se leía (PK-27).
+      if(isset($node->rGEveNom))
       {
-          $res->setRGeVeNom(RGeVeNom::FromSimpleXMLElement($node->rGeVeNom));
+          $res->setRGeVeNom(RGEveNom::FromSimpleXMLElement($node->rGEveNom));
       }
 
       return $res;

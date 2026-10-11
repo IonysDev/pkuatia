@@ -6,6 +6,7 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use SimpleXMLElement;
 
 /**
  * E820 Grupo de datos adicionales de uso comercial PADRE E790
@@ -19,6 +20,9 @@ class GGrupAdi
   public ?String $dContrato; //E825 Número de contrato
   public ?String $dSalAnt;   //E826 Saldo anterior
   public ?String $dCodConDncp; //E827 Código de contratación de la DNCP
+
+  /** @var list<DateTime> Ocurrencias de dVencPag después de la primera: hasta 3 en total (tgGrupAdi, DE_v150.xsd:829; Q-B9). */
+  private array $dVencPagAdicionales = [];
 
   /////////////////////////////////////////////
   //setters
@@ -80,6 +84,7 @@ class GGrupAdi
   public function setDVencPag(?DateTime $dVencPag): self
   {
     $this->dVencPag = $dVencPag;
+    $this->dVencPagAdicionales = []; // set reemplaza todas las ocurrencias, como hasta 0.2.0 (Q-B9)
 
     return $this;
   }
@@ -138,9 +143,9 @@ class GGrupAdi
    *
    * @return String
    */
-  public function getDCiclo(): String
+  public function getDCiclo(): ?String
   {
-    return $this->dCiclo;
+    return $this->dCiclo ?? null;
   }
 
   /**
@@ -174,13 +179,45 @@ class GGrupAdi
   }
 
   /**
+   * Agrega una fecha de vencimiento de pago: dVencPag admite hasta 3 ocurrencias (tgGrupAdi,
+   * DE_v150.xsd:829). Si no hay ninguna, equivale a setDVencPag(). Nuevo en 0.2.1 (Q-B9).
+   *
+   * @param DateTime $dVencPag
+   *
+   * @throws \InvalidArgumentException Si ya hay 3 fechas.
+   *
+   * @return self
+   */
+  public function addDVencPag(DateTime $dVencPag): self
+  {
+    if (!isset($this->dVencPag)) {
+      $this->dVencPag = $dVencPag;
+      return $this;
+    }
+    if (1 + count($this->dVencPagAdicionales) >= 3)
+      throw new \InvalidArgumentException('[GGrupAdi] dVencPag admite como máximo 3 ocurrencias (tgGrupAdi, DE_v150.xsd:829).');
+    $this->dVencPagAdicionales[] = $dVencPag;
+    return $this;
+  }
+
+  /**
+   * Todas las fechas de vencimiento de pago, en orden (la primera es la de getDVencPag()). Nuevo en 0.2.1 (Q-B9).
+   *
+   * @return list<DateTime>
+   */
+  public function getDVencPags(): array
+  {
+    return array_merge(isset($this->dVencPag) ? [$this->dVencPag] : [], $this->dVencPagAdicionales);
+  }
+
+  /**
    * Obtiene el valor de dContrato
    *
    * @return String
    */
-  public function getDContrato(): String
+  public function getDContrato(): ?String
   {
-    return $this->dContrato;
+    return $this->dContrato ?? null;
   }
 
   /**
@@ -224,8 +261,8 @@ class GGrupAdi
       $res->appendChild(XmlHelper::elemento($doc, 'dFecIniC', $this->dFecIniC->format('Y-m-d')));
     if (isset($this->dFecFinC))
       $res->appendChild(XmlHelper::elemento($doc, 'dFecFinC', $this->dFecFinC->format('Y-m-d')));
-    if (isset($this->dVencPag))
-      $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $this->dVencPag->format('Y-m-d')));
+    foreach ($this->getDVencPags() as $vencimiento) // hasta 3 ocurrencias (DE_v150.xsd:829; Q-B9)
+      $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $vencimiento->format('Y-m-d')));
     if (isset($this->dContrato))
       $res->appendChild(XmlHelper::elemento($doc, 'dContrato', $this->dContrato));
     if (isset($this->dSalAnt))
@@ -243,43 +280,79 @@ class GGrupAdi
    */
   public static function FromSifenResponseObject($object):self
   {
+    // Hasta 0.2.0 se buscaba "ciclo" (el elemento es dCiclo) y las fechas llegaban como texto a setters
+    // DateTime: TypeError en cuanto había una fecha (PK-25).
     $res = new GGrupAdi();
-
-    if(isset($object->ciclo))
+    foreach(get_object_vars($object) as $campo => $valor)
     {
-      $res->setDCiclo($object->ciclo);
+      // Los elementos repetidos (dVencPag, hasta 3) llegan como arreglo (Q-B9).
+      foreach((is_array($valor) ? $valor : [$valor]) as $unValor)
+      {
+        if(is_scalar($unValor))
+          self::asignar($res, $campo, (string) $unValor);
+      }
     }
-
-    if(isset($object->dFecIniC))
-    {
-      $res->setDFecIniC($object->dFecIniC);
-    }
-
-    if(isset($object->dFecFinC))
-    {
-      $res->setDFecFinC($object->dFecFinC);
-    }
-
-    if(isset($object->dVencPag))
-    {
-      $res->setDVencPag($object->dVencPag);
-    }
-
-    if(isset($object->dContrato))
-    {
-      $res->setDContrato($object->dContrato);
-    }
-
-    if(isset($object->dSalAnt))
-    {
-      $res->setDSalAnt($object->dSalAnt);
-    }
-
-    if(isset($object->dCodConDncp))
-    {
-      $res->setdCodConDncp($object->dCodConDncp);
-    }
-
     return $res;
+  }
+
+  /**
+   * Instancia un objeto GGrupAdi a partir de un DOMElement (E820, tgGrupAdi, DE_v150.xsd:811-846; todos los
+   * campos son opcionales). No existía hasta 0.2.0 y GCamEsp::FromDOMElement fallaba con Error (PK-25).
+   *
+   * @param DOMElement $node Nodo gGrupAdi.
+   *
+   * @return self
+   */
+  public static function FromDOMElement(DOMElement $node): self
+  {
+    if (strcmp($node->localName, 'gGrupAdi') != 0)
+      throw new \InvalidArgumentException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->localName);
+    $res = new GGrupAdi();
+    foreach ($node->childNodes as $hijo) {
+      if ($hijo instanceof DOMElement)
+        self::asignar($res, $hijo->localName, $hijo->nodeValue);
+    }
+    return $res;
+  }
+
+  /**
+   * Instancia un objeto GGrupAdi a partir de un SimpleXMLElement. No existía hasta 0.2.0 y
+   * GCamEsp::FromSimpleXMLElement fallaba con Error (PK-25).
+   *
+   * @param SimpleXMLElement $node Nodo gGrupAdi.
+   *
+   * @return self
+   */
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+  {
+    if (strcmp($node->getName(), 'gGrupAdi') != 0)
+      throw new \InvalidArgumentException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->getName());
+    $res = new GGrupAdi();
+    foreach ($node->children() as $hijo)
+      self::asignar($res, $hijo->getName(), (string) $hijo);
+    return $res;
+  }
+
+  private static function asignar(GGrupAdi $res, string $campo, string $valor): void
+  {
+    match ($campo) {
+      'dCiclo' => $res->setDCiclo($valor),
+      'dFecIniC' => $res->setDFecIniC(self::fecha($valor, $campo)),
+      'dFecFinC' => $res->setDFecFinC(self::fecha($valor, $campo)),
+      'dVencPag' => $res->addDVencPag(self::fecha($valor, $campo)),
+      'dContrato' => $res->setDContrato($valor),
+      'dSalAnt' => $res->setDSalAnt($valor),
+      'dCodConDncp' => $res->setdCodConDncp($valor),
+      default => null,
+    };
+  }
+
+  /** tFecAAAAMMDDguion (AAAA-MM-DD), con la hora en cero para que la ida y vuelta sea exacta. */
+  private static function fecha(string $valor, string $campo): DateTime
+  {
+    $fecha = DateTime::createFromFormat('!Y-m-d', trim($valor));
+    if ($fecha === false)
+      throw new \InvalidArgumentException("[GGrupAdi] $campo debe tener el formato AAAA-MM-DD (tFecAAAAMMDDguion): '$valor'");
+    return $fecha;
   }
 }

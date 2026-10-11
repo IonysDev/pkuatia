@@ -265,14 +265,20 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Establece el valor de dNumCons
+   * Establece el valor de dNumCons (H016), el número de la constancia: entero positivo de hasta 11 dígitos. Al emitirse
+   * se completa con ceros a la izquierda hasta 11 (xs:positiveInteger con patrón [0-9]{11}, tgCamDEAsoc en
+   * DE_v150.xsd), así que un número que empieza con cero se puede pasar como entero.
    *
    * @param int $dNumCons
    *
    * @return self
+   *
+   * @throws \InvalidArgumentException si no es positivo o tiene más de 11 dígitos (desde 0.2.1; PK-35, Q-B11).
    */
   public function setDNumCons(int $dNumCons): self
   {
+    if ($dNumCons < 1 || $dNumCons > 99999999999)
+      throw new \InvalidArgumentException("[GCamDEAsoc] El número de constancia (dNumCons, H016) debe ser un entero positivo de hasta 11 dígitos; se recibió $dNumCons.");
     $this->dNumCons = $dNumCons;
 
     return $this;
@@ -280,14 +286,19 @@ class GCamDEAsoc extends BaseSifenField
 
 
   /**
-   * Establece el valor de dNumControl
+   * Establece el valor de dNumControl (H017), el número de control de la constancia: 8 caracteres entre letras, números
+   * y guion (patrón [0-9A-Za-z\-]{8}, tgCamDEAsoc en DE_v150.xsd). Se emite tal como se carga.
    *
    * @param String $dNumControl
    *
    * @return self
+   *
+   * @throws \InvalidArgumentException si no cumple el patrón del XSD (desde 0.2.1; PK-35, Q-B11).
    */
   public function setDNumControl(String $dNumControl): self
   {
+    if (preg_match('/^[0-9A-Za-z\-]{8}$/D', $dNumControl) !== 1)
+      throw new \InvalidArgumentException("[GCamDEAsoc] El número de control de la constancia (dNumControl, H017) debe tener 8 caracteres entre letras, números y guion; se recibió '$dNumControl'.");
     $this->dNumControl = $dNumControl;
 
     return $this;
@@ -727,10 +738,14 @@ class GCamDEAsoc extends BaseSifenField
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipCons', $this->getDDesTipCons()));
     }
 
-    if ($this->iTipDocAso == 3 && $this->iTipCons == 2) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumCons', $this->getDNumCons()));
+    // H016/H017: obligatorios con la constancia de microproductores (H014 = 2) y opcionales con la de no ser
+    // contribuyente (H014 = 1), que también trae número y control en el formulario de la DNIT. Hasta 0.2.0 solo se
+    // emitían con H014 = 2 y con la de no ser contribuyente se perdían (PK-35, decisión Q-B11). El número va con 11
+    // dígitos (patrón [0-9]{11}).
+    if ($this->iTipDocAso == 3 && ($this->iTipCons == 2 || isset($this->dNumCons)))
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumCons', str_pad((string) $this->getDNumCons(), 11, '0', STR_PAD_LEFT)));
+    if ($this->iTipDocAso == 3 && ($this->iTipCons == 2 || isset($this->dNumControl)))
       $res->appendChild(XmlHelper::elemento($doc, 'dNumControl', $this->getDNumControl()));
-    }
 
     if(isset($this->dRucFus))
       $res->appendChild(XmlHelper::elemento($doc, 'dRucFus', $this->getDRucFus()));

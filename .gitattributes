@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Capturas reales del SIFEN usadas como fixtures: se guardan byte a byte, sin conversión de fin de línea.
+tests/Resources/sifen/** -text

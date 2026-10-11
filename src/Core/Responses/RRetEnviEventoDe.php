@@ -3,6 +3,8 @@
 namespace IonysDev\Pkuatia\Core\Responses;
 
 use IonysDev\Pkuatia\Core\Fields\Response\Event\GResProcEVe;
+use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use IonysDev\Pkuatia\Helpers\FechaHelper;
 
 use DateTime;
 use SimpleXMLElement;
@@ -89,10 +91,20 @@ class RRetEnviEventoDe
   {
     if (is_null($object)) {
       throw new \Exception("Error Processing Request: null", 1);
-      return null;
     }
     $res = new RRetEnviEventoDe();
-    $res->setDFecProc(DateTime::createFromFormat(DateTime::ATOM, $object->dFecProc));
+    // Rechazo genérico: el SIFEN responde con el sobre rRetEnviDe > rProtDe (capturado para recepción y
+    // consulta de RUC, respuestas-ws/2026-10-06; para eventos [PENDIENTE DE VERIFICACIÓN]). Se expone como
+    // un gResProcEVe con el estado y los mensajes, sin id.
+    if (isset($object->rProtDe)) {
+      $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+      if (isset($prot->dFecProc))
+        $res->setDFecProc($prot->getDFecProc());
+      $res->seGResProcEVe([(new GResProcEVe())->setDEstRes($prot->getDEstRes())->setGResProc($prot->getGResProc())]);
+      return $res;
+    }
+    // Con zona en la respuesta directa, sin zona dentro de xContEv: FechaHelper acepta los dos (PK-29).
+    $res->setDFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
     $gResProcEVe = array();
     if (isset($object->gResProcEVe)) {
       if(is_array($object->gResProcEVe)) {
@@ -113,11 +125,11 @@ class RRetEnviEventoDe
   {
     if(strcmp($node->getName(),'rRetEnviEventoDe') != 0) {
       throw new \Exception("Invalid XML Element:" . $node->getName());
-      return null;
     }
 
     $res = new RRetEnviEventoDe();
-    $res->setDFecProc(DateTime::createFromFormat("Y-m-d\TH:i:s", $node->dFecProc));
+    // Hasta 0.2.0 solo se aceptaba la fecha sin zona; la respuesta directa la trae con zona (PK-29).
+    $res->setDFecProc(FechaHelper::FromSifen($node->dFecProc, 'dFecProc'));
     ///create the array
     $gResProcEVe = array();
     if (isset($node->gResProcEVe)) {

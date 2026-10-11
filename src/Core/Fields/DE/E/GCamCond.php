@@ -210,8 +210,11 @@ class GCamCond extends BaseSifenField
     if (isset($object->iCondOpe)) {
       $res->setICondOpe(intval($object->iCondOpe));
     }
-    if (isset($object->gPaConEIni) && count($object->gPaConEIni) > 0) {
-      foreach ($object->gPaConEIni as $g) {
+    if (isset($object->gPaConEIni)) {
+      // ext/soap entrega un objeto con un solo pago y un arreglo con varios: hasta 0.2.0, count() sobre el objeto
+      // terminaba en TypeError con el caso más común, un único pago (B12).
+      $pagos = is_array($object->gPaConEIni) ? $object->gPaConEIni : [$object->gPaConEIni];
+      foreach ($pagos as $g) {
         $res->gPaConEIni[] = GPaConEIni::FromSifenResponseObject($g);
       }
     }

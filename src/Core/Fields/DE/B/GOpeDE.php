@@ -10,6 +10,7 @@ use DOMElement;
 use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo Id:     B001        
@@ -199,7 +200,8 @@ class GOpeDE extends BaseSifenField
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
         $res->setDDesTipEmi($node->getElementsByTagName('dDesTipEmi')->item(0)->nodeValue);
-        $res->setDCodSeg(intval($node->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
+        // B004 tiCodSe: 9 dígitos con ceros a la izquierda (DE_Types_v150.xsd); hasta 0.2.0 intval() perdía el cero inicial y el DE ya no coincidía con su CDC (PK-26).
+        $res->setDCodSeg(trim($node->getElementsByTagName('dCodSeg')->item(0)->nodeValue));
         if($node->getElementsByTagName('dInfoEmi')->length > 0)
             $res->setDInfoEmi($node->getElementsByTagName('dInfoEmi')->item(0)->nodeValue);
         if($node->getElementsByTagName('dInfoFisc')->length > 0)
@@ -220,7 +222,7 @@ class GOpeDE extends BaseSifenField
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->iTipEmi));
         $res->setDDesTipEmi($node->dDesTipEmi);
-        $res->setDCodSeg(intval($node->dCodSeg));
+        $res->setDCodSeg(trim((string) $node->dCodSeg)); // texto de 9 dígitos, sin intval() (PK-26)
         if(isset($node->dInfoEmi))
             $res->setDInfoEmi($node->dInfoEmi);
         if(isset($node->dInfoFisc))
@@ -240,7 +242,9 @@ class GOpeDE extends BaseSifenField
         $res = new GOpeDE();
         $res->setITipEmi(intval($object->iTipEmi));
         $res->setDDesTipEmi($object->dDesTipEmi);
-        $res->setDCodSeg(intval($object->dCodSeg));
+        // tiCodSe deriva de xs:integer: con el WSDL, SoapClient puede entregarlo como entero y perder el cero
+        // inicial; se completa a 9 dígitos, que es su longitud fija (PK-26).
+        $res->setDCodSeg(str_pad(trim((string) $object->dCodSeg), 9, '0', STR_PAD_LEFT));
         if(isset($object->dInfoEmi))
         {
             $res->setDInfoEmi($object->dInfoEmi);

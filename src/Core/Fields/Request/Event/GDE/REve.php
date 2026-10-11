@@ -180,7 +180,6 @@ class REve
     {
         if(strcmp($node->getName(),'rEve') != 0) {
             throw new \Exception("Invalid XML Element". $node->getName());
-            return null;
         }
 
         $res = new self();
