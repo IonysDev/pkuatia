@@ -322,6 +322,26 @@ Técnico.
 - `src/Core/Responses/RespuestaRecepcionEvento.php` y `RespuestaRecepcionLoteDE.php` (decisión Q-B6): archivos
   de 0 bytes desde 09/2023, sin ninguna clase, así que ningún código podía usarlos.
 
+### Homologación en `sifen-test` (11/10/2026)
+
+- ✅ **FE a crédito en cuotas sin entrega inicial** y **NR asociada a esa FE**: aprobadas (0260).
+- ✅ **AF con constancia de no ser contribuyente con número y número de control** (PK-35): aprobada (0260), y la
+  consulta del CDC devuelve los dos datos tal como se emitieron. Si la cédula del vendedor es un RUC registrado, el
+  SIFEN la rechaza con 2562 "El vendedor no debe ser contribuyente".
+- ✅ **FE con los cuatro grupos sectoriales combinados** (decisión Q-B8): aprobada.
+- ✅ **FE con vehículo nuevo**, con el código de operación y medidas con decimales (decisión Q-B12): aprobada, y la
+  consulta devuelve las medidas exactas.
+- ✅ **Lote de 2 FE**: 0300 con un número de lote de 17 dígitos; `EsperarResultadoLote` consultó a los 10 minutos y
+  obtuvo 0362 con las dos FE aprobadas.
+- ✅ **Cinco eventos del receptor en un sobre** (conformidad total y parcial, disconformidad, desconocimiento y
+  notificación de recepción): cada uno respondió 0143, "la firma digital del evento debe corresponder al receptor",
+  lo esperado al firmarlos con el certificado del emisor. Los cinco pasan el esquema y la respuesta con varios
+  eventos se lee completa.
+- ❌ **FE en ANG**: 1206 con la descripción de la moneda recortada a 20 caracteres. Para las 15 monedas cuyo nombre
+  supera los 20 caracteres que admite el XSD, sigue sin verificarse qué descripción acepta el SIFEN.
+- El ambiente alternó respuestas correctas con el rechazo genérico 0160, que ahora la librería devuelve como
+  respuesta (ver "Corregido"). Las capturas anonimizadas quedan en ekuat-ia, `06-ejemplos/respuestas-ws/2026-10-11/`.
+
 ## [0.2.0] — 2026-10-09
 
 Fase A del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): correcciones
