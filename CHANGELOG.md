@@ -16,6 +16,10 @@ y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semve
   envío cortado, el rechazo genérico de la consulta de RUC, la recepción y la consulta del lote (0300 y 0362) y la
   respuesta con cinco eventos. Los nueve rDE enviados validan contra el XSD y hacen ida y vuelta byte a byte. Solo
   cambian las pruebas: la librería no cambia.
+- Advertencia sobre las 15 monedas cuyo nombre supera los 20 caracteres que admite el XSD (deuda D-A3, sin
+  solución conocida): el SIFEN rechaza la descripción recortada con 1206 y no hay una descripción conocida que
+  acepte, así que esas monedas no se pueden usar en un DE. Está en el README (Notas importantes, punto 6) y en el
+  docblock de `MonedaMapping::GetDescription()`.
 
 ## [0.2.1] — 2026-10-11
 
