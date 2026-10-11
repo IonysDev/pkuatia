@@ -5,7 +5,7 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
-## [0.2.1] — No publicado
+## [0.2.1] — 2026-10-11
 
 Fase B del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): deserialización,
 respuestas del SIFEN y robustez (PK-25 a PK-43). **Compatible hacia atrás para el uso habitual**: no se
