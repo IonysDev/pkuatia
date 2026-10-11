@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo:        E800  
@@ -112,11 +113,12 @@ class GGrupSeg extends BaseSifenField
     {
       $res->setDCodEmpSeg((String) $node->dCodEmpSeg);
     }
-    if(isset($node->gGrupoPolSeg))
+    // Hasta 0.2.0 se buscaba "gGrupoPolSeg" (el elemento es gGrupPolSeg) y las pólizas se perdían (PK-25).
+    if(isset($node->gGrupPolSeg))
     {
-      foreach($node->gGrupoPolSeg as $gGrupoPolSeg)
+      foreach($node->gGrupPolSeg as $gGrupPolSeg)
       {
-        $res->gGrupPolSeg[] = GGrupPolSeg::FromSimpleXMLElement($gGrupoPolSeg);
+        $res->gGrupPolSeg[] = GGrupPolSeg::FromSimpleXMLElement($gGrupPolSeg);
       }
     }
     return $res;
@@ -136,17 +138,18 @@ class GGrupSeg extends BaseSifenField
     {
       $res->setDCodEmpSeg($object->dCodEmpSeg);
     }
-    if(isset($object->gGrupoPolSeg))
+    // Hasta 0.2.0 se buscaba "gGrupoPolSeg" (el elemento es gGrupPolSeg) y las pólizas se perdían (PK-25).
+    if(isset($object->gGrupPolSeg))
     {
-      if(!is_array($object->gGrupoPolSeg))
+      if(!is_array($object->gGrupPolSeg))
       {
-        $res->gGrupPolSeg[] = GGrupPolSeg::FromSifenResponseObject($object->gGrupoPolSeg);
+        $res->gGrupPolSeg[] = GGrupPolSeg::FromSifenResponseObject($object->gGrupPolSeg);
       }
-      else if(count($object->gGrupoPolSeg) > 0)
+      else if(count($object->gGrupPolSeg) > 0)
       {
-        foreach($object->gGrupoPolSeg as $gGrupoPolSeg)
+        foreach($object->gGrupPolSeg as $gGrupPolSeg)
         {
-          $res->gGrupPolSeg[] = GGrupPolSeg::FromSifenResponseObject($gGrupoPolSeg);
+          $res->gGrupPolSeg[] = GGrupPolSeg::FromSifenResponseObject($gGrupPolSeg);
         }
       }
     }

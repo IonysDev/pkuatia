@@ -20,16 +20,25 @@ class GVehNuevo extends BaseSifenField
   public ?String $dColor; // E774 Color del vehículo
   public ?int $dPotencia; ///E775 Potencia del motor (CV)
   public ?int $dCapMot; ///E776 Capacidad del motor
+  /** @deprecated 0.2.1 Parte entera del peso neto (E777 admite 4 decimales): usar getDPNetDecimal(). */
   public ?int $dPNet; ///E777 Peso Neto 
+  /** @deprecated 0.2.1 Parte entera del peso bruto (E778 admite 4 decimales): usar getDPBrutoDecimal(). */
   public ?int $dPBruto; ///E778 Peso Bruto
   public ?int $iTipCom; ///E779 Tipo de combustible
   public ?String $dDesTipCom; ///E780 Descripción del tipo de combustible
   public String $dNroMotor; ///E781 Numero de Motor
+  /** @deprecated 0.2.1 Parte entera de la capacidad de tracción (E782 admite 4 decimales): usar getDCapTraccDecimal(). */
   public ?int $dCapTracc; ///E782 Capacidad máxima de  tracción 
   public ?int $dAnoFab; ///E783 Año de fabricación
   public String $cTipVeh; ///E784 Tipo de vehículo
   public ?int $dCapac; ///E785 Capacidad máxima de pasajeros 
   public String $dCilin; ///E786  Cilindradas del motor
+
+  // Q-B12 (0.2.1): valor exacto de las medidas tMontoBase6, con sus decimales. Las propiedades enteras de arriba guardan
+  // la parte entera, como hasta 0.2.0.
+  private ?String $dPNetDecimal = null;
+  private ?String $dPBrutoDecimal = null;
+  private ?String $dCapTraccDecimal = null;
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -127,30 +136,38 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Establece el valor de dPNet
+   * Establece el valor de dPNet (E777, peso neto; tMontoBase6: hasta 10 dígitos, 4 de ellos decimales).
+   * Desde 0.2.1 acepta texto con decimales y lo emite exacto; hasta 0.2.0 solo admitía enteros (Q-B12).
    *
-   * @param int $dPNet
+   * @param int|String $dPNet
+   *
+   * @throws \InvalidArgumentException Si no es un número válido para el XSD.
    *
    * @return self
    */
-  public function setDPNet(int $dPNet): self
+  public function setDPNet(int|String $dPNet): self
   {
-    $this->dPNet = $dPNet;
+    $this->dPNetDecimal = self::monto($dPNet, 'dPNet');
+    $this->dPNet = intval($this->dPNetDecimal);
 
     return $this;
   }
 
 
   /**
-   * Establece el valor de dPBruto
+   * Establece el valor de dPBruto (E778, peso bruto; tMontoBase6: hasta 10 dígitos, 4 de ellos decimales).
+   * Desde 0.2.1 acepta texto con decimales y lo emite exacto; hasta 0.2.0 solo admitía enteros (Q-B12).
    *
-   * @param int $dPBruto
+   * @param int|String $dPBruto
+   *
+   * @throws \InvalidArgumentException Si no es un número válido para el XSD.
    *
    * @return self
    */
-  public function setDPBruto(int $dPBruto): self
+  public function setDPBruto(int|String $dPBruto): self
   {
-    $this->dPBruto = $dPBruto;
+    $this->dPBrutoDecimal = self::monto($dPBruto, 'dPBruto');
+    $this->dPBruto = intval($this->dPBrutoDecimal);
 
     return $this;
   }
@@ -201,15 +218,19 @@ class GVehNuevo extends BaseSifenField
 
 
   /**
-   * Establece el valor de dCapTracc
+   * Establece el valor de dCapTracc (E782, capacidad máxima de tracción; tMontoBase6: hasta 10 dígitos, 4 de ellos
+   * decimales). Desde 0.2.1 acepta texto con decimales y lo emite exacto; hasta 0.2.0 solo admitía enteros (Q-B12).
    *
-   * @param int $dCapTracc
+   * @param int|String $dCapTracc
+   *
+   * @throws \InvalidArgumentException Si no es un número válido para el XSD.
    *
    * @return self
    */
-  public function setDCapTracc(int $dCapTracc): self
+  public function setDCapTracc(int|String $dCapTracc): self
   {
-    $this->dCapTracc = $dCapTracc;
+    $this->dCapTraccDecimal = self::monto($dCapTracc, 'dCapTracc');
+    $this->dCapTracc = intval($this->dCapTraccDecimal);
 
     return $this;
   }
@@ -283,9 +304,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getITipOpVN(): int
+  public function getITipOpVN(): ?int
   {
-    return $this->iTipOpVN;
+    return $this->iTipOpVN ?? null;
   }
 
   /**
@@ -294,14 +315,15 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipOpVN(): String
+  public function getDDesTipOpVN(): ?String
   {
-    switch ($this->iTipOpVN) {
+    switch ($this->iTipOpVN ?? null) {
       case 1:
         return "Venta a representante";
         break;
       case 2:
-        return "Venta al consumidor final";
+        // Literal del XSD con C mayúscula (tdDesTipOpVN, DE_Types_v150.xsd:1500); hasta 0.2.0 iba con minúscula (B12).
+        return "Venta al Consumidor final";
         break;
       case 3:
         return "Venta a gobierno";
@@ -322,9 +344,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDChasis(): String
+  public function getDChasis(): ?String
   {
-    return $this->dChasis;
+    return $this->dChasis ?? null;
   }
 
   /**
@@ -332,9 +354,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDColor(): String
+  public function getDColor(): ?String
   {
-    return $this->dColor;
+    return $this->dColor ?? null;
   }
 
   /**
@@ -342,9 +364,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDPotencia(): int
+  public function getDPotencia(): ?int
   {
-    return $this->dPotencia;
+    return $this->dPotencia ?? null;
   }
 
   /**
@@ -352,29 +374,53 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDCapMot(): int
+  public function getDCapMot(): ?int
   {
-    return $this->dCapMot;
+    return $this->dCapMot ?? null;
   }
 
   /**
    * Obtiene el valor de dPNet
    *
    * @return int
+   *
+   * @deprecated 0.2.1 Trunca el peso neto (E777 admite 4 decimales): usar getDPNetDecimal().
    */
-  public function getDPNet(): int
+  public function getDPNet(): ?int
   {
-    return $this->dPNet;
+    return $this->dPNet ?? null;
+  }
+
+  /**
+   * Obtiene el peso neto (E777) exacto, con sus decimales, o null si no se informó (Q-B12, 0.2.1).
+   *
+   * @return String|null
+   */
+  public function getDPNetDecimal(): ?String
+  {
+    return isset($this->dPNet) ? self::exacto($this->dPNetDecimal, $this->dPNet) : null;
   }
 
   /**
    * Obtiene el valor de dPBruto
    *
    * @return int
+   *
+   * @deprecated 0.2.1 Trunca el peso bruto (E778 admite 4 decimales): usar getDPBrutoDecimal().
    */
-  public function getDPBruto(): int
+  public function getDPBruto(): ?int
   {
-    return $this->dPBruto;
+    return $this->dPBruto ?? null;
+  }
+
+  /**
+   * Obtiene el peso bruto (E778) exacto, con sus decimales, o null si no se informó (Q-B12, 0.2.1).
+   *
+   * @return String|null
+   */
+  public function getDPBrutoDecimal(): ?String
+  {
+    return isset($this->dPBruto) ? self::exacto($this->dPBrutoDecimal, $this->dPBruto) : null;
   }
 
   /**
@@ -382,9 +428,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getITipCom(): int
+  public function getITipCom(): ?int
   {
-    return $this->iTipCom;
+    return $this->iTipCom ?? null;
   }
 
   /**
@@ -392,9 +438,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipCom(): String
+  public function getDDesTipCom(): ?String
   {
-    switch ($this->iTipCom) {
+    switch ($this->iTipCom ?? null) {
       case 1:
         return "Gasolina";
         break;
@@ -434,10 +480,22 @@ class GVehNuevo extends BaseSifenField
    * Obtiene el valor de dCapTracc
    *
    * @return int
+   *
+   * @deprecated 0.2.1 Trunca la capacidad de tracción (E782 admite 4 decimales): usar getDCapTraccDecimal().
    */
-  public function getDCapTracc(): int
+  public function getDCapTracc(): ?int
   {
-    return $this->dCapTracc;
+    return $this->dCapTracc ?? null;
+  }
+
+  /**
+   * Obtiene la capacidad máxima de tracción (E782) exacta, con sus decimales, o null si no se informó (Q-B12, 0.2.1).
+   *
+   * @return String|null
+   */
+  public function getDCapTraccDecimal(): ?String
+  {
+    return isset($this->dCapTracc) ? self::exacto($this->dCapTraccDecimal, $this->dCapTracc) : null;
   }
 
   /**
@@ -445,9 +503,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDAnoFab(): int
+  public function getDAnoFab(): ?int
   {
-    return $this->dAnoFab;
+    return $this->dAnoFab ?? null;
   }
 
   /**
@@ -465,9 +523,9 @@ class GVehNuevo extends BaseSifenField
    *
    * @return int
    */
-  public function getDCapac(): int
+  public function getDCapac(): ?int
   {
-    return $this->dCapac;
+    return $this->dCapac ?? null;
   }
 
   /**
@@ -495,7 +553,8 @@ class GVehNuevo extends BaseSifenField
   {
     $res = $doc->createElement('gVehNuevo');
     if(isset($this->iTipOpVN)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'iTipOpVN', $this->getDDesTipOpVN()));
+      // E771 lleva el código (tiTipOpVN, DE_Types_v150.xsd:1470-1487); hasta 0.2.0 se emitía la descripción (B12).
+      $res->appendChild(XmlHelper::elemento($doc, 'iTipOpVN', $this->getITipOpVN()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipOpVN', $this->getDDesTipOpVN()));
     }
     if(isset($this->dChasis))
@@ -507,9 +566,9 @@ class GVehNuevo extends BaseSifenField
     if(isset($this->dCapMot))
       $res->appendChild(XmlHelper::elemento($doc, 'dCapMot', $this->getDCapMot()));
     if(isset($this->dPNet))
-      $res->appendChild(XmlHelper::elemento($doc, 'dPNet', $this->getDPNet()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPNet', $this->getDPNetDecimal()));
     if(isset($this->dPBruto))
-      $res->appendChild(XmlHelper::elemento($doc, 'dPBruto', $this->getDPBruto()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dPBruto', $this->getDPBrutoDecimal()));
     if(isset($this->iTipCom)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipCom', $this->getITipCom()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipCom', $this->getDDesTipCom()));
@@ -517,7 +576,7 @@ class GVehNuevo extends BaseSifenField
     if(isset($this->dNroMotor))
       $res->appendChild(XmlHelper::elemento($doc, 'dNroMotor', $this->getDNroMotor()));
     if(isset($this->dCapTracc))
-      $res->appendChild(XmlHelper::elemento($doc, 'dCapTracc', $this->getDCapTracc()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dCapTracc', $this->getDCapTraccDecimal()));
     if(isset($this->dAnoFab))
       $res->appendChild(XmlHelper::elemento($doc, 'dAnoFab', $this->getDAnoFab()));
     if(isset($this->cTipVeh))
@@ -554,9 +613,9 @@ class GVehNuevo extends BaseSifenField
         if($node->getElementsByTagName('dCapMot')->length > 0)
           $res->setDCapMot(intval(trim($node->getElementsByTagName('dCapMot')->item(0)->nodeValue)));
         if($node->getElementsByTagName('dPNet')->length > 0)
-          $res->setDPNet(intval(trim($node->getElementsByTagName('dPNet')->item(0)->nodeValue)));
+          $res->setDPNet(trim($node->getElementsByTagName('dPNet')->item(0)->nodeValue));
         if($node->getElementsByTagName('dPBruto')->length > 0)
-          $res->setDPBruto(intval(trim($node->getElementsByTagName('dPBruto')->item(0)->nodeValue)));
+          $res->setDPBruto(trim($node->getElementsByTagName('dPBruto')->item(0)->nodeValue));
         if($node->getElementsByTagName('iTipCom')->length > 0)
           $res->setITipCom(intval(trim($node->getElementsByTagName('iTipCom')->item(0)->nodeValue)));
         if($node->getElementsByTagName('dDesTipCom')->length > 0)
@@ -564,7 +623,7 @@ class GVehNuevo extends BaseSifenField
         if($node->getElementsByTagName('dNroMotor')->length > 0)
           $res->setDNroMotor(trim($node->getElementsByTagName('dNroMotor')->item(0)->nodeValue));
         if($node->getElementsByTagName('dCapTracc')->length > 0)
-          $res->setDCapTracc(intval(trim($node->getElementsByTagName('dCapTracc')->item(0)->nodeValue)));
+          $res->setDCapTracc(trim($node->getElementsByTagName('dCapTracc')->item(0)->nodeValue));
         if($node->getElementsByTagName('dAnoFab')->length > 0)
           $res->setDAnoFab(intval(trim($node->getElementsByTagName('dAnoFab')->item(0)->nodeValue)));
         if($node->getElementsByTagName('cTipVeh')->length > 0)
@@ -576,10 +635,49 @@ class GVehNuevo extends BaseSifenField
         return $res;
     }
 
+  /**
+   * Instancia un GVehNuevo a partir del objeto que entrega SoapClient. Hasta 0.2.0 lanzaba "Not implemented", y con él
+   * fallaba la lectura SOAP de cualquier ítem con vehículo nuevo (B12).
+   *
+   * @param stdClass $object Objeto respuesta del SIFEN.
+   *
+   * @return self
+   */
   public static function FromSifenResponseObject(stdClass $object): self
   {
-    throw new \Exception("Not implemented");
     $res = new self();
+    if(isset($object->iTipOpVN))
+      $res->setITipOpVN(intval($object->iTipOpVN));
+    if(isset($object->dDesTipOpVN))
+      $res->setDDesTipOpVN(strval($object->dDesTipOpVN));
+    if(isset($object->dChasis))
+      $res->setDChasis(strval($object->dChasis));
+    if(isset($object->dColor))
+      $res->setDColor(strval($object->dColor));
+    if(isset($object->dPotencia))
+      $res->setDPotencia(intval($object->dPotencia));
+    if(isset($object->dCapMot))
+      $res->setDCapMot(intval($object->dCapMot));
+    if(isset($object->dPNet))
+      $res->setDPNet(trim(strval($object->dPNet)));
+    if(isset($object->dPBruto))
+      $res->setDPBruto(trim(strval($object->dPBruto)));
+    if(isset($object->iTipCom))
+      $res->setITipCom(intval($object->iTipCom));
+    if(isset($object->dDesTipCom))
+      $res->setDDesTipCom(strval($object->dDesTipCom));
+    if(isset($object->dNroMotor))
+      $res->setDNroMotor(strval($object->dNroMotor));
+    if(isset($object->dCapTracc))
+      $res->setDCapTracc(trim(strval($object->dCapTracc)));
+    if(isset($object->dAnoFab))
+      $res->setDAnoFab(intval($object->dAnoFab));
+    if(isset($object->cTipVeh))
+      $res->setCTipVeh(strval($object->cTipVeh));
+    if(isset($object->dCapac))
+      $res->setDCapac(intval($object->dCapac));
+    if(isset($object->dCilin))
+      $res->setDCilin(strval($object->dCilin));
     return $res;
   }
 
@@ -612,10 +710,10 @@ class GVehNuevo extends BaseSifenField
       $res->setDCapMot(intval($node->dCapMot));
     }
     if (isset($node->dPNet)) {
-      $res->setDPNet(intval($node->dPNet));
+      $res->setDPNet(trim((string) $node->dPNet));
     }
     if (isset($node->dPBruto)) {
-      $res->setDPBruto(intval($node->dPBruto));
+      $res->setDPBruto(trim((string) $node->dPBruto));
     }
     if (isset($node->iTipCom)) {
       $res->setITipCom(intval($node->iTipCom));
@@ -624,7 +722,7 @@ class GVehNuevo extends BaseSifenField
       $res->setDNroMotor($node->dNroMotor);
     }
     if (isset($node->dCapTracc)) {
-      $res->setDCapTracc(intval($node->dCapTracc));
+      $res->setDCapTracc(trim((string) $node->dCapTracc));
     }
     if (isset($node->dAnoFab)) {
       $res->setDAnoFab(intval($node->dAnoFab));
@@ -639,5 +737,40 @@ class GVehNuevo extends BaseSifenField
       $res->setDCilin($node->dCilin);
     }
     return $res;
+  }
+
+  /**
+   * Valida una medida contra tMontoBase6 (xs:decimal con fractionDigits 4 y totalDigits 10, DE_Types_v150.xsd:1308-1314)
+   * y la devuelve como texto, sin redondear. Como en xs:decimal, los ceros a la izquierda y los decimales finales en
+   * cero no cuentan. Mismo criterio que GGrupSup (Q-B10): también acepta, normalizados, los textos numéricos que hasta
+   * 0.2.0 entraban por la conversión de PHP a int ("+5" y "5." como "5", ".5" como "0.5", "1e3" como "1000").
+   */
+  private static function monto(int|String $valor, String $campo): String
+  {
+    $original = trim((string) $valor);
+    $texto = $original;
+    if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
+      if (!is_numeric($texto))
+        throw new \InvalidArgumentException("[GVehNuevo] $campo debe ser un número decimal: '$original'");
+      $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
+    }
+    $signo = str_starts_with($texto, '-') ? '-' : '';
+    $texto = ltrim($texto, '+-');
+    if (str_starts_with($texto, '.'))
+      $texto = '0' . $texto;
+    if (str_ends_with($texto, '.'))
+      $texto = substr($texto, 0, -1);
+    [$enteros, $decimales] = array_pad(explode('.', $texto, 2), 2, '');
+    $enteros = ltrim($enteros, '0');
+    $decimales = rtrim($decimales, '0');
+    if (strlen($decimales) > 4 || strlen($enteros) + strlen($decimales) > 10)
+      throw new \InvalidArgumentException("[GVehNuevo] $campo admite hasta 10 dígitos, de los cuales hasta 4 decimales (tMontoBase6): '$original'");
+    return $signo . $texto;
+  }
+
+  /** Valor exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */
+  private static function exacto(?String $decimal, int $entero): String
+  {
+    return ($decimal !== null && intval($decimal) === $entero) ? $decimal : (string) $entero;
   }
 }

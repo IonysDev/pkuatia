@@ -126,11 +126,12 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de iTiOpe - Tipo de operación
+     * Establece el valor de iTiOpe - Tipo de operación.
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      *
      * @param int $iTiOpe
      *
-     * @return self
+     * @return void
      */
     public function setITiOpe(int|RecTiOpe $iTiOpe): void
     {
@@ -150,11 +151,12 @@ class RGEveNom
      */
     public function setCPaisRec(string $cPaisRec): self
     {
-        $this->cPaisRec = $cPaisRec;
-        // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec; antes quedaba vacío.
+        // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec.
         $desc = CountryMapping::getCountryDesc($cPaisRec);
-        if ($desc !== null)
-            $this->dDesPaisRe = $desc;
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+        $this->cPaisRec = $cPaisRec;
+        $this->dDesPaisRe = $desc;
         return $this;
     }
 
@@ -172,11 +174,12 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de iTiContRec - Tipo de contribuyente receptor
+     * Establece el valor de iTiContRec - Tipo de contribuyente receptor.
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      *
      * @param int $iTiContRec
      *
-     * @return self
+     * @return void
      */
     public function setITiContRec(int|EmisRecTipCont $iTiContRec): void
     {
@@ -306,18 +309,20 @@ class RGEveNom
     }
 
     /**
-     * Establece el valor de cDepRec - Código de departamento del receptor
+     * Establece el valor de cDepRec - Código de departamento del receptor.
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      *
      * @param int $cDepRec
      *
-     * @return self
+     * @return void
      */
     public function setCDepRec(int $cDepRec): void
     {
+        $desc = DepartamentoMapping::getDepName(strval($cDepRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         $this->cDepRec = $cDepRec;
-        if(!is_null($cDepRec)) {
-            $this->dDesDepRec = DepartamentoMapping::getDepName(strval($this->cDepRec));
-        }
+        $this->dDesDepRec = $desc;
     }
 
     
@@ -344,8 +349,11 @@ class RGEveNom
      */
     public function setCDisRec(int $cDisRec): self
     {
+        $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cDisRec = $cDisRec;
-        $this->dDesDisRec = PyGeoCodesMapping::getDistName(strval($this->cDisRec));
+        $this->dDesDisRec = $desc;
         return $this;
     }
 
@@ -372,10 +380,11 @@ class RGEveNom
      */
     public function setCCiuRec(int $cCiuRec): self
     {
+        $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[RGEveNom] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cCiuRec = $cCiuRec;
-        if(!is_null($cCiuRec)) {
-            $this->dDesCiuRec = PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
-        }
+        $this->dDesCiuRec = $desc;
         return $this;
     }
 
@@ -860,7 +869,6 @@ class RGEveNom
   {
     if (strcmp($node->getName(), 'rGEveNom') != 0) {
         throw new \Exception("Invalid XML Element: $node->getName()");
-        return null;
     }
 
     $res = new self();

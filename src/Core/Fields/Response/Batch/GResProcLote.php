@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response\Batch;
 
 use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
+use stdClass;
 
 /**
  * Nodo Id:     CRSch05        

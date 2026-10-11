@@ -9,6 +9,7 @@ use DOMElement;
 use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo Id:     D001
@@ -140,7 +141,6 @@ class GDatGralOpe extends BaseSifenField
     if(strcmp($node->getName(), 'gDatGralOpe') != 0)
     {
       throw new Exception("Invalid XML Element: $node->getName()");
-      return null;
     }
     $res = new GDatGralOpe();
     $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFeEmiDE));

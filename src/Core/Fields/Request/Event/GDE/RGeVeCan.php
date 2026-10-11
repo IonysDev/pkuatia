@@ -120,7 +120,6 @@ class RGeVeCan
   {
     if (strcmp($node->getName(), 'rGeVeCan') != 0) {
       throw new \Exception("Invalid XML Element:" . $node->getName());
-      return null;
     }
 
     $res = new self();

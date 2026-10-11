@@ -120,27 +120,45 @@ class GDatRec extends BaseSifenField
         return $this;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setITiOpe(int|RecTiOpe $iTiOpe): void
     {
         $this->iTiOpe = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setCPaisRec(String $cPaisRec): void
     {
+        $desc = CountryMapping::getCountryDesc($cPaisRec);
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
         $this->cPaisRec = $cPaisRec;
-        $this->dDesPaisRe = CountryMapping::getCountryDesc($cPaisRec);
+        $this->dDesPaisRe = $desc;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDDesPaisRe(String $dDesPaisRe): void
     {
         $this->dDesPaisRe = $dDesPaisRe;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setITiContRec(int|EmisRecTipCont $iTiContRec): void
     {
         $this->iTiContRec = $iTiContRec instanceof EmisRecTipCont ? $iTiContRec->value : $iTiContRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDRucRec(String $dRucRec): void
     {
         $this->dRucRec = $dRucRec;
@@ -183,57 +201,88 @@ class GDatRec extends BaseSifenField
         return $this;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNumIDRec(String $dNumIDRec): void
     {
         $this->dNumIDRec = $dNumIDRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNomRec(String $dNomRec): void
     {
         $this->dNomRec = $dNomRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNomFanRec(String $dNomFanRec): void
     {
         $this->dNomFanRec = $dNomFanRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDDirRec(String $dDirRec): void
     {
         $this->dDirRec = $dDirRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDTelRec(String $dTelRec): void
     {
         $this->dTelRec = $dTelRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDCelRec(String $dCelRec): void
     {
         $this->dCelRec = $dCelRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDEmailRec(String $dEmailRec): void
     {
         $this->dEmailRec = $dEmailRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDCodCliente(String $dCodCliente): void
     {
         $this->dCodCliente = $dCodCliente;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setDNumCasRec(int $dNumCasRec): void
     {
         $this->dNumCasRec = $dNumCasRec;
     }
 
+    /**
+     * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
+     */
     public function setCDepRec(int $cDepRec): void
     {
+        $desc = DepartamentoMapping::getDepName(strval($cDepRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         $this->cDepRec = $cDepRec;
-        if(!is_null($cDepRec)) {
-            $this->dDesDepRec = DepartamentoMapping::getDepName(strval($this->cDepRec));
-        }
+        $this->dDesDepRec = $desc;
     }
 
     public function setDDesDepRec(String $dDesDepRec): self
@@ -244,10 +293,11 @@ class GDatRec extends BaseSifenField
 
     public function setCDisRec(int $cDisRec): self
     {
+        $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cDisRec = $cDisRec;
-        if(!is_null($cDisRec)) {
-            $this->dDesDisRec = PyGeoCodesMapping::getDistName(strval($this->cDisRec));
-        }
+        $this->dDesDisRec = $desc;
         return $this;
     }
 
@@ -259,10 +309,11 @@ class GDatRec extends BaseSifenField
 
     public function setCCiuRec(int $cCiuRec): self
     {
+        $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
+        if ($desc === null)
+          throw new \InvalidArgumentException("[GDatRec] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cCiuRec = $cCiuRec;
-        if(!is_null($cCiuRec)) {
-            $this->dDesCiuRec = PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
-        }
+        $this->dDesCiuRec = $desc;
         return $this;
     }
 
@@ -562,54 +613,11 @@ class GDatRec extends BaseSifenField
         if(strcmp($node->getName(), 'gDatRec') != 0){
             throw new \InvalidArgumentException("El nombre del elemento no es gDatRec");
         }
-
-        $res = new GDatRec();
-        $res->setINatRec(intval($node->iNatRec));
-        $res->setITiOpe(intval($node->iTiOpe));
-        $res->setCPaisRec(strval($node->cPaisRec));
-        $res->setDDesPaisRe(strval($node->dDesPaisRe));
-        if(isset($node->iTiContRec))
-            $res->setITiContRec(intval($node->iTiContRec));
-        if(isset($node->dRucRec))
-            $res->setDRucRec(strval($node->dRucRec));
-        if(isset($node->dDVRec))
-            $res->setDDVRec(intval($node->dDVRec));
-        if(isset($node->iTipIDRec))
-            $res->setITipIDRec(intval($node->iTipIDRec));
-        if(isset($node->dNumIDRec))
-            $res->setDNumIDRec(intval($node->dNumIDRec));
-        if(isset($node->dDTipIDRec))
-            $res->setDDTipIDRec(strval($node->dDTipIDRec));
-        if(isset($node->dNumIDRec))
-            $res->setDNomFanRec(strval($node->dNumIDRec));
-        $res->setDNomRec(strval($node->dNomRec));
-        if(isset($node->dNomFanRec))
-            $res->setDNomFanRec(strval($node->dNomFanRec));
-        if(isset($node->dDirRec))
-            $res->setDDirRec(strval($node->dDirRec));
-        if(isset($node->getDNumCasRec))
-            $res->setDNumCasRec(intval($node->getDNumCasRec));
-        if(isset($node->cDepRec))
-            $res->setCDepRec(intval($node->cDepRec));
-        if(isset($node->cCiuRec))
-            $res->setDDesDepRec(strval($node->dDesDepRec));
-        if(isset($node->cDisRec))
-            $res->setCDisRec(intval($node->cDisRec));
-        if(isset($node->dDesDisRec))
-            $res->setDDesDisRec(strval($node->dDesDisRec));
-        if(isset($node->cCiuRec))
-            $res->setCCiuRec(intval($node->cCiuRec));
-        if(isset($node->dDesCiuRec))
-            $res->setDDesCiuRec(strval($node->dDesCiuRec));
-        if(isset($node->dTelRec))
-            $res->setDTelRec(strval($node->dTelRec));
-        if(isset($node->dCelRec))
-            $res->setDCelRec(strval($node->dCelRec));
-        if(isset($node->dEmailRec))
-            $res->setDEmailRec(strval($node->dEmailRec));
-        if(isset($node->dCodCliente))
-            $res->setDCodCliente(strval($node->dCodCliente));
-        return $res;
+        // Hasta 0.2.0 esta vía tenía su propia lectura con cuatro defectos: intval() sobre dNumIDRec (tdNumDocId es
+        // alfanumérico, un pasaporte quedaba en 0; PK-26), copia de dNumIDRec en dNomFanRec (PK-36), dNumCasRec
+        // buscado como "getDNumCasRec" y dDesDepRec condicionado a cCiuRec. Ahora delega en FromDOMElement sobre
+        // el mismo nodo para que las dos vías lean exactamente igual.
+        return self::FromDOMElement(dom_import_simplexml($node));
     }
 
     /**

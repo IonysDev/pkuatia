@@ -14,6 +14,7 @@ use DOMElement;
 use InvalidArgumentException;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use stdClass;
 
 /**
  * Nodo Id:     D100        
@@ -129,9 +130,10 @@ class GEmis extends BaseSifenField
      */
     public function setCDepEmi(int $cDepEmi): self
     {
-        $this->dDesDepEmi = DepartamentoMapping::getDepName(strval($cDepEmi));
-        if(is_null($this->dDesDepEmi))
-            throw new InvalidArgumentException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
+        $desc = DepartamentoMapping::getDepName(strval($cDepEmi));
+        if ($desc === null)
+          throw new InvalidArgumentException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
+        $this->dDesDepEmi = $desc;
         $this->cDepEmi = $cDepEmi;
         return $this;
     }
@@ -160,9 +162,10 @@ class GEmis extends BaseSifenField
      */
     public function setCDisEmi(int $cDisEmi): self
     {
-        $this->dDesDisEmi = PyGeoCodesMapping::getDistName(strval($cDisEmi));
-        if(is_null($this->dDesDisEmi))
-            throw new InvalidArgumentException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
+        $desc = PyGeoCodesMapping::getDistName(strval($cDisEmi));
+        if ($desc === null)
+          throw new InvalidArgumentException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
+        $this->dDesDisEmi = $desc;
         $this->cDisEmi = $cDisEmi;
         return $this;
     }
@@ -183,10 +186,11 @@ class GEmis extends BaseSifenField
 
     public function setCCiuEmi(int $cCiuEmi): self
     {
+        $desc = PyGeoCodesMapping::getCiudName(strval($cCiuEmi));
+        if ($desc === null)
+          throw new InvalidArgumentException("[GEmis::setCCiuEmi] El código de ciudad $cCiuEmi no existe.");
         $this->cCiuEmi = $cCiuEmi;
-        if(!is_null($cCiuEmi)) {
-            $this->dDesCiuEmi = PyGeoCodesMapping::getCiudName(strval($this->cCiuEmi));
-        }
+        $this->dDesCiuEmi = $desc;
         return $this;
     }
 

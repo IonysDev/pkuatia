@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia\Core\Responses;
 
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
+use stdClass;
 
 /**
  * Nodo Id:     ARSch01
@@ -63,7 +64,6 @@ class RRetEnviDe {
         if(is_null($object))
         {
             throw new \Exception("Error Processing Request: null", 1);
-            return null;
         }
         
         $res = new RRetEnviDe();

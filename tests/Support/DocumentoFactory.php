@@ -10,6 +10,7 @@ use IonysDev\Pkuatia\Core\Constants\CamCondOpe;
 use IonysDev\Pkuatia\Core\Constants\CamFEIndPres;
 use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
 use IonysDev\Pkuatia\Core\Constants\CamIVATasaIVA;
+use IonysDev\Pkuatia\Core\Constants\COblAfe;
 use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
 use IonysDev\Pkuatia\Core\Constants\GTranspModTrans;
 use IonysDev\Pkuatia\Core\Constants\GTranspRespFlete;
@@ -19,9 +20,12 @@ use IonysDev\Pkuatia\Core\Constants\MotEmiNR;
 use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
 use IonysDev\Pkuatia\Core\Constants\PaConEIniTiPago;
+use IonysDev\Pkuatia\Core\Constants\PagTarCDDenTarj;
+use IonysDev\Pkuatia\Core\Constants\PagTarCDForProPa;
 use IonysDev\Pkuatia\Core\Constants\RecTiOpe;
 use IonysDev\Pkuatia\Core\Constants\RespEmiNR;
 use IonysDev\Pkuatia\Core\Constants\TipIDRec;
+use IonysDev\Pkuatia\Core\Constants\TipIDRespDE;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\Autofactura;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\Factura;
@@ -29,6 +33,8 @@ use IonysDev\Pkuatia\Core\DocumentosElectronicos\NotaDeCredito;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\NotaDeDebito;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\NotaDeRemision;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
+use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
+use IonysDev\Pkuatia\Core\Fields\DE\G\GCamCarg;
 use IonysDev\Pkuatia\Sifen;
 
 /**
@@ -195,8 +201,105 @@ final class DocumentoFactory
     }
     $af->calcTotSub(0);
     $af->addPago(PaConEIniTiPago::Efectivo, $af->gTotSub->getDTotGralOpe(), 'PYG');
-    $af->addConstanciaDeNoSerContribuyente(12345, '1234567890');
+    // Valores inventados con el formato de la constancia real (Q-B11): número de 11 dígitos y control de 8 caracteres.
+    $af->addConstanciaDeNoSerContribuyente(12345678901, 'A1B2C3D4');
     return $af;
+  }
+
+  /** @return array<string, callable(Factura): mixed> Un builder por grupo de tgCamEsp (DE_v150.xsd:794-806). */
+  public static function sectores(): array
+  {
+    return [
+      'energía' => fn (Factura $fe) => $fe->setDatosComplementariosSectorEnergia('MED-001', 1, 'R', '100.00', '250.00', '150.00'),
+      'seguros' => fn (Factura $fe) => $fe->addDatosComplementariosSectorSegurosPoliza('SEG01', 'POL-2026-001', 'Meses', '12', '0001234567', new DateTime('2026-01-01'), new DateTime('2026-12-31'), 'PROD001'),
+      'supermercados' => fn (Factura $fe) => $fe->setDatosComplementariosSectorSupermercados('Cajero 1', '100000', '0', null, null),
+      'datos adicionales' => fn (Factura $fe) => $fe->setDatosAdicionalesDeUsoComercial('202601', new DateTime('2026-01-01'), new DateTime('2026-01-31'), new DateTime('2026-02-15'), 'CONTR-0001', '0'),
+    ];
+  }
+
+  /** FE con un grupo sectorial (clave de sectores()) y un ítem con gRasMerc (lote, vencimiento, serie y pedido). */
+  public static function facturaSectorial(string $sector, int $numDoc = 60): Factura
+  {
+    $fe = new Factura(CamCondOpe::Contado);
+    self::configurarBase($fe, $numDoc);
+    self::receptorContribuyente($fe);
+    $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
+    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
+    $fe->addItem('MED001', 'Medicamento', 77, '1', 0, '5000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10,
+      null, null, null, null, null, null, 'LOTE-2026-A', new DateTime('2027-06-30'), 'SERIE-001', 'PED-77');
+    $fe->calcTotSub(0);
+    $fe->addPago(PaConEIniTiPago::Efectivo, '5000', 'PYG');
+    (self::sectores()[$sector])($fe);
+    return $fe;
+  }
+
+  /** FE con los cuatro grupos de tgCamEsp a la vez (Q-B8: se emiten todos, en el orden del XSD). */
+  public static function facturaConTodosLosSectores(int $numDoc = 61): Factura
+  {
+    $fe = self::facturaSectorial('energía', $numDoc);
+    foreach (['seguros', 'supermercados', 'datos adicionales'] as $sector) {
+      (self::sectores()[$sector])($fe);
+    }
+    return $fe;
+  }
+
+  /** Autofactura cuyo lugar de la transacción no informa distrito (cDisProv es 0-1 en tgCamAE, DE_v150.xsd:1351). */
+  public static function autofacturaSinDistrito(): Autofactura
+  {
+    $af = self::autofactura(32, 1);
+    $af->setLugarTransaccion('Lugar de la transaccion', 1, null, 1);
+    return $af;
+  }
+
+  /**
+   * FE con los grupos opcionales que no cubren los demás documentos (B12): responsable del DE (gRespDE), obligación
+   * afectada (gOblAfe), compras públicas (gCompPub), vehículo nuevo vendido al consumidor final en un ítem (gVehNuevo),
+   * pagos con tarjeta y con cheque (gPagTarCD, gPagCheq) y campos generales con los datos de la carga (gCamGen,
+   * gCamCarg). Sin dCilin: su patrón en el XSD es el texto literal "/d" (DE_v150.xsd, tgVehNuevo).
+   */
+  public static function facturaConTodosLosOpcionales(int $numDoc = 70): Factura
+  {
+    $fe = new Factura(CamCondOpe::Contado);
+    self::configurarBase($fe, $numDoc);
+    self::receptorContribuyente($fe);
+    $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
+    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
+    $fe->setEmisorResponsableDelDE(TipIDRespDE::CedulaParaguaya, '1234567', 'Responsable de Prueba', 'Gerente');
+    $fe->addObligacionAfectada(COblAfe::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores);
+    $fe->setDatosComprasPublicas('01', '00001', 26, 1234567, new DateTime('2026-01-02')); // dAnoCont: 2 dígitos (tdAnoCont)
+    $vehiculo = (new GVehNuevo())->setITipOpVN(2)->setDChasis('9BWZZZ377VT004251')->setDColor('Blanco')
+      ->setDPotencia(150)->setDCapMot(1600)->setDPNet('1200.5')->setDPBruto('1500.25')->setITipCom(1)->setDNroMotor('MOT-0001')
+      ->setDCapTracc('1500.75')->setDAnoFab(2026)->setCTipVeh('SEDAN')->setDCapac(5); // medidas con decimales (Q-B12)
+    $fe->addItem('VEH001', 'Automóvil nuevo', 77, '1', 0, '150000000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10,
+      detalleVehiculoNuevo: $vehiculo);
+    $fe->calcTotSub(0);
+    $fe->addPagoPYGPorTarjeta(true, '100000000', PagTarCDDenTarj::Visa, PagTarCDForProPa::POS, 123456, 'Titular de Prueba', '1234');
+    $fe->addPagoPYGPorCheque('50000000', '00012345', 'Banco de Prueba');
+    $fe->setNroDeOrdenDeCompra('OC-0001');
+    $fe->setNroDeOrdenDeVenta('OV-0001');
+    $fe->setNroDeAsientoContable('AS-0001');
+    $fe->gCamGen->setGCamCarg((new GCamCarg())->setCUniMedTotVol(110)->setDTotVolMerc(10)->setCUniMedTotPes(83)
+      ->setDTotPesMerc(1500)->setICarCarga(1));
+    return $fe;
+  }
+
+  /**
+   * RDE sin firmar y determinista, para comparar serializaciones: código de seguridad y fecha de firma
+   * fijos. El código por defecto no empieza con cero; el cero inicial (PK-26) se prueba pasándolo.
+   */
+  public static function rde(DocumentoElectronico $doc, string $codSeg = '123456789'): RDE
+  {
+    $doc->gOpeDE->setDCodSeg($codSeg);
+    $rde = match (true) {
+      $doc instanceof Autofactura => $doc->autofacturaToRDE(),
+      $doc instanceof Factura => $doc->facturaToRDE(),
+      $doc instanceof NotaDeCredito => $doc->notaDeCreditoToRDE(),
+      $doc instanceof NotaDeDebito => $doc->notaDeDebitoToRDE(),
+      $doc instanceof NotaDeRemision => $doc->notaDeRemisionToRDE(),
+      default => $doc->documentoElectronicoToRDE(),
+    };
+    $rde->getDE()->setDFecFirma(new DateTime('2026-01-15T10:05:00', new DateTimeZone('America/Asuncion')));
+    return $rde;
   }
 
   /** Firma un RDE con el entorno de prueba ya inicializado (SifenTestEnvironment::init()). */

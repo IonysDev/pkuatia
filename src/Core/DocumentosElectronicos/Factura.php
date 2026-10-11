@@ -99,7 +99,7 @@ class Factura extends DocumentoElectronicoComercial
    * 
    * @param String $codigoDNCPModalidad Código de modalidad emitido por la DNCP.
    * @param String $codigoDNCPEntidad Código de entidad pública emitido por la DNCP.
-   * @param int $anho Año de contratación según registros de la DNCP.
+   * @param int $anho Año de contratación según registros de la DNCP, con dos dígitos (tdAnoCont: p. ej. 26 para 2026).
    * @param int $nroDNCPSecuencia Número de secuencia del registro de la DNCP.
    * @param DateTime $fechaEmisionCodigoContratacion Fecha de emisión del código de contratación por la DNCP.
    */

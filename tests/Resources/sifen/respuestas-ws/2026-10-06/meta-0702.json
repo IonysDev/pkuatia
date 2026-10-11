@@ -1,0 +1,38 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 219,
+            "resp_len": 541,
+            "ts": "2026-10-06T07:02:31-03:00"
+        },
+        {
+            "op": "rEnviDe",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 10203,
+            "resp_len": 455,
+            "ts": "2026-10-06T07:02:52-03:00"
+        }
+    ],
+    "resumen": {
+        "canario": {
+            "dCodRes": "502",
+            "dMsgRes": "RUC encontrado"
+        },
+        "fe": {
+            "numDoc": 111,
+            "cdc": "01800000005001001000011122026100616135851109"
+        },
+        "enviarDE": {
+            "dEstRes": "Rechazado",
+            "dFecProc": "2026-10-06T07:02:54-03:00",
+            "gResProc": [
+                "0160 XML Mal Formado."
+            ]
+        },
+        "parada": "la FE no fue aprobada (ver 0x-rEnviDe-response.xml); no se cancela ni se consulta"
+    }
+}

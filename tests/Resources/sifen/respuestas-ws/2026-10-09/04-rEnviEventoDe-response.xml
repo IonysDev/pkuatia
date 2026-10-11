@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"><env:Header/><env:Body><ns2:rRetEnviEventoDe xmlns:ns2="http://ekuatia.set.gov.py/sifen/xsd"><ns2:dFecProc>2026-10-09T17:04:57-03:00</ns2:dFecProc><ns2:gResProcEVe><ns2:dEstRes>Rechazado</ns2:dEstRes><ns2:id>1</ns2:id><ns2:gResProc><ns2:dCodRes>4009</ns2:dCodRes><ns2:dMsgRes>TEST - Plazo de solicitud de cancelaci&#243;n de una FE extempor&#225;neo</ns2:dMsgRes></ns2:gResProc></ns2:gResProcEVe></ns2:rRetEnviEventoDe></env:Body></env:Envelope>

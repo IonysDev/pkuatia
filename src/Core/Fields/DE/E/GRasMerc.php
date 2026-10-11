@@ -35,7 +35,7 @@ class GRasMerc extends BaseSifenField
   /**
    * Establece el valor de dNumLote
    *
-   * @param int $dNumLote
+   * @param int|String $dNumLote
    *
    * @return self
    */
@@ -154,13 +154,27 @@ class GRasMerc extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Obtiene el valor de dNumLote
+   * Obtiene el valor de dNumLote como entero. E751 es texto de 1 a 80 caracteres y puede ser alfanumérico: devuelve la
+   * parte numérica inicial, o 0, como hasta 0.2.0. Desde 0.2.1 la lectura conserva el lote exacto, y este getter
+   * terminaba en TypeError con un lote alfanumérico (QA de la Fase B).
    *
    * @return int
+   *
+   * @deprecated 0.2.1 E751 es texto: usar getDNumLoteString().
    */
   public function getDNumLote(): int
   {
-    return $this->dNumLote;
+    return intval($this->dNumLote);
+  }
+
+  /**
+   * Obtiene el número de lote (E751) tal como se informó, o null si no se informó (QA de la Fase B, 0.2.1).
+   *
+   * @return String|null
+   */
+  public function getDNumLoteString(): ?String
+  {
+    return $this->dNumLote ?? null;
   }
 
   /**
@@ -267,10 +281,37 @@ class GRasMerc extends BaseSifenField
     return $res;
   }
 
+  /**
+   * Instancia un objeto GRasMerc a partir de un objeto stdClass de respuesta del SIFEN. Hasta 0.2.0 lanzaba
+   * "Not implemented" (PK-25). Todos los campos de tgRasMerc son opcionales.
+   *
+   * @param stdClass $object
+   *
+   * @return self
+   */
   public static function FromSifenResponseObject(stdClass $object): self
   {
-    throw new \Exception("Not implemented");
     $res = new self();
+    if (isset($object->dNumLote))
+      $res->setDNumLote((string) $object->dNumLote);
+    if (isset($object->dVencMerc)) {
+      $fecha = DateTime::createFromFormat('!Y-m-d', trim((string) $object->dVencMerc));
+      if ($fecha === false)
+        throw new \InvalidArgumentException("[GRasMerc] dVencMerc debe tener el formato AAAA-MM-DD: '{$object->dVencMerc}'");
+      $res->setDVencMerc($fecha);
+    }
+    if (isset($object->dNSerie))
+      $res->setDNSerie((string) $object->dNSerie);
+    if (isset($object->dNumPedi))
+      $res->setDNumPedi((string) $object->dNumPedi);
+    if (isset($object->dNumSegui))
+      $res->setDNumSegui((string) $object->dNumSegui);
+    if (isset($object->dNumReg))
+      $res->setDNumReg((string) $object->dNumReg);
+    if (isset($object->dNumRegEntCom))
+      $res->setDNumRegEntCom((string) $object->dNumRegEntCom);
+    if (isset($object->dNomPro))
+      $res->setDNomPro((string) $object->dNomPro);
     return $res;
   }
   
@@ -335,7 +376,7 @@ class GRasMerc extends BaseSifenField
         throw new \Exception('[GRasMerc] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     if($node->getElementsByTagName('dNumLote')->length > 0)
-      $res->setDNumLote(intval(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue)));
+      $res->setDNumLote(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue)); // texto 1-80 (DE_v150.xsd:437); hasta 0.2.0 intval() lo volvía 0 (PK-25)
     if($node->getElementsByTagName('dVencMerc')->length > 0)
       $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dVencMerc')->item(0)->nodeValue)));
     if($node->getElementsByTagName('dNSerie')->length > 0)

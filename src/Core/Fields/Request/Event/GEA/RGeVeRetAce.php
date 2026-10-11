@@ -22,6 +22,57 @@ class RGeVeRetAce
   public String $dCodConRet;  // GER007 - Identificador de la retención - 40 - 1-1
   public DateTime $dFeEmiRet; // GER008 - Fecha de emisión de  la retención - 19 - 1-1
 
+  // dRuc y dMonRet son obligatorios en el XSD (Evento_v150.xsd:120 y :127) aunque el MT no los lista; hasta
+  // 0.2.0 la clase no los modelaba y se perdían al consultar un DE con retenciones (PK-42). Nuevos en 0.2.1.
+  public String $dRuc;        // RUC (tRuc, Evento_v150.xsd:120); el XSD no documenta de quién es
+  public String $dMonRet;     // Monto de la retención (tMontoBase, Evento_v150.xsd:127)
+
+  /**
+   * Establece dRuc (tRuc, Evento_v150.xsd:120). Nuevo en 0.2.1 (PK-42).
+   *
+   * @param String $dRuc
+   *
+   * @return self
+   */
+  public function setDRuc(String $dRuc): self
+  {
+    $this->dRuc = $dRuc;
+    return $this;
+  }
+
+  /**
+   * Establece dMonRet, el monto de la retención (tMontoBase, decimal BCMath; Evento_v150.xsd:127). Nuevo en 0.2.1 (PK-42).
+   *
+   * @param String $dMonRet
+   *
+   * @return self
+   */
+  public function setDMonRet(String $dMonRet): self
+  {
+    $this->dMonRet = $dMonRet;
+    return $this;
+  }
+
+  /**
+   * Obtiene dRuc, o null si no se informó. Nuevo en 0.2.1 (PK-42).
+   *
+   * @return String|null
+   */
+  public function getDRuc(): ?String
+  {
+    return $this->dRuc ?? null;
+  }
+
+  /**
+   * Obtiene dMonRet, o null si no se informó. Nuevo en 0.2.1 (PK-42).
+   *
+   * @return String|null
+   */
+  public function getDMonRet(): ?String
+  {
+    return $this->dMonRet ?? null;
+  }
+
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
   ///////////////////////////////////////////////////////////////////////
@@ -219,12 +270,16 @@ class RGeVeRetAce
   {
     $res = $doc->createElement('rGeVeRetAce');
     $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    if (isset($this->dRuc))
+      $res->appendChild(XmlHelper::elemento($doc, 'dRuc', $this->dRuc)); // orden de trGeVeRetAce (Evento_v150.xsd:112-130)
     $res->appendChild(XmlHelper::elemento($doc, 'dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dEstRet', $this->getDEstRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dPunExpRet', $this->getDPunExpRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dNumDocRet', $this->getDNumDocRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dCodConRet', $this->getDCodConRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
+    if (isset($this->dMonRet))
+      $res->appendChild(XmlHelper::elemento($doc, 'dMonRet', $this->dMonRet));
     return $res;
   }
 
@@ -267,12 +322,16 @@ class RGeVeRetAce
 
     $res = new self();
     $res->setId($node->Id);
+    if (isset($node->dRuc))
+      $res->setDRuc((string) $node->dRuc);
     $res->setDNumTimRet(intval($node->dNumTimRet));
     $res->setDEstRet($node->dEstRet);
     $res->setDPunExpRet($node->dPunExpRet);
     $res->setDNumDocRet($node->dNumDocRet);
     $res->setDCodConRet($node->dCodConRet);
     $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFeEmiRet)));
+    if (isset($node->dMonRet))
+      $res->setDMonRet((string) $node->dMonRet);
      return $res;
   }
 }
