@@ -19,6 +19,10 @@ final class LimpiezaTest extends TestCase
   {
     $sinTipo = [];
     foreach (self::archivosDeSrc() as $ruta) {
+      // src/Resources/codigos/*.php son catálogos de datos (devuelven un arreglo), no clases (Fase C, C5).
+      if (str_contains(str_replace(DIRECTORY_SEPARATOR, '/', $ruta), '/src/Resources/')) {
+        continue;
+      }
       if (!in_array(basename($ruta, '.php'), self::tiposDeclarados(self::significativos($ruta)), true)) {
         $sinTipo[] = self::relativa($ruta);
       }

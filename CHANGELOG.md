@@ -70,6 +70,18 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
 - `Constants\EstadoResultado` (`dEstRes`: Aprobado, Aprobado con observación, Rechazado) con `fromTexto()`
   tolerante a espacios, mayúsculas y tildes, `esAprobado()` (verdadero también con observaciones) y `letra()`; y
   `Constants\EstadoRuc` (`dCodEstCons`: ACT, SUS, SAD, BLQ, CAN, CDE) con `descripcion()` y `esActivo()`.
+- **Catálogo de validaciones del SIFEN** (`Validacion\CatalogoValidaciones`), generado desde ekuat-ia con
+  `tools/generar-catalogos.php` a `src/Resources/codigos/` (README en la carpeta): las 282 validaciones vigentes
+  del DE y las 18 eliminadas en v150 (MT §12.4), las 95 de los eventos (MT §11.6, con los códigos repetidos
+  4313-4323 conservados) y los códigos de los web services (MT §12.2-12.3), más los elementos del XSD del DE con
+  su ID del MT, sus ocurrencias y su línea citable. `describir('1321')` devuelve una `InfoValidacion` con el
+  código, el ID del campo (D208c), el mensaje, el estado (A/AO/R), el grupo, la observación (la regla), la
+  vigencia, la fuente y el método de PKuatia que carga el campo (`campos-metodos.php`, mantenido a mano);
+  `describirTodos()`, `porCampo('D208')`, `todas()`, `elemento('dNumTim')` (`InfoElemento`: campo C004, obligatorio,
+  padre `tgDTim`, línea del XSD), `hijosDe('gTimb')`, `campoMT()` y `metodoPkuatia()`. Es lo que permite pasar de
+  un `dCodRes` a "qué tocar en el código". `tests/Unit/Resources/CatalogosSincroniaTest` regenera los catálogos en
+  memoria desde `docs/sifen-ai` y los compara con los versionados (se omite sin esa carpeta).
+- El lint de CI incluye `tools/`.
 
 ### Cambiado
 
