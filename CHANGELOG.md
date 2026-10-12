@@ -122,6 +122,20 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   2550/2551, 1450/1451, 2600/2601, 1500/1501, 2350/2351, 2100/2101, 2150/2151, 2200/2201, 2250/2251, 2300/2301,
   2400, 1850/1851, 1900/1901/1902 y 2390, con el mensaje del MT). Control de falsos positivos: los documentos de la
   fábrica de pruebas y los once rDE reales de `sifen-test` dan cero errores.
+- Reglas de negocio del validador (`Validacion\Reglas\*`, errores-validacion.md del MT §12.4; cada error con el
+  mensaje del MT, el campo, el elemento, la ruta y el método de PKuatia): **descripciones que no corresponden al
+  código** en 37 pares código/descripción de todos los grupos (1051, 1100, 1203, 1205, 1206, 1211, 1254, 1257,
+  1260, 1301, 1313, 1325, 1326, 1329, 1352, 1452, 1502, 1554, 1555, 1602, 1702, 1802, 1804, 1806, 1903, 2103, 2104,
+  2401, 2410, 2429, 2552, 2555, 2556, 2558, 2559, 2561, 2602, 2603; los códigos de texto libre no se comparan y las
+  15 monedas de nombre largo se avisan como advertencia, D-A3); **generales**: 1003 dígito verificador del CDC, 1000
+  CDC coherente con el contenido, 1004 firma adelantada, 1005 transmisión a más de 72 h (advertencia), 1103 timbrado
+  con vigencia posterior a la emisión, 1110 serie, 1150/1151/1156 ventanas de la fecha de emisión, 1202 tipo de
+  transacción, 1207/1208/1209/1210 condición y valor del tipo de cambio, 1253 dígito verificador del emisor y
+  1255/1328/2553/2557/2153/2203 departamento, distrito y ciudad relacionados (`PyGeoCodesMapping::estanRelacionados()`,
+  nuevo); **receptor**: 1315, 1300, 1316, 1320, 1302/1303, 1304/1305, 1317, 1309, 1310/1311, 1319, 1321 (NT-024),
+  1314/1323, 1318, 1330, 1324, 1327; **pagos**: 1503, 1550/1551/1552, 1553, 1556/1557, 1600/1601, 1650/1651,
+  1700/1701, 1703/1704, 1705/1706, 1751. Un test por código, con un documento válido al que se le introduce una sola
+  violación; las fechas se evalúan contra un momento de referencia (`$ahora`, por defecto ahora en Asunción).
 
 ### Cambiado
 

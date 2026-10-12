@@ -112,6 +112,10 @@ final class DocumentoFactory
     $fe->addItem('PROD005', 'Producto gravado 5%', 77, '3', 0, '21000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA5);
     $fe->calcTotSub(0);
     $fe->setOperacionCreditoEnCuotas(['81500', '81500'], [new DateTime('2026-11-01'), new DateTime('2026-12-01')], $entregaInicial);
+    if ($entregaInicial !== null) {
+      // E605a (validación 1551): con entrega inicial (E645) hay que informar cómo se pagó (Fase C, C10).
+      $fe->addPago(PaConEIniTiPago::Efectivo, $entregaInicial, 'PYG');
+    }
     return $fe;
   }
 

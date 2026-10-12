@@ -36,6 +36,18 @@ use PHPUnit\Framework\TestCase;
  */
 final class ValidadorCompletitudTest extends TestCase
 {
+  /** Momento de referencia coherente con las fechas de la fábrica (las reglas de fechas de C10 son relativas a él). */
+  private static function ahoraFabrica(): \DateTime
+  {
+    return (clone F::fechaEmision())->modify('+2 hours');
+  }
+
+  /** Momento de referencia para las capturas reales del 06, 09 y 11/10/2026. */
+  private static function ahoraCapturas(): \DateTime
+  {
+    return new \DateTime('2026-10-12T00:00:00', new \DateTimeZone('America/Asuncion'));
+  }
+
   /** @return iterable<string, array{callable(): DocumentoElectronico}> */
   public static function documentosDeLaFabrica(): iterable
   {
@@ -61,14 +73,14 @@ final class ValidadorCompletitudTest extends TestCase
   public function testLosDocumentosCompletosNoTienenErrores(callable $crear): void
   {
     $doc = $crear();
-    $r = $doc->validarReglas();
+    $r = $doc->validarReglas(self::ahoraFabrica());
     $this->assertInstanceOf(ResultadoValidacion::class, $r);
     $this->assertTrue($r->esValido(), "builder: $r");
     $this->assertCount(0, $r);
 
     $rde = self::aRde($doc);
-    $this->assertTrue(ValidadorDE::validar($rde)->esValido(), 'RDE: ' . ValidadorDE::validar($rde));
-    $this->assertTrue(ValidadorDE::validar($rde->getDE())->esValido(), 'DE');
+    $this->assertTrue(ValidadorDE::validar($rde, self::ahoraFabrica())->esValido(), 'RDE: ' . ValidadorDE::validar($rde, self::ahoraFabrica()));
+    $this->assertTrue(ValidadorDE::validar($rde->getDE(), self::ahoraFabrica())->esValido(), 'DE');
   }
 
   /** @return iterable<string, array{string}> los rDE reales enviados a sifen-test (todos pasaron el esquema del SIFEN) */
@@ -86,7 +98,7 @@ final class ValidadorCompletitudTest extends TestCase
     $doc = new DOMDocument();
     $doc->loadXML(file_get_contents($ruta));
     $rde = RDE::FromDOMElement($doc->documentElement);
-    $r = ValidadorDE::validar($rde);
+    $r = ValidadorDE::validar($rde, self::ahoraCapturas());
     $this->assertTrue($r->esValido(), (string) $r);
   }
 
@@ -150,7 +162,7 @@ final class ValidadorCompletitudTest extends TestCase
   public function testPresenciaDeGruposPorTipoDeDocumento(callable $crear, string $codigo, string $campo): void
   {
     $doc = $crear();
-    $r = $doc instanceof DocumentoElectronico ? $doc->validarReglas() : ValidadorDE::validar($doc);
+    $r = $doc instanceof DocumentoElectronico ? $doc->validarReglas(self::ahoraFabrica()) : ValidadorDE::validar($doc, self::ahoraFabrica());
     $this->assertFalse($r->esValido());
     $encontrados = $r->porCodigo($codigo);
     $this->assertNotEmpty($encontrados, "se esperaba el código $codigo; errores: $r");

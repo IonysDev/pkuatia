@@ -265,4 +265,10 @@ final class VistaDocumento
     }
     return null;
   }
+
+  /** El DE subyacente cuando la vista se armó desde un DE o RDE; null para un documento en construcción. */
+  public function de(): ?DE
+  {
+    return $this->de;
+  }
 }
