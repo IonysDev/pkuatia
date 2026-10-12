@@ -53,6 +53,8 @@ use IonysDev\Pkuatia\Helpers\PemHelper;
 use IonysDev\Pkuatia\Helpers\Pkcs12Helper;
 use IonysDev\Pkuatia\Helpers\QRHelper;
 use IonysDev\Pkuatia\Helpers\SignHelper;
+use IonysDev\Pkuatia\Validacion\ResultadoFirma;
+use IonysDev\Pkuatia\Validacion\VerificadorFirma;
 use SoapClient;
 use SoapFault;
 use SoapVar;
@@ -277,6 +279,21 @@ class Sifen
     } catch (\Throwable $e) {
       throw self::excepcionDeOperacion($e, 'ConsultarDE', "[Sifen] Error al consultar el documento electrónico en el SIFEN");
     }
+  }
+
+  /**
+   * Verifica la firma digital de un rDE o de un sobre de eventos (gGroupGesEve) recibido: el digest de la referencia,
+   * el valor de la firma contra el certificado de KeyInfo, los algoritmos del estándar (NT-016) y la vigencia del
+   * certificado en dFecFirma (0140, 0141, 0120, 0121 y 2450 del MT). No necesita Init() ni red. No verifica la cadena
+   * de certificación ni la revocación. Nuevo en 0.3.0 (Fase C, C8).
+   *
+   * @param String $xml XML del rDE firmado (p. ej. el que devuelve FirmarDE() o el que trae ConsultarDE()) o del sobre de eventos.
+   *
+   * @return ResultadoFirma esValida(), getFirmas() (una InfoFirma por Signature, con el certificado) y getErrores().
+   */
+  public static function VerificarFirma(String $xml): ResultadoFirma
+  {
+    return VerificadorFirma::verificar($xml);
   }
 
   /**

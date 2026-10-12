@@ -98,6 +98,18 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   `RProtDe`, `GResProcLote` y `GResProcEVe` `getEstado()`, `esAprobado()`, `esRechazado()`, `getMotivos()`,
   `getCodigo()`, `getMensaje()`, `getProtocolo()` (más `getCdc()` en el lote, `getIdEvento()` en los eventos y
   `toArray()` en ambos). Todo probado sobre las capturas reales del 06, 09 y 11/10/2026.
+- **`Sifen::VerificarFirma(string $xml): ResultadoFirma`** (evaluación §6.2): verifica la firma de un rDE o de un
+  sobre de eventos recibido, sin `Init()` ni red. Por cada `Signature`, una `InfoFirma` con la referencia, si el
+  digest coincide (el contenido no fue alterado), si el `SignatureValue` verifica con el certificado de `KeyInfo`,
+  si los algoritmos son los del estándar (RSA-SHA256/384/512, SHA-256, C14N exclusiva o inclusiva y transform
+  enveloped, NT-016), el certificado (`CertificadoFirma`: sujeto, emisor, RUC si figura en el `serialNumber` o en
+  el SAN, vigencia) y si estaba vigente en `dFecFirma`. Los errores llevan el código del MT: 0140 (estándar),
+  0141 (digest o firma), 0120 (certificado ilegible), 2450/0121 (vigencia al firmar). No verifica la cadena de
+  certificación ni la revocación. Control positivo con un certificado autofirmado; control negativo con las once
+  capturas anonimizadas de `sifen-test`, cuya firma ya no verifica.
+- `Validacion\ErrorValidacion` y `OrigenError`: el tipo común de error de la validación XSD, de completitud, de
+  reglas y de firma (origen, mensaje, código del SIFEN, campo del MT, elemento, ruta, valor, sugerencia, línea y
+  si es solo una advertencia), con `getInfoValidacion()` y `__toString()`.
 
 ### Cambiado
 
