@@ -45,6 +45,10 @@ class Config
     // Cabecera User-Agent de las solicitudes SOAP. Null: la de PHP. Nuevo en 0.2.1 (PK-31).
     public ?String $soapUserAgent = null;
 
+    // Guarda la última solicitud y respuesta SOAP (opción trace de SoapClient) para Sifen::GetLastRequest() y
+    // GetLastResponse(). Con false no se guardan y esos métodos devuelven null. Nuevo en 0.3.0 (Fase C, C12).
+    public bool $soapTrace = true;
+
     /**
      * Normaliza el formato de certificado a un valor interno soportado.
      * Acepta "pem", "p12" y "pfx" (P12 y PFX son PKCS#12). Es idempotente: admite también los
@@ -143,6 +147,9 @@ class Config
 
         if(isset($config->soapUserAgent)) {
             $res->soapUserAgent = strval($config->soapUserAgent);
+        }
+        if(isset($config->soapTrace)) {
+            $res->soapTrace = boolval($config->soapTrace);
         }
 
         return $res;
@@ -315,6 +322,38 @@ class Config
         $this->soapUserAgent = $soapUserAgent;
 
         return $this;
+    }
+
+    /**
+     * Guarda (true, por defecto) o no (false) la última solicitud y respuesta SOAP para Sifen::GetLastRequest() y
+     * GetLastResponse(). Se aplica en el siguiente Sifen::Init(). Nuevo en 0.3.0.
+     *
+     * @param bool $soapTrace
+     *
+     * @return self
+     */
+    public function setSoapTrace(bool $soapTrace): self
+    {
+        $this->soapTrace = $soapTrace;
+
+        return $this;
+    }
+
+    /**
+     * Oculta los secretos en var_dump() y print_r(): la passphrase de la clave y el CSC se muestran como
+     * '[redactado]' (PK-39, Fase C, C12). Las propiedades y los getters conservan los valores reales. Nuevo en 0.3.0.
+     *
+     * @return array<string, mixed>
+     */
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        foreach (['privateKeyPassphrase', 'csc'] as $secreto) {
+            if (array_key_exists($secreto, $vars)) {
+                $vars[$secreto] = '[redactado]';
+            }
+        }
+        return $vars;
     }
 
     ///////////////////////////////////////////////////////////////////////

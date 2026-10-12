@@ -224,7 +224,7 @@ class RContDe
   {
     $previo = libxml_use_internal_errors(true);
     try {
-      $sx = simplexml_load_string($xml);
+      $sx = simplexml_load_string($xml, SimpleXMLElement::class, LIBXML_NONET); // contenido del SIFEN: sin acceso a la red (0.3.0)
       if ($sx === false) {
         $error = libxml_get_last_error();
         throw new ValidacionException('[RContDe] Parte de xContenDE que no es XML bien formado: ' . ($error ? trim($error->message) : 'error desconocido'));

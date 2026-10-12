@@ -68,6 +68,9 @@ class Sifen
   private static $options;
   /** @var callable(string, array): SoapClient|null Factoría de SoapClient para pruebas (null = comportamiento por defecto). */
   private static $soapClientFactory = null;
+  /** Carpeta propia con el certificado y la clave extraídos del PKCS#12 (PK-39, 0.3.0); null si no se usó PKCS#12. */
+  private static ?string $carpetaTemporal = null;
+  private static bool $limpiezaRegistrada = false;
 
   /**
    * Inicializa la clase Sifen con la configuración necesaria para realizar las peticiones.
@@ -92,6 +95,7 @@ class Sifen
         throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[Sifen] El archivo de certificado no ha sido encontrado en: " . $config->certificateFilePath . ".");
     }
 
+    self::borrarTemporales(); // PK-39: un Init() repetido no deja en disco los temporales del anterior
     $sslContext = null;
     if ($config->isPem()) {
       $sslOptions = [
@@ -117,7 +121,7 @@ class Sifen
 
     self::$options = [
       'soap_version' => SOAP_1_2,
-      'trace' => true,
+      'trace' => $config->soapTrace, // Config::$soapTrace (0.3.0): con false, GetLastRequest()/GetLastResponse() devuelven null
       'exceptions' => true,
       // El SIFEN limita la tasa de solicitudes: la caché de WSDL evita re-descargarlo en cada
       // operación (opt-in vía Config::$wsdlCacheEnabled para no alterar el comportamiento histórico).
@@ -132,6 +136,19 @@ class Sifen
     self::$client = null;
     
     SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFormat, $config->certificateFilePath);
+  }
+
+  /**
+   * Libera lo que Init() dejó en disco y en memoria: borra la carpeta temporal con el certificado y la clave extraídos
+   * del PKCS#12 (PK-39), descarta el cliente SOAP (GetLastRequest() y GetLastResponse() pasan a devolver null) y olvida
+   * las opciones. Se puede llamar varias veces; un Init() posterior vuelve a dejar todo listo. La librería la ejecuta
+   * sola al terminar el script. Nuevo en 0.3.0 (Fase C, C12).
+   */
+  public static function Shutdown(): void
+  {
+    self::borrarTemporales();
+    self::$client = null;
+    self::$options = null;
   }
 
   /**
@@ -913,7 +930,7 @@ class Sifen
       return $object;
     $doc = new \DOMDocument();
     $previo = libxml_use_internal_errors(true);
-    $leido = $doc->loadXML($crudo);
+    $leido = $doc->loadXML($crudo, LIBXML_NONET); // contenido del SIFEN: sin acceso a la red por DTD o entidades (0.3.0)
     libxml_clear_errors();
     libxml_use_internal_errors($previo);
     if (!$leido)
@@ -1053,39 +1070,67 @@ class Sifen
   }
 
   /**
-   * Genera un context SSL para certificados/clave en formato PKCS#12 (P12/PFX)
+   * Genera un context SSL para certificados/clave en formato PKCS#12 (P12/PFX).
+   *
+   * PK-39 (0.3.0): el certificado y la clave van a una carpeta propia de nombre impredecible dentro de
+   * sys_get_temp_dir() (0700 donde el sistema lo respeta; en Windows la protección es el nombre y el borrado
+   * garantizado), la clave se exporta cifrada con la misma passphrase, una falla intermedia no deja restos y los
+   * archivos se borran en Shutdown(), en el siguiente Init() y al terminar el script. Hasta 0.2.1 iban a
+   * sys_get_temp_dir() como cert_* y key_*, con la clave en claro, y solo se borraban al terminar el script.
    * 
    */
-  private static function createStreamContextFromPkcs12($pkcs12FilePath, $password)
+  private static function createStreamContextFromPkcs12(string $pkcs12FilePath, string $password)
   {
-    $pkcs12Content = file_get_contents($pkcs12FilePath);
-    $certs = Pkcs12Helper::read($pkcs12Content, $password);
+    $certs = Pkcs12Helper::read((string) file_get_contents($pkcs12FilePath), $password);
+    $claveCifrada = '';
+    if (!openssl_pkey_export($certs['pkey'], $claveCifrada, $password))
+      throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, '[Sifen] No se pudo exportar la clave privada del PKCS#12: ' . (openssl_error_string() ?: 'error desconocido'));
+    $carpeta = rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . 'pkuatia-' . bin2hex(random_bytes(8));
+    if (!@mkdir($carpeta, 0700) && !is_dir($carpeta))
+      throw new ConfiguracionException('[Sifen] No se pudo crear la carpeta temporal para el certificado: ' . $carpeta);
+    self::$carpetaTemporal = $carpeta;
+    self::registrarLimpieza();
+    try {
+      $certFile = $carpeta . DIRECTORY_SEPARATOR . 'cert.pem';
+      $keyFile = $carpeta . DIRECTORY_SEPARATOR . 'key.pem';
+      if (file_put_contents($certFile, $certs['cert']) === false || file_put_contents($keyFile, $claveCifrada) === false)
+        throw new ConfiguracionException('[Sifen] No se pudieron escribir los archivos temporales del certificado en: ' . $carpeta);
+      @chmod($keyFile, 0600);
+      return stream_context_create([
+        'ssl' => [
+          'local_cert' => $certFile,
+          'local_pk' => $keyFile,
+          'passphrase' => $password,
+          'verify_peer' => true,
+          'verify_peer_name' => true,
+        ]
+      ]);
+    } catch (\Throwable $e) {
+      self::borrarTemporales();
+      throw $e;
+    }
+  }
 
-    // Create temporary files for the certificate and private key
-    $certFile = tempnam(sys_get_temp_dir(), 'cert_');
-    $keyFile = tempnam(sys_get_temp_dir(), 'key_');
-
-    // Write the extracted cert and key to temporary files
-    file_put_contents($certFile, $certs['cert']);
-    file_put_contents($keyFile, $certs['pkey']);
-
-    // Create stream context
-    $context = stream_context_create([
-      'ssl' => [
-        'local_cert' => $certFile,
-        'local_pk' => $keyFile,
-        'passphrase' => $password,
-        'verify_peer' => true,
-        'verify_peer_name' => true,
-      ]
-    ]);
-
-    // Clean up temporary files
-    register_shutdown_function(function () use ($certFile, $keyFile) {
-      @unlink($certFile);
-      @unlink($keyFile);
+  /** Registra una sola vez el borrado de los temporales al terminar el script (también tras un error fatal). */
+  private static function registrarLimpieza(): void
+  {
+    if (self::$limpiezaRegistrada)
+      return;
+    self::$limpiezaRegistrada = true;
+    register_shutdown_function(static function (): void {
+      self::borrarTemporales();
     });
+  }
 
-    return $context;
+  /** Borra la carpeta temporal del PKCS#12 si existe. Idempotente y nunca lanza. */
+  private static function borrarTemporales(): void
+  {
+    $carpeta = self::$carpetaTemporal;
+    self::$carpetaTemporal = null;
+    if ($carpeta === null || !is_dir($carpeta))
+      return;
+    foreach (['cert.pem', 'key.pem'] as $archivo)
+      @unlink($carpeta . DIRECTORY_SEPARATOR . $archivo);
+    @rmdir($carpeta);
   }
 }

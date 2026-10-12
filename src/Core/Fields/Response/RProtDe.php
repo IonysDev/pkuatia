@@ -239,7 +239,7 @@ class RProtDe
    */
   public static function FromXMLString(String $xmlString): RProtDe
   {
-    $xml = simplexml_load_string($xmlString);
+    $xml = simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NONET); // contenido del SIFEN: sin acceso a la red (0.3.0)
     $res = self::fromSimpleXMLElement($xml);
     return $res;
   }

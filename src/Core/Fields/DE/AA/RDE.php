@@ -276,7 +276,7 @@ class RDE extends BaseSifenField
   private static function copiarFirma(DOMDocument $doc, String $xml): DOMElement
   {
     $origen = new DOMDocument();
-    $origen->loadXML($xml);
+    $origen->loadXML($xml, LIBXML_NONET); // la firma puede venir de un XML del SIFEN: sin acceso a la red (0.3.0)
     return self::copiarNodo($doc, $origen->documentElement, null);
   }
 

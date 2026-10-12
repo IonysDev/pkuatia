@@ -165,6 +165,14 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   Fuera de alcance porque dependen de datos del SIFEN: 2403, 2404, 2414, 2417, 2437, 2438 y 2440; 2309 y 2312 no
   pueden fallar porque el modelo deriva esas descripciones. Con esto el validador cubre 233 códigos del MT, más 1921 de la NT-013. La FE
   con todos los opcionales de la fábrica de pruebas pasa a B2G con códigos DNCP (1401 y 1800 la rechazaban).
+- `Sifen::Shutdown()`: libera lo que `Init()` dejó en disco y en memoria (borra los temporales del PKCS#12, descarta
+  el cliente SOAP y olvida las opciones). Se puede llamar varias veces; `Init()` vuelve a dejar todo listo. La
+  librería la ejecuta sola al terminar el script.
+- `Config::$soapTrace` (con `setSoapTrace()` y clave `soapTrace` del JSON; por defecto `true`, como hasta 0.2.1):
+  con `false` el `SoapClient` no guarda la última solicitud ni la última respuesta y `GetLastRequest()` y
+  `GetLastResponse()` devuelven `null`.
+- `Config::__debugInfo()`: `var_dump()` y `print_r()` muestran la passphrase de la clave y el CSC como `'[redactado]'`;
+  las propiedades y los getters conservan los valores (evaluación §4, PK-39).
 
 ### Corregido
 
@@ -172,8 +180,19 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   el objeto SOAP no tiene, así que E704 y E705 se perdían al leer un DE desde la respuesta de `ConsultarDE`. Lo
   detectó la ida y vuelta de la FE B2G de la fábrica de pruebas (`IdaYVueltaGruposTest`). Solo cambia la lectura: la
   serialización es idéntica.
+- **PK-39** (evaluación §4): con un certificado PKCS#12, `Init()` dejaba el certificado y la clave privada **en
+  claro** en `sys_get_temp_dir()` con nombres predecibles (`cert_*`, `key_*`) hasta que terminara el script. Ahora
+  van a una carpeta propia de nombre impredecible (`pkuatia-<16 hex>/`, 0700 donde el sistema lo respeta; en Windows
+  la protección es el nombre y el borrado garantizado), la clave se exporta **cifrada** con la misma passphrase
+  (`openssl_pkey_export`; el contexto SSL ya la recibe), una falla intermedia no deja restos y los archivos se borran
+  en `Shutdown()`, en el siguiente `Init()` y al terminar el script.
 
 ### Cambiado
+
+- El XML que viene del SIFEN se parsea con `LIBXML_NONET` (evaluación §9): la respuesta cruda de las siete
+  operaciones, `RProtDe::FromXMLString()`, `RContDe::FromXContenDE()` y la firma de un `RDE` leído. Una DTD o una
+  entidad externa en una respuesta no provoca ninguna lectura de red; las entidades tampoco se sustituyen, como
+  hasta ahora.
 
 - `ConsultarRUC` y `ConsultarDE` envuelven también el `SoapFault` y las demás fallas (decisión Q-C3, que cierra la
   parte 2 de Q-B4): la excepción es `TransporteException`, que sigue siendo un `\SoapFault` con el mismo
