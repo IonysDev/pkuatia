@@ -36,6 +36,8 @@ use IonysDev\Pkuatia\Core\Constants\OpeDETipEmi;
 use IonysDev\Pkuatia\Core\Constants\RecNat;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
+use IonysDev\Pkuatia\Validacion\ResultadoValidacion;
+use IonysDev\Pkuatia\Validacion\ValidadorDE;
 
 /**
  * Clase que contiene la estructura básica de un DE, en todos los casos posibles de éste; asi como las validaciones necesarias.
@@ -142,6 +144,21 @@ class DocumentoElectronico
     $rde = new RDE();
     $rde->setDE($de);
     return $rde;
+  }
+
+  /**
+   * Valida el documento sin serializarlo ni firmarlo y devuelve la lista de problemas, cada uno con el código con el
+   * que el SIFEN lo rechazaría, el campo del Manual Técnico, el elemento XML y una sugerencia (Fase C, decisión Q-C1).
+   * Revisa la completitud según el XSD (campos obligatorios de cada grupo informado), la presencia de los grupos
+   * que exige el tipo de documento y las reglas de negocio verificables sin conexión. Lee las propiedades con isset,
+   * así que un documento a medio armar no termina en Error. No lanza: ver ResultadoValidacion::lanzarSiInvalido().
+   * Para un DE leído de un XML (ConsultarDE) usar ValidadorDE::validar(). Nuevo en 0.3.0.
+   *
+   * @param DateTime|null $ahora Momento de referencia para las reglas de fechas; por defecto, ahora en la zona del SIFEN.
+   */
+  public function validarReglas(?DateTime $ahora = null): ResultadoValidacion
+  {
+    return ValidadorDE::validar($this, $ahora);
   }
 
   /**

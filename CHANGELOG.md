@@ -110,6 +110,18 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
 - `Validacion\ErrorValidacion` y `OrigenError`: el tipo común de error de la validación XSD, de completitud, de
   reglas y de firma (origen, mensaje, código del SIFEN, campo del MT, elemento, ruta, valor, sugerencia, línea y
   si es solo una advertencia), con `getInfoValidacion()` y `__toString()`.
+- **Validador de reglas offline** (evaluación §6.3, decisión Q-C1): `DocumentoElectronico::validarReglas()` en los
+  cinco tipos de documento y `Validacion\ValidadorDE::validar()` para un `DE` o `RDE` ya armado o leído de un XML.
+  Devuelve un `ResultadoValidacion` (se cuenta, se recorre, `esValido()`, `getErrores()`, `getAdvertencias()`,
+  `porCodigo()`, `porCampo()`, `porOrigen()`, `lanzarSiInvalido()` que lanza `DocumentoInvalidoException` con el
+  resultado adjunto) con un `ErrorValidacion` por problema. No serializa, no firma y no modifica el documento; lee
+  las propiedades con `isset`, nunca getters, así que un documento a medio armar lista lo que le falta en vez de
+  terminar en `Error` (cierra la deuda Q-B3 de la 0.2.1). En esta entrega: la completitud según el XSD (campos con
+  `minOccurs = 1` de cada grupo informado, con el campo del MT, la línea del XSD y el método de PKuatia que lo carga;
+  código 0160) y la presencia de los grupos que cada tipo de documento exige o prohíbe (1200/1201, 1350/1351,
+  2550/2551, 1450/1451, 2600/2601, 1500/1501, 2350/2351, 2100/2101, 2150/2151, 2200/2201, 2250/2251, 2300/2301,
+  2400, 1850/1851, 1900/1901/1902 y 2390, con el mensaje del MT). Control de falsos positivos: los documentos de la
+  fábrica de pruebas y los once rDE reales de `sifen-test` dan cero errores.
 
 ### Cambiado
 
