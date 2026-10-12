@@ -2,6 +2,9 @@
 
 namespace IonysDev\Pkuatia\Core;
 
+use IonysDev\Pkuatia\Core\Constants\MotivoCertificado;
+use IonysDev\Pkuatia\Core\Exceptions\CertificadoException;
+use IonysDev\Pkuatia\Core\Exceptions\ConfiguracionException;
 use IonysDev\Pkuatia\Helpers\PemHelper;
 
 /**
@@ -47,7 +50,7 @@ class Config
      * Acepta "pem", "p12" y "pfx" (P12 y PFX son PKCS#12). Es idempotente: admite también los
      * valores internos ya normalizados ("pem", "pkcs12"), de modo que normalizar dos veces no falle.
      *
-     * @throws \Exception
+     * @throws CertificadoException Con motivo NoSoportado (desde 0.3.0; antes \Exception, de la que hereda).
      */
     public static function normalizeCertificateFormat(string $format): string
     {
@@ -58,7 +61,8 @@ class Config
         if (in_array($format, ['p12', 'pfx', self::CERT_FORMAT_PKCS12], true)) {
             return self::CERT_FORMAT_PKCS12;
         }
-        throw new \Exception(
+        throw CertificadoException::porMotivo(
+            MotivoCertificado::NoSoportado,
             "[Config] Formato de certificado no soportado: $format. Valores aceptados: pem, p12, pfx."
         );
     }
@@ -92,7 +96,7 @@ class Config
         $res = new Config();
         
         if(is_null($config)) {
-            throw new \Exception("Objeto de configuración no puede ser nulo.");
+            throw new ConfiguracionException("Objeto de configuración no puede ser nulo.");
         }
         
         if(isset($config->env)) {
@@ -108,12 +112,12 @@ class Config
         }
 
         if(!isset($config->privateKeyFilePath)) {
-            throw new \Exception("Ruta del archivo de la clave privada debe ser especificada.");
+            throw new ConfiguracionException("Ruta del archivo de la clave privada debe ser especificada.");
         }
         $res->privateKeyFilePath = $config->privateKeyFilePath;
 
         if(!isset($config->privateKeyPassphrase)) {
-            throw new \Exception("Contraseña de la clave privada debe ser especificada.");
+            throw new ConfiguracionException("Contraseña de la clave privada debe ser especificada.");
         }
         $res->privateKeyPassphrase = $config->privateKeyPassphrase;
 

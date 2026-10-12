@@ -31,6 +31,34 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   `DE_Types_v150.xsd:1290-1314`): `normalizar()`, `exacto()` y `esValido()`. Reúne, sin cambiarlo, el criterio que
   `GGrupSup` (0.2.1, Q-B10) y `GVehNuevo` (0.2.1, Q-B12) aplicaban por separado; los dos grupos delegan en él y
   conservan sus mensajes. Lo usará el validador de reglas de esta misma versión.
+- **Excepciones tipadas** (`IonysDev\Pkuatia\Core\Exceptions`, evaluación §7.2 con las decisiones Q-C2 y Q-C3). Cada
+  clase extiende la que se lanzaba hasta 0.2.1 en ese lugar, así que ningún `catch` existente deja de funcionar, y
+  todas implementan `PkuatiaExceptionInterface` (con `getContexto()`, sin secretos) para atraparlas de una vez:
+  - `PkuatiaException` (base, extiende `\Exception`) → `ConfiguracionException` (Config incompleta, `Init()` sin
+    archivos, factoría de SoapClient inválida, archivos temporales o del dId) → `CertificadoException` con
+    `getMotivo()` (`MotivoCertificado`: NoEncontrado, PassphraseIncorrecta, CifradoHeredado, PemInvalido,
+    NoSoportado); `FirmaException` (firmador sin inicializar); `RespuestaException` (respuesta del SIFEN que no se
+    pudo interpretar: `getOperacion()`, `getCampoFaltante()`, `getRespuestaCruda()`).
+  - `ValidacionException` (extiende `\InvalidArgumentException`) → `CampoInvalidoException` con `getCampoMT()`,
+    `getElemento()`, `getValorRecibido()`, `getReglaEsperada()` y `getCodigoSifen()`.
+  - `TransporteException` (extiende `\SoapFault`, que ya es una `\Exception`) para toda falla de comunicación en las
+    siete operaciones del facade, con `getOperacion()`, `getTipo()` (`TipoFallaTransporte`: Wsdl,
+    RespuestaVaciaONoXml, Conexion, TiempoAgotado, Tls, SoapFault, Desconocida, deducido de lo observado contra
+    `sifen-test`), el `faultcode` original y el `SoapFault` original en `getPrevious()`; `SifenNoDisponibleException`
+    cuando el patrón es el de saturación o bloqueo temporal (WSDL o cuerpo vacío).
+- El facade lanza las excepciones tipadas: `Init()` y `Config` (`CertificadoException`/`ConfiguracionException`),
+  las validaciones previas a la red (`ValidacionException`; el CDC y el motivo de los eventos y la NT-024 como
+  `CampoInvalidoException`, esta última con el código 1321 y el campo D208), los errores de parseo
+  (`RespuestaException` con la respuesta cruda) y las fallas de comunicación (`TransporteException`). Los mensajes
+  conservan el prefijo `[Sifen] …` de cada operación. `SignHelper`, `Pkcs12Helper` y `PemHelper` lanzan
+  `CertificadoException` o `FirmaException`.
+
+### Cambiado
+
+- `ConsultarRUC` y `ConsultarDE` envuelven también el `SoapFault` y las demás fallas (decisión Q-C3, que cierra la
+  parte 2 de Q-B4): la excepción es `TransporteException`, que sigue siendo un `\SoapFault` con el mismo
+  `faultcode`, así que `catch (\SoapFault)` la atrapa igual que hasta 0.2.1; cambia solo el mensaje, que ahora lleva
+  el prefijo `[Sifen] Error al consultar …:` como en las demás operaciones.
 
 ## [0.2.1] — 2026-10-11
 

@@ -10,6 +10,9 @@ use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use DateTime;
 use DateTimeZone;
 use IonysDev\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Constants\MotivoCertificado;
+use IonysDev\Pkuatia\Core\Exceptions\CertificadoException;
+use IonysDev\Pkuatia\Core\Exceptions\FirmaException;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use DOMDocument;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
@@ -34,14 +37,14 @@ class SignHelper
   public static function Init(String $keyFilePath, String $passphrase, String $certificateFormat, ?String $certFilePath = null)
   {
     if (!file_exists($keyFilePath))
-      throw new \Exception("[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
+      throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
 
     $format = Config::normalizeCertificateFormat($certificateFormat);
     $usesCombinedPem = $format === Config::CERT_FORMAT_PEM
       && PemHelper::usesCombinedFile($certFilePath, $keyFilePath);
 
     if (!$usesCombinedPem && !is_null($certFilePath) && !file_exists($certFilePath))
-      throw new \Exception("[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
+      throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
 
     self::$xmlKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
     self::$xmlKey->passphrase = $passphrase;
@@ -63,7 +66,7 @@ class SignHelper
       self::$xmlKey->loadKey($privateKey, false);
     }
     else {
-      throw new \Exception("[SignHelper] Formato de certificado no soportado.");
+      throw CertificadoException::porMotivo(MotivoCertificado::NoSoportado, "[SignHelper] Formato de certificado no soportado.");
     }
 
     // Se mantiene una instancia en la propiedad pública por compatibilidad hacia atrás,
@@ -98,7 +101,7 @@ class SignHelper
   public static function SignRDE(RDE $rde, DateTime $fechaFirma = new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE))): DOMDocument
   {
     if (!isset(self::$x509Cert))
-      throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
+      throw new FirmaException("[SignHelper] No se ha inicializado el firmador de XML.");
 
     $rde->DE->setDFecFirma($fechaFirma);
 
@@ -132,7 +135,7 @@ class SignHelper
   public static function SingEvents(GGroupGesEve $raiz, $config)
   {
     if (!isset(self::$x509Cert))
-      throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
+      throw new FirmaException("[SignHelper] No se ha inicializado el firmador de XML.");
 
     $xmlDocument = new DOMDocument('1.0', 'UTF-8');
     $xmlDocument->formatOutput = false;
