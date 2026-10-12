@@ -59,6 +59,17 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   facade le agrega la operación y la respuesta cruda); una falla al serializar a XML lanza `PkuatiaException`.
   Lo que era `\InvalidArgumentException` sigue siéndolo y lo que era `\Exception` sigue siéndolo. En `src/` no
   queda ningún `throw` genérico, y un test lo vigila.
+- `Constants\CodigoResultadoWS`: enum con los 57 códigos de resultado de los web services como texto de cuatro
+  dígitos con cero inicial, tal como llegan en `dCodRes`: los 40 vigentes del MT v150 (§12.2 y §12.3, con 0420
+  inexistente, 0421 RUC sin permiso y 0422 CDC encontrado), 0364 (consulta de lote extemporánea, guía de la DNIT),
+  0520-0523 (archivo de RUC, NT-011), los 10 eliminados en v150 (con `vigente()` falso) y dos que no figuran en las
+  tablas pero el SIFEN responde: 0100 "Error Inesperado" y 0143 "La firma digital del evento debe corresponder al
+  receptor del DE/DTE" (capturas del 09 y 11/10/2026). `fromAny()` acepta `260`, `"260"` y `"0260"`;
+  `descripcion()`, `idMT()`, `esAprobacion()`, `esTransitorio()`, `esObservado()`, `categoria()`
+  (`CategoriaCodigoWS`, por rangos del §12.1.1) y `fuente()`. Las constantes enteras `COD_RES_*` siguen valiendo.
+- `Constants\EstadoResultado` (`dEstRes`: Aprobado, Aprobado con observación, Rechazado) con `fromTexto()`
+  tolerante a espacios, mayúsculas y tildes, `esAprobado()` (verdadero también con observaciones) y `letra()`; y
+  `Constants\EstadoRuc` (`dCodEstCons`: ACT, SUS, SAD, BLQ, CAN, CDE) con `descripcion()` y `esActivo()`.
 
 ### Cambiado
 
