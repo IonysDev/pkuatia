@@ -4,7 +4,8 @@
 > contra `https://sifen-test.set.gov.py`, anonimizadas con `pkuatia-test/AnonimizarCapturas.php`.
 > Propósito: cerrar los `[PENDIENTE DE VERIFICACIÓN]` sobre el formato real de las respuestas
 > (ver `SESION-CONTEXT.md`, "Prueba a ejecutar al inicio de la Fase A de PKuatia"). **Al 09/10/2026 la tabla de
-> esa sección queda cerrada por completo** (ver "Pendientes que cierra").
+> esa sección queda cerrada por completo** (ver "Pendientes que cierra"). La corrida del 11/10/2026 (Fase B) cubre
+> los demás tipos de documento, el lote y los eventos del receptor.
 
 ## Qué se conserva y qué se reemplaza en la anonimización
 
@@ -23,11 +24,35 @@ a escapar igual que lo hace el SIFEN.
 
 | Carpeta | Contenido | Pendientes que cierra |
 |---|---|---|
+| [`2026-10-11/`](./2026-10-11/) | **Fase B**: FE a crédito en cuotas **0260**; NR **0260**; AF **rechazada 2562** (cédula del vendedor registrada como RUC) y **aprobada 0260** con constancia de no contribuyente; consulta de la AF **0422**; FE en ANG **rechazada 1206**; FE con los cuatro grupos de `gCamEsp` **0260**; FE con vehículo **0260** y su consulta **0422**; lote de dos FE **0300** y consulta del lote **0362**; sobre con **cinco eventos del receptor** firmados por el emisor, **0143 × 5**; consulta de RUC con **0160** genérico. README propio con cronología y observaciones | Texto de **0143**; `rRetEnviEventoDe` con **varios `gResProcEVe`** (`id` 1 a 5, en el orden del sobre); `dProtConsLote` de 17 dígitos y `rResEnviConsLoteDe` real (`dFecProc` = recepción del lote, `dMsgRes` = "Aprobado" por DE); `rRetEnviDe` de rechazo de negocio (2562, 1206) con `Id` y `dDigVal`; respuesta de consulta para AF y para `gVehNuevo` |
 | [`2026-10-09/`](./2026-10-09/) | **Flujo completo**: consulta de RUC **0502**; consulta de un CDC nunca registrado **0420**; FE **aprobada 0260**; cancelación **rechazada 4009** 11 s después de aprobar; consulta del CDC aprobado **0422** (`xContenDE` sin eventos); cancelación **rechazada 0100 "Error Inesperado"** (transitorio); cancelación **aprobada 0600**; consulta del CDC cancelado **0422** con `xContEv` | `rRetEnviDe` aprobado (orden y literal 0260); `rRetEnviEventoDe` aprobado y rechazado (`dFecProc`, orden de `gResProcEVe`, literal 0600); forma de `xContenDE` y de `xContEv` (`rContEv` > `xEvento` + `rResEnviEventoDe`); `dProtAut` sigue tras la cancelación; literal 0420 |
 | [`2026-10-06/`](./2026-10-06/) | Consulta de RUC **0502**; FE válida rechazada con **0160** y dos consultas de RUC rechazadas con **0160** en un ambiente degradado/bloqueado | Formato del `rRetEnviDe` de rechazo genérico |
 
 **Queda abierto** (no requiere más capturas de este flujo): si el desfase de reloj que produce el 4009 (ver
-observación 5) ocurre también en producción, y cómo se ve `xContEv` con **más de un** `rContEv`.
+observación 6 del 09/10) ocurre también en producción, cómo se ve `xContEv` con **más de un** `rContEv` (el 11/10 los
+cinco eventos fueron rechazados, así que no quedaron registrados), y qué literal acepta la validación 1206 para las
+monedas con `CodeName` de más de 20 caracteres (el 11/10 el truncado a 20 fue rechazado).
+
+## 2026-10-11 — resumen
+
+Cronología, tabla de archivos y observaciones completas en [`2026-10-11/README.md`](./2026-10-11/README.md).
+Lo que cambia respecto de lo documentado hasta el 09/10:
+
+1. **0143 tiene texto:** "La firma digital del evento debe corresponder al receptor del DE/DTE" (archivo `15`). Sigue
+   sin estar en el MT v150.
+2. **Varios eventos por sobre:** cinco `rEve` con `Id` 1 a 5 (dos `rGeVeConf`, `rGeVeDisconf`, `rGeVeDescon`,
+   `rGeVeNotRec`) devolvieron cinco `gResProcEVe` en el mismo orden, cada uno con `dEstRes`, `id` y `gResProc`. El
+   `id` repite el `Id` del `rEve`, así que el `@Id` correlativo funciona como clave de correlación.
+3. **`rResEnviLoteDe` y `rResEnviConsLoteDe` reales** (archivos `13` y `14`): `dProtConsLote` de 17 dígitos,
+   `dTpoProces` = 0, `dMsgResLot` "Procesamiento de lote {N} concluido", y por cada DE `gResProcLote { id, dEstRes,
+   dProtAut, gResProc }` con `id` en minúscula y `dMsgRes` = "Aprobado" (no el literal de la recepción individual).
+   El `dFecProc` de la consulta es la hora de recepción del lote.
+4. **Rechazos de negocio en `rRetEnviDe`** (2562 y 1206, archivos `05` y `09`): a diferencia del 0160 genérico,
+   traen `Id`, `dFecProc` y `dDigVal`; falta solo `dProtAut`. Los `dMsgRes` llevan el prefijo "TEST - ".
+5. **El desfase de reloj del 09/10 se repite:** los `dFecProc` de los rechazos 2562 y 1206 van unos 2,5 minutos
+   adelantados respecto de la hora de la llamada (11:44:48 frente a 11:42:18; 11:50:35 frente a 11:48:05).
+6. **0160 genérico también con el ambiente "sano":** entre llamadas aprobadas, una consulta de RUC idéntica a otra
+   que acababa de responder 0502 devolvió 0160 (archivo `06`). Confirma el canario de solo lectura del 06/10.
 
 ## 2026-10-09 — cronología (hora de Asunción, `-03:00`)
 
@@ -123,6 +148,7 @@ Los `meta-*.json` guardan la cronología exacta de cada corrida con milisegundos
 
 ```
 pkuatia-test> ./Run.ps1 CapturaRespuestas.php [--consultar=<CDC>] [--sin-canario] [--inexistente]
+pkuatia-test> ./Run.ps1 CapturaFaseB.php          # corrida del 11/10: cuotas, NR, AF, ANG, sectores, vehículo, lote, eventos del receptor
 pkuatia-test> php AnonimizarCapturas.php --dir=captures/<fecha> --out=06-ejemplos/respuestas-ws/<fecha>
 ```
 
