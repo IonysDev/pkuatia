@@ -39,14 +39,14 @@ use ReflectionProperty;
  */
 final class VistaDocumento
 {
-  private function __construct(private readonly ?DocumentoElectronico $builder, private readonly ?DE $de)
+  private function __construct(private readonly ?DocumentoElectronico $builder, private readonly ?DE $de, private readonly ?RDE $rde = null)
   {
   }
 
   public static function desde(DocumentoElectronico|DE|RDE $documento): self
   {
     if ($documento instanceof RDE)
-      $documento = isset($documento->DE) ? $documento->DE : new DE();
+      return new self(null, isset($documento->DE) ? $documento->DE : new DE(), $documento);
     return $documento instanceof DE ? new self(null, $documento) : new self($documento, null);
   }
 
@@ -270,5 +270,12 @@ final class VistaDocumento
   public function de(): ?DE
   {
     return $this->de;
+  }
+
+  /** J003 dInfAdic del grupo fuera de la firma (rDE.gCamFuFD); solo un RDE lo lleva, los builders no. */
+  public function dInfAdic(): ?string
+  {
+    $texto = $this->prop($this->prop($this->rde, 'gCamFuFD'), 'dInfAdic');
+    return is_string($texto) && trim($texto) !== '' ? $texto : null;
   }
 }

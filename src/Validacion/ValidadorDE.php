@@ -10,8 +10,10 @@ use IonysDev\Pkuatia\Core\Fields\DE\A\DE;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Validacion\Reglas\ReglasDeDescripciones;
 use IonysDev\Pkuatia\Validacion\Reglas\ReglasDeGrupos;
+use IonysDev\Pkuatia\Validacion\Reglas\ReglasDeItems;
 use IonysDev\Pkuatia\Validacion\Reglas\ReglasDelReceptor;
 use IonysDev\Pkuatia\Validacion\Reglas\ReglasDePagos;
+use IonysDev\Pkuatia\Validacion\Reglas\ReglasDeTotales;
 use IonysDev\Pkuatia\Validacion\Reglas\ReglasGenerales;
 
 /**
@@ -24,7 +26,8 @@ use IonysDev\Pkuatia\Validacion\Reglas\ReglasGenerales;
  *   esquema. Los campos que la librería completa al serializar o firmar no se exigen.
  * - Conjuntos de reglas del MT §12.4 (Validacion\Reglas): presencia de grupos por tipo de documento, descripciones
  *   que no corresponden al código, reglas generales (CDC, firma, timbrado, fechas, tipo de cambio, emisor, geografía),
- *   receptor y pagos. Los mensajes son los del MT (catálogo) y la sugerencia, el método de PKuatia que informa el campo.
+ *   receptor, pagos, ítems (precios, descuentos e IVA por ítem, NT-013) y totales. Los mensajes son los del MT
+ *   (catálogo) y la sugerencia, el método de PKuatia que informa el campo; los importes se recalculan con BCMath.
  */
 final class ValidadorDE
 {
@@ -35,7 +38,8 @@ final class ValidadorDE
   /** Marca de un elemento que el modelo no almacena porque lo deriva al serializar (p. ej. dDesDepSal desde cDepSal). */
   private const DERIVADO = "\0derivado";
   /** @var list<class-string<Reglas\ConjuntoDeReglas>> en el orden en que se aplican */
-  private const CONJUNTOS = [ReglasDeGrupos::class, ReglasDeDescripciones::class, ReglasGenerales::class, ReglasDelReceptor::class, ReglasDePagos::class];
+  private const CONJUNTOS = [ReglasDeGrupos::class, ReglasDeDescripciones::class, ReglasGenerales::class, ReglasDelReceptor::class, ReglasDePagos::class,
+    ReglasDeItems::class, ReglasDeTotales::class];
 
   /**
    * @param DateTime|null $ahora Momento de referencia para las reglas de fechas; por defecto, ahora en la zona del SIFEN.

@@ -136,6 +136,20 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   1314/1323, 1318, 1330, 1324, 1327; **pagos**: 1503, 1550/1551/1552, 1553, 1556/1557, 1600/1601, 1650/1651,
   1700/1701, 1703/1704, 1705/1706, 1751. Un test por código, con un documento válido al que se le introduce una sola
   violación; las fechas se evalúan contra un momento de referencia (`$ahora`, por defecto ahora en Asunción).
+- Reglas de negocio del validador, ítems y totales (`Validacion\Reglas\ReglasDeItems` y `ReglasDeTotales`; MT §12.4
+  E8 y F, `campos-obligatorios.md` y NT-013): **ítems**: 1800/1801 códigos DNCP, 1807/1808 relevancia de las
+  mercaderías, 1854/1855/1856 tipo de cambio por ítem, 1859 total bruto, 1852/1861 descuento particular y su
+  porcentaje (variación admitida 0,8, como dice el MT), 1853 total de la operación por ítem, 1857/1858 total en
+  guaraníes; **IVA por ítem**: 1904/1905/1906 proporción, 1907/1908 tasa, 1909/1910/1911 base gravada,
+  1912/1913 liquidación y 1921 base exenta del gravado parcial (NT-013 §2.1, todavía sin fila en
+  `errores-validacion.md`); **totales**: 2352–2359 subtotales por afectación, 2362 total de la operación (suma de los
+  subtotales; en la autofactura, de los ítems), 2363/2364 descuentos, 2365 total general, 2366–2371 liquidación del
+  IVA, 2372–2377 bases gravadas y 2382/2385/2386 total en guaraníes. Los importes se recalculan con BCMath desde los
+  ítems informados con las fórmulas que `addItem()` y `calcTotSub()` aplican y el SIFEN aprobó: `F014 = F008 − F013 +
+  F025` y `F017 = F015 + F016 − F036 − F037 + F026` (`campos-obligatorios.md`; la fila 2365 del MT dice otra cosa,
+  devolución a ekuat-ia). Como el DE no dice con cuántos decimales redondea el emisor, se admite menos de una unidad
+  del último decimal informado. 2503 (J003 `dInfAdic` fuera de la firma, que PKuatia emite a pedido) se informa como
+  advertencia hasta comprobarlo en `sifen-test`.
 
 ### Cambiado
 
