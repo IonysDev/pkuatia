@@ -150,6 +150,21 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   devolución a ekuat-ia). Como el DE no dice con cuántos decimales redondea el emisor, se admite menos de una unidad
   del último decimal informado. 2503 (J003 `dInfAdic` fuera de la firma, que PKuatia emite a pedido) se informa como
   advertencia hasta comprobarlo en `sifen-test`.
+- Reglas de negocio del validador, transporte, documentos asociados y campos específicos
+  (`Validacion\Reglas\ReglasDeTransporte`, `ReglasDeDocumentosAsociados` y `ReglasEspecificas`; MT §12.4 E1, E6, E9,
+  E10 y H): **transporte**: 2102 tipo de transporte, 2107/2109 fechas de traslado obligatorias en la NR, 2108 inicio
+  anterior a la puesta en producción del SIFEN, 2110 fin anterior al inicio, 2252/2253 número de vuelo solo en el
+  aéreo, 2254/2255 matrícula o identificación según E967, 2302/2305 RUC del transportista según su naturaleza, 2306
+  dígito verificador, 2307/2308 tipo de documento según la naturaleza, 2311 número de documento; **documentos
+  asociados**: 2415 un solo asociado en AF, NC y ND, 2416/2434 constancia solo en la AF, 2402/2418 CDC solo en el
+  electrónico, 2405–2409 y 2411 campos del impreso obligatorios con H002 = 2 y 2419–2423 y 2425 prohibidos sin él,
+  2424/2435 descripción del tipo de impreso, 2436 retención con pago por retención, 2413 resolución de crédito fiscal
+  con D011 = 12, 2426/2427 tipo de constancia, 2430–2433 número y control de la constancia; **específicas**:
+  1400/1401 compras públicas solo y siempre en B2G, 1402 fecha del código de contratación, 2604/2605 fecha futura de
+  la factura en la NR, 2606 traslado entre locales con el emisor como receptor, 2050–2055 ciclos de `gGrupAdi`.
+  Fuera de alcance porque dependen de datos del SIFEN: 2403, 2404, 2414, 2417, 2437, 2438 y 2440; 2309 y 2312 no
+  pueden fallar porque el modelo deriva esas descripciones. Con esto el validador cubre 233 códigos del MT, más 1921 de la NT-013. La FE
+  con todos los opcionales de la fábrica de pruebas pasa a B2G con códigos DNCP (1401 y 1800 la rechazaban).
 
 ### Corregido
 
