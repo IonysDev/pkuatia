@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Utils\DecimalXsd;
 use SimpleXMLElement;
 
 /**
@@ -317,34 +318,17 @@ class GGrupSup
    * DE_Types_v150.xsd) y lo devuelve como texto, sin redondear. Como en xs:decimal, los ceros a la izquierda
    * y los decimales finales en cero no cuentan. También acepta, normalizados, los textos numéricos que hasta 0.2.0
    * entraban por la conversión de PHP a int: "+5" y "5." como "5", ".5" como "0.5" y la notación exponencial
-   * ("1e3") como decimal.
+   * ("1e3") como decimal. Desde 0.3.0 (Fase C, C1) delega en Utils\DecimalXsd, con el mismo criterio y los
+   * mismos mensajes.
    */
   private static function monto(int|String $valor, String $campo, int $totalDigitos): String
   {
-    $original = trim((string) $valor);
-    $texto = $original;
-    if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
-      if (!is_numeric($texto))
-        throw new \InvalidArgumentException("[GGrupSup] $campo debe ser un número decimal: '$original'");
-      $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
-    }
-    $signo = str_starts_with($texto, '-') ? '-' : '';
-    $texto = ltrim($texto, '+-');
-    if (str_starts_with($texto, '.'))
-      $texto = '0' . $texto;
-    if (str_ends_with($texto, '.'))
-      $texto = substr($texto, 0, -1);
-    [$enteros, $decimales] = array_pad(explode('.', $texto, 2), 2, '');
-    $enteros = ltrim($enteros, '0');
-    $decimales = rtrim($decimales, '0');
-    if (strlen($decimales) > 4 || strlen($enteros) + strlen($decimales) > $totalDigitos)
-      throw new \InvalidArgumentException("[GGrupSup] $campo admite hasta $totalDigitos dígitos, de los cuales hasta 4 decimales (DE_Types_v150.xsd): '$original'");
-    return $signo . $texto;
+    return DecimalXsd::normalizar($valor, $campo, $totalDigitos, 4, '[GGrupSup]');
   }
 
   /** Monto exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */
   private static function exacto(?String $decimal, int $entero): String
   {
-    return ($decimal !== null && intval($decimal) === $entero) ? $decimal : (string) $entero;
+    return DecimalXsd::exacto($decimal, $entero);
   }
 }

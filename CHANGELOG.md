@@ -26,6 +26,11 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   solución conocida): el SIFEN rechaza la descripción recortada con 1206 y no hay una descripción conocida que
   acepte, así que esas monedas no se pueden usar en un DE. Está en el README (Notas importantes, punto 6) y en el
   docblock de `MonedaMapping::GetDescription()`.
+- `Utils\DecimalXsd`: validación y normalización de montos y medidas contra los tipos decimales del XSD
+  (`xs:decimal` con `totalDigits` y `fractionDigits`, como `tMontoBase4` y `tMontoBase6`,
+  `DE_Types_v150.xsd:1290-1314`): `normalizar()`, `exacto()` y `esValido()`. Reúne, sin cambiarlo, el criterio que
+  `GGrupSup` (0.2.1, Q-B10) y `GVehNuevo` (0.2.1, Q-B12) aplicaban por separado; los dos grupos delegan en él y
+  conservan sus mensajes. Lo usará el validador de reglas de esta misma versión.
 
 ## [0.2.1] — 2026-10-11
 
