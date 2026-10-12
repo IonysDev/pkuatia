@@ -151,6 +151,13 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   del último decimal informado. 2503 (J003 `dInfAdic` fuera de la firma, que PKuatia emite a pedido) se informa como
   advertencia hasta comprobarlo en `sifen-test`.
 
+### Corregido
+
+- `GCamItem::FromSifenResponseObject()` leía los códigos DNCP del ítem como `dDDncpG` y `dDDncpE`, propiedades que
+  el objeto SOAP no tiene, así que E704 y E705 se perdían al leer un DE desde la respuesta de `ConsultarDE`. Lo
+  detectó la ida y vuelta de la FE B2G de la fábrica de pruebas (`IdaYVueltaGruposTest`). Solo cambia la lectura: la
+  serialización es idéntica.
+
 ### Cambiado
 
 - `ConsultarRUC` y `ConsultarDE` envuelven también el `SoapFault` y las demás fallas (decisión Q-C3, que cierra la

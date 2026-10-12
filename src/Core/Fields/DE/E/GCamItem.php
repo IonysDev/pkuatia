@@ -917,11 +917,13 @@ class GCamItem extends BaseSifenField
     if (isset($object->dNCM)) {
       $res->setDNCM($object->dNCM);
     }
-    if (isset($object->dDDncpG)) {
-      $res->setDDncpG($object->dDDncpG);
+    // E704/E705: hasta 0.2.1 se leían como dDDncpG/dDDncpE (propiedades que el SOAP no tiene) y los códigos DNCP se
+    // perdían al leer un DE desde la respuesta del SIFEN (Fase C, C11; ida y vuelta de la FE B2G de la fábrica).
+    if (isset($object->dDncpG)) {
+      $res->setDDncpG($object->dDncpG);
     }
-    if (isset($object->dDDncpE)) {
-      $res->setDDncpE($object->dDDncpE);
+    if (isset($object->dDncpE)) {
+      $res->setDDncpE($object->dDncpE);
     }
     if (isset($object->dGtin)) {
       $res->setDGtin($object->dGtin);

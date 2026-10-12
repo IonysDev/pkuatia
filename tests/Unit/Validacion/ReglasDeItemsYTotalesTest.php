@@ -77,7 +77,7 @@ final class ReglasDeItemsYTotalesTest extends TestCase
   /** @return iterable<string, array{callable(): DE, string}> */
   public static function items(): iterable
   {
-    yield '1800 B2G sin DNCP general' => [function () { $d = self::de(fn () => F::facturaConTodosLosOpcionales()); $d->gDatGralOpe->gDatRec->iTiOpe = 3; return $d; }, '1800'];
+    yield '1800 B2G sin DNCP general' => [function () { $d = self::fe(); $d->gDatGralOpe->gDatRec->iTiOpe = 3; return $d; }, '1800'];
     yield '1801 DNCP general sin específico' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->dDncpG = '12345678'; return $d; }, '1801'];
     yield '1807 relevancia fuera de la NR' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->cRelMerc = 1; $d->gDtipDe->gCamItem[0]->dDesRelMerc = 'Tolerancia de quiebra'; return $d; }, '1807'];
     yield '1808 relevancia sin cantidad ni porcentaje' => [function () { $d = self::nr(); $d->gDtipDe->gCamItem[0]->cRelMerc = 1; $d->gDtipDe->gCamItem[0]->dDesRelMerc = 'Tolerancia de quiebra'; return $d; }, '1808'];
