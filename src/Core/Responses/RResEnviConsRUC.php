@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Responses;
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRUC;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * RespuestaConsultaRUC
@@ -126,7 +127,7 @@ class RResEnviConsRUC
   public static function fromStdClassObject($object)
   {
     if (is_null($object)) {
-      throw new \Exception("Error Processing Request: null", 1);
+      throw new RespuestaException("Error Processing Request: null", 1);
     }
     $res = new RResEnviConsRUC();
     // Rechazo genérico: la consulta de RUC responde con el sobre rRetEnviDe > rProtDe (respuestas-ws/2026-10-06/03 y

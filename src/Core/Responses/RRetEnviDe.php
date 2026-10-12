@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Responses;
 
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * Nodo Id:     ARSch01
@@ -63,7 +64,7 @@ class RRetEnviDe {
     {
         if(is_null($object))
         {
-            throw new \Exception("Error Processing Request: null", 1);
+            throw new RespuestaException("Error Processing Request: null", 1);
         }
         
         $res = new RRetEnviDe();

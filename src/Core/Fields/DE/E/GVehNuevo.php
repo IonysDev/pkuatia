@@ -9,6 +9,7 @@ use Exception;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Utils\DecimalXsd;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E770 Grupo de detalle de vehículos nuevos
@@ -599,7 +600,7 @@ class GVehNuevo extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gVehNuevo') != 0)
-            throw new Exception('[GVehNuevo] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GVehNuevo] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new self();
         if($node->getElementsByTagName('iTipOpVN')->length > 0)
           $res->setITipOpVN(intval(trim($node->getElementsByTagName('iTipOpVN')->item(0)->nodeValue)));
@@ -691,7 +692,7 @@ class GVehNuevo extends BaseSifenField
   public static function FromSimpleXMLElement($node): self
   {
     if ($node->getName() != 'gVehNuevo') {
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
     }
 
     $res = new self();

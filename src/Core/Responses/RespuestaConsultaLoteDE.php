@@ -2,6 +2,8 @@
 
 namespace IonysDev\Pkuatia\Core\Responses;
 
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
+
 /**
  * RespuestaConsultaLoteDE
  *
@@ -105,7 +107,7 @@ class RespuestaConsultaLoteDE
   {
     ///is is null
     if (is_null($object)) {
-      throw new \Exception("Error Processing Request: null", 1);
+      throw new RespuestaException("Error Processing Request: null", 1);
     }
 
     ///check response codes

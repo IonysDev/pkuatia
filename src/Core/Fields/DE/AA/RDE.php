@@ -12,6 +12,8 @@ use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
+use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;
 
 /**
  * Nodo Id:     AA001
@@ -165,7 +167,7 @@ class RDE extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'rDE') != 0)
-      throw new \Exception('[RDE] Invalid XML Node Name: ' . $node->getName());
+      throw new ValidacionException('[RDE] Invalid XML Node Name: ' . $node->getName());
     $res = new RDE();
     if(isset($node->dVerFor))
       $res->setDVerFor(intval($node->dVerFor));
@@ -191,7 +193,7 @@ class RDE extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'rDE') != 0)
-      throw new \Exception('[RDE] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[RDE] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new RDE();
     if($node->getElementsByTagName('dVerFor')->length > 0)
       $res->setDVerFor(intval($node->getElementsByTagName('dVerFor')->item(0)->nodeValue));
@@ -245,9 +247,9 @@ class RDE extends BaseSifenField
   {
     // Validaciones
     if(!isset($this->dVerFor))
-      throw new \Exception('[RDE] El campo dVerFor no puede ser nulo.');
+      throw new ValidacionException('[RDE] El campo dVerFor no puede ser nulo.');
     if(!isset($this->DE))
-      throw new \Exception('[RDE] El campo DE no puede ser nulo.');
+      throw new ValidacionException('[RDE] El campo DE no puede ser nulo.');
 
     // Conversión
     $res = $doc->createElement('rDE');
@@ -314,7 +316,7 @@ class RDE extends BaseSifenField
   {
     $xmlString = $this->toDOMDocument()->saveXML();
     if(!$xmlString)
-      throw new \Exception('[RDE] Error al convertir el objeto a XML.');
+      throw new PkuatiaException('[RDE] Error al convertir el objeto a XML.');
     return $xmlString;
   }
 }

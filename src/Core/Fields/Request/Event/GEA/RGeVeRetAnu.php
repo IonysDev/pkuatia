@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  *  ID:GERA001 Raíz Gestión de Eventos de retención anulación PADRE:GDE007
@@ -339,7 +340,7 @@ class RGeVeRetAnu
   public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
   {
     if($node->getName() != 'rGeVeRetAnu')
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
 
     $res = new RGeVeRetAnu();
     $res->setId($node->Id);

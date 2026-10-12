@@ -16,6 +16,7 @@ use IonysDev\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
 use IonysDev\Pkuatia\Core\Fields\DE\F\GTotSub;
 use DateTime;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 trait ItemValorado {
 
@@ -320,7 +321,7 @@ trait ItemValorado {
      */
     public function calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, ?String $comision = null, ?String $redondeo = null) : GTotSub {
         if($redondeoSedeco && $redondeo !== null)
-            throw new \InvalidArgumentException('[ItemValorado] calcTotSub: los parámetros $redondeo y $redondeoSedeco son excluyentes.');
+            throw new ValidacionException('[ItemValorado] calcTotSub: los parámetros $redondeo y $redondeoSedeco son excluyentes.');
         $sumaSubtBruto = '0';
         if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value)
         {

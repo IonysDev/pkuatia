@@ -181,6 +181,9 @@ class Sifen
    */
   private static function excepcionDeOperacion(\Throwable $e, string $operacion, string $prefijo): \Throwable
   {
+    // Una RespuestaException de una clase de respuesta (campo faltante) se completa con la operación y la respuesta cruda.
+    if ($e instanceof RespuestaException)
+      return RespuestaException::desde($e, $operacion, $prefijo . ': ' . $e->getMessage(), self::respuestaCrudaSinFallar());
     if ($e instanceof PkuatiaExceptionInterface)
       return $e;
     if ($e instanceof SoapFault)

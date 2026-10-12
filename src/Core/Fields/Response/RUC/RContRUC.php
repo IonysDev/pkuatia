@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response\RUC;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * ContRUC01 Elemento raiz de la respuesta a la consulta de RUC
@@ -252,7 +253,7 @@ class RContRUC
   public static function fromSimpleXMLElement(SimpleXMLElement $xml): RContRUC
   {
     if(strcmp($xml->getName(),'rContRUC') != 0) {
-      throw new \Exception("Invalid XML Element: $xml->getName()");
+      throw new RespuestaException("Invalid XML Element: $xml->getName()");
     }
     $res = new RContRUC();
     if(isset($xml->dRUCCons)){

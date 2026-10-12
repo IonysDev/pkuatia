@@ -12,6 +12,7 @@ use IonysDev\Pkuatia\Core\Constants\CamIVAAfecIVA;
 use IonysDev\Pkuatia\Utils\ValueValidations;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id: E700
@@ -249,7 +250,7 @@ class GCamItem extends BaseSifenField
   {
     $desc = UnidadMedidaMapping::GetDesc(strval($cUniMed));
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamItem] El código de unidad de medida $cUniMed (E709) no existe en Unidades_Medida_v141.xsd del SIFEN.");
+      throw new ValidacionException("[GCamItem] El código de unidad de medida $cUniMed (E709) no existe en Unidades_Medida_v141.xsd del SIFEN.");
     $this->cUniMed = $cUniMed;
     $this->setDDesUniMed($desc);
     return $this;
@@ -287,7 +288,7 @@ class GCamItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dCantProSer, 10, 0, 8))
     {
-      throw new \Exception("Valor inválido de dCantProSer: $dCantProSer");
+      throw new ValidacionException("Valor inválido de dCantProSer: $dCantProSer");
     }
     $this->dCantProSer = $dCantProSer;
     return $this;
@@ -305,7 +306,7 @@ class GCamItem extends BaseSifenField
   {
     $desc = CountryMapping::getCountryDesc($cPaisOrig);
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamItem] El código de país $cPaisOrig (cPaisOrig) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+      throw new ValidacionException("[GCamItem] El código de país $cPaisOrig (cPaisOrig) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
     $this->cPaisOrig = $cPaisOrig;
     $this->setDDesPaisOrig($desc);
     return $this;
@@ -360,7 +361,7 @@ class GCamItem extends BaseSifenField
         $this->setDDesRelMerc("Tolerancia de merma");
         break;
       default:
-        throw new \Exception("Valor '" . $cRelMerc . "'no soportado para cRelMerc");
+        throw new ValidacionException("Valor '" . $cRelMerc . "'no soportado para cRelMerc");
         break;
     }
     return $this;
@@ -393,7 +394,7 @@ class GCamItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dCanQuiMer, 10, 0, 4))
     {
-      throw new \Exception("Valor inválido de dCanQuiMer: $dCanQuiMer");
+      throw new ValidacionException("Valor inválido de dCanQuiMer: $dCanQuiMer");
     }
     $this->dCanQuiMer = $dCanQuiMer;
     return $this;
@@ -411,7 +412,7 @@ class GCamItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dPorQuiMer, 3, 0, 8))
     {
-      throw new \Exception("Valor inválido de dPorQuiMer: $dPorQuiMer");
+      throw new ValidacionException("Valor inválido de dPorQuiMer: $dPorQuiMer");
     }
     $this->dPorQuiMer = $dPorQuiMer;
     return $this;
@@ -759,7 +760,7 @@ class GCamItem extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gCamItem') != 0)
     {
-      throw new \Exception("El nodo '" . $node->getName() . "' no es un nodo 'gCamItem'");
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no es un nodo 'gCamItem'");
     }
     $res = new GCamItem();
     $res->setDCodInt(strval($node->dCodInt));
@@ -982,12 +983,12 @@ class GCamItem extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamItem') != 0)
-        throw new \Exception('[GCamItem] Nodo con nombre inválido: ' . $node->nodeName);
+        throw new ValidacionException('[GCamItem] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     
     $dCodIntNode = $node->getElementsByTagName('dCodInt')->item(0);
     if(!$dCodIntNode)
-      throw new \Exception('[GCamItem] Elemento requerido dCodInt no encontrado.');
+      throw new ValidacionException('[GCamItem] Elemento requerido dCodInt no encontrado.');
     $res->setDCodInt(trim($dCodIntNode->nodeValue));
     
     if($node->getElementsByTagName('dParAranc')->length > 0)
@@ -1005,22 +1006,22 @@ class GCamItem extends BaseSifenField
     
     $dDesProSerNode = $node->getElementsByTagName('dDesProSer')->item(0);
     if(!$dDesProSerNode)
-      throw new \Exception('[GCamItem] Elemento requerido dDesProSer no encontrado.');
+      throw new ValidacionException('[GCamItem] Elemento requerido dDesProSer no encontrado.');
     $res->setDDesProSer(trim($dDesProSerNode->nodeValue));
     
     $cUniMedNode = $node->getElementsByTagName('cUniMed')->item(0);
     if(!$cUniMedNode)
-      throw new \Exception('[GCamItem] Elemento requerido cUniMed no encontrado.');
+      throw new ValidacionException('[GCamItem] Elemento requerido cUniMed no encontrado.');
     $res->setCUniMed(intval(trim($cUniMedNode->nodeValue)));
     
     $dDesUniMedNode = $node->getElementsByTagName('dDesUniMed')->item(0);
     if(!$dDesUniMedNode)
-      throw new \Exception('[GCamItem] Elemento requerido dDesUniMed no encontrado.');
+      throw new ValidacionException('[GCamItem] Elemento requerido dDesUniMed no encontrado.');
     $res->setDDesUniMed(trim($dDesUniMedNode->nodeValue));
     
     $dCantProSerNode = $node->getElementsByTagName('dCantProSer')->item(0);
     if(!$dCantProSerNode)
-      throw new \Exception('[GCamItem] Elemento requerido dCantProSer no encontrado.');
+      throw new ValidacionException('[GCamItem] Elemento requerido dCantProSer no encontrado.');
     $res->setDCantProSer(floatval(trim($dCantProSerNode->nodeValue)));
     
     // Optional elements

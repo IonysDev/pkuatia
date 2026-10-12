@@ -10,6 +10,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E605
@@ -78,7 +79,7 @@ class GPaConEIni extends BaseSifenField
     }
     else
     {
-      throw new \Exception("El valor monto por tipo de pago a ser asignado no es válido");
+      throw new ValidacionException("El valor monto por tipo de pago a ser asignado no es válido");
     }
     return $this;
   }
@@ -132,7 +133,7 @@ class GPaConEIni extends BaseSifenField
     }
     else
     {
-      throw new \Exception("El valor tasa de cambio por tipo de pago a ser asignado no es válido");
+      throw new ValidacionException("El valor tasa de cambio por tipo de pago a ser asignado no es válido");
     }
     return $this;
   }
@@ -279,7 +280,7 @@ class GPaConEIni extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gPaConEIni') != 0)
     {
-      throw new \Exception("El elemento '" . $node->getName() . "' no es gPaConEIni");
+      throw new ValidacionException("El elemento '" . $node->getName() . "' no es gPaConEIni");
     }
     $res = new GPaConEIni();
     $res->setITiPago(intval($node->iTiPago));
@@ -377,7 +378,7 @@ class GPaConEIni extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gPaConEIni') != 0)
-      throw new \Exception('[GPaConEIni] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GPaConEIni] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GPaConEIni();
     $res->setITiPago(intval(trim($node->getElementsByTagName('iTiPago')->item(0)->nodeValue)));
     $res->setDDesTiPag(trim($node->getElementsByTagName('dDesTiPag')->item(0)->nodeValue));

@@ -13,6 +13,7 @@ use IonysDev\Pkuatia\Core\Fields\DE\E\GCamSal;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamTrans;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GTransp;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GVehTras;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Trait que proporciona métodos amigables para establecer los campos de transporte de mercaderías.
@@ -319,12 +320,12 @@ trait CamposDeTransporte
         
         if ($tipoIdentificacion == 1) {
             if ($numeroIdentificacion === null) {
-                throw new Exception('[CamposDeTransporte::addTransporteVehiculo] El número de identificación es obligatorio cuando tipoIdentificacion=1');
+                throw new ValidacionException('[CamposDeTransporte::addTransporteVehiculo] El número de identificación es obligatorio cuando tipoIdentificacion=1');
             }
             $gVehTras->setDNroIDVeh($numeroIdentificacion);
         } elseif ($tipoIdentificacion == 2) {
             if ($numeroMatricula === null) {
-                throw new Exception('[CamposDeTransporte::addTransporteVehiculo] El número de matrícula es obligatorio cuando tipoIdentificacion=2');
+                throw new ValidacionException('[CamposDeTransporte::addTransporteVehiculo] El número de matrícula es obligatorio cuando tipoIdentificacion=2');
             }
             $gVehTras->setDNroMatVeh($numeroMatricula);
         }
@@ -393,13 +394,13 @@ trait CamposDeTransporte
         
         if ($esContribuyente) {
             if ($ruc === null || $digitoVerificadorRuc === null) {
-                throw new Exception('[CamposDeTransporte::setTransporteTransportista] RUC y dígito verificador son obligatorios cuando el transportista es contribuyente');
+                throw new ValidacionException('[CamposDeTransporte::setTransporteTransportista] RUC y dígito verificador son obligatorios cuando el transportista es contribuyente');
             }
             $gCamTrans->setDRucTrans($ruc);
             $gCamTrans->setDDVTrans($digitoVerificadorRuc);
         } else {
             if ($tipoDocumentoIdentidad === null || $numeroDocumentoIdentidad === null) {
-                throw new Exception('[CamposDeTransporte::setTransporteTransportista] Tipo y número de documento de identidad son obligatorios cuando el transportista no es contribuyente');
+                throw new ValidacionException('[CamposDeTransporte::setTransporteTransportista] Tipo y número de documento de identidad son obligatorios cuando el transportista no es contribuyente');
             }
             $gCamTrans->setITipIDTrans($tipoDocumentoIdentidad);
             $gCamTrans->setDNumIDTrans($numeroDocumentoIdentidad);
@@ -444,11 +445,11 @@ trait CamposDeTransporte
         $this->ensureGTransp();
         
         if (!isset($this->gTransp->gCamTrans)) {
-            throw new Exception('[CamposDeTransporte::setTransporteAgente] Debe establecer primero los datos del transportista antes de agregar información del agente');
+            throw new ValidacionException('[CamposDeTransporte::setTransporteAgente] Debe establecer primero los datos del transportista antes de agregar información del agente');
         }
         
         if ($ruc !== null && $digitoVerificadorRuc === null) {
-            throw new Exception('[CamposDeTransporte::setTransporteAgente] El dígito verificador del RUC es obligatorio si se proporciona el RUC del agente');
+            throw new ValidacionException('[CamposDeTransporte::setTransporteAgente] El dígito verificador del RUC es obligatorio si se proporciona el RUC del agente');
         }
         
         $this->gTransp->gCamTrans->setDNombAg($nombre);

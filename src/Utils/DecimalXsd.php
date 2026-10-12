@@ -2,6 +2,8 @@
 
 namespace IonysDev\Pkuatia\Utils;
 
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
+
 /**
  * Normalización y validación de montos y medidas contra los tipos decimales del XSD del SIFEN:
  * xs:decimal con totalDigits y fractionDigits, como tMontoBase4 (19 dígitos, 4 decimales) y
@@ -38,7 +40,7 @@ final class DecimalXsd
     $pre = $prefijo === '' ? '' : $prefijo . ' ';
     if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
       if (!is_numeric($texto))
-        throw new \InvalidArgumentException("{$pre}$campo debe ser un número decimal: '$original'");
+        throw new ValidacionException("{$pre}$campo debe ser un número decimal: '$original'");
       $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
     }
     $signo = str_starts_with($texto, '-') ? '-' : '';
@@ -51,7 +53,7 @@ final class DecimalXsd
     $enteros = ltrim($enteros, '0');
     $parteDecimal = rtrim($parteDecimal, '0');
     if (strlen($parteDecimal) > $decimales || strlen($enteros) + strlen($parteDecimal) > $totalDigitos)
-      throw new \InvalidArgumentException("{$pre}$campo admite hasta $totalDigitos dígitos, de los cuales hasta $decimales decimales ($tipo): '$original'");
+      throw new ValidacionException("{$pre}$campo admite hasta $totalDigitos dígitos, de los cuales hasta $decimales decimales ($tipo): '$original'");
     return $signo . $texto;
   }
 

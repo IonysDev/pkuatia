@@ -7,6 +7,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Helpers\FechaHelper;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * ID PP01: Protocolo  de procesamiento del DE
@@ -250,7 +251,7 @@ class RProtDe
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): RProtDe
   {
     if (strcmp($xml->getName(), 'rProtDe') != 0) {
-      throw new \Exception("Invalid XML Element: $xml->getName()");
+      throw new RespuestaException("Invalid XML Element: $xml->getName()");
     }
     $res = new RProtDe();
     // Hasta 0.2.0: se leía "id" (el SIFEN manda Id), la fecha con un formato que nunca coincide ("Y-m-d H:i:s")

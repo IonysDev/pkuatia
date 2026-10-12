@@ -6,6 +6,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response\Batch;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * Nodo Id:     CRSch05        
@@ -144,10 +145,10 @@ class GResProcLote
     $res = new GResProcLote();
 
     if (isset($object->id)) $res->setId($object->id);
-    else throw new \Exception("[GResProcLote] Error al instanciar respuesta, falta parametro: id", 1);
+    else throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: id", 'id');
 
     if (isset($object->dEstRes)) $res->setDEstRes($object->dEstRes);
-    else throw new \Exception("[GResProcLote] Error al instanciar respuesta, falta parametro: dEstRes", 1);
+    else throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: dEstRes", 'dEstRes');
 
     if (isset($object->dProtAut)) $res->setDProtAut($object->dProtAut);
 
@@ -162,7 +163,7 @@ class GResProcLote
         array_push($aux, GResProc::FromSifenResponseObject($object->gResProc));
       };
       $res->setGResProc($aux);
-    } else throw new \Exception("[GResProcLote] Error al instanciar respuesta, falta parametro: gResProc", 1);
+    } else throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: gResProc", 'gResProc');
 
     return $res;
   }

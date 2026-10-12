@@ -24,6 +24,7 @@ use IonysDev\Pkuatia\Utils\ValueValidations;
 use DateTime;
 use IonysDev\Pkuatia\Core\Constants\CamAENatVen;
 use IonysDev\Pkuatia\Core\Constants\CamAETipIDVen;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Tipo de Documento Electrónico SIFEN: 4 - Autofactura electrónica (C002).
@@ -245,7 +246,7 @@ class Autofactura extends DocumentoElectronicoComercial
         ?string $tasaDeCambio = null
     ): self {
         if (strcmp($moneda, 'PYG') !== 0 && $tasaDeCambio === null) {
-            throw new \Exception('[Autofactura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
+            throw new ValidacionException('[Autofactura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
         }
         $gPaConEIni = new GPaConEIni();
         $gPaConEIni->setITiPago($tipoDePago);
@@ -308,7 +309,7 @@ class Autofactura extends DocumentoElectronicoComercial
         $gPaConEIni->setDMonTiPag($monto);
         $gPaConEIni->setCMoneTiPag($moneda);
         if (strcmp($moneda, 'PYG') !== 0 && $tasaDeCambio === null) {
-            throw new \Exception('[Autofactura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
+            throw new ValidacionException('[Autofactura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
         }
         if ($tasaDeCambio !== null) {
             $gPaConEIni->setDTiCamTiPag($tasaDeCambio);
@@ -373,18 +374,18 @@ class Autofactura extends DocumentoElectronicoComercial
         ?string $monedaCuotas = null
     ): self {
         if (count($montoCuotas) !== count($vencimientos)) {
-            throw new \Exception('[Autofactura] La cantidad de montos de cuotas y vencimientos no coincide.');
+            throw new ValidacionException('[Autofactura] La cantidad de montos de cuotas y vencimientos no coincide.');
         }
         if ($montoEntregaInicial !== null && ValueValidations::isValidStringDecimal($montoEntregaInicial, 15, 0, 4) === false) {
-            throw new \Exception('[Autofactura] Monto de entrega inicial inválido: ' . $montoEntregaInicial);
+            throw new ValidacionException('[Autofactura] Monto de entrega inicial inválido: ' . $montoEntregaInicial);
         }
         $gCuotas = [];
         foreach ($montoCuotas as $i => $monto) {
             if (ValueValidations::isValidStringDecimal($monto, 15, 0, 4) === false) {
-                throw new \Exception('[Autofactura] Monto de cuota ' . ($i + 1) . ' inválido: ' . $monto);
+                throw new ValidacionException('[Autofactura] Monto de cuota ' . ($i + 1) . ' inválido: ' . $monto);
             }
             if (!($vencimientos[$i] instanceof DateTime)) {
-                throw new \Exception('[Autofactura] Vencimiento de cuota ' . ($i + 1) . ' debe ser DateTime.');
+                throw new ValidacionException('[Autofactura] Vencimiento de cuota ' . ($i + 1) . ' debe ser DateTime.');
             }
             $gCuota = new GCuotas();
             $gCuota->setCMoneCuo($monedaCuotas ?? 'PYG');

@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GEI001 - rGeVeInu - Campos generales del DE
@@ -280,7 +281,7 @@ class RGeVeInu
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
      if(strcmp($node->getName(),'rGeVeInu') != 0) {
-       throw new \Exception("Invalid XML Element: ". $node->getName());
+       throw new ValidacionException("Invalid XML Element: ". $node->getName());
      }
 
       $res = new self();

@@ -10,6 +10,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E010
@@ -172,7 +173,7 @@ class GCamFE extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gCamFE') != 0)
     {
-      throw new \Exception("El nodo '" . $node->getName() . "' no corresponde a 'gCamFE'");
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a 'gCamFE'");
     }
     $res = new GCamFE();
     $res->iIndPres = intval($node->iIndPres);
@@ -225,7 +226,7 @@ class GCamFE extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamFE') != 0)
-      throw new \Exception('[GCamFE] El nombre del nodo no corresponde a gCamFE: ' . $node->nodeName, 1);
+      throw new ValidacionException('[GCamFE] El nombre del nodo no corresponde a gCamFE: ' . $node->nodeName, 1);
     $res = new GCamFE();
     $res->iIndPres = intval($node->getElementsByTagName('iIndPres')->item(0)->nodeValue);
     $res->dDesIndPres = strval($node->getElementsByTagName('dDesIndPres')->item(0)->nodeValue);
@@ -250,7 +251,7 @@ class GCamFE extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     if ($this->iIndPres === CamFEIndPres::Otro->value && (mb_strlen($this->getDDesIndPres()) < 10 || mb_strlen($this->getDDesIndPres()) > 30))
-      throw new \InvalidArgumentException("[GCamFE] Con iIndPres = 9 (Otro), dDesIndPres (E012) debe ser un texto libre de 10 a 30 caracteres (tdDesIndPres, DE_Types_v150.xsd): informarlo con setDDesIndPres(). Valor actual: '" . $this->getDDesIndPres() . "'.");
+      throw new ValidacionException("[GCamFE] Con iIndPres = 9 (Otro), dDesIndPres (E012) debe ser un texto libre de 10 a 30 caracteres (tdDesIndPres, DE_Types_v150.xsd): informarlo con setDDesIndPres(). Valor actual: '" . $this->getDDesIndPres() . "'.");
     $res = $doc->createElement('gCamFE');
     $res->appendChild(XmlHelper::elemento($doc, 'iIndPres', $this->iIndPres));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesIndPres', $this->getDDesIndPres()));
@@ -301,7 +302,7 @@ class GCamFE extends BaseSifenField
     }
     if(strlen($errMsg) > 0)
     {
-      throw new \Exception($errMsg);
+      throw new ValidacionException($errMsg);
     }
   }
 }

@@ -14,6 +14,7 @@ use DOMElement;
 use SimpleXMLElement;
 use Stringable;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E900    
@@ -501,7 +502,7 @@ class GTransp extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gTransp') != 0)
-      throw new \Exception('[GTransp] El nombre del nodo no es gTransp: ' . $node->nodeName);
+      throw new ValidacionException('[GTransp] El nombre del nodo no es gTransp: ' . $node->nodeName);
     $res = new self();
     
     if($node->getElementsByTagName('iTipTrans')->length > 0)

@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\Helpers\FechaHelper;
 
 use DateTime;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 //id: GRSch01,respuesta del registro de eventos
 class RRetEnviEventoDe
@@ -90,7 +91,7 @@ class RRetEnviEventoDe
   public static function FromSifenResponseObject($object)
   {
     if (is_null($object)) {
-      throw new \Exception("Error Processing Request: null", 1);
+      throw new RespuestaException("Error Processing Request: null", 1);
     }
     $res = new RRetEnviEventoDe();
     // Rechazo genérico: el SIFEN responde con el sobre rRetEnviDe > rProtDe (capturado para recepción y
@@ -124,7 +125,7 @@ class RRetEnviEventoDe
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
     if(strcmp($node->getName(),'rRetEnviEventoDe') != 0) {
-      throw new \Exception("Invalid XML Element:" . $node->getName());
+      throw new RespuestaException("Invalid XML Element:" . $node->getName());
     }
 
     $res = new RRetEnviEventoDe();

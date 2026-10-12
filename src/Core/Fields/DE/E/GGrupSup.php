@@ -7,6 +7,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Utils\DecimalXsd;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E810 gGrupSup Grupo del sector supermercados
@@ -274,7 +275,7 @@ class GGrupSup
   public static function FromDOMElement(DOMElement $node): self
   {
     if (strcmp($node->localName, 'gGrupSup') != 0)
-      throw new \InvalidArgumentException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->localName);
+      throw new ValidacionException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->localName);
     $res = new GGrupSup();
     foreach ($node->childNodes as $hijo) {
       if ($hijo instanceof DOMElement)
@@ -294,7 +295,7 @@ class GGrupSup
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if (strcmp($node->getName(), 'gGrupSup') != 0)
-      throw new \InvalidArgumentException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->getName());
+      throw new ValidacionException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->getName());
     $res = new GGrupSup();
     foreach ($node->children() as $hijo)
       self::asignar($res, $hijo->getName(), (string) $hijo);

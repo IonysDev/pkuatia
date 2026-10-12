@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GDE001 - rGesEve - Raíz de Gestión de Eventos
@@ -24,7 +25,7 @@ class RGesEve
         if (isset($this->REve))
         return $this->REve;
         else
-        throw new \Exception('El campo REve no ha sido definido.');
+        throw new ValidacionException('El campo REve no ha sido definido.');
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -85,7 +86,7 @@ class RGesEve
     public static function FromSimpleXMLElement(SimpleXMLElement $node):self
     {
         if(strcmp($node->getName(),'rGesEve') != 0) {
-            throw new \Exception("Invalid XML Element: " . $node->getName());
+            throw new ValidacionException("Invalid XML Element: " . $node->getName());
         }
 
         $res = new self();

@@ -9,6 +9,7 @@ use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     D140
@@ -176,7 +177,7 @@ class GRespDE extends BaseSifenField
     {
         if(strcmp($node->getName(),'gRespDE') != 0)
         {
-            throw new \Exception('El nombre del nodo no corresponde a "gRespDE"');
+            throw new ValidacionException('El nombre del nodo no corresponde a "gRespDE"');
         }
         $res = new self();
         $res->setITipIDRespDE(intval($node->iTipIDRespDE));
@@ -217,7 +218,7 @@ class GRespDE extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gRespDE') != 0)
-            throw new \Exception('[GRespDE] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GRespDE] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GRespDE();
         $res->setITipIDRespDE(intval($node->getElementsByTagName('iTipIDRespDE')->item(0)->nodeValue));
         $res->setDDTipIDRespDE(strval($node->getElementsByTagName('dDTipIDRespDE')->item(0)->nodeValue));
@@ -241,7 +242,7 @@ class GRespDE extends BaseSifenField
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         if ($this->iTipIDRespDE === TipIDRespDE::Otro->value && (mb_strlen($this->getDDTipIDRespDE()) < 9 || mb_strlen($this->getDDTipIDRespDE()) > 41))
-            throw new \InvalidArgumentException("[GRespDE] Con iTipIDRespDE = 9 (Otro), dDTipIDRespDE (D142) debe ser un texto libre de 9 a 41 caracteres (tdDTipIDRespDE, DE_Types_v150.xsd): informarlo con setDDTipIDRespDE(). Valor actual: '" . $this->getDDTipIDRespDE() . "'.");
+            throw new ValidacionException("[GRespDE] Con iTipIDRespDE = 9 (Otro), dDTipIDRespDE (D142) debe ser un texto libre de 9 a 41 caracteres (tdDTipIDRespDE, DE_Types_v150.xsd): informarlo con setDDTipIDRespDE(). Valor actual: '" . $this->getDDTipIDRespDE() . "'.");
         $res = $doc->createElement('gRespDE');
         $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRespDE', $this->iTipIDRespDE));
         $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRespDE', $this->getDDTipIDRespDE()));

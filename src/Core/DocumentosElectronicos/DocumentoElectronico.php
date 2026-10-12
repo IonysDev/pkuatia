@@ -35,6 +35,7 @@ use Exception;
 use IonysDev\Pkuatia\Core\Constants\OpeDETipEmi;
 use IonysDev\Pkuatia\Core\Constants\RecNat;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Clase que contiene la estructura básica de un DE, en todos los casos posibles de éste; asi como las validaciones necesarias.
@@ -268,7 +269,7 @@ class DocumentoElectronico
   public function setSerieNumeroTimbrado(String $serie): self
   {
     if (!TimbradoUtils::ValidarSerie($serie))
-      throw new Exception("[DocumentoElectronico::setSerieNumeroTimbrado] Valor de serie inválido. Valor recibido: $serie");
+      throw new ValidacionException("[DocumentoElectronico::setSerieNumeroTimbrado] Valor de serie inválido. Valor recibido: $serie");
     $this->gTimb->setDSerieNum($serie);
     return $this;
   }
@@ -288,7 +289,7 @@ class DocumentoElectronico
   public function setNumeroEstablecimiento(int $numEst): self
   {
     if ($numEst < 1 || $numEst > 999)
-      throw new Exception("[DocumentoElectronico::setNumeroEstablecimiento] El número de establecimiento debe ser un valor entre 1 y 999. Valor recibido: $numEst");
+      throw new ValidacionException("[DocumentoElectronico::setNumeroEstablecimiento] El número de establecimiento debe ser un valor entre 1 y 999. Valor recibido: $numEst");
     $this->gTimb->setDEst(str_pad(strval($numEst), 3, "0", STR_PAD_LEFT));
     return $this;
   }
@@ -308,7 +309,7 @@ class DocumentoElectronico
   public function setNumeroPuntoExpedicion(int $numExp): self
   {
     if ($numExp < 1 || $numExp > 999)
-      throw new Exception("[DocumentoElectronico::setNumeroPuntoExpedicion] El número de punto de expedición debe ser un valor entre 1 y 999. Valor recibido: $numExp");
+      throw new ValidacionException("[DocumentoElectronico::setNumeroPuntoExpedicion] El número de punto de expedición debe ser un valor entre 1 y 999. Valor recibido: $numExp");
     $this->gTimb->setDPunExp(str_pad(strval($numExp), 3, "0", STR_PAD_LEFT));
     return $this;
   }
@@ -329,7 +330,7 @@ class DocumentoElectronico
   public function setNumeroDocumento(int $numDoc): self
   {
     if ($numDoc < 1 || $numDoc > 9999999)
-      throw new Exception("[DocumentoElectronico::setNumeroDocumento] El número de documento debe ser un valor entre 1 y 9999999. Valor recibido: $numDoc");
+      throw new ValidacionException("[DocumentoElectronico::setNumeroDocumento] El número de documento debe ser un valor entre 1 y 9999999. Valor recibido: $numDoc");
     $this->gTimb->setDNumDoc(str_pad($numDoc, 7, '0', STR_PAD_LEFT));
     return $this;
   }
@@ -436,7 +437,7 @@ class DocumentoElectronico
   public function setEmisorRUC(String $rucEmisor, int $dv): self
   {
     if (!RucUtils::ValidarRUCconDV($rucEmisor . '-' . $dv))
-      throw new Exception("[DocumentoElectronico::setEmisorRUC] El RUC del emisor no es válido. Valor recibido: $rucEmisor-$dv");
+      throw new ValidacionException("[DocumentoElectronico::setEmisorRUC] El RUC del emisor no es válido. Valor recibido: $rucEmisor-$dv");
     $this->gEmis->setDRucEm($rucEmisor);
     $this->gEmis->setDDVEmi($dv);
     return $this;
@@ -731,29 +732,29 @@ class DocumentoElectronico
     $tipoOpInt = $tipoOperacion instanceof RecTiOpe ? $tipoOperacion->value : $tipoOperacion;
     $tipoIdInt = $tipoIdentificacion instanceof TipIDRec ? $tipoIdentificacion->value : $tipoIdentificacion;
     if ($tipoOpInt === RecTiOpe::B2F->value && strcmp($codPais, 'PRY') == 0) {
-      throw new Exception("[DocumentoElectronico::setReceptor] No se puede emitir un DE de tipo B2F para un receptor en Paraguay.");
+      throw new ValidacionException("[DocumentoElectronico::setReceptor] No se puede emitir un DE de tipo B2F para un receptor en Paraguay.");
     }
     // Validación de tipo de identidad y estado de contribuyente
     if ($esContribuyente) {
       if (!$tipoContribuyente)
-        throw new Exception("[DocumentoElectronico::setReceptor] El tipo de contribuyente es obligatorio si el receptor es contribuyente.");
+        throw new ValidacionException("[DocumentoElectronico::setReceptor] El tipo de contribuyente es obligatorio si el receptor es contribuyente.");
       if (is_null($ruc))
-        throw new Exception("[DocumentoElectronico::setReceptor] El RUC del receptor es obligatorio si el receptor es contribuyente.");
+        throw new ValidacionException("[DocumentoElectronico::setReceptor] El RUC del receptor es obligatorio si el receptor es contribuyente.");
       if (is_null($dv))
-        throw new Exception("[DocumentoElectronico::setReceptor] El dígito verificador del RUC del receptor es obligatorio si el receptor es contribuyente.");
+        throw new ValidacionException("[DocumentoElectronico::setReceptor] El dígito verificador del RUC del receptor es obligatorio si el receptor es contribuyente.");
     } else {
       if ($tipoIdentificacion === null)
-        throw new Exception("[DocumentoElectronico::setReceptor] El tipo de identificación es obligatorio si el receptor no es contribuyente.");
+        throw new ValidacionException("[DocumentoElectronico::setReceptor] El tipo de identificación es obligatorio si el receptor no es contribuyente.");
       // '0' es el valor que el MT exige en D210 para el receptor innominado (D208 = 5) y antes se rechazaba por ser falsy.
       if ($nroIdentificacion === null || $nroIdentificacion === '')
-        throw new Exception("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente (para el innominado, D208 = 5, informar '0').");
+        throw new ValidacionException("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente (para el innominado, D208 = 5, informar '0').");
       // Para "Otro" (9), D209 (dDTipIDRec) es de texto libre, obligatorio y de 9 a 41 caracteres.
       if ($tipoIdInt === TipIDRec::Otro->value) {
         if (is_null($descTipoIdentificacion) || $descTipoIdentificacion === '')
-          throw new Exception("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) es obligatoria cuando el tipo de identificación es 9 (Otro).");
+          throw new ValidacionException("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) es obligatoria cuando el tipo de identificación es 9 (Otro).");
         $descLen = mb_strlen($descTipoIdentificacion);
         if ($descLen < 9 || $descLen > 41)
-          throw new Exception("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) debe tener entre 9 y 41 caracteres cuando el tipo de identificación es 9 (Otro). Se encontraron " . $descLen . ".");
+          throw new ValidacionException("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) debe tener entre 9 y 41 caracteres cuando el tipo de identificación es 9 (Otro). Se encontraron " . $descLen . ".");
       }
     }
 
@@ -785,22 +786,22 @@ class DocumentoElectronico
       $this->gDatRec->setDNomFanRec($nombreFantasia);
 
     if ($tipoOpInt === RecTiOpe::B2F->value && $callePrincipal == null) {
-      throw new Exception("[DocumentoElectronico::setReceptor] La calle principal es obligatoria para un receptor extranjero.");
+      throw new ValidacionException("[DocumentoElectronico::setReceptor] La calle principal es obligatoria para un receptor extranjero.");
     }
 
     if (isset($callePrincipal)) {
       $this->gDatRec->setDDirRec($callePrincipal);
       if (!isset($numeroCasa))
-        throw new Exception("[DocumentoElectronico::setReceptor] El número de casa es obligatorio si se establece la calle principal.");
+        throw new ValidacionException("[DocumentoElectronico::setReceptor] El número de casa es obligatorio si se establece la calle principal.");
       $this->gDatRec->setDNumCasRec($numeroCasa);
       if ($tipoOpInt !== RecTiOpe::B2F->value) {
         if (!isset($codigoDepartamento))
-          throw new Exception("[DocumentoElectronico::setReceptor] El código de departamento es obligatorio si se establece la calle principal.");
+          throw new ValidacionException("[DocumentoElectronico::setReceptor] El código de departamento es obligatorio si se establece la calle principal.");
         $this->gDatRec->setCDepRec($codigoDepartamento);
         if (isset($codigoDistrito))
           $this->gDatRec->setCDisRec($codigoDistrito);
         if (!isset($codigoCiudad))
-          throw new Exception("[DocumentoElectronico::setReceptor] El código de ciudad es obligatorio si se establece la calle principal.");
+          throw new ValidacionException("[DocumentoElectronico::setReceptor] El código de ciudad es obligatorio si se establece la calle principal.");
         $this->gDatRec->setCCiuRec($codigoCiudad);
         if (isset($telefono))
           $this->gDatRec->setDTelRec($telefono);
@@ -871,7 +872,7 @@ class DocumentoElectronico
     if (!isset($this->gGrupEner))
       return $this->setDatosComplementariosSectorEnergia($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
     if (1 + count($this->gGrupEnerAdicionales) >= 9)
-      throw new \InvalidArgumentException('[DocumentoElectronico] El sector de energía eléctrica admite como máximo 9 medidores (gGrupEner, DE_v150.xsd:802; NT-023).');
+      throw new ValidacionException('[DocumentoElectronico] El sector de energía eléctrica admite como máximo 9 medidores (gGrupEner, DE_v150.xsd:802; NT-023).');
     $this->gGrupEnerAdicionales[] = self::crearGGrupEner($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
     return $this;
   }
@@ -1050,7 +1051,7 @@ class DocumentoElectronico
       $this->gGrupSeg->setDCodEmpSeg($codigoEmpresaSeguros);
     } else {
       if (strcmp($this->gGrupSeg->getDCodEmpSeg(), $codigoEmpresaSeguros) != 0)
-        throw new Exception("[DocumentoElectronico::addDatosComplementariosSectorSegurosPoliza] No se puede agregar una póliza de una empresa de seguros diferente a la ya agregada. Valor recibido: $codigoEmpresaSeguros");
+        throw new ValidacionException("[DocumentoElectronico::addDatosComplementariosSectorSegurosPoliza] No se puede agregar una póliza de una empresa de seguros diferente a la ya agregada. Valor recibido: $codigoEmpresaSeguros");
     }
     $poliza = new GGrupPolSeg();
     $poliza->setDPoliza($codigoPoliza);

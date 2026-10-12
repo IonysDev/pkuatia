@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GEC001 - rGeVeCan - Campos generales del DE
@@ -119,7 +120,7 @@ class RGeVeCan
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if (strcmp($node->getName(), 'rGeVeCan') != 0) {
-      throw new \Exception("Invalid XML Element:" . $node->getName());
+      throw new ValidacionException("Invalid XML Element:" . $node->getName());
     }
 
     $res = new self();

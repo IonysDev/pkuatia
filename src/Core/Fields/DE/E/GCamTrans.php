@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E980 gCamTrans  PADRE:E900
@@ -489,7 +490,7 @@ class GCamTrans extends BaseSifenField
       if (!isset($this->dDirChof))
          $faltantes[] = 'dDirChof (E993, dirección del chofer; DE_v150.xsd:986)';
       if (count($faltantes) > 0)
-         throw new \InvalidArgumentException('[GCamTrans] Faltan campos obligatorios del transportista (E980): ' . implode('; ', $faltantes) . '. Con los builders se informan en setTransporteTransportista().');
+         throw new ValidacionException('[GCamTrans] Faltan campos obligatorios del transportista (E980): ' . implode('; ', $faltantes) . '. Con los builders se informan en setTransporteTransportista().');
 
       $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
@@ -548,7 +549,7 @@ class GCamTrans extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamTrans') != 0)
-      throw new \Exception('[GCamTrans] El nombre del nodo no corresponde a gCamTrans: ' . $node->nodeName);
+      throw new ValidacionException('[GCamTrans] El nombre del nodo no corresponde a gCamTrans: ' . $node->nodeName);
     $res = new GCamTrans();
     
     if($node->getElementsByTagName('iNatTrans')->length > 0)

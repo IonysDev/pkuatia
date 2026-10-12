@@ -10,6 +10,7 @@ use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     D001
@@ -140,7 +141,7 @@ class GDatGralOpe extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gDatGralOpe') != 0)
     {
-      throw new Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
     }
     $res = new GDatGralOpe();
     $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFeEmiDE));
@@ -182,7 +183,7 @@ class GDatGralOpe extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gDatGralOpe') != 0)
-      throw new \Exception('[GDatGralOpe] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GDatGralOpe] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GDatGralOpe();
     $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFeEmiDE')[0]->nodeValue)));
     if($node->getElementsByTagName('gOpeCom')->length > 0)
@@ -206,11 +207,11 @@ class GDatGralOpe extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     if(!isset($this->dFeEmiDE))
-      throw new Exception('[GDatGralOpe] El campo dFeEmiDE no puede ser nulo');
+      throw new ValidacionException('[GDatGralOpe] El campo dFeEmiDE no puede ser nulo');
     if(!isset($this->gEmis))
-      throw new Exception('[GDatGralOpe] El campo gEmis no puede ser nulo');
+      throw new ValidacionException('[GDatGralOpe] El campo gEmis no puede ser nulo');
     if(!isset($this->gDatRec))
-      throw new Exception('[GDatGralOpe] El campo gDatRec no puede ser nulo');
+      throw new ValidacionException('[GDatGralOpe] El campo gDatRec no puede ser nulo');
     $res = $doc->createElement('gDatGralOpe');
     $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
     if(isset($this->gOpeCom)) 

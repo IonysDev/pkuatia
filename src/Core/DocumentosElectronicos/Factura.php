@@ -22,6 +22,7 @@ use IonysDev\Pkuatia\Core\Fields\DE\E\GPagCred;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GPagTarCD;
 use IonysDev\Pkuatia\Utils\ValueValidations;
 use DateTime;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Tipo de Documento Electrónico Sifen: 1 - Factura
@@ -135,7 +136,7 @@ class Factura extends DocumentoElectronicoComercial
     String $tasaDeCambio = null) : self
   {
     if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
-      throw new \Exception('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
+      throw new ValidacionException('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
     }
     $gPaConEIni = new GPaConEIni();
     $gPaConEIni->setITiPago($tipoDePago);
@@ -224,7 +225,7 @@ class Factura extends DocumentoElectronicoComercial
     $gPaConEIni->setDMonTiPag($monto);
     $gPaConEIni->setCMoneTiPag($moneda);
     if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
-      throw new \Exception('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
+      throw new ValidacionException('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
     }
     if(isset($tasaDeCambio)) {
       $gPaConEIni->setDTiCamTiPag($tasaDeCambio);
@@ -327,18 +328,18 @@ class Factura extends DocumentoElectronicoComercial
   public function setOperacionCreditoEnCuotas(array $montoCuotas, array $vencimientos, ?String $montoEntregaInicial = null, ?String $monedaCuotas = null) : self
   {
     if(count($montoCuotas) != count($vencimientos)) {
-      throw new \Exception('[Factura] La cantidad de montos de cuotas y vencimientos no coinciden.');
+      throw new ValidacionException('[Factura] La cantidad de montos de cuotas y vencimientos no coinciden.');
     }
     if(isset($montoEntregaInicial) && ValueValidations::isValidStringDecimal($montoEntregaInicial, 15, 0, 4) === false) {
-      throw new \Exception('[Factura] El monto de la entrega inicial no es una cadena decimal válida para este campo: ' . $montoEntregaInicial);
+      throw new ValidacionException('[Factura] El monto de la entrega inicial no es una cadena decimal válida para este campo: ' . $montoEntregaInicial);
     }
     $gCuotas = [];
     foreach($montoCuotas as $i => $monto) {
       if(ValueValidations::isValidStringDecimal($monto, 15, 0, 4) === false) {
-        throw new \Exception('[Factura] El monto de la cuota ' . ($i + 1) . ' no es un decimal válido: ' . $monto);
+        throw new ValidacionException('[Factura] El monto de la cuota ' . ($i + 1) . ' no es un decimal válido: ' . $monto);
       }
       if(!($vencimientos[$i] instanceof DateTime)) {
-        throw new \Exception('[Factura] El vencimiento de la cuota ' . ($i + 1) . ' no es una instancia de DateTime.');
+        throw new ValidacionException('[Factura] El vencimiento de la cuota ' . ($i + 1) . ' no es una instancia de DateTime.');
       }
       $gCuota = new GCuotas();
       $gCuota->setCMoneCuo(isset($monedaCuotas) ? $monedaCuotas : 'PYG');

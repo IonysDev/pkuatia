@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Utils;
 
 use IonysDev\Pkuatia\Core\Fields\DE\C\GTimb;
 use Exception;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Clase con métodos de utilidad para el timbrado de documentos.
@@ -23,7 +24,7 @@ class TimbradoUtils {
         if(is_null($serieActual) || strlen($serieActual) == 0)
             return 'AA';
         if(strcmp($serieActual, 'ZZ') == 0)
-            throw new Exception('[GTimb] La serie actual es ZZ, no existe una serie siguiente.');
+            throw new ValidacionException('[GTimb] La serie actual es ZZ, no existe una serie siguiente.');
         $res = '';
         $c1 = substr($serieActual, 0, 1);
         $c2 = substr($serieActual, 1, 1);
@@ -50,18 +51,18 @@ class TimbradoUtils {
     public static function CalcNumSgte(?String $serieActual, ?int $numeroActual): array
     {
         if(!self::ValidarSerie($serieActual))
-            throw new Exception('[TimbradoUtils] La serie actual no es válida.');
+            throw new ValidacionException('[TimbradoUtils] La serie actual no es válida.');
         if(is_null($numeroActual))
            return ['serie' => $serieActual, 'numero' => 1];
         if($numeroActual < 1 || $numeroActual > GTimb::MAX_NUMDOC)
-            throw new Exception('[TimbradoUtils] El número actual no es válido.');
+            throw new ValidacionException('[TimbradoUtils] El número actual no es válido.');
 
         if($numeroActual < GTimb::MAX_NUMDOC) {
             return ['serie' => $serieActual, 'numero' => $numeroActual + 1];
         }
         else {
             if(!is_null($serieActual) && strcmp($serieActual, 'ZZ') == 0)
-                throw new Exception('[TimbradoUtils] Series y números agotados.');
+                throw new ValidacionException('[TimbradoUtils] Series y números agotados.');
             return ['serie' => self::CalcSerieSgte($serieActual), 'numero' => 1];
         }
     }

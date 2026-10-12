@@ -11,6 +11,7 @@ use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     B001        
@@ -57,7 +58,7 @@ class GOpeDE extends BaseSifenField
     {
         $case = $iTipEmi instanceof OpeDETipEmi ? $iTipEmi : OpeDETipEmi::tryFrom($iTipEmi);
         if ($case === null) {
-            throw new \Exception('[GOpeDE] El valor de iTipEmi no es válido: ' . $iTipEmi);
+            throw new ValidacionException('[GOpeDE] El valor de iTipEmi no es válido: ' . $iTipEmi);
         }
         $this->iTipEmi = $case->value;
         $this->dDesTipEmi = $case->getDescription();
@@ -102,7 +103,7 @@ class GOpeDE extends BaseSifenField
     public function setDInfoEmi(String $dInfoEmi): self
     {
         if(strlen($dInfoEmi) > 3000)
-            throw new Exception('[GOpeDE] El valor de dInfoEmi no puede tener más de 3000 caracteres.');
+            throw new ValidacionException('[GOpeDE] El valor de dInfoEmi no puede tener más de 3000 caracteres.');
         $this->dInfoEmi = $dInfoEmi;
         return $this;
     }
@@ -117,7 +118,7 @@ class GOpeDE extends BaseSifenField
     public function setDInfoFisc(String $dInfoFisc): self
     {
         if(strlen($dInfoFisc) > 3000)
-            throw new Exception('[GOpeDE] El valor de dInfoFisc no puede tener más de 3000 caracteres.');
+            throw new ValidacionException('[GOpeDE] El valor de dInfoFisc no puede tener más de 3000 caracteres.');
         $this->dInfoFisc = $dInfoFisc;
         return $this;
     }
@@ -196,7 +197,7 @@ class GOpeDE extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gOpeDE') != 0)
-            throw new Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GOpeDE] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->getElementsByTagName('iTipEmi')->item(0)->nodeValue));
         $res->setDDesTipEmi($node->getElementsByTagName('dDesTipEmi')->item(0)->nodeValue);
@@ -217,7 +218,7 @@ class GOpeDE extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         if(strcmp($node->getName(), 'gOpeDE') != 0){
-            throw new Exception('[GOpeDE] Nodo con nombre inválido: ' . $node->getName());
+            throw new ValidacionException('[GOpeDE] Nodo con nombre inválido: ' . $node->getName());
         }
         $res = new GOpeDE();
         $res->setITipEmi(intval($node->iTipEmi));

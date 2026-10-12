@@ -8,6 +8,7 @@ use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E940    
@@ -319,7 +320,7 @@ class GCamEnt extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamEnt') != 0)
-      throw new \Exception('[GCamEnt] El nombre del nodo no corresponde a gCamEnt: ' . $node->nodeName);
+      throw new ValidacionException('[GCamEnt] El nombre del nodo no corresponde a gCamEnt: ' . $node->nodeName);
     $res = new GCamEnt();
     
     if($node->getElementsByTagName('dDirLocEnt')->length > 0)

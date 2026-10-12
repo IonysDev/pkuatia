@@ -7,6 +7,7 @@ use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use IonysDev\Pkuatia\Helpers\FechaHelper;
 use DateTime;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * Nodo Id:     DRSch01
@@ -218,7 +219,7 @@ class RResEnviConsDe
   public static function FromSifenResponseObject($object)
   {
     if (is_null($object)) {
-      throw new \Exception("Error Processing Request: null", 1);
+      throw new RespuestaException("Error Processing Request: null", 1);
     }
     $res = new RResEnviConsDe();
     // Rechazo genérico: el SIFEN responde con el sobre rRetEnviDe > rProtDe (capturado para recepción y consulta

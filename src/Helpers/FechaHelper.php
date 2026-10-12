@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Helpers;
 use DateTime;
 use DateTimeZone;
 use IonysDev\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Lectura de las fechas y horas que devuelve el SIFEN en sus respuestas. Formatos reales (capturas de
@@ -38,6 +39,6 @@ final class FechaHelper
       if ($fecha !== false && $sinAvisos)
         return $fecha;
     }
-    throw new \InvalidArgumentException("[FechaHelper] $campo no es una fecha y hora del SIFEN (AAAA-MM-DDThh:mm:ss, con o sin zona horaria): '$texto'");
+    throw new ValidacionException("[FechaHelper] $campo no es una fecha y hora del SIFEN (AAAA-MM-DDThh:mm:ss, con o sin zona horaria): '$texto'");
   }
 }

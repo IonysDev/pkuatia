@@ -52,6 +52,13 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   (`RespuestaException` con la respuesta cruda) y las fallas de comunicación (`TransporteException`). Los mensajes
   conservan el prefijo `[Sifen] …` de cada operación. `SignHelper`, `Pkcs12Helper` y `PemHelper` lanzan
   `CertificadoException` o `FirmaException`.
+- Todo el modelo lanza las excepciones tipadas (352 `throw` en 92 archivos, sin cambiar ningún mensaje): las
+  validaciones de los setters, de los builders de documentos, de los eventos, de los helpers y de las utilidades
+  lanzan `ValidacionException`; las clases de respuesta lanzan `RespuestaException` cuando la respuesta del SIFEN
+  es nula, no tiene la forma esperada o le falta un campo (`getCampoFaltante()` con el nombre del campo, y el
+  facade le agrega la operación y la respuesta cruda); una falla al serializar a XML lanza `PkuatiaException`.
+  Lo que era `\InvalidArgumentException` sigue siéndolo y lo que era `\Exception` sigue siéndolo. En `src/` no
+  queda ningún `throw` genérico, y un test lo vigila.
 
 ### Cambiado
 

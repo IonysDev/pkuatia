@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01 
@@ -104,9 +105,9 @@ class GResProc
   public static function FromSimpleXMLElement(SimpleXMLElement $node): GResProc
   {
     if (strcmp($node->getName(), 'gResProc') != 0)
-      throw new \InvalidArgumentException('[GResProc] El nombre del nodo no corresponde a gResProc: ' . $node->getName());
+      throw new ValidacionException('[GResProc] El nombre del nodo no corresponde a gResProc: ' . $node->getName());
     if (!isset($node->dCodRes) || !isset($node->dMsgRes))
-      throw new \InvalidArgumentException('[GResProc] gResProc debe contener dCodRes y dMsgRes.');
+      throw new ValidacionException('[GResProc] gResProc debe contener dCodRes y dMsgRes.');
     $res = new GResProc();
     $res->setDCodRes((string) $node->dCodRes);
     $res->setDMsgRes((string) $node->dMsgRes);

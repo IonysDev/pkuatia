@@ -3,6 +3,7 @@
 namespace IonysDev\Pkuatia\Core\Fields\Response\DE;
 
 use DOMElement;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 class TxContenEv
 {
@@ -79,7 +80,7 @@ class TxContenEv
 
       return $res;
     } else {
-      throw new \Exception("Invalid XML Element: $xml->tagName");
+      throw new RespuestaException("Invalid XML Element: $xml->tagName");
     }
   }
   

@@ -10,6 +10,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     C001        
@@ -75,7 +76,7 @@ class GTimb extends BaseSifenField
     public function setDNumTim(int $dNumTim): self
     {
         if($dNumTim < 0 || $dNumTim > 99999999) 
-            throw new \Exception('[GTimb] El valor de dNumTim no es válido: ' . $dNumTim);
+            throw new ValidacionException('[GTimb] El valor de dNumTim no es válido: ' . $dNumTim);
         $this->dNumTim = $dNumTim;
         return $this;
     }
@@ -91,7 +92,7 @@ class GTimb extends BaseSifenField
     public function setDEst(String $dEst): self
     {
         if(strlen($dEst) != 3) 
-            throw new \Exception('[GTimb] El valor de dEst no es válido: ' . $dEst);
+            throw new ValidacionException('[GTimb] El valor de dEst no es válido: ' . $dEst);
         $this->dEst = $dEst;
         return $this;
     }
@@ -107,7 +108,7 @@ class GTimb extends BaseSifenField
     public function setDPunExp(String $dPunExp): self
     {
         if(strlen($dPunExp) != 3) 
-            throw new \Exception('[GTimb] El valor de dPunExp no es válido: ' . $dPunExp);
+            throw new ValidacionException('[GTimb] El valor de dPunExp no es válido: ' . $dPunExp);
         $this->dPunExp = $dPunExp;
         return $this;
     }
@@ -123,7 +124,7 @@ class GTimb extends BaseSifenField
     public function setDNumDoc(String $dNumDoc): self
     {
         if(strlen($dNumDoc) != 7) 
-            throw new \Exception('[GTimb] El valor de dNumDoc no es válido: ' . $dNumDoc);
+            throw new ValidacionException('[GTimb] El valor de dNumDoc no es válido: ' . $dNumDoc);
         $this->dNumDoc = $dNumDoc;
         return $this;
     }
@@ -250,7 +251,7 @@ class GTimb extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $xml) 
     {
         if(strcmp($xml->getName(), 'gTimb') != 0) {
-            throw new \Exception('El nombre del elemento no es gTimb');
+            throw new ValidacionException('El nombre del elemento no es gTimb');
         }
         $res = new GTimb();
         $res->setITiDE(intval($xml->iTiDE));
@@ -298,7 +299,7 @@ class GTimb extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gTimb') != 0)
-            throw new \Exception('[GTimb] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GTimb] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GTimb();
         $res->setITiDE(intval($node->getElementsByTagName('iTiDE')->item(0)->nodeValue));
         $res->setDNumTim(intval(trim($node->getElementsByTagName('dNumTim')->item(0)->nodeValue)));

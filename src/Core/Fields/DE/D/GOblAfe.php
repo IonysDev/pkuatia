@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     D030
@@ -49,7 +50,7 @@ class GOblAfe extends BaseSifenField
         $descripcion = COblAfe::getDescriptionFromValue($codigo);
         if(is_null($descripcion))
         {
-            throw new \InvalidArgumentException("[GOblAfe] Código de obligación afectada inválido: " . $codigo . ". Debe pertenecer a la Tabla 12 - Tipo de obligaciones (NT-018).");
+            throw new ValidacionException("[GOblAfe] Código de obligación afectada inválido: " . $codigo . ". Debe pertenecer a la Tabla 12 - Tipo de obligaciones (NT-018).");
         }
         $this->cOblAfe = $codigo;
         $this->dDesOblAfe = $descripcion;
@@ -111,7 +112,7 @@ class GOblAfe extends BaseSifenField
     {
         if(strcmp($node->getName(), 'gOblAfe') != 0)
         {
-            throw new \InvalidArgumentException("El nombre del elemento debe ser 'gOblAfe'.");
+            throw new ValidacionException("El nombre del elemento debe ser 'gOblAfe'.");
         }
 
         $res = new GOblAfe();
@@ -156,7 +157,7 @@ class GOblAfe extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gOblAfe') != 0)
-            throw new \Exception('[GOblAfe] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GOblAfe] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GOblAfe();
         $res->cOblAfe = intval(trim($node->getElementsByTagName('cOblAfe')->item(0)->nodeValue));
         $res->setDDesOblAfe(trim(strval($node->getElementsByTagName('dDesOblAfe')->item(0)->nodeValue)));
