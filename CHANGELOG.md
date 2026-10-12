@@ -82,6 +82,22 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   un `dCodRes` a "qué tocar en el código". `tests/Unit/Resources/CatalogosSincroniaTest` regenera los catálogos en
   memoria desde `docs/sifen-ai` y los compara con los versionados (se omite sin esa carpeta).
 - El lint de CI incluye `tools/`.
+- **Lectura directa de las respuestas** (evaluación §7.2). Interfaz `Core\Responses\RespuestaSifen`, implementada por
+  las siete respuestas del facade, con nombres nuevos para no tocar los getters históricos (`getDCodRes()` sigue
+  devolviendo `int` o `String` según la clase): `getCodigo()` (texto de cuatro dígitos con cero inicial, "0260"),
+  `getMensaje()`, `esExitosa()`, `getCodigoResultado()` (`CodigoResultadoWS`), `getInfoValidacion()` (catálogo:
+  campo del MT, regla y método de PKuatia), `getFechaProceso()` y `toArray()`. Por operación: `RRetEnviDe`
+  `esAprobado()`, `esRechazado()`, `getEstado()`, `getProtocolo()`, `getCdc()`, `getMotivos()`; `RResEnviLoteDe`
+  `fueEncolado()`, `getNumeroLote()`, `getTiempoMedioProcesamiento()`; `RResEnviConsLoteDe` `estaEnProcesamiento()`,
+  `estaConcluido()`, `esExtemporaneo()`, `esResultadoDefinitivo()`, `getDocumentos()`, `todosAprobados()`,
+  `getRechazados()`, `getResultadoDe($cdc)`; `RResEnviConsDe` `fueEncontrado()`, `getProtocolo()`;
+  `RResEnviConsRUC` `fueEncontrado()`, `getEstadoRuc()`, `esFacturadorElectronico()`, `getRazonSocial()`;
+  `RRetEnviEventoDe` `getResultados()`, `todosAprobados()`, `getRechazados()`, `getResultadoDelEvento($id)`;
+  `RResEnviConsArchivoRUC` `fueEncontrado()`. En los grupos de resultado: `GResProc` `getCodigo()`, `getMensaje()`,
+  `getCodigoResultado()`, `esAprobacion()`, `esValidacionDE()`, `esValidacionEvento()`, `getInfoValidacion()`;
+  `RProtDe`, `GResProcLote` y `GResProcEVe` `getEstado()`, `esAprobado()`, `esRechazado()`, `getMotivos()`,
+  `getCodigo()`, `getMensaje()`, `getProtocolo()` (más `getCdc()` en el lote, `getIdEvento()` en los eventos y
+  `toArray()` en ambos). Todo probado sobre las capturas reales del 06, 09 y 11/10/2026.
 
 ### Cambiado
 

@@ -16,7 +16,7 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
  * Nodo Padre:  Es nodo raiz.
  */
 
-class RResEnviConsDe
+class RResEnviConsDe implements RespuestaSifen
 {
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
@@ -278,5 +278,53 @@ class RResEnviConsDe
     } else {
       echo json_encode($this, JSON_PRETTY_PRINT);
     }
+  }
+
+  use RespuestaSifenTrait;
+
+  // --- Fase C (C6): RespuestaSifen -----------------------------------------------------------------------------------
+
+  public function getCodigo(): ?string
+  {
+    return isset($this->dCodRes) ? self::codigoTexto($this->dCodRes) : null;
+  }
+
+  public function getMensaje(): ?string
+  {
+    return $this->dMsgRes ?? null;
+  }
+
+  /** El CDC existe como DTE aprobado y se devolvió su contenido (0422). */
+  public function esExitosa(): bool
+  {
+    return $this->fueEncontrado();
+  }
+
+  public function fueEncontrado(): bool
+  {
+    return $this->getCodigo() === '0422';
+  }
+
+  /** Número de transacción del DE consultado (dProtAut dentro de xContenDE), o null. */
+  public function getProtocolo(): ?string
+  {
+    return isset($this->rContDe) && isset($this->rContDe->dProtAut) ? $this->rContDe->dProtAut : null;
+  }
+
+  public function getFechaProceso(): ?DateTime
+  {
+    return $this->dFecProc ?? null;
+  }
+
+  public function toArray(): array
+  {
+    return [
+      'codigo' => $this->getCodigo(),
+      'mensaje' => $this->getMensaje(),
+      'exitosa' => $this->esExitosa(),
+      'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+      'protocolo' => $this->getProtocolo(),
+      'eventos' => isset($this->rContDe) ? count($this->rContDe->getRContEvs()) : 0,
+    ];
   }
 }

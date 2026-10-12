@@ -14,7 +14,7 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
  * Descripción: Nodo raiz de Respuesta del WS Recepción Lote de Documentos Electrónicos
  * Nodo Padre:  Es raíz.
  */
-class RResEnviLoteDe
+class RResEnviLoteDe implements RespuestaSifen
 {
 
     public const COD_RES_ACEPTADO = 300;
@@ -221,5 +221,59 @@ class RResEnviLoteDe
         else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 'dTpoProces');
         
         return $res;
+    }
+
+    use RespuestaSifenTrait;
+
+    // --- Fase C (C6): RespuestaSifen -------------------------------------------------------------------------------
+
+    public function getCodigo(): ?string
+    {
+        return isset($this->dCodRes) ? self::codigoTexto($this->dCodRes) : null;
+    }
+
+    public function getMensaje(): ?string
+    {
+        return $this->dMsgRes ?? null;
+    }
+
+    /** El lote fue recibido y encolado (0300); el resultado se consulta después con ConsultaLote(). */
+    public function esExitosa(): bool
+    {
+        return $this->fueEncolado();
+    }
+
+    public function fueEncolado(): bool
+    {
+        return $this->getCodigo() === '0300';
+    }
+
+    /** Número de lote (dProtConsLote) como texto, para ConsultaLote(); null si el lote no fue encolado. */
+    public function getNumeroLote(): ?string
+    {
+        return $this->getDProtConsLoteString();
+    }
+
+    /** Tiempo medio de procesamiento informado (dTpoProces, segundos), o null. */
+    public function getTiempoMedioProcesamiento(): ?int
+    {
+        return $this->dTpoProces ?? null;
+    }
+
+    public function getFechaProceso(): ?DateTime
+    {
+        return $this->dFecProc ?? null;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'codigo' => $this->getCodigo(),
+            'mensaje' => $this->getMensaje(),
+            'exitosa' => $this->esExitosa(),
+            'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+            'numeroLote' => $this->getNumeroLote(),
+            'tiempoMedioProcesamiento' => $this->getTiempoMedioProcesamiento(),
+        ];
     }
 }

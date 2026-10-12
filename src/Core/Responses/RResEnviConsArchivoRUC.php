@@ -10,7 +10,7 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 /**
  * Clase que representa la respuesta del SIFEN a la consulta masiva de RUC (WS siConsArchivoRUC, NT-011).
  */
-class RResEnviConsArchivoRUC
+class RResEnviConsArchivoRUC implements RespuestaSifen
 {
   // Códigos de resultado del WS según Tabla L de la NT-011
   public const COD_RES_ARCHIVO_ENCONTRADO = 520;    // Archivo encontrado
@@ -208,5 +208,47 @@ class RResEnviConsArchivoRUC
       $res->setRConsDte(strval($object->rConsDte));
     }
     return $res;
+  }
+
+  use RespuestaSifenTrait;
+
+  // --- Fase C (C6): RespuestaSifen -----------------------------------------------------------------------------------
+
+  public function getCodigo(): ?string
+  {
+    return isset($this->dCodRes) ? self::codigoTexto($this->dCodRes) : null;
+  }
+
+  public function getMensaje(): ?string
+  {
+    return $this->dMsgRes ?? null;
+  }
+
+  /** El archivo del día fue encontrado y se devolvió (0520). */
+  public function esExitosa(): bool
+  {
+    return $this->fueEncontrado();
+  }
+
+  public function fueEncontrado(): bool
+  {
+    return $this->getCodigo() === '0520';
+  }
+
+  public function getFechaProceso(): ?DateTime
+  {
+    return $this->dFecProc ?? null;
+  }
+
+  public function toArray(): array
+  {
+    return [
+      'codigo' => $this->getCodigo(),
+      'mensaje' => $this->getMensaje(),
+      'exitosa' => $this->esExitosa(),
+      'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+      'fechaArchivo' => isset($this->dFecArchivo) ? $this->dFecArchivo->format('Y-m-d') : null,
+      'conArchivo' => isset($this->rConsDte) && $this->rConsDte !== '',
+    ];
   }
 }

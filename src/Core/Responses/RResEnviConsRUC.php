@@ -6,11 +6,13 @@ use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use IonysDev\Pkuatia\Core\Fields\Response\RUC\RContRUC;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
+use IonysDev\Pkuatia\Core\Constants\EstadoRuc;
+use DateTime;
 
 /**
  * RespuestaConsultaRUC
  */
-class RResEnviConsRUC 
+class RResEnviConsRUC implements RespuestaSifen 
 {
   public const COD_RES_RUC_NOT_FOUND = 500;
   public const COD_RES_FORBIDDEN = 501;
@@ -151,5 +153,66 @@ class RResEnviConsRUC
         $res->setRContRUC(RContRUC::fromStdClassObject($object->rContRUC));
     }
     return $res;
+  }
+
+  use RespuestaSifenTrait;
+
+  // --- Fase C (C6): RespuestaSifen y lectura del RUC -----------------------------------------------------------------
+
+  public function getCodigo(): ?string
+  {
+    return isset($this->dCodRes) ? self::codigoTexto($this->dCodRes) : null;
+  }
+
+  public function getMensaje(): ?string
+  {
+    return $this->dMsgRes ?? null;
+  }
+
+  /** El RUC existe y se devolvieron sus datos (0502). */
+  public function esExitosa(): bool
+  {
+    return $this->fueEncontrado();
+  }
+
+  public function fueEncontrado(): bool
+  {
+    return $this->getCodigo() === '0502';
+  }
+
+  /** Estado del RUC consultado (dCodEstCons), o null si no vino o no se reconoce. */
+  public function getEstadoRuc(): ?EstadoRuc
+  {
+    return isset($this->rContRuc) && isset($this->rContRuc->dCodEstCons) ? EstadoRuc::tryFrom(strtoupper(trim($this->rContRuc->dCodEstCons))) : null;
+  }
+
+  /** Si el RUC es facturador electrónico (dRUCFactElec S/N), o null si no vino. */
+  public function esFacturadorElectronico(): ?bool
+  {
+    return isset($this->rContRuc) && isset($this->rContRuc->dRUCFactElec) ? strtoupper(trim($this->rContRuc->dRUCFactElec)) === 'S' : null;
+  }
+
+  public function getRazonSocial(): ?string
+  {
+    return isset($this->rContRuc) && isset($this->rContRuc->dRazCons) ? $this->rContRuc->dRazCons : null;
+  }
+
+  /** La consulta de RUC no trae dFecProc: siempre null. */
+  public function getFechaProceso(): ?DateTime
+  {
+    return null;
+  }
+
+  public function toArray(): array
+  {
+    return [
+      'codigo' => $this->getCodigo(),
+      'mensaje' => $this->getMensaje(),
+      'exitosa' => $this->esExitosa(),
+      'ruc' => isset($this->rContRuc) && isset($this->rContRuc->dRUCCons) ? $this->rContRuc->dRUCCons : null,
+      'razonSocial' => $this->getRazonSocial(),
+      'estadoRuc' => $this->getEstadoRuc()?->value,
+      'facturadorElectronico' => $this->esFacturadorElectronico(),
+    ];
   }
 }

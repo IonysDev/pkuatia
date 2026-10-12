@@ -5,6 +5,9 @@ namespace IonysDev\Pkuatia\Core\Responses;
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
+use IonysDev\Pkuatia\Core\Constants\EstadoResultado;
+use DateTime;
+use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 
 /**
  * Nodo Id:     ARSch01
@@ -13,7 +16,7 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
  * Nodo Padre:  Es raíz.
  */
 
-class RRetEnviDe {
+class RRetEnviDe implements RespuestaSifen {
 
     public RProtDe $rProtDe; // Valor convertido a objeto del XML de protocolo de procesamiento de documento electrónico.
 
@@ -72,4 +75,75 @@ class RRetEnviDe {
         return $res;
     }
 
+    use RespuestaSifenTrait;
+
+    // --- Fase C (C6): RespuestaSifen y lectura del resultado -------------------------------------------------------
+
+    public function getCodigo(): ?string
+    {
+        return isset($this->rProtDe) ? $this->rProtDe->getCodigo() : null;
+    }
+
+    public function getMensaje(): ?string
+    {
+        return isset($this->rProtDe) ? $this->rProtDe->getMensaje() : null;
+    }
+
+    /** El DE fue autorizado (0260, dEstRes Aprobado o Aprobado con observaciones). */
+    public function esExitosa(): bool
+    {
+        return $this->esAprobado();
+    }
+
+    public function esAprobado(): bool
+    {
+        return isset($this->rProtDe) && $this->rProtDe->esAprobado();
+    }
+
+    public function esRechazado(): bool
+    {
+        return !$this->esAprobado();
+    }
+
+    public function getEstado(): ?EstadoResultado
+    {
+        return isset($this->rProtDe) ? $this->rProtDe->getEstado() : null;
+    }
+
+    /** Número de transacción (dProtAut), o null si el DE no fue aprobado. */
+    public function getProtocolo(): ?string
+    {
+        return isset($this->rProtDe) ? $this->rProtDe->getProtocolo() : null;
+    }
+
+    /** CDC del DE procesado (Id de rProtDe), o null (el rechazo genérico no lo trae). */
+    public function getCdc(): ?string
+    {
+        return isset($this->rProtDe) ? $this->rProtDe->getId() : null;
+    }
+
+    /** @return list<GResProc> */
+    public function getMotivos(): array
+    {
+        return isset($this->rProtDe) ? $this->rProtDe->getMotivos() : [];
+    }
+
+    public function getFechaProceso(): ?DateTime
+    {
+        return isset($this->rProtDe) && isset($this->rProtDe->dFecProc) ? $this->rProtDe->getDFecProc() : null;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'codigo' => $this->getCodigo(),
+            'mensaje' => $this->getMensaje(),
+            'exitosa' => $this->esExitosa(),
+            'estado' => $this->getEstado()?->value,
+            'cdc' => $this->getCdc(),
+            'protocolo' => $this->getProtocolo(),
+            'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+            'motivos' => array_map(static fn (GResProc $m): array => ['codigo' => $m->getCodigo(), 'mensaje' => $m->getMensaje()], $this->getMotivos()),
+        ];
+    }
 }

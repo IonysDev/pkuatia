@@ -6,6 +6,9 @@ use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
+use IonysDev\Pkuatia\Core\Constants\CodigoResultadoWS;
+use IonysDev\Pkuatia\Validacion\CatalogoValidaciones;
+use IonysDev\Pkuatia\Validacion\InfoValidacion;
 
 /**
  * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01 
@@ -114,4 +117,48 @@ class GResProc
     return $res;
   }
 
+  // --- Fase C (C6): lectura del código -----------------------------------------------------------------------------
+
+  /** Código como texto de cuatro dígitos con cero inicial ("0260"), tal como lo compara CodigoResultadoWS. */
+  public function getCodigo(): string
+  {
+    return str_pad(trim($this->dCodRes ?? ''), 4, '0', STR_PAD_LEFT);
+  }
+
+  public function getMensaje(): string
+  {
+    return $this->dMsgRes ?? '';
+  }
+
+  /** El código como caso del enum, o null si no es un código de web service (p. ej. una validación del DE). */
+  public function getCodigoResultado(): ?CodigoResultadoWS
+  {
+    return CodigoResultadoWS::fromAny($this->getCodigo());
+  }
+
+  /** Aprobación según el MT: 0260, 0300, 0362, 0422, 0502, 0520 o 0600. */
+  public function esAprobacion(): bool
+  {
+    return $this->getCodigoResultado()?->esAprobacion() ?? false;
+  }
+
+  /** Código de validación del DE (1000-2650, MT §12.4). */
+  public function esValidacionDE(): bool
+  {
+    $n = (int) $this->getCodigo();
+    return $n >= 1000 && $n < 4000;
+  }
+
+  /** Código de validación de un evento (4000-4499, MT §11.6). */
+  public function esValidacionEvento(): bool
+  {
+    $n = (int) $this->getCodigo();
+    return $n >= 4000 && $n < 5000;
+  }
+
+  /** Descripción del código según el catálogo del MT (campo, regla, método de PKuatia), o null. */
+  public function getInfoValidacion(): ?InfoValidacion
+  {
+    return CatalogoValidaciones::describir($this->getCodigo());
+  }
 }
