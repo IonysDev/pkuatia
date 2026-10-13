@@ -60,17 +60,25 @@ class SignHelper
     $clave = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
     $clave->passphrase = $passphrase;
 
+    // Un archivo que existe pero no se puede leer (permisos, una carpeta) termina en excepción, no en un firmador con
+    // certificado vacío que el SIFEN rechazaría con 0120 (QA de la Fase C).
+    $leer = static function (string $ruta): string {
+      $contenido = @file_get_contents($ruta);
+      if ($contenido === false)
+        throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[SignHelper] No se pudo leer el archivo del certificado o de la clave: $ruta");
+      return $contenido;
+    };
     if ($format === Config::CERT_FORMAT_PEM) {
       if ($usesCombinedPem) {
-        $x509Cert = PemHelper::extractCertificatePem(file_get_contents($keyFilePath));
+        $x509Cert = PemHelper::extractCertificatePem($leer($keyFilePath));
       }
       else {
-        $x509Cert = file_get_contents($certFilePath);
+        $x509Cert = $leer((string) $certFilePath);
       }
       $clave->loadKey($keyFilePath, true);
     }
     else if ($format === Config::CERT_FORMAT_PKCS12) {
-      $keys = file_get_contents($keyFilePath);
+      $keys = $leer($keyFilePath);
       $componentes = Pkcs12Helper::read($keys, $passphrase);
       $x509Cert = $componentes['cert'];
       $clave->loadKey($componentes['pkey'], false);
@@ -81,7 +89,7 @@ class SignHelper
 
     // La firma usa la copia privada (PK-39, Q-C4). La propiedad pública obsoleta se puebla con un clon por
     // compatibilidad hacia atrás, y cada firma usa un firmador fresco (ver createSigner) para evitar el sobrefirmado.
-    self::$x509Cert = (string) $x509Cert;
+    self::$x509Cert = $x509Cert;
     self::$clave = $clave;
     self::$xmlKey = clone $clave;
     self::$xmlSigner = self::createSigner();

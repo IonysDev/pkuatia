@@ -229,6 +229,12 @@ vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambi
 - Los cálculos del IVA por ítem (1910, 1911, 1913 y 1921) admiten 0,01 de diferencia: `sifen-test` aprobó el
   13/10/2026 una base gravada 0,01 mayor que la exacta con su liquidación coherente, que el validador rechazaba.
   Una diferencia mayor sigue sin verificar y se informa.
+- Las opciones booleanas del JSON de `Config` (`wsdlCacheEnabled`, `soapTrace`, `validarXsdAntesDeEnviar`) se leían
+  con `boolval()`, que toma las cadenas `"false"` y `"0"` como verdadero; ahora se interpretan como booleanos
+  (`FILTER_VALIDATE_BOOLEAN`). Hallazgo de la revisión final de la fase.
+- `SignHelper::Init()` lanza `CertificadoException` (`PemInvalido`) cuando el certificado o la clave existen pero no
+  se pueden leer (permisos, una carpeta), en vez de seguir con un certificado vacío que el SIFEN rechazaría con 0120.
+  Hallazgo de la revisión final de la fase.
 - **PK-39** (evaluación §4): con un certificado PKCS#12, `Init()` dejaba el certificado y la clave privada **en
   claro** en `sys_get_temp_dir()` con nombres predecibles (`cert_*`, `key_*`) hasta que terminara el script. Ahora
   van a una carpeta propia de nombre impredecible (`pkuatia-<16 hex>/`, 0700 donde el sistema lo respeta; en Windows
@@ -250,7 +256,8 @@ vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambi
 - El XML que viene del SIFEN se parsea con `LIBXML_NONET` (evaluación §9): la respuesta cruda de las siete
   operaciones, `RProtDe::FromXMLString()`, `RContDe::FromXContenDE()` y la firma de un `RDE` leído. Una DTD o una
   entidad externa en una respuesta no provoca ninguna lectura de red; las entidades tampoco se sustituyen, como
-  hasta ahora.
+  hasta ahora. `ValidadorXsd` también valida el esquema con `LIBXML_NONET`, así que un XSD ajeno con includes por
+  `https://` tampoco sale a la red.
 - `ConsultarRUC` y `ConsultarDE` envuelven también el `SoapFault` y las demás fallas (decisión Q-C3, que cierra la
   parte 2 de Q-B4): la excepción es `TransporteException`, que sigue siendo un `\SoapFault` con el mismo
   `faultcode`, así que `catch (\SoapFault)` la atrapa igual que hasta 0.2.1; cambia solo el mensaje, que ahora lleva

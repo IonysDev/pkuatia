@@ -145,7 +145,7 @@ class Config
         }
 
         if(isset($config->wsdlCacheEnabled)) {
-            $res->wsdlCacheEnabled = boolval($config->wsdlCacheEnabled);
+            $res->wsdlCacheEnabled = filter_var($config->wsdlCacheEnabled, FILTER_VALIDATE_BOOLEAN); // "false" y "0" son falso (QA de la Fase C)
         }
 
         if(isset($config->soapConnectionTimeout)) {
@@ -156,10 +156,10 @@ class Config
             $res->soapUserAgent = strval($config->soapUserAgent);
         }
         if(isset($config->soapTrace)) {
-            $res->soapTrace = boolval($config->soapTrace);
+            $res->soapTrace = filter_var($config->soapTrace, FILTER_VALIDATE_BOOLEAN);
         }
         if(isset($config->validarXsdAntesDeEnviar)) {
-            $res->validarXsdAntesDeEnviar = boolval($config->validarXsdAntesDeEnviar);
+            $res->validarXsdAntesDeEnviar = filter_var($config->validarXsdAntesDeEnviar, FILTER_VALIDATE_BOOLEAN);
         }
 
         return $res;

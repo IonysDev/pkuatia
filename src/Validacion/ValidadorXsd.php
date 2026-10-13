@@ -55,7 +55,7 @@ final class ValidadorXsd
           '0160', null, null, null, null, 'Revisar que el XML esté completo y bien formado antes de validarlo contra el esquema.', $primero !== null && $primero->line > 0 ? $primero->line : null));
         return $resultado;
       }
-      if ($doc->schemaValidate($xsd))
+      if ($doc->schemaValidate($xsd, LIBXML_NONET)) // tampoco los includes del esquema salen a la red
         return $resultado;
       foreach (libxml_get_errors() as $error)
         $resultado->agregar(self::desdeLibxml($error));
