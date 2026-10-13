@@ -1,0 +1,161 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 205,
+            "resp_len": 541,
+            "ts": "2026-10-13T05:57:03-03:00"
+        },
+        {
+            "op": "rEnviDe-1309",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 518,
+            "resp_len": 633,
+            "ts": "2026-10-13T05:58:05-03:00"
+        },
+        {
+            "op": "rEnviDe-2365",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 472,
+            "resp_len": 640,
+            "ts": "2026-10-13T05:59:06-03:00"
+        },
+        {
+            "op": "rEnviDe-1550",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 472,
+            "resp_len": 708,
+            "ts": "2026-10-13T06:00:07-03:00"
+        },
+        {
+            "op": "rEnviDe-1319",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 422,
+            "resp_len": 648,
+            "ts": "2026-10-13T06:01:07-03:00"
+        },
+        {
+            "op": "rEnviDe-2400",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 789,
+            "resp_len": 667,
+            "ts": "2026-10-13T06:02:09-03:00"
+        },
+        {
+            "op": "rEnviDe-1004",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 374,
+            "resp_len": 627,
+            "ts": "2026-10-13T06:03:10-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 1,
+        "seco": false,
+        "casos": {
+            "1309": {
+                "cdc": "01800000005001001000012422026101315621358692",
+                "esperado": "1309",
+                "prediccion": [
+                    "1309"
+                ],
+                "dEstRes": "Rechazado",
+                "dCodRes": "1309",
+                "dMsgRes": "TEST - Dígito Verificador del RUC del receptor incorrecto",
+                "dProtAut": null,
+                "motivos": [
+                    "1309 TEST - Dígito Verificador del RUC del receptor incorrecto"
+                ],
+                "coincide": true
+            },
+            "2365": {
+                "cdc": "01800000005001001000012522026101317855062910",
+                "esperado": "2365",
+                "prediccion": [
+                    "2365"
+                ],
+                "dEstRes": "Rechazado",
+                "dCodRes": "2365",
+                "dMsgRes": "TEST - Cálculo del total general de la operación incorrecto",
+                "dProtAut": null,
+                "motivos": [
+                    "2365 TEST - Cálculo del total general de la operación incorrecto"
+                ],
+                "coincide": true
+            },
+            "1550": {
+                "cdc": "01800000005001001000012622026101312132533782",
+                "esperado": "1550",
+                "prediccion": [
+                    "1550"
+                ],
+                "dEstRes": "Rechazado",
+                "dCodRes": "1550",
+                "dMsgRes": "TEST - El grupo de campos que describen la forma de pago de la operación al contado o del monto de la entrega inicial es obligatorio",
+                "dProtAut": null,
+                "motivos": [
+                    "1550 TEST - El grupo de campos que describen la forma de pago de la operación al contado o del monto de la entrega inicial es obligatorio"
+                ],
+                "coincide": true
+            },
+            "1319": {
+                "cdc": "01800000005001001000012722026101311083212948",
+                "esperado": "1300|1319",
+                "prediccion": [
+                    "1300",
+                    "1319"
+                ],
+                "dEstRes": "Rechazado",
+                "dCodRes": "1300",
+                "dMsgRes": "TEST - El tipo de operación no compatible con la naturaleza del receptor",
+                "dProtAut": null,
+                "motivos": [
+                    "1300 TEST - El tipo de operación no compatible con la naturaleza del receptor"
+                ],
+                "coincide": true
+            },
+            "2400": {
+                "cdc": "05800000005001001000012822026101310174763767",
+                "esperado": "2400",
+                "prediccion": [
+                    "2400"
+                ],
+                "dEstRes": "Rechazado",
+                "dCodRes": "2400",
+                "dMsgRes": "TEST - Documento asociado es obligatorio para el tipo de documento electrónico seleccionado",
+                "dProtAut": null,
+                "motivos": [
+                    "2400 TEST - Documento asociado es obligatorio para el tipo de documento electrónico seleccionado"
+                ],
+                "coincide": true
+            },
+            "1004": {
+                "cdc": "01800000005001001000012922026101318046472180",
+                "esperado": "1004",
+                "prediccion": [
+                    "1004"
+                ],
+                "dEstRes": "Rechazado",
+                "dCodRes": "1004",
+                "dMsgRes": "TEST - La fecha y hora de la firma digital es adelantada",
+                "dProtAut": null,
+                "motivos": [
+                    "1004 TEST - La fecha y hora de la firma digital es adelantada"
+                ],
+                "coincide": true
+            }
+        },
+        "canario": {
+            "dCodRes": "0502",
+            "dMsgRes": "RUC encontrado"
+        }
+    }
+}

@@ -111,7 +111,7 @@ abstract class ConjuntoDeReglas
     if (bccomp($diferencia, '0', 10) < 0)
       $diferencia = bcmul($diferencia, '-1', 10);
     if ($tolerancia !== null)
-      return bccomp($diferencia, $tolerancia, 10) > 0;
+      return bccomp($diferencia, $tolerancia, 8) > 0; // a 8 decimales, los que admite el XSD: 0,0100000009 no supera 0,01
     $punto = strpos($informado, '.');
     $decimales = $punto === false ? 0 : strlen($informado) - $punto - 1;
     $unidad = $decimales === 0 ? '1' : '0.' . str_repeat('0', $decimales - 1) . '1';

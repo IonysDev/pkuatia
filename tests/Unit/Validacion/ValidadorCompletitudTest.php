@@ -42,10 +42,10 @@ final class ValidadorCompletitudTest extends TestCase
     return (clone F::fechaEmision())->modify('+2 hours');
   }
 
-  /** Momento de referencia para las capturas reales del 06, 09 y 11/10/2026. */
+  /** Momento de referencia para las capturas reales del 06, 09, 11 y 13/10/2026. */
   private static function ahoraCapturas(): \DateTime
   {
-    return new \DateTime('2026-10-12T00:00:00', new \DateTimeZone('America/Asuncion'));
+    return new \DateTime('2026-10-14T00:00:00', new \DateTimeZone('America/Asuncion'));
   }
 
   /** @return iterable<string, array{callable(): DocumentoElectronico}> */
@@ -87,6 +87,10 @@ final class ValidadorCompletitudTest extends TestCase
   public static function capturasReales(): iterable
   {
     foreach (glob(R::DIR . '/*/*-firmada-anonimizada.xml') as $ruta) {
+      // Los de la homologación del 13/10/2026 (C14) se enviaron con una violación a propósito, salvo los aprobados
+      // (11, 12, 14 y 15); los cubre CapturasHomologacionFaseCTest con el código que cada uno debía dar.
+      if (str_contains($ruta, '2026-10-13') && preg_match('/^(0[2-7]|10|13)-/', basename($ruta)) === 1)
+        continue;
       yield basename(dirname($ruta)) . '/' . basename($ruta) => [$ruta];
     }
   }

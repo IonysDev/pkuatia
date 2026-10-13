@@ -1,0 +1,150 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 206,
+            "resp_len": 541,
+            "ts": "2026-10-13T06:05:56-03:00"
+        },
+        {
+            "op": "rEnviDe-2503",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 465,
+            "resp_len": 657,
+            "ts": "2026-10-13T06:06:57-03:00"
+        },
+        {
+            "op": "rEnviDe-1911",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 482,
+            "resp_len": 645,
+            "ts": "2026-10-13T06:07:58-03:00"
+        },
+        {
+            "op": "rEnviDe-b2g",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 476,
+            "resp_len": 645,
+            "ts": "2026-10-13T06:08:59-03:00"
+        },
+        {
+            "op": "rEnviDe-cilin",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 217,
+            "resp_len": 634,
+            "ts": "2026-10-13T06:09:59-03:00"
+        },
+        {
+            "op": "rEnviDe-usd-item",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 488,
+            "resp_len": 645,
+            "ts": "2026-10-13T06:11:00-03:00"
+        },
+        {
+            "op": "rEnviDe-redondeo",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 453,
+            "resp_len": 645,
+            "ts": "2026-10-13T06:12:01-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 2,
+        "seco": false,
+        "casos": {
+            "2503": {
+                "cdc": "01800000005001001000013022026101311208068675",
+                "esperado": "?",
+                "prediccion": [],
+                "dEstRes": "Rechazado",
+                "dCodRes": "2503",
+                "dMsgRes": "TEST - Información adicional de interés para el emisor fue incluida en el DE",
+                "dProtAut": null,
+                "motivos": [
+                    "2503 TEST - Información adicional de interés para el emisor fue incluida en el DE"
+                ],
+                "coincide": null
+            },
+            "1911": {
+                "cdc": "01800000005001001000013122026101314495221147",
+                "esperado": "1911?",
+                "prediccion": [
+                    "1911"
+                ],
+                "dEstRes": "Aprobado",
+                "dCodRes": "0260",
+                "dMsgRes": "Autorización del DE satisfactoria",
+                "dProtAut": "50225403",
+                "motivos": [
+                    "0260 Autorización del DE satisfactoria"
+                ],
+                "coincide": false
+            },
+            "b2g": {
+                "cdc": "01800000005001001000013222026101311768097948",
+                "esperado": "0260",
+                "prediccion": [],
+                "dEstRes": "Aprobado",
+                "dCodRes": "0260",
+                "dMsgRes": "Autorización del DE satisfactoria",
+                "dProtAut": "50225404",
+                "motivos": [
+                    "0260 Autorización del DE satisfactoria"
+                ],
+                "coincide": true
+            },
+            "cilin": {
+                "cdc": "01800000005001001000013322026101311251009510",
+                "esperado": "?",
+                "prediccion": [],
+                "dEstRes": "Rechazado",
+                "dCodRes": "0160",
+                "dMsgRes": "XML malformado [El valor 1600 del elemento: dCilin es invalido]",
+                "dProtAut": null,
+                "motivos": [
+                    "0160 XML malformado [El valor 1600 del elemento: dCilin es invalido]"
+                ],
+                "coincide": null
+            },
+            "usd-item": {
+                "cdc": "01800000005001001000013422026101314133391264",
+                "esperado": "0260",
+                "prediccion": [],
+                "dEstRes": "Aprobado",
+                "dCodRes": "0260",
+                "dMsgRes": "Autorización del DE satisfactoria",
+                "dProtAut": "50225405",
+                "motivos": [
+                    "0260 Autorización del DE satisfactoria"
+                ],
+                "coincide": true
+            },
+            "redondeo": {
+                "cdc": "01800000005001001000013522026101315371084548",
+                "esperado": "0260",
+                "prediccion": [],
+                "dEstRes": "Aprobado",
+                "dCodRes": "0260",
+                "dMsgRes": "Autorización del DE satisfactoria",
+                "dProtAut": "50225409",
+                "motivos": [
+                    "0260 Autorización del DE satisfactoria"
+                ],
+                "coincide": true
+            }
+        },
+        "canario": {
+            "dCodRes": "0502",
+            "dMsgRes": "RUC encontrado"
+        }
+    }
+}

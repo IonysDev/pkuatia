@@ -197,17 +197,17 @@ final class ReglasDeItemsYTotalesTest extends TestCase
     $this->assertCount(1, ValidadorDE::validar($d, self::ahora())->porCodigo('1853'));
   }
 
-  /** J003 dInfAdic va fuera de la firma y el MT (2503) dice que no debe enviarse: advertencia hasta probarlo en C14. */
-  public function testInformacionAdicionalDelEmisorEsAdvertencia2503(): void
+  /** J003 dInfAdic va fuera de la firma y el SIFEN rechaza el DE con 2503 (verificado en sifen-test el 13/10/2026, C14). */
+  public function testInformacionAdicionalDelEmisorEsRechazo2503(): void
   {
     $rde = F::rde(F::facturaContado());
     $fuera = new GCamFuFD();
     $fuera->setDInfAdic('Texto adicional del emisor');
     $rde->setGCamFuFD($fuera);
     $r = ValidadorDE::validar($rde, self::ahora());
-    $this->assertTrue($r->esValido(), (string) $r);
+    $this->assertFalse($r->esValido(), (string) $r);
     $this->assertCount(1, $r->porCodigo('2503'));
-    $this->assertTrue($r->porCodigo('2503')[0]->esAdvertencia);
+    $this->assertFalse($r->porCodigo('2503')[0]->esAdvertencia);
     $this->assertSame('J003', $r->porCodigo('2503')[0]->campoMT);
     $this->assertSame('rDE.gCamFuFD', $r->porCodigo('2503')[0]->ruta);
     $this->assertCount(0, ValidadorDE::validar(F::facturaContado(), self::ahora())->porCodigo('2503'), 'el builder no lleva J003');

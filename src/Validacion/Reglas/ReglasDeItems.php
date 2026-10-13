@@ -3,6 +3,8 @@
 namespace IonysDev\Pkuatia\Validacion\Reglas;
 
 use DateTime;
+use IonysDev\Pkuatia\Validacion\ErrorValidacion;
+use IonysDev\Pkuatia\Validacion\OrigenError;
 use IonysDev\Pkuatia\Validacion\ResultadoValidacion;
 use IonysDev\Pkuatia\Validacion\VistaDocumento;
 
@@ -13,7 +15,11 @@ use IonysDev\Pkuatia\Validacion\VistaDocumento;
  * (1904-1906), tasa (1907/1908), base gravada (1909-1911), liquidación (1912/1913) y base exenta (1921, NT-013 §2.1;
  * todavía no figura en errores-validacion.md). Las fórmulas son las de la NT-013, que addItem() aplica y el SIFEN
  * aprobó en sifen-test; se comparan con la tolerancia de ConjuntoDeReglas::difiere() (0,8 para 1861, como dice el
- * MT). 1862 (EA005) no se aplica: el XSD v150 no tiene porcentaje de descuento global por ítem. Fase C, paso C10b.
+ * MT). Los cálculos del IVA por ítem (1910, 1911, 1913, 1921) admiten 0,01 de diferencia: sifen-test aprobó el
+ * 13/10/2026 una base gravada 0,01 mayor que la exacta con su liquidación coherente (homologación C14); una
+ * diferencia mayor sigue sin verificar y se informa. 1862 (EA005) no se aplica: el XSD v150 no tiene porcentaje de
+ * descuento global por ítem. dCilin (E786) se rechaza siempre: el SIFEN aplica el patrón "/d" del XSD de
+ * producción tal como está publicado (0160 el 13/10/2026). Fase C, pasos C10b y C14.
  */
 final class ReglasDeItems extends ConjuntoDeReglas
 {
@@ -33,6 +39,12 @@ final class ReglasDeItems extends ConjuntoDeReglas
       $relevancia = self::entero($item, 'cRelMerc');
       self::regla($r, $relevancia !== null && $tipo !== null && $tipo !== 7, '1807', 'cRelMerc', $ruta, $relevancia, 'Solo la nota de remisión informa la relevancia de las mercaderías.');
       self::regla($r, $relevancia !== null && self::monto($item, 'dCanQuiMer') === null && self::monto($item, 'dPorQuiMer') === null, '1808', 'dCanQuiMer', $ruta, null, 'Informar la cantidad (E717) o el porcentaje (E718) de quiebra o merma.');
+      // E786 dCilin: el XSD de producción declara el patrón "/d" (un error del XSD) y el SIFEN lo aplica tal cual, así que
+      // cualquier valor responde 0160 "XML malformado [El valor N del elemento: dCilin es invalido]" (sifen-test, 13/10/2026).
+      $cilindrada = self::texto(self::v($item, 'gVehNuevo'), 'dCilin');
+      if ($cilindrada !== null)
+        $r->agregar(new ErrorValidacion(OrigenError::Regla, 'XML malformado: el SIFEN rechaza dCilin con cualquier valor (el patrón del XSD de producción es "/d").', '0160', 'E786', 'dCilin',
+          $ruta . '.gVehNuevo', $cilindrada, 'No informar dCilin: sifen-test lo rechazó con 0160 el 13/10/2026 (captura 05-rEnviDe-cilin del 2026-10-13); GVehNuevo::setDCilin() no tiene un valor que el SIFEN acepte.'));
 
       $cantidad = self::monto($item, 'dCantProSer');
       $total = null;
@@ -103,16 +115,16 @@ final class ReglasDeItems extends ConjuntoDeReglas
         $divisor = bcadd('10000', bcmul((string) $tasa, $proporcion, 10), 10);
         $baseEsperada = bcdiv(bcmul(bcmul('100', $total, 10), $proporcion, 10), $divisor, 10);
         if ($base !== null)
-          self::regla($r, self::difiere($base, $baseEsperada), $tasa === 5 ? '1910' : '1911', 'dBasGravIVA', $rutaIva, $base, "E735 = 100 × EA008 × E733 / (10000 + E734 × E733) = $baseEsperada (NT-013).");
+          self::regla($r, self::difiere($base, $baseEsperada, '0.01'), $tasa === 5 ? '1910' : '1911', 'dBasGravIVA', $rutaIva, $base, "E735 = 100 × EA008 × E733 / (10000 + E734 × E733) = $baseEsperada (NT-013; el SIFEN admite 0,01).");
         if ($afectacion === 4)
           $baseExentaEsperada = bcdiv(bcmul(bcmul('100', $total, 10), bcsub('100', $proporcion, 10), 10), $divisor, 10);
       }
       if ($gravado && $base !== null && $liquidacion !== null && $tasa !== null) {
         $esperado = bcdiv(bcmul($base, (string) $tasa, 10), '100', 10);
-        self::regla($r, self::difiere($liquidacion, $esperado), '1913', 'dLiqIVAItem', $rutaIva, $liquidacion, "E736 = E735 × E734 / 100 = $esperado.");
+        self::regla($r, self::difiere($liquidacion, $esperado, '0.01'), '1913', 'dLiqIVAItem', $rutaIva, $liquidacion, "E736 = E735 × E734 / 100 = $esperado (el SIFEN admite 0,01).");
       }
       if ($baseExenta !== null && $baseExentaEsperada !== null)
-        self::reglaConMensaje($r, self::difiere($baseExenta, $baseExentaEsperada), '1921', 'E737', 'Error en el cálculo de la base exenta por ítem', 'dBasExe', $rutaIva, $baseExenta,
+        self::reglaConMensaje($r, self::difiere($baseExenta, $baseExentaEsperada, '0.01'), '1921', 'E737', 'Error en el cálculo de la base exenta por ítem', 'dBasExe', $rutaIva, $baseExenta,
           "NT-013 §2.1: E737 = 100 × EA008 × (100 − E733) / (10000 + E734 × E733) con E731 = 4, y 0 con E731 = 1, 2 o 3: $baseExentaEsperada.");
     }
   }

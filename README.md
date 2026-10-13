@@ -688,6 +688,14 @@ En `test/` hay scripts de consulta que requieren certificado y red:
 
 6. **Monedas con nombre largo**: 15 monedas del catálogo ISO 4217 (ANG, BMD, FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD, XBA, XBB, XBC, XTS y XXX) tienen un nombre de más de 20 caracteres, el máximo que admite el XSD para la descripción de la moneda. La librería la recorta a 20, pero el SIFEN rechaza esa descripción con el código 1206 (verificado en `sifen-test` con ANG el 11/10/2026). No hay una descripción conocida que el SIFEN acepte para estas monedas: por ahora no se pueden usar en un DE.
 
+7. **Información adicional del emisor (`dInfAdic`, J003)**: aunque el XSD la admite, el SIFEN rechaza el DE con 2503
+   si va informada (verificado en `sifen-test` el 13/10/2026). No pasar el tercer parámetro de `FirmarDE()`; el
+   validador de reglas lo marca como error.
+
+8. **Cilindrada del vehículo nuevo (`dCilin`, E786)**: el XSD de producción declara el patrón `/d` y el SIFEN lo aplica
+   tal cual, así que rechaza cualquier valor numérico con 0160 (verificado el 13/10/2026). No usar `setDCilin()`; el
+   validador de reglas y `ValidarXSD()` lo señalan.
+
 ## 🧪 Pruebas
 
 Verificaciones offline (no requieren certificado ni conexión al SIFEN):

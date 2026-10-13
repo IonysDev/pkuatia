@@ -369,7 +369,7 @@ class Sifen
    *  
    * @param RDE $rde Contenedor del DE a firmar.
    * @param DateTime $fechaFirma Fecha y hora de la firma (dFecFirma); se respeta tal cual, con la zona horaria que traiga.
-   * @param String $infoAdicionalEmisor Información adicional de interés del emisor (J003 dInfAdic, 1 a 5000 caracteres, DE_v150.xsd:1922-1931); se emite fuera de la firma, en gCamFuFD. Vacío = no se emite.
+   * @param String $infoAdicionalEmisor **Dejar vacío**: el SIFEN rechaza el DE con 2503 si J003 va informado (verificado en sifen-test el 13/10/2026; el validador de reglas lo marca como error). Información adicional de interés del emisor (J003 dInfAdic, 1 a 5000 caracteres, DE_v150.xsd:1922-1931); se emite fuera de la firma, en gCamFuFD. Vacío = no se emite.
    *
    * @return String XML del DE firmado.
    */

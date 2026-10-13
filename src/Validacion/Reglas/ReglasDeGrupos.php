@@ -74,8 +74,8 @@ final class ReglasDeGrupos extends ConjuntoDeReglas
     $gen = $v->gCamGen();
     self::regla($r, $gen !== null && self::v($gen, 'gCamCarg') !== null && !$esFE && !$esNR, '2390', 'gCamCarg', 'DE.gCamGen');
 
-    // J003 va fuera de la firma y el MT (2503) dice que el SIFEN lo rechaza; PKuatia lo venía emitiendo (devolución a
-    // ekuat-ia). Advertencia hasta comprobarlo en sifen-test (C14). Fase C, paso C10b.
-    self::regla($r, $v->dInfAdic() !== null, '2503', 'dInfAdic', 'rDE.gCamFuFD', $v->dInfAdic(), 'Comprobación pendiente en sifen-test: por ahora es una advertencia.', true);
+    // J003 va fuera de la firma y el SIFEN rechaza el DE con 2503 si se informa (verificado en sifen-test el 13/10/2026,
+    // captura 02-rEnviDe-2503 del 2026-10-13); PKuatia lo emite solo si se pasa $infoAdicionalEmisor a FirmarDE(). C10b/C14.
+    self::regla($r, $v->dInfAdic() !== null, '2503', 'dInfAdic', 'rDE.gCamFuFD', $v->dInfAdic(), 'El SIFEN rechaza el DE si J003 va informado (sifen-test, 13/10/2026): no pasar $infoAdicionalEmisor a FirmarDE().');
   }
 }

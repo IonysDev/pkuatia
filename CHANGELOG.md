@@ -195,6 +195,15 @@ vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambi
   tocar la red y lanzan `DocumentoInvalidoException` con el resultado adjunto. Por defecto nada cambia. Los nueve
   rDE aprobados por `sifen-test` el 11/10 y los dos del 09/10 validan; la FE B2G con compras públicas valida gracias
   al arreglo local de `dEntCont`.
+- El validador rechaza `dCilin` (E786) con 0160 sea cual sea el valor: el XSD de producción declara el patrón `/d` y
+  `sifen-test` lo aplicó tal cual el 13/10/2026 ("XML malformado [El valor 1600 del elemento: dCilin es invalido]").
+- **Homologación del validador en `sifen-test`** (13/10/2026, capturas en `tests/Resources/sifen/respuestas-ws/2026-10-13/`
+  copiadas de ekuat-ia): doce envíos con una sola violación o característica cada uno. El SIFEN respondió el código
+  que el validador predecía en 1309, 2365, 1550, 1300 (innominado en B2B: informa D202 antes que D208), 2400, 1004,
+  2503 y 0160 (`dCilin`), y aprobó con 0260 la base gravada 0,01 mayor, la FE B2G con `dEntCont` (PK-44 cerrada), la
+  FE en USD con tipo de cambio por ítem y fracción (Q-C8) y el redondeo de EA008 a la unidad. Un canario recibió el
+  0160 genérico y un minuto después el ambiente respondió normalmente. `CapturasHomologacionFaseCTest` lee cada
+  respuesta a través del facade y comprueba que el validador predice lo mismo sobre el documento anonimizado.
 
 ### Obsoleto
 
@@ -217,6 +226,9 @@ vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambi
   adelantada parecía 2,5 horas atrasada y no se predecía 1004, y las ventanas de 1150/1151 corrían desplazadas. Las
   fechas del documento se toman ahora como hora de pared en Asunción (`VistaDocumento::enZonaSifen()`), que es lo
   que ve el SIFEN. Hallazgo del ensayo en seco de la homologación (C14).
+- Los cálculos del IVA por ítem (1910, 1911, 1913 y 1921) admiten 0,01 de diferencia: `sifen-test` aprobó el
+  13/10/2026 una base gravada 0,01 mayor que la exacta con su liquidación coherente, que el validador rechazaba.
+  Una diferencia mayor sigue sin verificar y se informa.
 - **PK-39** (evaluación §4): con un certificado PKCS#12, `Init()` dejaba el certificado y la clave privada **en
   claro** en `sys_get_temp_dir()` con nombres predecibles (`cert_*`, `key_*`) hasta que terminara el script. Ahora
   van a una carpeta propia de nombre impredecible (`pkuatia-<16 hex>/`, 0700 donde el sistema lo respeta; en Windows
@@ -226,6 +238,9 @@ vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambi
 
 ### Cambiado
 
+- 2503 (J003 `dInfAdic`) pasa de advertencia a error del validador: `sifen-test` rechazó el 13/10/2026 una FE con
+  `dInfAdic`, así que el tercer parámetro de `FirmarDE()` no tiene un uso que el SIFEN acepte (sigue existiendo por
+  compatibilidad; su docblock lo dice).
 - El total del ítem en guaraníes (EA009 `dTotOpeGs`, tipo de cambio por ítem) se redondea al guaraní entero
   (decisión Q-C8). Hasta 0.2.1 `addItem()` lo calculaba con `bcmul()` sin escala, es decir truncado: con precios o
   tipos de cambio con fracción cada ítem quedaba hasta 1 Gs por debajo del valor exacto (EA009 = EA008 × E725,
