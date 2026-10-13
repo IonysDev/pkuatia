@@ -134,7 +134,7 @@ final class CodigosDeResultadoTest extends TestCase
       $this->assertNull($resuelto, "$codigo no es un código de WS");
       $this->assertGreaterThanOrEqual(1000, (int) $codigo);
     } else {
-      $this->assertSame(CodigoResultadoWS::{$caso}, $resuelto, $codigo);
+      $this->assertSame(constant(CodigoResultadoWS::class . "::$caso"), $resuelto, $codigo); // sin Clase::{$expr}: es sintaxis de PHP 8.3 y el CI corre 8.1 y 8.2
       $this->assertTrue($resuelto->vigente());
     }
   }
