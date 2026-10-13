@@ -180,6 +180,18 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   lanza `ConfiguracionException` cuando `env = prod` y el CSC sigue siendo ese (decisión Q-C6): en producción el
   SIFEN rechazaba cada DE con 2501 (J002a) sin que la librería avisara, así que nadie que hoy funcione en producción
   puede verse afectado. En desarrollo no cambia nada.
+- **Validación contra los XSD de producción** (evaluación §6.3): `Sifen::ValidarXSD($rdeXml)` y
+  `Sifen::ValidarEventoXSD($sobreXml)` validan contra los esquemas incluidos en `src/Resources/xsd/`
+  (`siRecepDE_v150.xsd` y `siRecepEvento_v150.xsd` con su cadena de includes), sin red (`LIBXML_NONET`) y sin
+  `Init()`, y devuelven un `ResultadoValidacion` con un `ErrorValidacion` por error de libxml: origen XSD, código
+  0160 (AE01, lo que el SIFEN responde ante un XML que no cumple el esquema), elemento, campo del MT (catálogo de
+  elementos), línea y una sugerencia con lo que falta y el método de PKuatia que lo informa; un XML mal formado o
+  vacío da un solo error sin elemento. `Validacion\ValidadorXsd::validar($xml, $xsd)` acepta cualquier esquema
+  local. `Config::$validarXsdAntesDeEnviar` (con `setValidarXsdAntesDeEnviar()` y clave JSON; por defecto `false`):
+  con `true`, `EnviarDE`, `EnviarLoteDE` (cada documento) y `RegistrarEvento` (el sobre ya firmado) validan antes de
+  tocar la red y lanzan `DocumentoInvalidoException` con el resultado adjunto. Por defecto nada cambia. Los nueve
+  rDE aprobados por `sifen-test` el 11/10 y los dos del 09/10 validan; la FE B2G con compras públicas valida gracias
+  al arreglo local de `dEntCont`.
 
 ### Obsoleto
 

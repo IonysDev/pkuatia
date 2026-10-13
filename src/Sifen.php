@@ -14,6 +14,7 @@ use IonysDev\Pkuatia\Core\Constants\MotivoCertificado;
 use IonysDev\Pkuatia\Core\Exceptions\CampoInvalidoException;
 use IonysDev\Pkuatia\Core\Exceptions\CertificadoException;
 use IonysDev\Pkuatia\Core\Exceptions\ConfiguracionException;
+use IonysDev\Pkuatia\Core\Exceptions\DocumentoInvalidoException;
 use IonysDev\Pkuatia\Core\Exceptions\PkuatiaExceptionInterface;
 use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 use IonysDev\Pkuatia\Core\Exceptions\TransporteException;
@@ -54,6 +55,8 @@ use IonysDev\Pkuatia\Helpers\Pkcs12Helper;
 use IonysDev\Pkuatia\Helpers\QRHelper;
 use IonysDev\Pkuatia\Helpers\SignHelper;
 use IonysDev\Pkuatia\Validacion\ResultadoFirma;
+use IonysDev\Pkuatia\Validacion\ResultadoValidacion;
+use IonysDev\Pkuatia\Validacion\ValidadorXsd;
 use IonysDev\Pkuatia\Validacion\VerificadorFirma;
 use SoapClient;
 use SoapFault;
@@ -321,6 +324,45 @@ class Sifen
   }
 
   /**
+   * Valida un rDE firmado contra los XSD de producción del SIFEN incluidos en la librería (siRecepDE_v150.xsd y su
+   * cadena de includes), sin red y sin Init(). Devuelve un ResultadoValidacion con un ErrorValidacion por error del
+   * esquema: origen XSD, código 0160 (AE01, lo que el SIFEN responde ante un XML que no cumple el esquema), elemento,
+   * campo del MT, línea y sugerencia. No reemplaza a validarReglas(): el XSD no conoce las reglas de negocio del MT.
+   * Nuevo en 0.3.0 (Fase C, C7).
+   *
+   * @param String $xml XML del rDE firmado (p. ej. el que devuelve FirmarDE()).
+   */
+  public static function ValidarXSD(String $xml): ResultadoValidacion
+  {
+    return ValidadorXsd::validarRde($xml);
+  }
+
+  /**
+   * Valida un sobre de eventos firmado (gGroupGesEve, lo que RegistrarEvento() envía) contra siRecepEvento_v150.xsd,
+   * sin red y sin Init(). Misma forma de resultado que ValidarXSD(). Nuevo en 0.3.0 (Fase C, C7).
+   */
+  public static function ValidarEventoXSD(String $xml): ResultadoValidacion
+  {
+    return ValidadorXsd::validarEvento($xml);
+  }
+
+  /**
+   * Config::$validarXsdAntesDeEnviar (opt-in, 0.3.0): valida contra el XSD antes de tocar la red y lanza
+   * DocumentoInvalidoException con el resultado adjunto. Con el valor por defecto (false) no hace nada.
+   */
+  private static function exigirXsd(string $xml, bool $esEvento, string $operacion, string $descripcion): void
+  {
+    if (!isset(self::$config) || !self::$config->validarXsdAntesDeEnviar)
+      return;
+    $resultado = $esEvento ? ValidadorXsd::validarEvento($xml) : ValidadorXsd::validarRde($xml);
+    if ($resultado->esValido())
+      return;
+    $primero = $resultado->getErrores()[0];
+    throw DocumentoInvalidoException::desde($resultado, "[Sifen] $operacion: $descripcion no cumple el XSD y no se envió (Config::\$validarXsdAntesDeEnviar está activo). "
+      . count($resultado->getErrores()) . ' error(es); el primero' . ($primero->linea !== null ? " (línea {$primero->linea})" : '') . ': ' . $primero->mensaje);
+  }
+
+  /**
    * Firma un DE (contenido en un RDE) y devuelve en forma de cadena el XML firmado.
    * Además genera el link para el código QR del DE. 
    * Este XML estará listo para envío al SIFEN.
@@ -388,6 +430,7 @@ class Sifen
    */
   public static function EnviarDE(String $rdeXML): RRetEnviDe
   {
+    self::exigirXsd($rdeXML, false, 'EnviarDE', 'el DE');
     // Realiza el envío del documento electrónico al SIFEN
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl");
@@ -450,6 +493,7 @@ class Sifen
         $rucLote = $matches[1];
       else if (strcmp($rucLote, $matches[1]) != 0)
         throw new ValidacionException("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo RUC emisor. Se encontraron los RUC " . $rucLote . " y " . $matches[1] . ".");
+      self::exigirXsd($rde, false, 'EnviarLoteDE', "el documento $n del lote ($cdc)");
       $rLotDe .= $rde;
     }
     $rLotDe .= '</rLoteDE>';
@@ -580,6 +624,7 @@ class Sifen
     try {
       $xmlDocument = SignHelper::SingEvents($raiz, self::$config);
       $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
+      self::exigirXsd($signedXML, true, 'RegistrarEvento', 'el sobre de eventos');
 
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_EVENTO . "?wsdl");
       $rEnviEventoDe = new REnviEventoDe(self::GetDId(), new SoapVar(

@@ -52,6 +52,10 @@ class Config
     // GetLastResponse(). Con false no se guardan y esos métodos devuelven null. Nuevo en 0.3.0 (Fase C, C12).
     public bool $soapTrace = true;
 
+    // Con true, EnviarDE(), EnviarLoteDE() y RegistrarEvento() validan el XML contra los XSD de producción antes de
+    // tocar la red y lanzan DocumentoInvalidoException si no cumple. Por defecto false: nada cambia. Nuevo en 0.3.0 (C7).
+    public bool $validarXsdAntesDeEnviar = false;
+
     /**
      * Normaliza el formato de certificado a un valor interno soportado.
      * Acepta "pem", "p12" y "pfx" (P12 y PFX son PKCS#12). Es idempotente: admite también los
@@ -153,6 +157,9 @@ class Config
         }
         if(isset($config->soapTrace)) {
             $res->soapTrace = boolval($config->soapTrace);
+        }
+        if(isset($config->validarXsdAntesDeEnviar)) {
+            $res->validarXsdAntesDeEnviar = boolval($config->validarXsdAntesDeEnviar);
         }
 
         return $res;
@@ -338,6 +345,22 @@ class Config
     public function setSoapTrace(bool $soapTrace): self
     {
         $this->soapTrace = $soapTrace;
+
+        return $this;
+    }
+
+    /**
+     * Activa (true) la validación contra los XSD de producción antes de enviar: EnviarDE(), EnviarLoteDE() y
+     * RegistrarEvento() lanzan DocumentoInvalidoException, con el ResultadoValidacion adjunto, en vez de tocar la red.
+     * Por defecto false (opt-in). Se aplica en el siguiente Sifen::Init(). Nuevo en 0.3.0.
+     *
+     * @param bool $validarXsdAntesDeEnviar
+     *
+     * @return self
+     */
+    public function setValidarXsdAntesDeEnviar(bool $validarXsdAntesDeEnviar): self
+    {
+        $this->validarXsdAntesDeEnviar = $validarXsdAntesDeEnviar;
 
         return $this;
     }
