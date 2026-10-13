@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\DE\A\DE;
 use IonysDev\Pkuatia\Utils\RNGMaker;
 use IonysDev\Pkuatia\Utils\RucUtils;
 use Stringable;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class CDCHelper
 {
@@ -69,7 +70,7 @@ class CDCHelper
     // Hasta 0.2.0 un CDC corto se devolvía como el texto "ERROR: ..." y uno largo o con letras fuera de lugar se devolvía
     // tal cual: los dos terminaban en el atributo Id del DE (PK-38).
     if (!preg_match('/^[0-9]{2}[0-9]{7}[0-9A-D][0-9]{34}$/', $cDC)) {
-      throw new \InvalidArgumentException("[CDCHelper] El CDC debe tener 44 caracteres con el formato tCDC del XSD y se obtuvo '$cDC' ("
+      throw new ValidacionException("[CDCHelper] El CDC debe tener 44 caracteres con el formato tCDC del XSD y se obtuvo '$cDC' ("
         . strlen($cDC) . " caracteres): revisar el RUC del emisor (3 a 8 caracteres), el establecimiento, el punto de expedición y el número del documento.");
     }
     return $cDC;

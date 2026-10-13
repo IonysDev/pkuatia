@@ -16,6 +16,7 @@ Esta biblioteca permite generar, firmar, enviar y consultar Documentos Tributari
 - [Configuración](#-configuración)
 - [Recomendaciones para Producción](#-recomendaciones-para-producción)
 - [Uso Básico](#-uso-básico)
+- [Validar, verificar y leer errores](#-validar-verificar-y-leer-errores)
 - [Funcionalidades](#-funcionalidades)
 - [Tipos de Documentos Soportados](#-tipos-de-documentos-soportados)
 - [Ejemplos](#-ejemplos)
@@ -100,13 +101,20 @@ $config->privateKeyFilePath = "/ruta/a/tu/certificado.pem";
 
 // Credenciales del SIFEN
 $config->idCsc = "0001"; // ID CSC proporcionado por el SIFEN
-$config->csc = "ABCD0000000000000000000000000000"; // CSC de 32 caracteres
+$config->csc = "ABCD0000000000000000000000000000"; // CSC de 32 caracteres (este es el de pruebas: en producción Init() exige el real)
 
 // Ruta para almacenar el archivo de control del dId (opcional)
 $config->dIdFilePath = "PKuatiaDId.dat.json";
 
+// Opcionales (0.3.0)
+// $config->validarXsdAntesDeEnviar = true; // EnviarDE, EnviarLoteDE y RegistrarEvento validan contra el XSD antes de tocar la red
+// $config->soapTrace = false;              // no guardar la última solicitud/respuesta (GetLastRequest/GetLastResponse devuelven null)
+
 // Inicializar Sifen
 Sifen::Init($config);
+
+// Al terminar (opcional): borra los temporales del PKCS#12, descarta el cliente SOAP y olvida la clave privada
+Sifen::Shutdown();
 ```
 
 ### Configuración desde archivo JSON
@@ -129,7 +137,9 @@ Ejemplo de `config.json`:
     "idCsc": "0001",
     "csc": "ABCD0000000000000000000000000000",
     "dIdFilePath": "PKuatiaDId.dat.json",
-    "wsdlCacheEnabled": true
+    "wsdlCacheEnabled": true,
+    "soapTrace": true,
+    "validarXsdAntesDeEnviar": false
 }
 ```
 
@@ -199,6 +209,18 @@ omisión**. Si al inicializar obtenés un error del tipo
 
 La librería detecta este caso y arroja una excepción con estas mismas instrucciones.
 
+### Secretos, archivos temporales y CSC
+
+- Con un certificado `.p12`/`.pfx`, `Init()` extrae el certificado y la clave a una carpeta propia de nombre
+  impredecible dentro de la carpeta temporal del sistema; la clave queda **cifrada** con la misma passphrase y los
+  archivos se borran en `Sifen::Shutdown()`, en el siguiente `Init()` y al terminar el script.
+- `var_dump($config)` y `print_r($config)` muestran la passphrase y el CSC como `[redactado]`. No registres `Config`
+  en logs igual: las propiedades siguen teniendo el valor real.
+- `SignHelper::$xmlKey` y `SignHelper::$xmlSigner` siguen existiendo por compatibilidad, pero están obsoletas: la
+  firma usa una copia privada de la clave y se retiran en la 1.0.
+- El CSC de fábrica (`ABCD0000…`) es el del ambiente de pruebas. Con `env = prod` y ese CSC, `Init()` lanza
+  `ConfiguracionException`: en producción el SIFEN rechaza cada DE con 2501.
+
 ## 📖 Uso Básico
 
 ### Consultar un RUC
@@ -256,6 +278,158 @@ $rde = RDE::FromSimpleXMLElement(simplexml_load_string($xmlFirmado));
 $xml = $rde->toXMLString(); // el mismo rDE, con Signature y gCamFuFD; la firma sigue verificando
 ```
 
+## 🛡️ Validar, verificar y leer errores
+
+Desde 0.3.0 la biblioteca puede decir, **antes de tocar la red**, qué rechazaría el SIFEN, verificar la firma de un
+XML recibido y explicar cada código de respuesta. Nada de esto cambia el comportamiento de `EnviarDE`: todo es
+opcional.
+
+### Validar antes de enviar
+
+Un documento en construcción (`Factura`, `NotaDeCredito`, `NotaDeDebito`, `NotaDeRemision`, `Autofactura`) o un
+`DE`/`RDE` ya armado o leído de un XML se valida contra las reglas del Manual Técnico sin serializar ni firmar:
+
+```php
+use IonysDev\Pkuatia\Validacion\OrigenError;
+use IonysDev\Pkuatia\Validacion\ValidadorDE;
+
+$resultado = $factura->validarReglas(); // o ValidadorDE::validar($rde) para un DE o RDE ya armado
+if (!$resultado->esValido()) {
+    foreach ($resultado->getErrores() as $error) {
+        // "1309 [D207 dDVRec] Dígito Verificador del RUC del receptor incorrecto ... Ver setReceptor()."
+        echo $error . "\n";
+        // o por partes: $error->codigoSifen, $error->campoMT, $error->elemento, $error->ruta, $error->valor, $error->sugerencia
+    }
+}
+foreach ($resultado->getAdvertencias() as $aviso) { // lo que el SIFEN aprobaría con observación
+    echo 'Aviso: ' . $aviso->mensaje . "\n";
+}
+$soloReglas = $resultado->porOrigen(OrigenError::Regla); // también porCodigo('1309') y porCampo('D207')
+$resultado->lanzarSiInvalido(); // DocumentoInvalidoException, con el resultado en getResultado()
+```
+
+Cada error lleva el código con el que el SIFEN rechazaría el documento (el mismo `dCodRes` que devolvería), el campo
+del MT, el elemento XML, la ruta dentro del DE, el valor recibido y una sugerencia con el método de PKuatia que carga
+ese campo. Las reglas de fechas (1004, 1005, 1103, 1150, 1151, 2055, 2108...) se evalúan contra el momento actual en
+Asunción, o contra el `DateTime` que se pase como `$ahora`.
+
+El validador comprueba la completitud según el XSD (lo que falta en cada grupo informado, código 0160) y las
+validaciones del MT listadas al final de esta sección. No cubre lo que solo el SIFEN sabe: existencia del RUC, del
+timbrado o del CDC asociado, duplicados y estado del receptor.
+
+Para validar el XML ya firmado contra los **XSD de producción** (lo primero que hace el SIFEN, código 0160):
+
+```php
+use IonysDev\Pkuatia\Sifen;
+
+$xml = Sifen::FirmarDE($rde, new DateTime('now', new DateTimeZone('America/Asuncion')));
+$resultado = Sifen::ValidarXSD($xml); // Sifen::ValidarEventoXSD($sobre) para un sobre de eventos; sin Init() ni red
+foreach ($resultado as $error) {
+    echo "línea {$error->linea}: {$error->mensaje} ({$error->campoMT}) {$error->sugerencia}\n";
+}
+```
+
+Y para que `EnviarDE`, `EnviarLoteDE` y `RegistrarEvento` lo hagan solos y lancen `DocumentoInvalidoException` en
+vez de enviar un XML que el SIFEN va a rechazar: `$config->validarXsdAntesDeEnviar = true;` (por defecto `false`).
+
+### Verificar una firma
+
+```php
+use IonysDev\Pkuatia\Sifen;
+
+$verificacion = Sifen::VerificarFirma($xmlRecibido); // un rDE o un sobre de eventos; sin Init() ni red
+if ($verificacion->esValida()) {
+    $firma = $verificacion->getFirmas()[0];
+    echo $firma->certificado?->sujeto . ' (RUC ' . $firma->certificado?->ruc . '), firmado el ' . $firma->fechaFirma?->format('c') . "\n";
+} else {
+    foreach ($verificacion->getErrores() as $error) {
+        echo $error . "\n"; // 0140 estándar, 0141 digest o firma, 0120 certificado, 0121/2450 vigencia
+    }
+}
+```
+
+Se verifica el digest, el valor de la firma contra el certificado incluido, los algoritmos del estándar y la vigencia
+del certificado en la fecha de firma. No se verifica la cadena de certificación ni la revocación.
+
+### Leer una respuesta
+
+Las siete respuestas del facade implementan `RespuestaSifen`: `getCodigo()` (`"0260"`), `getMensaje()`,
+`esExitosa()`, `getCodigoResultado()` (enum `CodigoResultadoWS`), `getInfoValidacion()` y `toArray()`. Cada una
+agrega lo suyo (`esAprobado()`, `getProtocolo()`, `getMotivos()`, `fueEncolado()`, `getRechazados()`...):
+
+```php
+use IonysDev\Pkuatia\Sifen;
+use IonysDev\Pkuatia\Validacion\CatalogoValidaciones;
+
+$respuesta = Sifen::EnviarDE($xml);
+if ($respuesta->esAprobado()) {
+    echo 'Aprobado, protocolo ' . $respuesta->getProtocolo() . "\n";
+} else {
+    foreach ($respuesta->getMotivos() as $motivo) {
+        $info = $motivo->getInfoValidacion(); // catálogo del MT: campo, regla y método de PKuatia que lo carga
+        echo $motivo->getCodigo() . ' ' . $motivo->getMensaje() . ($info !== null ? " [{$info->id}] {$info->observacion} → {$info->metodoPkuatia}" : '') . "\n";
+    }
+}
+
+// El catálogo también se consulta solo: qué significa un código y qué tocar
+echo CatalogoValidaciones::describir('1321'); // "1321 (D208c): Receptor innominado ..."; como objeto: ->observacion (la regla) y ->metodoPkuatia
+```
+
+### Errores: qué excepción capturar
+
+Los rechazos del SIFEN **no son excepciones**: llegan en el objeto de respuesta. Las excepciones son para lo que
+impide enviar o leer. Cada clase extiende la que se lanzaba en ese lugar hasta 0.2.1, así que un `catch` existente
+sigue funcionando, y todas implementan `PkuatiaExceptionInterface`.
+
+| Excepción | Extiende | Cuándo |
+|-----------|----------|--------|
+| `ConfiguracionException` | `PkuatiaException` (`\Exception`) | `Config` incompleta, archivos que no existen, CSC de prueba en producción, temporales |
+| `CertificadoException` | `ConfiguracionException` | certificado o clave ilegibles o con passphrase incorrecta; `getMotivo()` |
+| `FirmaException` | `PkuatiaException` | firmar sin `Init()` o después de `Shutdown()` |
+| `RespuestaException` | `PkuatiaException` | respuesta del SIFEN que no se pudo interpretar; `getRespuestaCruda()`, `getCampoFaltante()` |
+| `ValidacionException` | `\InvalidArgumentException` | datos inválidos en setters, builders y validaciones previas al envío |
+| `CampoInvalidoException` | `ValidacionException` | lo mismo, con el campo del MT y el código del SIFEN (p. ej. 1321) |
+| `DocumentoInvalidoException` | `ValidacionException` | `lanzarSiInvalido()` y `validarXsdAntesDeEnviar`; `getResultado()` |
+| `TransporteException` | `\SoapFault` | falla de comunicación; `getTipo()` (`TipoFallaTransporte`) y `getOperacion()` |
+| `SifenNoDisponibleException` | `TransporteException` | saturación o bloqueo temporal del SIFEN: reintentar más tarde |
+
+```php
+use IonysDev\Pkuatia\Core\Exceptions\PkuatiaExceptionInterface;
+use IonysDev\Pkuatia\Core\Exceptions\SifenNoDisponibleException;
+use IonysDev\Pkuatia\Core\Exceptions\TransporteException;
+use IonysDev\Pkuatia\Sifen;
+
+try {
+    $respuesta = Sifen::EnviarDE($xml);
+} catch (SifenNoDisponibleException $e) {
+    // esperar y reintentar: el SIFEN no respondió (WSDL o cuerpo vacío)
+} catch (TransporteException $e) {
+    echo $e->getTipo()->value . ' en ' . $e->getOperacion() . ': ' . $e->getMessage();
+} catch (PkuatiaExceptionInterface $e) {
+    echo get_class($e) . ': ' . $e->getMessage(); // configuración, certificado, validación o respuesta ilegible
+}
+```
+
+### Validaciones del MT que cubre el validador
+
+Completitud según el XSD (0160) y estas 234 validaciones del MT §12.4 (1921 es de la NT-013). Lo que falta depende
+de datos que solo el SIFEN tiene (existencia y estado de RUC, timbrados y CDC, duplicados, sumas contra la factura
+asociada).
+
+```text
+1000 1003 1004 1005 1051 1100 1103 1110 1150 1151 1156 1200 1201 1202 1203 1205 1206 1207 1208 1209 1210 1211
+1253 1254 1255 1257 1260 1300 1301 1302 1303 1304 1305 1309 1310 1311 1313 1314 1315 1316 1317 1318 1319 1320
+1321 1323 1324 1325 1326 1327 1328 1329 1330 1350 1351 1352 1400 1401 1402 1450 1451 1452 1500 1501 1502 1503
+1550 1551 1552 1553 1554 1555 1556 1557 1600 1601 1602 1650 1651 1700 1701 1702 1703 1704 1705 1706 1751 1800
+1801 1802 1804 1806 1807 1808 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1861 1900 1901 1902 1903 1904
+1905 1906 1907 1908 1909 1910 1911 1912 1913 1921 2050 2051 2052 2053 2054 2055 2100 2101 2102 2103 2104 2107
+2108 2109 2110 2150 2151 2153 2200 2201 2203 2250 2251 2252 2253 2254 2255 2300 2301 2302 2305 2306 2307 2308
+2311 2350 2351 2352 2353 2354 2355 2356 2357 2358 2359 2362 2363 2364 2365 2366 2367 2368 2369 2370 2371 2372
+2373 2374 2375 2376 2377 2382 2385 2386 2390 2400 2401 2402 2405 2406 2407 2408 2409 2410 2411 2413 2415 2416
+2418 2419 2420 2421 2422 2423 2424 2425 2426 2427 2429 2430 2431 2432 2433 2434 2435 2436 2503 2550 2551 2552
+2553 2555 2556 2557 2558 2559 2561 2600 2601 2602 2603 2604 2605 2606
+```
+
 ## 🎯 Funcionalidades
 
 | Área | Métodos principales |
@@ -267,6 +441,9 @@ $xml = $rde->toXMLString(); // el mismo rDE, con Signature y gCamFuFD; la firma 
 | Eventos receptor | `ConformarDE`, `DisconformarDE`, `DesconocerDE`, `NotificarRecepcionDE`, `NominarFE` |
 | Builders | `Factura`, `NotaDeCredito`, `NotaDeDebito`, `NotaDeRemision`, `Autofactura` |
 | Diagnóstico | `GetLastRequest`, `GetLastResponse` (el XML de la última solicitud y de la última respuesta) |
+| Validación sin red | `validarReglas` (builders) y `ValidadorDE::validar`, `ValidarXSD`, `ValidarEventoXSD`, `VerificarFirma` |
+| Lectura de respuestas | `esAprobado`, `getCodigo`, `getMensaje`, `getMotivos`, `getInfoValidacion`; `CatalogoValidaciones::describir` |
+| Ciclo de vida | `Init`, `Shutdown` |
 
 Los ejemplos completos de **FE contado**, **cancelación** y **lote** están en [Ejemplos](#-ejemplos). Otros
 tipos de documento y eventos se documentarán en una siguiente iteración.
@@ -510,6 +687,14 @@ En `test/` hay scripts de consulta que requieren certificado y red:
 5. **Firma Digital**: La biblioteca requiere que el certificado y la clave privada estén disponibles localmente.
 
 6. **Monedas con nombre largo**: 15 monedas del catálogo ISO 4217 (ANG, BMD, FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD, XBA, XBB, XBC, XTS y XXX) tienen un nombre de más de 20 caracteres, el máximo que admite el XSD para la descripción de la moneda. La librería la recorta a 20, pero el SIFEN rechaza esa descripción con el código 1206 (verificado en `sifen-test` con ANG el 11/10/2026). No hay una descripción conocida que el SIFEN acepte para estas monedas: por ahora no se pueden usar en un DE.
+
+7. **Información adicional del emisor (`dInfAdic`, J003)**: aunque el XSD la admite, el SIFEN rechaza el DE con 2503
+   si va informada (verificado en `sifen-test` el 13/10/2026). No pasar el tercer parámetro de `FirmarDE()`; el
+   validador de reglas lo marca como error.
+
+8. **Cilindrada del vehículo nuevo (`dCilin`, E786)**: el XSD de producción declara el patrón `/d` y el SIFEN lo aplica
+   tal cual, así que rechaza cualquier valor numérico con 0160 (verificado el 13/10/2026). No usar `setDCilin()`; el
+   validador de reglas y `ValidarXSD()` lo señalan.
 
 ## 🧪 Pruebas
 

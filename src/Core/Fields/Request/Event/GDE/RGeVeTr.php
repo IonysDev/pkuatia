@@ -9,6 +9,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GET001 - rGeVeTr - Grupos de Campos Generales del Evento 
@@ -611,7 +612,7 @@ class RGeVeTr
         break;
 
       default:
-        throw new \InvalidArgumentException('[RGeVeTr] iTipIDTrans no válido: ' . $this->iTipIDTrans);
+        throw new ValidacionException('[RGeVeTr] iTipIDTrans no válido: ' . $this->iTipIDTrans);
     }
   }
 
@@ -758,7 +759,7 @@ class RGeVeTr
   public function validar(): void
   {
     if (!isset($this->Id) || !isset($this->dMotEv))
-      throw new \InvalidArgumentException('[RGeVeTr] Id (GET002, CDC de la Nota de Remisión) y dMotEv (GET003, motivo) son obligatorios.');
+      throw new ValidacionException('[RGeVeTr] Id (GET002, CDC de la Nota de Remisión) y dMotEv (GET003, motivo) son obligatorios.');
     $faltan = [];
     $req = function (string $prop, string $desc) use (&$faltan): void {
       if (!isset($this->$prop)) $faltan[] = "$prop ($desc)";
@@ -796,13 +797,13 @@ class RGeVeTr
         if (isset($this->dTipIdenVeh) && $this->dTipIdenVeh == 2) $req('dNroMatVeh', 'GET030 matrícula');
         break;
       default:
-        throw new \InvalidArgumentException("[RGeVeTr] dMotEv (GET003) debe ser 1 cambio del local de entrega, 2 cambio del chofer, 3 cambio del transportista o 4 cambio de vehículo; se recibió {$this->dMotEv}.");
+        throw new ValidacionException("[RGeVeTr] dMotEv (GET003) debe ser 1 cambio del local de entrega, 2 cambio del chofer, 3 cambio del transportista o 4 cambio de vehículo; se recibió {$this->dMotEv}.");
     }
     if (count($faltan) > 0)
-      throw new \InvalidArgumentException('[RGeVeTr] Para dMotEv = ' . $this->dMotEv . ' faltan: ' . implode(', ', $faltan) . '.');
+      throw new ValidacionException('[RGeVeTr] Para dMotEv = ' . $this->dMotEv . ' faltan: ' . implode(', ', $faltan) . '.');
     // tdNroMatVeh exige longitud exacta 6 (Evento_Types_v150.xsd:524-533), a diferencia del DE (hasta 7).
     if (isset($this->dNroMatVeh) && mb_strlen($this->dNroMatVeh) !== 6)
-      throw new \InvalidArgumentException("[RGeVeTr] dNroMatVeh (GET030) debe tener exactamente 6 caracteres en el evento (tdNroMatVeh, Evento_Types_v150.xsd:524-533); se recibió '{$this->dNroMatVeh}'.");
+      throw new ValidacionException("[RGeVeTr] dNroMatVeh (GET030) debe tener exactamente 6 caracteres en el evento (tdNroMatVeh, Evento_Types_v150.xsd:524-533); se recibió '{$this->dNroMatVeh}'.");
   }
 
   /**
@@ -928,7 +929,7 @@ class RGeVeTr
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if (strcmp($node->getName(), 'rGeVeTr') != 0) {
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
     }
 
     $res = new self();

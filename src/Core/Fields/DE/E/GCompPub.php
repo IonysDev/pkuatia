@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 
 /**
@@ -162,7 +163,7 @@ class GCompPub extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gCompPub') != 0)
     {
-      throw new \Exception("El nodo '" . $node->getName() . "' no corresponde a 'gCompPub'."); 
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a 'gCompPub'."); 
     }
     $res = new GCompPub();
     $res->setDModCont($node->dModCont);
@@ -232,7 +233,7 @@ class GCompPub extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCompPub') != 0)
-      throw new \Exception('[GCompPub] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GCompPub] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GCompPub();
     $res->setDModCont($node->getElementsByTagName('dModCont')->item(0)->nodeValue);
     $res->setDEntCont(intval($node->getElementsByTagName('dEntCont')->item(0)->nodeValue));

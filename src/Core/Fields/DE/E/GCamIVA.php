@@ -10,6 +10,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E730
@@ -124,7 +125,7 @@ class GCamIVA extends BaseSifenField
   public function setDBasGravIVA(String $dBasGravIVA): self
   {
     if(!ValueValidations::isValidStringDecimal($dBasGravIVA, 15, 0, 8))
-      throw new \Exception("Invalid dBasGravIVA: $dBasGravIVA");
+      throw new ValidacionException("Invalid dBasGravIVA: $dBasGravIVA");
     $this->dBasGravIVA = $dBasGravIVA;
     return $this;
   }
@@ -140,7 +141,7 @@ class GCamIVA extends BaseSifenField
   public function setDLiqIVAItem(String $dLiqIVAItem): self
   {
     if(!ValueValidations::isValidStringDecimal($dLiqIVAItem, 15, 0, 8))
-      throw new \Exception("Invalid dBasGravIVA: $dLiqIVAItem");
+      throw new ValidacionException("Invalid dBasGravIVA: $dLiqIVAItem");
     $this->dLiqIVAItem = $dLiqIVAItem;
     return $this;
   }
@@ -224,7 +225,7 @@ class GCamIVA extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gCamIVA') != 0)
-      throw new \Exception("Invalid gCamIVA XML Node Name: " . $node->getName());
+      throw new ValidacionException("Invalid gCamIVA XML Node Name: " . $node->getName());
     $res = new GCamIVA();
     $res->iAfecIVA    = intval($node->iAfecIVA);
     $res->dDesAfecIVA = strval($node->dDesAfecIVA);
@@ -331,7 +332,7 @@ class GCamIVA extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamIVA') != 0)
-        throw new \Exception('[GCamIVA] Nodo con nombre inválido: ' . $node->nodeName);
+        throw new ValidacionException('[GCamIVA] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     $res->iAfecIVA = intval(trim($node->getElementsByTagName('iAfecIVA')->item(0)->nodeValue));
     $res->dDesAfecIVA = trim($node->getElementsByTagName('dDesAfecIVA')->item(0)->nodeValue);

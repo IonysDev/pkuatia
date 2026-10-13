@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  *  ID:GDI001 Raiz Gestión de Eventos Disconformidad PADRE:GDE007
@@ -118,7 +119,7 @@ class RGeVeDisconf
   public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
   {
     if($node->getName() != 'rGeVeDisconf')
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
 
     $res = new RGeVeDisconf();
     $res->setId($node->Id);

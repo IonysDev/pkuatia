@@ -8,6 +8,8 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
+use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;
 
 /**
  * Nodo Id:     E791 
@@ -80,7 +82,7 @@ class GGrupEner
   public function setDLecAnt(String $dLecAnt): self
   {
     if(!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0, 2))
-      throw new \Exception('[GGrupEner] dLecAnt debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAnt, 1);
+      throw new ValidacionException('[GGrupEner] dLecAnt debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAnt, 1);
     $this->dLecAnt = $dLecAnt;
     return $this;
   }
@@ -96,7 +98,7 @@ class GGrupEner
   public function setDLecAct(String $dLecAct): self
   {
     if(!ValueValidations::isValidStringDecimal($dLecAct, 11, 0, 2))
-      throw new \Exception('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAct, 1);
+      throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAct, 1);
     $this->dLecAct = $dLecAct;
     return $this;
   }
@@ -111,7 +113,7 @@ class GGrupEner
   public function setDConKwh(String $dConKwh): self
   {
     if(!ValueValidations::isValidStringDecimal($dConKwh, 11, 0, 2))
-      throw new \Exception('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dConKwh, 1);
+      throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dConKwh, 1);
     $this->dConKwh = $dConKwh;
     return $this;
   }
@@ -196,7 +198,7 @@ class GGrupEner
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gGrupEner') != 0)
-      throw new \Exception('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->getName(), 1);
+      throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->getName(), 1);
     $res = new GGrupEner();
     // Hasta 0.2.0 se pasaba el SimpleXMLElement a setDActiv(int): TypeError con cualquier dActiv (PK-25).
     if(isset($node->dNroMed))
@@ -237,7 +239,7 @@ class GGrupEner
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->localName, 'gGrupEner') != 0)
-      throw new \InvalidArgumentException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->localName);
+      throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->localName);
     $res = new GGrupEner();
     foreach($node->childNodes as $hijo)
     {
@@ -330,7 +332,7 @@ class GGrupEner
     $domElement = $this->toDOMElement(new DOMDocument());
     $xmlString = $domElement->ownerDocument->saveXML($domElement);
     if(!$xmlString)
-      throw new \Exception('[GGrupEner] Error al convertir el objeto a XML.');
+      throw new PkuatiaException('[GGrupEner] Error al convertir el objeto a XML.');
     return $xmlString;
   }
 

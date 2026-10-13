@@ -2,6 +2,9 @@
 
 namespace IonysDev\Pkuatia\Helpers;
 
+use IonysDev\Pkuatia\Core\Constants\MotivoCertificado;
+use IonysDev\Pkuatia\Core\Exceptions\CertificadoException;
+
 /**
  * Utilidades para archivos PEM (certificado y/o clave privada).
  */
@@ -25,12 +28,12 @@ class PemHelper
   /**
    * Extrae uno o más bloques de certificado X.509 de un contenido PEM.
    *
-   * @throws \Exception
+   * @throws CertificadoException Desde 0.3.0; antes \Exception, de la que hereda.
    */
   public static function extractCertificatePem(string $pemContent): string
   {
     if (!preg_match_all('/-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/s', $pemContent, $matches)) {
-      throw new \Exception("[PemHelper] No se encontró un certificado PEM en el archivo.");
+      throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[PemHelper] No se encontró un certificado PEM en el archivo.");
     }
 
     return implode("\n", $matches[0]);
@@ -47,19 +50,19 @@ class PemHelper
   }
 
   /**
-   * @throws \Exception
+   * @throws CertificadoException Desde 0.3.0; antes \Exception, de la que hereda.
    */
   public static function validateCombinedPemFile(string $filePath): void
   {
     $pemContent = file_get_contents($filePath);
     if ($pemContent === false) {
-      throw new \Exception("[PemHelper] No se pudo leer el archivo PEM: $filePath");
+      throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[PemHelper] No se pudo leer el archivo PEM: $filePath");
     }
     if (!self::pemContainsCertificate($pemContent)) {
-      throw new \Exception("[PemHelper] El archivo PEM no contiene un certificado: $filePath");
+      throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[PemHelper] El archivo PEM no contiene un certificado: $filePath");
     }
     if (!self::pemContainsPrivateKey($pemContent)) {
-      throw new \Exception("[PemHelper] El archivo PEM no contiene una clave privada: $filePath");
+      throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[PemHelper] El archivo PEM no contiene una clave privada: $filePath");
     }
   }
 }

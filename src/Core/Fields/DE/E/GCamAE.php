@@ -11,6 +11,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E300
@@ -68,7 +69,7 @@ class GCamAE
     if ($nat === null) {
       unset($this->iNatVen, $this->dDesNatVen);
       $dado = $iNatVen instanceof CamAENatVen ? $iNatVen->value : $iNatVen;
-      throw new \Exception("[GCamAE] iNatVen debe ser 1 o 2, valor dado: $dado");
+      throw new ValidacionException("[GCamAE] iNatVen debe ser 1 o 2, valor dado: $dado");
     }
 
     $this->iNatVen = $nat->value;
@@ -88,7 +89,7 @@ class GCamAE
   public function setDDesNatVen(String $dDesNatVen): self
   {
     if($dDesNatVen != "No contribuyente" && $dDesNatVen != "Extranjero")
-      throw new \Exception("[GCamAE] dDesNatVen debe ser 'No contribuyente' o 'Extranjero', valor dado: $dDesNatVen");
+      throw new ValidacionException("[GCamAE] dDesNatVen debe ser 'No contribuyente' o 'Extranjero', valor dado: $dDesNatVen");
     $this->dDesNatVen = $dDesNatVen;
     return $this;
   }
@@ -110,7 +111,7 @@ class GCamAE
     if ($tipo === null) {
       unset($this->iTipIDVen, $this->dDTipIDVen);
       $dado = $iTipIDVen instanceof CamAETipIDVen ? $iTipIDVen->value : $iTipIDVen;
-      throw new \Exception("[GCamAE] iTipIDVen debe ser 1, 2, 3 o 4, valor dado: $dado");
+      throw new ValidacionException("[GCamAE] iTipIDVen debe ser 1, 2, 3 o 4, valor dado: $dado");
     }
 
     $this->iTipIDVen = $tipo->value;
@@ -130,7 +131,7 @@ class GCamAE
   public function setDDTipIDVen(String $dDTipIDVen): self 
   {
     if($dDTipIDVen != "Cédula paraguaya" && $dDTipIDVen != "Pasaporte" && $dDTipIDVen != "Cédula extranjera" && $dDTipIDVen != "Carnet de residencia")
-      throw new \Exception("[GCamAE] dDTipIDVen debe ser 'Cédula paraguaya', 'Pasaporte', 'Cédula extranjera' o 'Carnet de residencia', valor dado: $dDTipIDVen");
+      throw new ValidacionException("[GCamAE] dDTipIDVen debe ser 'Cédula paraguaya', 'Pasaporte', 'Cédula extranjera' o 'Carnet de residencia', valor dado: $dDTipIDVen");
     $this->dDTipIDVen = $dDTipIDVen;
     return $this;
   }
@@ -145,7 +146,7 @@ class GCamAE
   public function setDNumIDVen(String $dNumIDVen): self
   {
     if(strlen($dNumIDVen) < 1 || strlen($dNumIDVen) > 20)
-      throw new \Exception("[GCamAE] dNumIDVen debe tener entre 1 y 20 caracteres, valor dado: $dNumIDVen");
+      throw new ValidacionException("[GCamAE] dNumIDVen debe tener entre 1 y 20 caracteres, valor dado: $dNumIDVen");
     $this->dNumIDVen = $dNumIDVen;
     return $this;
   }
@@ -161,7 +162,7 @@ class GCamAE
   public function setDNomVen(String $dNomVen): self
   {
     if(strlen($dNomVen) < 4 || strlen($dNomVen) > 60)
-      throw new \Exception("[GCamAE] dNomVen debe tener entre 4 y 60 caracteres, valor dado: $dNomVen");
+      throw new ValidacionException("[GCamAE] dNomVen debe tener entre 4 y 60 caracteres, valor dado: $dNomVen");
     $this->dNomVen = $dNomVen;
     return $this;
   }
@@ -178,7 +179,7 @@ class GCamAE
   public function setDDirVen(String $dDirVen): self
   {
     if(strlen($dDirVen) < 1 || strlen($dDirVen) > 255)
-      throw new \Exception("[GCamAE] dDirVen debe tener entre 1 y 255 caracteres, valor dado: $dDirVen");
+      throw new ValidacionException("[GCamAE] dDirVen debe tener entre 1 y 255 caracteres, valor dado: $dDirVen");
     $this->dDirVen = $dDirVen;
     return $this;
   }
@@ -195,7 +196,7 @@ class GCamAE
   public function setDNumCasVen(int $dNumCasVen): self
   {
     if($dNumCasVen < 0 || $dNumCasVen > 999999)
-      throw new \Exception("[GCamAE] dNumCasVen debe tener entre 0 y 999999, valor dado: $dNumCasVen");
+      throw new ValidacionException("[GCamAE] dNumCasVen debe tener entre 0 y 999999, valor dado: $dNumCasVen");
     $this->dNumCasVen = $dNumCasVen;
     return $this;
   }
@@ -213,7 +214,7 @@ class GCamAE
   {
     $desc = DepartamentoMapping::getDepName(strval($cDepVen));
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamAE] cDepVen debe ser un código de departamento válido, valor dado: $cDepVen");
+      throw new ValidacionException("[GCamAE] cDepVen debe ser un código de departamento válido, valor dado: $cDepVen");
     $this->dDesDepVen = $desc;
     $this->cDepVen = $cDepVen;
     return $this;
@@ -249,7 +250,7 @@ class GCamAE
     }
     $desc = PyGeoCodesMapping::getDistName(strval($cDisVen));
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamAE] cDisVen debe ser un código de distrito válido, valor dado: $cDisVen");
+      throw new ValidacionException("[GCamAE] cDisVen debe ser un código de distrito válido, valor dado: $cDisVen");
     $this->cDisVen = $cDisVen;
     $this->dDesDisVen = $desc;
     return $this;
@@ -267,7 +268,7 @@ class GCamAE
   {
     $desc = PyGeoCodesMapping::getCiudName(strval($cCiuVen));
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamAE] cCiuVen debe ser un código de ciudad válido, valor dado: $cCiuVen");
+      throw new ValidacionException("[GCamAE] cCiuVen debe ser un código de ciudad válido, valor dado: $cCiuVen");
     $this->cCiuVen = $cCiuVen;
     $this->dDesCiuVen = $desc;
     return $this;
@@ -300,7 +301,7 @@ class GCamAE
   {
     $desc = DepartamentoMapping::getDepName(strval($cDepProv));
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamAE] cDepProv debe ser un código de departamento válido, valor dado: $cDepProv");
+      throw new ValidacionException("[GCamAE] cDepProv debe ser un código de departamento válido, valor dado: $cDepProv");
     $this->cDepProv = $cDepProv;
     $this->dDesDepProv = $desc;
     return $this;
@@ -324,7 +325,7 @@ class GCamAE
     }
     $desc = PyGeoCodesMapping::getDistName(strval($cDisProv));
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamAE] cDisProv debe ser un código de distrito válido, valor dado: $cDisProv");
+      throw new ValidacionException("[GCamAE] cDisProv debe ser un código de distrito válido, valor dado: $cDisProv");
     $this->cDisProv = $cDisProv;
     $this->dDesDisProv = $desc;
     return $this;
@@ -342,7 +343,7 @@ class GCamAE
   {
     $desc = PyGeoCodesMapping::getCiudName(strval($cCiuProv));
     if ($desc === null)
-      throw new \InvalidArgumentException("[GCamAE] cCiuProv debe ser un código de ciudad válido, valor dado: $cCiuProv");
+      throw new ValidacionException("[GCamAE] cCiuProv debe ser un código de ciudad válido, valor dado: $cCiuProv");
     $this->cCiuProv = $cCiuProv;
     $this->dDesCiuProv = $desc;
     return $this;
@@ -675,7 +676,7 @@ class GCamAE
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->localName, 'gCamAE') != 0)
-      throw new \InvalidArgumentException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->localName);
+      throw new ValidacionException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->localName);
     // Hasta 0.2.0 se pasaba el DOMElement (no su valor) a intval()/strval(): Error en toda autofactura (PK-25).
     $valores = [];
     foreach($node->childNodes as $hijo)
@@ -697,7 +698,7 @@ class GCamAE
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gCamAE') != 0)
-      throw new \InvalidArgumentException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->getName());
+      throw new ValidacionException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->getName());
     $valores = [];
     foreach($node->children() as $hijo)
       $valores[$hijo->getName()] = (string) $hijo;
@@ -717,7 +718,7 @@ class GCamAE
     foreach($obligatorios as $campo)
     {
       if(!isset($v[$campo]))
-        throw new \InvalidArgumentException("[GCamAE] Falta el elemento obligatorio $campo (tgCamAE, DE_v150.xsd:1351).");
+        throw new ValidacionException("[GCamAE] Falta el elemento obligatorio $campo (tgCamAE, DE_v150.xsd:1351).");
     }
     $res = new GCamAE();
     $res->setINatVen(intval($v['iNatVen']));

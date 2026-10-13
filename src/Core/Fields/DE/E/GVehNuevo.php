@@ -8,6 +8,8 @@ use DOMElement;
 use Exception;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Utils\DecimalXsd;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E770 Grupo de detalle de vehículos nuevos
@@ -598,7 +600,7 @@ class GVehNuevo extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gVehNuevo') != 0)
-            throw new Exception('[GVehNuevo] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GVehNuevo] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new self();
         if($node->getElementsByTagName('iTipOpVN')->length > 0)
           $res->setITipOpVN(intval(trim($node->getElementsByTagName('iTipOpVN')->item(0)->nodeValue)));
@@ -690,7 +692,7 @@ class GVehNuevo extends BaseSifenField
   public static function FromSimpleXMLElement($node): self
   {
     if ($node->getName() != 'gVehNuevo') {
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
     }
 
     $res = new self();
@@ -744,33 +746,16 @@ class GVehNuevo extends BaseSifenField
    * y la devuelve como texto, sin redondear. Como en xs:decimal, los ceros a la izquierda y los decimales finales en
    * cero no cuentan. Mismo criterio que GGrupSup (Q-B10): también acepta, normalizados, los textos numéricos que hasta
    * 0.2.0 entraban por la conversión de PHP a int ("+5" y "5." como "5", ".5" como "0.5", "1e3" como "1000").
+   * Desde 0.3.0 (Fase C, C1) delega en Utils\DecimalXsd, con el mismo criterio y los mismos mensajes.
    */
   private static function monto(int|String $valor, String $campo): String
   {
-    $original = trim((string) $valor);
-    $texto = $original;
-    if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
-      if (!is_numeric($texto))
-        throw new \InvalidArgumentException("[GVehNuevo] $campo debe ser un número decimal: '$original'");
-      $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
-    }
-    $signo = str_starts_with($texto, '-') ? '-' : '';
-    $texto = ltrim($texto, '+-');
-    if (str_starts_with($texto, '.'))
-      $texto = '0' . $texto;
-    if (str_ends_with($texto, '.'))
-      $texto = substr($texto, 0, -1);
-    [$enteros, $decimales] = array_pad(explode('.', $texto, 2), 2, '');
-    $enteros = ltrim($enteros, '0');
-    $decimales = rtrim($decimales, '0');
-    if (strlen($decimales) > 4 || strlen($enteros) + strlen($decimales) > 10)
-      throw new \InvalidArgumentException("[GVehNuevo] $campo admite hasta 10 dígitos, de los cuales hasta 4 decimales (tMontoBase6): '$original'");
-    return $signo . $texto;
+    return DecimalXsd::normalizar($valor, $campo, 10, 4, '[GVehNuevo]', 'tMontoBase6');
   }
 
   /** Valor exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */
   private static function exacto(?String $decimal, int $entero): String
   {
-    return ($decimal !== null && intval($decimal) === $entero) ? $decimal : (string) $entero;
+    return DecimalXsd::exacto($decimal, $entero);
   }
 }

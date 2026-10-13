@@ -8,6 +8,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Core\Constants\MotEmi;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E400
@@ -94,7 +95,7 @@ class GCamNCDE extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamNCDE') != 0)
-      throw new \Exception('[GCamNCDE] El nombre del nodo no corresponde a gCamNCDE: ' . $node->nodeName, 1);
+      throw new ValidacionException('[GCamNCDE] El nombre del nodo no corresponde a gCamNCDE: ' . $node->nodeName, 1);
     $res = new GCamNCDE();
     $res->iMotEmi = intval($node->getElementsByTagName('iMotEmi')->item(0)->nodeValue);
     $res->dDesMotEmi = strval($node->getElementsByTagName('dDesMotEmi')->item(0)->nodeValue);
@@ -133,7 +134,7 @@ class GCamNCDE extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gCamNCDE') != 0)
     {
-      throw new \Exception("El nodo '" . $node->getName() . "' no corresponde a 'gCamNCDE'");
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a 'gCamNCDE'");
     }
     $res = new GCamNCDE();
     $res->iMotEmi = intval($node->iMotEmi);

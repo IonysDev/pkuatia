@@ -8,6 +8,7 @@ use DOMElement;
 use Exception;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E960
@@ -41,7 +42,7 @@ class GVehTras extends BaseSifenField
     public function setDTiVehTras(String $dTiVehTras): self
     {
         if(strlen($dTiVehTras) < 4 || strlen($dTiVehTras) > 10)
-            throw new Exception('[GVehTras] Tipo de vehículo (dTiVehTras) inválido: ' . $dTiVehTras . '. Debe tener entre 4 y 10 caracteres.');
+            throw new ValidacionException('[GVehTras] Tipo de vehículo (dTiVehTras) inválido: ' . $dTiVehTras . '. Debe tener entre 4 y 10 caracteres.');
         $this->dTiVehTras = $dTiVehTras;
         return $this;
     }
@@ -56,7 +57,7 @@ class GVehTras extends BaseSifenField
     public function setDMarVeh(String $dMarVeh): self
     {
         if(strlen($dMarVeh) < 1 || strlen($dMarVeh) > 10)
-            throw new Exception('[GVehTras] Marca del vehículo (dMarVeh) inválida: ' . $dMarVeh . '. Debe tener entre 1 y 10 caracteres.');
+            throw new ValidacionException('[GVehTras] Marca del vehículo (dMarVeh) inválida: ' . $dMarVeh . '. Debe tener entre 1 y 10 caracteres.');
         $this->dMarVeh = $dMarVeh;
         return $this;
     }
@@ -71,7 +72,7 @@ class GVehTras extends BaseSifenField
     public function setDTipIdenVeh(int $dTipIdenVeh): self
     {
         if($dTipIdenVeh != 1 && $dTipIdenVeh != 2)
-            throw new Exception('[GVehTras] Tipo de identificación del vehículo (dTipIdenVeh) inválido: ' . $dTipIdenVeh . '. Debe ser 1 o 2.');
+            throw new ValidacionException('[GVehTras] Tipo de identificación del vehículo (dTipIdenVeh) inválido: ' . $dTipIdenVeh . '. Debe ser 1 o 2.');
         $this->dTipIdenVeh = $dTipIdenVeh;
         return $this;
     }
@@ -86,7 +87,7 @@ class GVehTras extends BaseSifenField
     public function setDNroIDVeh(String $dNroIDVeh): self
     {
         if(strlen($dNroIDVeh) < 1 || strlen($dNroIDVeh) > 20)
-            throw new Exception('[GVehTras] Número de identificación del vehículo (dNroIDVeh) inválido: ' . $dNroIDVeh . '. Debe tener entre 1 y 20 caracteres.');
+            throw new ValidacionException('[GVehTras] Número de identificación del vehículo (dNroIDVeh) inválido: ' . $dNroIDVeh . '. Debe tener entre 1 y 20 caracteres.');
         $this->dNroIDVeh = $dNroIDVeh;
         return $this;
     }
@@ -101,7 +102,7 @@ class GVehTras extends BaseSifenField
     public function setDAdicVeh(String $dAdicVeh): self
     {
         if(strlen($dAdicVeh) < 1 || strlen($dAdicVeh) > 20)
-            throw new Exception('[GVehTras] Datos adicionales del vehículo (dAdicVeh) inválidos: ' . $dAdicVeh . '. Debe tener entre 1 y 20 caracteres.');
+            throw new ValidacionException('[GVehTras] Datos adicionales del vehículo (dAdicVeh) inválidos: ' . $dAdicVeh . '. Debe tener entre 1 y 20 caracteres.');
         $this->dAdicVeh = $dAdicVeh;
         return $this;
     }
@@ -116,7 +117,7 @@ class GVehTras extends BaseSifenField
     public function setDNroMatVeh(String $dNroMatVeh): self
     {
         if(strlen($dNroMatVeh) != 6)
-            throw new Exception('[GVehTras] Número de matrícula del vehículo (dNroMatVeh) inválido: ' . $dNroMatVeh . '. Debe tener 6 caracteres.');
+            throw new ValidacionException('[GVehTras] Número de matrícula del vehículo (dNroMatVeh) inválido: ' . $dNroMatVeh . '. Debe tener 6 caracteres.');
         $this->dNroMatVeh = $dNroMatVeh;
         return $this;
     }
@@ -131,7 +132,7 @@ class GVehTras extends BaseSifenField
     public function setDNroVuelo(String $dNroVuelo): self
     {
         if(strlen($dNroVuelo) != 6)
-            throw new Exception('[GVehTras] Número de vuelo (dNroVuelo) inválido: ' . $dNroVuelo . '. Debe tener 6 caracteres.');
+            throw new ValidacionException('[GVehTras] Número de vuelo (dNroVuelo) inválido: ' . $dNroVuelo . '. Debe tener 6 caracteres.');
         $this->dNroVuelo = $dNroVuelo;
         return $this;
     }
@@ -231,7 +232,7 @@ class GVehTras extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gVehTras') != 0)
-            throw new Exception('[GVehTras] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GVehTras] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new self();
         $res->setDTiVehTras(trim($node->getElementsByTagName('dTiVehTras')->item(0)->nodeValue));
         $res->setDMarVeh(trim($node->getElementsByTagName('dMarVeh')->item(0)->nodeValue));
@@ -301,22 +302,22 @@ class GVehTras extends BaseSifenField
         if(isset($this->dTiVehTras))
             $res->appendChild(XmlHelper::elemento($doc, 'dTiVehTras', $this->getDTiVehTras()));
         else
-            throw new Exception('[GVehTras] El campo dTiVehTras (E961, tipo de vehículo) es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dTiVehTras (E961, tipo de vehículo) es obligatorio.');
         
         if(isset($this->dMarVeh))
             $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
         else
-            throw new Exception('[GVehTras] El campo dMarVeh es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dMarVeh es obligatorio.');
 
         if(isset($this->dTipIdenVeh))
             $res->appendChild(XmlHelper::elemento($doc, 'dTipIdenVeh', $this->getDTipIdenVeh()));
         else
-            throw new Exception('[GVehTras] El campo dTipIdenVeh es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dTipIdenVeh es obligatorio.');
         
         if (isset($this->dNroIDVeh))
             $res->appendChild(XmlHelper::elemento($doc, 'dNroIDVeh', $this->getDNroIDVeh()));
         else if($this->dTipIdenVeh == 1)
-            throw new Exception('[GVehTras] El campo dNroIDVeh es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dNroIDVeh es obligatorio.');
         
         if(isset($this->dAdicVeh))
             $res->appendChild(XmlHelper::elemento($doc, 'dAdicVeh', $this->getDAdicVeh()));
@@ -324,7 +325,7 @@ class GVehTras extends BaseSifenField
         if (isset($this->dNroMatVeh))
             $res->appendChild(XmlHelper::elemento($doc, 'dNroMatVeh', $this->getDNroMatVeh()));
         else if($this->dTipIdenVeh == 2)
-            throw new Exception('[GVehTras] El campo dNroMatVeh es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dNroMatVeh es obligatorio.');
         
         if(isset($this->dNroVuelo))
             $res->appendChild(XmlHelper::elemento($doc, 'dNroVuelo', $this->getDNroVuelo()));

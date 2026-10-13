@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:GEDD001 Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto PADRE:GDE007
@@ -259,7 +260,7 @@ class RGeDevCCFFDev
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
     if($node->getName() != 'rGeDevCCFFDev')
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
 
     $res = new RGeDevCCFFDev();
     $res->setId($node->Id);

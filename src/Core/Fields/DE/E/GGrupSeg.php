@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo:        E800  
@@ -106,7 +107,7 @@ class GGrupSeg extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gGrupSeg') != 0)
     {
-      throw new \Exception('[gGrupSeg] El nombre del nodo no corresponde a gGrupSeg: ' . $node->getName(), 1);
+      throw new ValidacionException('[gGrupSeg] El nombre del nodo no corresponde a gGrupSeg: ' . $node->getName(), 1);
     }
     $res = new GGrupSeg();
     if(isset($node->dCodEmpSeg))
@@ -164,7 +165,7 @@ class GGrupSeg extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if (strcmp($node->nodeName, 'gGrupSeg') != 0) {
-      throw new \Exception('[GGrupSeg] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GGrupSeg] Nodo con nombre inválido: ' . $node->nodeName);
     }
     $res = new GGrupSeg();
     if ($node->getElementsByTagName('dCodEmpSeg')->length > 0) {

@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * E820 Grupo de datos adicionales de uso comercial PADRE E790
@@ -195,7 +196,7 @@ class GGrupAdi
       return $this;
     }
     if (1 + count($this->dVencPagAdicionales) >= 3)
-      throw new \InvalidArgumentException('[GGrupAdi] dVencPag admite como máximo 3 ocurrencias (tgGrupAdi, DE_v150.xsd:829).');
+      throw new ValidacionException('[GGrupAdi] dVencPag admite como máximo 3 ocurrencias (tgGrupAdi, DE_v150.xsd:829).');
     $this->dVencPagAdicionales[] = $dVencPag;
     return $this;
   }
@@ -306,7 +307,7 @@ class GGrupAdi
   public static function FromDOMElement(DOMElement $node): self
   {
     if (strcmp($node->localName, 'gGrupAdi') != 0)
-      throw new \InvalidArgumentException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->localName);
+      throw new ValidacionException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->localName);
     $res = new GGrupAdi();
     foreach ($node->childNodes as $hijo) {
       if ($hijo instanceof DOMElement)
@@ -326,7 +327,7 @@ class GGrupAdi
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if (strcmp($node->getName(), 'gGrupAdi') != 0)
-      throw new \InvalidArgumentException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->getName());
+      throw new ValidacionException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->getName());
     $res = new GGrupAdi();
     foreach ($node->children() as $hijo)
       self::asignar($res, $hijo->getName(), (string) $hijo);
@@ -352,7 +353,7 @@ class GGrupAdi
   {
     $fecha = DateTime::createFromFormat('!Y-m-d', trim($valor));
     if ($fecha === false)
-      throw new \InvalidArgumentException("[GGrupAdi] $campo debe tener el formato AAAA-MM-DD (tFecAAAAMMDDguion): '$valor'");
+      throw new ValidacionException("[GGrupAdi] $campo debe tener el formato AAAA-MM-DD (tFecAAAAMMDDguion): '$valor'");
     return $fecha;
   }
 }

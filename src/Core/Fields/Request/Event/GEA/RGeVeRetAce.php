@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  *  ID:GER001 rGeVeRetAce Raíz Gestión de Eventos de retención PADRE:GDE007
@@ -317,7 +318,7 @@ class RGeVeRetAce
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
     if($node->getName() != 'rGeVeRetAce')
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
 
 
     $res = new self();

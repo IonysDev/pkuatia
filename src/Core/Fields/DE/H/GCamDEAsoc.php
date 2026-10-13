@@ -11,6 +11,7 @@ use DOMElement;
 use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     H001
@@ -242,7 +243,7 @@ class GCamDEAsoc extends BaseSifenField
         $this->setDDesTipCons("Constancia de microproductores");
         break;
       default:
-        throw new \Exception("Invalid iTipCons: $iTipCons");
+        throw new ValidacionException("Invalid iTipCons: $iTipCons");
         break;
     }
     return $this;
@@ -278,7 +279,7 @@ class GCamDEAsoc extends BaseSifenField
   public function setDNumCons(int $dNumCons): self
   {
     if ($dNumCons < 1 || $dNumCons > 99999999999)
-      throw new \InvalidArgumentException("[GCamDEAsoc] El número de constancia (dNumCons, H016) debe ser un entero positivo de hasta 11 dígitos; se recibió $dNumCons.");
+      throw new ValidacionException("[GCamDEAsoc] El número de constancia (dNumCons, H016) debe ser un entero positivo de hasta 11 dígitos; se recibió $dNumCons.");
     $this->dNumCons = $dNumCons;
 
     return $this;
@@ -298,7 +299,7 @@ class GCamDEAsoc extends BaseSifenField
   public function setDNumControl(String $dNumControl): self
   {
     if (preg_match('/^[0-9A-Za-z\-]{8}$/D', $dNumControl) !== 1)
-      throw new \InvalidArgumentException("[GCamDEAsoc] El número de control de la constancia (dNumControl, H017) debe tener 8 caracteres entre letras, números y guion; se recibió '$dNumControl'.");
+      throw new ValidacionException("[GCamDEAsoc] El número de control de la constancia (dNumControl, H017) debe tener 8 caracteres entre letras, números y guion; se recibió '$dNumControl'.");
     $this->dNumControl = $dNumControl;
 
     return $this;
@@ -506,7 +507,7 @@ class GCamDEAsoc extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamDEAsoc') != 0)
-        throw new Exception('[GCamDEAsoc] Nodo con nombre inválido: ' . $node->nodeName);
+        throw new ValidacionException('[GCamDEAsoc] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     $res->setITipDocAso(intval(trim($node->getElementsByTagName('iTipDocAso')->item(0)->nodeValue)));
     $res->setDDesTipDocAso(trim($node->getElementsByTagName('dDesTipDocAso')->item(0)->nodeValue));
@@ -554,7 +555,7 @@ class GCamDEAsoc extends BaseSifenField
   {
     if(strcmp($nodo->getName(), 'gCamDEAsoc') != 0)
     {
-      throw new \Exception("El nombre del nodo no es gCamDEAsoc");
+      throw new ValidacionException("El nombre del nodo no es gCamDEAsoc");
     }
     $res = new GCamDEAsoc();
     $res->setITipDocAso(intval($nodo->iTipDocAso));
@@ -718,7 +719,7 @@ class GCamDEAsoc extends BaseSifenField
       $res->appendChild(XmlHelper::elemento($doc, 'dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(XmlHelper::elemento($doc, 'dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
       if ($this->getITipoDocAso() === TipoDocImpresoAso::ComprobanteRetencion->value)
-        throw new \InvalidArgumentException('[GCamDEAsoc] El tipo de documento impreso asociado 5 (Comprobante de retención) no existe en el XSD de producción (tiTIpoDoc admite 1-4, DE_Types_v150.xsd) y el SIFEN lo rechaza. Use 1 Factura, 2 Nota de crédito, 3 Nota de débito o 4 Nota de remisión.');
+        throw new ValidacionException('[GCamDEAsoc] El tipo de documento impreso asociado 5 (Comprobante de retención) no existe en el XSD de producción (tiTIpoDoc admite 1-4, DE_Types_v150.xsd) y el SIFEN lo rechaza. Use 1 Factura, 2 Nota de crédito, 3 Nota de débito o 4 Nota de remisión.');
       $res->appendChild(XmlHelper::elemento($doc, 'iTipoDocAso', $this->getITipoDocAso()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDTipoDocAso', $this->getDDTipoDocAso()));
     }

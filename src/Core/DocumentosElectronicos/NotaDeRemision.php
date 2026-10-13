@@ -16,6 +16,7 @@ use IonysDev\Pkuatia\Core\DocumentosElectronicos\Traits\CamposDeTransporte;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\Traits\ItemSinValor;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamNRE;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Tipo de Documento Electrónico Sifen: 7 - Nota de Remisión Electrónica
@@ -132,7 +133,7 @@ class NotaDeRemision extends DocumentoElectronico
         // Si el motivo es Importación, validar que se haya establecido el número de despacho
         $motivoInt = $motivoEmision instanceof MotEmiNR ? $motivoEmision->value : $motivoEmision;
         if ($motivoInt === 5 && (!isset($this->gTransp) || !isset($this->gTransp->dNuDespImp))) {
-            throw new Exception('[NotaDeRemision::setMotivoEmision] Cuando el motivo de emisión es Importación (5), debe establecerse el número de despacho de importación usando setTransporteNumeroDespachoImportacion()');
+            throw new ValidacionException('[NotaDeRemision::setMotivoEmision] Cuando el motivo de emisión es Importación (5), debe establecerse el número de despacho de importación usando setTransporteNumeroDespachoImportacion()');
         }
         
         return $this;
@@ -158,7 +159,7 @@ class NotaDeRemision extends DocumentoElectronico
     {
         // Validar longitud de la descripción
         if (strlen($descripcion) < 5 || strlen($descripcion) > 60) {
-            throw new Exception('[NotaDeRemision::setDescripcionMotivoEmision] La descripción del motivo debe tener entre 5 y 60 caracteres. Longitud recibida: ' . strlen($descripcion));
+            throw new ValidacionException('[NotaDeRemision::setDescripcionMotivoEmision] La descripción del motivo debe tener entre 5 y 60 caracteres. Longitud recibida: ' . strlen($descripcion));
         }
         
         // Establecer automáticamente el motivo de emisión a "Otro" (99) si aún no lo está
@@ -208,7 +209,7 @@ class NotaDeRemision extends DocumentoElectronico
     public function setKilometrosRecorrido(int $kilometros): self
     {
         if ($kilometros < 1 || $kilometros > 99999) {
-            throw new Exception('[NotaDeRemision::setKilometrosRecorrido] Los kilómetros estimados de recorrido deben estar entre 1 y 99999. Valor recibido: ' . $kilometros);
+            throw new ValidacionException('[NotaDeRemision::setKilometrosRecorrido] Los kilómetros estimados de recorrido deben estar entre 1 y 99999. Valor recibido: ' . $kilometros);
         }
         
         $this->gCamNRE->setDKmR($kilometros);
@@ -237,7 +238,7 @@ class NotaDeRemision extends DocumentoElectronico
         // las 00:00 no es "anterior a la fecha actual".
         $hoy = new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE));
         if ($fechaEmision->format('Y-m-d') < $hoy->format('Y-m-d')) {
-            throw new Exception('[NotaDeRemision::setFechaFuturaEmisionFactura] La fecha futura de emisión de la factura no puede ser anterior a la fecha actual. Fecha recibida: ' . $fechaEmision->format('Y-m-d'));
+            throw new ValidacionException('[NotaDeRemision::setFechaFuturaEmisionFactura] La fecha futura de emisión de la factura no puede ser anterior a la fecha actual. Fecha recibida: ' . $fechaEmision->format('Y-m-d'));
         }
         
         $this->gCamNRE->setDFecEm($fechaEmision);
@@ -457,7 +458,7 @@ class NotaDeRemision extends DocumentoElectronico
         if (count($errores) > 0) {
             $mensaje = '[NotaDeRemision::validar] La Nota de Remisión tiene los siguientes errores de validación:' . PHP_EOL;
             $mensaje .= implode(PHP_EOL . '- ', $errores);
-            throw new Exception($mensaje);
+            throw new ValidacionException($mensaje);
         }
     }
     

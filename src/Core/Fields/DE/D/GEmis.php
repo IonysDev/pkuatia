@@ -15,6 +15,7 @@ use InvalidArgumentException;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     D100        
@@ -132,7 +133,7 @@ class GEmis extends BaseSifenField
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepEmi));
         if ($desc === null)
-          throw new InvalidArgumentException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
+          throw new ValidacionException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
         $this->dDesDepEmi = $desc;
         $this->cDepEmi = $cDepEmi;
         return $this;
@@ -164,7 +165,7 @@ class GEmis extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisEmi));
         if ($desc === null)
-          throw new InvalidArgumentException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
+          throw new ValidacionException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
         $this->dDesDisEmi = $desc;
         $this->cDisEmi = $cDisEmi;
         return $this;
@@ -188,7 +189,7 @@ class GEmis extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuEmi));
         if ($desc === null)
-          throw new InvalidArgumentException("[GEmis::setCCiuEmi] El código de ciudad $cCiuEmi no existe.");
+          throw new ValidacionException("[GEmis::setCCiuEmi] El código de ciudad $cCiuEmi no existe.");
         $this->cCiuEmi = $cCiuEmi;
         $this->dDesCiuEmi = $desc;
         return $this;
@@ -369,7 +370,7 @@ class GEmis extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $node) : self
     {
         if(strcmp($node->getName(), 'gEmis') != 0){
-            throw new \InvalidArgumentException('El nombre del elemento no es gEmis');
+            throw new ValidacionException('El nombre del elemento no es gEmis');
         }
         $res = new GEmis();
         $res->dRucEm = strval($node->dRucEm);
@@ -420,7 +421,7 @@ class GEmis extends BaseSifenField
     public static function FromDOMElement(DOMElement $node) : self
     {
         if(strcmp($node->nodeName, 'gEmis') != 0)
-            throw new \Exception('[GEmis] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GEmis] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new self();
         $res->dRucEm = trim($node->getElementsByTagName('dRucEm')->item(0)->nodeValue);
         $res->dDVEmi = intval(trim($node->getElementsByTagName('dDVEmi')->item(0)->nodeValue));

@@ -9,6 +9,7 @@ use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E750    
@@ -297,7 +298,7 @@ class GRasMerc extends BaseSifenField
     if (isset($object->dVencMerc)) {
       $fecha = DateTime::createFromFormat('!Y-m-d', trim((string) $object->dVencMerc));
       if ($fecha === false)
-        throw new \InvalidArgumentException("[GRasMerc] dVencMerc debe tener el formato AAAA-MM-DD: '{$object->dVencMerc}'");
+        throw new ValidacionException("[GRasMerc] dVencMerc debe tener el formato AAAA-MM-DD: '{$object->dVencMerc}'");
       $res->setDVencMerc($fecha);
     }
     if (isset($object->dNSerie))
@@ -325,7 +326,7 @@ class GRasMerc extends BaseSifenField
   {
 
     if(strcmp($node->getName(), 'gRasMerc') != 0)
-      throw new \Exception("Invalid gRasMerc XML Node Name: " . $node->getName());
+      throw new ValidacionException("Invalid gRasMerc XML Node Name: " . $node->getName());
 
     $res = new GRasMerc();
     if(isset($node->dNumLote))
@@ -373,7 +374,7 @@ class GRasMerc extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gRasMerc') != 0)
-        throw new \Exception('[GRasMerc] Nodo con nombre inválido: ' . $node->nodeName);
+        throw new ValidacionException('[GRasMerc] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     if($node->getElementsByTagName('dNumLote')->length > 0)
       $res->setDNumLote(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue)); // texto 1-80 (DE_v150.xsd:437); hasta 0.2.0 intval() lo volvía 0 (PK-25)

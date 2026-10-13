@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields;
 use DOMDocument;
 use DOMElement;
 use ReflectionClass;
+use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;
 
 /**
  * Clase que debe ser extendida por todos los campos de Sifen
@@ -36,7 +37,7 @@ abstract class BaseSifenField
       $domElement = $this->toDOMElement($doc);
       $xmlString = $domElement->ownerDocument->saveXML($domElement);
       if(!$xmlString)
-        throw new \Exception('[' . self::class . '] Error al convertir el objeto a XML.');
+        throw new PkuatiaException('[' . self::class . '] Error al convertir el objeto a XML.');
       return $xmlString;
     }
 }

@@ -5,6 +5,8 @@ namespace IonysDev\Pkuatia\Core\Fields\Response\DE;;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ContDE01 - Contenedor de la respuesta del DE consultado
@@ -142,7 +144,7 @@ class RContDe
   {
 
     if(strcmp($xml->getName(),'rContDe') != 0) {
-      throw new \Exception("Invalid XML Element:". $xml->getName());
+      throw new RespuestaException("Invalid XML Element:". $xml->getName());
     }
     
     $res = new self();
@@ -194,11 +196,11 @@ class RContDe
   public static function FromXContenDE(String $xContenDE): self
   {
     if (!preg_match('/<rDE[\s>]/', $xContenDE, $m, PREG_OFFSET_CAPTURE))
-      throw new \InvalidArgumentException('[RContDe] xContenDE no contiene el elemento rDE.');
+      throw new ValidacionException('[RContDe] xContenDE no contiene el elemento rDE.');
     $inicio = $m[0][1];
     $fin = strrpos($xContenDE, '</rDE>');
     if ($fin === false || $fin < $inicio)
-      throw new \InvalidArgumentException('[RContDe] xContenDE no contiene el cierre del elemento rDE.');
+      throw new ValidacionException('[RContDe] xContenDE no contiene el cierre del elemento rDE.');
     $fin += strlen('</rDE>');
 
     $res = new self();
@@ -222,10 +224,10 @@ class RContDe
   {
     $previo = libxml_use_internal_errors(true);
     try {
-      $sx = simplexml_load_string($xml);
+      $sx = simplexml_load_string($xml, SimpleXMLElement::class, LIBXML_NONET); // contenido del SIFEN: sin acceso a la red (0.3.0)
       if ($sx === false) {
         $error = libxml_get_last_error();
-        throw new \InvalidArgumentException('[RContDe] Parte de xContenDE que no es XML bien formado: ' . ($error ? trim($error->message) : 'error desconocido'));
+        throw new ValidacionException('[RContDe] Parte de xContenDE que no es XML bien formado: ' . ($error ? trim($error->message) : 'error desconocido'));
       }
       return $sx;
     } finally {

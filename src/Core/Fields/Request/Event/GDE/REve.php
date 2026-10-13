@@ -7,6 +7,7 @@ use DateTime;
 use DOMDocument;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GDE002 - REve - Grupos de Campos Generales del Evento 
@@ -179,7 +180,7 @@ class REve
     public static function FromSimpleXMLElement(SimpleXMLElement $node):self
     {
         if(strcmp($node->getName(),'rEve') != 0) {
-            throw new \Exception("Invalid XML Element". $node->getName());
+            throw new ValidacionException("Invalid XML Element". $node->getName());
         }
 
         $res = new self();

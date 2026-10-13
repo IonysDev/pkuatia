@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GEN001 - rGeVeNotRec - Raíz Gestión de Eventos Notificación: Recepción DE o DTE
@@ -141,7 +142,7 @@ class RGeVeNotRec
     // tiTipDoc admite solo 1 a 4 (DE_Types_v150.xsd:645-653; lo usa Evento_v150.xsd para dTipIDRec): en los eventos del
     // receptor no existen el innominado (5) ni "Otro" (9) del DE.
     if ($dTipIDRec < 1 || $dTipIDRec > 4)
-      throw new \InvalidArgumentException("[RGeVeNotRec] dTipIDRec (tipo de documento de identidad del receptor) debe ser 1 Cédula paraguaya, 2 Pasaporte, 3 Cédula extranjera o 4 Carnet de residencia (tiTipDoc, DE_Types_v150.xsd:645-653); se recibió $dTipIDRec.");
+      throw new ValidacionException("[RGeVeNotRec] dTipIDRec (tipo de documento de identidad del receptor) debe ser 1 Cédula paraguaya, 2 Pasaporte, 3 Cédula extranjera o 4 Carnet de residencia (tiTipDoc, DE_Types_v150.xsd:645-653); se recibió $dTipIDRec.");
     $this->dTipIDRec = $dTipIDRec;
 
     return $this;
@@ -343,7 +344,7 @@ class RGeVeNotRec
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
     if($node->getName() != 'rGeVeNotRec')
-      throw new \Exception("Invalid XML Element: $node->tagName");
+      throw new ValidacionException("Invalid XML Element: $node->tagName");
 
     $res = new RGeVeNotRec();
 

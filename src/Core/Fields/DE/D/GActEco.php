@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     D130
@@ -107,7 +108,7 @@ class GActEco extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gActEco') != 0)
-            throw new \Exception('[GActEco] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GActEco] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new self();
         $res->setCActEco(trim(strval($node->getElementsByTagName('cActEco')->item(0)->nodeValue)));
         $res->setDDesActEco(trim(strval($node->getElementsByTagName('dDesActEco')->item(0)->nodeValue)));
@@ -124,7 +125,7 @@ class GActEco extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $node) 
     {
         if(strcmp($node->getName(), 'gActEco') != 0)
-            throw new \Exception('[GActEco] Nodo con nombre inválido: ' . $node->getName());
+            throw new ValidacionException('[GActEco] Nodo con nombre inválido: ' . $node->getName());
         $res = new GActEco();
         $res->setCActEco(strval($node->cActEco));
         $res->setDDesActEco(strval($node->dDesActEco));

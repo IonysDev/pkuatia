@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E630 
@@ -150,7 +151,7 @@ class GPagCheq extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gPagCheq') != 0)
-      throw new \Exception("El nodo '" . $node->nodeName . "' no corresponde a gPagCheq", 1);
+      throw new ValidacionException("El nodo '" . $node->nodeName . "' no corresponde a gPagCheq", 1);
     $res = new GPagCheq();
     if($node->getElementsByTagName('dNumCheq')->length > 0)
       $res->setDNumCheq($node->getElementsByTagName('dNumCheq')->item(0)->nodeValue);

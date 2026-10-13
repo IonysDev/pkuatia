@@ -4,6 +4,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Response\DE;
 
 use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 //ID: CRSch05, Grupo resultado del procesamiento del lote
 
@@ -125,7 +126,7 @@ class GResProcEve
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
       if(strcmp($node->getName(),'gResProcEVe') != 0) {
-        throw new \Exception("Invalid XML Element: $node->getName()");
+        throw new RespuestaException("Invalid XML Element: $node->getName()");
       }
 
       $res = new GResProcEVe();

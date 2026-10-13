@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GCO001 - rGeVeConf - Raiz Gestión de Eventos Conformidad
@@ -141,7 +142,7 @@ class RGeVeConf
   public static function FromSimpleXMLElement(SimpleXMLElement $node): Self
   {
     if ($node->getName() != 'rGeVeConf')
-      throw new \Exception("Invalid XML Element: $node->getName()");
+      throw new ValidacionException("Invalid XML Element: $node->getName()");
 
     $res = new RGeVeConf();
     $res->setId((string) $node->Id);
@@ -151,7 +152,7 @@ class RGeVeConf
     if (isset($node->dFecRecep)) {
       $fecha = DateTime::createFromFormat('Y-m-d\TH:i:s', trim((string) $node->dFecRecep));
       if ($fecha === false)
-        throw new \InvalidArgumentException("[RGeVeConf] dFecRecep debe tener el formato AAAA-MM-DDThh:mm:ss (fecHhmmss): '" . $node->dFecRecep . "'");
+        throw new ValidacionException("[RGeVeConf] dFecRecep debe tener el formato AAAA-MM-DDThh:mm:ss (fecHhmmss): '" . $node->dFecRecep . "'");
       $res->setDFecRecep($fecha);
     }
 

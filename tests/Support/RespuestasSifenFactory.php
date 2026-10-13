@@ -66,6 +66,25 @@ final class RespuestasSifenFactory
   public const RUC_0160_1145 = '2026-10-11/06-rEnviConsRUC-response-0160-generico.xml';
   /** rRetEnviDe 0260 de la AF con constancia de no ser contribuyente con número y control (PK-35, Q-B11). */
   public const ENVIO_AF_0260 = '2026-10-11/07-rEnviDe-af-response-0260.xml';
+
+  // Fase C, C14 (13/10/2026): homologación del validador de reglas; cada DE con una sola violación (CapturaFaseC.php).
+  public const C14_1309 = '2026-10-13/02-rEnviDe-1309-response-1309.xml';
+  public const C14_2365 = '2026-10-13/03-rEnviDe-2365-response-2365.xml';
+  public const C14_1550 = '2026-10-13/04-rEnviDe-1550-response-1550.xml';
+  /** Innominado en B2B: el validador predice 1300 y 1319; el SIFEN informa 1300 (D202 va antes que D208). */
+  public const C14_1300 = '2026-10-13/05-rEnviDe-1319-response-1300.xml';
+  public const C14_2400 = '2026-10-13/06-rEnviDe-2400-response-2400.xml';
+  public const C14_1004 = '2026-10-13/07-rEnviDe-1004-response-1004.xml';
+  /** Canario rechazado con el 0160 genérico del ambiente degradado (un minuto después respondió 0502). */
+  public const C14_RUC_0160_GENERICO = '2026-10-13/08-rEnviConsRUC-response-0160-generico.xml';
+  public const C14_2503 = '2026-10-13/10-rEnviDe-2503-response-2503.xml';
+  /** Base gravada 0,01 mayor que la exacta, aprobada: el SIFEN tolera 0,01 en E735. */
+  public const C14_1911_0260 = '2026-10-13/11-rEnviDe-1911-response-0260.xml';
+  public const C14_B2G_0260 = '2026-10-13/12-rEnviDe-b2g-response-0260.xml';
+  /** dCilin "1600": el SIFEN aplica el patrón "/d" del XSD de producción. */
+  public const C14_CILIN_0160 = '2026-10-13/13-rEnviDe-cilin-response-0160.xml';
+  public const C14_USD_ITEM_0260 = '2026-10-13/14-rEnviDe-usd-item-response-0260.xml';
+  public const C14_REDONDEO_0260 = '2026-10-13/15-rEnviDe-redondeo-response-0260.xml';
   /** rEnviConsDeResponse 0422 de esa AF: gCamDEAsoc con iTipCons 1, dNumCons y dNumControl. */
   public const CONSULTA_AF_0422 = '2026-10-11/08-rEnviConsDe-af-response-0422.xml';
   /** rRetEnviDe 1206 de una FE en ANG con la descripción de la moneda recortada a 20 caracteres (D-A3). */

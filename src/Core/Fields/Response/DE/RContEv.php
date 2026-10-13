@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use IonysDev\Pkuatia\Core\Responses\RRetEnviEventoDe;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * Nodo: ContEv01 - Elemento Raíz de Contenedor de Evento
@@ -126,7 +127,7 @@ class RContEv
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         if (strcmp($node->getName(), 'rContEv') != 0) {
-            throw new \Exception("Invalid XML Element:". $node->getName());
+            throw new RespuestaException("Invalid XML Element:". $node->getName());
         }
 
         $res = new self();

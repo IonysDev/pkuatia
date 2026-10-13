@@ -6,6 +6,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GTransp;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E001    
@@ -226,7 +227,7 @@ class GDtipDE extends BaseSifenField
   public static function FromSimpleXMLElement(\SimpleXMLElement $xml): GDtipDE
   {
     if(strcmp($xml->getName(), 'gDtipDE') != 0)
-      throw new \Exception('El nombre del elemento no es gDtipDE');
+      throw new ValidacionException('El nombre del elemento no es gDtipDE');
 
     $res = new GDtipDE();
     
@@ -354,7 +355,7 @@ class GDtipDE extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gDtipDE') != 0)
-      throw new \Exception('[GDtipDE] El nombre del nodo no corresponde a gDtipDE: ' . $node->nodeName, 1);
+      throw new ValidacionException('[GDtipDE] El nombre del nodo no corresponde a gDtipDE: ' . $node->nodeName, 1);
     $res = new GDtipDE();
     if($node->getElementsByTagName('gCamFE')->length > 0)
       $res->setGCamFE(GCamFE::FromDOMElement($node->getElementsByTagName('gCamFE')->item(0)));

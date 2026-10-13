@@ -1,0 +1,22 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 196,
+            "resp_len": 455,
+            "ts": "2026-10-13T06:04:26-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 2,
+        "seco": false,
+        "casos": [],
+        "canario": {
+            "dCodRes": "0160",
+            "dMsgRes": "XML Mal Formado."
+        },
+        "parada": "el canario no devolvió 0502 (dCodRes=0160)"
+    }
+}

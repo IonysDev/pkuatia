@@ -9,6 +9,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E650 
@@ -41,7 +42,7 @@ class GCuotas
     $this->dDMoneCuo = MonedaMapping::GetDescription($cMoneCuo);
     if($this->dDMoneCuo == null)
     {
-      throw new \Exception("Moneda (cMoneCuo) no válida: " . $cMoneCuo, 1);
+      throw new ValidacionException("Moneda (cMoneCuo) no válida: " . $cMoneCuo, 1);
     }
     return $this;
   }
@@ -69,7 +70,7 @@ class GCuotas
   public function setDMonCuota(String $dMonCuota): self
   {
     if(!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0, 4))
-      throw new \Exception("[GCuotas] Monto de la cuota (dMonCuota) no válido: " . $dMonCuota, 1);
+      throw new ValidacionException("[GCuotas] Monto de la cuota (dMonCuota) no válido: " . $dMonCuota, 1);
     $this->dMonCuota = $dMonCuota;
     return $this;
   }
@@ -145,7 +146,7 @@ class GCuotas
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gCuotas') != 0)
-      throw new \Exception("No corresponde a un nodo gCuotas válido: " . $node->getName(), 1);
+      throw new ValidacionException("No corresponde a un nodo gCuotas válido: " . $node->getName(), 1);
     $res = new GCuotas();
     $res->setCMoneCuo($node->cMoneCuo);
     $res->setDMonCuota($node->dMonCuota);
@@ -205,7 +206,7 @@ class GCuotas
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCuotas') != 0)
-      throw new \Exception('[GCuotas] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GCuotas] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GCuotas();
     $res->setCMoneCuo($node->getElementsByTagName('cMoneCuo')->item(0)->nodeValue);
     $res->setDDMoneCuo($node->getElementsByTagName('dDMoneCuo')->item(0)->nodeValue);

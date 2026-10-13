@@ -16,6 +16,7 @@ use InvalidArgumentException;
 use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     D010
@@ -125,7 +126,7 @@ class GOpeCom extends BaseSifenField
         if(is_null($this->dDesMoneOpe))
         {
             unset($this->cMoneOpe);
-            throw new InvalidArgumentException("[GOpeCom] El valor del campo cMoneOpe no es válido: " . $cMoneOpe);
+            throw new ValidacionException("[GOpeCom] El valor del campo cMoneOpe no es válido: " . $cMoneOpe);
         }
         return $this;
     }
@@ -156,7 +157,7 @@ class GOpeCom extends BaseSifenField
         if(is_int($dCondTiCam) && $dCondTiCam != 1 && $dCondTiCam != 2)
         {
             unset($this->dCondTiCam);
-            throw new InvalidArgumentException("[GOpeCom] El valor del campo dCondTiCam no es válido: " . $dCondTiCam);
+            throw new ValidacionException("[GOpeCom] El valor del campo dCondTiCam no es válido: " . $dCondTiCam);
         }
         else
         {
@@ -181,7 +182,7 @@ class GOpeCom extends BaseSifenField
         else
         {
             unset($this->dTiCam);
-            throw new InvalidArgumentException("[GOpeCom] El valor del campo dTiCam no es válido: " . $dTiCam);
+            throw new ValidacionException("[GOpeCom] El valor del campo dTiCam no es válido: " . $dTiCam);
         }
         return $this;
     }
@@ -225,12 +226,12 @@ class GOpeCom extends BaseSifenField
     {
         if(count($gOblAfe) > self::MAX_OBLIGACIONES_AFECTADAS)
         {
-            throw new InvalidArgumentException("[GOpeCom] No se pueden establecer más de " . self::MAX_OBLIGACIONES_AFECTADAS . " obligaciones afectadas (gOblAfe).");
+            throw new ValidacionException("[GOpeCom] No se pueden establecer más de " . self::MAX_OBLIGACIONES_AFECTADAS . " obligaciones afectadas (gOblAfe).");
         }
         foreach($gOblAfe as $obl)
         {
             if(!($obl instanceof GOblAfe))
-                throw new InvalidArgumentException("[GOpeCom] El arreglo gOblAfe solo puede contener objetos GOblAfe.");
+                throw new ValidacionException("[GOpeCom] El arreglo gOblAfe solo puede contener objetos GOblAfe.");
         }
         $this->gOblAfe = $gOblAfe;
         return $this;
@@ -247,7 +248,7 @@ class GOpeCom extends BaseSifenField
     {
         if(count($this->gOblAfe) >= self::MAX_OBLIGACIONES_AFECTADAS)
         {
-            throw new InvalidArgumentException("[GOpeCom] No se pueden agregar más de " . self::MAX_OBLIGACIONES_AFECTADAS . " obligaciones afectadas (gOblAfe).");
+            throw new ValidacionException("[GOpeCom] No se pueden agregar más de " . self::MAX_OBLIGACIONES_AFECTADAS . " obligaciones afectadas (gOblAfe).");
         }
         if(!($oblAfe instanceof GOblAfe))
         {
@@ -400,7 +401,7 @@ class GOpeCom extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $node): GOpeCom
     {
         if(strcmp($node->getName(), 'gOpeCom') != 0){
-            throw new \InvalidArgumentException("El nombre del elemento debe ser 'gOpeCom'.");
+            throw new ValidacionException("El nombre del elemento debe ser 'gOpeCom'.");
         }
         $res = new GOpeCom();
         if(isset($node->iTipTra))
@@ -444,9 +445,9 @@ class GOpeCom extends BaseSifenField
         if (strcmp(strtoupper($this->cMoneOpe), 'PYG') == 0) // cMoneOpe se inicializa en el constructor
             return;
         if (!isset($this->dCondTiCam))
-            throw new InvalidArgumentException("[GOpeCom] Con moneda de la operación " . $this->cMoneOpe . " (D015) es obligatoria la condición del tipo de cambio dCondTiCam (D017: 1 = global, 2 = por ítem; validación 1207). En los builders: setCondicionTipoDeCambio().");
+            throw new ValidacionException("[GOpeCom] Con moneda de la operación " . $this->cMoneOpe . " (D015) es obligatoria la condición del tipo de cambio dCondTiCam (D017: 1 = global, 2 = por ítem; validación 1207). En los builders: setCondicionTipoDeCambio().");
         if ($this->dCondTiCam == 1 && !isset($this->dTiCam))
-            throw new InvalidArgumentException("[GOpeCom] Con dCondTiCam = 1 (tipo de cambio global, D017) es obligatorio el tipo de cambio dTiCam (D018; validación 1209). En los builders: setTipoDeCambio().");
+            throw new ValidacionException("[GOpeCom] Con dCondTiCam = 1 (tipo de cambio global, D017) es obligatorio el tipo de cambio dTiCam (D018; validación 1209). En los builders: setTipoDeCambio().");
     }
 
     /**
@@ -494,7 +495,7 @@ class GOpeCom extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gOpeCom') != 0)
-            throw new \Exception('[GOpeCom] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GOpeCom] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new GOpeCom();
         if($node->getElementsByTagName('iTipTra')->length > 0)
             $res->setITipTra(intval(trim($node->getElementsByTagName('iTipTra')->item(0)->nodeValue)));

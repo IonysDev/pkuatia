@@ -15,6 +15,7 @@ use IonysDev\Pkuatia\Core\Fields\Request\Event\GER\RGeVeNotRec;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento 
@@ -456,7 +457,7 @@ class GGroupTiEvt
         $informados[] = $evento;
     }
     if (count($informados) !== 1)
-      throw new \InvalidArgumentException('[GGroupTiEvt] Cada rEve debe contener exactamente un evento (xs:choice de tgGroupEvt, Evento_v150.xsd:363-380); ' . (count($informados) === 0 ? 'no se informó ninguno.' : 'se informaron ' . count($informados) . ': ' . implode(', ', $informados) . '. Use un rEve por evento.'));
+      throw new ValidacionException('[GGroupTiEvt] Cada rEve debe contener exactamente un evento (xs:choice de tgGroupEvt, Evento_v150.xsd:363-380); ' . (count($informados) === 0 ? 'no se informó ninguno.' : 'se informaron ' . count($informados) . ': ' . implode(', ', $informados) . '. Use un rEve por evento.'));
     $res = $doc->createElement('gGroupTiEvt');
 
     // Eventos de Emisor
@@ -577,7 +578,7 @@ class GGroupTiEvt
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
       if(strcmp($node->getName(),'gGroupTiEvt') != 0) {
-          throw new \Exception("Invalid XML Element:". $node->getName());
+          throw new ValidacionException("Invalid XML Element:". $node->getName());
       }
 
       $res = new GGroupTiEvt();

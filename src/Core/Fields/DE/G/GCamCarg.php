@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:G050
@@ -255,7 +256,7 @@ class GCamCarg
   {
     if(strcmp($node->getName(), 'gCamCarg') != 0)
     {
-      throw new \Exception("El nombre del nodo no corresponde a 'gCamCarg'");
+      throw new ValidacionException("El nombre del nodo no corresponde a 'gCamCarg'");
     }
     $res = new GCamCarg();
     if(isset($node->cUniMedTotVol))
@@ -366,7 +367,7 @@ class GCamCarg
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamCarg') != 0)
-      throw new \Exception('[GCamCarg] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
+      throw new ValidacionException('[GCamCarg] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
     $res = new GCamCarg();
     if($node->getElementsByTagName('cUniMedTotVol')->length > 0)
       $res->setCUniMedTotVol(intval($node->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));

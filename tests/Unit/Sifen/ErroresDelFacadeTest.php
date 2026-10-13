@@ -20,6 +20,10 @@ use TypeError;
  * (previous) y también envuelven los errores de programa (\Throwable); ConsultarRUC y ConsultarDE dejan pasar
  * el SoapFault como hasta 0.2.0 y solo envuelven los \Error del parseo. GetLastRequest()/GetLastResponse()
  * permiten guardar la respuesta cruda aunque el parseo falle. Config suma connection_timeout y user_agent.
+ *
+ * Fase C (C2, Q-C3 = C): las consultas también envuelven el SoapFault, en una TransporteException que sigue siendo
+ * un \SoapFault con el mismo faultcode, así que estas comprobaciones siguen valiendo tal cual (ver
+ * ExcepcionesTipadasDelFacadeTest para las clases nuevas).
  */
 final class ErroresDelFacadeTest extends TestCase
 {
@@ -77,7 +81,7 @@ final class ErroresDelFacadeTest extends TestCase
     }
   }
 
-  /** Q-B4, parte 2 (b): en las consultas el SoapFault sigue llegando tal cual, como hasta 0.2.0. */
+  /** Q-B4, parte 2 (b) y Q-C3: en las consultas el SoapFault sigue siendo atrapable como \SoapFault, con su faultcode. */
   public function testLasConsultasDejanPasarElSoapFault(): void
   {
     StubSoapClient::instalar([

@@ -13,6 +13,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GENFE001 - rGEveNom - Grupos de Campos Generales del Evento 
@@ -138,7 +139,7 @@ class RGEveNom
         $valor = $iTiOpe instanceof RecTiOpe ? $iTiOpe->value : $iTiOpe;
         // tiTiOpeEv admite 1 (B2B), 2 (B2C) y 4 (B2F): la nominación no aplica a operaciones B2G (Evento_Types_v150.xsd:57-66).
         if (!in_array($valor, [1, 2, 4], true))
-            throw new \InvalidArgumentException("[RGEveNom] iTiOpe = $valor no está admitido en el evento de nominación: tiTiOpeEv acepta 1 (B2B), 2 (B2C) y 4 (B2F); una FE B2G no puede nominarse (Evento_Types_v150.xsd:57-66).");
+            throw new ValidacionException("[RGEveNom] iTiOpe = $valor no está admitido en el evento de nominación: tiTiOpeEv acepta 1 (B2B), 2 (B2C) y 4 (B2F); una FE B2G no puede nominarse (Evento_Types_v150.xsd:57-66).");
         $this->iTiOpe = $valor;
     }
 
@@ -154,7 +155,7 @@ class RGEveNom
         // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec.
         $desc = CountryMapping::getCountryDesc($cPaisRec);
         if ($desc === null)
-          throw new \InvalidArgumentException("[RGEveNom] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+          throw new ValidacionException("[RGEveNom] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
         $this->cPaisRec = $cPaisRec;
         $this->dDesPaisRe = $desc;
         return $this;
@@ -320,7 +321,7 @@ class RGEveNom
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepRec));
         if ($desc === null)
-          throw new \InvalidArgumentException("[RGEveNom] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
+          throw new ValidacionException("[RGEveNom] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         $this->cDepRec = $cDepRec;
         $this->dDesDepRec = $desc;
     }
@@ -351,7 +352,7 @@ class RGEveNom
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
         if ($desc === null)
-          throw new \InvalidArgumentException("[RGEveNom] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+          throw new ValidacionException("[RGEveNom] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cDisRec = $cDisRec;
         $this->dDesDisRec = $desc;
         return $this;
@@ -382,7 +383,7 @@ class RGEveNom
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
         if ($desc === null)
-          throw new \InvalidArgumentException("[RGEveNom] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+          throw new ValidacionException("[RGEveNom] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cCiuRec = $cCiuRec;
         $this->dDesCiuRec = $desc;
         return $this;
@@ -868,7 +869,7 @@ class RGEveNom
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if (strcmp($node->getName(), 'rGEveNom') != 0) {
-        throw new \Exception("Invalid XML Element: $node->getName()");
+        throw new ValidacionException("Invalid XML Element: $node->getName()");
     }
 
     $res = new self();

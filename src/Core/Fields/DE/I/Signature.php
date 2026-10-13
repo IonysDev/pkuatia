@@ -9,6 +9,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID I001 - Firma Digital del DTE  PADRE:AA001
@@ -118,7 +119,7 @@ class Signature extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'Signature') != 0)
-      throw new \Exception("[Signature] Invalid XML Node Name: " . $node->getName());
+      throw new ValidacionException("[Signature] Invalid XML Node Name: " . $node->getName());
     $res = new Signature();
     $res->setSignedInfo(SignedInfo::FromSimpleXMLElement($node->SignedInfo));
     $res->setSignatureValue($node->SignatureValue);
@@ -136,7 +137,7 @@ class Signature extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'Signature') != 0)
-      throw new \Exception("[Signature] Nodo de nombre inválido: " . $node->nodeName);
+      throw new ValidacionException("[Signature] Nodo de nombre inválido: " . $node->nodeName);
     $res = new Signature();
     $res->setSignedInfo(SignedInfo::FromDOMElement($node->getElementsByTagName('SignedInfo')->item(0)));
     $res->setSignatureValue($node->getElementsByTagName('SignatureValue')->item(0)->nodeValue);

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"><env:Header/><env:Body><ns2:rResEnviConsRUC xmlns:ns2="http://ekuatia.set.gov.py/sifen/xsd"><ns2:dCodRes>0502</ns2:dCodRes><ns2:dMsgRes>RUC encontrado</ns2:dMsgRes><ns2:xContRUC><ns2:dRUCCons>80000000</ns2:dRUCCons><ns2:dRazCons>EMPRESA DE PRUEBA S.A.</ns2:dRazCons><ns2:dCodEstCons>ACT</ns2:dCodEstCons><ns2:dDesEstCons>ACTIVO</ns2:dDesEstCons><ns2:dRUCFactElec>N</ns2:dRUCFactElec></ns2:xContRUC></ns2:rResEnviConsRUC></env:Body></env:Envelope>

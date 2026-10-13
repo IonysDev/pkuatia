@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id: G001
@@ -136,7 +137,7 @@ class GCamGen
   {
     if(strcmp($node->getName(), 'gCamGen') != 0)
     {
-      throw new \Exception('[GCamGen] El nombre del nodo no corresponde a gCamGen: ' . $node->getName(), 1);
+      throw new ValidacionException('[GCamGen] El nombre del nodo no corresponde a gCamGen: ' . $node->getName(), 1);
     }
     $res = new GCamGen();
     if(isset($node->dOrdCompra))
@@ -217,7 +218,7 @@ class GCamGen
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamGen') != 0)
-      throw new \Exception('[GCamGen] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
+      throw new ValidacionException('[GCamGen] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
     $res = new GCamGen();
     if($node->getElementsByTagName('dOrdCompra')->length > 0)
       $res->setDOrdCompra($node->getElementsByTagName('dOrdCompra')->item(0)->nodeValue);
