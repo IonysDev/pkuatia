@@ -11,7 +11,10 @@ Fase C del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02
 firmas, errores tipados y catálogo de códigos del SIFEN. **Compatible hacia atrás**: no se elimina ni cambia ninguna
 firma pública; las excepciones nuevas extienden las que se lanzaban hasta 0.2.1, de modo que todo `catch` existente
 sigue funcionando, y los rechazos del SIFEN siguen devolviéndose como objetos, no como excepciones. Toda validación
-previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
+previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento. Dos cambios de comportamiento
+deliberados, decididos durante la fase y detallados abajo: `Init()` se niega a arrancar en producción con el CSC de
+prueba (Q-C6, solo afectaba a documentos que el SIFEN ya rechazaba) y el total del ítem en guaraníes se redondea en
+vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambio por ítem y fracción).
 
 ### Agregado
 
@@ -224,7 +227,6 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   operaciones, `RProtDe::FromXMLString()`, `RContDe::FromXContenDE()` y la firma de un `RDE` leído. Una DTD o una
   entidad externa en una respuesta no provoca ninguna lectura de red; las entidades tampoco se sustituyen, como
   hasta ahora.
-
 - `ConsultarRUC` y `ConsultarDE` envuelven también el `SoapFault` y las demás fallas (decisión Q-C3, que cierra la
   parte 2 de Q-B4): la excepción es `TransporteException`, que sigue siendo un `\SoapFault` con el mismo
   `faultcode`, así que `catch (\SoapFault)` la atrapa igual que hasta 0.2.1; cambia solo el mensaje, que ahora lleva
