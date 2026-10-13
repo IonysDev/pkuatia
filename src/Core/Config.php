@@ -15,6 +15,9 @@ class Config
     public const ENV_DEV = "dev";
     public const ENV_PROD = "prod";
 
+    /** CSC del ambiente de pruebas, el valor de fábrica de $csc. En producción el SIFEN lo rechaza con 2501 (J002a). */
+    public const CSC_DE_PRUEBA = 'ABCD0000000000000000000000000000';
+
     public const CERT_FORMAT_PEM = "pem";
     public const CERT_FORMAT_PKCS12 = "pkcs12";
 
@@ -345,6 +348,15 @@ class Config
      *
      * @return array<string, mixed>
      */
+    /**
+     * Indica si $csc sigue siendo el CSC del ambiente de pruebas (el valor de fábrica). Sifen::Init() se niega a
+     * arrancar en producción con él (decisión Q-C6 de la Fase C). Nuevo en 0.3.0.
+     */
+    public function usaCscDePrueba(): bool
+    {
+        return $this->csc === self::CSC_DE_PRUEBA;
+    }
+
     public function __debugInfo(): array
     {
         $vars = get_object_vars($this);

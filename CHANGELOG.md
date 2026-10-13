@@ -176,6 +176,10 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
 - `SignHelper::Shutdown()`: olvida la clave privada y el certificado cargados por `Init()`; una firma posterior
   lanza `FirmaException` hasta el próximo `Init()`. `Sifen::Shutdown()` la invoca. La firma usa desde ahora una
   copia privada de la clave, independiente de la propiedad pública (decisión Q-C4).
+- `Config::CSC_DE_PRUEBA` y `Config::usaCscDePrueba()`: el CSC de fábrica es el del ambiente de pruebas. `Sifen::Init()`
+  lanza `ConfiguracionException` cuando `env = prod` y el CSC sigue siendo ese (decisión Q-C6): en producción el
+  SIFEN rechazaba cada DE con 2501 (J002a) sin que la librería avisara, así que nadie que hoy funcione en producción
+  puede verse afectado. En desarrollo no cambia nada.
 
 ### Obsoleto
 

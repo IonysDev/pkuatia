@@ -84,6 +84,11 @@ class Sifen
   {
     if (!file_exists($config->privateKeyFilePath))
       throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[Sifen] El archivo de clave privada no ha sido encontrado en: " . $config->privateKeyFilePath . ".");
+    // Q-C6 (0.3.0): con el CSC de fábrica (el del ambiente de pruebas) el SIFEN de producción rechaza todo DE con 2501
+    // (J002a), así que no se arranca en producción con él. En desarrollo no cambia nada.
+    if ($config->env === Config::ENV_PROD && $config->usaCscDePrueba())
+      throw new ConfiguracionException('[Sifen] El CSC configurado es el del ambiente de pruebas (' . Config::CSC_DE_PRUEBA . '): en producción '
+        . '(env = prod) el SIFEN rechaza cada DE con 2501 (J002a). Informe en Config el CSC ($csc) y su identificador ($idCsc) asignados por el SIFEN.');
     $config->certificateFormat = Config::normalizeCertificateFormat($config->certificateFormat);
     self::$config = $config;
 
