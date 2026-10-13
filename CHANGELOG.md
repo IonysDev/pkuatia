@@ -214,6 +214,12 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
 
 ### Cambiado
 
+- El total del ítem en guaraníes (EA009 `dTotOpeGs`, tipo de cambio por ítem) se redondea al guaraní entero
+  (decisión Q-C8). Hasta 0.2.1 `addItem()` lo calculaba con `bcmul()` sin escala, es decir truncado: con precios o
+  tipos de cambio con fracción cada ítem quedaba hasta 1 Gs por debajo del valor exacto (EA009 = EA008 × E725,
+  validación 1858) y F023 (suma de EA009) arrastraba la diferencia. **Cambia la serialización** solo de los
+  documentos con tipo de cambio por ítem cuyo producto tiene fracción (p. ej. 301,00 USD × 7300,5 = 2 197 450,5 →
+  2 197 451; antes 2 197 450). Los documentos de la línea base de pruebas no cambian.
 - El XML que viene del SIFEN se parsea con `LIBXML_NONET` (evaluación §9): la respuesta cruda de las siete
   operaciones, `RProtDe::FromXMLString()`, `RContDe::FromXContenDE()` y la firma de un `RDE` leído. Una DTD o una
   entidad externa en una respuesta no provoca ninguna lectura de red; las entidades tampoco se sustituyen, como

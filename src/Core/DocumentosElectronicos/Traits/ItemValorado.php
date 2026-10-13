@@ -239,8 +239,10 @@ trait ItemValorado {
             $totOpeItem = bcmul($pu, $cant, 8);
         }
         $gValorRestaItem->setDTotOpeItem($totOpeItem);
+        // EA009 en guaraníes, redondeado al guaraní entero (Q-C8, 0.3.0): hasta 0.2.1 bcmul() sin escala lo truncaba y con
+        // fracción cada ítem quedaba hasta 1 Gs por debajo del valor exacto (EA009 = EA008 × E725, validación 1858).
         if($esTipoCambioPorItem)
-            $gValorRestaItem->setDTotOpeGs(bcmul($totOpeItem, $tipoDeCambioItem));
+            $gValorRestaItem->setDTotOpeGs(BC::round(bcmul($totOpeItem, $tipoDeCambioItem, 8), 0));
         $gValorItem->setGValorRestaItem($gValorRestaItem);
         $gCamItem->setGValorItem($gValorItem);
         // END - GValorRestaItem
