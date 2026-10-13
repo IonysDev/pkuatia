@@ -3,6 +3,9 @@
 namespace IonysDev\Pkuatia\Validacion;
 
 use DateTime;
+use DateTimeInterface;
+use DateTimeZone;
+use IonysDev\Pkuatia\Core\Constants;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\Autofactura;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronicoComercial;
@@ -70,7 +73,17 @@ final class VistaDocumento
 
   public function dFecFirma(): ?DateTime
   {
-    return $this->de !== null && isset($this->de->dFecFirma) ? $this->de->dFecFirma : null;
+    return self::enZonaSifen($this->de !== null && isset($this->de->dFecFirma) ? $this->de->dFecFirma : null);
+  }
+
+  /**
+   * Las fechas del DE van sin zona en el XML y son hora de Asunción por convención del MT; al leer un rDE el modelo las
+   * crea con la zona por defecto de PHP. Para comparar con el reloj del SIFEN se toma la hora de pared en Asunción
+   * (hallazgo de C14).
+   */
+  public static function enZonaSifen(?DateTimeInterface $fecha): ?DateTime
+  {
+    return $fecha === null ? null : new DateTime($fecha->format('Y-m-d\TH:i:s'), new DateTimeZone(Constants::SIFEN_TIMEZONE));
   }
 
   /**
@@ -120,7 +133,8 @@ final class VistaDocumento
   public function dFeEmiDE(): ?DateTime
   {
     $g = $this->prop($this->builder, 'gDatGralOpe') ?? $this->prop($this->de, 'gDatGralOpe');
-    return $this->prop($g, 'dFeEmiDE');
+    $fecha = $this->prop($g, 'dFeEmiDE');
+    return $fecha instanceof DateTimeInterface ? self::enZonaSifen($fecha) : null;
   }
 
   public function gOpeCom(): ?GOpeCom

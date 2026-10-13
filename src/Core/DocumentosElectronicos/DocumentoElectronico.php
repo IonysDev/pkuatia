@@ -63,7 +63,7 @@ class DocumentoElectronico
 
   public GCamGen $gCamGen; // G001 - Campos de uso general
 
-  public array $gCamDEAsoc; // H001 - Campos que identifican a los DE asociados a este DE.
+  public array $gCamDEAsoc = []; // H001 - Campos que identifican a los DE asociados a este DE (lista vacía por defecto desde 0.3.0: sin asociado, la NC/ND se serializa y el validador avisa 2400 en vez de Error).
 
   /**
    * Constructor

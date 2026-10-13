@@ -76,12 +76,11 @@ abstract class ConjuntoDeReglas
     return $t === '' ? null : $t;
   }
 
+  /** Fecha del documento como hora de pared en Asunción (ver VistaDocumento::enZonaSifen()). */
   protected static function fecha(?object $objeto, string $propiedad): ?DateTime
   {
     $x = self::v($objeto, $propiedad);
-    if ($x instanceof DateTime)
-      return $x;
-    return $x instanceof DateTimeInterface ? DateTime::createFromInterface($x) : null;
+    return $x instanceof DateTimeInterface ? VistaDocumento::enZonaSifen($x) : null;
   }
 
   /** @return list<object> */

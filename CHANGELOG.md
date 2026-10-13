@@ -208,6 +208,15 @@ vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambi
   el objeto SOAP no tiene, así que E704 y E705 se perdían al leer un DE desde la respuesta de `ConsultarDE`. Lo
   detectó la ida y vuelta de la FE B2G de la fábrica de pruebas (`IdaYVueltaGruposTest`). Solo cambia la lectura: la
   serialización es idéntica.
+- Una nota de crédito o de débito sin documento asociado terminaba en `Error` ("`$gCamDEAsoc` must not be accessed
+  before initialization") al pasarla a RDE; la propiedad arranca ahora como lista vacía, el documento se serializa
+  (sin `gCamDEAsoc`) y el validador lo rechaza con 2400, que es lo que el SIFEN responde. Hallazgo del ensayo en
+  seco de la homologación (C14).
+- El validador de reglas comparaba las fechas de un rDE leído de un XML con la zona por defecto de PHP (UTC en
+  muchos servidores): como el XML no lleva zona y es hora de Asunción por convención del MT, una firma 30 minutos
+  adelantada parecía 2,5 horas atrasada y no se predecía 1004, y las ventanas de 1150/1151 corrían desplazadas. Las
+  fechas del documento se toman ahora como hora de pared en Asunción (`VistaDocumento::enZonaSifen()`), que es lo
+  que ve el SIFEN. Hallazgo del ensayo en seco de la homologación (C14).
 - **PK-39** (evaluación §4): con un certificado PKCS#12, `Init()` dejaba el certificado y la clave privada **en
   claro** en `sys_get_temp_dir()` con nombres predecibles (`cert_*`, `key_*`) hasta que terminara el script. Ahora
   van a una carpeta propia de nombre impredecible (`pkuatia-<16 hex>/`, 0700 donde el sistema lo respeta; en Windows
