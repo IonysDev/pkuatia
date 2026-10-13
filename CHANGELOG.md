@@ -173,6 +173,15 @@ previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento.
   `GetLastResponse()` devuelven `null`.
 - `Config::__debugInfo()`: `var_dump()` y `print_r()` muestran la passphrase de la clave y el CSC como `'[redactado]'`;
   las propiedades y los getters conservan los valores (evaluación §4, PK-39).
+- `SignHelper::Shutdown()`: olvida la clave privada y el certificado cargados por `Init()`; una firma posterior
+  lanza `FirmaException` hasta el próximo `Init()`. `Sifen::Shutdown()` la invoca. La firma usa desde ahora una
+  copia privada de la clave, independiente de la propiedad pública (decisión Q-C4).
+
+### Obsoleto
+
+- `SignHelper::$xmlKey` y `SignHelper::$xmlSigner` (decisión Q-C4): siguen públicas y `Init()` las sigue poblando,
+  así que nadie que las lea se rompe, pero la firma ya no las usa (una copia privada firma; modificarlas no cambia
+  nada) y leerlas expone la clave y la passphrase. `Shutdown()` las deja vacías. Se retiran en la 1.0.
 
 ### Corregido
 

@@ -140,15 +140,17 @@ class Sifen
 
   /**
    * Libera lo que Init() dejó en disco y en memoria: borra la carpeta temporal con el certificado y la clave extraídos
-   * del PKCS#12 (PK-39), descarta el cliente SOAP (GetLastRequest() y GetLastResponse() pasan a devolver null) y olvida
-   * las opciones. Se puede llamar varias veces; un Init() posterior vuelve a dejar todo listo. La librería la ejecuta
-   * sola al terminar el script. Nuevo en 0.3.0 (Fase C, C12).
+   * del PKCS#12 (PK-39), descarta el cliente SOAP (GetLastRequest() y GetLastResponse() pasan a devolver null), olvida
+   * las opciones y el firmador olvida la clave privada (SignHelper::Shutdown(), Q-C4). Se puede llamar varias veces;
+   * un Init() posterior vuelve a dejar todo listo. La librería borra los temporales sola al terminar el script.
+   * Nuevo en 0.3.0 (Fase C, C12).
    */
   public static function Shutdown(): void
   {
     self::borrarTemporales();
     self::$client = null;
     self::$options = null;
+    SignHelper::Shutdown();
   }
 
   /**
