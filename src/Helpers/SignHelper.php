@@ -63,9 +63,10 @@ class SignHelper
     // Un archivo que existe pero no se puede leer (permisos, una carpeta) termina en excepción, no en un firmador con
     // certificado vacío que el SIFEN rechazaría con 0120 (QA de la Fase C).
     $leer = static function (string $ruta): string {
-      $contenido = @file_get_contents($ruta);
-      if ($contenido === false)
-        throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[SignHelper] No se pudo leer el archivo del certificado o de la clave: $ruta");
+      // En Linux leer una carpeta devuelve '' (no false, como en Windows); un archivo vacío tampoco sirve.
+      $contenido = is_dir($ruta) ? false : @file_get_contents($ruta);
+      if ($contenido === false || $contenido === '')
+        throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[SignHelper] No se pudo leer el archivo del certificado o de la clave (vacío, carpeta o sin permisos): $ruta");
       return $contenido;
     };
     if ($format === Config::CERT_FORMAT_PEM) {
