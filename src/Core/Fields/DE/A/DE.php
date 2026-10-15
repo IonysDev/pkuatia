@@ -17,6 +17,7 @@ use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     A001
@@ -66,9 +67,9 @@ class DE extends BaseSifenField
   public function setId(String $id): self
   {
     if(strlen($id) != 44)
-      throw new \Exception('[DE] Id debe tener 44 caracteres.');
+      throw new ValidacionException('[DE] Id debe tener 44 caracteres.');
     else if(!preg_match('/^[0-9]{44}$/', $id))
-      throw new \Exception('[DE] Id debe contener solo números.');
+      throw new ValidacionException('[DE] Id debe contener solo números.');
     $this->id = $id;
     return $this;
   }
@@ -115,7 +116,7 @@ class DE extends BaseSifenField
   {
     $valor = $dSisFact instanceof DESisFact ? $dSisFact->value : $dSisFact;
     if(is_null(DESisFact::tryFrom($valor)))
-      throw new \Exception('[DE] Valor dSisFact inválido: ' . $valor . '. Debe ser 1 (Contribuyente)');
+      throw new ValidacionException('[DE] Valor dSisFact inválido: ' . $valor . '. Debe ser 1 (Contribuyente)');
     $this->dSisFact = $valor;
     return $this;
   }
@@ -345,48 +346,48 @@ class DE extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'DE') != 0)
-      throw new \Exception('[DE] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[DE] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new DE();
     
     // Required attribute: Id
     if(!$node->hasAttribute('Id'))
-      throw new \Exception('[DE] Atributo Id requerido no encontrado.');
+      throw new ValidacionException('[DE] Atributo Id requerido no encontrado.');
     $res->id = $node->getAttribute('Id');
     
     // Required elements
     $dDVIdNode = $node->getElementsByTagName('dDVId')->item(0);
     if(!$dDVIdNode)
-      throw new \Exception('[DE] Elemento requerido dDVId no encontrado.');
+      throw new ValidacionException('[DE] Elemento requerido dDVId no encontrado.');
     $res->dDVId = intval($dDVIdNode->nodeValue);
     
     $dFecFirmaNode = $node->getElementsByTagName('dFecFirma')->item(0);
     if(!$dFecFirmaNode)
-      throw new \Exception('[DE] Elemento requerido dFecFirma no encontrado.');
+      throw new ValidacionException('[DE] Elemento requerido dFecFirma no encontrado.');
     $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($dFecFirmaNode->nodeValue));
     
     $dSisFactNode = $node->getElementsByTagName('dSisFact')->item(0);
     if(!$dSisFactNode)
-      throw new \Exception('[DE] Elemento requerido dSisFact no encontrado.');
+      throw new ValidacionException('[DE] Elemento requerido dSisFact no encontrado.');
     $res->dSisFact = intval($dSisFactNode->nodeValue);
     
     $gOpeDENode = $node->getElementsByTagName('gOpeDE')->item(0);
     if(!$gOpeDENode)
-      throw new \Exception('[DE] Elemento requerido gOpeDE no encontrado.');
+      throw new ValidacionException('[DE] Elemento requerido gOpeDE no encontrado.');
     $res->gOpeDe = GOpeDE::FromDOMElement($gOpeDENode);
     
     $gTimbNode = $node->getElementsByTagName('gTimb')->item(0);
     if(!$gTimbNode)
-      throw new \Exception('[DE] Elemento requerido gTimb no encontrado.');
+      throw new ValidacionException('[DE] Elemento requerido gTimb no encontrado.');
     $res->gTimb = GTimb::FromDOMElement($gTimbNode);
     
     $gDatGralOpeNode = $node->getElementsByTagName('gDatGralOpe')->item(0);
     if(!$gDatGralOpeNode)
-      throw new \Exception('[DE] Elemento requerido gDatGralOpe no encontrado.');
+      throw new ValidacionException('[DE] Elemento requerido gDatGralOpe no encontrado.');
     $res->gDatGralOpe = GDatGralOpe::FromDOMElement($gDatGralOpeNode);
     
     $gDtipDENode = $node->getElementsByTagName('gDtipDE')->item(0);
     if(!$gDtipDENode)
-      throw new \Exception('[DE] Elemento requerido gDtipDE no encontrado.');
+      throw new ValidacionException('[DE] Elemento requerido gDtipDE no encontrado.');
     $res->gDtipDe = GDtipDE::FromDOMElement($gDtipDENode);
     
     // Optional elements
@@ -411,7 +412,7 @@ class DE extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node)
   {
     if(strcmp($node->getName(), 'DE') != 0)
-      throw new \Exception('[DE] Invalid XML Node Name: ' . $node->getName());
+      throw new ValidacionException('[DE] Invalid XML Node Name: ' . $node->getName());
     $res = new DE();
     $res->id = $node->attributes()['Id'];
     $res->dDVId = intval($node->dDVId);

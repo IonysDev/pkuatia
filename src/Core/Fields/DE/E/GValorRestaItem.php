@@ -9,6 +9,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     EA001 
@@ -42,7 +43,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dDescItem, 15, 0, 8))
     {
-      throw new \Exception("Valor inválido de dDescItem: $dDescItem");
+      throw new ValidacionException("Valor inválido de dDescItem: $dDescItem");
     }
     $this->dDescItem = $dDescItem;
     return $this;
@@ -59,7 +60,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0, 8))
     {
-      throw new \Exception("Valor inválido de dPorcDesIt: $dPorcDesIt");
+      throw new ValidacionException("Valor inválido de dPorcDesIt: $dPorcDesIt");
     }
     $this->dPorcDesIt = $dPorcDesIt;
     return $this;
@@ -77,7 +78,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0, 8))
     {
-      throw new \Exception("Valor inválido de dDescGloItem: $dDescGloItem");
+      throw new ValidacionException("Valor inválido de dDescGloItem: $dDescGloItem");
     }
     $this->dDescGloItem = $dDescGloItem;
     return $this;
@@ -95,7 +96,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0, 8))
     {
-      throw new \Exception("Valor inválido de dAntPreUniIt: $dAntPreUniIt");
+      throw new ValidacionException("Valor inválido de dAntPreUniIt: $dAntPreUniIt");
     }
     $this->dAntPreUniIt = $dAntPreUniIt;
     return $this;
@@ -113,7 +114,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0, 8))
     {
-      throw new \Exception("Valor inválido de dAntGloPreUniIt: $dAntGloPreUniIt");
+      throw new ValidacionException("Valor inválido de dAntGloPreUniIt: $dAntGloPreUniIt");
     }
     $this->dAntGloPreUniIt = $dAntGloPreUniIt;
     return $this;
@@ -131,7 +132,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0, 8))
     {
-      throw new \Exception("Valor inválido de dTotOpeItem: $dTotOpeItem");
+      throw new ValidacionException("Valor inválido de dTotOpeItem: $dTotOpeItem");
     }
     $this->dTotOpeItem = $dTotOpeItem;
     return $this;
@@ -148,7 +149,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0, 8))
     {
-      throw new \Exception("Valor inválido de dTotOpeGs: $dTotOpeGs");
+      throw new ValidacionException("Valor inválido de dTotOpeGs: $dTotOpeGs");
     }
     $this->dTotOpeGs = $dTotOpeGs;
     return $this;
@@ -317,7 +318,7 @@ class GValorRestaItem extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gValorRestaItem') != 0)
     {
-      throw new \Exception("El nodo '" . $node->getName() . "' no corresponde a gValorRestaItem");
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a gValorRestaItem");
     }
     $res = new GValorRestaItem();
     if(isset($node->dDescItem))
@@ -429,7 +430,7 @@ class GValorRestaItem extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gValorRestaItem') != 0)
-        throw new \Exception('[GValorRestaItem] Nodo con nombre inválido: ' . $node->nodeName);
+        throw new ValidacionException('[GValorRestaItem] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     if($node->getElementsByTagName('dDescItem')->length > 0)
       $res->setDDescItem(trim($node->getElementsByTagName('dDescItem')->item(0)->nodeValue));

@@ -9,6 +9,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E640
@@ -108,7 +109,7 @@ class GPagCred extends BaseSifenField
   {
     if(!ValueValidations::isValidStringDecimal($dMonEnt, 15, 0, 4))
     {
-      throw new \Exception("Monto de la entrega inicial (dMonEnt) no válido: " . $dMonEnt, 1);
+      throw new ValidacionException("Monto de la entrega inicial (dMonEnt) no válido: " . $dMonEnt, 1);
     }
     $this->dMonEnt = $dMonEnt;
     return $this;
@@ -209,7 +210,7 @@ class GPagCred extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gPagCred') != 0)
     {
-      throw new \Exception("El nombre del nodo no corresponde a gPagCred: " . $node->getName(), 1);
+      throw new ValidacionException("El nombre del nodo no corresponde a gPagCred: " . $node->getName(), 1);
     }
     $res = new self();
     $res->setICondCred(intval($node->iCondCred));
@@ -308,7 +309,7 @@ class GPagCred extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gPagCred') != 0)
-      throw new \Exception('[GPagCred] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GPagCred] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GPagCred();
     $res->setICondCred(intval($node->getElementsByTagName('iCondCred')->item(0)->nodeValue));
     $res->setDDCondCred(strval($node->getElementsByTagName('dDCondCred')->item(0)->nodeValue));

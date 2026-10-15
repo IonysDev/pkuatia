@@ -9,6 +9,7 @@ use DOMElement;
 use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     F001
@@ -90,7 +91,7 @@ class GTotSub
   {
     $newVal = trim($dSubExe);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dSubExe: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dSubExe: $newVal");
     $this->dSubExe = $newVal;
     return $this;
   }
@@ -107,7 +108,7 @@ class GTotSub
   {
     $newVal = trim($dSubExo);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dSubExo: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dSubExo: $newVal");
     $this->dSubExo = $newVal;
     return $this;
   }
@@ -124,7 +125,7 @@ class GTotSub
   {
     $newVal = trim($dSub5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dSub5: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dSub5: $newVal");
     $this->dSub5 = $newVal;
     return $this;
   }
@@ -141,7 +142,7 @@ class GTotSub
   {
     $newVal = trim($dSub10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dSub10: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dSub10: $newVal");
     $this->dSub10 = $newVal;
     return $this;
   }
@@ -158,7 +159,7 @@ class GTotSub
   {
     $newVal = trim($dTotOpe);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotOpe: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotOpe: $newVal");
     $this->dTotOpe = $newVal;
     return $this;
   }
@@ -175,7 +176,7 @@ class GTotSub
   {
     $newVal = trim($dTotDesc);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotDesc: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotDesc: $newVal");
     $this->dTotDesc = $newVal;
     return $this;
   }
@@ -192,7 +193,7 @@ class GTotSub
   {
     $newVal = trim($dTotDescGlotem);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotDescGlotem: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotDescGlotem: $newVal");
     $this->dTotDescGlotem = $newVal;
     return $this;
   }
@@ -209,7 +210,7 @@ class GTotSub
   {
     $newVal = trim($dTotAntItem);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotAntItem: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotAntItem: $newVal");
     $this->dTotAntItem = $newVal;
     return $this;
   }
@@ -226,7 +227,7 @@ class GTotSub
   {
     $newVal = trim($dTotAnt);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotAnt: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotAnt: $newVal");
     $this->dTotAnt = $newVal;
     return $this;
   }
@@ -243,7 +244,7 @@ class GTotSub
   {
     $newVal = trim($dPorcDescTotal);
     if(!ValueValidations::isValidStringDecimal($newVal, 3, 0, 8))
-      throw new \Exception("Valor no válido para el campo dPorcDescTotal: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dPorcDescTotal: $newVal");
     $this->dPorcDescTotal = $newVal;
     return $this;
   }
@@ -260,7 +261,7 @@ class GTotSub
   {
     $newVal = trim($dDescTotal);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dDescTotal: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dDescTotal: $newVal");
     $this->dDescTotal = $newVal;
     return $this;
   }
@@ -277,7 +278,7 @@ class GTotSub
   {
     $newVal = trim($dAnticipo);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dAnticipo: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dAnticipo: $newVal");
     $this->dAnticipo = $newVal;
     return $this;
   }
@@ -294,7 +295,7 @@ class GTotSub
   {
     $newVal = trim($dRedon);
     if(!ValueValidations::isValidStringDecimal($newVal, 4, 0, 4))
-      throw new \Exception("[GTotSub] Valor no válido para el campo dRedon: $newVal");
+      throw new ValidacionException("[GTotSub] Valor no válido para el campo dRedon: $newVal");
     $this->dRedon = $newVal;
     return $this;
   }
@@ -311,7 +312,7 @@ class GTotSub
   {
     $newVal = trim($dComi);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dComi: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dComi: $newVal");
     $this->dComi = $newVal;
     return $this;
   }
@@ -328,7 +329,7 @@ class GTotSub
   {
     $newVal = trim($dTotGralOpe);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotGralOpe: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotGralOpe: $newVal");
     $this->dTotGralOpe = $newVal;
     return $this;
   }
@@ -345,7 +346,7 @@ class GTotSub
   {
     $newVal = trim($dIVA5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dIVA5: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dIVA5: $newVal");
     $this->dIVA5 = $newVal;
     return $this;
   }
@@ -362,7 +363,7 @@ class GTotSub
   {
     $newVal = trim($dIVA10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dIVA10: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dIVA10: $newVal");
     $this->dIVA10 = $newVal;
     return $this;
   }
@@ -379,7 +380,7 @@ class GTotSub
   {
     $newVal = trim($dLiqTotIVA5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dLiqTotIVA5: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dLiqTotIVA5: $newVal");
     $this->dLiqTotIVA5 = $newVal;
     return $this;
   }
@@ -396,7 +397,7 @@ class GTotSub
   {
     $newVal = trim($dLiqTotIVA10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dLiqTotIVA10: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dLiqTotIVA10: $newVal");
     $this->dLiqTotIVA10 = $newVal;
     return $this;
   }
@@ -413,7 +414,7 @@ class GTotSub
   {
     $newVal = trim($dIVAComi);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dIVAComi: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dIVAComi: $newVal");
     $this->dIVAComi = $newVal;
     return $this;
   }
@@ -430,7 +431,7 @@ class GTotSub
   {
     $newVal = trim($dTotIVA);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotIVA: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotIVA: $newVal");
     $this->dTotIVA = $newVal;
     return $this;
   }
@@ -447,7 +448,7 @@ class GTotSub
   {
     $newVal = trim($dBaseGrav5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dBaseGrav5: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dBaseGrav5: $newVal");
     $this->dBaseGrav5 = $newVal;
     return $this;
   }
@@ -463,7 +464,7 @@ class GTotSub
   {
     $newVal = trim($dBaseGrav10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("[GTotSub] Valor no válido para el campo dBaseGrav10: $newVal");
+      throw new ValidacionException("[GTotSub] Valor no válido para el campo dBaseGrav10: $newVal");
     $this->dBaseGrav10 = $dBaseGrav10;
     return $this;
   }
@@ -480,7 +481,7 @@ class GTotSub
   {
     $newVal = trim($dTBasGraIVA);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("[GTotSub] Valor no válido para el campo dTBasGraIVA: $newVal");
+      throw new ValidacionException("[GTotSub] Valor no válido para el campo dTBasGraIVA: $newVal");
     $this->dTBasGraIVA = $newVal;
     return $this;
   }
@@ -497,7 +498,7 @@ class GTotSub
   {
     $newVal = trim($dTotalGs);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
-      throw new \Exception("Valor no válido para el campo dTotalGs: $newVal");
+      throw new ValidacionException("Valor no válido para el campo dTotalGs: $newVal");
     $this->dTotalGs = $newVal;
     return $this;
   }
@@ -937,7 +938,7 @@ class GTotSub
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gTotSub') != 0)
-      throw new \Exception('[GTotSub] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GTotSub] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GTotSub();
     if($node->getElementsByTagName('dSubExe')->length > 0)
       $res->setDSubExe($node->getElementsByTagName('dSubExe')->item(0)->nodeValue);
@@ -992,7 +993,7 @@ class GTotSub
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
     if(strcmp($xml->getName(), 'gTotSub') != 0)
-      throw new \Exception("El nombre del elemento no es del tipo gTotSub");
+      throw new ValidacionException("El nombre del elemento no es del tipo gTotSub");
     $res = new GTotSub();
     if (isset($xml->dSubExe)) {
       $res->setDSubExe($xml->dSubExe);

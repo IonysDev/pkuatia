@@ -5,6 +5,264 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [0.3.0] — 2026-10-15
+
+Fase C del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): validación de documentos y
+firmas, errores tipados y catálogo de códigos del SIFEN. **Compatible hacia atrás**: no se elimina ni cambia ninguna
+firma pública; las excepciones nuevas extienden las que se lanzaban hasta 0.2.1, de modo que todo `catch` existente
+sigue funcionando, y los rechazos del SIFEN siguen devolviéndose como objetos, no como excepciones. Toda validación
+previa al envío es opcional (opt-in): `EnviarDE` no cambia de comportamiento. Dos cambios de comportamiento
+deliberados, decididos durante la fase y detallados abajo: `Init()` se niega a arrancar en producción con el CSC de
+prueba (Q-C6, solo afectaba a documentos que el SIFEN ya rechazaba) y el total del ítem en guaraníes se redondea en
+vez de truncarse (Q-C8, cambia la serialización de documentos con tipo de cambio por ítem y fracción).
+
+### Agregado
+
+- Capturas de `sifen-test` del 11/10/2026, de la homologación de la 0.2.1, en
+  `tests/Resources/sifen/respuestas-ws/2026-10-11/`: 46 archivos copiados byte a byte de ekuat-ia (`cf55702`).
+  `tests/Unit/Responses/CapturasHomologacionFaseBTest` las lee a través del facade: los siete envíos (0260, 2562 y
+  1206), la consulta de la autofactura con su constancia y la de la FE con vehículo nuevo, la consulta 0420 de un
+  envío cortado, el rechazo genérico de la consulta de RUC, la recepción y la consulta del lote (0300 y 0362) y la
+  respuesta con cinco eventos. Los nueve rDE enviados validan contra el XSD y hacen ida y vuelta byte a byte. Solo
+  cambian las pruebas: la librería no cambia.
+- Advertencia sobre las 15 monedas cuyo nombre supera los 20 caracteres que admite el XSD (deuda D-A3, sin
+  solución conocida): el SIFEN rechaza la descripción recortada con 1206 y no hay una descripción conocida que
+  acepte, así que esas monedas no se pueden usar en un DE. Está en el README (Notas importantes, punto 6) y en el
+  docblock de `MonedaMapping::GetDescription()`.
+- `Utils\DecimalXsd`: validación y normalización de montos y medidas contra los tipos decimales del XSD
+  (`xs:decimal` con `totalDigits` y `fractionDigits`, como `tMontoBase4` y `tMontoBase6`,
+  `DE_Types_v150.xsd:1290-1314`): `normalizar()`, `exacto()` y `esValido()`. Reúne, sin cambiarlo, el criterio que
+  `GGrupSup` (0.2.1, Q-B10) y `GVehNuevo` (0.2.1, Q-B12) aplicaban por separado; los dos grupos delegan en él y
+  conservan sus mensajes. Lo usará el validador de reglas de esta misma versión.
+- **Excepciones tipadas** (`IonysDev\Pkuatia\Core\Exceptions`, evaluación §7.2 con las decisiones Q-C2 y Q-C3). Cada
+  clase extiende la que se lanzaba hasta 0.2.1 en ese lugar, así que ningún `catch` existente deja de funcionar, y
+  todas implementan `PkuatiaExceptionInterface` (con `getContexto()`, sin secretos) para atraparlas de una vez:
+  - `PkuatiaException` (base, extiende `\Exception`) → `ConfiguracionException` (Config incompleta, `Init()` sin
+    archivos, factoría de SoapClient inválida, archivos temporales o del dId) → `CertificadoException` con
+    `getMotivo()` (`MotivoCertificado`: NoEncontrado, PassphraseIncorrecta, CifradoHeredado, PemInvalido,
+    NoSoportado); `FirmaException` (firmador sin inicializar); `RespuestaException` (respuesta del SIFEN que no se
+    pudo interpretar: `getOperacion()`, `getCampoFaltante()`, `getRespuestaCruda()`).
+  - `ValidacionException` (extiende `\InvalidArgumentException`) → `CampoInvalidoException` con `getCampoMT()`,
+    `getElemento()`, `getValorRecibido()`, `getReglaEsperada()` y `getCodigoSifen()`.
+  - `TransporteException` (extiende `\SoapFault`, que ya es una `\Exception`) para toda falla de comunicación en las
+    siete operaciones del facade, con `getOperacion()`, `getTipo()` (`TipoFallaTransporte`: Wsdl,
+    RespuestaVaciaONoXml, Conexion, TiempoAgotado, Tls, SoapFault, Desconocida, deducido de lo observado contra
+    `sifen-test`), el `faultcode` original y el `SoapFault` original en `getPrevious()`; `SifenNoDisponibleException`
+    cuando el patrón es el de saturación o bloqueo temporal (WSDL o cuerpo vacío).
+- El facade lanza las excepciones tipadas: `Init()` y `Config` (`CertificadoException`/`ConfiguracionException`),
+  las validaciones previas a la red (`ValidacionException`; el CDC y el motivo de los eventos y la NT-024 como
+  `CampoInvalidoException`, esta última con el código 1321 y el campo D208), los errores de parseo
+  (`RespuestaException` con la respuesta cruda) y las fallas de comunicación (`TransporteException`). Los mensajes
+  conservan el prefijo `[Sifen] …` de cada operación. `SignHelper`, `Pkcs12Helper` y `PemHelper` lanzan
+  `CertificadoException` o `FirmaException`.
+- Todo el modelo lanza las excepciones tipadas (352 `throw` en 92 archivos, sin cambiar ningún mensaje): las
+  validaciones de los setters, de los builders de documentos, de los eventos, de los helpers y de las utilidades
+  lanzan `ValidacionException`; las clases de respuesta lanzan `RespuestaException` cuando la respuesta del SIFEN
+  es nula, no tiene la forma esperada o le falta un campo (`getCampoFaltante()` con el nombre del campo, y el
+  facade le agrega la operación y la respuesta cruda); una falla al serializar a XML lanza `PkuatiaException`.
+  Lo que era `\InvalidArgumentException` sigue siéndolo y lo que era `\Exception` sigue siéndolo. En `src/` no
+  queda ningún `throw` genérico, y un test lo vigila.
+- `Constants\CodigoResultadoWS`: enum con los 57 códigos de resultado de los web services como texto de cuatro
+  dígitos con cero inicial, tal como llegan en `dCodRes`: los 40 vigentes del MT v150 (§12.2 y §12.3, con 0420
+  inexistente, 0421 RUC sin permiso y 0422 CDC encontrado), 0364 (consulta de lote extemporánea, guía de la DNIT),
+  0520-0523 (archivo de RUC, NT-011), los 10 eliminados en v150 (con `vigente()` falso) y dos que no figuran en las
+  tablas pero el SIFEN responde: 0100 "Error Inesperado" y 0143 "La firma digital del evento debe corresponder al
+  receptor del DE/DTE" (capturas del 09 y 11/10/2026). `fromAny()` acepta `260`, `"260"` y `"0260"`;
+  `descripcion()`, `idMT()`, `esAprobacion()`, `esTransitorio()`, `esObservado()`, `categoria()`
+  (`CategoriaCodigoWS`, por rangos del §12.1.1) y `fuente()`. Las constantes enteras `COD_RES_*` siguen valiendo.
+- `Constants\EstadoResultado` (`dEstRes`: Aprobado, Aprobado con observación, Rechazado) con `fromTexto()`
+  tolerante a espacios, mayúsculas y tildes, `esAprobado()` (verdadero también con observaciones) y `letra()`; y
+  `Constants\EstadoRuc` (`dCodEstCons`: ACT, SUS, SAD, BLQ, CAN, CDE) con `descripcion()` y `esActivo()`.
+- **Catálogo de validaciones del SIFEN** (`Validacion\CatalogoValidaciones`), generado desde ekuat-ia con
+  `tools/generar-catalogos.php` a `src/Resources/codigos/` (README en la carpeta): las 282 validaciones vigentes
+  del DE y las 18 eliminadas en v150 (MT §12.4), las 95 de los eventos (MT §11.6, con los códigos repetidos
+  4313-4323 conservados) y los códigos de los web services (MT §12.2-12.3), más los elementos del XSD del DE con
+  su ID del MT, sus ocurrencias y su línea citable. `describir('1321')` devuelve una `InfoValidacion` con el
+  código, el ID del campo (D208c), el mensaje, el estado (A/AO/R), el grupo, la observación (la regla), la
+  vigencia, la fuente y el método de PKuatia que carga el campo (`campos-metodos.php`, mantenido a mano);
+  `describirTodos()`, `porCampo('D208')`, `todas()`, `elemento('dNumTim')` (`InfoElemento`: campo C004, obligatorio,
+  padre `tgDTim`, línea del XSD), `hijosDe('gTimb')`, `campoMT()` y `metodoPkuatia()`. Es lo que permite pasar de
+  un `dCodRes` a "qué tocar en el código". `tests/Unit/Resources/CatalogosSincroniaTest` regenera los catálogos en
+  memoria desde `docs/sifen-ai` y los compara con los versionados (se omite sin esa carpeta).
+- El lint de CI incluye `tools/`.
+- **Lectura directa de las respuestas** (evaluación §7.2). Interfaz `Core\Responses\RespuestaSifen`, implementada por
+  las siete respuestas del facade, con nombres nuevos para no tocar los getters históricos (`getDCodRes()` sigue
+  devolviendo `int` o `String` según la clase): `getCodigo()` (texto de cuatro dígitos con cero inicial, "0260"),
+  `getMensaje()`, `esExitosa()`, `getCodigoResultado()` (`CodigoResultadoWS`), `getInfoValidacion()` (catálogo:
+  campo del MT, regla y método de PKuatia), `getFechaProceso()` y `toArray()`. Por operación: `RRetEnviDe`
+  `esAprobado()`, `esRechazado()`, `getEstado()`, `getProtocolo()`, `getCdc()`, `getMotivos()`; `RResEnviLoteDe`
+  `fueEncolado()`, `getNumeroLote()`, `getTiempoMedioProcesamiento()`; `RResEnviConsLoteDe` `estaEnProcesamiento()`,
+  `estaConcluido()`, `esExtemporaneo()`, `esResultadoDefinitivo()`, `getDocumentos()`, `todosAprobados()`,
+  `getRechazados()`, `getResultadoDe($cdc)`; `RResEnviConsDe` `fueEncontrado()`, `getProtocolo()`;
+  `RResEnviConsRUC` `fueEncontrado()`, `getEstadoRuc()`, `esFacturadorElectronico()`, `getRazonSocial()`;
+  `RRetEnviEventoDe` `getResultados()`, `todosAprobados()`, `getRechazados()`, `getResultadoDelEvento($id)`;
+  `RResEnviConsArchivoRUC` `fueEncontrado()`. En los grupos de resultado: `GResProc` `getCodigo()`, `getMensaje()`,
+  `getCodigoResultado()`, `esAprobacion()`, `esValidacionDE()`, `esValidacionEvento()`, `getInfoValidacion()`;
+  `RProtDe`, `GResProcLote` y `GResProcEVe` `getEstado()`, `esAprobado()`, `esRechazado()`, `getMotivos()`,
+  `getCodigo()`, `getMensaje()`, `getProtocolo()` (más `getCdc()` en el lote, `getIdEvento()` en los eventos y
+  `toArray()` en ambos). Todo probado sobre las capturas reales del 06, 09 y 11/10/2026.
+- **`Sifen::VerificarFirma(string $xml): ResultadoFirma`** (evaluación §6.2): verifica la firma de un rDE o de un
+  sobre de eventos recibido, sin `Init()` ni red. Por cada `Signature`, una `InfoFirma` con la referencia, si el
+  digest coincide (el contenido no fue alterado), si el `SignatureValue` verifica con el certificado de `KeyInfo`,
+  si los algoritmos son los del estándar (RSA-SHA256/384/512, SHA-256, C14N exclusiva o inclusiva y transform
+  enveloped, NT-016), el certificado (`CertificadoFirma`: sujeto, emisor, RUC si figura en el `serialNumber` o en
+  el SAN, vigencia) y si estaba vigente en `dFecFirma`. Los errores llevan el código del MT: 0140 (estándar),
+  0141 (digest o firma), 0120 (certificado ilegible), 2450/0121 (vigencia al firmar). No verifica la cadena de
+  certificación ni la revocación. Control positivo con un certificado autofirmado; control negativo con las once
+  capturas anonimizadas de `sifen-test`, cuya firma ya no verifica.
+- `Validacion\ErrorValidacion` y `OrigenError`: el tipo común de error de la validación XSD, de completitud, de
+  reglas y de firma (origen, mensaje, código del SIFEN, campo del MT, elemento, ruta, valor, sugerencia, línea y
+  si es solo una advertencia), con `getInfoValidacion()` y `__toString()`.
+- **Validador de reglas offline** (evaluación §6.3, decisión Q-C1): `DocumentoElectronico::validarReglas()` en los
+  cinco tipos de documento y `Validacion\ValidadorDE::validar()` para un `DE` o `RDE` ya armado o leído de un XML.
+  Devuelve un `ResultadoValidacion` (se cuenta, se recorre, `esValido()`, `getErrores()`, `getAdvertencias()`,
+  `porCodigo()`, `porCampo()`, `porOrigen()`, `lanzarSiInvalido()` que lanza `DocumentoInvalidoException` con el
+  resultado adjunto) con un `ErrorValidacion` por problema. No serializa, no firma y no modifica el documento; lee
+  las propiedades con `isset`, nunca getters, así que un documento a medio armar lista lo que le falta en vez de
+  terminar en `Error` (cierra la deuda Q-B3 de la 0.2.1). En esta entrega: la completitud según el XSD (campos con
+  `minOccurs = 1` de cada grupo informado, con el campo del MT, la línea del XSD y el método de PKuatia que lo carga;
+  código 0160) y la presencia de los grupos que cada tipo de documento exige o prohíbe (1200/1201, 1350/1351,
+  2550/2551, 1450/1451, 2600/2601, 1500/1501, 2350/2351, 2100/2101, 2150/2151, 2200/2201, 2250/2251, 2300/2301,
+  2400, 1850/1851, 1900/1901/1902 y 2390, con el mensaje del MT). Control de falsos positivos: los documentos de la
+  fábrica de pruebas y los once rDE reales de `sifen-test` dan cero errores.
+- Reglas de negocio del validador (`Validacion\Reglas\*`, errores-validacion.md del MT §12.4; cada error con el
+  mensaje del MT, el campo, el elemento, la ruta y el método de PKuatia): **descripciones que no corresponden al
+  código** en 37 pares código/descripción de todos los grupos (1051, 1100, 1203, 1205, 1206, 1211, 1254, 1257,
+  1260, 1301, 1313, 1325, 1326, 1329, 1352, 1452, 1502, 1554, 1555, 1602, 1702, 1802, 1804, 1806, 1903, 2103, 2104,
+  2401, 2410, 2429, 2552, 2555, 2556, 2558, 2559, 2561, 2602, 2603; los códigos de texto libre no se comparan y las
+  15 monedas de nombre largo se avisan como advertencia, D-A3); **generales**: 1003 dígito verificador del CDC, 1000
+  CDC coherente con el contenido, 1004 firma adelantada, 1005 transmisión a más de 72 h (advertencia), 1103 timbrado
+  con vigencia posterior a la emisión, 1110 serie, 1150/1151/1156 ventanas de la fecha de emisión, 1202 tipo de
+  transacción, 1207/1208/1209/1210 condición y valor del tipo de cambio, 1253 dígito verificador del emisor y
+  1255/1328/2553/2557/2153/2203 departamento, distrito y ciudad relacionados (`PyGeoCodesMapping::estanRelacionados()`,
+  nuevo); **receptor**: 1315, 1300, 1316, 1320, 1302/1303, 1304/1305, 1317, 1309, 1310/1311, 1319, 1321 (NT-024),
+  1314/1323, 1318, 1330, 1324, 1327; **pagos**: 1503, 1550/1551/1552, 1553, 1556/1557, 1600/1601, 1650/1651,
+  1700/1701, 1703/1704, 1705/1706, 1751. Un test por código, con un documento válido al que se le introduce una sola
+  violación; las fechas se evalúan contra un momento de referencia (`$ahora`, por defecto ahora en Asunción).
+- Reglas de negocio del validador, ítems y totales (`Validacion\Reglas\ReglasDeItems` y `ReglasDeTotales`; MT §12.4
+  E8 y F, `campos-obligatorios.md` y NT-013): **ítems**: 1800/1801 códigos DNCP, 1807/1808 relevancia de las
+  mercaderías, 1854/1855/1856 tipo de cambio por ítem, 1859 total bruto, 1852/1861 descuento particular y su
+  porcentaje (variación admitida 0,8, como dice el MT), 1853 total de la operación por ítem, 1857/1858 total en
+  guaraníes; **IVA por ítem**: 1904/1905/1906 proporción, 1907/1908 tasa, 1909/1910/1911 base gravada,
+  1912/1913 liquidación y 1921 base exenta del gravado parcial (NT-013 §2.1, todavía sin fila en
+  `errores-validacion.md`); **totales**: 2352–2359 subtotales por afectación, 2362 total de la operación (suma de los
+  subtotales; en la autofactura, de los ítems), 2363/2364 descuentos, 2365 total general, 2366–2371 liquidación del
+  IVA, 2372–2377 bases gravadas y 2382/2385/2386 total en guaraníes. Los importes se recalculan con BCMath desde los
+  ítems informados con las fórmulas que `addItem()` y `calcTotSub()` aplican y el SIFEN aprobó: `F014 = F008 − F013 +
+  F025` y `F017 = F015 + F016 − F036 − F037 + F026` (`campos-obligatorios.md`; la fila 2365 del MT dice otra cosa,
+  devolución a ekuat-ia). Como el DE no dice con cuántos decimales redondea el emisor, se admite menos de una unidad
+  del último decimal informado. 2503 (J003 `dInfAdic` fuera de la firma, que PKuatia emite a pedido) se informa como
+  advertencia hasta comprobarlo en `sifen-test`.
+- Reglas de negocio del validador, transporte, documentos asociados y campos específicos
+  (`Validacion\Reglas\ReglasDeTransporte`, `ReglasDeDocumentosAsociados` y `ReglasEspecificas`; MT §12.4 E1, E6, E9,
+  E10 y H): **transporte**: 2102 tipo de transporte, 2107/2109 fechas de traslado obligatorias en la NR, 2108 inicio
+  anterior a la puesta en producción del SIFEN, 2110 fin anterior al inicio, 2252/2253 número de vuelo solo en el
+  aéreo, 2254/2255 matrícula o identificación según E967, 2302/2305 RUC del transportista según su naturaleza, 2306
+  dígito verificador, 2307/2308 tipo de documento según la naturaleza, 2311 número de documento; **documentos
+  asociados**: 2415 un solo asociado en AF, NC y ND, 2416/2434 constancia solo en la AF, 2402/2418 CDC solo en el
+  electrónico, 2405–2409 y 2411 campos del impreso obligatorios con H002 = 2 y 2419–2423 y 2425 prohibidos sin él,
+  2424/2435 descripción del tipo de impreso, 2436 retención con pago por retención, 2413 resolución de crédito fiscal
+  con D011 = 12, 2426/2427 tipo de constancia, 2430–2433 número y control de la constancia; **específicas**:
+  1400/1401 compras públicas solo y siempre en B2G, 1402 fecha del código de contratación, 2604/2605 fecha futura de
+  la factura en la NR, 2606 traslado entre locales con el emisor como receptor, 2050–2055 ciclos de `gGrupAdi`.
+  Fuera de alcance porque dependen de datos del SIFEN: 2403, 2404, 2414, 2417, 2437, 2438 y 2440; 2309 y 2312 no
+  pueden fallar porque el modelo deriva esas descripciones. Con esto el validador cubre 233 códigos del MT, más 1921 de la NT-013. La FE
+  con todos los opcionales de la fábrica de pruebas pasa a B2G con códigos DNCP (1401 y 1800 la rechazaban).
+- `Sifen::Shutdown()`: libera lo que `Init()` dejó en disco y en memoria (borra los temporales del PKCS#12, descarta
+  el cliente SOAP y olvida las opciones). Se puede llamar varias veces; `Init()` vuelve a dejar todo listo. La
+  librería la ejecuta sola al terminar el script.
+- `Config::$soapTrace` (con `setSoapTrace()` y clave `soapTrace` del JSON; por defecto `true`, como hasta 0.2.1):
+  con `false` el `SoapClient` no guarda la última solicitud ni la última respuesta y `GetLastRequest()` y
+  `GetLastResponse()` devuelven `null`.
+- `Config::__debugInfo()`: `var_dump()` y `print_r()` muestran la passphrase de la clave y el CSC como `'[redactado]'`;
+  las propiedades y los getters conservan los valores (evaluación §4, PK-39).
+- `SignHelper::Shutdown()`: olvida la clave privada y el certificado cargados por `Init()`; una firma posterior
+  lanza `FirmaException` hasta el próximo `Init()`. `Sifen::Shutdown()` la invoca. La firma usa desde ahora una
+  copia privada de la clave, independiente de la propiedad pública (decisión Q-C4).
+- `Config::CSC_DE_PRUEBA` y `Config::usaCscDePrueba()`: el CSC de fábrica es el del ambiente de pruebas. `Sifen::Init()`
+  lanza `ConfiguracionException` cuando `env = prod` y el CSC sigue siendo ese (decisión Q-C6): en producción el
+  SIFEN rechazaba cada DE con 2501 (J002a) sin que la librería avisara, así que nadie que hoy funcione en producción
+  puede verse afectado. En desarrollo no cambia nada.
+- **Validación contra los XSD de producción** (evaluación §6.3): `Sifen::ValidarXSD($rdeXml)` y
+  `Sifen::ValidarEventoXSD($sobreXml)` validan contra los esquemas incluidos en `src/Resources/xsd/`
+  (`siRecepDE_v150.xsd` y `siRecepEvento_v150.xsd` con su cadena de includes), sin red (`LIBXML_NONET`) y sin
+  `Init()`, y devuelven un `ResultadoValidacion` con un `ErrorValidacion` por error de libxml: origen XSD, código
+  0160 (AE01, lo que el SIFEN responde ante un XML que no cumple el esquema), elemento, campo del MT (catálogo de
+  elementos), línea y una sugerencia con lo que falta y el método de PKuatia que lo informa; un XML mal formado o
+  vacío da un solo error sin elemento. `Validacion\ValidadorXsd::validar($xml, $xsd)` acepta cualquier esquema
+  local. `Config::$validarXsdAntesDeEnviar` (con `setValidarXsdAntesDeEnviar()` y clave JSON; por defecto `false`):
+  con `true`, `EnviarDE`, `EnviarLoteDE` (cada documento) y `RegistrarEvento` (el sobre ya firmado) validan antes de
+  tocar la red y lanzan `DocumentoInvalidoException` con el resultado adjunto. Por defecto nada cambia. Los nueve
+  rDE aprobados por `sifen-test` el 11/10 y los dos del 09/10 validan; la FE B2G con compras públicas valida gracias
+  al arreglo local de `dEntCont`.
+- El validador rechaza `dCilin` (E786) con 0160 sea cual sea el valor: el XSD de producción declara el patrón `/d` y
+  `sifen-test` lo aplicó tal cual el 13/10/2026 ("XML malformado [El valor 1600 del elemento: dCilin es invalido]").
+- **Homologación del validador en `sifen-test`** (13/10/2026, capturas en `tests/Resources/sifen/respuestas-ws/2026-10-13/`
+  copiadas de ekuat-ia): doce envíos con una sola violación o característica cada uno. El SIFEN respondió el código
+  que el validador predecía en 1309, 2365, 1550, 1300 (innominado en B2B: informa D202 antes que D208), 2400, 1004,
+  2503 y 0160 (`dCilin`), y aprobó con 0260 la base gravada 0,01 mayor, la FE B2G con `dEntCont` (PK-44 cerrada), la
+  FE en USD con tipo de cambio por ítem y fracción (Q-C8) y el redondeo de EA008 a la unidad. Un canario recibió el
+  0160 genérico y un minuto después el ambiente respondió normalmente. `CapturasHomologacionFaseCTest` lee cada
+  respuesta a través del facade y comprueba que el validador predice lo mismo sobre el documento anonimizado.
+
+### Obsoleto
+
+- `SignHelper::$xmlKey` y `SignHelper::$xmlSigner` (decisión Q-C4): siguen públicas y `Init()` las sigue poblando,
+  así que nadie que las lea se rompe, pero la firma ya no las usa (una copia privada firma; modificarlas no cambia
+  nada) y leerlas expone la clave y la passphrase. `Shutdown()` las deja vacías. Se retiran en la 1.0.
+
+### Corregido
+
+- `GCamItem::FromSifenResponseObject()` leía los códigos DNCP del ítem como `dDDncpG` y `dDDncpE`, propiedades que
+  el objeto SOAP no tiene, así que E704 y E705 se perdían al leer un DE desde la respuesta de `ConsultarDE`. Lo
+  detectó la ida y vuelta de la FE B2G de la fábrica de pruebas (`IdaYVueltaGruposTest`). Solo cambia la lectura: la
+  serialización es idéntica.
+- Una nota de crédito o de débito sin documento asociado terminaba en `Error` ("`$gCamDEAsoc` must not be accessed
+  before initialization") al pasarla a RDE; la propiedad arranca ahora como lista vacía, el documento se serializa
+  (sin `gCamDEAsoc`) y el validador lo rechaza con 2400, que es lo que el SIFEN responde. Hallazgo del ensayo en
+  seco de la homologación (C14).
+- El validador de reglas comparaba las fechas de un rDE leído de un XML con la zona por defecto de PHP (UTC en
+  muchos servidores): como el XML no lleva zona y es hora de Asunción por convención del MT, una firma 30 minutos
+  adelantada parecía 2,5 horas atrasada y no se predecía 1004, y las ventanas de 1150/1151 corrían desplazadas. Las
+  fechas del documento se toman ahora como hora de pared en Asunción (`VistaDocumento::enZonaSifen()`), que es lo
+  que ve el SIFEN. Hallazgo del ensayo en seco de la homologación (C14).
+- Los cálculos del IVA por ítem (1910, 1911, 1913 y 1921) admiten 0,01 de diferencia: `sifen-test` aprobó el
+  13/10/2026 una base gravada 0,01 mayor que la exacta con su liquidación coherente, que el validador rechazaba.
+  Una diferencia mayor sigue sin verificar y se informa.
+- Las opciones booleanas del JSON de `Config` (`wsdlCacheEnabled`, `soapTrace`, `validarXsdAntesDeEnviar`) se leían
+  con `boolval()`, que toma las cadenas `"false"` y `"0"` como verdadero; ahora se interpretan como booleanos
+  (`FILTER_VALIDATE_BOOLEAN`). Hallazgo de la revisión final de la fase.
+- `SignHelper::Init()` lanza `CertificadoException` (`PemInvalido`) cuando el certificado o la clave existen pero no
+  se pueden leer (permisos, una carpeta), en vez de seguir con un certificado vacío que el SIFEN rechazaría con 0120.
+  Hallazgo de la revisión final de la fase.
+- **PK-39** (evaluación §4): con un certificado PKCS#12, `Init()` dejaba el certificado y la clave privada **en
+  claro** en `sys_get_temp_dir()` con nombres predecibles (`cert_*`, `key_*`) hasta que terminara el script. Ahora
+  van a una carpeta propia de nombre impredecible (`pkuatia-<16 hex>/`, 0700 donde el sistema lo respeta; en Windows
+  la protección es el nombre y el borrado garantizado), la clave se exporta **cifrada** con la misma passphrase
+  (`openssl_pkey_export`; el contexto SSL ya la recibe), una falla intermedia no deja restos y los archivos se borran
+  en `Shutdown()`, en el siguiente `Init()` y al terminar el script.
+
+### Cambiado
+
+- 2503 (J003 `dInfAdic`) pasa de advertencia a error del validador: `sifen-test` rechazó el 13/10/2026 una FE con
+  `dInfAdic`, así que el tercer parámetro de `FirmarDE()` no tiene un uso que el SIFEN acepte (sigue existiendo por
+  compatibilidad; su docblock lo dice).
+- El total del ítem en guaraníes (EA009 `dTotOpeGs`, tipo de cambio por ítem) se redondea al guaraní entero
+  (decisión Q-C8). Hasta 0.2.1 `addItem()` lo calculaba con `bcmul()` sin escala, es decir truncado: con precios o
+  tipos de cambio con fracción cada ítem quedaba hasta 1 Gs por debajo del valor exacto (EA009 = EA008 × E725,
+  validación 1858) y F023 (suma de EA009) arrastraba la diferencia. **Cambia la serialización** solo de los
+  documentos con tipo de cambio por ítem cuyo producto tiene fracción (p. ej. 301,00 USD × 7300,5 = 2 197 450,5 →
+  2 197 451; antes 2 197 450). Los documentos de la línea base de pruebas no cambian.
+- El XML que viene del SIFEN se parsea con `LIBXML_NONET` (evaluación §9): la respuesta cruda de las siete
+  operaciones, `RProtDe::FromXMLString()`, `RContDe::FromXContenDE()` y la firma de un `RDE` leído. Una DTD o una
+  entidad externa en una respuesta no provoca ninguna lectura de red; las entidades tampoco se sustituyen, como
+  hasta ahora. `ValidadorXsd` también valida el esquema con `LIBXML_NONET`, así que un XSD ajeno con includes por
+  `https://` tampoco sale a la red.
+- `ConsultarRUC` y `ConsultarDE` envuelven también el `SoapFault` y las demás fallas (decisión Q-C3, que cierra la
+  parte 2 de Q-B4): la excepción es `TransporteException`, que sigue siendo un `\SoapFault` con el mismo
+  `faultcode`, así que `catch (\SoapFault)` la atrapa igual que hasta 0.2.1; cambia solo el mensaje, que ahora lleva
+  el prefijo `[Sifen] Error al consultar …:` como en las demás operaciones.
+
 ## [0.2.1] — 2026-10-11
 
 Fase B del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): deserialización,

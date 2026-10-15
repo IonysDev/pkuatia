@@ -19,7 +19,7 @@ final class RespuestasWsSincroniaTest extends TestCase
   {
     $constantes = (new ReflectionClass(RespuestasSifenFactory::class))->getConstants();
     unset($constantes['DIR']);
-    $this->assertCount(15, $constantes);
+    $this->assertCount(42, $constantes);
     foreach ($constantes as $nombre => $captura) {
       $this->assertFileExists(RespuestasSifenFactory::DIR . '/' . $captura, $nombre);
     }
@@ -39,7 +39,7 @@ final class RespuestasWsSincroniaTest extends TestCase
   public function testLasRespuestasSonSobresSoap12BienFormados(): void
   {
     $respuestas = array_filter(self::archivos(RespuestasSifenFactory::DIR), fn (string $r): bool => str_contains($r, '-response'));
-    $this->assertCount(13, $respuestas);
+    $this->assertCount(43, $respuestas);
     foreach ($respuestas as $relativo) {
       $doc = new DOMDocument();
       $this->assertTrue($doc->loadXML(file_get_contents(RespuestasSifenFactory::DIR . '/' . $relativo)), $relativo);
@@ -58,10 +58,21 @@ final class RespuestasWsSincroniaTest extends TestCase
       $this->markTestSkipped('docs/sifen-ai/06-ejemplos/respuestas-ws no está disponible en este entorno.');
     }
     $origen = self::archivos(self::ORIGEN_EKUATIA);
-    $this->assertSame($origen, self::archivos(RespuestasSifenFactory::DIR), 'conjunto de archivos distinto: copiar de nuevo desde ekuat-ia');
+    $local = self::archivos(RespuestasSifenFactory::DIR);
+    // Una carpeta recién capturada se copia a la carpeta de trabajo de ekuat-ia antes de que allí la commiteen (C14,
+    // 13/10/2026): hasta que el clon docs/sifen-ai la tenga, se compara el resto y el test queda incompleto, no roto.
+    $carpeta = static fn (string $relativo): string => explode('/', $relativo)[0];
+    $carpetasOrigen = array_unique(array_map($carpeta, $origen));
+    $pendientes = array_values(array_unique(array_filter(array_map($carpeta, $local), static fn (string $c): bool => !in_array($c, $carpetasOrigen, true))));
+    $localComun = array_values(array_filter($local, static fn (string $r): bool => in_array($carpeta($r), $carpetasOrigen, true)));
+    $this->assertSame($origen, $localComun, 'conjunto de archivos distinto: copiar de nuevo desde ekuat-ia');
     foreach ($origen as $relativo) {
       $esperado = str_replace("\r\n", "\n", file_get_contents(self::ORIGEN_EKUATIA . '/' . $relativo));
       $this->assertSame(md5($esperado), md5_file(RespuestasSifenFactory::DIR . '/' . $relativo), "$relativo difiere de ekuat-ia");
+    }
+    if ($pendientes !== []) {
+      $this->markTestIncomplete('Capturas copiadas desde la carpeta de trabajo de ekuat-ia, todavía sin commit allí: ' . implode(', ', $pendientes)
+        . '. Cuando ekuat-ia las tenga, actualizar docs/sifen-ai y volver a correr.');
     }
   }
 

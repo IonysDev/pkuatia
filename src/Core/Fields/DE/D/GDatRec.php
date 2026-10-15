@@ -14,6 +14,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     D200
@@ -135,7 +136,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = CountryMapping::getCountryDesc($cPaisRec);
         if ($desc === null)
-          throw new \InvalidArgumentException("[GDatRec] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+          throw new ValidacionException("[GDatRec] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
         $this->cPaisRec = $cPaisRec;
         $this->dDesPaisRe = $desc;
     }
@@ -280,7 +281,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepRec));
         if ($desc === null)
-          throw new \InvalidArgumentException("[GDatRec] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
+          throw new ValidacionException("[GDatRec] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         $this->cDepRec = $cDepRec;
         $this->dDesDepRec = $desc;
     }
@@ -295,7 +296,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
         if ($desc === null)
-          throw new \InvalidArgumentException("[GDatRec] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+          throw new ValidacionException("[GDatRec] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cDisRec = $cDisRec;
         $this->dDesDisRec = $desc;
         return $this;
@@ -311,7 +312,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
         if ($desc === null)
-          throw new \InvalidArgumentException("[GDatRec] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+          throw new ValidacionException("[GDatRec] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         $this->cCiuRec = $cCiuRec;
         $this->dDesCiuRec = $desc;
         return $this;
@@ -611,7 +612,7 @@ class GDatRec extends BaseSifenField
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
         if(strcmp($node->getName(), 'gDatRec') != 0){
-            throw new \InvalidArgumentException("El nombre del elemento no es gDatRec");
+            throw new ValidacionException("El nombre del elemento no es gDatRec");
         }
         // Hasta 0.2.0 esta vía tenía su propia lectura con cuatro defectos: intval() sobre dNumIDRec (tdNumDocId es
         // alfanumérico, un pasaporte quedaba en 0; PK-26), copia de dNumIDRec en dNomFanRec (PK-36), dNumCasRec
@@ -636,13 +637,13 @@ class GDatRec extends BaseSifenField
             return;
 
         if (!isset($this->dDTipIDRec) || $this->dDTipIDRec === '')
-            throw new \InvalidArgumentException(
+            throw new ValidacionException(
                 '[GDatRec] Cuando iTipIDRec (D208) es 9 (Otro), el campo dDTipIDRec (D209) es obligatorio y debe contener una descripción de texto libre del tipo de documento de identidad del receptor.'
             );
 
         $longitud = mb_strlen($this->dDTipIDRec);
         if ($longitud < 9 || $longitud > 41)
-            throw new \InvalidArgumentException(
+            throw new ValidacionException(
                 '[GDatRec] dDTipIDRec (D209) debe tener entre 9 y 41 caracteres cuando iTipIDRec (D208) es 9 (Otro). Se encontraron ' . $longitud . '.'
             );
     }
@@ -789,7 +790,7 @@ class GDatRec extends BaseSifenField
     public static function FromDOMElement(DOMElement $node): self
     {
         if(strcmp($node->nodeName, 'gDatRec') != 0)
-            throw new \Exception('[GDatRec] Nodo con nombre inválido: ' . $node->nodeName);
+            throw new ValidacionException('[GDatRec] Nodo con nombre inválido: ' . $node->nodeName);
         $res = new self();
         $res->setINatRec(intval(trim($node->getElementsByTagName('iNatRec')->item(0)->nodeValue)));
         $res->setITiOpe(intval(trim($node->getElementsByTagName('iTiOpe')->item(0)->nodeValue)));

@@ -9,6 +9,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     EA790   
@@ -225,7 +226,7 @@ class GGrupPolSeg extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gGrupPolSeg') != 0)
-      throw new \Exception('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->getName(), 1);
+      throw new ValidacionException('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->getName(), 1);
     $res = new GGrupPolSeg();
     $res->setDPoliza($node->dPoliza)
         ->setDUnidVig($node->dUnidVig)
@@ -266,7 +267,7 @@ class GGrupPolSeg extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gGrupPolSeg') != 0)
-      throw new \Exception('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->nodeName, 1);
+      throw new ValidacionException('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->nodeName, 1);
     $res = new GGrupPolSeg();
     $res->setDPoliza($node->getElementsByTagName('dPoliza')->item(0)->nodeValue)
         ->setDUnidVig($node->getElementsByTagName('dUnidVig')->item(0)->nodeValue)

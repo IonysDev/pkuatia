@@ -1,0 +1,65 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 215,
+            "resp_len": 541,
+            "ts": "2026-10-11T11:51:05-03:00"
+        },
+        {
+            "op": "rEnviEventoDe-receptor",
+            "location": "https://sifen-test.set.gov.py/de/ws/eventos/evento.wsdl",
+            "action": "",
+            "ms": 1911,
+            "resp_len": 1521,
+            "ts": "2026-10-11T11:51:23-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 4,
+        "seco": false,
+        "canario": {
+            "dCodRes": 502,
+            "dMsgRes": "RUC encontrado"
+        },
+        "eventos-receptor": [
+            {
+                "id": "1",
+                "dEstRes": "Rechazado",
+                "gResProc": [
+                    "0143 La firma digital del evento debe corresponder al receptor del DE/DTE"
+                ]
+            },
+            {
+                "id": "2",
+                "dEstRes": "Rechazado",
+                "gResProc": [
+                    "0143 La firma digital del evento debe corresponder al receptor del DE/DTE"
+                ]
+            },
+            {
+                "id": "3",
+                "dEstRes": "Rechazado",
+                "gResProc": [
+                    "0143 La firma digital del evento debe corresponder al receptor del DE/DTE"
+                ]
+            },
+            {
+                "id": "4",
+                "dEstRes": "Rechazado",
+                "gResProc": [
+                    "0143 La firma digital del evento debe corresponder al receptor del DE/DTE"
+                ]
+            },
+            {
+                "id": "5",
+                "dEstRes": "Rechazado",
+                "gResProc": [
+                    "0143 La firma digital del evento debe corresponder al receptor del DE/DTE"
+                ]
+            }
+        ]
+    }
+}

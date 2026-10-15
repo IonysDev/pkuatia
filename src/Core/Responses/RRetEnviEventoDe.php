@@ -8,9 +8,10 @@ use IonysDev\Pkuatia\Helpers\FechaHelper;
 
 use DateTime;
 use SimpleXMLElement;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 //id: GRSch01,respuesta del registro de eventos
-class RRetEnviEventoDe
+class RRetEnviEventoDe implements RespuestaSifen
 {                            // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; //GRSch02 - 19 - 1-1  - Fecha y hora del procesamiento del último evento enviado - 19 - 1-1
   public array $gResProcEVe; //GRSch03 - G  - 1-15 - Grupo Resultado del procesamiento del evento - Sin longitud - 0-50
@@ -90,7 +91,7 @@ class RRetEnviEventoDe
   public static function FromSifenResponseObject($object)
   {
     if (is_null($object)) {
-      throw new \Exception("Error Processing Request: null", 1);
+      throw new RespuestaException("Error Processing Request: null", 1);
     }
     $res = new RRetEnviEventoDe();
     // Rechazo genérico: el SIFEN responde con el sobre rRetEnviDe > rProtDe (capturado para recepción y
@@ -124,7 +125,7 @@ class RRetEnviEventoDe
   public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
     if(strcmp($node->getName(),'rRetEnviEventoDe') != 0) {
-      throw new \Exception("Invalid XML Element:" . $node->getName());
+      throw new RespuestaException("Invalid XML Element:" . $node->getName());
     }
 
     $res = new RRetEnviEventoDe();
@@ -140,5 +141,80 @@ class RRetEnviEventoDe
     }
 
     return $res;
+  }
+
+  use RespuestaSifenTrait;
+
+  // --- Fase C (C6): RespuestaSifen y lectura de los eventos --------------------------------------------------------
+
+  /**
+   * Resultado de cada evento del sobre (gResProcEVe), en el orden recibido.
+   *
+   * @return list<GResProcEVe>
+   */
+  public function getResultados(): array
+  {
+    return array_values($this->gResProcEVe ?? []);
+  }
+
+  /** Código del primer evento, como texto de cuatro dígitos; null si no hay resultados. */
+  public function getCodigo(): ?string
+  {
+    return ($this->getResultados()[0] ?? null)?->getCodigo();
+  }
+
+  public function getMensaje(): ?string
+  {
+    return ($this->getResultados()[0] ?? null)?->getMensaje();
+  }
+
+  /** Todos los eventos del sobre fueron registrados (0600). */
+  public function esExitosa(): bool
+  {
+    return $this->todosAprobados();
+  }
+
+  public function todosAprobados(): bool
+  {
+    $resultados = $this->getResultados();
+    if ($resultados === [])
+      return false;
+    foreach ($resultados as $resultado) {
+      if (!$resultado->esAprobado())
+        return false;
+    }
+    return true;
+  }
+
+  /** @return list<GResProcEVe> */
+  public function getRechazados(): array
+  {
+    return array_values(array_filter($this->getResultados(), static fn (GResProcEVe $r): bool => $r->esRechazado()));
+  }
+
+  /** Resultado del evento con ese Id (el Id del rEve enviado), o null. */
+  public function getResultadoDelEvento(int|string $id): ?GResProcEVe
+  {
+    foreach ($this->getResultados() as $resultado) {
+      if ($resultado->getIdEvento() === (string) $id)
+        return $resultado;
+    }
+    return null;
+  }
+
+  public function getFechaProceso(): ?DateTime
+  {
+    return $this->dFecProc ?? null;
+  }
+
+  public function toArray(): array
+  {
+    return [
+      'codigo' => $this->getCodigo(),
+      'mensaje' => $this->getMensaje(),
+      'exitosa' => $this->esExitosa(),
+      'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+      'eventos' => array_map(static fn (GResProcEVe $r): array => $r->toArray(), $this->getResultados()),
+    ];
   }
 }

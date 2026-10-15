@@ -2,6 +2,9 @@
 
 namespace IonysDev\Pkuatia\Helpers;
 
+use IonysDev\Pkuatia\Core\Constants\MotivoCertificado;
+use IonysDev\Pkuatia\Core\Exceptions\CertificadoException;
+
 /**
  * Utilidades para archivos PKCS#12 (.p12 / .pfx) que contienen el certificado y la clave privada.
  */
@@ -19,7 +22,8 @@ class Pkcs12Helper
    *
    * @return array Componentes devueltos por openssl_pkcs12_read (claves 'pkey', 'cert', 'extracerts').
    *
-   * @throws \Exception Con un mensaje que distingue contraseña incorrecta, cifrado legacy u otros errores.
+   * @throws CertificadoException Con motivo PassphraseIncorrecta o CifradoHeredado (sin motivo para otros errores) y un
+   *                              mensaje que distingue cada caso. Desde 0.3.0; antes \Exception, de la que hereda.
    */
   public static function read(string $pkcs12Content, string $passphrase): array
   {
@@ -37,7 +41,8 @@ class Pkcs12Helper
 
     // "mac verify failure" indica que la contraseña no corresponde al archivo.
     if (stripos($errorStr, 'mac verify failure') !== false) {
-      throw new \Exception(
+      throw CertificadoException::porMotivo(
+        MotivoCertificado::PassphraseIncorrecta,
         "[Pkcs12Helper] No se pudo leer el archivo PKCS#12: la contraseña de la clave privada es incorrecta. " .
         "Detalle de OpenSSL: " . $errorStr
       );
@@ -45,7 +50,8 @@ class Pkcs12Helper
 
     // "unsupported" / "digital envelope routines" indican un algoritmo de cifrado legacy.
     if (stripos($errorStr, 'unsupported') !== false || stripos($errorStr, 'digital envelope') !== false) {
-      throw new \Exception(
+      throw CertificadoException::porMotivo(
+        MotivoCertificado::CifradoHeredado,
         "[Pkcs12Helper] No se pudo leer el archivo PKCS#12 porque usa un algoritmo de cifrado heredado " .
         "(legacy, p.ej. RC2-40 o 3DES) que OpenSSL 3 —incluido en PHP 8— deshabilita por omisión. " .
         "Los certificados emitidos por las CA de Paraguay suelen tener este formato. Soluciones posibles:\n" .
@@ -62,7 +68,7 @@ class Pkcs12Helper
       );
     }
 
-    throw new \Exception(
+    throw new CertificadoException(
       "[Pkcs12Helper] Error al leer el archivo PKCS#12: " . ($errorStr !== '' ? $errorStr : 'causa desconocida') . "."
     );
   }

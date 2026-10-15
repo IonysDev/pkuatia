@@ -1,0 +1,29 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 206,
+            "resp_len": 541,
+            "ts": "2026-10-11T11:45:34-03:00"
+        },
+        {
+            "op": "rEnviConsRUC-vendedor",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 193,
+            "resp_len": 455,
+            "ts": "2026-10-11T11:45:54-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 1,
+        "seco": false,
+        "canario": {
+            "dCodRes": 502,
+            "dMsgRes": "RUC encontrado"
+        },
+        "parada": "ConsultarRUC del vendedor falló: Error Processing Request: null"
+    }
+}

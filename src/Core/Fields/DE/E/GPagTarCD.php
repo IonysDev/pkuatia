@@ -9,6 +9,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id: E620 
@@ -125,7 +126,7 @@ class GPagTarCD extends BaseSifenField
   {
     if(is_int($iForProPa) && $iForProPa != 1 && $iForProPa != 2 && $iForProPa != 9)
     {
-      throw new \Exception("[GPagTarCD] Valor de iForProPa inválido: $iForProPa");
+      throw new ValidacionException("[GPagTarCD] Valor de iForProPa inválido: $iForProPa");
     }
     $this->iForProPa = $iForProPa instanceof PagTarCDForProPa ? $iForProPa->value : $iForProPa;
     return $this;
@@ -284,7 +285,7 @@ class GPagTarCD extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gPagTarCD') != 0)
     {
-      throw new \Exception("El nodo '" . $node->getName() . "' no es gPagTarCD");
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no es gPagTarCD");
     }
     $res = new GPagTarCD();
     $res->setIDenTarj(intval($node->iDenTarj));
@@ -406,7 +407,7 @@ class GPagTarCD extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): GPagTarCD
   {
     if(strcmp($node->nodeName, 'gPagTarCD') != 0)
-      throw new \Exception('[GPagTarCD] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GPagTarCD] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new GPagTarCD();
     $res->setIDenTarj(intval($node->getElementsByTagName('iDenTarj')->item(0)->nodeValue));
     $res->setDDesDenTarj(strval($node->getElementsByTagName('dDesDenTarj')->item(0)->nodeValue));

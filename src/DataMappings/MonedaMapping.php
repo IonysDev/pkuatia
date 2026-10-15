@@ -44,6 +44,11 @@ class MonedaMapping
    * FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD, XBA, XBB, XBC, XTS, XXX) y producían rechazo de esquema
    * (PK-23). El nombre completo se obtiene con GetCodeName().
    *
+   * Advertencia (deuda D-A3, sin solución conocida): el recorte evita el rechazo de esquema, pero el SIFEN rechaza
+   * la descripción recortada con 1206 "Descripción de la moneda de la operación no corresponde al código"
+   * (verificado en sifen-test el 11/10/2026 con ANG), y el nombre completo no entra en el XSD. Esas 15 monedas no
+   * se pueden usar en un DE hasta que la DNIT indique qué descripción acepta.
+   *
    * @param  mixed $code
    *
    * @return String|null null si el código no existe en Monedas_v150.xsd.

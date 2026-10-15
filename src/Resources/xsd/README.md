@@ -18,6 +18,12 @@ se hacen sobre las copias fieles de `ekuat-ia/00-fuentes/xsd/`.
 
 ## Uso
 
+Desde 0.3.0 (Fase C, C7) la librería valida con estas copias: `Sifen::ValidarXSD($rdeXml)` y
+`Sifen::ValidarEventoXSD($sobreXml)` devuelven un `ResultadoValidacion` (un `ErrorValidacion` por error de libxml,
+con elemento, campo del MT, línea y sugerencia), `Validacion\ValidadorXsd::validar($xml, $xsd)` acepta cualquier
+esquema local y `Config::$validarXsdAntesDeEnviar = true` hace que `EnviarDE`, `EnviarLoteDE` y `RegistrarEvento`
+validen antes de tocar la red. A mano:
+
 ```php
 $doc = new DOMDocument();
 $doc->loadXML($rdeXml);                       // rDE firmado

@@ -5,6 +5,7 @@ namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 use IonysDev\Pkuatia\Core\Constants;
 use DOMDocument;
 use DOMElement;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo: GEC000 - gGroupGesEve - Raíz del grupo deeventos 
@@ -74,7 +75,7 @@ class GGroupGesEve
   {
     $xmlString = $this->toDOMDocument()->saveXML();
     if (!$xmlString) {
-      throw new \Exception('Error al generar el XML');
+      throw new ValidacionException('Error al generar el XML');
     }
     return $xmlString;
   }

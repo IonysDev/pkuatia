@@ -2,6 +2,9 @@
 
 namespace IonysDev\Pkuatia\Core;
 
+use IonysDev\Pkuatia\Core\Constants\MotivoCertificado;
+use IonysDev\Pkuatia\Core\Exceptions\CertificadoException;
+use IonysDev\Pkuatia\Core\Exceptions\ConfiguracionException;
 use IonysDev\Pkuatia\Helpers\PemHelper;
 
 /**
@@ -11,6 +14,9 @@ class Config
 {  
     public const ENV_DEV = "dev";
     public const ENV_PROD = "prod";
+
+    /** CSC del ambiente de pruebas, el valor de fábrica de $csc. En producción el SIFEN lo rechaza con 2501 (J002a). */
+    public const CSC_DE_PRUEBA = 'ABCD0000000000000000000000000000';
 
     public const CERT_FORMAT_PEM = "pem";
     public const CERT_FORMAT_PKCS12 = "pkcs12";
@@ -42,12 +48,20 @@ class Config
     // Cabecera User-Agent de las solicitudes SOAP. Null: la de PHP. Nuevo en 0.2.1 (PK-31).
     public ?String $soapUserAgent = null;
 
+    // Guarda la última solicitud y respuesta SOAP (opción trace de SoapClient) para Sifen::GetLastRequest() y
+    // GetLastResponse(). Con false no se guardan y esos métodos devuelven null. Nuevo en 0.3.0 (Fase C, C12).
+    public bool $soapTrace = true;
+
+    // Con true, EnviarDE(), EnviarLoteDE() y RegistrarEvento() validan el XML contra los XSD de producción antes de
+    // tocar la red y lanzan DocumentoInvalidoException si no cumple. Por defecto false: nada cambia. Nuevo en 0.3.0 (C7).
+    public bool $validarXsdAntesDeEnviar = false;
+
     /**
      * Normaliza el formato de certificado a un valor interno soportado.
      * Acepta "pem", "p12" y "pfx" (P12 y PFX son PKCS#12). Es idempotente: admite también los
      * valores internos ya normalizados ("pem", "pkcs12"), de modo que normalizar dos veces no falle.
      *
-     * @throws \Exception
+     * @throws CertificadoException Con motivo NoSoportado (desde 0.3.0; antes \Exception, de la que hereda).
      */
     public static function normalizeCertificateFormat(string $format): string
     {
@@ -58,7 +72,8 @@ class Config
         if (in_array($format, ['p12', 'pfx', self::CERT_FORMAT_PKCS12], true)) {
             return self::CERT_FORMAT_PKCS12;
         }
-        throw new \Exception(
+        throw CertificadoException::porMotivo(
+            MotivoCertificado::NoSoportado,
             "[Config] Formato de certificado no soportado: $format. Valores aceptados: pem, p12, pfx."
         );
     }
@@ -92,7 +107,7 @@ class Config
         $res = new Config();
         
         if(is_null($config)) {
-            throw new \Exception("Objeto de configuración no puede ser nulo.");
+            throw new ConfiguracionException("Objeto de configuración no puede ser nulo.");
         }
         
         if(isset($config->env)) {
@@ -108,12 +123,12 @@ class Config
         }
 
         if(!isset($config->privateKeyFilePath)) {
-            throw new \Exception("Ruta del archivo de la clave privada debe ser especificada.");
+            throw new ConfiguracionException("Ruta del archivo de la clave privada debe ser especificada.");
         }
         $res->privateKeyFilePath = $config->privateKeyFilePath;
 
         if(!isset($config->privateKeyPassphrase)) {
-            throw new \Exception("Contraseña de la clave privada debe ser especificada.");
+            throw new ConfiguracionException("Contraseña de la clave privada debe ser especificada.");
         }
         $res->privateKeyPassphrase = $config->privateKeyPassphrase;
 
@@ -130,7 +145,7 @@ class Config
         }
 
         if(isset($config->wsdlCacheEnabled)) {
-            $res->wsdlCacheEnabled = boolval($config->wsdlCacheEnabled);
+            $res->wsdlCacheEnabled = filter_var($config->wsdlCacheEnabled, FILTER_VALIDATE_BOOLEAN); // "false" y "0" son falso (QA de la Fase C)
         }
 
         if(isset($config->soapConnectionTimeout)) {
@@ -139,6 +154,12 @@ class Config
 
         if(isset($config->soapUserAgent)) {
             $res->soapUserAgent = strval($config->soapUserAgent);
+        }
+        if(isset($config->soapTrace)) {
+            $res->soapTrace = filter_var($config->soapTrace, FILTER_VALIDATE_BOOLEAN);
+        }
+        if(isset($config->validarXsdAntesDeEnviar)) {
+            $res->validarXsdAntesDeEnviar = filter_var($config->validarXsdAntesDeEnviar, FILTER_VALIDATE_BOOLEAN);
         }
 
         return $res;
@@ -311,6 +332,63 @@ class Config
         $this->soapUserAgent = $soapUserAgent;
 
         return $this;
+    }
+
+    /**
+     * Guarda (true, por defecto) o no (false) la última solicitud y respuesta SOAP para Sifen::GetLastRequest() y
+     * GetLastResponse(). Se aplica en el siguiente Sifen::Init(). Nuevo en 0.3.0.
+     *
+     * @param bool $soapTrace
+     *
+     * @return self
+     */
+    public function setSoapTrace(bool $soapTrace): self
+    {
+        $this->soapTrace = $soapTrace;
+
+        return $this;
+    }
+
+    /**
+     * Activa (true) la validación contra los XSD de producción antes de enviar: EnviarDE(), EnviarLoteDE() y
+     * RegistrarEvento() lanzan DocumentoInvalidoException, con el ResultadoValidacion adjunto, en vez de tocar la red.
+     * Por defecto false (opt-in). Se aplica en el siguiente Sifen::Init(). Nuevo en 0.3.0.
+     *
+     * @param bool $validarXsdAntesDeEnviar
+     *
+     * @return self
+     */
+    public function setValidarXsdAntesDeEnviar(bool $validarXsdAntesDeEnviar): self
+    {
+        $this->validarXsdAntesDeEnviar = $validarXsdAntesDeEnviar;
+
+        return $this;
+    }
+
+    /**
+     * Oculta los secretos en var_dump() y print_r(): la passphrase de la clave y el CSC se muestran como
+     * '[redactado]' (PK-39, Fase C, C12). Las propiedades y los getters conservan los valores reales. Nuevo en 0.3.0.
+     *
+     * @return array<string, mixed>
+     */
+    /**
+     * Indica si $csc sigue siendo el CSC del ambiente de pruebas (el valor de fábrica). Sifen::Init() se niega a
+     * arrancar en producción con él (decisión Q-C6 de la Fase C). Nuevo en 0.3.0.
+     */
+    public function usaCscDePrueba(): bool
+    {
+        return $this->csc === self::CSC_DE_PRUEBA;
+    }
+
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        foreach (['privateKeyPassphrase', 'csc'] as $secreto) {
+            if (array_key_exists($secreto, $vars)) {
+                $vars[$secreto] = '[redactado]';
+            }
+        }
+        return $vars;
     }
 
     ///////////////////////////////////////////////////////////////////////

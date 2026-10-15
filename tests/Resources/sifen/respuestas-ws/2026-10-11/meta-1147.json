@@ -1,0 +1,77 @@
+{
+    "llamadas": [
+        {
+            "op": "rEnviConsRUC",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl",
+            "action": "",
+            "ms": 200,
+            "resp_len": 541,
+            "ts": "2026-10-11T11:47:49-03:00"
+        },
+        {
+            "op": "rEnviDe-fe-ang",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 452,
+            "resp_len": 658,
+            "ts": "2026-10-11T11:48:05-03:00"
+        },
+        {
+            "op": "rEnviDe-fe-sectores",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 471,
+            "resp_len": 645,
+            "ts": "2026-10-11T11:48:21-03:00"
+        },
+        {
+            "op": "rEnviDe-fe-vehiculo",
+            "location": "https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl",
+            "action": "",
+            "ms": 475,
+            "resp_len": 645,
+            "ts": "2026-10-11T11:48:36-03:00"
+        },
+        {
+            "op": "rEnviConsDe-fe-vehiculo",
+            "location": "https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl",
+            "action": "",
+            "ms": 227,
+            "resp_len": 10167,
+            "ts": "2026-10-11T11:48:52-03:00"
+        }
+    ],
+    "resumen": {
+        "ventana": 2,
+        "seco": false,
+        "canario": {
+            "dCodRes": 502,
+            "dMsgRes": "RUC encontrado"
+        },
+        "fe-ang": {
+            "dEstRes": "Rechazado",
+            "dProtAut": null,
+            "gResProc": [
+                "1206 TEST - Descripción de la moneda de la operación no corresponde al código"
+            ]
+        },
+        "fe-sectores": {
+            "dEstRes": "Aprobado",
+            "dProtAut": "50222133",
+            "gResProc": [
+                "0260 Autorización del DE satisfactoria"
+            ]
+        },
+        "fe-vehiculo": {
+            "dEstRes": "Aprobado",
+            "dProtAut": "50222134",
+            "gResProc": [
+                "0260 Autorización del DE satisfactoria"
+            ]
+        },
+        "consulta-fe-vehiculo": {
+            "dCodRes": 422,
+            "dMsgRes": "CDC encontrado"
+        }
+    }
+}

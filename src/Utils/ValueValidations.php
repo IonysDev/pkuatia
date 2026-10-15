@@ -2,6 +2,8 @@
 
 namespace IonysDev\Pkuatia\Utils;
 
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
+
 class ValueValidations
 {
     /**
@@ -28,11 +30,11 @@ class ValueValidations
     public static function isValidStringDecimal(String $value, int $intPartLenght, int $decPartMinPrecision, int $decPartMaxPrecision = 99): bool
     {
         if($decPartMinPrecision > $decPartMaxPrecision)
-            throw new \Exception("The minimum precision cannot be greater than the maximum precision.");
+            throw new ValidacionException("The minimum precision cannot be greater than the maximum precision.");
         if($decPartMinPrecision < 0 || $decPartMaxPrecision < 0)
-            throw new \Exception("The precision cannot be negative.");
+            throw new ValidacionException("The precision cannot be negative.");
         if($intPartLenght < 0)
-            throw new \Exception("The integer part lenght cannot be negative.");
+            throw new ValidacionException("The integer part lenght cannot be negative.");
 
         // is_numeric descarta espacios, comas y texto; la expresión regular excluye además signos,
         // notación científica y puntos sin dígitos.

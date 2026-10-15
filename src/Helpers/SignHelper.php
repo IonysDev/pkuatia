@@ -10,6 +10,9 @@ use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGesEve;
 use DateTime;
 use DateTimeZone;
 use IonysDev\Pkuatia\Core\Constants;
+use IonysDev\Pkuatia\Core\Constants\MotivoCertificado;
+use IonysDev\Pkuatia\Core\Exceptions\CertificadoException;
+use IonysDev\Pkuatia\Core\Exceptions\FirmaException;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use DOMDocument;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
@@ -19,9 +22,20 @@ use RobRichards\XMLSecLibs\XMLSecurityKey;
  */
 class SignHelper
 {
-  public static XMLSecurityDSig $xmlSigner; // Se mantiene por compatibilidad; las firmas usan instancias frescas.
+  /**
+   * @deprecated 0.3.0 Solo por compatibilidad: Init() la puebla, pero cada firma usa un firmador fresco (createSigner).
+   *             Se retira en la 1.0 (Fase C, decisión Q-C4).
+   */
+  public static XMLSecurityDSig $xmlSigner;
+  /**
+   * @deprecated 0.3.0 Solo por compatibilidad: Init() la puebla con la clave y la passphrase, pero la firma usa una
+   *             copia privada, así que modificarla no cambia nada y leerla expone secretos. Shutdown() la deja vacía.
+   *             Se retira en la 1.0 (Fase C, decisión Q-C4).
+   */
   public static XMLSecurityKey $xmlKey;
-  private static string $x509Cert;          // Certificado X.509 (PEM) para construir firmadores frescos por firma.
+  private static ?string $x509Cert = null;    // Certificado X.509 (PEM) para construir firmadores frescos por firma.
+  /** Clave privada que realmente firma (PK-39, Q-C4): independiente de la propiedad pública; Shutdown() la olvida. */
+  private static ?XMLSecurityKey $clave = null;
 
   /**
    * Inicializa el firmador de XML.
@@ -34,41 +48,65 @@ class SignHelper
   public static function Init(String $keyFilePath, String $passphrase, String $certificateFormat, ?String $certFilePath = null)
   {
     if (!file_exists($keyFilePath))
-      throw new \Exception("[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
+      throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
 
     $format = Config::normalizeCertificateFormat($certificateFormat);
     $usesCombinedPem = $format === Config::CERT_FORMAT_PEM
       && PemHelper::usesCombinedFile($certFilePath, $keyFilePath);
 
     if (!$usesCombinedPem && !is_null($certFilePath) && !file_exists($certFilePath))
-      throw new \Exception("[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
+      throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
 
-    self::$xmlKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
-    self::$xmlKey->passphrase = $passphrase;
+    $clave = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
+    $clave->passphrase = $passphrase;
+
+    // Un archivo que existe pero no se puede leer (permisos, una carpeta) termina en excepción, no en un firmador con
+    // certificado vacío que el SIFEN rechazaría con 0120 (QA de la Fase C).
+    $leer = static function (string $ruta): string {
+      // En Linux leer una carpeta devuelve '' (no false, como en Windows); un archivo vacío tampoco sirve.
+      $contenido = is_dir($ruta) ? false : @file_get_contents($ruta);
+      if ($contenido === false || $contenido === '')
+        throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[SignHelper] No se pudo leer el archivo del certificado o de la clave (vacío, carpeta o sin permisos): $ruta");
+      return $contenido;
+    };
     if ($format === Config::CERT_FORMAT_PEM) {
       if ($usesCombinedPem) {
-        self::$x509Cert = PemHelper::extractCertificatePem(file_get_contents($keyFilePath));
+        $x509Cert = PemHelper::extractCertificatePem($leer($keyFilePath));
       }
       else {
-        self::$x509Cert = file_get_contents($certFilePath);
+        $x509Cert = $leer((string) $certFilePath);
       }
-      self::$xmlKey->loadKey($keyFilePath, true);
+      $clave->loadKey($keyFilePath, true);
     }
     else if ($format === Config::CERT_FORMAT_PKCS12) {
-      $keys = file_get_contents($keyFilePath);
-      $clave = Pkcs12Helper::read($keys, $passphrase);
-      $privateKey  = $clave['pkey'];
-      self::$x509Cert = $clave['cert'];
-      self::$xmlKey->passphrase = $passphrase;
-      self::$xmlKey->loadKey($privateKey, false);
+      $keys = $leer($keyFilePath);
+      $componentes = Pkcs12Helper::read($keys, $passphrase);
+      $x509Cert = $componentes['cert'];
+      $clave->loadKey($componentes['pkey'], false);
     }
     else {
-      throw new \Exception("[SignHelper] Formato de certificado no soportado.");
+      throw CertificadoException::porMotivo(MotivoCertificado::NoSoportado, "[SignHelper] Formato de certificado no soportado.");
     }
 
-    // Se mantiene una instancia en la propiedad pública por compatibilidad hacia atrás,
-    // pero cada firma usa un firmador fresco (ver createSigner) para evitar el sobrefirmado.
+    // La firma usa la copia privada (PK-39, Q-C4). La propiedad pública obsoleta se puebla con un clon por
+    // compatibilidad hacia atrás, y cada firma usa un firmador fresco (ver createSigner) para evitar el sobrefirmado.
+    self::$x509Cert = $x509Cert;
+    self::$clave = $clave;
+    self::$xmlKey = clone $clave;
     self::$xmlSigner = self::createSigner();
+  }
+
+  /**
+   * Olvida la clave privada y el certificado que cargó Init(): la copia privada se descarta y la propiedad pública
+   * obsoleta queda con una clave vacía, así que una firma posterior lanza FirmaException hasta el próximo Init().
+   * La invoca Sifen::Shutdown(). Nuevo en 0.3.0 (Fase C, C12, decisión Q-C4).
+   */
+  public static function Shutdown(): void
+  {
+    self::$clave = null;
+    self::$x509Cert = null;
+    self::$xmlKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
+    self::$xmlSigner = new XMLSecurityDSig('');
   }
 
   /**
@@ -84,7 +122,7 @@ class SignHelper
   {
     $signer = new XMLSecurityDSig('');
     $signer->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
-    $signer->add509Cert(self::$x509Cert);
+    $signer->add509Cert((string) self::$x509Cert);
     return $signer;
   }
 
@@ -97,8 +135,8 @@ class SignHelper
    */
   public static function SignRDE(RDE $rde, DateTime $fechaFirma = new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE))): DOMDocument
   {
-    if (!isset(self::$x509Cert))
-      throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
+    if (self::$clave === null || self::$x509Cert === null)
+      throw new FirmaException("[SignHelper] No se ha inicializado el firmador de XML.");
 
     $rde->DE->setDFecFirma($fechaFirma);
 
@@ -124,15 +162,15 @@ class SignHelper
       ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
       ['id_name' => 'Id', 'overwrite' => false],
     );
-    $signer->sign(self::$xmlKey, $xmlDocument->documentElement);
+    $signer->sign(self::$clave, $xmlDocument->documentElement);
     $signer->appendSignature($rdeNode);
     return $xmlDocument;
   }
 
   public static function SingEvents(GGroupGesEve $raiz, $config)
   {
-    if (!isset(self::$x509Cert))
-      throw new \Exception("[SignHelper] No se ha inicializado el firmador de XML.");
+    if (self::$clave === null || self::$x509Cert === null)
+      throw new FirmaException("[SignHelper] No se ha inicializado el firmador de XML.");
 
     $xmlDocument = new DOMDocument('1.0', 'UTF-8');
     $xmlDocument->formatOutput = false;
@@ -151,7 +189,7 @@ class SignHelper
         ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
         ['id_name' => 'Id', 'overwrite' => false],
       );
-      $signer->sign(self::$xmlKey, $xmlDocument->documentElement);
+      $signer->sign(self::$clave, $xmlDocument->documentElement);
       $signer->appendSignature($eventNode);
     }
 

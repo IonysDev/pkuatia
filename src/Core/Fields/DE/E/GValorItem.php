@@ -9,6 +9,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 
 /**
@@ -39,7 +40,7 @@ class GValorItem extends BaseSifenField
   {
     if(ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0, 8) === false)
     {
-      throw new \Exception("El valor dPUniProSer no es válido:" . $dPUniProSer);
+      throw new ValidacionException("El valor dPUniProSer no es válido:" . $dPUniProSer);
     }
     $this->dPUniProSer = $dPUniProSer;
     return $this;
@@ -57,7 +58,7 @@ class GValorItem extends BaseSifenField
   {
     if(ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0, 4) === false)
     {
-      throw new \Exception("El valor dTiCamIt no es válido:" . $dTiCamIt);
+      throw new ValidacionException("El valor dTiCamIt no es válido:" . $dTiCamIt);
     }
     $this->dTiCamIt = $dTiCamIt;
     return $this;
@@ -75,7 +76,7 @@ class GValorItem extends BaseSifenField
   {
     if(ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0, 8) === false)
     {
-      throw new \Exception("El valor dTotBruOpeItem no es válido:" . $dTotBruOpeItem);
+      throw new ValidacionException("El valor dTotBruOpeItem no es válido:" . $dTotBruOpeItem);
     }
     $this->dTotBruOpeItem = $dTotBruOpeItem;
     return $this;
@@ -167,7 +168,7 @@ class GValorItem extends BaseSifenField
   {
     if(strcmp($node->getName(), 'gValorItem') !== 0)
     {
-      throw new \Exception("El elemento '" . $node->getName() . "' no corresponde a un gValorItem.");
+      throw new ValidacionException("El elemento '" . $node->getName() . "' no corresponde a un gValorItem.");
     }
     $res = new GValorItem();
     $res->setDPUniProSer(strval($node->dPUniProSer));
@@ -246,7 +247,7 @@ class GValorItem extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gValorItem') != 0)
-        throw new \Exception('[GValorItem] Nodo con nombre inválido: ' . $node->nodeName);
+        throw new ValidacionException('[GValorItem] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     $res->setDPUniProSer(trim($node->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
     if($node->getElementsByTagName('dTiCamIt')->length > 0)

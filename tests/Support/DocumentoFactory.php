@@ -69,10 +69,10 @@ final class DocumentoFactory
   }
 
   /** Receptor contribuyente B2B (RUC ficticio 80012345-0). */
-  public static function receptorContribuyente(DocumentoElectronico $doc, string $nombre = 'Cliente Receptor SA', bool $conDireccion = false): void
+  public static function receptorContribuyente(DocumentoElectronico $doc, string $nombre = 'Cliente Receptor SA', bool $conDireccion = false, RecTiOpe $tipoOperacion = RecTiOpe::B2B): void
   {
     $doc->setReceptor(
-      $nombre, true, RecTiOpe::B2B, 'PRY', EmisRecTipCont::PersonaJuridica, '80012345', 0,
+      $nombre, true, $tipoOperacion, 'PRY', EmisRecTipCont::PersonaJuridica, '80012345', 0,
       null, null, null,
       $conDireccion ? 'Calle Entrega' : null, $conDireccion ? 123 : null, $conDireccion ? 1 : null, $conDireccion ? 1 : null, $conDireccion ? 1 : null,
       null, null, null, null
@@ -112,6 +112,10 @@ final class DocumentoFactory
     $fe->addItem('PROD005', 'Producto gravado 5%', 77, '3', 0, '21000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA5);
     $fe->calcTotSub(0);
     $fe->setOperacionCreditoEnCuotas(['81500', '81500'], [new DateTime('2026-11-01'), new DateTime('2026-12-01')], $entregaInicial);
+    if ($entregaInicial !== null) {
+      // E605a (validación 1551): con entrega inicial (E645) hay que informar cómo se pagó (Fase C, C10).
+      $fe->addPago(PaConEIniTiPago::Efectivo, $entregaInicial, 'PYG');
+    }
     return $fe;
   }
 
@@ -261,7 +265,9 @@ final class DocumentoFactory
   {
     $fe = new Factura(CamCondOpe::Contado);
     self::configurarBase($fe, $numDoc);
-    self::receptorContribuyente($fe);
+    // D202 = 3 (B2G): las compras públicas (E020) solo se admiten en B2G (validación 1401) y B2G exige los códigos DNCP
+    // del ítem (E704/E705, validaciones 1800/1801). Hasta la Fase C (C11) el fixture era B2B y nunca se homologó.
+    self::receptorContribuyente($fe, 'Cliente Receptor SA', false, RecTiOpe::B2G);
     $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
     $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
     $fe->setEmisorResponsableDelDE(TipIDRespDE::CedulaParaguaya, '1234567', 'Responsable de Prueba', 'Gerente');
@@ -271,7 +277,7 @@ final class DocumentoFactory
       ->setDPotencia(150)->setDCapMot(1600)->setDPNet('1200.5')->setDPBruto('1500.25')->setITipCom(1)->setDNroMotor('MOT-0001')
       ->setDCapTracc('1500.75')->setDAnoFab(2026)->setCTipVeh('SEDAN')->setDCapac(5); // medidas con decimales (Q-B12)
     $fe->addItem('VEH001', 'Automóvil nuevo', 77, '1', 0, '150000000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10,
-      detalleVehiculoNuevo: $vehiculo);
+      dncpCodigoGeneral: '12345678', dncpCodigoEspecifico: '1234', detalleVehiculoNuevo: $vehiculo);
     $fe->calcTotSub(0);
     $fe->addPagoPYGPorTarjeta(true, '100000000', PagTarCDDenTarj::Visa, PagTarCDForProPa::POS, 123456, 'Titular de Prueba', '1234');
     $fe->addPagoPYGPorCheque('50000000', '00012345', 'Banco de Prueba');

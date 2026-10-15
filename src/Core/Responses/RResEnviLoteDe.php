@@ -6,6 +6,7 @@ use DateTime;
 use stdClass;
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use IonysDev\Pkuatia\Helpers\FechaHelper;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * Nodo Id:     BRSch01        
@@ -13,7 +14,7 @@ use IonysDev\Pkuatia\Helpers\FechaHelper;
  * Descripción: Nodo raiz de Respuesta del WS Recepción Lote de Documentos Electrónicos
  * Nodo Padre:  Es raíz.
  */
-class RResEnviLoteDe
+class RResEnviLoteDe implements RespuestaSifen
 {
 
     public const COD_RES_ACEPTADO = 300;
@@ -185,7 +186,7 @@ class RResEnviLoteDe
     public static function FromSifenResponseObject($object)
     {
         if (is_null($object)) {
-            throw new \Exception("[RResEnviLoteDe] Error Processing Request: null", 1);
+            throw new RespuestaException("[RResEnviLoteDe] Error Processing Request: null", 1);
         }
         $res = new RResEnviLoteDe();
         // Rechazo genérico: sobre rRetEnviDe > rProtDe (capturado para recepción y consulta de RUC,
@@ -201,24 +202,78 @@ class RResEnviLoteDe
             return $res;
         }
         if (isset($object->dFecProc)) $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc')); // con o sin zona (PK-29)
-        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
+        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');
         
         if(isset($object->dCodRes)) $res->setDCodRes($object->dCodRes);
-        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 1);
+        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 'dCodRes');
         
         if(isset($object->dMsgRes)) $res->setDMsgRes($object->dMsgRes);
-        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 1);
+        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 'dMsgRes');
         
         if(isset($object->dProtConsLote)) {
             if(ctype_digit($object->dProtConsLote)) 
                 $res->setdProtConsLote($object->dProtConsLote);
-            else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
+            else throw new RespuestaException("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
         }
-        else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 1);
+        else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 'dProtConsLote');
 
         if(isset($object->dTpoProces)) $res->setDTpoProces($object->dTpoProces);
-        else throw new \Exception("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 1);
+        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 'dTpoProces');
         
         return $res;
+    }
+
+    use RespuestaSifenTrait;
+
+    // --- Fase C (C6): RespuestaSifen -------------------------------------------------------------------------------
+
+    public function getCodigo(): ?string
+    {
+        return isset($this->dCodRes) ? self::codigoTexto($this->dCodRes) : null;
+    }
+
+    public function getMensaje(): ?string
+    {
+        return $this->dMsgRes ?? null;
+    }
+
+    /** El lote fue recibido y encolado (0300); el resultado se consulta después con ConsultaLote(). */
+    public function esExitosa(): bool
+    {
+        return $this->fueEncolado();
+    }
+
+    public function fueEncolado(): bool
+    {
+        return $this->getCodigo() === '0300';
+    }
+
+    /** Número de lote (dProtConsLote) como texto, para ConsultaLote(); null si el lote no fue encolado. */
+    public function getNumeroLote(): ?string
+    {
+        return $this->getDProtConsLoteString();
+    }
+
+    /** Tiempo medio de procesamiento informado (dTpoProces, segundos), o null. */
+    public function getTiempoMedioProcesamiento(): ?int
+    {
+        return $this->dTpoProces ?? null;
+    }
+
+    public function getFechaProceso(): ?DateTime
+    {
+        return $this->dFecProc ?? null;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'codigo' => $this->getCodigo(),
+            'mensaje' => $this->getMensaje(),
+            'exitosa' => $this->esExitosa(),
+            'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+            'numeroLote' => $this->getNumeroLote(),
+            'tiempoMedioProcesamiento' => $this->getTiempoMedioProcesamiento(),
+        ];
     }
 }

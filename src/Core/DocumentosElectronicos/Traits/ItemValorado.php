@@ -16,6 +16,7 @@ use IonysDev\Pkuatia\Core\Fields\DE\E\GValorRestaItem;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
 use IonysDev\Pkuatia\Core\Fields\DE\F\GTotSub;
 use DateTime;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 trait ItemValorado {
 
@@ -238,8 +239,10 @@ trait ItemValorado {
             $totOpeItem = bcmul($pu, $cant, 8);
         }
         $gValorRestaItem->setDTotOpeItem($totOpeItem);
+        // EA009 en guaraníes, redondeado al guaraní entero (Q-C8, 0.3.0): hasta 0.2.1 bcmul() sin escala lo truncaba y con
+        // fracción cada ítem quedaba hasta 1 Gs por debajo del valor exacto (EA009 = EA008 × E725, validación 1858).
         if($esTipoCambioPorItem)
-            $gValorRestaItem->setDTotOpeGs(bcmul($totOpeItem, $tipoDeCambioItem));
+            $gValorRestaItem->setDTotOpeGs(BC::round(bcmul($totOpeItem, $tipoDeCambioItem, 8), 0));
         $gValorItem->setGValorRestaItem($gValorRestaItem);
         $gCamItem->setGValorItem($gValorItem);
         // END - GValorRestaItem
@@ -320,7 +323,7 @@ trait ItemValorado {
      */
     public function calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, ?String $comision = null, ?String $redondeo = null) : GTotSub {
         if($redondeoSedeco && $redondeo !== null)
-            throw new \InvalidArgumentException('[ItemValorado] calcTotSub: los parámetros $redondeo y $redondeoSedeco son excluyentes.');
+            throw new ValidacionException('[ItemValorado] calcTotSub: los parámetros $redondeo y $redondeoSedeco son excluyentes.');
         $sumaSubtBruto = '0';
         if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value)
         {

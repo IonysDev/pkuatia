@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     J001 
@@ -94,7 +95,7 @@ class GCamFuFD extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamFuFD') != 0)
-        throw new \Exception('[GCamFuFD] Nodo con nombre inválido: ' . $node->nodeName);
+        throw new ValidacionException('[GCamFuFD] Nodo con nombre inválido: ' . $node->nodeName);
     $res = new self();
     $res->setDCarQR(trim($node->getElementsByTagName('dCarQR')->item(0)->nodeValue));
     if($node->getElementsByTagName('dInfAdic')->length > 0)
@@ -112,7 +113,7 @@ class GCamFuFD extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
     if (strcmp($xml->getName(), 'gCamFuFD') != 0) {
-      throw new \Exception('[GCamFuFD] Nodo XML con nombre inválido: ' . $xml->getName());
+      throw new ValidacionException('[GCamFuFD] Nodo XML con nombre inválido: ' . $xml->getName());
     }
     $res = new GCamFuFD();
     $res->setDCarQR((string)$xml->dCarQR);
@@ -153,11 +154,11 @@ class GCamFuFD extends BaseSifenField
   {
     // Validaciones
     if(!isset($this->dCarQR) || empty($this->dCarQR))
-      throw new \Exception('[GCamFuFD] dCarQR no puede estar vacío.');
+      throw new ValidacionException('[GCamFuFD] dCarQR no puede estar vacío.');
     else if(strlen($this->dCarQR) < 100 || strlen($this->dCarQR) > 600)
-      throw new \Exception('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres. Se encontraron ' . strlen($this->dCarQR) . '.');
+      throw new ValidacionException('[GCamFuFD] dCarQR debe tener entre 100 y 600 caracteres. Se encontraron ' . strlen($this->dCarQR) . '.');
     if(isset($this->dInfAdic) && strlen($this->dInfAdic) > 5000)
-      throw new \Exception('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
+      throw new ValidacionException('[GCamFuFD] dInfAdic no puede tener más de 5000 caracteres.');
     // Conversión
     $res = $doc->createElement('gCamFuFD');    
     $qr = new DOMElement('dCarQR');

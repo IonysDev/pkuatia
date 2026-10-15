@@ -7,6 +7,10 @@ use DOMElement;
 use IonysDev\Pkuatia\Helpers\FechaHelper;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
+use IonysDev\Pkuatia\Core\Constants\EstadoResultado;
+use IonysDev\Pkuatia\Validacion\CatalogoValidaciones;
+use IonysDev\Pkuatia\Validacion\InfoValidacion;
 
 /**
  * ID PP01: Protocolo  de procesamiento del DE
@@ -235,7 +239,7 @@ class RProtDe
    */
   public static function FromXMLString(String $xmlString): RProtDe
   {
-    $xml = simplexml_load_string($xmlString);
+    $xml = simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NONET); // contenido del SIFEN: sin acceso a la red (0.3.0)
     $res = self::fromSimpleXMLElement($xml);
     return $res;
   }
@@ -250,7 +254,7 @@ class RProtDe
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): RProtDe
   {
     if (strcmp($xml->getName(), 'rProtDe') != 0) {
-      throw new \Exception("Invalid XML Element: $xml->getName()");
+      throw new RespuestaException("Invalid XML Element: $xml->getName()");
     }
     $res = new RProtDe();
     // Hasta 0.2.0: se leía "id" (el SIFEN manda Id), la fecha con un formato que nunca coincide ("Y-m-d H:i:s")
@@ -307,5 +311,62 @@ class RProtDe
       }
     }
     return $res;
+  }
+
+  // --- Fase C (C6): lectura del resultado -------------------------------------------------------------------------
+
+  /** Estado del resultado (dEstRes) como enum, o null si no vino o no se reconoce. */
+  public function getEstado(): ?EstadoResultado
+  {
+    return EstadoResultado::fromTexto($this->dEstRes ?? null);
+  }
+
+  /** Aprobado o aprobado con observaciones según dEstRes; si no vino, decide el primer código (0260). */
+  public function esAprobado(): bool
+  {
+    $estado = $this->getEstado();
+    if ($estado !== null)
+      return $estado->esAprobado();
+    return ($this->getMotivos()[0] ?? null)?->esAprobacion() === true;
+  }
+
+  public function esRechazado(): bool
+  {
+    return !$this->esAprobado();
+  }
+
+  /**
+   * Resultados de procesamiento (gResProc) en el orden recibido; el primero es el motivo principal.
+   *
+   * @return list<GResProc>
+   */
+  public function getMotivos(): array
+  {
+    return array_values($this->gResProc ?? []);
+  }
+
+  /** Código del primer resultado, como texto de cuatro dígitos; null si no hay resultados. */
+  public function getCodigo(): ?string
+  {
+    return ($this->getMotivos()[0] ?? null)?->getCodigo();
+  }
+
+  /** Mensaje del primer resultado, o null si no hay resultados. */
+  public function getMensaje(): ?string
+  {
+    return ($this->getMotivos()[0] ?? null)?->getMensaje();
+  }
+
+  /** Número de transacción (dProtAut) como texto, o null si no fue aprobado. */
+  public function getProtocolo(): ?string
+  {
+    return isset($this->dProtAut) && (string) $this->dProtAut !== '' ? (string) $this->dProtAut : null;
+  }
+
+  /** Descripción del código principal según el catálogo del MT, o null. */
+  public function getInfoValidacion(): ?InfoValidacion
+  {
+    $codigo = $this->getCodigo();
+    return $codigo === null ? null : CatalogoValidaciones::describir($codigo);
   }
 }

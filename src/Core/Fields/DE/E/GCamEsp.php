@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E790 
@@ -60,7 +61,7 @@ class GCamEsp extends BaseSifenField
       return $this;
     }
     if (1 + count($this->gGrupEnerAdicionales) >= 9)
-      throw new \InvalidArgumentException('[GCamEsp] gGrupEner admite como máximo 9 ocurrencias (DE_v150.xsd:802, NT-023).');
+      throw new ValidacionException('[GCamEsp] gGrupEner admite como máximo 9 ocurrencias (DE_v150.xsd:802, NT-023).');
     $this->gGrupEnerAdicionales[] = $gGrupEner;
     return $this;
   }
@@ -187,7 +188,7 @@ class GCamEsp extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gCamEsp') != 0)
-      throw new \Exception('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->getName(), 1);
+      throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->getName(), 1);
     $res = new GCamEsp();
     // gGrupEner admite hasta 9 ocurrencias: hasta 0.2.0 se leía solo la primera (Q-B9).
     foreach($node->gGrupEner as $gGrupEner)
@@ -247,7 +248,7 @@ class GCamEsp extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamEsp') != 0)
-      throw new \Exception('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->nodeName, 1);
+      throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->nodeName, 1);
     $res = new GCamEsp();
     foreach($node->getElementsByTagName('gGrupEner') as $gGrupEner) // hasta 9 ocurrencias (Q-B9)
       $res->addGGrupEner(GGrupEner::FromDOMElement($gGrupEner));

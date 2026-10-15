@@ -8,9 +8,11 @@ namespace IonysDev\Pkuatia\Tests\Support;
 final class TestCertFactory
 {
   /**
+   * @param array<string, string> $dn Atributos extra o reemplazos del sujeto (p. ej. ['serialNumber' => 'RUC80000000-5'],
+   *                                  donde las CA paraguayas ponen el RUC de una persona jurídica).
    * @return array{pemPath: string, passphrase: string, cleanup: callable}
    */
-  public static function createSelfSignedPem(string $passphrase = 'test-pass'): array
+  public static function createSelfSignedPem(string $passphrase = 'test-pass', array $dn = []): array
   {
     $opensslConfig = self::opensslConfigArgs();
     $key = openssl_pkey_new([
@@ -23,7 +25,7 @@ final class TestCertFactory
       throw new \RuntimeException('No se pudo generar la clave privada de prueba. ¿Falta openssl.cnf en Windows?');
     }
 
-    $dn = ['countryName' => 'PY', 'commonName' => 'PKuatia Unit Test'];
+    $dn = $dn + ['countryName' => 'PY', 'commonName' => 'PKuatia Unit Test'];
     $csr = openssl_csr_new($dn, $key, $opensslConfig + ['digest_alg' => 'sha256']);
     if ($csr === false) {
       throw new \RuntimeException('No se pudo generar el CSR de prueba.');

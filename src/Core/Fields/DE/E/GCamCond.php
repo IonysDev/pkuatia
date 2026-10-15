@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E600
@@ -153,7 +154,7 @@ class GCamCond extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gCamCond') != 0){
-      throw new \Exception("El nodo '" . $node->getName() . "' no corresponde a gCamCond", 1);
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a gCamCond", 1);
     }
     $res = new self();
     $res->setICondOpe(intval($node->iCondOpe));
@@ -234,7 +235,7 @@ class GCamCond extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamCond') != 0){
-      throw new \Exception("El nodo '" . $node->nodeName . "' no corresponde a gCamCond", 1);
+      throw new ValidacionException("El nodo '" . $node->nodeName . "' no corresponde a gCamCond", 1);
     }
     $res = new self();
     if($node->getElementsByTagName('iCondOpe')->length > 0){

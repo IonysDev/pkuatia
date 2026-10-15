@@ -11,6 +11,7 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use SimpleXMLElement;
 use stdClass;
+use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * Nodo Id:     E500
@@ -210,7 +211,7 @@ class GCamNRE extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     if ($this->getIMotEmiNR() === MotEmiNR::Otro->value && (mb_strlen($this->getDDesMotEmiNR()) < 5 || mb_strlen($this->getDDesMotEmiNR()) > 60))
-      throw new \InvalidArgumentException("[GCamNRE] Con iMotEmiNR = 99 (Otro), dDesMotEmiNR (E502) debe ser un texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd): informarlo con setDDesMotEmiNR(). Valor actual: '" . $this->getDDesMotEmiNR() . "'.");
+      throw new ValidacionException("[GCamNRE] Con iMotEmiNR = 99 (Otro), dDesMotEmiNR (E502) debe ser un texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd): informarlo con setDDesMotEmiNR(). Valor actual: '" . $this->getDDesMotEmiNR() . "'.");
     $res = $doc->createElement('gCamNRE');
     $res->appendChild(XmlHelper::elemento($doc, 'iMotEmiNR', $this->getIMotEmiNR()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesMotEmiNR', $this->getDDesMotEmiNR()));
@@ -232,7 +233,7 @@ class GCamNRE extends BaseSifenField
   public static function FromDOMElement(DOMElement $node): self
   {
     if(strcmp($node->nodeName, 'gCamNRE') != 0)
-      throw new \Exception('[GCamNRE] Nodo con nombre inválido: ' . $node->nodeName);
+      throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->nodeName);
     $valores = [];
     foreach($node->childNodes as $hijo)
     {
@@ -253,7 +254,7 @@ class GCamNRE extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if(strcmp($node->getName(), 'gCamNRE') != 0)
-      throw new \InvalidArgumentException('[GCamNRE] Nodo con nombre inválido: ' . $node->getName());
+      throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->getName());
     $valores = [];
     foreach($node->children() as $hijo)
       $valores[$hijo->getName()] = (string) $hijo;
@@ -290,7 +291,7 @@ class GCamNRE extends BaseSifenField
     foreach(['iMotEmiNR', 'dDesMotEmiNR', 'iRespEmiNR', 'dDesRespEmiNR', 'dKmR'] as $campo)
     {
       if(!isset($v[$campo]))
-        throw new \InvalidArgumentException("[GCamNRE] Elemento requerido $campo no encontrado.");
+        throw new ValidacionException("[GCamNRE] Elemento requerido $campo no encontrado.");
     }
     $res = new GCamNRE();
     $res->setIMotEmiNR(intval($v['iMotEmiNR']));
@@ -303,7 +304,7 @@ class GCamNRE extends BaseSifenField
       // tFecAAAAMMDDguion; '!' deja la hora en cero (antes quedaba la hora actual).
       $fecha = DateTime::createFromFormat('!Y-m-d', trim($v['dFecEm']));
       if($fecha === false)
-        throw new \InvalidArgumentException("[GCamNRE] dFecEm debe tener el formato AAAA-MM-DD: '{$v['dFecEm']}'");
+        throw new ValidacionException("[GCamNRE] dFecEm debe tener el formato AAAA-MM-DD: '{$v['dFecEm']}'");
       $res->setDFecEm($fecha);
     }
     return $res;

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:ns1="http://ekuatia.set.gov.py/sifen/xsd"><env:Body><ns1:rEnviConsLoteDe><ns1:dId>77</ns1:dId><ns1:dProtConsLote>85929997107567388</ns1:dProtConsLote></ns1:rEnviConsLoteDe></env:Body></env:Envelope>

@@ -8,6 +8,7 @@ use DateTime;
 use IonysDev\Pkuatia\Core\Fields\Response\Batch\GResProcLote;
 use IonysDev\Pkuatia\Core\Fields\Response\RProtDe;
 use IonysDev\Pkuatia\Helpers\FechaHelper;
+use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
  * Nodo Id:     CRSch01        
@@ -15,7 +16,7 @@ use IonysDev\Pkuatia\Helpers\FechaHelper;
  * Descripción: Nodo raiz de Respuesta del WS Consulta Resultado Lote
  * Nodo Padre:  Es raíz.
  */
-class RResEnviConsLoteDe
+class RResEnviConsLoteDe implements RespuestaSifen
 {
   public const COD_RES_RECHAZADO_INEXISTENTE = 360;
   public const COD_RES_EN_PROCESAMIENTO = 361;
@@ -134,7 +135,7 @@ class RResEnviConsLoteDe
   {
 
     if (is_null($object)) {
-      throw new \Exception("[RResEnviConsLoteDe] Error Processing Request: null", 1);
+      throw new RespuestaException("[RResEnviConsLoteDe] Error Processing Request: null", 1);
     }
 
     $res = new RResEnviConsLoteDe();
@@ -153,13 +154,13 @@ class RResEnviConsLoteDe
       return $res;
     }
     if(isset($object->dFecProc)) $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc')); // con o sin zona (PK-29)
-    else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 1);
+    else throw RespuestaException::porCampoFaltante("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');
     
     if(isset($object->dCodResLot)) $res->setDCodResLot($object->dCodResLot);
-    else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dCodResLot", 1);
+    else throw RespuestaException::porCampoFaltante("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dCodResLot", 'dCodResLot');
     
     if(isset($object->dMsgResLot)) $res->setDMsgResLot($object->dMsgResLot);
-    else throw new \Exception("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dMsgResLot", 1);
+    else throw RespuestaException::porCampoFaltante("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dMsgResLot", 'dMsgResLot');
     
 
     $res->gResProcLote = array();
@@ -175,5 +176,102 @@ class RResEnviConsLoteDe
       }
     }
     return $res;
+  }
+
+  use RespuestaSifenTrait;
+
+  // --- Fase C (C6): RespuestaSifen y lectura del lote --------------------------------------------------------------
+
+  public function getCodigo(): ?string
+  {
+    return isset($this->dCodResLot) ? self::codigoTexto($this->dCodResLot) : null;
+  }
+
+  public function getMensaje(): ?string
+  {
+    return $this->dMsgResLot ?? null;
+  }
+
+  /** El lote terminó de procesarse (0362): cada DE tiene su resultado en getDocumentos(). */
+  public function esExitosa(): bool
+  {
+    return $this->estaConcluido();
+  }
+
+  public function estaEnProcesamiento(): bool
+  {
+    return $this->getCodigo() === '0361';
+  }
+
+  public function estaConcluido(): bool
+  {
+    return $this->getCodigo() === '0362';
+  }
+
+  /** Pasaron más de 48 horas desde el envío (0364): consultar cada CDC con ConsultarDE(). */
+  public function esExtemporaneo(): bool
+  {
+    return $this->getCodigo() === '0364';
+  }
+
+  /** Hay un resultado final (concluido, inexistente, extemporáneo o tipos distintos): no hace falta volver a consultar. */
+  public function esResultadoDefinitivo(): bool
+  {
+    return $this->getCodigo() !== null && !$this->estaEnProcesamiento();
+  }
+
+  /**
+   * Resultado de cada DE del lote (gResProcLote).
+   *
+   * @return list<GResProcLote>
+   */
+  public function getDocumentos(): array
+  {
+    return array_values($this->gResProcLote ?? []);
+  }
+
+  /** Todos los DE del lote fueron aprobados (y hay al menos uno). */
+  public function todosAprobados(): bool
+  {
+    $documentos = $this->getDocumentos();
+    if ($documentos === [])
+      return false;
+    foreach ($documentos as $documento) {
+      if (!$documento->esAprobado())
+        return false;
+    }
+    return true;
+  }
+
+  /** @return list<GResProcLote> */
+  public function getRechazados(): array
+  {
+    return array_values(array_filter($this->getDocumentos(), static fn (GResProcLote $d): bool => $d->esRechazado()));
+  }
+
+  /** Resultado del DE con ese CDC, o null si no está en el lote. */
+  public function getResultadoDe(string $cdc): ?GResProcLote
+  {
+    foreach ($this->getDocumentos() as $documento) {
+      if ($documento->getCdc() === $cdc)
+        return $documento;
+    }
+    return null;
+  }
+
+  public function getFechaProceso(): ?DateTime
+  {
+    return $this->dFecProc ?? null;
+  }
+
+  public function toArray(): array
+  {
+    return [
+      'codigo' => $this->getCodigo(),
+      'mensaje' => $this->getMensaje(),
+      'exitosa' => $this->esExitosa(),
+      'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+      'documentos' => array_map(static fn (GResProcLote $d): array => $d->toArray(), $this->getDocumentos()),
+    ];
   }
 }
