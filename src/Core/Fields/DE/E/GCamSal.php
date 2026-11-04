@@ -291,7 +291,7 @@ class GCamSal extends BaseSifenField
     if (isset($this->dComp2Sal))
       $res->appendChild(XmlHelper::elemento($doc, 'dComp2Sal', $this->getDComp2Sal()));
 
-    $res->appendChild(XmlHelper::elemento($doc, 'cDepSal', $this->getCDisSal()));
+    $res->appendChild(XmlHelper::elemento($doc, 'cDepSal', $this->getCDepSal()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesDepSal', $this->getDDesDepSal()));
 
     if (isset($this->cDisSal)) {
