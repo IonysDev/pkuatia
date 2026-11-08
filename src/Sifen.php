@@ -245,7 +245,34 @@ class Sifen
             return $client;
         }
 
-        return new SoapClient($wsdl, self::$options);
+        // La descarga del WSDL también es una lectura de red: respeta Config::$soapReadTimeout (0.3.1).
+        return self::conTiempoDeLectura(fn () => new SoapClient($wsdl, self::$options));
+    }
+
+    /**
+     * Ejecuta una llamada SOAP aplicando Config::$soapReadTimeout como tiempo máximo de lectura. La extensión SOAP
+     * ignora la opción http.timeout del contexto de flujo y toma el tiempo de lectura de default_socket_timeout
+     * (verificado el 08/11/2026 con un servidor local que acepta y nunca responde), así que ese ini se fija solo
+     * durante la llamada y se restaura siempre, también si la llamada lanza. Sin configurar no se toca nada.
+     * Nuevo en 0.3.1 (Fase D, D7, deuda D-B5).
+     *
+     * @template T
+     * @param callable(): T $llamada
+     * @return T
+     */
+    private static function conTiempoDeLectura(callable $llamada): mixed
+    {
+        $segundos = isset(self::$config) ? self::$config->soapReadTimeout : null;
+        if ($segundos === null) {
+            return $llamada();
+        }
+        $anterior = ini_get('default_socket_timeout');
+        ini_set('default_socket_timeout', (string) $segundos);
+        try {
+            return $llamada();
+        } finally {
+            ini_set('default_socket_timeout', $anterior === false ? '60' : $anterior);
+        }
     }
 
     /**
@@ -262,7 +289,7 @@ class Sifen
         // la respuesta cruda (también en GetLastResponse(), PK-31).
         try {
             self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
-            $object = self::RespuestaOGenerica(self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc)));
+            $object = self::RespuestaOGenerica(self::conTiempoDeLectura(fn () => self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc))));
             return RResEnviConsRUC::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
             throw self::excepcionDeOperacion($e, 'ConsultarRUC', "[Sifen] Error al consultar el RUC en el SIFEN");
@@ -283,7 +310,7 @@ class Sifen
     {
         try {
             self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_ARCHIVO_RUC . "?wsdl");
-            $object = self::RespuestaOGenerica(self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador)));
+            $object = self::RespuestaOGenerica(self::conTiempoDeLectura(fn () => self::$client->rEnviConsArchivoRUC(new REnviConsArchivoRUC(self::GetDId(), $rucFacturador))));
             return RResEnviConsArchivoRUC::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
             throw self::excepcionDeOperacion($e, 'ConsultarArchivoRUC', "[Sifen] Error al consultar el archivo de RUC en el SIFEN");
@@ -302,7 +329,7 @@ class Sifen
         // Fase C (Q-C3): como en ConsultarRUC, toda falla llega tipada.
         try {
             self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA . "?wsdl");
-            $object = self::RespuestaOGenerica(self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc)));
+            $object = self::RespuestaOGenerica(self::conTiempoDeLectura(fn () => self::$client->REnviConsDe(new REnviConsDe(self::GetDId(), $cdc))));
             return RResEnviConsDe::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
             throw self::excepcionDeOperacion($e, 'ConsultarDE', "[Sifen] Error al consultar el documento electrónico en el SIFEN");
@@ -438,7 +465,7 @@ class Sifen
         try {
             self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE . "?wsdl");
             $rEnviDe = new REnviDe(self::GetDId(), new SoapVar('<ns1:xDE>' . $rdeXML . '</ns1:xDE>', XSD_ANYXML));
-            $object = self::$client->rEnviDe($rEnviDe);
+            $object = self::conTiempoDeLectura(fn () => self::$client->rEnviDe($rEnviDe));
             return RRetEnviDe::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
             // Q-B4: \Throwable para que un TypeError del parseo también llegue como excepción del facade, con la causa en
@@ -540,7 +567,7 @@ class Sifen
         try {
             self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_RECIBE_LOTE . "?wsdl");
             $rEnvioLote = new REnvioLote(self::GetDId(), $zipContent);
-            $object = self::RespuestaOGenerica(self::$client->rEnvioLote($rEnvioLote));
+            $object = self::RespuestaOGenerica(self::conTiempoDeLectura(fn () => self::$client->rEnvioLote($rEnvioLote)));
             // El parseo entra al try desde 0.2.1 (Q-B4), como en los demás métodos.
             return RResEnviLoteDe::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
@@ -561,7 +588,7 @@ class Sifen
         try {
             self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_LOTE . "?wsdl");
             $rEnviConsLoteDe = new REnviConsLoteDe(self::GetDId(), $nroLote);
-            $object = self::RespuestaOGenerica(self::$client->rEnviConsLoteDe($rEnviConsLoteDe));
+            $object = self::RespuestaOGenerica(self::conTiempoDeLectura(fn () => self::$client->rEnviConsLoteDe($rEnviConsLoteDe)));
             return RResEnviConsLoteDe::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
             throw self::excepcionDeOperacion($e, 'ConsultaLote', "[Sifen] Error al consultar el lote de documentos electrónicos en el SIFEN");
@@ -652,7 +679,7 @@ class Sifen
                 '<ns1:dEvReg>' . $signedXML . '</ns1:dEvReg>',
                 XSD_ANYXML
             ));
-            $object = self::RespuestaOGenerica(self::$client->rEnviEventoDe($rEnviEventoDe));
+            $object = self::RespuestaOGenerica(self::conTiempoDeLectura(fn () => self::$client->rEnviEventoDe($rEnviEventoDe)));
             return RRetEnviEventoDe::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
             throw self::excepcionDeOperacion($e, 'RegistrarEvento', "[Sifen] Error al registrar el evento");

@@ -109,6 +109,8 @@ $config->dIdFilePath = "PKuatiaDId.dat.json";
 // Opcionales (0.3.0)
 // $config->validarXsdAntesDeEnviar = true; // EnviarDE, EnviarLoteDE y RegistrarEvento validan contra el XSD antes de tocar la red
 // $config->soapTrace = false;              // no guardar la última solicitud/respuesta (GetLastRequest/GetLastResponse devuelven null)
+// $config->soapConnectionTimeout = 10;     // segundos para establecer la conexión (0.2.1)
+// $config->soapReadTimeout = 60;           // segundos para recibir la respuesta una vez conectado (0.3.1)
 
 // Inicializar Sifen
 Sifen::Init($config);
@@ -139,6 +141,8 @@ Ejemplo de `config.json`:
     "dIdFilePath": "PKuatiaDId.dat.json",
     "wsdlCacheEnabled": true,
     "soapTrace": true,
+    "soapConnectionTimeout": 10,
+    "soapReadTimeout": 60,
     "validarXsdAntesDeEnviar": false
 }
 ```

@@ -14,15 +14,22 @@ class CountryMapping
      *
      * @return array
      */
+    /** @var array<int, array<string, mixed>>|null Caché del catálogo (Fase D, D7). */
+    private static ?array $catalogo = null;
+
     public static function getArray(): array
     {
-        $xml = new DOMDocument();
-        $xml->load(__DIR__ . '/Sources/ISO3166.xml');
-        $xml->preserveWhiteSpace = true;
-        $parseObj = str_replace($xml->lastChild->prefix.':', "", $xml->saveXML($xml->lastChild));
-        $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
-        //retorna el array con la lista de paises
-        return $array['simpleType']['restriction']['enumeration'];
+        // Caché estática: hasta 0.3.0 se releía y reparseaba ISO3166.xml en cada llamada (Fase D, D7, deuda D-B4).
+        // El arreglo se devuelve por valor, así que quien lo recibe no puede alterar la caché.
+        if (self::$catalogo === null) {
+            $xml = new DOMDocument();
+            $xml->load(__DIR__ . '/Sources/ISO3166.xml');
+            $xml->preserveWhiteSpace = true;
+            $parseObj = str_replace($xml->lastChild->prefix.':', "", $xml->saveXML($xml->lastChild));
+            $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
+            self::$catalogo = $array['simpleType']['restriction']['enumeration'];
+        }
+        return self::$catalogo;
     }
 
     /**

@@ -45,6 +45,11 @@ class Config
     // SoapClient). Null: el valor por defecto de PHP (default_socket_timeout). Nuevo en 0.2.1 (PK-31).
     public ?int $soapConnectionTimeout = null;
 
+    // Tiempo máximo, en segundos, para recibir la respuesta del SIFEN una vez conectado (tiempo de lectura). La
+    // extensión SOAP lo toma de default_socket_timeout, así que se fija ese ini solo durante cada llamada y se
+    // restaura después. Null: no se toca (rige default_socket_timeout, 60 s por defecto). Nuevo en 0.3.1 (Fase D, D-B5).
+    public ?int $soapReadTimeout = null;
+
     // Cabecera User-Agent de las solicitudes SOAP. Null: la de PHP. Nuevo en 0.2.1 (PK-31).
     public ?string $soapUserAgent = null;
 
@@ -151,6 +156,9 @@ class Config
 
         if (isset($config->soapConnectionTimeout)) {
             $res->soapConnectionTimeout = intval($config->soapConnectionTimeout);
+        }
+        if (isset($config->soapReadTimeout)) {
+            $res->soapReadTimeout = intval($config->soapReadTimeout);
         }
 
         if (isset($config->soapUserAgent)) {
@@ -318,6 +326,22 @@ class Config
     public function setSoapConnectionTimeout(?int $soapConnectionTimeout): self
     {
         $this->soapConnectionTimeout = $soapConnectionTimeout;
+
+        return $this;
+    }
+
+    /**
+     * Establece el tiempo máximo, en segundos, para recibir la respuesta del SIFEN una vez conectado (tiempo de
+     * lectura). Null deja el valor por defecto de PHP (default_socket_timeout). Se aplica en cada llamada SOAP a partir
+     * del siguiente Sifen::Init(). Nuevo en 0.3.1 (Fase D, D-B5).
+     *
+     * @param int|null $soapReadTimeout
+     *
+     * @return self
+     */
+    public function setSoapReadTimeout(?int $soapReadTimeout): self
+    {
+        $this->soapReadTimeout = $soapReadTimeout;
 
         return $this;
     }

@@ -12,12 +12,17 @@ class PyGeoCodesMapping
      *
      * @return array
      */
+    /** @var array<string, mixed>|null Caché del catálogo completo (Fase D, D7). */
+    private static ?array $catalogo = null;
+
     public static function getArray()
     {
-        $xml = simplexml_load_file(__DIR__ . '/Sources/PyGeoCodes.xml');
-        $json = json_encode($xml);
-        $array = json_decode($json, true);
-        return $array;
+        // Caché estática: hasta 0.3.0 se releía y reparseaba PyGeoCodes.xml en cada llamada (Fase D, D7, deuda D-B4).
+        if (self::$catalogo === null) {
+            $xml = simplexml_load_file(__DIR__ . '/Sources/PyGeoCodes.xml');
+            self::$catalogo = json_decode(json_encode($xml), true);
+        }
+        return self::$catalogo;
     }
 
     /**

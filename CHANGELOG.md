@@ -27,6 +27,11 @@ comportamiento para quien emite documentos.
   `toIdNameList()`: los 36 enums de códigos del MT lo usan en vez de repetir los tres métodos (D6). Ninguna firma
   cambia; `getDescripcion()`, `getDescripcionFromInt()` y `toKeyValueArray()` siguen en cada enum. Los seis enums de
   la Fase C (`CodigoResultadoWS`, `EstadoResultado`, etc.) no modelan código → descripción del MT y no lo usan.
+- `Config::$soapReadTimeout` (+ `setSoapReadTimeout()`, clave `soapReadTimeout` del JSON): tiempo máximo, en
+  segundos, para recibir la respuesta del SIFEN una vez conectado; complementa a `soapConnectionTimeout` (0.2.1).
+  La extensión SOAP ignora `http.timeout` del contexto de flujo y toma el tiempo de lectura de
+  `default_socket_timeout`, así que el facade fija ese ini solo durante cada llamada (y la descarga del WSDL) y lo
+  restaura siempre. Sin configurar, nada cambia (D7, deuda D-B5).
 
 ### Corregido
 
@@ -97,6 +102,9 @@ comportamiento para quien emite documentos.
   `RGeVeCCFF` y `RGeDevCCFFCue` dentro de `GGroupTiEvt` llevan la inicial en mayúscula (eran `rGeVeRetAce`, etc.;
   para PHP es la misma clase). `RRetEnviEventoDe::setGResProcEVe()`/`getGResProcEVe()` tienen ahora el cuerpo y los
   typos históricos `seGResProcEVe()`/`geGResProcEVe()` delegan en ellos (antes era al revés).
+- `CountryMapping`, `DepartamentoMapping` y `PyGeoCodesMapping` cachean su catálogo en una estática en vez de releer y
+  reparsear el XML en cada llamada a `getArray()`, como ya hacían `MonedaMapping` y `UnidadMedidaMapping` (D7, deuda
+  D-B4). Mismo resultado; el arreglo se devuelve por valor.
 
 ## [0.3.0] — 2026-10-15
 
