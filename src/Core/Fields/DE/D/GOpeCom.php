@@ -26,7 +26,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GOpeCom extends BaseSifenField
 {
-                                // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public int $iTipTra;     // D011 - 1-2       - 0-1 - Tipo de transacción
     public string $dDesTipTra;  // D012 - 5-39      - 0-1 - Descripción del tipo de transacción
     public int $iTImp;       // D013 - 1         - 1-1 - Tipo de impuesto afectado
@@ -266,7 +266,7 @@ class GOpeCom extends BaseSifenField
      */
     public function getDDesTipTra(): string
     {
-       return $this->dDesTipTra;
+        return $this->dDesTipTra;
     }
 
     /**

@@ -19,7 +19,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GOblAfe extends BaseSifenField
 {
-                                // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public int $cOblAfe;        // D031 - 3      - 1-1 - Código de la obligación afectada
     public string $dDesOblAfe;  // D032 - 21-65  - 1-1 - Descripción de la obligación afectada
 
@@ -101,13 +101,13 @@ class GOblAfe extends BaseSifenField
     // XML Element
     ///////////////////////////////////////////////////////////////////////
 
-     /**
-     * Instancia la clase a partir de un SimpleXMLElement
-     *
-     * @param SimpleXMLElement $node
-     *
-     * @return GOblAfe
-     */
+    /**
+    * Instancia la clase a partir de un SimpleXMLElement
+    *
+    * @param SimpleXMLElement $node
+    *
+    * @return GOblAfe
+    */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): GOblAfe
     {
         if (strcmp($node->getName(), 'gOblAfe') != 0) {
@@ -135,8 +135,8 @@ class GOblAfe extends BaseSifenField
     {
         $res = $doc->createElement('gOblAfe');
         if (isset($this->cOblAfe)) {
-           $res->appendChild(XmlHelper::elemento($doc, 'cOblAfe', $this->getCOblAfe()));
-           $res->appendChild(XmlHelper::elemento($doc, 'dDesOblAfe', $this->getDDesOblAfe()));
+            $res->appendChild(XmlHelper::elemento($doc, 'cOblAfe', $this->getCOblAfe()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesOblAfe', $this->getDDesOblAfe()));
         }
 
         return $res;

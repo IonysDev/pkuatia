@@ -17,276 +17,276 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GCamEsp extends BaseSifenField
 {
-                                // Id   - Longitud - Ocurrencia - Descripción
-  public GGrupEner $gGrupEner;  // E791 - - 0-9    - Campos del sector de energía eléctrica
-  public GGrupSeg $gGrupSeg;   // E800 - - 0-1    - Campos del sector de seguros
-  public GGrupSup $gGrupSup;   // E810 - - 0-1    - Campos del sector de supermercados
-  public GGrupAdi $gGrupAdi;   // E820 - - 0-1    - Grupo  de  datos adicionales de uso comercial
+    // Id   - Longitud - Ocurrencia - Descripción
+    public GGrupEner $gGrupEner;  // E791 - - 0-9    - Campos del sector de energía eléctrica
+    public GGrupSeg $gGrupSeg;   // E800 - - 0-1    - Campos del sector de seguros
+    public GGrupSup $gGrupSup;   // E810 - - 0-1    - Campos del sector de supermercados
+    public GGrupAdi $gGrupAdi;   // E820 - - 0-1    - Grupo  de  datos adicionales de uso comercial
 
-  /** @var list<GGrupEner> Ocurrencias de gGrupEner después de la primera: hasta 9 en total (DE_v150.xsd:802, NT-023; Q-B9). */
-  private array $gGrupEnerAdicionales = [];
+    /** @var list<GGrupEner> Ocurrencias de gGrupEner después de la primera: hasta 9 en total (DE_v150.xsd:802, NT-023; Q-B9). */
+    private array $gGrupEnerAdicionales = [];
 
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de gGrupEner (Campos del sector de energía eléctrica)
-   *
-   * @param GGrupEner $gGrupEner
-   *
-   * @return self
-   */
-  public function setgGrupEner(GGrupEner $gGrupEner): self
-  {
-    $this->gGrupEner = $gGrupEner;
-    $this->gGrupEnerAdicionales = []; // set reemplaza todas las ocurrencias, como hasta 0.2.0 (Q-B9)
-    return $this;
-  }
-
-  /**
-   * Agrega una ocurrencia de gGrupEner (un medidor): el XSD admite hasta 9 (DE_v150.xsd:802, NT-023). Si no
-   * hay ninguna, equivale a setgGrupEner(). Nuevo en 0.2.1 (Q-B9).
-   *
-   * @param GGrupEner $gGrupEner
-   *
-   * @throws \InvalidArgumentException Si ya hay 9 ocurrencias.
-   *
-   * @return self
-   */
-  public function addGGrupEner(GGrupEner $gGrupEner): self
-  {
-    if (!isset($this->gGrupEner)) {
-      $this->gGrupEner = $gGrupEner;
-      return $this;
-    }
-    if (1 + count($this->gGrupEnerAdicionales) >= 9) {
-      throw new ValidacionException('[GCamEsp] gGrupEner admite como máximo 9 ocurrencias (DE_v150.xsd:802, NT-023).');
-    }
-    $this->gGrupEnerAdicionales[] = $gGrupEner;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gGrupSeg (Campos del sector de seguros)
-   *
-   * @param GGrupSeg $gGrupSeg
-   *
-   * @return self
-   */
-  public function setGGrupSeg(GGrupSeg $gGrupSeg): self
-  {
-    $this->gGrupSeg = $gGrupSeg;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gGrupSup (Campos del sector de supermercados)
-   *
-   * @param GGrupSup $gGrupSup
-   *
-   * @return self
-   */
-  public function setGGrupSup(GGrupSup $gGrupSup): self
-  {
-    $this->gGrupSup = $gGrupSup;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gGrupAdi (Grupo  de  datos adicionales de uso comercial)
-   *
-   * @param GGrupAdi $gGrupAdi
-   *
-   * @return self
-   */
-  public function setGGrupAdi(GGrupAdi $gGrupAdi): self
-  {
-    $this->gGrupAdi = $gGrupAdi;
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de gGrupEner
-   *
-   * @return GGrupEner
-   */
-  public function getgGrupEner(): GGrupEner
-  {
-    return $this->gGrupEner;
-  }
-
-  /**
-   * Todas las ocurrencias de gGrupEner, en orden (la primera es la de getgGrupEner()). Nuevo en 0.2.1 (Q-B9).
-   *
-   * @return list<GGrupEner>
-   */
-  public function getGGrupEners(): array
-  {
-    return array_merge(isset($this->gGrupEner) ? [$this->gGrupEner] : [], $this->gGrupEnerAdicionales);
-  }
-
-  /**
-   * Obtiene el valor de gGrupSeg (E800, campos del sector de seguros).
-   *
-   * @return GGrupSeg
-   */
-  public function getGGrupSeg(): GGrupSeg
-  {
-    return $this->gGrupSeg;
-  }
-
-  /**
-   * Obtiene el valor de gGrupSeg.
-   *
-   * @deprecated 0.2.1 Nombre con errata; usar getGGrupSeg().
-   *
-   * @return GGrupSeg
-   */
-  public function getGGrupoSeg(): GGrupSeg
-  {
-    return $this->getGGrupSeg();
-  }
-
-  /**
-   * Obtiene el valor de gGrupSup
-   *
-   * @return GGrupSup
-   */
-  public function getGGrupSup(): GGrupSup
-  {
-    return $this->gGrupSup;
-  }
-
-  /**
-   * Obtiene el valor de gGrupAdi
-   *
-   * @return GGrupAdi
-   */
-  public function getGGrupAdi(): GGrupAdi
-  {
-    return $this->gGrupAdi;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Instanciadores
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Instancia un objeto GCamEsp a partir de un SimpleXMLElement.
-   * Hasta 0.2.0 los tres lectores llamaban a setGGrupoSeg() (inexistente) y a lectores inexistentes de
-   * gGrupSup y gGrupAdi (PK-25): ningún DE con gCamEsp se podía deserializar. Secuencia de tgCamEsp:
-   * gGrupEner, gGrupSeg, gGrupSup, gGrupAdi (DE_v150.xsd:794-806).
-   *
-   * @param  SimpleXMLElement $node
-   *
-   * @return self
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-    if (strcmp($node->getName(), 'gCamEsp') != 0) {
-      throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->getName(), 1);
-    }
-    $res = new GCamEsp();
-    // gGrupEner admite hasta 9 ocurrencias: hasta 0.2.0 se leía solo la primera (Q-B9).
-    foreach ($node->gGrupEner as $gGrupEner) {
-      $res->addGGrupEner(GGrupEner::FromSimpleXMLElement($gGrupEner));
-    }
-    if (isset($node->gGrupSeg)) {
-      $res->setGGrupSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupSeg));
-    }
-    if (isset($node->gGrupSup)) {
-      $res->setGGrupSup(GGrupSup::FromSimpleXMLElement($node->gGrupSup));
-    }
-    if (isset($node->gGrupAdi)) {
-      $res->setGGrupAdi(GGrupAdi::FromSimpleXMLElement($node->gGrupAdi));
-    }
-    return $res;
-  }
-
-  /**
-   * Instancia un objeto GCamEsp a partir de un objeto stdClass que contiene datos de la respuesta del Sifen
-   *
-   * @param  stdClass $object
-   *
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $res = new GCamEsp();
-    if (isset($object->gGrupEner)) {
-      // Con más de una ocurrencia, SoapClient entrega un arreglo (Q-B9).
-      foreach ((is_array($object->gGrupEner) ? $object->gGrupEner : [$object->gGrupEner]) as $gGrupEner) {
-        $res->addGGrupEner(GGrupEner::FromSifenResponseObject($gGrupEner));
-      }
+    /**
+     * Establece el valor de gGrupEner (Campos del sector de energía eléctrica)
+     *
+     * @param GGrupEner $gGrupEner
+     *
+     * @return self
+     */
+    public function setgGrupEner(GGrupEner $gGrupEner): self
+    {
+        $this->gGrupEner = $gGrupEner;
+        $this->gGrupEnerAdicionales = []; // set reemplaza todas las ocurrencias, como hasta 0.2.0 (Q-B9)
+        return $this;
     }
 
-    if (isset($object->gGrupSeg)) {
-      $res->setGGrupSeg(GGrupSeg::FromSifenResponseObject($object->gGrupSeg));
+    /**
+     * Agrega una ocurrencia de gGrupEner (un medidor): el XSD admite hasta 9 (DE_v150.xsd:802, NT-023). Si no
+     * hay ninguna, equivale a setgGrupEner(). Nuevo en 0.2.1 (Q-B9).
+     *
+     * @param GGrupEner $gGrupEner
+     *
+     * @throws \InvalidArgumentException Si ya hay 9 ocurrencias.
+     *
+     * @return self
+     */
+    public function addGGrupEner(GGrupEner $gGrupEner): self
+    {
+        if (!isset($this->gGrupEner)) {
+            $this->gGrupEner = $gGrupEner;
+            return $this;
+        }
+        if (1 + count($this->gGrupEnerAdicionales) >= 9) {
+            throw new ValidacionException('[GCamEsp] gGrupEner admite como máximo 9 ocurrencias (DE_v150.xsd:802, NT-023).');
+        }
+        $this->gGrupEnerAdicionales[] = $gGrupEner;
+        return $this;
     }
 
-    if (isset($object->gGrupSup)) {
-      // Hasta 0.2.0 se buscaba "gGrupoSup" (errata) y el grupo de supermercados nunca se leía (PK-25).
-      $res->setGGrupSup(GGrupSup::FromSifenResponseObject($object->gGrupSup));
+    /**
+     * Establece el valor de gGrupSeg (Campos del sector de seguros)
+     *
+     * @param GGrupSeg $gGrupSeg
+     *
+     * @return self
+     */
+    public function setGGrupSeg(GGrupSeg $gGrupSeg): self
+    {
+        $this->gGrupSeg = $gGrupSeg;
+        return $this;
     }
 
-    if (isset($object->gGrupAdi)) {
-      $res->setGGrupAdi(GGrupAdi::FromSifenResponseObject($object->gGrupAdi));
+    /**
+     * Establece el valor de gGrupSup (Campos del sector de supermercados)
+     *
+     * @param GGrupSup $gGrupSup
+     *
+     * @return self
+     */
+    public function setGGrupSup(GGrupSup $gGrupSup): self
+    {
+        $this->gGrupSup = $gGrupSup;
+        return $this;
     }
-    return $res;
-  }
 
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if (strcmp($node->nodeName, 'gCamEsp') != 0) {
-      throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->nodeName, 1);
+    /**
+     * Establece el valor de gGrupAdi (Grupo  de  datos adicionales de uso comercial)
+     *
+     * @param GGrupAdi $gGrupAdi
+     *
+     * @return self
+     */
+    public function setGGrupAdi(GGrupAdi $gGrupAdi): self
+    {
+        $this->gGrupAdi = $gGrupAdi;
+        return $this;
     }
-    $res = new GCamEsp();
-    foreach ($node->getElementsByTagName('gGrupEner') as $gGrupEner) { // hasta 9 ocurrencias (Q-B9)
-      $res->addGGrupEner(GGrupEner::FromDOMElement($gGrupEner));
-    }
-    if ($node->getElementsByTagName('gGrupSeg')->length > 0) {
-      $res->setGGrupSeg(GGrupSeg::FromDOMElement($node->getElementsByTagName('gGrupSeg')->item(0)));
-    } // hasta 0.2.0 recibía el nodo gGrupSup (PK-25)
-    if ($node->getElementsByTagName('gGrupSup')->length > 0) {
-      $res->setGGrupSup(GGrupSup::FromDOMElement($node->getElementsByTagName('gGrupSup')->item(0)));
-    }
-    if ($node->getElementsByTagName('gGrupAdi')->length > 0) {
-      $res->setGGrupAdi(GGrupAdi::FromDOMElement($node->getElementsByTagName('gGrupAdi')->item(0)));
-    }
-    return $res;
-  }
 
-  ///////////////////////////////////////////////////////////////////////
-  // Conversores
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Getters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Convierte este GCamEsp en un DOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement("gCamEsp");
-    foreach ($this->getGGrupEners() as $gGrupEner) {
-      $res->appendChild($gGrupEner->toDOMElement($doc));
+    /**
+     * Obtiene el valor de gGrupEner
+     *
+     * @return GGrupEner
+     */
+    public function getgGrupEner(): GGrupEner
+    {
+        return $this->gGrupEner;
     }
-    // Orden de tgCamEsp (DE_v150.xsd:794-800): gGrupEner, gGrupSeg, gGrupSup, gGrupAdi. Hasta v0.1.5 el bloque de
-    // seguros emitía gGrupSup por un typo y en el orden incorrecto (PK-06).
-    if (isset($this->gGrupSeg)) {
-      $res->appendChild($this->gGrupSeg->toDOMElement($doc));
+
+    /**
+     * Todas las ocurrencias de gGrupEner, en orden (la primera es la de getgGrupEner()). Nuevo en 0.2.1 (Q-B9).
+     *
+     * @return list<GGrupEner>
+     */
+    public function getGGrupEners(): array
+    {
+        return array_merge(isset($this->gGrupEner) ? [$this->gGrupEner] : [], $this->gGrupEnerAdicionales);
     }
-    if (isset($this->gGrupSup)) {
-      $res->appendChild($this->gGrupSup->toDOMElement($doc));
+
+    /**
+     * Obtiene el valor de gGrupSeg (E800, campos del sector de seguros).
+     *
+     * @return GGrupSeg
+     */
+    public function getGGrupSeg(): GGrupSeg
+    {
+        return $this->gGrupSeg;
     }
-    if (isset($this->gGrupAdi)) {
-      $res->appendChild($this->gGrupAdi->toDOMElement($doc));
+
+    /**
+     * Obtiene el valor de gGrupSeg.
+     *
+     * @deprecated 0.2.1 Nombre con errata; usar getGGrupSeg().
+     *
+     * @return GGrupSeg
+     */
+    public function getGGrupoSeg(): GGrupSeg
+    {
+        return $this->getGGrupSeg();
     }
-    return $res;
-  }
+
+    /**
+     * Obtiene el valor de gGrupSup
+     *
+     * @return GGrupSup
+     */
+    public function getGGrupSup(): GGrupSup
+    {
+        return $this->gGrupSup;
+    }
+
+    /**
+     * Obtiene el valor de gGrupAdi
+     *
+     * @return GGrupAdi
+     */
+    public function getGGrupAdi(): GGrupAdi
+    {
+        return $this->gGrupAdi;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Instanciadores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Instancia un objeto GCamEsp a partir de un SimpleXMLElement.
+     * Hasta 0.2.0 los tres lectores llamaban a setGGrupoSeg() (inexistente) y a lectores inexistentes de
+     * gGrupSup y gGrupAdi (PK-25): ningún DE con gCamEsp se podía deserializar. Secuencia de tgCamEsp:
+     * gGrupEner, gGrupSeg, gGrupSup, gGrupAdi (DE_v150.xsd:794-806).
+     *
+     * @param  SimpleXMLElement $node
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if (strcmp($node->getName(), 'gCamEsp') != 0) {
+            throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->getName(), 1);
+        }
+        $res = new GCamEsp();
+        // gGrupEner admite hasta 9 ocurrencias: hasta 0.2.0 se leía solo la primera (Q-B9).
+        foreach ($node->gGrupEner as $gGrupEner) {
+            $res->addGGrupEner(GGrupEner::FromSimpleXMLElement($gGrupEner));
+        }
+        if (isset($node->gGrupSeg)) {
+            $res->setGGrupSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupSeg));
+        }
+        if (isset($node->gGrupSup)) {
+            $res->setGGrupSup(GGrupSup::FromSimpleXMLElement($node->gGrupSup));
+        }
+        if (isset($node->gGrupAdi)) {
+            $res->setGGrupAdi(GGrupAdi::FromSimpleXMLElement($node->gGrupAdi));
+        }
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GCamEsp a partir de un objeto stdClass que contiene datos de la respuesta del Sifen
+     *
+     * @param  stdClass $object
+     *
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new GCamEsp();
+        if (isset($object->gGrupEner)) {
+            // Con más de una ocurrencia, SoapClient entrega un arreglo (Q-B9).
+            foreach ((is_array($object->gGrupEner) ? $object->gGrupEner : [$object->gGrupEner]) as $gGrupEner) {
+                $res->addGGrupEner(GGrupEner::FromSifenResponseObject($gGrupEner));
+            }
+        }
+
+        if (isset($object->gGrupSeg)) {
+            $res->setGGrupSeg(GGrupSeg::FromSifenResponseObject($object->gGrupSeg));
+        }
+
+        if (isset($object->gGrupSup)) {
+            // Hasta 0.2.0 se buscaba "gGrupoSup" (errata) y el grupo de supermercados nunca se leía (PK-25).
+            $res->setGGrupSup(GGrupSup::FromSifenResponseObject($object->gGrupSup));
+        }
+
+        if (isset($object->gGrupAdi)) {
+            $res->setGGrupAdi(GGrupAdi::FromSifenResponseObject($object->gGrupAdi));
+        }
+        return $res;
+    }
+
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gCamEsp') != 0) {
+            throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->nodeName, 1);
+        }
+        $res = new GCamEsp();
+        foreach ($node->getElementsByTagName('gGrupEner') as $gGrupEner) { // hasta 9 ocurrencias (Q-B9)
+            $res->addGGrupEner(GGrupEner::FromDOMElement($gGrupEner));
+        }
+        if ($node->getElementsByTagName('gGrupSeg')->length > 0) {
+            $res->setGGrupSeg(GGrupSeg::FromDOMElement($node->getElementsByTagName('gGrupSeg')->item(0)));
+        } // hasta 0.2.0 recibía el nodo gGrupSup (PK-25)
+        if ($node->getElementsByTagName('gGrupSup')->length > 0) {
+            $res->setGGrupSup(GGrupSup::FromDOMElement($node->getElementsByTagName('gGrupSup')->item(0)));
+        }
+        if ($node->getElementsByTagName('gGrupAdi')->length > 0) {
+            $res->setGGrupAdi(GGrupAdi::FromDOMElement($node->getElementsByTagName('gGrupAdi')->item(0)));
+        }
+        return $res;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte este GCamEsp en un DOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement("gCamEsp");
+        foreach ($this->getGGrupEners() as $gGrupEner) {
+            $res->appendChild($gGrupEner->toDOMElement($doc));
+        }
+        // Orden de tgCamEsp (DE_v150.xsd:794-800): gGrupEner, gGrupSeg, gGrupSup, gGrupAdi. Hasta v0.1.5 el bloque de
+        // seguros emitía gGrupSup por un typo y en el orden incorrecto (PK-06).
+        if (isset($this->gGrupSeg)) {
+            $res->appendChild($this->gGrupSeg->toDOMElement($doc));
+        }
+        if (isset($this->gGrupSup)) {
+            $res->appendChild($this->gGrupSup->toDOMElement($doc));
+        }
+        if (isset($this->gGrupAdi)) {
+            $res->appendChild($this->gGrupAdi->toDOMElement($doc));
+        }
+        return $res;
+    }
 }

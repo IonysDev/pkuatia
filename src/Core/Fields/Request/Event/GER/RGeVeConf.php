@@ -15,149 +15,149 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class RGeVeConf
 {
-  // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public string $Id;        // GCO002 CDC del DTE 44- 1-1
-  public int $iTipConf;  // GCO003 Tipo de Conformidad - 1 - 1-1
-  public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción - 19 -0-1
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public string $Id;        // GCO002 CDC del DTE 44- 1-1
+    public int $iTipConf;  // GCO003 Tipo de Conformidad - 1 - 1-1
+    public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción - 19 -0-1
 
 
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de Id - CDC del DTE
-   *
-   * @param String $Id
-   *
-   * @return self
-   */
-  public function setId(string $Id): self
-  {
-    $this->Id = $Id;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de iTipConf - Tipo de Conformidad
-   *
-   * @param int $iTipConf
-   *
-   * @return self
-   */
-  public function setITipConf(int $iTipConf): self
-  {
-    $this->iTipConf = $iTipConf;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dFecRecep - Fecha Estimada de Recepción
-   *
-   * @param DateTime $dFecRecep
-   *
-   * @return self
-   */
-  public function setDFecRecep(DateTime $dFecRecep): self
-  {
-    $this->dFecRecep = $dFecRecep;
-    return $this;
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////
-  // Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de Id - CDC del DTE
-   *
-   * @return String
-   */
-  public function getId(): string
-  {
-    return $this->Id;
-  }
-
-  /**
-   * Obtiene el valor de iTipConf - Tipo de Conformidad
-   *
-   * @return int
-   */
-  public function getITipConf(): int
-  {
-    return $this->iTipConf;
-  }
-
-  /**
-   * Obtiene el valor de dFecRecep - Fecha Estimada de Recepción
-   *
-   * @return DateTime
-   */
-  public function getDFecRecep(): DateTime
-  {
-    return $this->dFecRecep;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Conversiones XML
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('rGeVeConf');
-    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
-    $res->appendChild(XmlHelper::elemento($doc, 'iTipConf', $this->getITipConf()));
-    if ($this->iTipConf == 2) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dFecRecep', $this->dFecRecep->format('Y-m-d\TH:i:s'))); // GCO004 es fecHhmmss (Evento_v150.xsd:76); antes se emitía solo la fecha
-    }
-    return $res;
-  }
-
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return RGeVeConf
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): RGeVeConf
-  // {
-  //   if (strcmp($xml->tagName, 'rGeVeConf') == 0 && $xml->childElementCount == 3) {
-  //     $res = new RGeVeConf();
-  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-  //     $res->setITipConf(intval($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue));
-  //     $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
-
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-    if ($node->getName() != 'rGeVeConf') {
-      throw new ValidacionException("Invalid XML Element: $node->getName()");
+    /**
+     * Establece el valor de Id - CDC del DTE
+     *
+     * @param String $Id
+     *
+     * @return self
+     */
+    public function setId(string $Id): self
+    {
+        $this->Id = $Id;
+        return $this;
     }
 
-    $res = new RGeVeConf();
-    $res->setId((string) $node->Id);
-    // Hasta 0.2.0: setITipConf() recibía el SimpleXMLElement (TypeError, PK-28) y dFecRecep se leía como
-    // AAAA-MM-DD aunque es fecHhmmss (Evento_v150.xsd:67-78) y se emite con hora desde 0.2.0 (PK-13).
-    $res->setITipConf(intval((string) $node->iTipConf));
-    if (isset($node->dFecRecep)) {
-      $fecha = DateTime::createFromFormat('Y-m-d\TH:i:s', trim((string) $node->dFecRecep));
-      if ($fecha === false) {
-        throw new ValidacionException("[RGeVeConf] dFecRecep debe tener el formato AAAA-MM-DDThh:mm:ss (fecHhmmss): '" . $node->dFecRecep . "'");
-      }
-      $res->setDFecRecep($fecha);
+    /**
+     * Establece el valor de iTipConf - Tipo de Conformidad
+     *
+     * @param int $iTipConf
+     *
+     * @return self
+     */
+    public function setITipConf(int $iTipConf): self
+    {
+        $this->iTipConf = $iTipConf;
+        return $this;
     }
 
-    return $res;
-  }
+    /**
+     * Establece el valor de dFecRecep - Fecha Estimada de Recepción
+     *
+     * @param DateTime $dFecRecep
+     *
+     * @return self
+     */
+    public function setDFecRecep(DateTime $dFecRecep): self
+    {
+        $this->dFecRecep = $dFecRecep;
+        return $this;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////
+    // Getters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de Id - CDC del DTE
+     *
+     * @return String
+     */
+    public function getId(): string
+    {
+        return $this->Id;
+    }
+
+    /**
+     * Obtiene el valor de iTipConf - Tipo de Conformidad
+     *
+     * @return int
+     */
+    public function getITipConf(): int
+    {
+        return $this->iTipConf;
+    }
+
+    /**
+     * Obtiene el valor de dFecRecep - Fecha Estimada de Recepción
+     *
+     * @return DateTime
+     */
+    public function getDFecRecep(): DateTime
+    {
+        return $this->dFecRecep;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversiones XML
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('rGeVeConf');
+        $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTipConf', $this->getITipConf()));
+        if ($this->iTipConf == 2) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dFecRecep', $this->dFecRecep->format('Y-m-d\TH:i:s'))); // GCO004 es fecHhmmss (Evento_v150.xsd:76); antes se emitía solo la fecha
+        }
+        return $res;
+    }
+
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return RGeVeConf
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): RGeVeConf
+    // {
+    //   if (strcmp($xml->tagName, 'rGeVeConf') == 0 && $xml->childElementCount == 3) {
+    //     $res = new RGeVeConf();
+    //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+    //     $res->setITipConf(intval($xml->getElementsByTagName('iTipConf')->item(0)->nodeValue));
+    //     $res->setDFecRecep(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFecRecep')->item(0)->nodeValue));
+    //     return $res;
+    //   } else {
+    //     throw new \Exception("Invalid XML Element: $xml->tagName");
+    //     return null;
+    //   }
+    // }
+
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if ($node->getName() != 'rGeVeConf') {
+            throw new ValidacionException("Invalid XML Element: $node->getName()");
+        }
+
+        $res = new RGeVeConf();
+        $res->setId((string) $node->Id);
+        // Hasta 0.2.0: setITipConf() recibía el SimpleXMLElement (TypeError, PK-28) y dFecRecep se leía como
+        // AAAA-MM-DD aunque es fecHhmmss (Evento_v150.xsd:67-78) y se emite con hora desde 0.2.0 (PK-13).
+        $res->setITipConf(intval((string) $node->iTipConf));
+        if (isset($node->dFecRecep)) {
+            $fecha = DateTime::createFromFormat('Y-m-d\TH:i:s', trim((string) $node->dFecRecep));
+            if ($fecha === false) {
+                throw new ValidacionException("[RGeVeConf] dFecRecep debe tener el formato AAAA-MM-DDThh:mm:ss (fecHhmmss): '" . $node->dFecRecep . "'");
+            }
+            $res->setDFecRecep($fecha);
+        }
+
+        return $res;
+    }
 }

@@ -19,70 +19,70 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 final class DecimalXsd
 {
-  /**
-   * Valida y normaliza un valor decimal.
-   *
-   * @param int|String $valor        Valor recibido (entero o texto numérico).
-   * @param String     $campo        Nombre del campo, para el mensaje de error (p. ej. "dEfectivo").
-   * @param int        $totalDigitos totalDigits del tipo XSD (19 en tMontoBase4, 10 en tMontoBase6).
-   * @param int        $decimales    fractionDigits del tipo XSD (4 en ambos).
-   * @param String     $prefijo      Prefijo del mensaje, p. ej. "[GGrupSup]"; vacío para omitirlo.
-   * @param String     $tipo         Referencia citada en el mensaje de límite (p. ej. "tMontoBase6").
-   *
-   * @return String Texto decimal normalizado.
-   *
-   * @throws \InvalidArgumentException Si el valor no es numérico o excede los dígitos o decimales permitidos.
-   */
-  public static function normalizar(int|string $valor, string $campo, int $totalDigitos, int $decimales = 4, string $prefijo = '', string $tipo = 'DE_Types_v150.xsd'): string
-  {
-    $original = trim((string) $valor);
-    $texto = $original;
-    $pre = $prefijo === '' ? '' : $prefijo . ' ';
-    if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
-      if (!is_numeric($texto)) {
-        throw new ValidacionException("{$pre}$campo debe ser un número decimal: '$original'");
-      }
-      $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
+    /**
+     * Valida y normaliza un valor decimal.
+     *
+     * @param int|String $valor        Valor recibido (entero o texto numérico).
+     * @param String     $campo        Nombre del campo, para el mensaje de error (p. ej. "dEfectivo").
+     * @param int        $totalDigitos totalDigits del tipo XSD (19 en tMontoBase4, 10 en tMontoBase6).
+     * @param int        $decimales    fractionDigits del tipo XSD (4 en ambos).
+     * @param String     $prefijo      Prefijo del mensaje, p. ej. "[GGrupSup]"; vacío para omitirlo.
+     * @param String     $tipo         Referencia citada en el mensaje de límite (p. ej. "tMontoBase6").
+     *
+     * @return String Texto decimal normalizado.
+     *
+     * @throws \InvalidArgumentException Si el valor no es numérico o excede los dígitos o decimales permitidos.
+     */
+    public static function normalizar(int|string $valor, string $campo, int $totalDigitos, int $decimales = 4, string $prefijo = '', string $tipo = 'DE_Types_v150.xsd'): string
+    {
+        $original = trim((string) $valor);
+        $texto = $original;
+        $pre = $prefijo === '' ? '' : $prefijo . ' ';
+        if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
+            if (!is_numeric($texto)) {
+                throw new ValidacionException("{$pre}$campo debe ser un número decimal: '$original'");
+            }
+            $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
+        }
+        $signo = str_starts_with($texto, '-') ? '-' : '';
+        $texto = ltrim($texto, '+-');
+        if (str_starts_with($texto, '.')) {
+            $texto = '0' . $texto;
+        }
+        if (str_ends_with($texto, '.')) {
+            $texto = substr($texto, 0, -1);
+        }
+        [$enteros, $parteDecimal] = array_pad(explode('.', $texto, 2), 2, '');
+        $enteros = ltrim($enteros, '0');
+        $parteDecimal = rtrim($parteDecimal, '0');
+        if (strlen($parteDecimal) > $decimales || strlen($enteros) + strlen($parteDecimal) > $totalDigitos) {
+            throw new ValidacionException("{$pre}$campo admite hasta $totalDigitos dígitos, de los cuales hasta $decimales decimales ($tipo): '$original'");
+        }
+        return $signo . $texto;
     }
-    $signo = str_starts_with($texto, '-') ? '-' : '';
-    $texto = ltrim($texto, '+-');
-    if (str_starts_with($texto, '.')) {
-      $texto = '0' . $texto;
-    }
-    if (str_ends_with($texto, '.')) {
-      $texto = substr($texto, 0, -1);
-    }
-    [$enteros, $parteDecimal] = array_pad(explode('.', $texto, 2), 2, '');
-    $enteros = ltrim($enteros, '0');
-    $parteDecimal = rtrim($parteDecimal, '0');
-    if (strlen($parteDecimal) > $decimales || strlen($enteros) + strlen($parteDecimal) > $totalDigitos) {
-      throw new ValidacionException("{$pre}$campo admite hasta $totalDigitos dígitos, de los cuales hasta $decimales decimales ($tipo): '$original'");
-    }
-    return $signo . $texto;
-  }
 
-  /**
-   * Valor decimal exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor
-   * (compatibilidad con quien escribe la propiedad entera sin pasar por el setter).
-   */
-  public static function exacto(?string $decimal, int $entero): string
-  {
-    return ($decimal !== null && intval($decimal) === $entero) ? $decimal : (string) $entero;
-  }
+    /**
+     * Valor decimal exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor
+     * (compatibilidad con quien escribe la propiedad entera sin pasar por el setter).
+     */
+    public static function exacto(?string $decimal, int $entero): string
+    {
+        return ($decimal !== null && intval($decimal) === $entero) ? $decimal : (string) $entero;
+    }
 
-  /**
-   * Indica si el valor cumple con el tipo, sin lanzar excepción (para el validador de reglas).
-   */
-  public static function esValido(mixed $valor, int $totalDigitos, int $decimales = 4): bool
-  {
-    if (!is_int($valor) && !is_string($valor)) {
-      return false;
+    /**
+     * Indica si el valor cumple con el tipo, sin lanzar excepción (para el validador de reglas).
+     */
+    public static function esValido(mixed $valor, int $totalDigitos, int $decimales = 4): bool
+    {
+        if (!is_int($valor) && !is_string($valor)) {
+            return false;
+        }
+        try {
+            self::normalizar($valor, 'valor', $totalDigitos, $decimales);
+            return true;
+        } catch (\InvalidArgumentException) {
+            return false;
+        }
     }
-    try {
-      self::normalizar($valor, 'valor', $totalDigitos, $decimales);
-      return true;
-    } catch (\InvalidArgumentException) {
-      return false;
-    }
-  }
 }

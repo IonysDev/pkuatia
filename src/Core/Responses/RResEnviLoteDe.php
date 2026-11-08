@@ -19,7 +19,7 @@ class RResEnviLoteDe implements RespuestaSifen
     public const COD_RES_ACEPTADO = 300;
     public const COD_RES_RECHAZADO = 301;
 
-                                    // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public DateTime $dFecProc;      // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
     public int $dCodRes;       // BRSch03 - 4     - 1.1 - Código del resultado de recepción
     public string $dMsgRes;       // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
@@ -193,7 +193,7 @@ class RResEnviLoteDe implements RespuestaSifen
         if (isset($object->rProtDe)) {
             $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
             if (isset($prot->dFecProc)) {
-            $res->setdFecProc($prot->getDFecProc());
+                $res->setdFecProc($prot->getDFecProc());
             }
             $proc = $prot->getGResProc()[0] ?? null;
             if ($proc !== null) {
@@ -203,38 +203,38 @@ class RResEnviLoteDe implements RespuestaSifen
             return $res;
         }
         if (isset($object->dFecProc)) {
-        $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
+            $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
         } // con o sin zona (PK-29)
         else {
-        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');
+            throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');
         }
 
         if (isset($object->dCodRes)) {
-        $res->setDCodRes($object->dCodRes);
+            $res->setDCodRes($object->dCodRes);
         } else {
-        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 'dCodRes');
+            throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 'dCodRes');
         }
 
         if (isset($object->dMsgRes)) {
-        $res->setDMsgRes($object->dMsgRes);
+            $res->setDMsgRes($object->dMsgRes);
         } else {
-        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 'dMsgRes');
+            throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 'dMsgRes');
         }
 
         if (isset($object->dProtConsLote)) {
             if (ctype_digit($object->dProtConsLote)) {
                 $res->setdProtConsLote($object->dProtConsLote);
             } else {
-            throw new RespuestaException("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
+                throw new RespuestaException("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
             }
         } elseif ($res->getDCodRes() == self::COD_RES_ACEPTADO) {
-        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 'dProtConsLote');
+            throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 'dProtConsLote');
         }
 
         if (isset($object->dTpoProces)) {
-        $res->setDTpoProces($object->dTpoProces);
+            $res->setDTpoProces($object->dTpoProces);
         } else {
-        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 'dTpoProces');
+            throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 'dTpoProces');
         }
 
         return $res;

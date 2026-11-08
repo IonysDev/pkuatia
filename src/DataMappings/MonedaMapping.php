@@ -11,72 +11,72 @@ use DOMDocument;
 
 class MonedaMapping
 {
-  /**
-   * Longitud máxima de la descripción de la moneda en el XSD: tdDMoneTiPag (DE_Types_v150.xsd:884-895),
-   * tipo de D016 dDesMoneOpe, E609 dDMoneTiPag y E651 dDMoneCuo.
-   */
-  public const MAX_LONGITUD_DESCRIPCION = 20;
+    /**
+     * Longitud máxima de la descripción de la moneda en el XSD: tdDMoneTiPag (DE_Types_v150.xsd:884-895),
+     * tipo de D016 dDesMoneOpe, E609 dDMoneTiPag y E651 dDMoneCuo.
+     */
+    public const MAX_LONGITUD_DESCRIPCION = 20;
 
-  /** @var array<int, array<string, mixed>>|null Caché del catálogo. */
-  private static ?array $catalogo = null;
+    /** @var array<int, array<string, mixed>>|null Caché del catálogo. */
+    private static ?array $catalogo = null;
 
-  /**
-   * Devuelve un array con la lista de monedas.
-   *
-   * @return array
-   */
-  public static function GetArray()
-  {
-    if (self::$catalogo === null) {
-      $xml = new DOMDocument();
-      $xml->load(__DIR__ . '/Sources/Monedas_v150.xsd');
-      $xml->preserveWhiteSpace = true;
-      $parseObj = str_replace($xml->lastChild->prefix . ':', "", $xml->saveXML($xml->lastChild));
-      $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
-      self::$catalogo = $array['simpleType']['restriction']['enumeration'];
+    /**
+     * Devuelve un array con la lista de monedas.
+     *
+     * @return array
+     */
+    public static function GetArray()
+    {
+        if (self::$catalogo === null) {
+            $xml = new DOMDocument();
+            $xml->load(__DIR__ . '/Sources/Monedas_v150.xsd');
+            $xml->preserveWhiteSpace = true;
+            $parseObj = str_replace($xml->lastChild->prefix . ':', "", $xml->saveXML($xml->lastChild));
+            $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
+            self::$catalogo = $array['simpleType']['restriction']['enumeration'];
+        }
+        return self::$catalogo;
     }
-    return self::$catalogo;
-  }
 
-  /**
-   * Devuelve la descripción de la moneda a partir del código ISO 4217, recortada a los 20 caracteres
-   * que admite el XSD (tdDMoneTiPag). 15 monedas del catálogo tienen un CodeName más largo (ANG, BMD,
-   * FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD, XBA, XBB, XBC, XTS, XXX) y producían rechazo de esquema
-   * (PK-23). El nombre completo se obtiene con GetCodeName().
-   *
-   * Advertencia (deuda D-A3, sin solución conocida): el recorte evita el rechazo de esquema, pero el SIFEN rechaza
-   * la descripción recortada con 1206 "Descripción de la moneda de la operación no corresponde al código"
-   * (verificado en sifen-test el 11/10/2026 con ANG), y el nombre completo no entra en el XSD. Esas 15 monedas no
-   * se pueden usar en un DE hasta que la DNIT indique qué descripción acepta.
-   *
-   * @param  mixed $code
-   *
-   * @return String|null null si el código no existe en Monedas_v150.xsd.
-   */
-  public static function GetDescription($code): ?string
-  {
-    $nombre = self::GetCodeName($code);
-    if ($nombre === null) {
-      return null;
+    /**
+     * Devuelve la descripción de la moneda a partir del código ISO 4217, recortada a los 20 caracteres
+     * que admite el XSD (tdDMoneTiPag). 15 monedas del catálogo tienen un CodeName más largo (ANG, BMD,
+     * FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD, XBA, XBB, XBC, XTS, XXX) y producían rechazo de esquema
+     * (PK-23). El nombre completo se obtiene con GetCodeName().
+     *
+     * Advertencia (deuda D-A3, sin solución conocida): el recorte evita el rechazo de esquema, pero el SIFEN rechaza
+     * la descripción recortada con 1206 "Descripción de la moneda de la operación no corresponde al código"
+     * (verificado en sifen-test el 11/10/2026 con ANG), y el nombre completo no entra en el XSD. Esas 15 monedas no
+     * se pueden usar en un DE hasta que la DNIT indique qué descripción acepta.
+     *
+     * @param  mixed $code
+     *
+     * @return String|null null si el código no existe en Monedas_v150.xsd.
+     */
+    public static function GetDescription($code): ?string
+    {
+        $nombre = self::GetCodeName($code);
+        if ($nombre === null) {
+            return null;
+        }
+        return mb_strlen($nombre) > self::MAX_LONGITUD_DESCRIPCION ? rtrim(mb_substr($nombre, 0, self::MAX_LONGITUD_DESCRIPCION)) : $nombre;
     }
-    return mb_strlen($nombre) > self::MAX_LONGITUD_DESCRIPCION ? rtrim(mb_substr($nombre, 0, self::MAX_LONGITUD_DESCRIPCION)) : $nombre;
-  }
 
-  /**
-   * Devuelve el CodeName completo de la moneda tal como figura en Monedas_v150.xsd (sin recortar).
-   *
-   * @param  mixed $code
-   *
-   * @return String|null
-   */
-  public static function GetCodeName($code): ?string
-  {
-    $buscado = strtoupper((string) $code);
-    foreach (self::GetArray() as $value) {
-      if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $buscado) {
-        return (string) $value['annotation']['documentation']['CodeName'];
-      }
+    /**
+     * Devuelve el CodeName completo de la moneda tal como figura en Monedas_v150.xsd (sin recortar).
+     *
+     * @param  mixed $code
+     *
+     * @return String|null
+     */
+    public static function GetCodeName($code): ?string
+    {
+        $buscado = strtoupper((string) $code);
+        foreach (self::GetArray() as $value) {
+            if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $buscado) {
+                return (string) $value['annotation']['documentation']['CodeName'];
+            }
+        }
+        return null;
     }
-    return null;
-  }
 }

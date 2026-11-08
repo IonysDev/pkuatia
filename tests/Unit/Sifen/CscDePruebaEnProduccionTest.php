@@ -15,59 +15,59 @@ use PHPUnit\Framework\TestCase;
  */
 final class CscDePruebaEnProduccionTest extends TestCase
 {
-  /** @var array{pemPath: string, passphrase: string, cleanup: callable} */
-  private array $cert;
+    /** @var array{pemPath: string, passphrase: string, cleanup: callable} */
+    private array $cert;
 
-  protected function setUp(): void
-  {
-    $this->cert = TestCertFactory::createSelfSignedPem();
-  }
-
-  protected function tearDown(): void
-  {
-    Sifen::Shutdown();
-    ($this->cert['cleanup'])();
-  }
-
-  private function config(string $env): Config
-  {
-    $config = new Config();
-    $config->env = $env;
-    $config->certificateFormat = Config::CERT_FORMAT_PEM;
-    $config->privateKeyFilePath = $this->cert['pemPath'];
-    $config->privateKeyPassphrase = $this->cert['passphrase'];
-    $config->dIdFilePath = tempnam(sys_get_temp_dir(), 'pkuatia_did_') . '.json';
-    return $config;
-  }
-
-  public function testElCscDeFabricaEsElDePrueba(): void
-  {
-    $this->assertSame(Config::CSC_DE_PRUEBA, (new Config())->csc);
-    $this->assertTrue((new Config())->usaCscDePrueba());
-    $this->assertFalse((new Config())->setCsc('1234ABCD5678EF9012345678901234AB')->usaCscDePrueba());
-  }
-
-  public function testInitEnProduccionConElCscDePruebaLanzaConfiguracionException(): void
-  {
-    $config = $this->config(Config::ENV_PROD);
-    try {
-      Sifen::Init($config);
-      $this->fail('Init() debe rechazar el CSC de prueba en producción');
-    } catch (ConfiguracionException $e) {
-      $this->assertStringContainsString('CSC', $e->getMessage());
-      $this->assertStringContainsString('2501', $e->getMessage());
-      $this->assertStringContainsString('idCsc', $e->getMessage());
-      $this->assertStringNotContainsString($this->cert['passphrase'], $e->getMessage());
+    protected function setUp(): void
+    {
+        $this->cert = TestCertFactory::createSelfSignedPem();
     }
-  }
 
-  public function testInitEnProduccionConOtroCscYEnDesarrolloConElDePruebaSiguenFuncionando(): void
-  {
-    $prod = $this->config(Config::ENV_PROD);
-    $prod->setCsc('1234ABCD5678EF9012345678901234AB')->setIdCsc('0001');
-    Sifen::Init($prod);
-    $this->assertSame(Config::ENV_PROD, $prod->getEnv());
-    Sifen::Init($this->config(Config::ENV_DEV));
-    $this->addToAssertionCount(1); // sin excepción
-  }
+    protected function tearDown(): void
+    {
+        Sifen::Shutdown();
+        ($this->cert['cleanup'])();
+    }
+
+    private function config(string $env): Config
+    {
+        $config = new Config();
+        $config->env = $env;
+        $config->certificateFormat = Config::CERT_FORMAT_PEM;
+        $config->privateKeyFilePath = $this->cert['pemPath'];
+        $config->privateKeyPassphrase = $this->cert['passphrase'];
+        $config->dIdFilePath = tempnam(sys_get_temp_dir(), 'pkuatia_did_') . '.json';
+        return $config;
+    }
+
+    public function testElCscDeFabricaEsElDePrueba(): void
+    {
+        $this->assertSame(Config::CSC_DE_PRUEBA, (new Config())->csc);
+        $this->assertTrue((new Config())->usaCscDePrueba());
+        $this->assertFalse((new Config())->setCsc('1234ABCD5678EF9012345678901234AB')->usaCscDePrueba());
+    }
+
+    public function testInitEnProduccionConElCscDePruebaLanzaConfiguracionException(): void
+    {
+        $config = $this->config(Config::ENV_PROD);
+        try {
+            Sifen::Init($config);
+            $this->fail('Init() debe rechazar el CSC de prueba en producción');
+        } catch (ConfiguracionException $e) {
+            $this->assertStringContainsString('CSC', $e->getMessage());
+            $this->assertStringContainsString('2501', $e->getMessage());
+            $this->assertStringContainsString('idCsc', $e->getMessage());
+            $this->assertStringNotContainsString($this->cert['passphrase'], $e->getMessage());
+        }
+    }
+
+    public function testInitEnProduccionConOtroCscYEnDesarrolloConElDePruebaSiguenFuncionando(): void
+    {
+        $prod = $this->config(Config::ENV_PROD);
+        $prod->setCsc('1234ABCD5678EF9012345678901234AB')->setIdCsc('0001');
+        Sifen::Init($prod);
+        $this->assertSame(Config::ENV_PROD, $prod->getEnv());
+        Sifen::Init($this->config(Config::ENV_DEV));
+        $this->addToAssertionCount(1); // sin excepción
+    }
 }

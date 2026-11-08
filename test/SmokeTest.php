@@ -40,19 +40,19 @@ use IonysDev\Pkuatia\Sifen;
 $fails = 0;
 function check($cond, $msg)
 {
-  global $fails;
-  if ($cond) {
-    echo "OK   $msg\n";
-  } else {
-    echo "FAIL $msg\n";
-    $fails++;
-  }
+    global $fails;
+    if ($cond) {
+        echo "OK   $msg\n";
+    } else {
+        echo "FAIL $msg\n";
+        $fails++;
+    }
 }
 
 // 1. Literales COblAfe: longitud 21-65 (tdDesOblAfe del XSD de producción)
 foreach (COblAfe::cases() as $case) {
-  $len = mb_strlen($case->getDescription());
-  check($len >= 21 && $len <= 65, "COblAfe {$case->value} longitud $len en [21,65]");
+    $len = mb_strlen($case->getDescription());
+    check($len >= 21 && $len <= 65, "COblAfe {$case->value} longitud $len en [21,65]");
 }
 
 // 2. dDesTImp con guion ASCII según XSD de producción
@@ -63,10 +63,10 @@ $o1 = new GOblAfe();
 $o1->setCOblAfe(COblAfe::ImpuestoALaRentaEmpresarialSimple);
 check($o1->getCOblAfe() === 701 && is_string($o1->getDDesOblAfe()), "GOblAfe::setCOblAfe(enum) asigna código y descripción");
 try {
-  (new GOblAfe())->setCOblAfe(999);
-  check(false, "GOblAfe con código inválido debe lanzar excepción");
+    (new GOblAfe())->setCOblAfe(999);
+    check(false, "GOblAfe con código inválido debe lanzar excepción");
 } catch (\InvalidArgumentException $e) {
-  check(true, "GOblAfe con código inválido lanza InvalidArgumentException");
+    check(true, "GOblAfe con código inválido lanza InvalidArgumentException");
 }
 
 // 4. gOblAfe en GOpeCom: serialización, posición y round-trip
@@ -83,13 +83,13 @@ check(strrpos($xml, '</gOblAfe></gOpeCom>') !== false, "gOblAfe es el último hi
 $parsed = GOpeCom::FromDOMElement($node);
 check(count($parsed->getGOblAfe()) === 2 && $parsed->getGOblAfe()[1]->getCOblAfe() === 211, "GOpeCom::FromDOMElement round-trip de gOblAfe");
 try {
-  $g = new GOpeCom();
-  foreach ([113, 143, 211, 311, 321, 700, 701, 702, 703, 715, 716, 113, 143] as $c) {
-    $g->addGOblAfe($c);
-  }
-  check(false, "addGOblAfe nro 13 debe lanzar excepción");
+    $g = new GOpeCom();
+    foreach ([113, 143, 211, 311, 321, 700, 701, 702, 703, 715, 716, 113, 143] as $c) {
+        $g->addGOblAfe($c);
+    }
+    check(false, "addGOblAfe nro 13 debe lanzar excepción");
 } catch (\InvalidArgumentException $e) {
-  check(true, "addGOblAfe respeta el máximo de 12 ocurrencias");
+    check(true, "addGOblAfe respeta el máximo de 12 ocurrencias");
 }
 
 // 5. DE::setDSisFact (NT-010: único valor 1)
@@ -97,10 +97,10 @@ $de = new DE();
 $de->setDSisFact(1);
 check($de->getDSisFact() === 1, "DE::setDSisFact(1) acepta el valor");
 try {
-  $de->setDSisFact(2);
-  check(false, "DE::setDSisFact(2) debe lanzar excepción");
+    $de->setDSisFact(2);
+    check(false, "DE::setDSisFact(2) debe lanzar excepción");
 } catch (\Exception $e) {
-  check(true, "DE::setDSisFact(2) lanza excepción controlada");
+    check(true, "DE::setDSisFact(2) lanza excepción controlada");
 }
 
 // 6. RGEveNom: descripción del tipo de documento y orden de campos según Evento_v150.xsd
@@ -139,17 +139,17 @@ $deNT->gTotSub = $tot;
 $validador = new ReflectionMethod(Sifen::class, 'ValidarUmbralInnominadoNT024');
 $validador->setAccessible(true);
 try {
-  $validador->invoke(null, $deNT);
-  check(false, "NT-024: innominado con 7M debe lanzar excepción");
+    $validador->invoke(null, $deNT);
+    check(false, "NT-024: innominado con 7M debe lanzar excepción");
 } catch (\Exception $e) {
-  check(str_contains($e->getMessage(), 'NT-024'), "NT-024: innominado con 7M lanza excepción");
+    check(str_contains($e->getMessage(), 'NT-024'), "NT-024: innominado con 7M lanza excepción");
 }
 $tot->dTotGralOpe = '6999999.99';
 try {
-  $validador->invoke(null, $deNT);
-  check(true, "NT-024: innominado con 6.999.999,99 pasa");
+    $validador->invoke(null, $deNT);
+    check(true, "NT-024: innominado con 6.999.999,99 pasa");
 } catch (\Exception $e) {
-  check(false, "NT-024: innominado con 6.999.999,99 no debe lanzar: " . $e->getMessage());
+    check(false, "NT-024: innominado con 6.999.999,99 no debe lanzar: " . $e->getMessage());
 }
 
 // 8. Correlatividad del dId (con bloqueo de archivo)

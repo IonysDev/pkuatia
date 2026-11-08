@@ -18,397 +18,397 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GCamEnt extends BaseSifenField
 {
-                             // Id - Longitud - Ocurrencia - Descripción
-  public string $dDirLocEnt; // E941 - 1-255 - 1-1 - Dirección del local de la entrega
-  public ?int $dNumCasEnt;   // E942 - 1-6   - 1-1 - Número de casa de Entrega
-  public string $dComp1Ent;  // E943 - 1-255 - 0-1 - Complemento de dirección 1 Entrega
-  public string $dComp2Ent;  // E944 - 1-255 - 0-1 - Complemento de dirección 2 Entrega
-  public ?int $cDepEnt;      // E945 - 1-2   - 1-1 - Código del departamento del local de Entrega
-  public ?int $cDisEnt;      // E947 - 1-4   - 0-1 - Código del distrito del local de Entrega
-  public ?int $cCiuEnt;      // E949 - 1-5   - 1-1 - Código de la ciudad del local de Entrega
-  public string $dTelEnt;    // E951 - 6-15  - 0-1 - Teléfono de contacto del local de Entrega
+    // Id - Longitud - Ocurrencia - Descripción
+    public string $dDirLocEnt; // E941 - 1-255 - 1-1 - Dirección del local de la entrega
+    public ?int $dNumCasEnt;   // E942 - 1-6   - 1-1 - Número de casa de Entrega
+    public string $dComp1Ent;  // E943 - 1-255 - 0-1 - Complemento de dirección 1 Entrega
+    public string $dComp2Ent;  // E944 - 1-255 - 0-1 - Complemento de dirección 2 Entrega
+    public ?int $cDepEnt;      // E945 - 1-2   - 1-1 - Código del departamento del local de Entrega
+    public ?int $cDisEnt;      // E947 - 1-4   - 0-1 - Código del distrito del local de Entrega
+    public ?int $cCiuEnt;      // E949 - 1-5   - 1-1 - Código de la ciudad del local de Entrega
+    public string $dTelEnt;    // E951 - 6-15  - 0-1 - Teléfono de contacto del local de Entrega
 
-  ///////////////////////////////////////////////////////////////////////
-  ///Setters
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ///Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de dDirLocEnt
-   *
-   * @param String $dDirLocEnt
-   *
-   * @return self
-   */
-  public function setDDirLocEnt(string $dDirLocEnt): self
-  {
-    $this->dDirLocEnt = $dDirLocEnt;
+    /**
+     * Establece el valor de dDirLocEnt
+     *
+     * @param String $dDirLocEnt
+     *
+     * @return self
+     */
+    public function setDDirLocEnt(string $dDirLocEnt): self
+    {
+        $this->dDirLocEnt = $dDirLocEnt;
 
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNumCasEnt
-   *
-   * @param int $dNumCasEnt
-   *
-   * @return self
-   */
-  public function setDNumCasEnt(int $dNumCasEnt): self
-  {
-    $this->dNumCasEnt = $dNumCasEnt;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dComp1Ent
-   *
-   * @param String $dComp1Ent
-   *
-   * @return self
-   */
-  public function setDComp1Ent(string $dComp1Ent): self
-  {
-    $this->dComp1Ent = $dComp1Ent;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dComp2Ent
-   *
-   * @param String $dComp2Ent
-   *
-   * @return self
-   */
-  public function setDComp2Ent(string $dComp2Ent): self
-  {
-    $this->dComp2Ent = $dComp2Ent;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cDepEnt
-   *
-   * @param int $cDepEnt
-   *
-   * @return self
-   */
-  public function setCDepEnt(int $cDepEnt): self
-  {
-    $this->cDepEnt = $cDepEnt;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cDisEnt
-   *
-   * @param int $cDisEnt
-   *
-   * @return self
-   */
-  public function setCDisEnt(int $cDisEnt): self
-  {
-    $this->cDisEnt = $cDisEnt;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cCiuEnt
-   *
-   * @param int $cCiuEnt
-   *
-   * @return self
-   */
-  public function setCCiuEnt(int $cCiuEnt): self
-  {
-    $this->cCiuEnt = $cCiuEnt;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dTelEnt
-   *
-   * @param String $dTelEnt
-   *
-   * @return self
-   */
-  public function setDTelEnt(string $dTelEnt): self
-  {
-    $this->dTelEnt = $dTelEnt;
-
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de dDirLocEnt
-   *
-   * @return String
-   */
-  public function getDDirLocEnt(): string
-  {
-    return $this->dDirLocEnt;
-  }
-
-  /**
-   * Obtiene el valor de dNumCasEnt
-   *
-   * @return int
-   */
-  public function getDNumCasEnt(): ?int
-  {
-    return $this->dNumCasEnt ?? null;
-  }
-
-  /**
-   * Obtiene el valor de dComp1Ent
-   *
-   * @return String
-   */
-  public function getDComp1Ent(): string
-  {
-    return $this->dComp1Ent;
-  }
-
-  /**
-   * Obtiene el valor de dComp2Ent
-   *
-   * @return String
-   */
-  public function getDComp2Ent(): string
-  {
-    return $this->dComp2Ent;
-  }
-
-  /**
-   * Obtiene el valor de cDepEnt
-   *
-   * @return int
-   */
-  public function getCDepEnt(): ?int
-  {
-    return $this->cDepEnt ?? null;
-  }
-
-  /**
-   * E946 Descripción del departamento del local de la entrega
-   *
-   * @return String
-   */
-  public function getDDesDepEnt(): string
-  {
-    return DepartamentoMapping::getDepName(strval($this->cDepEnt));
-  }
-
-
-  /**
-   * Obtiene el valor de cDisEnt
-   *
-   * @return int
-   */
-  public function getCDisEnt(): ?int
-  {
-    return $this->cDisEnt ?? null;
-  }
-
-  /**
-   * E948 Descripción de distrito del local de entrada
-   *
-   * @return String
-   */
-  public function getDDesDisEnt(): string
-  {
-    return PyGeoCodesMapping::getDistName(strval($this->cDisEnt));
-  }
-
-  /**
-   * Obtiene el valor de cCiuEnt
-   *
-   * @return int
-   */
-  public function getCCiuEnt(): ?int
-  {
-    return $this->cCiuEnt ?? null;
-  }
-
-  /**
-   * E950 Descripción de ciudad del local de entrada
-   *
-   * @return String
-   */
-  public function getDDesCiuEnt(): string
-  {
-    return PyGeoCodesMapping::getCiudName(strval($this->cCiuEnt));
-  }
-
-  /**
-   * Obtiene el valor de dTelEnt
-   *
-   * @return String
-   */
-  public function getDTelEnt(): string
-  {
-    return $this->dTelEnt;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///XML Element
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gCamEnt');
-
-    $res->appendChild(XmlHelper::elemento($doc, 'dDirLocEnt', $this->getDDirLocEnt()));
-
-    if (isset($this->dNumCasEnt)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasEnt', $this->getDNumCasEnt()));
-    } else {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasEnt', 0));
+        return $this;
     }
 
-    if (isset($this->dComp1Ent)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dComp1Ent', $this->getDComp1Ent()));
+
+    /**
+     * Establece el valor de dNumCasEnt
+     *
+     * @param int $dNumCasEnt
+     *
+     * @return self
+     */
+    public function setDNumCasEnt(int $dNumCasEnt): self
+    {
+        $this->dNumCasEnt = $dNumCasEnt;
+
+        return $this;
     }
 
-    if (isset($this->dComp2Ent)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dComp2Ent', $this->getDComp2Ent()));
+
+    /**
+     * Establece el valor de dComp1Ent
+     *
+     * @param String $dComp1Ent
+     *
+     * @return self
+     */
+    public function setDComp1Ent(string $dComp1Ent): self
+    {
+        $this->dComp1Ent = $dComp1Ent;
+
+        return $this;
     }
 
-    $res->appendChild(XmlHelper::elemento($doc, 'cDepEnt', $this->getCDepEnt()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesDepEnt', $this->getDDesDepEnt()));
 
-    if (isset($this->cDisEnt)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'cDisEnt', $this->getCDisEnt()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesDisEnt', $this->getDDesDisEnt()));
-    }
-    $res->appendChild(XmlHelper::elemento($doc, 'cCiuEnt', $this->getCCiuEnt()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEnt', $this->getDDesCiuEnt()));
+    /**
+     * Establece el valor de dComp2Ent
+     *
+     * @param String $dComp2Ent
+     *
+     * @return self
+     */
+    public function setDComp2Ent(string $dComp2Ent): self
+    {
+        $this->dComp2Ent = $dComp2Ent;
 
-    if (isset($this->dTelEnt)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dTelEnt', $this->getDTelEnt()));
-    }
-
-    return $res;
-  }
-
-  /**
-   * Instancia un objeto GCamEnt a partir de un DOMElement que representa el nodo XML del objeto.
-   *
-   * @param DOMElement $node Nodo XML que representa el objeto.
-   *
-   * @return self Objeto instanciado.
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if (strcmp($node->nodeName, 'gCamEnt') != 0) {
-      throw new ValidacionException('[GCamEnt] El nombre del nodo no corresponde a gCamEnt: ' . $node->nodeName);
-    }
-    $res = new GCamEnt();
-
-    if ($node->getElementsByTagName('dDirLocEnt')->length > 0) {
-      $res->setDDirLocEnt($node->getElementsByTagName('dDirLocEnt')->item(0)->nodeValue);
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dNumCasEnt')->length > 0) {
-      $res->setDNumCasEnt(intval($node->getElementsByTagName('dNumCasEnt')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de cDepEnt
+     *
+     * @param int $cDepEnt
+     *
+     * @return self
+     */
+    public function setCDepEnt(int $cDepEnt): self
+    {
+        $this->cDepEnt = $cDepEnt;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dComp1Ent')->length > 0) {
-      $res->setDComp1Ent($node->getElementsByTagName('dComp1Ent')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de cDisEnt
+     *
+     * @param int $cDisEnt
+     *
+     * @return self
+     */
+    public function setCDisEnt(int $cDisEnt): self
+    {
+        $this->cDisEnt = $cDisEnt;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dComp2Ent')->length > 0) {
-      $res->setDComp2Ent($node->getElementsByTagName('dComp2Ent')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de cCiuEnt
+     *
+     * @param int $cCiuEnt
+     *
+     * @return self
+     */
+    public function setCCiuEnt(int $cCiuEnt): self
+    {
+        $this->cCiuEnt = $cCiuEnt;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('cDepEnt')->length > 0) {
-      $res->setCDepEnt(intval($node->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de dTelEnt
+     *
+     * @param String $dTelEnt
+     *
+     * @return self
+     */
+    public function setDTelEnt(string $dTelEnt): self
+    {
+        $this->dTelEnt = $dTelEnt;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('cDisEnt')->length > 0) {
-      $res->setCDisEnt(intval($node->getElementsByTagName('cDisEnt')->item(0)->nodeValue));
+    ///////////////////////////////////////////////////////////////////////
+    ///GETTERS
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de dDirLocEnt
+     *
+     * @return String
+     */
+    public function getDDirLocEnt(): string
+    {
+        return $this->dDirLocEnt;
     }
 
-    if ($node->getElementsByTagName('cCiuEnt')->length > 0) {
-      $res->setCCiuEnt(intval($node->getElementsByTagName('cCiuEnt')->item(0)->nodeValue));
+    /**
+     * Obtiene el valor de dNumCasEnt
+     *
+     * @return int
+     */
+    public function getDNumCasEnt(): ?int
+    {
+        return $this->dNumCasEnt ?? null;
     }
 
-    if ($node->getElementsByTagName('dTelEnt')->length > 0) {
-      $res->setDTelEnt($node->getElementsByTagName('dTelEnt')->item(0)->nodeValue);
+    /**
+     * Obtiene el valor de dComp1Ent
+     *
+     * @return String
+     */
+    public function getDComp1Ent(): string
+    {
+        return $this->dComp1Ent;
     }
 
-    return $res;
-  }
-
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $res = new GCamEnt();
-    if (isset($object->dDirLocEnt)) {
-      $res->setDDirLocEnt($object->dDirLocEnt);
-    }
-    if (isset($object->dNumCasEnt)) {
-      $res->setDNumCasEnt($object->dNumCasEnt);
-    }
-    if (isset($object->dComp1Ent)) {
-      $res->setDComp1Ent($object->dComp1Ent);
-    }
-    if (isset($object->dComp2Ent)) {
-      $res->setDComp2Ent($object->dComp2Ent);
-    }
-    if (isset($object->cDepEnt)) {
-      $res->setCDepEnt($object->cDepEnt);
-    }
-    if (isset($object->cDisEnt)) {
-      $res->setCDisEnt($object->cDisEnt);
-    }
-    if (isset($object->cCiuEnt)) {
-      $res->setCCiuEnt($object->cCiuEnt);
-    }
-    if (isset($object->dTelEnt)) {
-      $res->setDTelEnt($object->dTelEnt);
+    /**
+     * Obtiene el valor de dComp2Ent
+     *
+     * @return String
+     */
+    public function getDComp2Ent(): string
+    {
+        return $this->dComp2Ent;
     }
 
-    return $res;
+    /**
+     * Obtiene el valor de cDepEnt
+     *
+     * @return int
+     */
+    public function getCDepEnt(): ?int
+    {
+        return $this->cDepEnt ?? null;
+    }
 
-  }
+    /**
+     * E946 Descripción del departamento del local de la entrega
+     *
+     * @return String
+     */
+    public function getDDesDepEnt(): string
+    {
+        return DepartamentoMapping::getDepName(strval($this->cDepEnt));
+    }
 
-  /**
-   * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
-   * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
-   *
-   * @param \SimpleXMLElement $node Nodo gCamEnt.
-   *
-   * @return self
-   */
-  public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
-  {
-    return self::FromDOMElement(dom_import_simplexml($node));
-  }
+
+    /**
+     * Obtiene el valor de cDisEnt
+     *
+     * @return int
+     */
+    public function getCDisEnt(): ?int
+    {
+        return $this->cDisEnt ?? null;
+    }
+
+    /**
+     * E948 Descripción de distrito del local de entrada
+     *
+     * @return String
+     */
+    public function getDDesDisEnt(): string
+    {
+        return PyGeoCodesMapping::getDistName(strval($this->cDisEnt));
+    }
+
+    /**
+     * Obtiene el valor de cCiuEnt
+     *
+     * @return int
+     */
+    public function getCCiuEnt(): ?int
+    {
+        return $this->cCiuEnt ?? null;
+    }
+
+    /**
+     * E950 Descripción de ciudad del local de entrada
+     *
+     * @return String
+     */
+    public function getDDesCiuEnt(): string
+    {
+        return PyGeoCodesMapping::getCiudName(strval($this->cCiuEnt));
+    }
+
+    /**
+     * Obtiene el valor de dTelEnt
+     *
+     * @return String
+     */
+    public function getDTelEnt(): string
+    {
+        return $this->dTelEnt;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gCamEnt');
+
+        $res->appendChild(XmlHelper::elemento($doc, 'dDirLocEnt', $this->getDDirLocEnt()));
+
+        if (isset($this->dNumCasEnt)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumCasEnt', $this->getDNumCasEnt()));
+        } else {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumCasEnt', 0));
+        }
+
+        if (isset($this->dComp1Ent)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dComp1Ent', $this->getDComp1Ent()));
+        }
+
+        if (isset($this->dComp2Ent)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dComp2Ent', $this->getDComp2Ent()));
+        }
+
+        $res->appendChild(XmlHelper::elemento($doc, 'cDepEnt', $this->getCDepEnt()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesDepEnt', $this->getDDesDepEnt()));
+
+        if (isset($this->cDisEnt)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'cDisEnt', $this->getCDisEnt()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesDisEnt', $this->getDDesDisEnt()));
+        }
+        $res->appendChild(XmlHelper::elemento($doc, 'cCiuEnt', $this->getCCiuEnt()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEnt', $this->getDDesCiuEnt()));
+
+        if (isset($this->dTelEnt)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dTelEnt', $this->getDTelEnt()));
+        }
+
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GCamEnt a partir de un DOMElement que representa el nodo XML del objeto.
+     *
+     * @param DOMElement $node Nodo XML que representa el objeto.
+     *
+     * @return self Objeto instanciado.
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gCamEnt') != 0) {
+            throw new ValidacionException('[GCamEnt] El nombre del nodo no corresponde a gCamEnt: ' . $node->nodeName);
+        }
+        $res = new GCamEnt();
+
+        if ($node->getElementsByTagName('dDirLocEnt')->length > 0) {
+            $res->setDDirLocEnt($node->getElementsByTagName('dDirLocEnt')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dNumCasEnt')->length > 0) {
+            $res->setDNumCasEnt(intval($node->getElementsByTagName('dNumCasEnt')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('dComp1Ent')->length > 0) {
+            $res->setDComp1Ent($node->getElementsByTagName('dComp1Ent')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dComp2Ent')->length > 0) {
+            $res->setDComp2Ent($node->getElementsByTagName('dComp2Ent')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('cDepEnt')->length > 0) {
+            $res->setCDepEnt(intval($node->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('cDisEnt')->length > 0) {
+            $res->setCDisEnt(intval($node->getElementsByTagName('cDisEnt')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('cCiuEnt')->length > 0) {
+            $res->setCCiuEnt(intval($node->getElementsByTagName('cCiuEnt')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('dTelEnt')->length > 0) {
+            $res->setDTelEnt($node->getElementsByTagName('dTelEnt')->item(0)->nodeValue);
+        }
+
+        return $res;
+    }
+
+    /**
+     * FromSifenResponseObject
+     *
+     * @param  mixed $object
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new GCamEnt();
+        if (isset($object->dDirLocEnt)) {
+            $res->setDDirLocEnt($object->dDirLocEnt);
+        }
+        if (isset($object->dNumCasEnt)) {
+            $res->setDNumCasEnt($object->dNumCasEnt);
+        }
+        if (isset($object->dComp1Ent)) {
+            $res->setDComp1Ent($object->dComp1Ent);
+        }
+        if (isset($object->dComp2Ent)) {
+            $res->setDComp2Ent($object->dComp2Ent);
+        }
+        if (isset($object->cDepEnt)) {
+            $res->setCDepEnt($object->cDepEnt);
+        }
+        if (isset($object->cDisEnt)) {
+            $res->setCDisEnt($object->cDisEnt);
+        }
+        if (isset($object->cCiuEnt)) {
+            $res->setCCiuEnt($object->cCiuEnt);
+        }
+        if (isset($object->dTelEnt)) {
+            $res->setDTelEnt($object->dTelEnt);
+        }
+
+        return $res;
+
+    }
+
+    /**
+     * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
+     * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
+     *
+     * @param \SimpleXMLElement $node Nodo gCamEnt.
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+    {
+        return self::FromDOMElement(dom_import_simplexml($node));
+    }
 }

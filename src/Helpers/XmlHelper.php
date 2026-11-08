@@ -20,52 +20,52 @@ use DOMElement;
  */
 final class XmlHelper
 {
-  private function __construct()
-  {
-  }
+    private function __construct()
+    {
+    }
 
-  /**
-   * Crea `<nombre>valor</nombre>` con el valor como texto escapado. Un valor `null` o `''` produce
-   * el elemento vacío (mismo resultado que `new DOMElement($nombre, '')`).
-   *
-   * @param mixed $valor Escalar o Stringable; se convierte con `(string)` (true → "1", false → "").
-   */
-  public static function elemento(DOMDocument $doc, string $nombre, mixed $valor = null): DOMElement
-  {
-    $elemento = $doc->createElement($nombre);
-    $texto = self::texto($valor);
-    if ($texto !== '') {
-      $elemento->appendChild($doc->createTextNode($texto));
+    /**
+     * Crea `<nombre>valor</nombre>` con el valor como texto escapado. Un valor `null` o `''` produce
+     * el elemento vacío (mismo resultado que `new DOMElement($nombre, '')`).
+     *
+     * @param mixed $valor Escalar o Stringable; se convierte con `(string)` (true → "1", false → "").
+     */
+    public static function elemento(DOMDocument $doc, string $nombre, mixed $valor = null): DOMElement
+    {
+        $elemento = $doc->createElement($nombre);
+        $texto = self::texto($valor);
+        if ($texto !== '') {
+            $elemento->appendChild($doc->createTextNode($texto));
+        }
+        return $elemento;
     }
-    return $elemento;
-  }
 
-  /**
-   * Variante para métodos que construyen nodos sin un DOMDocument a mano (`new DOMElement(...)`
-   * sueltos): el valor se pre-escapa para que libxml lo interprete como el texto original.
-   * Preferir elemento() cuando se dispone del documento.
-   */
-  public static function elementoSuelto(string $nombre, mixed $valor = null): DOMElement
-  {
-    $texto = self::texto($valor);
-    if ($texto === '') {
-      return new DOMElement($nombre);
+    /**
+     * Variante para métodos que construyen nodos sin un DOMDocument a mano (`new DOMElement(...)`
+     * sueltos): el valor se pre-escapa para que libxml lo interprete como el texto original.
+     * Preferir elemento() cuando se dispone del documento.
+     */
+    public static function elementoSuelto(string $nombre, mixed $valor = null): DOMElement
+    {
+        $texto = self::texto($valor);
+        if ($texto === '') {
+            return new DOMElement($nombre);
+        }
+        return new DOMElement($nombre, htmlspecialchars($texto, ENT_XML1 | ENT_QUOTES, 'UTF-8'));
     }
-    return new DOMElement($nombre, htmlspecialchars($texto, ENT_XML1 | ENT_QUOTES, 'UTF-8'));
-  }
 
-  /**
-   * Convierte el valor a la cadena que se emite en el XML, con la misma coerción que aplicaba
-   * `new DOMElement($nombre, $valor)` (int/float/bool/Stringable → string).
-   */
-  public static function texto(mixed $valor): string
-  {
-    if ($valor === null) {
-      return '';
+    /**
+     * Convierte el valor a la cadena que se emite en el XML, con la misma coerción que aplicaba
+     * `new DOMElement($nombre, $valor)` (int/float/bool/Stringable → string).
+     */
+    public static function texto(mixed $valor): string
+    {
+        if ($valor === null) {
+            return '';
+        }
+        if (is_bool($valor)) {
+            return $valor ? '1' : '';
+        }
+        return (string) $valor;
     }
-    if (is_bool($valor)) {
-      return $valor ? '1' : '';
-    }
-    return (string) $valor;
-  }
 }

@@ -69,6 +69,10 @@ comportamiento para quien emite documentos.
   sin uso eliminadas (18, ninguna referenciada), una línea en blanco tras `namespace`, sin espacios al final de línea
   ni en líneas vacías, `public static` en ese orden. Sin cambio de comportamiento: la serialización de los
   documentos de referencia y la API pública son idénticas; los docblocks y las cadenas no se tocan.
+- **Indentación de cuatro espacios en todo el código** (D4, decisión Q-D1): el repositorio mezclaba dos y cuatro
+  espacios mitad y mitad. Un único commit de solo espacio en blanco (`git diff -w` vacío), listado en
+  `.git-blame-ignore-revs` para que `git blame` lo salte (GitHub lo aplica solo; en local:
+  `git config blame.ignoreRevsFile .git-blame-ignore-revs`). `.php-cs-fixer.dist.php` y `.editorconfig` fijan la regla.
 
 ## [0.3.0] — 2026-10-15
 

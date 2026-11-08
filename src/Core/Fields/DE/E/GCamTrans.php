@@ -21,683 +21,683 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GCamTrans extends BaseSifenField
 {
-                               // Id - Longitud - Ocurrencia - Descripción
-   public int $iNatTrans;   // E981 - 1     - 1-1 - Naturaleza del transportista
-   public string $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista
-   public string $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista
-   public int $dDVTrans;    // E984 - 1     - 0-1 - Dígito verificador del RUC del transportista (obligatorio si E981 = 1)
-   public int $iTipIDTrans; // E985 - 1     - 0-1 - Tipo de documento de identidad del transportista
-   public string $dNumIDTrans; // E987 - 1-20  - 0-1 - Número de documento de identidad del transportista
-   public string $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista
-   public string $dNumIDChof;  // E990 - 1-20  - 1-1 - Número de documento de identidad del chofer (DE_v150.xsd:971)
-   public string $dNomChof;    // E991 - 4-60  - 1-1 - Nombre y apellido del chofer
-   public string $dDomFisc;    // E992 - 1-150 - 1-1 - Domicilio fiscal del transportista (DE_v150.xsd:973; el MT v150 lo listaba como opcional)
-   public string $dDirChof;    // E993 - 1-255 - 1-1 - Dirección del chofer (DE_v150.xsd:986; el MT v150 lo listaba como opcional)
-   public string $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente
-   public string $dRucAg;      // E995 - 3-8   - 0-1 - RUC del agente
-   public string $dDVAg;       // E996 - 1     - 0-1 - Dígito verificador del  RUC del agente
-   public string $dDirAge;     // E997 - 1-255 - 0-1 - Dirección del agente
-
-   ///////////////////////////////////////////////////////////////////////
-   ////SETTERS
-   ///////////////////////////////////////////////////////////////////////
-
-   /**
-    * Establece el valor de iNatTrans
-    *
-    * @param int $iNatTrans
-    *
-    * @return self
-    */
-   public function setINatTrans(int $iNatTrans): self
-   {
-      $this->iNatTrans = $iNatTrans;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dNomTrans
-    *
-    * @param String $dNomTrans
-    *
-    * @return self
-    */
-   public function setDNomTrans(string $dNomTrans): self
-   {
-      $this->dNomTrans = $dNomTrans;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dRucTrans
-    *
-    * @param String $dRucTrans
-    *
-    * @return self
-    */
-   public function setDRucTrans(string $dRucTrans): self
-   {
-      $this->dRucTrans = $dRucTrans;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dDVTrans
-    *
-    * @param int $dDVTrans
-    *
-    * @return self
-    */
-   public function setDDVTrans(int $dDVTrans): self
-   {
-      $this->dDVTrans = $dDVTrans;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de iTipIDTrans
-    *
-    * @param int $iTipIDTrans
-    *
-    * @return self
-    */
-   public function setITipIDTrans(int $iTipIDTrans): self
-   {
-      $this->iTipIDTrans = $iTipIDTrans;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dNumIDTrans
-    *
-    * @param String $dNumIDTrans
-    *
-    * @return self
-    */
-   public function setDNumIDTrans(string $dNumIDTrans): self
-   {
-      $this->dNumIDTrans = $dNumIDTrans;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de cNacTrans
-    *
-    * @param String $cNacTrans
-    *
-    * @return self
-    */
-   public function setCNacTrans(string $cNacTrans): self
-   {
-      $this->cNacTrans = $cNacTrans;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dNumIDChof
-    *
-    * @param String $dNumIDChof
-    *
-    * @return self
-    */
-   public function setDNumIDChof(string $dNumIDChof): self
-   {
-      $this->dNumIDChof = $dNumIDChof;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dNomChof
-    *
-    * @param String $dNomChof
-    *
-    * @return self
-    */
-   public function setDNomChof(string $dNomChof): self
-   {
-      $this->dNomChof = $dNomChof;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dDomFisc
-    *
-    * @param String $dDomFisc
-    *
-    * @return self
-    */
-   public function setDDomFisc(string $dDomFisc): self
-   {
-      $this->dDomFisc = $dDomFisc;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dDirChof
-    *
-    * @param String $dDirChof
-    *
-    * @return self
-    */
-   public function setDDirChof(string $dDirChof): self
-   {
-      $this->dDirChof = $dDirChof;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dNombAg
-    *
-    * @param String $dNombAg
-    *
-    * @return self
-    */
-   public function setDNombAg(string $dNombAg): self
-   {
-      $this->dNombAg = $dNombAg;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dRucAg
-    *
-    * @param String $dRucAg
-    *
-    * @return self
-    */
-   public function setDRucAg(string $dRucAg): self
-   {
-      $this->dRucAg = $dRucAg;
-
-      return $this;
-   }
-
-
-   /**
-    * Establece el valor de dDVAg
-    *
-    * @param String $dDVAg
-    *
-    * @return self
-    */
-   public function setDDVAg(string $dDVAg): self
-   {
-      $this->dDVAg = $dDVAg;
-
-      return $this;
-   }
-
-   /**
-    * Establece el valor de dDirAge
-    *
-    * @param String $dDirAge
-    *
-    * @return self
-    */
-   public function setDDirAge(string $dDirAge): self
-   {
-      $this->dDirAge = $dDirAge;
-
-      return $this;
-   }
-
-   ///////////////////////////////////////////////////////////////////////
-   ///GETTERS
-   ///////////////////////////////////////////////////////////////////////
-
-   /**
-    * Obtiene el valor de iNatTrans
-    *
-    * @return int
-    */
-   public function getINatTrans(): int
-   {
-      return $this->iNatTrans;
-   }
-
-   /**
-    * Obtiene el valor de dNomTrans
-    *
-    * @return String
-    */
-   public function getDNomTrans(): string
-   {
-      return $this->dNomTrans;
-   }
-
-   /**
-    * Obtiene el valor de dRucTrans
-    *
-    * @return String
-    */
-   public function getDRucTrans(): string
-   {
-      return $this->dRucTrans;
-   }
-
-   /**
-    * Obtiene el valor de dDVTrans
-    *
-    * @return int
-    */
-   public function getDDVTrans(): int
-   {
-      return $this->dDVTrans;
-   }
-
-   /**
-    * Obtiene el valor de iTipIDTrans
-    *
-    * @return int
-    */
-   public function getITipIDTrans(): int
-   {
-      return $this->iTipIDTrans;
-   }
-
-   /**
-    * E986 Descripción del tipo de documento de identidad del transportista
-    *
-    * @return String
-    */
-   public function getDDTipIDTrans(): string
-   {
-      switch ($this->iTipIDTrans) {
-         case 1:
-            return "Cédula paraguaya";
-            break;
-         case 2:
-            return "Pasaporte";
-            break;
-         case 3:
-            return "Cédula extranjera";
-            break;
-         case 4:
-            return "Carnet de residencia";
-            break;
-         default:
-            return '';
-            break;
-      }
-   }
-
-
-
-   /**
-    * Obtiene el valor de dNumIDTrans
-    *
-    * @return String
-    */
-   public function getDNumIDTrans(): string
-   {
-      return $this->dNumIDTrans;
-   }
-
-   /**
-    * Obtiene el valor de cNacTrans
-    *
-    * @return String
-    */
-   public function getCNacTrans(): string
-   {
-      return $this->cNacTrans;
-   }
-
-   /**
-    * E989 Descripción de la nacionalidad del transportista
-    *
-    * @return String
-    */
-   public function getDDesNacTrans(): string
-   {
-      return CountryMapping::getCountryDesc($this->cNacTrans);
-   }
-
-   /**
-    * Obtiene el valor de dNumIDChof
-    *
-    * @return String
-    */
-   public function getDNumIDChof(): string
-   {
-      return $this->dNumIDChof;
-   }
-
-   /**
-    * Obtiene el valor de dNomChof
-    *
-    * @return String
-    */
-   public function getDNomChof(): string
-   {
-      return $this->dNomChof;
-   }
-
-   /**
-    * Obtiene el valor de dDomFisc
-    *
-    * @return String
-    */
-   public function getDDomFisc(): string
-   {
-      return $this->dDomFisc;
-   }
-
-   /**
-    * Obtiene el valor de dDirChof
-    *
-    * @return String
-    */
-   public function getDDirChof(): string
-   {
-      return $this->dDirChof;
-   }
-
-   /**
-    * Obtiene el valor de dNombAg
-    *
-    * @return String
-    */
-   public function getDNombAg(): string
-   {
-      return $this->dNombAg;
-   }
-
-   /**
-    * Obtiene el valor de dRucAg
-    *
-    * @return String
-    */
-   public function getDRucAg(): string
-   {
-      return $this->dRucAg;
-   }
-
-   /**
-    * Obtiene el valor de dDVAg
-    *
-    * @return String
-    */
-   public function getDDVAg(): string
-   {
-      return $this->dDVAg;
-   }
-
-   /**
-    * Obtiene el valor de dDirAge
-    *
-    * @return String
-    */
-   public function getDDirAge(): string
-   {
-      return $this->dDirAge;
-   }
-
-   ///////////////////////////////////////////////////////////////////////
-   //XML Element
-   ///////////////////////////////////////////////////////////////////////
-
-   /**
-    * toDOMElement
-    *
-    * @return DOMElement
-    */
-   public function toDOMElement(DOMDocument $doc): DOMElement
-   {
-      $res = $doc->createElement('gCamTrans');
-
-      // Obligatorios en tgCamTrans (DE_v150.xsd:958-959, :971-973, :986). El MT v150 listaba E990, E992 y E993 como
-      // opcionales, pero el XSD de producción los exige (minOccurs="1") y el SIFEN rechaza el DE por esquema si faltan.
-      $faltantes = [];
-      if (!isset($this->iNatTrans)) {
-         $faltantes[] = 'iNatTrans (E981, naturaleza del transportista)';
-      }
-      if (!isset($this->dNomTrans)) {
-         $faltantes[] = 'dNomTrans (E982, nombre o razón social del transportista)';
-      }
-      if (isset($this->iNatTrans) && $this->iNatTrans == 1 && (!isset($this->dRucTrans) || !isset($this->dDVTrans))) {
-         $faltantes[] = 'dRucTrans y dDVTrans (E983-E984, obligatorios cuando E981 = 1 contribuyente)';
-      }
-      if (isset($this->iNatTrans) && $this->iNatTrans == 2 && (!isset($this->iTipIDTrans) || !isset($this->dNumIDTrans))) {
-         $faltantes[] = 'iTipIDTrans y dNumIDTrans (E985 y E987, obligatorios cuando E981 = 2 no contribuyente)';
-      }
-      if (!isset($this->dNumIDChof)) {
-         $faltantes[] = 'dNumIDChof (E990, documento de identidad del chofer)';
-      }
-      if (!isset($this->dNomChof)) {
-         $faltantes[] = 'dNomChof (E991, nombre y apellido del chofer)';
-      }
-      if (!isset($this->dDomFisc)) {
-         $faltantes[] = 'dDomFisc (E992, domicilio fiscal del transportista; DE_v150.xsd:973)';
-      }
-      if (!isset($this->dDirChof)) {
-         $faltantes[] = 'dDirChof (E993, dirección del chofer; DE_v150.xsd:986)';
-      }
-      if (count($faltantes) > 0) {
-         throw new ValidacionException('[GCamTrans] Faltan campos obligatorios del transportista (E980): ' . implode('; ', $faltantes) . '. Con los builders se informan en setTransporteTransportista().');
-      }
-
-      $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
-
-      if ($this->iNatTrans == 1) {
-         $res->appendChild(XmlHelper::elemento($doc, 'dRucTrans', $this->getDRucTrans()));
-      }
-
-      if (isset($this->dRucTrans)) {
-         $res->appendChild(XmlHelper::elemento($doc, 'dDVTrans', $this->getDDVTrans()));
-      }
-
-      if ($this->iNatTrans == 2) {
-         $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
-      }
-
-      if (isset($this->iTipIDTrans)) {
-         $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getDDTipIDTrans()));
-         $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
-      }
-
-      if (isset($this->cNacTrans)) { // E988-E989 minOccurs="0" (DE_v150.xsd:968-970): antes se emitía sin guarda
-         $res->appendChild(XmlHelper::elemento($doc, 'cNacTrans', $this->getCNacTrans()));
-         $res->appendChild(XmlHelper::elemento($doc, 'dDesNacTrans', $this->getDDesNacTrans()));
-      }
-
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDChof', $this->getDNumIDChof()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dNomChof', $this->getDNomChof()));
-
-      // E992 y E993: obligatorios en el XSD (ya verificados arriba)
-      $res->appendChild(XmlHelper::elemento($doc, 'dDomFisc', $this->getDDomFisc()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dDirChof', $this->getDDirChof()));
-
-      if (isset($this->dNombAg)) {
-         $res->appendChild(XmlHelper::elemento($doc, 'dNombAg', $this->getDNombAg()));
-      }
-
-      if (isset($this->dRucAg)) {
-         $res->appendChild(XmlHelper::elemento($doc, 'dRucAg', $this->getDRucAg()));
-      }
-
-      if (isset($this->dDVAg)) {
-         $res->appendChild(XmlHelper::elemento($doc, 'dDVAg', $this->getDDVAg()));
-      }
-
-      if (isset($this->dDirAge)) {
-         $res->appendChild(XmlHelper::elemento($doc, 'dDirAge', $this->getDDirAge()));
-      }
-
-      return $res;
-   }
-
-  /**
-   * Instancia un objeto GCamTrans a partir de un DOMElement que representa el nodo XML del objeto.
-   *
-   * @param DOMElement $node Nodo XML que representa el objeto.
-   *
-   * @return self Objeto instanciado.
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if (strcmp($node->nodeName, 'gCamTrans') != 0) {
-      throw new ValidacionException('[GCamTrans] El nombre del nodo no corresponde a gCamTrans: ' . $node->nodeName);
-    }
-    $res = new GCamTrans();
-
-    if ($node->getElementsByTagName('iNatTrans')->length > 0) {
-      $res->setINatTrans(intval($node->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
+    // Id - Longitud - Ocurrencia - Descripción
+    public int $iNatTrans;   // E981 - 1     - 1-1 - Naturaleza del transportista
+    public string $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista
+    public string $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista
+    public int $dDVTrans;    // E984 - 1     - 0-1 - Dígito verificador del RUC del transportista (obligatorio si E981 = 1)
+    public int $iTipIDTrans; // E985 - 1     - 0-1 - Tipo de documento de identidad del transportista
+    public string $dNumIDTrans; // E987 - 1-20  - 0-1 - Número de documento de identidad del transportista
+    public string $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista
+    public string $dNumIDChof;  // E990 - 1-20  - 1-1 - Número de documento de identidad del chofer (DE_v150.xsd:971)
+    public string $dNomChof;    // E991 - 4-60  - 1-1 - Nombre y apellido del chofer
+    public string $dDomFisc;    // E992 - 1-150 - 1-1 - Domicilio fiscal del transportista (DE_v150.xsd:973; el MT v150 lo listaba como opcional)
+    public string $dDirChof;    // E993 - 1-255 - 1-1 - Dirección del chofer (DE_v150.xsd:986; el MT v150 lo listaba como opcional)
+    public string $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente
+    public string $dRucAg;      // E995 - 3-8   - 0-1 - RUC del agente
+    public string $dDVAg;       // E996 - 1     - 0-1 - Dígito verificador del  RUC del agente
+    public string $dDirAge;     // E997 - 1-255 - 0-1 - Dirección del agente
+
+    ///////////////////////////////////////////////////////////////////////
+    ////SETTERS
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Establece el valor de iNatTrans
+     *
+     * @param int $iNatTrans
+     *
+     * @return self
+     */
+    public function setINatTrans(int $iNatTrans): self
+    {
+        $this->iNatTrans = $iNatTrans;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dNomTrans')->length > 0) {
-      $res->setDNomTrans($node->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dNomTrans
+     *
+     * @param String $dNomTrans
+     *
+     * @return self
+     */
+    public function setDNomTrans(string $dNomTrans): self
+    {
+        $this->dNomTrans = $dNomTrans;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dRucTrans')->length > 0) {
-      $res->setDRucTrans($node->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dRucTrans
+     *
+     * @param String $dRucTrans
+     *
+     * @return self
+     */
+    public function setDRucTrans(string $dRucTrans): self
+    {
+        $this->dRucTrans = $dRucTrans;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dDVTrans')->length > 0) {
-      $res->setDDVTrans(intval($node->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de dDVTrans
+     *
+     * @param int $dDVTrans
+     *
+     * @return self
+     */
+    public function setDDVTrans(int $dDVTrans): self
+    {
+        $this->dDVTrans = $dDVTrans;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('iTipIDTrans')->length > 0) {
-      $res->setITipIDTrans(intval($node->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de iTipIDTrans
+     *
+     * @param int $iTipIDTrans
+     *
+     * @return self
+     */
+    public function setITipIDTrans(int $iTipIDTrans): self
+    {
+        $this->iTipIDTrans = $iTipIDTrans;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dNumIDTrans')->length > 0) {
-      $res->setDNumIDTrans($node->getElementsByTagName('dNumIDTrans')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dNumIDTrans
+     *
+     * @param String $dNumIDTrans
+     *
+     * @return self
+     */
+    public function setDNumIDTrans(string $dNumIDTrans): self
+    {
+        $this->dNumIDTrans = $dNumIDTrans;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('cNacTrans')->length > 0) {
-      $res->setCNacTrans($node->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de cNacTrans
+     *
+     * @param String $cNacTrans
+     *
+     * @return self
+     */
+    public function setCNacTrans(string $cNacTrans): self
+    {
+        $this->cNacTrans = $cNacTrans;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dNumIDChof')->length > 0) {
-      $res->setDNumIDChof($node->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dNumIDChof
+     *
+     * @param String $dNumIDChof
+     *
+     * @return self
+     */
+    public function setDNumIDChof(string $dNumIDChof): self
+    {
+        $this->dNumIDChof = $dNumIDChof;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dNomChof')->length > 0) {
-      $res->setDNomChof($node->getElementsByTagName('dNomChof')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dNomChof
+     *
+     * @param String $dNomChof
+     *
+     * @return self
+     */
+    public function setDNomChof(string $dNomChof): self
+    {
+        $this->dNomChof = $dNomChof;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dDomFisc')->length > 0) {
-      $res->setDDomFisc($node->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dDomFisc
+     *
+     * @param String $dDomFisc
+     *
+     * @return self
+     */
+    public function setDDomFisc(string $dDomFisc): self
+    {
+        $this->dDomFisc = $dDomFisc;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dDirChof')->length > 0) {
-      $res->setDDirChof($node->getElementsByTagName('dDirChof')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dDirChof
+     *
+     * @param String $dDirChof
+     *
+     * @return self
+     */
+    public function setDDirChof(string $dDirChof): self
+    {
+        $this->dDirChof = $dDirChof;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dNombAg')->length > 0) {
-      $res->setDNombAg($node->getElementsByTagName('dNombAg')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dNombAg
+     *
+     * @param String $dNombAg
+     *
+     * @return self
+     */
+    public function setDNombAg(string $dNombAg): self
+    {
+        $this->dNombAg = $dNombAg;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dRucAg')->length > 0) {
-      $res->setDRucAg($node->getElementsByTagName('dRucAg')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dRucAg
+     *
+     * @param String $dRucAg
+     *
+     * @return self
+     */
+    public function setDRucAg(string $dRucAg): self
+    {
+        $this->dRucAg = $dRucAg;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dDVAg')->length > 0) {
-      $res->setDDVAg(intval($node->getElementsByTagName('dDVAg')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de dDVAg
+     *
+     * @param String $dDVAg
+     *
+     * @return self
+     */
+    public function setDDVAg(string $dDVAg): self
+    {
+        $this->dDVAg = $dDVAg;
+
+        return $this;
     }
 
-    if ($node->getElementsByTagName('dDirAge')->length > 0) {
-      $res->setDDirAge($node->getElementsByTagName('dDirAge')->item(0)->nodeValue);
+    /**
+     * Establece el valor de dDirAge
+     *
+     * @param String $dDirAge
+     *
+     * @return self
+     */
+    public function setDDirAge(string $dDirAge): self
+    {
+        $this->dDirAge = $dDirAge;
+
+        return $this;
     }
 
-    return $res;
-  }
+    ///////////////////////////////////////////////////////////////////////
+    ///GETTERS
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-      $res = new GCamTrans();
-      if (isset($object->iNatTrans)) {
-         $res->setINatTrans(intval($object->iNatTrans));
-      }
-      if (isset($object->dNomTrans)) {
-         $res->setDNomTrans($object->dNomTrans);
-      }
-      if (isset($object->dRucTrans)) {
-         $res->setDRucTrans($object->dRucTrans);
-      }
-      if (isset($object->dDVTrans)) {
-         $res->setDDVTrans(intval($object->dDVTrans));
-      }
-      if (isset($object->iTipIDTrans)) {
-         $res->setITipIDTrans(intval($object->iTipIDTrans));
-      }
-      if (isset($object->dNumIDTrans)) {
-         $res->setDNumIDTrans($object->dNumIDTrans);
-      }
-      if (isset($object->cNacTrans)) {
-         $res->setCNacTrans($object->cNacTrans);
-      }
-      if (isset($object->dNumIDChof)) {
-         $res->setDNumIDChof($object->dNumIDChof);
-      }
-      if (isset($object->dNomChof)) {
-         $res->setDNomChof($object->dNomChof);
-      }
-      if (isset($object->dDomFisc)) {
-         $res->setDDomFisc($object->dDomFisc);
-      }
-      if (isset($object->dDirChof)) {
-         $res->setDDirChof($object->dDirChof);
-      }
-      if (isset($object->dNombAg)) {
-         $res->setDNombAg($object->dNombAg);
-      }
-      if (isset($object->dRucAg)) {
-         $res->setDRucAg($object->dRucAg);
-      }
-      if (isset($object->dDVAg)) {
-         $res->setDDVAg(intval($object->dDVAg));
-      }
-      if (isset($object->dDirAge)) {
-         $res->setDDirAge($object->dDirAge);
-      }
+    /**
+     * Obtiene el valor de iNatTrans
+     *
+     * @return int
+     */
+    public function getINatTrans(): int
+    {
+        return $this->iNatTrans;
+    }
+
+    /**
+     * Obtiene el valor de dNomTrans
+     *
+     * @return String
+     */
+    public function getDNomTrans(): string
+    {
+        return $this->dNomTrans;
+    }
+
+    /**
+     * Obtiene el valor de dRucTrans
+     *
+     * @return String
+     */
+    public function getDRucTrans(): string
+    {
+        return $this->dRucTrans;
+    }
+
+    /**
+     * Obtiene el valor de dDVTrans
+     *
+     * @return int
+     */
+    public function getDDVTrans(): int
+    {
+        return $this->dDVTrans;
+    }
+
+    /**
+     * Obtiene el valor de iTipIDTrans
+     *
+     * @return int
+     */
+    public function getITipIDTrans(): int
+    {
+        return $this->iTipIDTrans;
+    }
+
+    /**
+     * E986 Descripción del tipo de documento de identidad del transportista
+     *
+     * @return String
+     */
+    public function getDDTipIDTrans(): string
+    {
+        switch ($this->iTipIDTrans) {
+            case 1:
+                return "Cédula paraguaya";
+                break;
+            case 2:
+                return "Pasaporte";
+                break;
+            case 3:
+                return "Cédula extranjera";
+                break;
+            case 4:
+                return "Carnet de residencia";
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
 
 
-      return $res;
-   }
 
-  /**
-   * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
-   * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
-   *
-   * @param \SimpleXMLElement $node Nodo gCamTrans.
-   *
-   * @return self
-   */
-  public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
-  {
-    return self::FromDOMElement(dom_import_simplexml($node));
-  }
+    /**
+     * Obtiene el valor de dNumIDTrans
+     *
+     * @return String
+     */
+    public function getDNumIDTrans(): string
+    {
+        return $this->dNumIDTrans;
+    }
+
+    /**
+     * Obtiene el valor de cNacTrans
+     *
+     * @return String
+     */
+    public function getCNacTrans(): string
+    {
+        return $this->cNacTrans;
+    }
+
+    /**
+     * E989 Descripción de la nacionalidad del transportista
+     *
+     * @return String
+     */
+    public function getDDesNacTrans(): string
+    {
+        return CountryMapping::getCountryDesc($this->cNacTrans);
+    }
+
+    /**
+     * Obtiene el valor de dNumIDChof
+     *
+     * @return String
+     */
+    public function getDNumIDChof(): string
+    {
+        return $this->dNumIDChof;
+    }
+
+    /**
+     * Obtiene el valor de dNomChof
+     *
+     * @return String
+     */
+    public function getDNomChof(): string
+    {
+        return $this->dNomChof;
+    }
+
+    /**
+     * Obtiene el valor de dDomFisc
+     *
+     * @return String
+     */
+    public function getDDomFisc(): string
+    {
+        return $this->dDomFisc;
+    }
+
+    /**
+     * Obtiene el valor de dDirChof
+     *
+     * @return String
+     */
+    public function getDDirChof(): string
+    {
+        return $this->dDirChof;
+    }
+
+    /**
+     * Obtiene el valor de dNombAg
+     *
+     * @return String
+     */
+    public function getDNombAg(): string
+    {
+        return $this->dNombAg;
+    }
+
+    /**
+     * Obtiene el valor de dRucAg
+     *
+     * @return String
+     */
+    public function getDRucAg(): string
+    {
+        return $this->dRucAg;
+    }
+
+    /**
+     * Obtiene el valor de dDVAg
+     *
+     * @return String
+     */
+    public function getDDVAg(): string
+    {
+        return $this->dDVAg;
+    }
+
+    /**
+     * Obtiene el valor de dDirAge
+     *
+     * @return String
+     */
+    public function getDDirAge(): string
+    {
+        return $this->dDirAge;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    //XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gCamTrans');
+
+        // Obligatorios en tgCamTrans (DE_v150.xsd:958-959, :971-973, :986). El MT v150 listaba E990, E992 y E993 como
+        // opcionales, pero el XSD de producción los exige (minOccurs="1") y el SIFEN rechaza el DE por esquema si faltan.
+        $faltantes = [];
+        if (!isset($this->iNatTrans)) {
+            $faltantes[] = 'iNatTrans (E981, naturaleza del transportista)';
+        }
+        if (!isset($this->dNomTrans)) {
+            $faltantes[] = 'dNomTrans (E982, nombre o razón social del transportista)';
+        }
+        if (isset($this->iNatTrans) && $this->iNatTrans == 1 && (!isset($this->dRucTrans) || !isset($this->dDVTrans))) {
+            $faltantes[] = 'dRucTrans y dDVTrans (E983-E984, obligatorios cuando E981 = 1 contribuyente)';
+        }
+        if (isset($this->iNatTrans) && $this->iNatTrans == 2 && (!isset($this->iTipIDTrans) || !isset($this->dNumIDTrans))) {
+            $faltantes[] = 'iTipIDTrans y dNumIDTrans (E985 y E987, obligatorios cuando E981 = 2 no contribuyente)';
+        }
+        if (!isset($this->dNumIDChof)) {
+            $faltantes[] = 'dNumIDChof (E990, documento de identidad del chofer)';
+        }
+        if (!isset($this->dNomChof)) {
+            $faltantes[] = 'dNomChof (E991, nombre y apellido del chofer)';
+        }
+        if (!isset($this->dDomFisc)) {
+            $faltantes[] = 'dDomFisc (E992, domicilio fiscal del transportista; DE_v150.xsd:973)';
+        }
+        if (!isset($this->dDirChof)) {
+            $faltantes[] = 'dDirChof (E993, dirección del chofer; DE_v150.xsd:986)';
+        }
+        if (count($faltantes) > 0) {
+            throw new ValidacionException('[GCamTrans] Faltan campos obligatorios del transportista (E980): ' . implode('; ', $faltantes) . '. Con los builders se informan en setTransporteTransportista().');
+        }
+
+        $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
+
+        if ($this->iNatTrans == 1) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dRucTrans', $this->getDRucTrans()));
+        }
+
+        if (isset($this->dRucTrans)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDVTrans', $this->getDDVTrans()));
+        }
+
+        if ($this->iNatTrans == 2) {
+            $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
+        }
+
+        if (isset($this->iTipIDTrans)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getDDTipIDTrans()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
+        }
+
+        if (isset($this->cNacTrans)) { // E988-E989 minOccurs="0" (DE_v150.xsd:968-970): antes se emitía sin guarda
+            $res->appendChild(XmlHelper::elemento($doc, 'cNacTrans', $this->getCNacTrans()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesNacTrans', $this->getDDesNacTrans()));
+        }
+
+        $res->appendChild(XmlHelper::elemento($doc, 'dNumIDChof', $this->getDNumIDChof()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNomChof', $this->getDNomChof()));
+
+        // E992 y E993: obligatorios en el XSD (ya verificados arriba)
+        $res->appendChild(XmlHelper::elemento($doc, 'dDomFisc', $this->getDDomFisc()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDirChof', $this->getDDirChof()));
+
+        if (isset($this->dNombAg)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNombAg', $this->getDNombAg()));
+        }
+
+        if (isset($this->dRucAg)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dRucAg', $this->getDRucAg()));
+        }
+
+        if (isset($this->dDVAg)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDVAg', $this->getDDVAg()));
+        }
+
+        if (isset($this->dDirAge)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDirAge', $this->getDDirAge()));
+        }
+
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GCamTrans a partir de un DOMElement que representa el nodo XML del objeto.
+     *
+     * @param DOMElement $node Nodo XML que representa el objeto.
+     *
+     * @return self Objeto instanciado.
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gCamTrans') != 0) {
+            throw new ValidacionException('[GCamTrans] El nombre del nodo no corresponde a gCamTrans: ' . $node->nodeName);
+        }
+        $res = new GCamTrans();
+
+        if ($node->getElementsByTagName('iNatTrans')->length > 0) {
+            $res->setINatTrans(intval($node->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('dNomTrans')->length > 0) {
+            $res->setDNomTrans($node->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dRucTrans')->length > 0) {
+            $res->setDRucTrans($node->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dDVTrans')->length > 0) {
+            $res->setDDVTrans(intval($node->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('iTipIDTrans')->length > 0) {
+            $res->setITipIDTrans(intval($node->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('dNumIDTrans')->length > 0) {
+            $res->setDNumIDTrans($node->getElementsByTagName('dNumIDTrans')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('cNacTrans')->length > 0) {
+            $res->setCNacTrans($node->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dNumIDChof')->length > 0) {
+            $res->setDNumIDChof($node->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dNomChof')->length > 0) {
+            $res->setDNomChof($node->getElementsByTagName('dNomChof')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dDomFisc')->length > 0) {
+            $res->setDDomFisc($node->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dDirChof')->length > 0) {
+            $res->setDDirChof($node->getElementsByTagName('dDirChof')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dNombAg')->length > 0) {
+            $res->setDNombAg($node->getElementsByTagName('dNombAg')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dRucAg')->length > 0) {
+            $res->setDRucAg($node->getElementsByTagName('dRucAg')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dDVAg')->length > 0) {
+            $res->setDDVAg(intval($node->getElementsByTagName('dDVAg')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('dDirAge')->length > 0) {
+            $res->setDDirAge($node->getElementsByTagName('dDirAge')->item(0)->nodeValue);
+        }
+
+        return $res;
+    }
+
+    /**
+     * FromSifenResponseObject
+     *
+     * @param  mixed $object
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new GCamTrans();
+        if (isset($object->iNatTrans)) {
+            $res->setINatTrans(intval($object->iNatTrans));
+        }
+        if (isset($object->dNomTrans)) {
+            $res->setDNomTrans($object->dNomTrans);
+        }
+        if (isset($object->dRucTrans)) {
+            $res->setDRucTrans($object->dRucTrans);
+        }
+        if (isset($object->dDVTrans)) {
+            $res->setDDVTrans(intval($object->dDVTrans));
+        }
+        if (isset($object->iTipIDTrans)) {
+            $res->setITipIDTrans(intval($object->iTipIDTrans));
+        }
+        if (isset($object->dNumIDTrans)) {
+            $res->setDNumIDTrans($object->dNumIDTrans);
+        }
+        if (isset($object->cNacTrans)) {
+            $res->setCNacTrans($object->cNacTrans);
+        }
+        if (isset($object->dNumIDChof)) {
+            $res->setDNumIDChof($object->dNumIDChof);
+        }
+        if (isset($object->dNomChof)) {
+            $res->setDNomChof($object->dNomChof);
+        }
+        if (isset($object->dDomFisc)) {
+            $res->setDDomFisc($object->dDomFisc);
+        }
+        if (isset($object->dDirChof)) {
+            $res->setDDirChof($object->dDirChof);
+        }
+        if (isset($object->dNombAg)) {
+            $res->setDNombAg($object->dNombAg);
+        }
+        if (isset($object->dRucAg)) {
+            $res->setDRucAg($object->dRucAg);
+        }
+        if (isset($object->dDVAg)) {
+            $res->setDDVAg(intval($object->dDVAg));
+        }
+        if (isset($object->dDirAge)) {
+            $res->setDDirAge($object->dDirAge);
+        }
+
+
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
+     * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
+     *
+     * @param \SimpleXMLElement $node Nodo gCamTrans.
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+    {
+        return self::FromDOMElement(dom_import_simplexml($node));
+    }
 }

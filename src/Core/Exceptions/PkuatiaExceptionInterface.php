@@ -13,11 +13,11 @@ use Throwable;
  */
 interface PkuatiaExceptionInterface extends Throwable
 {
-  /**
-   * Datos que ayudan a diagnosticar el error (operación, campo, código del SIFEN, tipo de falla…).
-   * Nunca incluye secretos: ni contraseñas, ni CSC, ni material de claves.
-   *
-   * @return array<string, mixed>
-   */
-  public function getContexto(): array;
+    /**
+     * Datos que ayudan a diagnosticar el error (operación, campo, código del SIFEN, tipo de falla…).
+     * Nunca incluye secretos: ni contraseñas, ni CSC, ni material de claves.
+     *
+     * @return array<string, mixed>
+     */
+    public function getContexto(): array;
 }

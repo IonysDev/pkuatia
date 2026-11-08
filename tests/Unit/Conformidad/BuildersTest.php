@@ -24,69 +24,69 @@ use PHPUnit\Framework\TestCase;
  */
 final class BuildersTest extends TestCase
 {
-  /** @var callable */
-  private $cleanup;
+    /** @var callable */
+    private $cleanup;
 
-  protected function setUp(): void
-  {
-    $this->cleanup = SifenTestEnvironment::init()['cleanup'];
-  }
+    protected function setUp(): void
+    {
+        $this->cleanup = SifenTestEnvironment::init()['cleanup'];
+    }
 
-  protected function tearDown(): void
-  {
-    ($this->cleanup)();
-  }
+    protected function tearDown(): void
+    {
+        ($this->cleanup)();
+    }
 
-  public function testReceptorInnominadoConElBuilderValida(): void
-  {
-    $fe = new Factura(CamCondOpe::Contado);
-    DocumentoFactory::configurarBase($fe, 70);
-    $fe->setReceptor('Sin Nombre', false, RecTiOpe::B2C, 'PRY', null, null, null, TipIDRec::Innominado, '0',
-      null, null, null, null, null, null, null, null, null, null);
-    $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
-    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
-    $fe->addItem('PROD001', 'Producto', 77, '1', 0, '50000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
-    $fe->calcTotSub(0);
-    $fe->addPago(PaConEIniTiPago::Efectivo, '50000', 'PYG');
+    public function testReceptorInnominadoConElBuilderValida(): void
+    {
+        $fe = new Factura(CamCondOpe::Contado);
+        DocumentoFactory::configurarBase($fe, 70);
+        $fe->setReceptor('Sin Nombre', false, RecTiOpe::B2C, 'PRY', null, null, null, TipIDRec::Innominado, '0',
+            null, null, null, null, null, null, null, null, null, null);
+        $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
+        $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
+        $fe->addItem('PROD001', 'Producto', 77, '1', 0, '50000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
+        $fe->calcTotSub(0);
+        $fe->addPago(PaConEIniTiPago::Efectivo, '50000', 'PYG');
 
-    $xml = DocumentoFactory::firmar($fe->facturaToRDE());
-    $this->assertStringContainsString('<iTipIDRec>5</iTipIDRec><dDTipIDRec>Innominado</dDTipIDRec><dNumIDRec>0</dNumIDRec>', $xml);
-    XsdAssertions::assertRdeValido($xml, 'FE innominada');
-  }
+        $xml = DocumentoFactory::firmar($fe->facturaToRDE());
+        $this->assertStringContainsString('<iTipIDRec>5</iTipIDRec><dDTipIDRec>Innominado</dDTipIDRec><dNumIDRec>0</dNumIDRec>', $xml);
+        XsdAssertions::assertRdeValido($xml, 'FE innominada');
+    }
 
-  public function testCantidadCeroNoDividePorCero(): void
-  {
-    $fe = DocumentoFactory::facturaContado(71);
-    $fe->addItem('MUESTRA', 'Muestra sin cargo', 77, '0', 0, '0', null, CamIVAAfecIVA::Exento, '0', CamIVATasaIVA::ExentoExonerado);
-    $tot = $fe->calcTotSub(0);
-    $this->assertSame('0.00000000', $tot->getDPorcDescTotal(), 'F010 debe ser 0 cuando no hay descuento global');
-  }
+    public function testCantidadCeroNoDividePorCero(): void
+    {
+        $fe = DocumentoFactory::facturaContado(71);
+        $fe->addItem('MUESTRA', 'Muestra sin cargo', 77, '0', 0, '0', null, CamIVAAfecIVA::Exento, '0', CamIVATasaIVA::ExentoExonerado);
+        $tot = $fe->calcTotSub(0);
+        $this->assertSame('0.00000000', $tot->getDPorcDescTotal(), 'F010 debe ser 0 cuando no hay descuento global');
+    }
 
-  public function testSoloItemsSinValorNoDividePorCero(): void
-  {
-    $fe = new Factura(CamCondOpe::Contado);
-    DocumentoFactory::configurarBase($fe, 72);
-    DocumentoFactory::receptorContribuyente($fe);
-    $fe->setTipoDeTransaccion(OpeComTipTrans::Donacion);
-    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
-    $fe->addItem('DON', 'Donacion', 77, '1', 0, '0', null, CamIVAAfecIVA::Exento, '0', CamIVATasaIVA::ExentoExonerado);
-    $tot = $fe->calcTotSub(0);
-    $this->assertSame('0.00000000', $tot->getDPorcDescTotal());
-  }
+    public function testSoloItemsSinValorNoDividePorCero(): void
+    {
+        $fe = new Factura(CamCondOpe::Contado);
+        DocumentoFactory::configurarBase($fe, 72);
+        DocumentoFactory::receptorContribuyente($fe);
+        $fe->setTipoDeTransaccion(OpeComTipTrans::Donacion);
+        $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
+        $fe->addItem('DON', 'Donacion', 77, '1', 0, '0', null, CamIVAAfecIVA::Exento, '0', CamIVATasaIVA::ExentoExonerado);
+        $tot = $fe->calcTotSub(0);
+        $this->assertSame('0.00000000', $tot->getDPorcDescTotal());
+    }
 
-  public function testMonedaExtranjeraSinTipoDeCambioLanzaUnaExcepcionDeDominio(): void
-  {
-    $fe = new Factura(CamCondOpe::Contado);
-    DocumentoFactory::configurarBase($fe, 73);
-    DocumentoFactory::receptorContribuyente($fe);
-    $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
-    $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
-    $fe->setMoneda('USD'); // sin setCondicionTipoDeCambio ni setTipoDeCambio
-    $fe->addItem('EXP001', 'Producto', 77, '1', 2, '10.00', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
+    public function testMonedaExtranjeraSinTipoDeCambioLanzaUnaExcepcionDeDominio(): void
+    {
+        $fe = new Factura(CamCondOpe::Contado);
+        DocumentoFactory::configurarBase($fe, 73);
+        DocumentoFactory::receptorContribuyente($fe);
+        $fe->setTipoDeTransaccion(OpeComTipTrans::VentaMercaderia);
+        $fe->setIndicadorPresencia(CamFEIndPres::Presencial);
+        $fe->setMoneda('USD'); // sin setCondicionTipoDeCambio ni setTipoDeCambio
+        $fe->addItem('EXP001', 'Producto', 77, '1', 2, '10.00', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
 
-    $this->expectException(\Exception::class);
-    $this->expectExceptionMessageMatches('/D017|tipo de cambio/i');
-    $fe->calcTotSub(2);
-    DocumentoFactory::firmar($fe->facturaToRDE());
-  }
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessageMatches('/D017|tipo de cambio/i');
+        $fe->calcTotSub(2);
+        DocumentoFactory::firmar($fe->facturaToRDE());
+    }
 }

@@ -19,397 +19,397 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GRasMerc extends BaseSifenField
 {
-  public string $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote (texto; hasta v0.1.5 era int y rechazaba lotes alfanuméricos)
-  public DateTime $dVencMerc;     // E752 - 10    - 0-1 - Fecha de vencimiento  de la mercadería
-  public string $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
-  public string $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
-  public string $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
-  public string $dNumReg;       // E759 - 1-20  - 0-1 - Número de registro del  producto otorgado por  el SENAVE
-  public string $dNumRegEntCom; // E760 - 1-20  - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
-  public string $dNomPro;       // E761 - 1-30  - 0-1 - Nombre del Producto
+    public string $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote (texto; hasta v0.1.5 era int y rechazaba lotes alfanuméricos)
+    public DateTime $dVencMerc;     // E752 - 10    - 0-1 - Fecha de vencimiento  de la mercadería
+    public string $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
+    public string $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
+    public string $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
+    public string $dNumReg;       // E759 - 1-20  - 0-1 - Número de registro del  producto otorgado por  el SENAVE
+    public string $dNumRegEntCom; // E760 - 1-20  - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
+    public string $dNomPro;       // E761 - 1-30  - 0-1 - Nombre del Producto
 
 
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de dNumLote
-   *
-   * @param int|String $dNumLote
-   *
-   * @return self
-   */
-  public function setDNumLote(int|string $dNumLote): self
-  {
-    $this->dNumLote = (string) $dNumLote;
+    /**
+     * Establece el valor de dNumLote
+     *
+     * @param int|String $dNumLote
+     *
+     * @return self
+     */
+    public function setDNumLote(int|string $dNumLote): self
+    {
+        $this->dNumLote = (string) $dNumLote;
 
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dVencMerc
-   *
-   * @param DateTime $dVencMerc
-   *
-   * @return self
-   */
-  public function setDVencMerc(DateTime $dVencMerc): self
-  {
-    $this->dVencMerc = $dVencMerc;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNSerie
-   *
-   * @param String $dNSerie
-   *
-   * @return self
-   */
-  public function setDNSerie(string $dNSerie): self
-  {
-    $this->dNSerie = $dNSerie;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNumPedi
-   *
-   * @param String $dNumPedi
-   *
-   * @return self
-   */
-  public function setDNumPedi(string $dNumPedi): self
-  {
-    $this->dNumPedi = $dNumPedi;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNumSegui
-   *
-   * @param String $dNumSegui
-   *
-   * @return self
-   */
-  public function setDNumSegui(string $dNumSegui): self
-  {
-    $this->dNumSegui = $dNumSegui;
-
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dNumReg
-   *
-   * @param String $dNumReg
-   *
-   * @return self
-   */
-  public function setDNumReg(string $dNumReg): self
-  {
-    $this->dNumReg = $dNumReg;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNumRegEntCom
-   *
-   * @param String $dNumRegEntCom
-   *
-   * @return self
-   */
-  public function setDNumRegEntCom(string $dNumRegEntCom): self
-  {
-    $this->dNumRegEntCom = $dNumRegEntCom;
-
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dNomPro
-   *
-   * @param String $dNomPro
-   *
-   * @return self
-   */
-  public function setDNomPro(string $dNomPro): self
-  {
-    $this->dNomPro = $dNomPro;
-
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de dNumLote como entero. E751 es texto de 1 a 80 caracteres y puede ser alfanumérico: devuelve la
-   * parte numérica inicial, o 0, como hasta 0.2.0. Desde 0.2.1 la lectura conserva el lote exacto, y este getter
-   * terminaba en TypeError con un lote alfanumérico (QA de la Fase B).
-   *
-   * @return int
-   *
-   * @deprecated 0.2.1 E751 es texto: usar getDNumLoteString().
-   */
-  public function getDNumLote(): int
-  {
-    return intval($this->dNumLote);
-  }
-
-  /**
-   * Obtiene el número de lote (E751) tal como se informó, o null si no se informó (QA de la Fase B, 0.2.1).
-   *
-   * @return String|null
-   */
-  public function getDNumLoteString(): ?string
-  {
-    return $this->dNumLote ?? null;
-  }
-
-  /**
-   * Obtiene el valor de dVencMerc
-   *
-   * @return DateTime
-   */
-  public function getDVencMerc(): DateTime
-  {
-    return $this->dVencMerc;
-  }
-
-  /**
-   * Obtiene el valor de dNSerie
-   *
-   * @return String
-   */
-  public function getDNSerie(): string
-  {
-    return $this->dNSerie;
-  }
-
-  /**
-   * Obtiene el valor de dNumPedi
-   *
-   * @return String
-   */
-  public function getDNumPedi(): string
-  {
-    return $this->dNumPedi;
-  }
-
-  /**
-   * Obtiene el valor de dNumSegui
-   *
-   * @return String
-   */
-  public function getDNumSegui(): string
-  {
-    return $this->dNumSegui;
-  }
-
-  /**
-   * Obtiene el valor de dNumReg
-   *
-   * @return String
-   */
-  public function getDNumReg(): string
-  {
-    return $this->dNumReg;
-  }
-
-  /**
-   * Obtiene el valor de dNumRegEntCom
-   *
-   * @return String
-   */
-  public function getDNumRegEntCom(): string
-  {
-    return $this->dNumRegEntCom;
-  }
-
-  /**
-   * Obtiene el valor de dNomPro
-   *
-   * @return String
-   */
-  public function getDNomPro(): string
-  {
-    return $this->dNomPro;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  //XML Element
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Convierte este GRasMerc en un DOMElement que puede ser insertado en el DOMDocument especificado.
-   *
-   * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
-   *
-   * @return DOMElement El DOMElement creado.
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gRasMerc');
-    // Todos los campos de tgRasMerc son opcionales (DE_v150.xsd:430-495); hasta v0.1.5 se emitían sin guardas (PK-08).
-    if (isset($this->dNumLote)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumLote', $this->dNumLote));
-    }
-    if (isset($this->dVencMerc)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dVencMerc', $this->dVencMerc->format('Y-m-d')));
-    }
-    if (isset($this->dNSerie)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNSerie', $this->dNSerie));
-    }
-    if (isset($this->dNumPedi)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumPedi', $this->dNumPedi));
-    }
-    if (isset($this->dNumSegui)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumSegui', $this->dNumSegui));
-    }
-    if (isset($this->dNumReg)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumReg', $this->dNumReg));
-    }
-    if (isset($this->dNumRegEntCom)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumRegEntCom', $this->dNumRegEntCom));
-    }
-    if (isset($this->dNomPro)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNomPro', $this->dNomPro));
-    }
-    return $res;
-  }
-
-  /**
-   * Instancia un objeto GRasMerc a partir de un objeto stdClass de respuesta del SIFEN. Hasta 0.2.0 lanzaba
-   * "Not implemented" (PK-25). Todos los campos de tgRasMerc son opcionales.
-   *
-   * @param stdClass $object
-   *
-   * @return self
-   */
-  public static function FromSifenResponseObject(stdClass $object): self
-  {
-    $res = new self();
-    if (isset($object->dNumLote)) {
-      $res->setDNumLote((string) $object->dNumLote);
-    }
-    if (isset($object->dVencMerc)) {
-      $fecha = DateTime::createFromFormat('!Y-m-d', trim((string) $object->dVencMerc));
-      if ($fecha === false) {
-        throw new ValidacionException("[GRasMerc] dVencMerc debe tener el formato AAAA-MM-DD: '{$object->dVencMerc}'");
-      }
-      $res->setDVencMerc($fecha);
-    }
-    if (isset($object->dNSerie)) {
-      $res->setDNSerie((string) $object->dNSerie);
-    }
-    if (isset($object->dNumPedi)) {
-      $res->setDNumPedi((string) $object->dNumPedi);
-    }
-    if (isset($object->dNumSegui)) {
-      $res->setDNumSegui((string) $object->dNumSegui);
-    }
-    if (isset($object->dNumReg)) {
-      $res->setDNumReg((string) $object->dNumReg);
-    }
-    if (isset($object->dNumRegEntCom)) {
-      $res->setDNumRegEntCom((string) $object->dNumRegEntCom);
-    }
-    if (isset($object->dNomPro)) {
-      $res->setDNomPro((string) $object->dNomPro);
-    }
-    return $res;
-  }
-
-  /**
-   * FromSimpleXMLElement
-   *
-   * @param  mixed $node
-   * @return self
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-
-    if (strcmp($node->getName(), 'gRasMerc') != 0) {
-      throw new ValidacionException("Invalid gRasMerc XML Node Name: " . $node->getName());
+        return $this;
     }
 
-    $res = new GRasMerc();
-    if (isset($node->dNumLote)) {
-      $res->setDNumLote($node->dNumLote);
-    }
-    if (isset($node->dVencMerc)) {
-      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $node->dVencMerc));
-    }
-    if (isset($node->dNSerie)) {
-      $res->setDNSerie($node->dNSerie);
-    }
-    if (isset($node->dNumPedi)) {
-      $res->setDNumPedi($node->dNumPedi);
-    }
-    if (isset($node->dNumSegui)) {
-      $res->setDNumSegui($node->dNumSegui);
-    }
-    if (isset($node->dNumReg)) {
-      $res->setDNumReg($node->dNumReg);
-    }
-    if (isset($node->dNumRegEntCom)) {
-      $res->setDNumRegEntCom($node->dNumRegEntCom);
-    }
-    if (isset($node->dNomPro)) {
-      $res->setDNomPro($node->dNomPro);
-    }
-    return $res;
-  }
 
-  /**
-   * Instancia un objeto GRasMerc a partir de un DOMElement que lo representa.
-   *
-   * @param DOMElement $node
-   *
-   * @return self
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if (strcmp($node->nodeName, 'gRasMerc') != 0) {
-        throw new ValidacionException('[GRasMerc] Nodo con nombre inválido: ' . $node->nodeName);
+    /**
+     * Establece el valor de dVencMerc
+     *
+     * @param DateTime $dVencMerc
+     *
+     * @return self
+     */
+    public function setDVencMerc(DateTime $dVencMerc): self
+    {
+        $this->dVencMerc = $dVencMerc;
+
+        return $this;
     }
-    $res = new self();
-    if ($node->getElementsByTagName('dNumLote')->length > 0) {
-      $res->setDNumLote(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue));
-    } // texto 1-80 (DE_v150.xsd:437); hasta 0.2.0 intval() lo volvía 0 (PK-25)
-    if ($node->getElementsByTagName('dVencMerc')->length > 0) {
-      $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dVencMerc')->item(0)->nodeValue)));
+
+
+    /**
+     * Establece el valor de dNSerie
+     *
+     * @param String $dNSerie
+     *
+     * @return self
+     */
+    public function setDNSerie(string $dNSerie): self
+    {
+        $this->dNSerie = $dNSerie;
+
+        return $this;
     }
-    if ($node->getElementsByTagName('dNSerie')->length > 0) {
-      $res->setDNSerie(trim($node->getElementsByTagName('dNSerie')->item(0)->nodeValue));
+
+
+    /**
+     * Establece el valor de dNumPedi
+     *
+     * @param String $dNumPedi
+     *
+     * @return self
+     */
+    public function setDNumPedi(string $dNumPedi): self
+    {
+        $this->dNumPedi = $dNumPedi;
+
+        return $this;
     }
-    if ($node->getElementsByTagName('dNumPedi')->length > 0) {
-      $res->setDNumPedi(trim($node->getElementsByTagName('dNumPedi')->item(0)->nodeValue));
+
+
+    /**
+     * Establece el valor de dNumSegui
+     *
+     * @param String $dNumSegui
+     *
+     * @return self
+     */
+    public function setDNumSegui(string $dNumSegui): self
+    {
+        $this->dNumSegui = $dNumSegui;
+
+        return $this;
     }
-    if ($node->getElementsByTagName('dNumSegui')->length > 0) {
-      $res->setDNumSegui(trim($node->getElementsByTagName('dNumSegui')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de dNumReg
+     *
+     * @param String $dNumReg
+     *
+     * @return self
+     */
+    public function setDNumReg(string $dNumReg): self
+    {
+        $this->dNumReg = $dNumReg;
+
+        return $this;
     }
-    if ($node->getElementsByTagName('dNumReg')->length > 0) {
-      $res->setDNumReg(trim($node->getElementsByTagName('dNumReg')->item(0)->nodeValue));
+
+
+    /**
+     * Establece el valor de dNumRegEntCom
+     *
+     * @param String $dNumRegEntCom
+     *
+     * @return self
+     */
+    public function setDNumRegEntCom(string $dNumRegEntCom): self
+    {
+        $this->dNumRegEntCom = $dNumRegEntCom;
+
+        return $this;
     }
-    if ($node->getElementsByTagName('dNumRegEntCom')->length > 0) {
-      $res->setDNumRegEntCom(trim($node->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de dNomPro
+     *
+     * @param String $dNomPro
+     *
+     * @return self
+     */
+    public function setDNomPro(string $dNomPro): self
+    {
+        $this->dNomPro = $dNomPro;
+
+        return $this;
     }
-    if ($node->getElementsByTagName('dNomPro')->length > 0) {
-      $res->setDNomPro(trim($node->getElementsByTagName('dNomPro')->item(0)->nodeValue));
+
+    ///////////////////////////////////////////////////////////////////////
+    ///GETTERS
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de dNumLote como entero. E751 es texto de 1 a 80 caracteres y puede ser alfanumérico: devuelve la
+     * parte numérica inicial, o 0, como hasta 0.2.0. Desde 0.2.1 la lectura conserva el lote exacto, y este getter
+     * terminaba en TypeError con un lote alfanumérico (QA de la Fase B).
+     *
+     * @return int
+     *
+     * @deprecated 0.2.1 E751 es texto: usar getDNumLoteString().
+     */
+    public function getDNumLote(): int
+    {
+        return intval($this->dNumLote);
     }
-    return $res;
-  }
+
+    /**
+     * Obtiene el número de lote (E751) tal como se informó, o null si no se informó (QA de la Fase B, 0.2.1).
+     *
+     * @return String|null
+     */
+    public function getDNumLoteString(): ?string
+    {
+        return $this->dNumLote ?? null;
+    }
+
+    /**
+     * Obtiene el valor de dVencMerc
+     *
+     * @return DateTime
+     */
+    public function getDVencMerc(): DateTime
+    {
+        return $this->dVencMerc;
+    }
+
+    /**
+     * Obtiene el valor de dNSerie
+     *
+     * @return String
+     */
+    public function getDNSerie(): string
+    {
+        return $this->dNSerie;
+    }
+
+    /**
+     * Obtiene el valor de dNumPedi
+     *
+     * @return String
+     */
+    public function getDNumPedi(): string
+    {
+        return $this->dNumPedi;
+    }
+
+    /**
+     * Obtiene el valor de dNumSegui
+     *
+     * @return String
+     */
+    public function getDNumSegui(): string
+    {
+        return $this->dNumSegui;
+    }
+
+    /**
+     * Obtiene el valor de dNumReg
+     *
+     * @return String
+     */
+    public function getDNumReg(): string
+    {
+        return $this->dNumReg;
+    }
+
+    /**
+     * Obtiene el valor de dNumRegEntCom
+     *
+     * @return String
+     */
+    public function getDNumRegEntCom(): string
+    {
+        return $this->dNumRegEntCom;
+    }
+
+    /**
+     * Obtiene el valor de dNomPro
+     *
+     * @return String
+     */
+    public function getDNomPro(): string
+    {
+        return $this->dNomPro;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    //XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte este GRasMerc en un DOMElement que puede ser insertado en el DOMDocument especificado.
+     *
+     * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
+     *
+     * @return DOMElement El DOMElement creado.
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gRasMerc');
+        // Todos los campos de tgRasMerc son opcionales (DE_v150.xsd:430-495); hasta v0.1.5 se emitían sin guardas (PK-08).
+        if (isset($this->dNumLote)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumLote', $this->dNumLote));
+        }
+        if (isset($this->dVencMerc)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dVencMerc', $this->dVencMerc->format('Y-m-d')));
+        }
+        if (isset($this->dNSerie)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNSerie', $this->dNSerie));
+        }
+        if (isset($this->dNumPedi)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumPedi', $this->dNumPedi));
+        }
+        if (isset($this->dNumSegui)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumSegui', $this->dNumSegui));
+        }
+        if (isset($this->dNumReg)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumReg', $this->dNumReg));
+        }
+        if (isset($this->dNumRegEntCom)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumRegEntCom', $this->dNumRegEntCom));
+        }
+        if (isset($this->dNomPro)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNomPro', $this->dNomPro));
+        }
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GRasMerc a partir de un objeto stdClass de respuesta del SIFEN. Hasta 0.2.0 lanzaba
+     * "Not implemented" (PK-25). Todos los campos de tgRasMerc son opcionales.
+     *
+     * @param stdClass $object
+     *
+     * @return self
+     */
+    public static function FromSifenResponseObject(stdClass $object): self
+    {
+        $res = new self();
+        if (isset($object->dNumLote)) {
+            $res->setDNumLote((string) $object->dNumLote);
+        }
+        if (isset($object->dVencMerc)) {
+            $fecha = DateTime::createFromFormat('!Y-m-d', trim((string) $object->dVencMerc));
+            if ($fecha === false) {
+                throw new ValidacionException("[GRasMerc] dVencMerc debe tener el formato AAAA-MM-DD: '{$object->dVencMerc}'");
+            }
+            $res->setDVencMerc($fecha);
+        }
+        if (isset($object->dNSerie)) {
+            $res->setDNSerie((string) $object->dNSerie);
+        }
+        if (isset($object->dNumPedi)) {
+            $res->setDNumPedi((string) $object->dNumPedi);
+        }
+        if (isset($object->dNumSegui)) {
+            $res->setDNumSegui((string) $object->dNumSegui);
+        }
+        if (isset($object->dNumReg)) {
+            $res->setDNumReg((string) $object->dNumReg);
+        }
+        if (isset($object->dNumRegEntCom)) {
+            $res->setDNumRegEntCom((string) $object->dNumRegEntCom);
+        }
+        if (isset($object->dNomPro)) {
+            $res->setDNomPro((string) $object->dNomPro);
+        }
+        return $res;
+    }
+
+    /**
+     * FromSimpleXMLElement
+     *
+     * @param  mixed $node
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+
+        if (strcmp($node->getName(), 'gRasMerc') != 0) {
+            throw new ValidacionException("Invalid gRasMerc XML Node Name: " . $node->getName());
+        }
+
+        $res = new GRasMerc();
+        if (isset($node->dNumLote)) {
+            $res->setDNumLote($node->dNumLote);
+        }
+        if (isset($node->dVencMerc)) {
+            $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $node->dVencMerc));
+        }
+        if (isset($node->dNSerie)) {
+            $res->setDNSerie($node->dNSerie);
+        }
+        if (isset($node->dNumPedi)) {
+            $res->setDNumPedi($node->dNumPedi);
+        }
+        if (isset($node->dNumSegui)) {
+            $res->setDNumSegui($node->dNumSegui);
+        }
+        if (isset($node->dNumReg)) {
+            $res->setDNumReg($node->dNumReg);
+        }
+        if (isset($node->dNumRegEntCom)) {
+            $res->setDNumRegEntCom($node->dNumRegEntCom);
+        }
+        if (isset($node->dNomPro)) {
+            $res->setDNomPro($node->dNomPro);
+        }
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GRasMerc a partir de un DOMElement que lo representa.
+     *
+     * @param DOMElement $node
+     *
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gRasMerc') != 0) {
+            throw new ValidacionException('[GRasMerc] Nodo con nombre inválido: ' . $node->nodeName);
+        }
+        $res = new self();
+        if ($node->getElementsByTagName('dNumLote')->length > 0) {
+            $res->setDNumLote(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue));
+        } // texto 1-80 (DE_v150.xsd:437); hasta 0.2.0 intval() lo volvía 0 (PK-25)
+        if ($node->getElementsByTagName('dVencMerc')->length > 0) {
+            $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dVencMerc')->item(0)->nodeValue)));
+        }
+        if ($node->getElementsByTagName('dNSerie')->length > 0) {
+            $res->setDNSerie(trim($node->getElementsByTagName('dNSerie')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dNumPedi')->length > 0) {
+            $res->setDNumPedi(trim($node->getElementsByTagName('dNumPedi')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dNumSegui')->length > 0) {
+            $res->setDNumSegui(trim($node->getElementsByTagName('dNumSegui')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dNumReg')->length > 0) {
+            $res->setDNumReg(trim($node->getElementsByTagName('dNumReg')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dNumRegEntCom')->length > 0) {
+            $res->setDNumRegEntCom(trim($node->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dNomPro')->length > 0) {
+            $res->setDNomPro(trim($node->getElementsByTagName('dNomPro')->item(0)->nodeValue));
+        }
+        return $res;
+    }
 }

@@ -26,7 +26,7 @@ class GRespDE extends BaseSifenField
     public const TIPO_DOCUMENTO_IDENTIDAD_CARNET_RESIDENCIA   = 4;
     public const TIPO_DOCUMENTO_IDENTIDAD_OTRO                = 9;
 
-                                  // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public int $iTipIDRespDE;  // D141 - 1     - 1-1 - Tipo de documento de identidad del responsable de la generación del DE
     public string $dDTipIDRespDE; // D142 - 9-41  - 1-1 - Descripción del tipo de documento de identidad del responsable de la generación del DE
     public string $dNumIDRespDE;  // D143 - 1-20  - 1-1 - Número de documento de identidad del responsable de la generación del DE

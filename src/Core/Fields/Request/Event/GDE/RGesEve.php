@@ -13,7 +13,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class RGesEve
 {
-                        // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
     public REve $REve; // GDE002 - Grupos de campos generales del evento - x - 1-1
 
     ///////////////////////////////////////////////////////////////////////
@@ -23,9 +23,9 @@ class RGesEve
     public function getREve(): REve
     {
         if (isset($this->REve)) {
-        return $this->REve;
+            return $this->REve;
         } else {
-        throw new ValidacionException('El campo REve no ha sido definido.');
+            throw new ValidacionException('El campo REve no ha sido definido.');
         }
     }
 

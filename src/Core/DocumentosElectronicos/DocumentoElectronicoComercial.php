@@ -17,144 +17,144 @@ use IonysDev\Pkuatia\Core\Fields\DE\D\GOpeCom;
  */
 class DocumentoElectronicoComercial extends DocumentoElectronico
 {
-  //////////////////////////////////////////
-  // Atributos
-  //////////////////////////////////////////
+    //////////////////////////////////////////
+    // Atributos
+    //////////////////////////////////////////
 
-  public GOpeCom $gOpeCom; // D010 -Campos inherentes a la operación comercial
+    public GOpeCom $gOpeCom; // D010 -Campos inherentes a la operación comercial
 
-  //////////////////////////////////////////
-  // Constructor
-  //////////////////////////////////////////
+    //////////////////////////////////////////
+    // Constructor
+    //////////////////////////////////////////
 
-  public function __construct()
-  {
-    parent::__construct();
-    $this->gOpeCom = new GOpeCom();
-  }
-
-  //////////////////////////////////////////
-  // Setters
-  //////////////////////////////////////////
-
-  /**
-   * Establece el tipo de transacción de la operación comercial.
-   * Valor obligatorio para los documentos electrónicos comerciales.
-   *
-   * @param OpeComTipTrans $tipTra Tipo de transacción de la operación comercial
-   *
-   * @return self
-   *
-   */
-  public function setTipoDeTransaccion(int|OpeComTipTrans $tipTra): self
-  {
-    $this->gOpeCom->setITipTra($tipTra);
-    return $this;
-  }
-
-  /**
-   * Establece el tipo de impuesto afectado por la operación comercial.
-   *
-   * @param OpeComTipImp $tipImp Tipo de impuesto afectado por la operación comercial
-   *
-   * @return self
-   */
-  public function setTipoDeImpuestoAfectado(int|OpeComTipImp $tipImp): self
-  {
-    $this->gOpeCom->setITImp($tipImp);
-    return $this;
-  }
-
-  /**
-   * Establece la moneda de la operación comercial. Se debe expresar en código de moneda ISO 4217.
-   * Valor por defecto: PYG
-   *
-   * @param String $moneda Código de moneda ISO 4217
-   *
-   * @return self
-   */
-  public function setMoneda(string $moneda): self
-  {
-    $this->gOpeCom->setCMoneOpe($moneda);
-    return $this;
-  }
-
-  /**
-   * Establece la condición de aplicación de tipo de cambio. Valor obligatorio para los documentos electrónicos comerciales con moneda diferente a PYG.
-   *
-   * @param OpeComCondTipCam $condTipCam Condición de tipo de cambio
-   *
-   * @return self
-   */
-  public function setCondicionTipoDeCambio(int|OpeComCondTipCam $condTipCam): self
-  {
-    $this->gOpeCom->setDCondTiCam($condTipCam);
-    return $this;
-  }
-
-  /**
-   * Establece la tasa de cambio. Valor obligatorio para los documentos electrónicos comerciales con moneda diferente a PYG.
-   *
-   * @param string $tasaDeCambio Tasa de cambio expresada en cadena decimal para procesarse con BCMath.
-   *
-   * @return self
-   */
-  public function setTipoDeCambio(string $tasaDeCambio): self
-  {
-    $this->gOpeCom->setDTiCam($tasaDeCambio);
-    return $this;
-  }
-
-  /**
-   * Establece la condición de aplicación de anticipo. Valor obligatorio para los documentos electrónicos comerciales que contengan anticipos.
-   *
-   * @param OpeComCondAnt $condAnt Condición de anticipo
-   *
-   * @return self
-   */
-  public function setCondicionDeAnticipo(int|OpeComCondAnt $condAnt): self
-  {
-    $this->gOpeCom->setICondAnt($condAnt);
-    return $this;
-  }
-
-  /**
-   * Agrega una obligación afectada (gOblAfe - D030, NT-018) a la operación comercial.
-   * Las obligaciones afectadas permiten la imputación automática en el módulo RG90 (Marangatu).
-   * Valor opcional. Se admiten hasta 12 obligaciones por documento.
-   *
-   * @param int|COblAfe|GOblAfe $obligacion Código de la obligación afectada según Tabla 12 - NT-018 (o un GOblAfe ya conformado).
-   *
-   * @return self
-   */
-  public function addObligacionAfectada(int|COblAfe|GOblAfe $obligacion): self
-  {
-    $this->gOpeCom->addGOblAfe($obligacion);
-    return $this;
-  }
-
-  //////////////////////////////////////////
-  // Getters
-  //////////////////////////////////////////
-
-
-
-
-
-  //////////////////////////////////////////
-  // Otros Métodos
-  //////////////////////////////////////////
-
-  /**
-   * Genera y devuelve un objeto RDE que contiene todos los campos de este documento electrónico.
-   */
-  public function documentoElectronicoComercialToRDE(): RDE
-  {
-    $rde = $this->documentoElectronicoToRDE();
-    if ($this->getTipoDocumentoElectronico() != TimbTiDE::Factura && $this->getTipoDocumentoElectronico() != TimbTiDE::Autofactura) {
-      $this->gOpeCom->setITipTra(null);
+    public function __construct()
+    {
+        parent::__construct();
+        $this->gOpeCom = new GOpeCom();
     }
-    $rde->DE->gDatGralOpe->gOpeCom = $this->gOpeCom;
-    return $rde;
-  }
+
+    //////////////////////////////////////////
+    // Setters
+    //////////////////////////////////////////
+
+    /**
+     * Establece el tipo de transacción de la operación comercial.
+     * Valor obligatorio para los documentos electrónicos comerciales.
+     *
+     * @param OpeComTipTrans $tipTra Tipo de transacción de la operación comercial
+     *
+     * @return self
+     *
+     */
+    public function setTipoDeTransaccion(int|OpeComTipTrans $tipTra): self
+    {
+        $this->gOpeCom->setITipTra($tipTra);
+        return $this;
+    }
+
+    /**
+     * Establece el tipo de impuesto afectado por la operación comercial.
+     *
+     * @param OpeComTipImp $tipImp Tipo de impuesto afectado por la operación comercial
+     *
+     * @return self
+     */
+    public function setTipoDeImpuestoAfectado(int|OpeComTipImp $tipImp): self
+    {
+        $this->gOpeCom->setITImp($tipImp);
+        return $this;
+    }
+
+    /**
+     * Establece la moneda de la operación comercial. Se debe expresar en código de moneda ISO 4217.
+     * Valor por defecto: PYG
+     *
+     * @param String $moneda Código de moneda ISO 4217
+     *
+     * @return self
+     */
+    public function setMoneda(string $moneda): self
+    {
+        $this->gOpeCom->setCMoneOpe($moneda);
+        return $this;
+    }
+
+    /**
+     * Establece la condición de aplicación de tipo de cambio. Valor obligatorio para los documentos electrónicos comerciales con moneda diferente a PYG.
+     *
+     * @param OpeComCondTipCam $condTipCam Condición de tipo de cambio
+     *
+     * @return self
+     */
+    public function setCondicionTipoDeCambio(int|OpeComCondTipCam $condTipCam): self
+    {
+        $this->gOpeCom->setDCondTiCam($condTipCam);
+        return $this;
+    }
+
+    /**
+     * Establece la tasa de cambio. Valor obligatorio para los documentos electrónicos comerciales con moneda diferente a PYG.
+     *
+     * @param string $tasaDeCambio Tasa de cambio expresada en cadena decimal para procesarse con BCMath.
+     *
+     * @return self
+     */
+    public function setTipoDeCambio(string $tasaDeCambio): self
+    {
+        $this->gOpeCom->setDTiCam($tasaDeCambio);
+        return $this;
+    }
+
+    /**
+     * Establece la condición de aplicación de anticipo. Valor obligatorio para los documentos electrónicos comerciales que contengan anticipos.
+     *
+     * @param OpeComCondAnt $condAnt Condición de anticipo
+     *
+     * @return self
+     */
+    public function setCondicionDeAnticipo(int|OpeComCondAnt $condAnt): self
+    {
+        $this->gOpeCom->setICondAnt($condAnt);
+        return $this;
+    }
+
+    /**
+     * Agrega una obligación afectada (gOblAfe - D030, NT-018) a la operación comercial.
+     * Las obligaciones afectadas permiten la imputación automática en el módulo RG90 (Marangatu).
+     * Valor opcional. Se admiten hasta 12 obligaciones por documento.
+     *
+     * @param int|COblAfe|GOblAfe $obligacion Código de la obligación afectada según Tabla 12 - NT-018 (o un GOblAfe ya conformado).
+     *
+     * @return self
+     */
+    public function addObligacionAfectada(int|COblAfe|GOblAfe $obligacion): self
+    {
+        $this->gOpeCom->addGOblAfe($obligacion);
+        return $this;
+    }
+
+    //////////////////////////////////////////
+    // Getters
+    //////////////////////////////////////////
+
+
+
+
+
+    //////////////////////////////////////////
+    // Otros Métodos
+    //////////////////////////////////////////
+
+    /**
+     * Genera y devuelve un objeto RDE que contiene todos los campos de este documento electrónico.
+     */
+    public function documentoElectronicoComercialToRDE(): RDE
+    {
+        $rde = $this->documentoElectronicoToRDE();
+        if ($this->getTipoDocumentoElectronico() != TimbTiDE::Factura && $this->getTipoDocumentoElectronico() != TimbTiDE::Autofactura) {
+            $this->gOpeCom->setITipTra(null);
+        }
+        $rde->DE->gDatGralOpe->gOpeCom = $this->gOpeCom;
+        return $rde;
+    }
 }

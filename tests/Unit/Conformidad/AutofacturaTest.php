@@ -14,37 +14,37 @@ use PHPUnit\Framework\TestCase;
  */
 final class AutofacturaTest extends TestCase
 {
-  /** @var callable */
-  private $cleanup;
+    /** @var callable */
+    private $cleanup;
 
-  protected function setUp(): void
-  {
-    $this->cleanup = SifenTestEnvironment::init()['cleanup'];
-  }
+    protected function setUp(): void
+    {
+        $this->cleanup = SifenTestEnvironment::init()['cleanup'];
+    }
 
-  protected function tearDown(): void
-  {
-    ($this->cleanup)();
-  }
+    protected function tearDown(): void
+    {
+        ($this->cleanup)();
+    }
 
-  public function testElTotalDeLaOperacionSumaTodosLosItems(): void
-  {
-    $af = DocumentoFactory::autofactura(30, 2); // 5 × 20 000 + 1 × 30 000
-    $this->assertSame('130000.00000000', $af->gTotSub->getDTotOpe(), 'F008 dTotOpe');
-    $this->assertSame('130000', $af->gTotSub->getDTotGralOpe(), 'F014 dTotGralOpe');
-  }
+    public function testElTotalDeLaOperacionSumaTodosLosItems(): void
+    {
+        $af = DocumentoFactory::autofactura(30, 2); // 5 × 20 000 + 1 × 30 000
+        $this->assertSame('130000.00000000', $af->gTotSub->getDTotOpe(), 'F008 dTotOpe');
+        $this->assertSame('130000', $af->gTotSub->getDTotGralOpe(), 'F014 dTotGralOpe');
+    }
 
-  public function testElLiteralDeLaConstanciaEsElDelXsd(): void
-  {
-    $this->assertSame('Constancia Electrónica', TipDocAso::ConstanciaElectronica->getDescription());
-  }
+    public function testElLiteralDeLaConstanciaEsElDelXsd(): void
+    {
+        $this->assertSame('Constancia Electrónica', TipDocAso::ConstanciaElectronica->getDescription());
+    }
 
-  public function testAutofacturaFirmadaValidaContraElXsdYElQrLlevaIvaCero(): void
-  {
-    $xml = DocumentoFactory::firmar(DocumentoFactory::autofactura(31, 2)->autofacturaToRDE());
-    XsdAssertions::assertRdeValido($xml, 'Autofactura con 2 ítems');
-    $this->assertStringContainsString('<dDesTipDocAso>Constancia Electrónica</dDesTipDocAso>', $xml);
-    $this->assertStringContainsString('<dTotOpe>130000.00000000</dTotOpe>', $xml);
-    $this->assertMatchesRegularExpression('/dTotIVA=0&amp;cItems=2/', $xml, 'el QR debe informar dTotIVA=0 (NT-010)');
-  }
+    public function testAutofacturaFirmadaValidaContraElXsdYElQrLlevaIvaCero(): void
+    {
+        $xml = DocumentoFactory::firmar(DocumentoFactory::autofactura(31, 2)->autofacturaToRDE());
+        XsdAssertions::assertRdeValido($xml, 'Autofactura con 2 ítems');
+        $this->assertStringContainsString('<dDesTipDocAso>Constancia Electrónica</dDesTipDocAso>', $xml);
+        $this->assertStringContainsString('<dTotOpe>130000.00000000</dTotOpe>', $xml);
+        $this->assertMatchesRegularExpression('/dTotIVA=0&amp;cItems=2/', $xml, 'el QR debe informar dTotIVA=0 (NT-010)');
+    }
 }

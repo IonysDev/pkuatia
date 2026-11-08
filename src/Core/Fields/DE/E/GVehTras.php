@@ -18,7 +18,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GVehTras extends BaseSifenField
 {
-                                // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public string $dTiVehTras;  // E961 - 4-10 - 1-1 - Tipo de vehículo
     public string $dMarVeh;     // E962 - 1-10 - 1-1 - Marca
     public int $dTipIdenVeh; // E967 - 1    - 1-1 - Tipo de identificación del vehículo: 1 = Número de identificación del vehículo | 2 = Número de matrícula del vehículo
@@ -210,9 +210,9 @@ class GVehTras extends BaseSifenField
      */
     public function getDNroMatVeh(): ?string
     {
-    if (isset($this->dNroMatVeh)) {
+        if (isset($this->dNroMatVeh)) {
             return $this->dNroMatVeh;
-    }
+        }
         return null;
     }
 
@@ -318,19 +318,19 @@ class GVehTras extends BaseSifenField
         if (isset($this->dTiVehTras)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dTiVehTras', $this->getDTiVehTras()));
         } else {
-        throw new ValidacionException('[GVehTras] El campo dTiVehTras (E961, tipo de vehículo) es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dTiVehTras (E961, tipo de vehículo) es obligatorio.');
         }
 
         if (isset($this->dMarVeh)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
         } else {
-        throw new ValidacionException('[GVehTras] El campo dMarVeh es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dMarVeh es obligatorio.');
         }
 
         if (isset($this->dTipIdenVeh)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dTipIdenVeh', $this->getDTipIdenVeh()));
         } else {
-        throw new ValidacionException('[GVehTras] El campo dTipIdenVeh es obligatorio.');
+            throw new ValidacionException('[GVehTras] El campo dTipIdenVeh es obligatorio.');
         }
 
         if (isset($this->dNroIDVeh)) {

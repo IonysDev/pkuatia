@@ -13,7 +13,7 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
  */
 class RContEv
 {
-                                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
     public RGesEve $xEvento;                   // ContEv02 - XML del Evento - X - 1-1
     public RRetEnviEventoDe $rResEnviEventoDe; // ContEv03 - Respuesta del WS Recepción Evento  X - ??
 
@@ -133,11 +133,11 @@ class RContEv
         $res = new self();
 
         if (isset($node->xEvento)) {
-           $res->setXEvento(RGesEve::FromSimpleXMLElement($node->xEvento->rGesEve));
+            $res->setXEvento(RGesEve::FromSimpleXMLElement($node->xEvento->rGesEve));
         }
 
         if (isset($node->rResEnviEventoDe)) {
-          $res->setRResEnviEventoDe(RRetEnviEventoDe::FromSimpleXMLElement($node->rResEnviEventoDe->rRetEnviEventoDe));
+            $res->setRResEnviEventoDe(RRetEnviEventoDe::FromSimpleXMLElement($node->rResEnviEventoDe->rRetEnviEventoDe));
         }
 
 

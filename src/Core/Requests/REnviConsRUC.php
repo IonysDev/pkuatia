@@ -9,7 +9,7 @@ namespace IonysDev\Pkuatia\Core\Requests;
 
 class REnviConsRUC
 {
-                             // id - DESCRIPCION- LONGITUD - OCURRENCIA
+    // id - DESCRIPCION- LONGITUD - OCURRENCIA
     public int $dId;         // RSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud - 1-15 - 1-1
     public string $dRUCCons; // RSch03 - RUC que se desea consultar sin dígito verificador - 5-8 - 1-1
 

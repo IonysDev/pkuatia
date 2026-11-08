@@ -52,7 +52,7 @@ class TimbradoUtils
             throw new ValidacionException('[TimbradoUtils] La serie actual no es válida.');
         }
         if (is_null($numeroActual)) {
-           return ['serie' => $serieActual, 'numero' => 1];
+            return ['serie' => $serieActual, 'numero' => 1];
         }
         if ($numeroActual < 1 || $numeroActual > GTimb::MAX_NUMDOC) {
             throw new ValidacionException('[TimbradoUtils] El número actual no es válido.');

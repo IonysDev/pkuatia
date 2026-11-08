@@ -50,7 +50,7 @@ class GDatRec extends BaseSifenField
     public const TIPO_DOCUMENTO_IDENTIDAD_TARJETA_DIPLOMATICA = 6;
     public const TIPO_DOCUMENTO_IDENTIDAD_OTRO = 9;
 
-                                // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public int $iNatRec;     // D201 - 1     - 1-1 - Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
     public int $iTiOpe;      // D202 - 1     - 1-1 - Tipo de operación: 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
     public string $cPaisRec;    // D203 - 3     - 1-1 - Código de país del receptor
@@ -135,7 +135,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = CountryMapping::getCountryDesc($cPaisRec);
         if ($desc === null) {
-          throw new ValidacionException("[GDatRec] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+            throw new ValidacionException("[GDatRec] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
         }
         $this->cPaisRec = $cPaisRec;
         $this->dDesPaisRe = $desc;
@@ -281,7 +281,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepRec));
         if ($desc === null) {
-          throw new ValidacionException("[GDatRec] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
+            throw new ValidacionException("[GDatRec] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         }
         $this->cDepRec = $cDepRec;
         $this->dDesDepRec = $desc;
@@ -297,7 +297,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
         if ($desc === null) {
-          throw new ValidacionException("[GDatRec] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+            throw new ValidacionException("[GDatRec] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         }
         $this->cDisRec = $cDisRec;
         $this->dDesDisRec = $desc;
@@ -314,7 +314,7 @@ class GDatRec extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
         if ($desc === null) {
-          throw new ValidacionException("[GDatRec] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+            throw new ValidacionException("[GDatRec] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         }
         $this->cCiuRec = $cCiuRec;
         $this->dDesCiuRec = $desc;
@@ -338,7 +338,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->iNatRec)) {
             return $this->iNatRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -350,7 +350,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->iTiOpe)) {
             return $this->iTiOpe;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -364,7 +364,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->cPaisRec)) {
             return $this->cPaisRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -378,7 +378,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->dDesPaisRe)) {
             return $this->dDesPaisRe;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -391,7 +391,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->iTiContRec)) {
             return $this->iTiContRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -405,7 +405,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->dRucRec)) {
             return $this->dRucRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -427,7 +427,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->iTipIDRec)) {
             return $this->iTipIDRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -460,7 +460,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->dNumIDRec)) {
             return $this->dNumIDRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -484,7 +484,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->dNomFanRec)) {
             return $this->dNomFanRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -498,7 +498,7 @@ class GDatRec extends BaseSifenField
         if (isset($this->dDirRec)) {
             return $this->dDirRec;
         } else {
-        return null;
+            return null;
         }
     }
 

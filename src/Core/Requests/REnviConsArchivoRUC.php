@@ -9,7 +9,7 @@ namespace IonysDev\Pkuatia\Core\Requests;
  */
 class REnviConsArchivoRUC
 {
-                                // ID - DESCRIPCION - LONGITUD - OCURRENCIA
+    // ID - DESCRIPCION - LONGITUD - OCURRENCIA
     public int $dId;            // ESch04 - Identificador de control de envío generado por el sistema que utilice PKuatia - 1-15 - 1-1
     public string $dRucFactElec;// ESch05 - RUC del facturador electrónico que consulta, sin dígito verificador - 5-8 - 1-1
 

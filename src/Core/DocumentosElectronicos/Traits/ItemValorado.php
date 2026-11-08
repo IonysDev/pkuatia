@@ -145,12 +145,12 @@ trait ItemValorado
         if (is_int($afectIVA)) {
             $afectacionIVA = CamIVAAfecIVA::tryFrom($afectIVA);
         } else {
-        $afectacionIVA = $afectIVA;
+            $afectacionIVA = $afectIVA;
         }
         if (is_int($tasaDeIVA)) {
             $tasaIVA = CamIVATasaIVA::tryFrom($tasaDeIVA);
         } else {
-        $tasaIVA = $tasaDeIVA;
+            $tasaIVA = $tasaDeIVA;
         }
         ////////////////////////////////////////////////////////////////////////////
         // START - GValorItem

@@ -11,7 +11,7 @@ use SoapVar;
 
 class REnviEventoDe
 {
-                            // Id  - Longitud - Ocurrencia - Descripción
+    // Id  - Longitud - Ocurrencia - Descripción
     public int $dId;         // GSch02 - 1-15 - 1-1 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud.
     public SoapVar $dEvReg;  // GSch03 - XML  - 1-1 - Evento a ser registrado en XML.
 

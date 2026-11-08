@@ -23,7 +23,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GEmis extends BaseSifenField
 {
-                                // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public string $dRucEm;     // D101 - 3-8   - 1-1 - RUC del contribuyente emisor
     public int $dDVEmi;     // D102 - 1     - 1-1 - Dígito verificador del RUC del contribuyente emisor
     public int $iTipCont;   // D103 - 1     - 1-1 - Tipo de contribuyente: 1 = Persona Física | 2 = Persona Jurídica
@@ -130,7 +130,7 @@ class GEmis extends BaseSifenField
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepEmi));
         if ($desc === null) {
-          throw new ValidacionException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
+            throw new ValidacionException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
         }
         $this->dDesDepEmi = $desc;
         $this->cDepEmi = $cDepEmi;
@@ -163,7 +163,7 @@ class GEmis extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisEmi));
         if ($desc === null) {
-          throw new ValidacionException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
+            throw new ValidacionException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
         }
         $this->dDesDisEmi = $desc;
         $this->cDisEmi = $cDisEmi;
@@ -188,7 +188,7 @@ class GEmis extends BaseSifenField
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuEmi));
         if ($desc === null) {
-          throw new ValidacionException("[GEmis::setCCiuEmi] El código de ciudad $cCiuEmi no existe.");
+            throw new ValidacionException("[GEmis::setCCiuEmi] El código de ciudad $cCiuEmi no existe.");
         }
         $this->cCiuEmi = $cCiuEmi;
         $this->dDesCiuEmi = $desc;

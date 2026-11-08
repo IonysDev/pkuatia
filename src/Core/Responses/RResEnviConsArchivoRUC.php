@@ -12,245 +12,245 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
  */
 class RResEnviConsArchivoRUC implements RespuestaSifen
 {
-  // Códigos de resultado del WS según Tabla L de la NT-011
-  public const COD_RES_ARCHIVO_ENCONTRADO = 520;    // Archivo encontrado
-  public const COD_RES_ARCHIVO_NO_ENCONTRADO = 521; // No se encontró el archivo generado en el día
-  public const COD_RES_LIMITE_DESCARGAS = 522;      // Se ha superado el límite de descargas del día (máximo una diaria)
-  public const COD_RES_RUC_NO_COINCIDE = 523;       // El RUC del certificado no coincide con el RUC de consulta
+    // Códigos de resultado del WS según Tabla L de la NT-011
+    public const COD_RES_ARCHIVO_ENCONTRADO = 520;    // Archivo encontrado
+    public const COD_RES_ARCHIVO_NO_ENCONTRADO = 521; // No se encontró el archivo generado en el día
+    public const COD_RES_LIMITE_DESCARGAS = 522;      // Se ha superado el límite de descargas del día (máximo una diaria)
+    public const COD_RES_RUC_NO_COINCIDE = 523;       // El RUC del certificado no coincide con el RUC de consulta
 
-                                  // ID - DESCRIPCION - LONGITUD - OCURRENCIA
-  public DateTime $dFecProc;      // FSch02 - Fecha y hora del procesamiento - 19 - 1-1
-  public DateTime $dFecArchivo;   // FSch03 - Fecha del archivo - 10 - 0-1
-  public int $dCodRes;       // FSch04 - Código del resultado de la consulta - 1-4 - 1-1
-  public string $dMsgRes;       // FSch05 - Mensaje del resultado de la consulta - 1-255 - 1-1
-  public string $rConsDte;      // FSch06 - Archivo de RUC comprimido (ZIP) codificado en Base64 - 0-1
+    // ID - DESCRIPCION - LONGITUD - OCURRENCIA
+    public DateTime $dFecProc;      // FSch02 - Fecha y hora del procesamiento - 19 - 1-1
+    public DateTime $dFecArchivo;   // FSch03 - Fecha del archivo - 10 - 0-1
+    public int $dCodRes;       // FSch04 - Código del resultado de la consulta - 1-4 - 1-1
+    public string $dMsgRes;       // FSch05 - Mensaje del resultado de la consulta - 1-255 - 1-1
+    public string $rConsDte;      // FSch06 - Archivo de RUC comprimido (ZIP) codificado en Base64 - 0-1
 
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de dFecProc - Fecha y hora del procesamiento.
-   *
-   * @param DateTime $dFecProc
-   *
-   * @return self
-   */
-  public function setDFecProc(DateTime $dFecProc): self
-  {
-    $this->dFecProc = $dFecProc;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dFecArchivo - Fecha del archivo.
-   *
-   * @param DateTime $dFecArchivo
-   *
-   * @return self
-   */
-  public function setDFecArchivo(DateTime $dFecArchivo): self
-  {
-    $this->dFecArchivo = $dFecArchivo;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dCodRes - Código del resultado de la consulta.
-   *
-   * @param int $dCodRes
-   *
-   * @return self
-   */
-  public function setDCodRes(int $dCodRes): self
-  {
-    $this->dCodRes = $dCodRes;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dMsgRes - Mensaje del resultado de la consulta.
-   *
-   * @param String $dMsgRes
-   *
-   * @return self
-   */
-  public function setDMsgRes(string $dMsgRes): self
-  {
-    $this->dMsgRes = $dMsgRes;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de rConsDte - Archivo de RUC comprimido (ZIP) codificado en Base64.
-   *
-   * @param String $rConsDte
-   *
-   * @return self
-   */
-  public function setRConsDte(string $rConsDte): self
-  {
-    $this->rConsDte = $rConsDte;
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de dFecProc - Fecha y hora del procesamiento.
-   *
-   * @return DateTime|null
-   */
-  public function getDFecProc(): ?DateTime
-  {
-    return isset($this->dFecProc) ? $this->dFecProc : null;
-  }
-
-  /**
-   * Obtiene el valor de dFecArchivo - Fecha del archivo.
-   *
-   * @return DateTime|null
-   */
-  public function getDFecArchivo(): ?DateTime
-  {
-    return isset($this->dFecArchivo) ? $this->dFecArchivo : null;
-  }
-
-  /**
-   * Obtiene el valor de dCodRes - Código del resultado de la consulta.
-   *
-   * @return int|null
-   */
-  public function getDCodRes(): ?int
-  {
-    return isset($this->dCodRes) ? $this->dCodRes : null;
-  }
-
-  /**
-   * Obtiene el valor de dMsgRes - Mensaje del resultado de la consulta.
-   *
-   * @return String|null
-   */
-  public function getDMsgRes(): ?string
-  {
-    return isset($this->dMsgRes) ? $this->dMsgRes : null;
-  }
-
-  /**
-   * Obtiene el valor de rConsDte - Archivo de RUC comprimido (ZIP) codificado en Base64.
-   *
-   * @return String|null
-   */
-  public function getRConsDte(): ?string
-  {
-    return isset($this->rConsDte) ? $this->rConsDte : null;
-  }
-
-  /**
-   * Devuelve el contenido binario del archivo ZIP de RUC (decodifica el Base64 recibido).
-   *
-   * @return String|null Contenido binario del ZIP o null si el SIFEN no devolvió el archivo.
-   */
-  public function getArchivoZip(): ?string
-  {
-    if (!isset($this->rConsDte)) {
-      return null;
+    /**
+     * Establece el valor de dFecProc - Fecha y hora del procesamiento.
+     *
+     * @param DateTime $dFecProc
+     *
+     * @return self
+     */
+    public function setDFecProc(DateTime $dFecProc): self
+    {
+        $this->dFecProc = $dFecProc;
+        return $this;
     }
-    $contenido = base64_decode($this->rConsDte, true);
-    return $contenido === false ? null : $contenido;
-  }
 
-  ///////////////////////////////////////////////////////////////////////
-  // Métodos especiales de instanciación
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Crea una nueva instancia de RResEnviConsArchivoRUC a partir de un objeto stdClass.
-   * Pensado para castear la respuesta de una llamada SOAP.
-   *
-   * @param mixed $object Objeto de respuesta del SIFEN.
-   *
-   * @return RResEnviConsArchivoRUC
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    if (is_null($object)) {
-      throw new RespuestaException("[RResEnviConsArchivoRUC] La respuesta del SIFEN es nula.");
+    /**
+     * Establece el valor de dFecArchivo - Fecha del archivo.
+     *
+     * @param DateTime $dFecArchivo
+     *
+     * @return self
+     */
+    public function setDFecArchivo(DateTime $dFecArchivo): self
+    {
+        $this->dFecArchivo = $dFecArchivo;
+        return $this;
     }
-    $res = new RResEnviConsArchivoRUC();
-    // Rechazo genérico (rRetEnviDe > rProtDe, p. ej. 0160): el facade lo decodifica de la respuesta cruda cuando el WSDL
-    // da null (B13b); se devuelve con su código y su mensaje, como en las demás respuestas (QA de la Fase B).
-    if (isset($object->rProtDe)) {
-      $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
-      if (isset($prot->dFecProc)) {
-        $res->setDFecProc($prot->getDFecProc());
-      }
-      $proc = $prot->getGResProc()[0] ?? null;
-      if ($proc !== null) {
-        $res->setDCodRes(intval($proc->getDCodRes()));
-        $res->setDMsgRes($proc->getDMsgRes());
-      }
-      return $res;
+
+    /**
+     * Establece el valor de dCodRes - Código del resultado de la consulta.
+     *
+     * @param int $dCodRes
+     *
+     * @return self
+     */
+    public function setDCodRes(int $dCodRes): self
+    {
+        $this->dCodRes = $dCodRes;
+        return $this;
     }
-    if (isset($object->dFecProc)) {
-      $res->setDFecProc(new DateTime($object->dFecProc));
+
+    /**
+     * Establece el valor de dMsgRes - Mensaje del resultado de la consulta.
+     *
+     * @param String $dMsgRes
+     *
+     * @return self
+     */
+    public function setDMsgRes(string $dMsgRes): self
+    {
+        $this->dMsgRes = $dMsgRes;
+        return $this;
     }
-    if (isset($object->dFecArchivo)) {
-      $res->setDFecArchivo(new DateTime($object->dFecArchivo));
+
+    /**
+     * Establece el valor de rConsDte - Archivo de RUC comprimido (ZIP) codificado en Base64.
+     *
+     * @param String $rConsDte
+     *
+     * @return self
+     */
+    public function setRConsDte(string $rConsDte): self
+    {
+        $this->rConsDte = $rConsDte;
+        return $this;
     }
-    if (isset($object->dCodRes)) {
-      $res->setDCodRes(intval($object->dCodRes));
+
+    ///////////////////////////////////////////////////////////////////////
+    // Getters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de dFecProc - Fecha y hora del procesamiento.
+     *
+     * @return DateTime|null
+     */
+    public function getDFecProc(): ?DateTime
+    {
+        return isset($this->dFecProc) ? $this->dFecProc : null;
     }
-    if (isset($object->dMsgRes)) {
-      $res->setDMsgRes(strval($object->dMsgRes));
+
+    /**
+     * Obtiene el valor de dFecArchivo - Fecha del archivo.
+     *
+     * @return DateTime|null
+     */
+    public function getDFecArchivo(): ?DateTime
+    {
+        return isset($this->dFecArchivo) ? $this->dFecArchivo : null;
     }
-    if (isset($object->rConsDte)) {
-      $res->setRConsDte(strval($object->rConsDte));
+
+    /**
+     * Obtiene el valor de dCodRes - Código del resultado de la consulta.
+     *
+     * @return int|null
+     */
+    public function getDCodRes(): ?int
+    {
+        return isset($this->dCodRes) ? $this->dCodRes : null;
     }
-    return $res;
-  }
 
-  use RespuestaSifenTrait;
+    /**
+     * Obtiene el valor de dMsgRes - Mensaje del resultado de la consulta.
+     *
+     * @return String|null
+     */
+    public function getDMsgRes(): ?string
+    {
+        return isset($this->dMsgRes) ? $this->dMsgRes : null;
+    }
 
-  // --- Fase C (C6): RespuestaSifen -----------------------------------------------------------------------------------
+    /**
+     * Obtiene el valor de rConsDte - Archivo de RUC comprimido (ZIP) codificado en Base64.
+     *
+     * @return String|null
+     */
+    public function getRConsDte(): ?string
+    {
+        return isset($this->rConsDte) ? $this->rConsDte : null;
+    }
 
-  public function getCodigo(): ?string
-  {
-    return isset($this->dCodRes) ? self::codigoTexto($this->dCodRes) : null;
-  }
+    /**
+     * Devuelve el contenido binario del archivo ZIP de RUC (decodifica el Base64 recibido).
+     *
+     * @return String|null Contenido binario del ZIP o null si el SIFEN no devolvió el archivo.
+     */
+    public function getArchivoZip(): ?string
+    {
+        if (!isset($this->rConsDte)) {
+            return null;
+        }
+        $contenido = base64_decode($this->rConsDte, true);
+        return $contenido === false ? null : $contenido;
+    }
 
-  public function getMensaje(): ?string
-  {
-    return $this->dMsgRes ?? null;
-  }
+    ///////////////////////////////////////////////////////////////////////
+    // Métodos especiales de instanciación
+    ///////////////////////////////////////////////////////////////////////
 
-  /** El archivo del día fue encontrado y se devolvió (0520). */
-  public function esExitosa(): bool
-  {
-    return $this->fueEncontrado();
-  }
+    /**
+     * Crea una nueva instancia de RResEnviConsArchivoRUC a partir de un objeto stdClass.
+     * Pensado para castear la respuesta de una llamada SOAP.
+     *
+     * @param mixed $object Objeto de respuesta del SIFEN.
+     *
+     * @return RResEnviConsArchivoRUC
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        if (is_null($object)) {
+            throw new RespuestaException("[RResEnviConsArchivoRUC] La respuesta del SIFEN es nula.");
+        }
+        $res = new RResEnviConsArchivoRUC();
+        // Rechazo genérico (rRetEnviDe > rProtDe, p. ej. 0160): el facade lo decodifica de la respuesta cruda cuando el WSDL
+        // da null (B13b); se devuelve con su código y su mensaje, como en las demás respuestas (QA de la Fase B).
+        if (isset($object->rProtDe)) {
+            $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
+            if (isset($prot->dFecProc)) {
+                $res->setDFecProc($prot->getDFecProc());
+            }
+            $proc = $prot->getGResProc()[0] ?? null;
+            if ($proc !== null) {
+                $res->setDCodRes(intval($proc->getDCodRes()));
+                $res->setDMsgRes($proc->getDMsgRes());
+            }
+            return $res;
+        }
+        if (isset($object->dFecProc)) {
+            $res->setDFecProc(new DateTime($object->dFecProc));
+        }
+        if (isset($object->dFecArchivo)) {
+            $res->setDFecArchivo(new DateTime($object->dFecArchivo));
+        }
+        if (isset($object->dCodRes)) {
+            $res->setDCodRes(intval($object->dCodRes));
+        }
+        if (isset($object->dMsgRes)) {
+            $res->setDMsgRes(strval($object->dMsgRes));
+        }
+        if (isset($object->rConsDte)) {
+            $res->setRConsDte(strval($object->rConsDte));
+        }
+        return $res;
+    }
 
-  public function fueEncontrado(): bool
-  {
-    return $this->getCodigo() === '0520';
-  }
+    use RespuestaSifenTrait;
 
-  public function getFechaProceso(): ?DateTime
-  {
-    return $this->dFecProc ?? null;
-  }
+    // --- Fase C (C6): RespuestaSifen -----------------------------------------------------------------------------------
 
-  public function toArray(): array
-  {
-    return [
-      'codigo' => $this->getCodigo(),
-      'mensaje' => $this->getMensaje(),
-      'exitosa' => $this->esExitosa(),
-      'fechaProceso' => self::fechaIso($this->getFechaProceso()),
-      'fechaArchivo' => isset($this->dFecArchivo) ? $this->dFecArchivo->format('Y-m-d') : null,
-      'conArchivo' => isset($this->rConsDte) && $this->rConsDte !== '',
-    ];
-  }
+    public function getCodigo(): ?string
+    {
+        return isset($this->dCodRes) ? self::codigoTexto($this->dCodRes) : null;
+    }
+
+    public function getMensaje(): ?string
+    {
+        return $this->dMsgRes ?? null;
+    }
+
+    /** El archivo del día fue encontrado y se devolvió (0520). */
+    public function esExitosa(): bool
+    {
+        return $this->fueEncontrado();
+    }
+
+    public function fueEncontrado(): bool
+    {
+        return $this->getCodigo() === '0520';
+    }
+
+    public function getFechaProceso(): ?DateTime
+    {
+        return $this->dFecProc ?? null;
+    }
+
+    public function toArray(): array
+    {
+        return [
+          'codigo' => $this->getCodigo(),
+          'mensaje' => $this->getMensaje(),
+          'exitosa' => $this->esExitosa(),
+          'fechaProceso' => self::fechaIso($this->getFechaProceso()),
+          'fechaArchivo' => isset($this->dFecArchivo) ? $this->dFecArchivo->format('Y-m-d') : null,
+          'conArchivo' => isset($this->rConsDte) && $this->rConsDte !== '',
+        ];
+    }
 }

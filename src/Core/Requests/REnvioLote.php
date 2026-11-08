@@ -2,13 +2,13 @@
 
 namespace IonysDev\Pkuatia\Core\Requests;
 
-    // Nodo ID: BSch01 rEnvioLote Raíz
-    // Nombre: rEnvioLote
-    // Descripción: Clase que conforma la solicitud de envío de lote de documentos electrónicos.
-    // Nodo Padre: Es raíz.
+// Nodo ID: BSch01 rEnvioLote Raíz
+// Nombre: rEnvioLote
+// Descripción: Clase que conforma la solicitud de envío de lote de documentos electrónicos.
+// Nodo Padre: Es raíz.
 class REnvioLote
 {
-                        // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public int $dId;    // BSch02 - 1-15 - 1-1 - Identificador de control de envío.
     public string $xDE; // BSch01  -  no tiene  - 1-1 - Campo comprimido en formato Base64 según el esquema del Protocolo de procesamiento del Lote.
 

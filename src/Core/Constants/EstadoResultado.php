@@ -12,40 +12,40 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum EstadoResultado: string
 {
-  case Aprobado = 'Aprobado';
-  case AprobadoConObservacion = 'Aprobado con observación';
-  case Rechazado = 'Rechazado';
+    case Aprobado = 'Aprobado';
+    case AprobadoConObservacion = 'Aprobado con observación';
+    case Rechazado = 'Rechazado';
 
-  /** Reconoce el texto con tolerancia a espacios, mayúsculas y tildes. Null si no es un estado conocido. */
-  public static function fromTexto(?string $texto): ?self
-  {
-    if ($texto === null) {
-      return null;
+    /** Reconoce el texto con tolerancia a espacios, mayúsculas y tildes. Null si no es un estado conocido. */
+    public static function fromTexto(?string $texto): ?self
+    {
+        if ($texto === null) {
+            return null;
+        }
+        $n = mb_strtolower(trim($texto));
+        $n = strtr($n, ['á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u']);
+        $n = preg_replace('/\s+/', ' ', $n);
+        return match (true) {
+            $n === 'aprobado' => self::Aprobado,
+            str_starts_with($n, 'aprobado con observaci') => self::AprobadoConObservacion,
+            $n === 'rechazado' => self::Rechazado,
+            default => null,
+        };
     }
-    $n = mb_strtolower(trim($texto));
-    $n = strtr($n, ['á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u']);
-    $n = preg_replace('/\s+/', ' ', $n);
-    return match (true) {
-      $n === 'aprobado' => self::Aprobado,
-      str_starts_with($n, 'aprobado con observaci') => self::AprobadoConObservacion,
-      $n === 'rechazado' => self::Rechazado,
-      default => null,
-    };
-  }
 
-  /** Aprobado o aprobado con observaciones: en ambos casos el DE queda como DTE. */
-  public function esAprobado(): bool
-  {
-    return $this !== self::Rechazado;
-  }
+    /** Aprobado o aprobado con observaciones: en ambos casos el DE queda como DTE. */
+    public function esAprobado(): bool
+    {
+        return $this !== self::Rechazado;
+    }
 
-  /** Abreviatura con la que el MT lo escribe en las tablas de validación: A, AO o R. */
-  public function letra(): string
-  {
-    return match ($this) {
-      self::Aprobado => 'A',
-      self::AprobadoConObservacion => 'AO',
-      self::Rechazado => 'R',
-    };
-  }
+    /** Abreviatura con la que el MT lo escribe en las tablas de validación: A, AO o R. */
+    public function letra(): string
+    {
+        return match ($this) {
+            self::Aprobado => 'A',
+            self::AprobadoConObservacion => 'AO',
+            self::Rechazado => 'R',
+        };
+    }
 }

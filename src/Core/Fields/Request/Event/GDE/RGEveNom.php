@@ -21,33 +21,33 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class RGEveNom
 {
-                                // ID       - DESCRIPCION                                      - LONGITUD   - OCURRENCIA
-     public string $id;         // GENFE002 - Identificador del DTE                            - 44         - 1-1
-     public string $mOtEve;     // GENFE003 - Motivo del evento                                - 5-500      - 1-1
-     public int $iNatRec;    // GENFE004 - Naturaleza del receptor                          - 1          - 1-1
-     public int $iTiOpe;     // GENFE027 - Tipo de operación                                - 1          - 1-1
-     public string $cPaisRec;   // GENFE005 - Código de país del receptor                      - 3          - 1-1
-     public string $dDesPaisRe; // GENFE006 - Descripción del país receptor                    - 4-50       - 1-1
-     public int $iTiContRec; // GENFE007 - Tipo de contribuyente receptor                   - 1          - 0-1
-     public string $dRucRec;    // GENFE008 - RUC del receptor                                 - 3-8        - 0-1
-     public int $dDVRec;     // GENFE009 - Dígito verificador  del RUC del receptor         - 1          - 0-1
-     public int $iTipIDRec;  // GENFE010 - Tipo de documento de identidad del receptor      - 1          - 0-1
-     public string $dDTipIDRec; // GENFE011 - Descripción del tipo de documento de identidad   - 9-41       - 0-1
-     public string $dNumIDRec;  // GENFE012 - Número de documento de identidad                 - 1-15       - 0-1
-     public string $dNomRec;    // GENFE013 - Nombre o razón  social del receptor del DTE      - 4-255      - 1-1
-     public string $dNomFanRec; // GENFE014 - Nombre de fantasía                               - 4-255      - 0-1
-     public string $dDirRec;    // GENFE015 - Dirección del receptor                           - 1-255      - 0-1
-     public int $dNumCasRec; // GENFE016 - Número de casa del receptor                      - 1-6        - 0-1
-     public int $cDepRec;    // GENFE017 - Código de departamento del receptor              - 1-2        - 0-1
-     public string $dDesDepRec; // GENFE018 - Descripción del departamento del receptor        - 6-16       - 0-1
-     public int $cDisRec;    // GENFE019 - Código de distrito del receptor                  - 1-4        - 0-1
-     public string $dDesDisRec; // GENFE020 - Descripción del distrito del receptor            - 1-30       - 0-1
-     public int $cCiuRec;    // GENFE021 - Código de ciudad del receptor                    - 1-5        - 0-1
-     public string $dDesCiuRec; // GENFE022 - Descripción de la ciudad del receptor            - 1-30       - 0-1
-     public string $dTelRec;    // GENFE023 - Número de teléfono del receptor                  - 6-15       - 0-1
-     public string $dCelRec;    // GENFE024 - Número de celular del receptor                   - 10-20      - 0-1
-     public string $dEmailRec;  // GENFE025 - Correo electrónico del receptor                  - 3-80       - 0-1
-     public string $dCodCliente;// GENFE026 - Código de cliente                                - 3-15       - 0-1
+    // ID       - DESCRIPCION                                      - LONGITUD   - OCURRENCIA
+    public string $id;         // GENFE002 - Identificador del DTE                            - 44         - 1-1
+    public string $mOtEve;     // GENFE003 - Motivo del evento                                - 5-500      - 1-1
+    public int $iNatRec;    // GENFE004 - Naturaleza del receptor                          - 1          - 1-1
+    public int $iTiOpe;     // GENFE027 - Tipo de operación                                - 1          - 1-1
+    public string $cPaisRec;   // GENFE005 - Código de país del receptor                      - 3          - 1-1
+    public string $dDesPaisRe; // GENFE006 - Descripción del país receptor                    - 4-50       - 1-1
+    public int $iTiContRec; // GENFE007 - Tipo de contribuyente receptor                   - 1          - 0-1
+    public string $dRucRec;    // GENFE008 - RUC del receptor                                 - 3-8        - 0-1
+    public int $dDVRec;     // GENFE009 - Dígito verificador  del RUC del receptor         - 1          - 0-1
+    public int $iTipIDRec;  // GENFE010 - Tipo de documento de identidad del receptor      - 1          - 0-1
+    public string $dDTipIDRec; // GENFE011 - Descripción del tipo de documento de identidad   - 9-41       - 0-1
+    public string $dNumIDRec;  // GENFE012 - Número de documento de identidad                 - 1-15       - 0-1
+    public string $dNomRec;    // GENFE013 - Nombre o razón  social del receptor del DTE      - 4-255      - 1-1
+    public string $dNomFanRec; // GENFE014 - Nombre de fantasía                               - 4-255      - 0-1
+    public string $dDirRec;    // GENFE015 - Dirección del receptor                           - 1-255      - 0-1
+    public int $dNumCasRec; // GENFE016 - Número de casa del receptor                      - 1-6        - 0-1
+    public int $cDepRec;    // GENFE017 - Código de departamento del receptor              - 1-2        - 0-1
+    public string $dDesDepRec; // GENFE018 - Descripción del departamento del receptor        - 6-16       - 0-1
+    public int $cDisRec;    // GENFE019 - Código de distrito del receptor                  - 1-4        - 0-1
+    public string $dDesDisRec; // GENFE020 - Descripción del distrito del receptor            - 1-30       - 0-1
+    public int $cCiuRec;    // GENFE021 - Código de ciudad del receptor                    - 1-5        - 0-1
+    public string $dDesCiuRec; // GENFE022 - Descripción de la ciudad del receptor            - 1-30       - 0-1
+    public string $dTelRec;    // GENFE023 - Número de teléfono del receptor                  - 6-15       - 0-1
+    public string $dCelRec;    // GENFE024 - Número de celular del receptor                   - 10-20      - 0-1
+    public string $dEmailRec;  // GENFE025 - Correo electrónico del receptor                  - 3-80       - 0-1
+    public string $dCodCliente;// GENFE026 - Código de cliente                                - 3-15       - 0-1
 
     public const NATURALEZA_CONTRIBUYENTE = 1;
     public const NATURALEZA_NO_CONTRIBUYENTE = 2;
@@ -155,7 +155,7 @@ class RGEveNom
         // dDesPaisRe (obligatorio en trGEveNom, Evento_v150.xsd:394) se deriva del catálogo, como en GDatRec.
         $desc = CountryMapping::getCountryDesc($cPaisRec);
         if ($desc === null) {
-          throw new ValidacionException("[RGEveNom] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+            throw new ValidacionException("[RGEveNom] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
         }
         $this->cPaisRec = $cPaisRec;
         $this->dDesPaisRe = $desc;
@@ -323,7 +323,7 @@ class RGEveNom
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepRec));
         if ($desc === null) {
-          throw new ValidacionException("[RGEveNom] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
+            throw new ValidacionException("[RGEveNom] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
         }
         $this->cDepRec = $cDepRec;
         $this->dDesDepRec = $desc;
@@ -355,7 +355,7 @@ class RGEveNom
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
         if ($desc === null) {
-          throw new ValidacionException("[RGEveNom] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+            throw new ValidacionException("[RGEveNom] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         }
         $this->cDisRec = $cDisRec;
         $this->dDesDisRec = $desc;
@@ -387,7 +387,7 @@ class RGEveNom
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
         if ($desc === null) {
-          throw new ValidacionException("[RGEveNom] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+            throw new ValidacionException("[RGEveNom] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
         }
         $this->cCiuRec = $cCiuRec;
         $this->dDesCiuRec = $desc;
@@ -474,7 +474,7 @@ class RGEveNom
         if (isset($this->id)) {
             return $this->id;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -488,7 +488,7 @@ class RGEveNom
         if (isset($this->mOtEve)) {
             return $this->mOtEve;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -497,11 +497,11 @@ class RGEveNom
      */
     public function getINatRec(): ?int
     {
-    if (isset($this->iNatRec)) {
-        return $this->iNatRec;
-    } else {
-    return null;
-    }
+        if (isset($this->iNatRec)) {
+            return $this->iNatRec;
+        } else {
+            return null;
+        }
     }
 
 
@@ -513,11 +513,11 @@ class RGEveNom
         if (isset($this->iTiOpe)) {
             return $this->iTiOpe;
         } else {
-        return null;
+            return null;
         }
     }
 
-        /**
+    /**
      * Obtiene el valor de cPaisRec
      *
      * @return String
@@ -527,7 +527,7 @@ class RGEveNom
         if (isset($this->cPaisRec)) {
             return $this->cPaisRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -541,11 +541,11 @@ class RGEveNom
         if (isset($this->dDesPaisRe)) {
             return $this->dDesPaisRe;
         } else {
-        return null;
+            return null;
         }
     }
 
-        /**
+    /**
      * Obtiene el valor de iTiContRec
      */
     public function getITiContRec(): ?int
@@ -553,7 +553,7 @@ class RGEveNom
         if (isset($this->iTiContRec)) {
             return $this->iTiContRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -567,7 +567,7 @@ class RGEveNom
         if (isset($this->dRucRec)) {
             return $this->dRucRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -589,11 +589,11 @@ class RGEveNom
         if (isset($this->iTipIDRec)) {
             return $this->iTipIDRec;
         } else {
-        return null;
+            return null;
         }
     }
 
-      /**
+    /**
      * getDDTipIDRec
      *
      * @return String
@@ -628,21 +628,21 @@ class RGEveNom
                     break;
             }
         } else {
-        return null;
+            return null;
         }
     }
 
-     /**
-     * Obtiene el valor de dNumIDRec
-     *
-     * @return String
-     */
+    /**
+    * Obtiene el valor de dNumIDRec
+    *
+    * @return String
+    */
     public function getDNumIDRec(): ?string
     {
         if (isset($this->dNumIDRec)) {
             return $this->dNumIDRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -666,7 +666,7 @@ class RGEveNom
         if (isset($this->dNomFanRec)) {
             return $this->dNomFanRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -680,7 +680,7 @@ class RGEveNom
         if (isset($this->dDirRec)) {
             return $this->dDirRec;
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -812,82 +812,82 @@ class RGEveNom
     ///////////////////////////////////////////////////////////////////////
 
 
-  /**
-   * Convierte este RGEveNom a un DOM Element respetando el orden de campos del XSD Evento_v150 (trGEveNom).
-   *
-   * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
-   *
-   * @return DOMElement Nodo DOM creado pero no insertado.
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('rGEveNom');
+    /**
+     * Convierte este RGEveNom a un DOM Element respetando el orden de campos del XSD Evento_v150 (trGEveNom).
+     *
+     * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
+     *
+     * @return DOMElement Nodo DOM creado pero no insertado.
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('rGEveNom');
 
-    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
-    $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
-    $res->appendChild(XmlHelper::elemento($doc, 'iNatRec', $this->getINatRec()));
-    $res->appendChild(XmlHelper::elemento($doc, 'iTiOpe', $this->getITiOpe()));
-    $res->appendChild(XmlHelper::elemento($doc, 'cPaisRec', $this->getCPaisRec()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesPaisRe', $this->getDDesPaisRe()));
+        $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
+        $res->appendChild(XmlHelper::elemento($doc, 'iNatRec', $this->getINatRec()));
+        $res->appendChild(XmlHelper::elemento($doc, 'iTiOpe', $this->getITiOpe()));
+        $res->appendChild(XmlHelper::elemento($doc, 'cPaisRec', $this->getCPaisRec()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesPaisRe', $this->getDDesPaisRe()));
 
-    // Receptor contribuyente: se informan los datos del RUC
-    if (isset($this->iTiContRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'iTiContRec', $this->getITiContRec()));
-    }
-    if (isset($this->dRucRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dRucRec', $this->getDRucRec()));
-    }
-    if (isset($this->dDVRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dDVRec', $this->getDDVRec()));
-    }
+        // Receptor contribuyente: se informan los datos del RUC
+        if (isset($this->iTiContRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'iTiContRec', $this->getITiContRec()));
+        }
+        if (isset($this->dRucRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dRucRec', $this->getDRucRec()));
+        }
+        if (isset($this->dDVRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDVRec', $this->getDDVRec()));
+        }
 
-    // Receptor no contribuyente: se informa el documento de identidad
-    if (isset($this->iTipIDRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRec', $this->getITipIDRec()));
-    }
-    if (isset($this->dDTipIDRec) || isset($this->iTipIDRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRec', $this->getDDTipIDRec()));
-    }
-    if (isset($this->dNumIDRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumIDRec', $this->getDNumIDRec()));
-    }
+        // Receptor no contribuyente: se informa el documento de identidad
+        if (isset($this->iTipIDRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRec', $this->getITipIDRec()));
+        }
+        if (isset($this->dDTipIDRec) || isset($this->iTipIDRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRec', $this->getDDTipIDRec()));
+        }
+        if (isset($this->dNumIDRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumIDRec', $this->getDNumIDRec()));
+        }
 
-    $res->appendChild(XmlHelper::elemento($doc, 'dNomRec', $this->getDNomRec()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dNomRec', $this->getDNomRec()));
 
-    if (isset($this->dNomFanRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNomFanRec', $this->getDNomFanRec()));
-    }
-    if (isset($this->dDirRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dDirRec', $this->getDDirRec()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasRec', $this->getDNumCasRec()));
-    }
-    if (isset($this->cDepRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'cDepRec', $this->getCDepRec()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dDesDepRec', $this->getDDesDepRec()));
-    }
-    if (isset($this->cDisRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'cDisRec', $this->getCDisRec()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisRec', $this->getDDesDisRec()));
-    }
-    if (isset($this->cCiuRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'cCiuRec', $this->getCCiuRec()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuRec', $this->getDDesCiuRec()));
-    }
-    if (isset($this->dTelRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dTelRec', $this->getDTelRec()));
-    }
-    if (isset($this->dCelRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dCelRec', $this->getDCelRec()));
-    }
-    if (isset($this->dEmailRec)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dEmailRec', $this->getDEmailRec()));
-    }
-    if (isset($this->dCodCliente)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dCodCliente', $this->getDCodCliente()));
-    }
+        if (isset($this->dNomFanRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNomFanRec', $this->getDNomFanRec()));
+        }
+        if (isset($this->dDirRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDirRec', $this->getDDirRec()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumCasRec', $this->getDNumCasRec()));
+        }
+        if (isset($this->cDepRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'cDepRec', $this->getCDepRec()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesDepRec', $this->getDDesDepRec()));
+        }
+        if (isset($this->cDisRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'cDisRec', $this->getCDisRec()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesDisRec', $this->getDDesDisRec()));
+        }
+        if (isset($this->cCiuRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'cCiuRec', $this->getCCiuRec()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuRec', $this->getDDesCiuRec()));
+        }
+        if (isset($this->dTelRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dTelRec', $this->getDTelRec()));
+        }
+        if (isset($this->dCelRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dCelRec', $this->getDCelRec()));
+        }
+        if (isset($this->dEmailRec)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dEmailRec', $this->getDEmailRec()));
+        }
+        if (isset($this->dCodCliente)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dCodCliente', $this->getDCodCliente()));
+        }
 
-    return $res;
-  }
+        return $res;
+    }
 
     /**
      * FromSimpleXMLElement
@@ -895,113 +895,113 @@ class RGEveNom
      * @param  SimpleXMLElement $node
      * @return self
      */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-    if (strcmp($node->getName(), 'rGEveNom') != 0) {
-        throw new ValidacionException("Invalid XML Element: $node->getName()");
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if (strcmp($node->getName(), 'rGEveNom') != 0) {
+            throw new ValidacionException("Invalid XML Element: $node->getName()");
+        }
+
+        $res = new self();
+        $res->setId(strval($node->Id));
+        $res->setMOtEve(strval($node->mOtEve));
+
+        if (isset($node->iNatRec)) {
+            $res->setINatRec(intval($node->iNatRec));
+        }
+
+        if (isset($node->iTiOpe)) {
+            $res->setITiOpe(intval($node->iTiOpe));
+        }
+
+        if (isset($node->cPaisRec)) {
+            $res->setCPaisRec(strval($node->cPaisRec));
+        }
+
+        if (isset($node->dDesPaisRe)) {
+            $res->setDDesPaisRe(strval($node->dDesPaisRe));
+        }
+
+        if (isset($node->iTiContRec)) {
+            $res->setITiContRec(intval($node->iTiContRec));
+        }
+
+        if (isset($node->dRucRec)) {
+            $res->setDRucRec(strval($node->dRucRec));
+        }
+
+        if (isset($node->dDVRec)) {
+            $res->setDDVRec(intval($node->dDVRec));
+        }
+
+        if (isset($node->iTipIDRec)) {
+            $res->setITipIDRec(intval($node->iTipIDRec));
+        }
+
+        if (isset($node->dDTipIDRec)) {
+            $res->setDDTipIDRec(strval($node->dDTipIDRec));
+        }
+
+        if (isset($node->dNumIDRec)) {
+            $res->setDNumIDRec(strval($node->dNumIDRec));
+        }
+
+        if (isset($node->dNomRec)) {
+            $res->setDNomRec(strval($node->dNomRec));
+        }
+
+        if (isset($node->dNomFanRec)) {
+            $res->setDNomFanRec(strval($node->dNomFanRec));
+        }
+
+        if (isset($node->dDirRec)) {
+            $res->setDDirRec(strval($node->dDirRec));
+        }
+
+        if (isset($node->dNumCasRec)) {
+            $res->setDNumCasRec(intval($node->dNumCasRec));
+        }
+
+        if (isset($node->cDepRec)) {
+            $res->setCDepRec(intval($node->cDepRec));
+        }
+
+        if (isset($node->dDesDepRec)) {
+            $res->setDDesDepRec(strval($node->dDesDepRec));
+        }
+
+        if (isset($node->cDisRec)) {
+            $res->setCDisRec(intval($node->cDisRec));
+        }
+
+        if (isset($node->dDesDisRec)) {
+            $res->setDDesDisRec(strval($node->dDesDisRec));
+        }
+
+        if (isset($node->cCiuRec)) {
+            $res->setCCiuRec(intval($node->cCiuRec));
+        }
+
+        if (isset($node->dDesCiuRec)) {
+            $res->setDDesCiuRec(strval($node->dDesCiuRec));
+        }
+
+        if (isset($node->dTelRec)) {
+            $res->setDTelRec(strval($node->dTelRec));
+        }
+
+        if (isset($node->dCelRec)) {
+            $res->setDCelRec(strval($node->dCelRec));
+        }
+
+        if (isset($node->dEmailRec)) {
+            $res->setDEmailRec(strval($node->dEmailRec));
+        }
+
+        if (isset($node->dCodCliente)) {
+            $res->setDCodCliente(strval($node->dCodCliente));
+        }
+
+        return $res;
+
     }
-
-    $res = new self();
-    $res->setId(strval($node->Id));
-    $res->setMOtEve(strval($node->mOtEve));
-
-    if (isset($node->iNatRec)) {
-      $res->setINatRec(intval($node->iNatRec));
-    }
-
-    if (isset($node->iTiOpe)) {
-      $res->setITiOpe(intval($node->iTiOpe));
-    }
-
-    if (isset($node->cPaisRec)) {
-      $res->setCPaisRec(strval($node->cPaisRec));
-    }
-
-    if (isset($node->dDesPaisRe)) {
-      $res->setDDesPaisRe(strval($node->dDesPaisRe));
-    }
-
-    if (isset($node->iTiContRec)) {
-      $res->setITiContRec(intval($node->iTiContRec));
-    }
-
-    if (isset($node->dRucRec)) {
-      $res->setDRucRec(strval($node->dRucRec));
-    }
-
-    if (isset($node->dDVRec)) {
-      $res->setDDVRec(intval($node->dDVRec));
-    }
-
-    if (isset($node->iTipIDRec)) {
-      $res->setITipIDRec(intval($node->iTipIDRec));
-    }
-
-    if (isset($node->dDTipIDRec)) {
-      $res->setDDTipIDRec(strval($node->dDTipIDRec));
-    }
-
-    if (isset($node->dNumIDRec)) {
-      $res->setDNumIDRec(strval($node->dNumIDRec));
-    }
-
-    if (isset($node->dNomRec)) {
-      $res->setDNomRec(strval($node->dNomRec));
-    }
-
-    if (isset($node->dNomFanRec)) {
-      $res->setDNomFanRec(strval($node->dNomFanRec));
-    }
-
-    if (isset($node->dDirRec)) {
-      $res->setDDirRec(strval($node->dDirRec));
-    }
-
-    if (isset($node->dNumCasRec)) {
-      $res->setDNumCasRec(intval($node->dNumCasRec));
-    }
-
-    if (isset($node->cDepRec)) {
-      $res->setCDepRec(intval($node->cDepRec));
-    }
-
-    if (isset($node->dDesDepRec)) {
-      $res->setDDesDepRec(strval($node->dDesDepRec));
-    }
-
-    if (isset($node->cDisRec)) {
-      $res->setCDisRec(intval($node->cDisRec));
-    }
-
-    if (isset($node->dDesDisRec)) {
-      $res->setDDesDisRec(strval($node->dDesDisRec));
-    }
-
-    if (isset($node->cCiuRec)) {
-      $res->setCCiuRec(intval($node->cCiuRec));
-    }
-
-    if (isset($node->dDesCiuRec)) {
-      $res->setDDesCiuRec(strval($node->dDesCiuRec));
-    }
-
-    if (isset($node->dTelRec)) {
-      $res->setDTelRec(strval($node->dTelRec));
-    }
-
-    if (isset($node->dCelRec)) {
-      $res->setDCelRec(strval($node->dCelRec));
-    }
-
-    if (isset($node->dEmailRec)) {
-      $res->setDEmailRec(strval($node->dEmailRec));
-    }
-
-    if (isset($node->dCodCliente)) {
-      $res->setDCodCliente(strval($node->dCodCliente));
-    }
-
-    return $res;
-
-  }
 }

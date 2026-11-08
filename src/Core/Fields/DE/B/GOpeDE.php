@@ -22,7 +22,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GOpeDE extends BaseSifenField
 {
-                               // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public int $iTipEmi;    // B002 - 1      - 1-1 - Tipo de emisión: 1 - Normal, 2 - Contingencia
     public string $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
     public string $dCodSeg;    // B004 - 9      - 1-1 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
@@ -168,7 +168,7 @@ class GOpeDE extends BaseSifenField
         if (isset($this->dInfoEmi)) {
             return $this->dInfoEmi;
         } else {
-        return '';
+            return '';
         }
     }
 
@@ -182,7 +182,7 @@ class GOpeDE extends BaseSifenField
         if (isset($this->dInfoFisc)) {
             return $this->dInfoFisc;
         } else {
-        return '';
+            return '';
         }
     }
 

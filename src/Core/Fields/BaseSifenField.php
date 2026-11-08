@@ -32,12 +32,12 @@ abstract class BaseSifenField
      */
     public function toXMLString(): string
     {
-      $doc = new DOMDocument('1.0', 'UTF-8');
-      $domElement = $this->toDOMElement($doc);
-      $xmlString = $domElement->ownerDocument->saveXML($domElement);
-      if (!$xmlString) {
-        throw new PkuatiaException('[' . self::class . '] Error al convertir el objeto a XML.');
-      }
-      return $xmlString;
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $domElement = $this->toDOMElement($doc);
+        $xmlString = $domElement->ownerDocument->saveXML($domElement);
+        if (!$xmlString) {
+            throw new PkuatiaException('[' . self::class . '] Error al convertir el objeto a XML.');
+        }
+        return $xmlString;
     }
 }

@@ -9,7 +9,7 @@ namespace IonysDev\Pkuatia\Core\Requests;
 
 class REnviConsDe
 {
-                         // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
     public int $dId;     // DSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud - 1-15 - 1-1
     public string $dCDC; // DSch03 - CDC del documento electrónico que se desea consultar - 44 - 1-1
 

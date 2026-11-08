@@ -12,78 +12,78 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
  */
 class RGeVeRem
 {
-                     // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public string $Id; // GERE002 - CDC del DTE asociado - 44 - 1-1
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public string $Id; // GERE002 - CDC del DTE asociado - 44 - 1-1
 
-   ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
-   ///////////////////////////////////////////////////////////////////////
-
-
-  /**
-   * Establece el valor de Id
-   *
-   * @param String $Id
-   *
-   * @return self
-   */
-  public function setId(string $Id): self
-  {
-    $this->Id = $Id;
-
-    return $this;
-  }
-
-   ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
-   ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de Id
-   *
-   * @return String
-   */
-  public function getId(): string
-  {
-    return $this->Id;
-  }
-
-   ///////////////////////////////////////////////////////////////////////
-  ///XML ELEMENT
-   ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ///SETTERS
+    ///////////////////////////////////////////////////////////////////////
 
 
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('rGeVeRem');
-    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+    /**
+     * Establece el valor de Id
+     *
+     * @param String $Id
+     *
+     * @return self
+     */
+    public function setId(string $Id): self
+    {
+        $this->Id = $Id;
 
-    return $res;
-  }
+        return $this;
+    }
 
-//     /**
-//    * fromDOMElement
-//    *
-//    * @param  mixed $xml
-//    * @return TrGeVeRetAce
-//    */
-//   public static function fromDOMElement(DOMElement $xml): RGeVeRem
-//   {
-//     if (strcmp($xml->tagName, "rGeVeRem") == 0 && $xml->childElementCount == 7) {
-//       $res = new RGeVeRem();
-//       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+    ///////////////////////////////////////////////////////////////////////
+    ///GETTERS
+    ///////////////////////////////////////////////////////////////////////
 
-//       return $res;
-//     } else {
-//       throw new \Exception("Invalid XML Element: $xml->tagName");
-//       return null;
-//     }
-//   }
+    /**
+     * Obtiene el valor de Id
+     *
+     * @return String
+     */
+    public function getId(): string
+    {
+        return $this->Id;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///XML ELEMENT
+    ///////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('rGeVeRem');
+        $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+
+        return $res;
+    }
+
+    //     /**
+    //    * fromDOMElement
+    //    *
+    //    * @param  mixed $xml
+    //    * @return TrGeVeRetAce
+    //    */
+    //   public static function fromDOMElement(DOMElement $xml): RGeVeRem
+    //   {
+    //     if (strcmp($xml->tagName, "rGeVeRem") == 0 && $xml->childElementCount == 7) {
+    //       $res = new RGeVeRem();
+    //       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+
+    //       return $res;
+    //     } else {
+    //       throw new \Exception("Invalid XML Element: $xml->tagName");
+    //       return null;
+    //     }
+    //   }
 
     public static function FromSimpleXMLElement(SimpleXMLElement $xml)
     {

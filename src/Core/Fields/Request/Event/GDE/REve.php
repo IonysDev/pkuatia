@@ -15,7 +15,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class REve
 {
-                                      // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
     public int $Id;          // GDE003 - Identificador del evento - ATRIBUTO DEL CAMPO - 1-10 - 1-1
     public DateTime $dFecFirma;   // GDE004 - Fecha y Hora del firmado - 19 - 1-1
     public int $dVerFor;     // GDE005 - Versión del formato - 3 - 1-1

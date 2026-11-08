@@ -18,28 +18,28 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 final class FechaHelper
 {
-  /**
-   * Convierte una fecha y hora del SIFEN (AAAA-MM-DDThh:mm:ss, con o sin zona) en DateTime.
-   *
-   * @param mixed  $valor Texto de la fecha (string o nodo SimpleXML).
-   * @param String $campo Nombre del campo, para el mensaje de error.
-   *
-   * @throws \InvalidArgumentException Si el valor está vacío o no es una fecha válida en alguno de los dos formatos.
-   *
-   * @return DateTime
-   */
-  public static function FromSifen(mixed $valor, string $campo): DateTime
-  {
-    $texto = trim((string) $valor);
-    $zonaSifen = new DateTimeZone(Constants::SIFEN_TIMEZONE);
-    foreach (['!Y-m-d\TH:i:sP', '!Y-m-d\TH:i:s'] as $formato) {
-      $fecha = DateTime::createFromFormat($formato, $texto, $zonaSifen);
-      $errores = DateTime::getLastErrors();
-      $sinAvisos = $errores === false || ($errores['warning_count'] === 0 && $errores['error_count'] === 0);
-      if ($fecha !== false && $sinAvisos) {
-        return $fecha;
-      }
+    /**
+     * Convierte una fecha y hora del SIFEN (AAAA-MM-DDThh:mm:ss, con o sin zona) en DateTime.
+     *
+     * @param mixed  $valor Texto de la fecha (string o nodo SimpleXML).
+     * @param String $campo Nombre del campo, para el mensaje de error.
+     *
+     * @throws \InvalidArgumentException Si el valor está vacío o no es una fecha válida en alguno de los dos formatos.
+     *
+     * @return DateTime
+     */
+    public static function FromSifen(mixed $valor, string $campo): DateTime
+    {
+        $texto = trim((string) $valor);
+        $zonaSifen = new DateTimeZone(Constants::SIFEN_TIMEZONE);
+        foreach (['!Y-m-d\TH:i:sP', '!Y-m-d\TH:i:s'] as $formato) {
+            $fecha = DateTime::createFromFormat($formato, $texto, $zonaSifen);
+            $errores = DateTime::getLastErrors();
+            $sinAvisos = $errores === false || ($errores['warning_count'] === 0 && $errores['error_count'] === 0);
+            if ($fecha !== false && $sinAvisos) {
+                return $fecha;
+            }
+        }
+        throw new ValidacionException("[FechaHelper] $campo no es una fecha y hora del SIFEN (AAAA-MM-DDThh:mm:ss, con o sin zona horaria): '$texto'");
     }
-    throw new ValidacionException("[FechaHelper] $campo no es una fecha y hora del SIFEN (AAAA-MM-DDThh:mm:ss, con o sin zona horaria): '$texto'");
-  }
 }

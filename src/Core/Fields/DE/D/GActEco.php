@@ -18,7 +18,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GActEco extends BaseSifenField
 {
-                               // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public string $cActEco;    // D131 - 1-8   - 1-1 - Código de la actividad económica del emisor
     public string $dDesActEco; // D132 - 1-300 - 1-1 - Descripción de la actividad económica del emisor
 

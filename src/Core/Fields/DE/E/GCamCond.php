@@ -19,255 +19,255 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GCamCond extends BaseSifenField
 {
-                                 // Id - Longitud - Ocurrencia - Descripción
-  public int $iCondOpe;   // E601 - 1 - 1-1   - Condición de la operación: 1-Contado | 2-Crédito
-  public string $dDCondOpe;  // E602 - 7 - 1-1   - Descripción de la condición de operación
-  public array $gPaConEIni; // E605 -   - 0-999 - Descripción de la condición de operación (GPaConEIni)
-  public GPagCred $gPagCred;   // E640 -   - 0-1   - Campos que describen las informaciones de pagos a crédito
+    // Id - Longitud - Ocurrencia - Descripción
+    public int $iCondOpe;   // E601 - 1 - 1-1   - Condición de la operación: 1-Contado | 2-Crédito
+    public string $dDCondOpe;  // E602 - 7 - 1-1   - Descripción de la condición de operación
+    public array $gPaConEIni; // E605 -   - 0-999 - Descripción de la condición de operación (GPaConEIni)
+    public GPagCred $gPagCred;   // E640 -   - 0-1   - Campos que describen las informaciones de pagos a crédito
 
 
-  /**
-   * Constructor
-   */
-  public function __construct()
-  {
-    $this->gPaConEIni = [];
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Establece el valor de iCondOpe
-   *
-   * @param int $iCondOpe
-   *
-   * @return self
-   */
-  public function setICondOpe(int|CamCondOpe $iCondOpe): self
-  {
-    $this->iCondOpe = $iCondOpe instanceof CamCondOpe ? $iCondOpe->value : $iCondOpe;
-    $this->dDCondOpe = CamCondOpe::getDescripcion($this->iCondOpe);
-    return $this;
-  }
-
-  /**
-   * Establece el valor dDCondOpe que es la descripción de la condición de operación
-   *
-   * @param String $dDCondOpe
-   *
-   * @return self
-   */
-  public function setDDCondOpe(string $dDCondOpe): self
-  {
-    $this->dDCondOpe = $dDCondOpe;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gPaConEIni
-   *
-   * @param array $gPaConEIni
-   *
-   * @return self
-   */
-  public function setGPaConEIni(array $gPaConEIni): self
-  {
-    $this->gPaConEIni = $gPaConEIni;
-
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gPagCred
-   *
-   * @param GPagCred $gPagCred
-   *
-   * @return self
-   */
-  public function setGPagCred(GPagCred $gPagCred): self
-  {
-    $this->gPagCred = $gPagCred;
-
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de iCondOpe
-   *
-   * @return int
-   */
-  public function getICondOpe(): int
-  {
-    return $this->iCondOpe;
-  }
-
-  /**
-   * E602  Descripción de la condición de operación
-   *
-   * @return String
-   */
-  public function getDDCondOpe(): string
-  {
-    return $this->dDCondOpe;
-  }
-
-  /**
-   * Obtiene el valor de gPaConEIni
-   *
-   * @return array
-   */
-  public function getGPaConEIni(): array
-  {
-    return $this->gPaConEIni;
-  }
-
-  /**
-   * Obtiene el valor de gPagCred
-   *
-   * @return GPagCred|null
-   */
-  public function getGPagCred(): ?GPagCred
-  {
-    if (isset($this->gPagCred)) {
-      return $this->gPagCred;
-    } else {
-    return null;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gPaConEIni = [];
     }
-  }
 
-  ///////////////////////////////////////////////////////////////////////
-  // XML Element
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Instancia un objeto del tipo GCamCond a partir de un SimpleXMLElement
-   *
-   * @param SimpleXMLElement $node
-   *
-   * @return self
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-    if (strcmp($node->getName(), 'gCamCond') != 0) {
-      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a gCamCond", 1);
+    /**
+     * Establece el valor de iCondOpe
+     *
+     * @param int $iCondOpe
+     *
+     * @return self
+     */
+    public function setICondOpe(int|CamCondOpe $iCondOpe): self
+    {
+        $this->iCondOpe = $iCondOpe instanceof CamCondOpe ? $iCondOpe->value : $iCondOpe;
+        $this->dDCondOpe = CamCondOpe::getDescripcion($this->iCondOpe);
+        return $this;
     }
-    $res = new self();
-    $res->setICondOpe(intval($node->iCondOpe));
-    $res->setDDCondOpe(strval($node->dDCondOpe));
-    if (isset($node->gPaConEIni) && count($node->gPaConEIni) > 0) {
-      foreach ($node->gPaConEIni as $g) {
-        $res->gPaConEIni[] = GPaConEIni::FromSimpleXMLElement($g);
-      }
-    }
-    if (isset($node->gPagCred)) {
-      $res->setGPagCred(GPagCred::FromSimpleXMLElement($node->gPagCred));
-    }
-    return $res;
-  }
 
-  /**
-   * Convierte este objeto GCamCond a un DOMElement insertable en el DOMDocument indicado.
-   *
-   * @param DOMDocument $doc Documento DOM en el que se insertará el DOMElement
-   *
-   * @return DOMElement Objeto DOMElement que representa a este GCamCond
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gCamCond');
-    if (isset($this->iCondOpe)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'iCondOpe', $this->getICondOpe()));
+    /**
+     * Establece el valor dDCondOpe que es la descripción de la condición de operación
+     *
+     * @param String $dDCondOpe
+     *
+     * @return self
+     */
+    public function setDDCondOpe(string $dDCondOpe): self
+    {
+        $this->dDCondOpe = $dDCondOpe;
+        return $this;
     }
-    if (isset($this->dDCondOpe)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dDCondOpe', $this->getDDCondOpe()));
-    }
-    if (isset($this->gPaConEIni) && count($this->getGPaConEIni()) > 0) {
-      foreach ($this->getGPaConEIni() as $g) {
-        $res->appendChild($g->toDOMElement($doc));
-      }
-    }
-    if (isset($this->gPagCred)) {
-      $res->appendChild($this->gPagCred->toDOMElement($doc));
-    }
-    return $res;
-  }
 
-  ///////////////////////////////////////////////////////////////////////
-  // Others
-  ///////////////////////////////////////////////////////////////////////
+    /**
+     * Establece el valor de gPaConEIni
+     *
+     * @param array $gPaConEIni
+     *
+     * @return self
+     */
+    public function setGPaConEIni(array $gPaConEIni): self
+    {
+        $this->gPaConEIni = $gPaConEIni;
 
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $res = new self();
-    if (isset($object->iCondOpe)) {
-      $res->setICondOpe(intval($object->iCondOpe));
+        return $this;
     }
-    if (isset($object->gPaConEIni)) {
-      // ext/soap entrega un objeto con un solo pago y un arreglo con varios: hasta 0.2.0, count() sobre el objeto
-      // terminaba en TypeError con el caso más común, un único pago (B12).
-      $pagos = is_array($object->gPaConEIni) ? $object->gPaConEIni : [$object->gPaConEIni];
-      foreach ($pagos as $g) {
-        $res->gPaConEIni[] = GPaConEIni::FromSifenResponseObject($g);
-      }
-    }
-    if (isset($object->gPagCred)) {
-      $res->setGPagCred(GPagCred::FromSifenResponseObject($object->gPagCred));
-    }
-    return $res;
-  }
 
-  /**
-   * Instancia un objeto del tipo GCamCond a partir de un DOMElement que representa el nodo XML del objeto GCamCond.
-   *
-   * @param DOMElement $node
-   *
-   * @return self
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if (strcmp($node->nodeName, 'gCamCond') != 0) {
-      throw new ValidacionException("El nodo '" . $node->nodeName . "' no corresponde a gCamCond", 1);
-    }
-    $res = new self();
-    if ($node->getElementsByTagName('iCondOpe')->length > 0) {
-      $res->setICondOpe(intval($node->getElementsByTagName('iCondOpe')->item(0)->nodeValue));
-    }
-    if ($node->getElementsByTagName('dDCondOpe')->length > 0) {
-      $res->setDDCondOpe(strval($node->getElementsByTagName('dDCondOpe')->item(0)->nodeValue));
-    }
-    if ($node->getElementsByTagName('gPaConEIni')->length > 0) {
-      foreach ($node->getElementsByTagName('gPaConEIni') as $g) {
-        $res->gPaConEIni[] = GPaConEIni::FromDOMElement($g);
-      }
-    }
-    if ($node->getElementsByTagName('gPagCred')->length > 0) {
-      $res->setGPagCred(GPagCred::FromDOMElement($node->getElementsByTagName('gPagCred')->item(0)));
-    }
-    return $res;
-  }
+    /**
+     * Establece el valor de gPagCred
+     *
+     * @param GPagCred $gPagCred
+     *
+     * @return self
+     */
+    public function setGPagCred(GPagCred $gPagCred): self
+    {
+        $this->gPagCred = $gPagCred;
 
-  /**
-   * Agrega un objeto GPaConEIni al array gPaConEIni (E605) que contiene los campos que describen las condiciones de pago al contado o de la entrega inicial.
-   *
-   * @param GPaConEIni $gPaConEIni Objeto GPaConEIni a agregar al array gPaConEIni
-   *
-   * @return self
-   */
-  public function addGPaConEIni(GPaConEIni $gPaConEIni): self
-  {
-    $this->gPaConEIni[] = $gPaConEIni;
-    return $this;
-  }
+        return $this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///Getters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de iCondOpe
+     *
+     * @return int
+     */
+    public function getICondOpe(): int
+    {
+        return $this->iCondOpe;
+    }
+
+    /**
+     * E602  Descripción de la condición de operación
+     *
+     * @return String
+     */
+    public function getDDCondOpe(): string
+    {
+        return $this->dDCondOpe;
+    }
+
+    /**
+     * Obtiene el valor de gPaConEIni
+     *
+     * @return array
+     */
+    public function getGPaConEIni(): array
+    {
+        return $this->gPaConEIni;
+    }
+
+    /**
+     * Obtiene el valor de gPagCred
+     *
+     * @return GPagCred|null
+     */
+    public function getGPagCred(): ?GPagCred
+    {
+        if (isset($this->gPagCred)) {
+            return $this->gPagCred;
+        } else {
+            return null;
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Instancia un objeto del tipo GCamCond a partir de un SimpleXMLElement
+     *
+     * @param SimpleXMLElement $node
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if (strcmp($node->getName(), 'gCamCond') != 0) {
+            throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a gCamCond", 1);
+        }
+        $res = new self();
+        $res->setICondOpe(intval($node->iCondOpe));
+        $res->setDDCondOpe(strval($node->dDCondOpe));
+        if (isset($node->gPaConEIni) && count($node->gPaConEIni) > 0) {
+            foreach ($node->gPaConEIni as $g) {
+                $res->gPaConEIni[] = GPaConEIni::FromSimpleXMLElement($g);
+            }
+        }
+        if (isset($node->gPagCred)) {
+            $res->setGPagCred(GPagCred::FromSimpleXMLElement($node->gPagCred));
+        }
+        return $res;
+    }
+
+    /**
+     * Convierte este objeto GCamCond a un DOMElement insertable en el DOMDocument indicado.
+     *
+     * @param DOMDocument $doc Documento DOM en el que se insertará el DOMElement
+     *
+     * @return DOMElement Objeto DOMElement que representa a este GCamCond
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gCamCond');
+        if (isset($this->iCondOpe)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'iCondOpe', $this->getICondOpe()));
+        }
+        if (isset($this->dDCondOpe)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDCondOpe', $this->getDDCondOpe()));
+        }
+        if (isset($this->gPaConEIni) && count($this->getGPaConEIni()) > 0) {
+            foreach ($this->getGPaConEIni() as $g) {
+                $res->appendChild($g->toDOMElement($doc));
+            }
+        }
+        if (isset($this->gPagCred)) {
+            $res->appendChild($this->gPagCred->toDOMElement($doc));
+        }
+        return $res;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Others
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * FromSifenResponseObject
+     *
+     * @param  mixed $object
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new self();
+        if (isset($object->iCondOpe)) {
+            $res->setICondOpe(intval($object->iCondOpe));
+        }
+        if (isset($object->gPaConEIni)) {
+            // ext/soap entrega un objeto con un solo pago y un arreglo con varios: hasta 0.2.0, count() sobre el objeto
+            // terminaba en TypeError con el caso más común, un único pago (B12).
+            $pagos = is_array($object->gPaConEIni) ? $object->gPaConEIni : [$object->gPaConEIni];
+            foreach ($pagos as $g) {
+                $res->gPaConEIni[] = GPaConEIni::FromSifenResponseObject($g);
+            }
+        }
+        if (isset($object->gPagCred)) {
+            $res->setGPagCred(GPagCred::FromSifenResponseObject($object->gPagCred));
+        }
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto del tipo GCamCond a partir de un DOMElement que representa el nodo XML del objeto GCamCond.
+     *
+     * @param DOMElement $node
+     *
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gCamCond') != 0) {
+            throw new ValidacionException("El nodo '" . $node->nodeName . "' no corresponde a gCamCond", 1);
+        }
+        $res = new self();
+        if ($node->getElementsByTagName('iCondOpe')->length > 0) {
+            $res->setICondOpe(intval($node->getElementsByTagName('iCondOpe')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dDCondOpe')->length > 0) {
+            $res->setDDCondOpe(strval($node->getElementsByTagName('dDCondOpe')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('gPaConEIni')->length > 0) {
+            foreach ($node->getElementsByTagName('gPaConEIni') as $g) {
+                $res->gPaConEIni[] = GPaConEIni::FromDOMElement($g);
+            }
+        }
+        if ($node->getElementsByTagName('gPagCred')->length > 0) {
+            $res->setGPagCred(GPagCred::FromDOMElement($node->getElementsByTagName('gPagCred')->item(0)));
+        }
+        return $res;
+    }
+
+    /**
+     * Agrega un objeto GPaConEIni al array gPaConEIni (E605) que contiene los campos que describen las condiciones de pago al contado o de la entrega inicial.
+     *
+     * @param GPaConEIni $gPaConEIni Objeto GPaConEIni a agregar al array gPaConEIni
+     *
+     * @return self
+     */
+    public function addGPaConEIni(GPaConEIni $gPaConEIni): self
+    {
+        $this->gPaConEIni[] = $gPaConEIni;
+        return $this;
+    }
 }

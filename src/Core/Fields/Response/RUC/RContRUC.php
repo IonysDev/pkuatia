@@ -13,274 +13,274 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 class RContRUC
 {
-                                // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public string $dRUCCons;      // ContRUC02 - RUC Consultado - 5-8 - 1-1
-  public string $dRazCons;      // ContRUC03 - Razón social del RUC Consultado - 1-250 - 1-1
-  public string $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado - 3 - 1-1
-  public string $dDesEstCons;   // ContRUC05 - Descripción Código del Estado del RUC Consultado - 6-25 - 1-1
-  public string $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico - 1 - 1-1
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public string $dRUCCons;      // ContRUC02 - RUC Consultado - 5-8 - 1-1
+    public string $dRazCons;      // ContRUC03 - Razón social del RUC Consultado - 1-250 - 1-1
+    public string $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado - 3 - 1-1
+    public string $dDesEstCons;   // ContRUC05 - Descripción Código del Estado del RUC Consultado - 6-25 - 1-1
+    public string $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico - 1 - 1-1
 
-  ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ///SETTERS
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de dRUCCons
-   *
-   * @param String $dRUCCons
-   *
-   * @return self
-   */
-  public function setDRUCCons(string $dRUCCons): self
-  {
-    $this->dRUCCons = $dRUCCons;
+    /**
+     * Establece el valor de dRUCCons
+     *
+     * @param String $dRUCCons
+     *
+     * @return self
+     */
+    public function setDRUCCons(string $dRUCCons): self
+    {
+        $this->dRUCCons = $dRUCCons;
 
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dRazCons
-   *
-   * @param String $dRazCons
-   *
-   * @return self
-   */
-  public function setDRazCons(string $dRazCons): self
-  {
-    $this->dRazCons = $dRazCons;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dCodEstCons
-   *
-   * @param String $dCodEstCons
-   *
-   * @return self
-   */
-  public function setDCodEstCons(string $dCodEstCons): self
-  {
-    $this->dCodEstCons = $dCodEstCons;
-
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dDesEstCons
-   *
-   * @param String $dDesEstCons
-   *
-   * @return self
-   */
-  public function setDDesEstCons(string $dDesEstCons): self
-  {
-    $this->dDesEstCons = $dDesEstCons;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dRUCFactElec
-   *
-   * @param String $dRUCFactElec
-   *
-   * @return self
-   */
-  public function setDRUCFactElec(string $dRUCFactElec): self
-  {
-    $this->dRUCFactElec = $dRUCFactElec;
-
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  //GETTERS
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de dRUCCons
-   *
-   * @return String
-   */
-  public function getDRUCCons(): string
-  {
-    return $this->dRUCCons;
-  }
-
-  /**
-   * Obtiene el valor de dRazCons
-   *
-   * @return String
-   */
-  public function getDRazCons(): string
-  {
-    return $this->dRazCons;
-  }
-
-  /**
-   * Obtiene el valor de dCodEstCons
-   *
-   * @return String
-   */
-  public function getDCodEstCons(): string
-  {
-    return $this->dCodEstCons;
-  }
-
-  /**
-   * ContRUC05 - Descripción Código del Estado del RUC Consultado
-   *
-   * @return String
-   */
-  public function getDDesEstCons(): ?string
-  {
-    switch ($this->dCodEstCons ?? null) {
-      case 'ACT':
-        return "Activo";
-        break;
-      case 'SUS':
-        return "Suspensión Temporal";
-        break;
-      case 'SAD':
-        return "Suspensión Administrativa";
-        break;
-      case 'BLQ':
-        return "Bloqueado";
-        break;
-      case 'CAN':
-        return "Cancelado";
-        break;
-      case 'CDE':
-        return "Cancelado  Definitivo";
-        break;
-
-      default:
-        return null;
-        break;
+        return $this;
     }
-  }
 
 
-  /**
-   * Obtiene el valor de dRUCFactElec
-   *
-   * @return String
-   */
-  public function getDRUCFactElec(): string
-  {
-    return $this->dRUCFactElec;
-  }
+    /**
+     * Establece el valor de dRazCons
+     *
+     * @param String $dRazCons
+     *
+     * @return self
+     */
+    public function setDRazCons(string $dRazCons): self
+    {
+        $this->dRazCons = $dRazCons;
 
-  //get the description of dRUCFactElec
-  public function getDRUCFactElecDesc(): ?string
-  {
-    switch ($this->dRUCFactElec ?? null) {
-      case 'S':
-        return "Es facturador electrónico";
-        break;
-      case 'N':
-        return "No es facturador electrónico";
-        break;
+        return $this;
+    }
 
-      default:
-        return null;
-        break;
-    }
-  }
 
-  ///////////////////////////////////////////////////////////////////////
-  ///XML ELEMENT
-  ///////////////////////////////////////////////////////////////////////
-  /**
-   * toDOMElement
-   *
-   * @return void
-   */
-  public function toDOMElement(): DOMElement
-  {
-    $res = new DOMElement('rContRuc');
+    /**
+     * Establece el valor de dCodEstCons
+     *
+     * @param String $dCodEstCons
+     *
+     * @return self
+     */
+    public function setDCodEstCons(string $dCodEstCons): self
+    {
+        $this->dCodEstCons = $dCodEstCons;
 
-    $res->appendChild(XmlHelper::elementoSuelto('dRUCCons', $this->dRUCCons));
-    $res->appendChild(XmlHelper::elementoSuelto('dRazCons', $this->dRazCons));
-    $res->appendChild(XmlHelper::elementoSuelto('dCodEstCons', $this->dCodEstCons));
-    $res->appendChild(XmlHelper::elementoSuelto('dDesEstCons', $this->getDDesEstCons()));
-    $res->appendChild(XmlHelper::elementoSuelto('dRUCFactElec', $this->dRUCFactElec));
+        return $this;
+    }
 
-    return $res;
-  }
+    /**
+     * Establece el valor de dDesEstCons
+     *
+     * @param String $dDesEstCons
+     *
+     * @return self
+     */
+    public function setDDesEstCons(string $dDesEstCons): self
+    {
+        $this->dDesEstCons = $dDesEstCons;
 
-  ///create a objet from a objectClass
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return RContRUC
-   */
-  public static function fromStdClassObject($object): RContRUC
-  {
-    $res = new RContRUC();
-    if (isset($object->dRUCCons)) {
-      $res->setDRUCCons($object->dRUCCons);
+        return $this;
     }
-    if (isset($object->dRazCons)) {
-      $res->setDRazCons($object->dRazCons);
-    }
-    if (isset($object->dCodEstCons)) {
-      $res->setDCodEstCons($object->dCodEstCons);
-    }
-    // ContRUC05: hasta 0.2.0 se descartaba (PK-29). Queda en la propiedad con el literal del SIFEN (p. ej. "ACTIVO",
-    // respuestas-ws/2026-10-09/01-rEnviConsRUC-response.xml); getDDesEstCons() sigue derivándolo del código.
-    if (isset($object->dDesEstCons)) {
-      $res->setDDesEstCons((string) $object->dDesEstCons);
-    }
-    if (isset($object->dRUCFactElec)) {
-      $res->setDRUCFactElec($object->dRUCFactElec);
-    }
-    return $res;
-  }
 
-  /**
-   * Instantiates a RContRUC from a SimpleXMLElement.
-   *
-   * @param  SimpleXMLElement $xml
-   *
-   * @return RContRUC
-   */
-  public static function fromSimpleXMLElement(SimpleXMLElement $xml): RContRUC
-  {
-    if (strcmp($xml->getName(), 'rContRUC') != 0) {
-      throw new RespuestaException("Invalid XML Element: $xml->getName()");
-    }
-    $res = new RContRUC();
-    if (isset($xml->dRUCCons)) {
-      $res->setDRUCCons((string) $xml->dRUCCons);
-    }
-    if (isset($xml->dRazCons)) {
-      $res->setDRazCons((string) $xml->dRazCons);
-    }
-    if (isset($xml->dCodEstCons)) {
-      $res->setDCodEstCons((string) $xml->dCodEstCons);
-    }
-    if (isset($xml->dDesEstCons)) {
-      $res->setDDesEstCons((string) $xml->dDesEstCons); // hasta 0.2.0 se guardaba en dRUCFactElec (PK-29)
-    }
-    if (isset($xml->dRUCFactElec)) {
-      $res->setDRUCFactElec((string) $xml->dRUCFactElec);
-    }
-    return $res;
-  }
 
-  ///print the data of the object
-  public function printData()
-  {
-    return "Datos de la Consulta: " . PHP_EOL .
-      "RUC: " . $this->getDRUCCons() . PHP_EOL .
-      "Razón Social: " . $this->getDRazCons() . PHP_EOL .
-      "Descripción Estado: " . $this->getDDesEstCons() . PHP_EOL .
-      "Facturador Electrónico?: " . $this->getDRUCFactElecDesc() . PHP_EOL;
-  }
+    /**
+     * Establece el valor de dRUCFactElec
+     *
+     * @param String $dRUCFactElec
+     *
+     * @return self
+     */
+    public function setDRUCFactElec(string $dRUCFactElec): self
+    {
+        $this->dRUCFactElec = $dRUCFactElec;
+
+        return $this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    //GETTERS
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de dRUCCons
+     *
+     * @return String
+     */
+    public function getDRUCCons(): string
+    {
+        return $this->dRUCCons;
+    }
+
+    /**
+     * Obtiene el valor de dRazCons
+     *
+     * @return String
+     */
+    public function getDRazCons(): string
+    {
+        return $this->dRazCons;
+    }
+
+    /**
+     * Obtiene el valor de dCodEstCons
+     *
+     * @return String
+     */
+    public function getDCodEstCons(): string
+    {
+        return $this->dCodEstCons;
+    }
+
+    /**
+     * ContRUC05 - Descripción Código del Estado del RUC Consultado
+     *
+     * @return String
+     */
+    public function getDDesEstCons(): ?string
+    {
+        switch ($this->dCodEstCons ?? null) {
+            case 'ACT':
+                return "Activo";
+                break;
+            case 'SUS':
+                return "Suspensión Temporal";
+                break;
+            case 'SAD':
+                return "Suspensión Administrativa";
+                break;
+            case 'BLQ':
+                return "Bloqueado";
+                break;
+            case 'CAN':
+                return "Cancelado";
+                break;
+            case 'CDE':
+                return "Cancelado  Definitivo";
+                break;
+
+            default:
+                return null;
+                break;
+        }
+    }
+
+
+    /**
+     * Obtiene el valor de dRUCFactElec
+     *
+     * @return String
+     */
+    public function getDRUCFactElec(): string
+    {
+        return $this->dRUCFactElec;
+    }
+
+    //get the description of dRUCFactElec
+    public function getDRUCFactElecDesc(): ?string
+    {
+        switch ($this->dRUCFactElec ?? null) {
+            case 'S':
+                return "Es facturador electrónico";
+                break;
+            case 'N':
+                return "No es facturador electrónico";
+                break;
+
+            default:
+                return null;
+                break;
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///XML ELEMENT
+    ///////////////////////////////////////////////////////////////////////
+    /**
+     * toDOMElement
+     *
+     * @return void
+     */
+    public function toDOMElement(): DOMElement
+    {
+        $res = new DOMElement('rContRuc');
+
+        $res->appendChild(XmlHelper::elementoSuelto('dRUCCons', $this->dRUCCons));
+        $res->appendChild(XmlHelper::elementoSuelto('dRazCons', $this->dRazCons));
+        $res->appendChild(XmlHelper::elementoSuelto('dCodEstCons', $this->dCodEstCons));
+        $res->appendChild(XmlHelper::elementoSuelto('dDesEstCons', $this->getDDesEstCons()));
+        $res->appendChild(XmlHelper::elementoSuelto('dRUCFactElec', $this->dRUCFactElec));
+
+        return $res;
+    }
+
+    ///create a objet from a objectClass
+    /**
+     * FromSifenResponseObject
+     *
+     * @param  mixed $object
+     * @return RContRUC
+     */
+    public static function fromStdClassObject($object): RContRUC
+    {
+        $res = new RContRUC();
+        if (isset($object->dRUCCons)) {
+            $res->setDRUCCons($object->dRUCCons);
+        }
+        if (isset($object->dRazCons)) {
+            $res->setDRazCons($object->dRazCons);
+        }
+        if (isset($object->dCodEstCons)) {
+            $res->setDCodEstCons($object->dCodEstCons);
+        }
+        // ContRUC05: hasta 0.2.0 se descartaba (PK-29). Queda en la propiedad con el literal del SIFEN (p. ej. "ACTIVO",
+        // respuestas-ws/2026-10-09/01-rEnviConsRUC-response.xml); getDDesEstCons() sigue derivándolo del código.
+        if (isset($object->dDesEstCons)) {
+            $res->setDDesEstCons((string) $object->dDesEstCons);
+        }
+        if (isset($object->dRUCFactElec)) {
+            $res->setDRUCFactElec($object->dRUCFactElec);
+        }
+        return $res;
+    }
+
+    /**
+     * Instantiates a RContRUC from a SimpleXMLElement.
+     *
+     * @param  SimpleXMLElement $xml
+     *
+     * @return RContRUC
+     */
+    public static function fromSimpleXMLElement(SimpleXMLElement $xml): RContRUC
+    {
+        if (strcmp($xml->getName(), 'rContRUC') != 0) {
+            throw new RespuestaException("Invalid XML Element: $xml->getName()");
+        }
+        $res = new RContRUC();
+        if (isset($xml->dRUCCons)) {
+            $res->setDRUCCons((string) $xml->dRUCCons);
+        }
+        if (isset($xml->dRazCons)) {
+            $res->setDRazCons((string) $xml->dRazCons);
+        }
+        if (isset($xml->dCodEstCons)) {
+            $res->setDCodEstCons((string) $xml->dCodEstCons);
+        }
+        if (isset($xml->dDesEstCons)) {
+            $res->setDDesEstCons((string) $xml->dDesEstCons); // hasta 0.2.0 se guardaba en dRUCFactElec (PK-29)
+        }
+        if (isset($xml->dRUCFactElec)) {
+            $res->setDRUCFactElec((string) $xml->dRUCFactElec);
+        }
+        return $res;
+    }
+
+    ///print the data of the object
+    public function printData()
+    {
+        return "Datos de la Consulta: " . PHP_EOL .
+          "RUC: " . $this->getDRUCCons() . PHP_EOL .
+          "Razón Social: " . $this->getDRazCons() . PHP_EOL .
+          "Descripción Estado: " . $this->getDDesEstCons() . PHP_EOL .
+          "Facturador Electrónico?: " . $this->getDRUCFactElecDesc() . PHP_EOL;
+    }
 }

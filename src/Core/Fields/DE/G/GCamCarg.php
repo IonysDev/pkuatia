@@ -16,378 +16,378 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GCamCarg
 {
-                                   // Id - Longitud - Ocurrencia - Descripción
-  public int $cUniMedTotVol;           // G051 - 1-5  - 0-1 - Unidad de medida del total de volumen de la mercadería
-  public ?string $dDesUniMedTotVol = null; // G052 - 1-10 - 0-1 - Descripción de la unidad de medida del total de volumen de la mercadería
-  public int $dTotVolMerc;             // G053 - 1-20 - 0-1 - Total volumen de la mercadería
-  public int $cUniMedTotPes;           // G054 - 1-5  - 0-1 - Unidad de medida del peso total de la mercadería
-  public ?string $dDesUniMedTotPes = null; // G055 - 1-10 - 0-1 - Descripción de la unidad de medida del peso total de la mercadería
-  public int $dTotPesMerc;             // G056 - 1-20 - 0-1 - Total peso de la mercadería;
-  public int $iCarCarga;               // G057 - 1-1  - 0-1 - Características de la  Carga
-  public ?string $dDesCarCarga     = null; // G058 - 1-50 - 0-1 - Descripción de las características de la carga
+    // Id - Longitud - Ocurrencia - Descripción
+    public int $cUniMedTotVol;           // G051 - 1-5  - 0-1 - Unidad de medida del total de volumen de la mercadería
+    public ?string $dDesUniMedTotVol = null; // G052 - 1-10 - 0-1 - Descripción de la unidad de medida del total de volumen de la mercadería
+    public int $dTotVolMerc;             // G053 - 1-20 - 0-1 - Total volumen de la mercadería
+    public int $cUniMedTotPes;           // G054 - 1-5  - 0-1 - Unidad de medida del peso total de la mercadería
+    public ?string $dDesUniMedTotPes = null; // G055 - 1-10 - 0-1 - Descripción de la unidad de medida del peso total de la mercadería
+    public int $dTotPesMerc;             // G056 - 1-20 - 0-1 - Total peso de la mercadería;
+    public int $iCarCarga;               // G057 - 1-1  - 0-1 - Características de la  Carga
+    public ?string $dDesCarCarga     = null; // G058 - 1-50 - 0-1 - Descripción de las características de la carga
 
-  ///////////////////////////////////////////////////////////////////////
-  ///SETTER
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ///SETTER
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de cUniMedTotVol
-   *
-   * @param int $cUniMedTotVol
-   *
-   * @return self
-   */
-  public function setCUniMedTotVol(int $cUniMedTotVol): self
-  {
-    $this->cUniMedTotVol = $cUniMedTotVol;
-    $this->setDDesUniMedTotVol(UnidadMedidaMapping::GetDesc(strval($cUniMedTotVol)));
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dDesUniMedTotVol
-   *
-   * @param String $dDesUniMedTotVol
-   *
-   * @return self
-   */
-  public function setDDesUniMedTotVol(?string $dDesUniMedTotVol): self
-  {
-    $this->dDesUniMedTotVol = (is_null($dDesUniMedTotVol) || strlen($dDesUniMedTotVol) === 0)
-      ? null
-      : substr($dDesUniMedTotVol, 0, 10);
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dTotVolMerc
-   *
-   * @param int $dTotVolMerc
-   *
-   * @return self
-   */
-  public function setDTotVolMerc(int $dTotVolMerc): self
-  {
-    $this->dTotVolMerc = $dTotVolMerc;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cUniMedTotPes
-   *
-   * @param int $cUniMedTotPes
-   *
-   * @return self
-   */
-  public function setCUniMedTotPes(int $cUniMedTotPes): self
-  {
-    $this->cUniMedTotPes = $cUniMedTotPes;
-    $this->setDDesUniMedTotPes(UnidadMedidaMapping::GetDesc(strval($cUniMedTotPes)));
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dDesUniMedTotPes
-   *
-   * @param String $dDesUniMedTotPes
-   *
-   * @return self
-   */
-  public function setDDesUniMedTotPes(?string $dDesUniMedTotPes): self
-  {
-    $this->dDesUniMedTotPes = (is_null($dDesUniMedTotPes) || strlen($dDesUniMedTotPes) === 0)
-      ? null
-      : substr($dDesUniMedTotPes, 0, 10);
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dTotPesMerc
-   *
-   * @param int $dTotPesMerc
-   *
-   * @return self
-   */
-  public function setDTotPesMerc(int $dTotPesMerc): self
-  {
-    $this->dTotPesMerc = $dTotPesMerc;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de iCarCarga
-   *
-   * @param int $iCarCarga
-   *
-   * @return self
-   */
-  public function setICarCarga(int $iCarCarga): self
-  {
-    $this->iCarCarga = $iCarCarga;
-    switch ($iCarCarga) {
-      case 1:
-        $this->setDDesCarCarga("Mercaderías con cadena de frío");
-        break;
-      case 2:
-        $this->setDDesCarCarga("Carga peligrosa");
-        break;
-    }
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dDesCarCarga
-   *
-   * @param String $dDesCarCarga
-   *
-   * @return self
-   */
-  public function setDDesCarCarga(?string $dDesCarCarga): self
-  {
-    $this->dDesCarCarga = (is_null($dDesCarCarga) || strlen($dDesCarCarga) === 0)
-      ? null
-      : substr($dDesCarCarga, 0, 50);
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  //GETTER
-  ///////////////////////////////////////////////////////////////////////
-
-
-  /**
-   * Obtiene el valor de cUniMedTotVol
-   *
-   * @return int
-   */
-  public function getCUniMedTotVol(): int
-  {
-    return $this->cUniMedTotVol;
-  }
-
-  /**
-   * G052 Descripción de la unidad de medida del total de volumen de la mercadería
-   *
-   * @return String|null
-   */
-  public function getDDesUniMedTotVol(): ?string
-  {
-    return $this->dDesUniMedTotVol;
-  }
-
-
-  /**
-   * Obtiene el valor de dTotVolMerc
-   *
-   * @return int
-   */
-  public function getDTotVolMerc(): int
-  {
-    return $this->dTotVolMerc;
-  }
-
-  /**
-   * Obtiene el valor de cUniMedTotPes
-   *
-   * @return int
-   */
-  public function getCUniMedTotPes(): int
-  {
-    return $this->cUniMedTotPes;
-  }
-
-
-  /**
-   * G055 Descripción de la unidad de medida del peso total de la mercadería
-   *
-   * @return String|null
-   */
-  public function getdDesUniMedTotPes(): ?string
-  {
-    return $this->dDesUniMedTotPes;
-  }
-
-  /**
-   * Obtiene el valor de dTotPesMerc
-   *
-   * @return int
-   */
-  public function getDTotPesMerc(): int
-  {
-    return $this->dTotPesMerc;
-  }
-
-  /**
-   * Obtiene el valor de iCarCarga
-   *
-   * @return int
-   */
-  public function getICarCarga(): int
-  {
-    return $this->iCarCarga;
-  }
-
-  /**
-   * G058 Descripción de las características de la carga
-   *
-   * @return String|null
-   */
-  public function getDDesCarCarga(): ?string
-  {
-    return $this->dDesCarCarga;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///XML Element
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Instancia un objeto de la GCamCarg a partir de un SimpleXMLElement
-   *
-   * @param SimpleXMLElement $node
-   *
-   * @return self
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node)
-  {
-    if (strcmp($node->getName(), 'gCamCarg') != 0) {
-      throw new ValidacionException("El nombre del nodo no corresponde a 'gCamCarg'");
-    }
-    $res = new GCamCarg();
-    if (isset($node->cUniMedTotVol)) {
-      $res->setCUniMedTotVol(intval($node->cUniMedTotVol));
-    }
-    if (isset($node->dDesUniMedTotVol)) {
-      $res->setDDesUniMedTotVol(strval($node->dDesUniMedTotVol));
-    }
-    if (isset($node->dTotVolMerc)) {
-      $res->setDTotVolMerc(intval($node->dTotVolMerc));
-    }
-    if (isset($node->cUniMedTotPes)) {
-      $res->setCUniMedTotPes(intval($node->cUniMedTotPes));
-    }
-    if (isset($node->dDesUniMedTotPes)) {
-      $res->setDDesUniMedTotPes(strval($node->dDesUniMedTotPes));
-    }
-    if (isset($node->dTotPesMerc)) {
-      $res->setDTotPesMerc(intval($node->dTotPesMerc));
-    }
-    if (isset($node->iCarCarga)) {
-      $res->setICarCarga(intval($node->iCarCarga));
-    }
-    if (isset($node->dDesCarCarga)) {
-      $res->setDDesCarCarga(strval($node->dDesCarCarga));
-    }
-    return $res;
-  }
-
-  /**
-   * Convierte este GCamCarg a un DOMElement
-   *
-   * @param DOMDocument $doc Documento DOM donde se generará el nodo, sin insertarse
-   *
-   * @return DOMElement El nodo DOM generado
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gCamCarg');
-    // Todos los campos de tgCamCarg son opcionales (DE_v150.xsd:1825-1875); hasta v0.1.5 los numéricos se emitían sin guardas (PK-08).
-    if (isset($this->cUniMedTotVol)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotVol', $this->getCUniMedTotVol()));
-    }
-    if (!is_null($this->dDesUniMedTotVol) && strlen($this->dDesUniMedTotVol) > 0) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotVol', $this->dDesUniMedTotVol));
-    }
-    if (isset($this->dTotVolMerc)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dTotVolMerc', $this->getDTotVolMerc()));
-    }
-    if (isset($this->cUniMedTotPes)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotPes', $this->getCUniMedTotPes()));
-    }
-    if (!is_null($this->dDesUniMedTotPes) && strlen($this->dDesUniMedTotPes) > 0) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotPes', $this->dDesUniMedTotPes));
-    }
-    if (isset($this->dTotPesMerc)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dTotPesMerc', $this->getDTotPesMerc()));
-    }
-    if (isset($this->iCarCarga)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'iCarCarga', $this->getICarCarga()));
-    }
-    if (!is_null($this->dDesCarCarga) && strlen($this->dDesCarCarga) > 0) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dDesCarCarga', $this->dDesCarCarga));
-    }
-    return $res;
-  }
-
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $res = new GCamCarg();
-    if (isset($object->cUniMedTotVol)) {
-      $res->setCUniMedTotVol(intval($object->cUniMedTotVol));
-    }
-    if (isset($object->dTotVolMerc)) {
-      $res->setDTotVolMerc(intval($object->dTotVolMerc));
-    }
-    if (isset($object->cUniMedTotPes)) {
-      $res->setCUniMedTotPes(intval($object->cUniMedTotPes));
-    }
-    if (isset($object->dTotPesMerc)) {
-      $res->setDTotPesMerc(intval($object->dTotPesMerc));
-    }
-    if (isset($object->iCarCarga)) {
-      $res->setICarCarga(intval($object->iCarCarga));
+    /**
+     * Establece el valor de cUniMedTotVol
+     *
+     * @param int $cUniMedTotVol
+     *
+     * @return self
+     */
+    public function setCUniMedTotVol(int $cUniMedTotVol): self
+    {
+        $this->cUniMedTotVol = $cUniMedTotVol;
+        $this->setDDesUniMedTotVol(UnidadMedidaMapping::GetDesc(strval($cUniMedTotVol)));
+        return $this;
     }
 
-    return $res;
-  }
+    /**
+     * Establece el valor de dDesUniMedTotVol
+     *
+     * @param String $dDesUniMedTotVol
+     *
+     * @return self
+     */
+    public function setDDesUniMedTotVol(?string $dDesUniMedTotVol): self
+    {
+        $this->dDesUniMedTotVol = (is_null($dDesUniMedTotVol) || strlen($dDesUniMedTotVol) === 0)
+          ? null
+          : substr($dDesUniMedTotVol, 0, 10);
+        return $this;
+    }
 
-  /**
-   * Instancia un objeto GCamCarg a partir de un DOMElement que representa el nodo XML del objeto.
-   *
-   * @param DOMElement $node
-   *
-   * @return self
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if (strcmp($node->nodeName, 'gCamCarg') != 0) {
-      throw new ValidacionException('[GCamCarg] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
+    /**
+     * Establece el valor de dTotVolMerc
+     *
+     * @param int $dTotVolMerc
+     *
+     * @return self
+     */
+    public function setDTotVolMerc(int $dTotVolMerc): self
+    {
+        $this->dTotVolMerc = $dTotVolMerc;
+
+        return $this;
     }
-    $res = new GCamCarg();
-    if ($node->getElementsByTagName('cUniMedTotVol')->length > 0) {
-      $res->setCUniMedTotVol(intval($node->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));
+
+
+    /**
+     * Establece el valor de cUniMedTotPes
+     *
+     * @param int $cUniMedTotPes
+     *
+     * @return self
+     */
+    public function setCUniMedTotPes(int $cUniMedTotPes): self
+    {
+        $this->cUniMedTotPes = $cUniMedTotPes;
+        $this->setDDesUniMedTotPes(UnidadMedidaMapping::GetDesc(strval($cUniMedTotPes)));
+        return $this;
     }
-    if ($node->getElementsByTagName('dDesUniMedTotVol')->length > 0) {
-      $res->setDDesUniMedTotVol($node->getElementsByTagName('dDesUniMedTotVol')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dDesUniMedTotPes
+     *
+     * @param String $dDesUniMedTotPes
+     *
+     * @return self
+     */
+    public function setDDesUniMedTotPes(?string $dDesUniMedTotPes): self
+    {
+        $this->dDesUniMedTotPes = (is_null($dDesUniMedTotPes) || strlen($dDesUniMedTotPes) === 0)
+          ? null
+          : substr($dDesUniMedTotPes, 0, 10);
+        return $this;
     }
-    if ($node->getElementsByTagName('dTotVolMerc')->length > 0) {
-      $res->setDTotVolMerc(intval($node->getElementsByTagName('dTotVolMerc')->item(0)->nodeValue));
+
+    /**
+     * Establece el valor de dTotPesMerc
+     *
+     * @param int $dTotPesMerc
+     *
+     * @return self
+     */
+    public function setDTotPesMerc(int $dTotPesMerc): self
+    {
+        $this->dTotPesMerc = $dTotPesMerc;
+
+        return $this;
     }
-    if ($node->getElementsByTagName('cUniMedTotPes')->length > 0) {
-      $res->setCUniMedTotPes(intval($node->getElementsByTagName('cUniMedTotPes')->item(0)->nodeValue));
+
+
+    /**
+     * Establece el valor de iCarCarga
+     *
+     * @param int $iCarCarga
+     *
+     * @return self
+     */
+    public function setICarCarga(int $iCarCarga): self
+    {
+        $this->iCarCarga = $iCarCarga;
+        switch ($iCarCarga) {
+            case 1:
+                $this->setDDesCarCarga("Mercaderías con cadena de frío");
+                break;
+            case 2:
+                $this->setDDesCarCarga("Carga peligrosa");
+                break;
+        }
+        return $this;
     }
-    if ($node->getElementsByTagName('dDesUniMedTotPes')->length > 0) {
-      $res->setDDesUniMedTotPes($node->getElementsByTagName('dDesUniMedTotPes')->item(0)->nodeValue);
+
+    /**
+     * Establece el valor de dDesCarCarga
+     *
+     * @param String $dDesCarCarga
+     *
+     * @return self
+     */
+    public function setDDesCarCarga(?string $dDesCarCarga): self
+    {
+        $this->dDesCarCarga = (is_null($dDesCarCarga) || strlen($dDesCarCarga) === 0)
+          ? null
+          : substr($dDesCarCarga, 0, 50);
+        return $this;
     }
-    if ($node->getElementsByTagName('dTotPesMerc')->length > 0) {
-      $res->setDTotPesMerc(intval($node->getElementsByTagName('dTotPesMerc')->item(0)->nodeValue));
+
+    ///////////////////////////////////////////////////////////////////////
+    //GETTER
+    ///////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * Obtiene el valor de cUniMedTotVol
+     *
+     * @return int
+     */
+    public function getCUniMedTotVol(): int
+    {
+        return $this->cUniMedTotVol;
     }
-    if ($node->getElementsByTagName('iCarCarga')->length > 0) {
-      $res->setICarCarga(intval($node->getElementsByTagName('iCarCarga')->item(0)->nodeValue));
+
+    /**
+     * G052 Descripción de la unidad de medida del total de volumen de la mercadería
+     *
+     * @return String|null
+     */
+    public function getDDesUniMedTotVol(): ?string
+    {
+        return $this->dDesUniMedTotVol;
     }
-    if ($node->getElementsByTagName('dDesCarCarga')->length > 0) {
-      $res->setDDesCarCarga($node->getElementsByTagName('dDesCarCarga')->item(0)->nodeValue);
+
+
+    /**
+     * Obtiene el valor de dTotVolMerc
+     *
+     * @return int
+     */
+    public function getDTotVolMerc(): int
+    {
+        return $this->dTotVolMerc;
     }
-    return $res;
-  }
+
+    /**
+     * Obtiene el valor de cUniMedTotPes
+     *
+     * @return int
+     */
+    public function getCUniMedTotPes(): int
+    {
+        return $this->cUniMedTotPes;
+    }
+
+
+    /**
+     * G055 Descripción de la unidad de medida del peso total de la mercadería
+     *
+     * @return String|null
+     */
+    public function getdDesUniMedTotPes(): ?string
+    {
+        return $this->dDesUniMedTotPes;
+    }
+
+    /**
+     * Obtiene el valor de dTotPesMerc
+     *
+     * @return int
+     */
+    public function getDTotPesMerc(): int
+    {
+        return $this->dTotPesMerc;
+    }
+
+    /**
+     * Obtiene el valor de iCarCarga
+     *
+     * @return int
+     */
+    public function getICarCarga(): int
+    {
+        return $this->iCarCarga;
+    }
+
+    /**
+     * G058 Descripción de las características de la carga
+     *
+     * @return String|null
+     */
+    public function getDDesCarCarga(): ?string
+    {
+        return $this->dDesCarCarga;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Instancia un objeto de la GCamCarg a partir de un SimpleXMLElement
+     *
+     * @param SimpleXMLElement $node
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node)
+    {
+        if (strcmp($node->getName(), 'gCamCarg') != 0) {
+            throw new ValidacionException("El nombre del nodo no corresponde a 'gCamCarg'");
+        }
+        $res = new GCamCarg();
+        if (isset($node->cUniMedTotVol)) {
+            $res->setCUniMedTotVol(intval($node->cUniMedTotVol));
+        }
+        if (isset($node->dDesUniMedTotVol)) {
+            $res->setDDesUniMedTotVol(strval($node->dDesUniMedTotVol));
+        }
+        if (isset($node->dTotVolMerc)) {
+            $res->setDTotVolMerc(intval($node->dTotVolMerc));
+        }
+        if (isset($node->cUniMedTotPes)) {
+            $res->setCUniMedTotPes(intval($node->cUniMedTotPes));
+        }
+        if (isset($node->dDesUniMedTotPes)) {
+            $res->setDDesUniMedTotPes(strval($node->dDesUniMedTotPes));
+        }
+        if (isset($node->dTotPesMerc)) {
+            $res->setDTotPesMerc(intval($node->dTotPesMerc));
+        }
+        if (isset($node->iCarCarga)) {
+            $res->setICarCarga(intval($node->iCarCarga));
+        }
+        if (isset($node->dDesCarCarga)) {
+            $res->setDDesCarCarga(strval($node->dDesCarCarga));
+        }
+        return $res;
+    }
+
+    /**
+     * Convierte este GCamCarg a un DOMElement
+     *
+     * @param DOMDocument $doc Documento DOM donde se generará el nodo, sin insertarse
+     *
+     * @return DOMElement El nodo DOM generado
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gCamCarg');
+        // Todos los campos de tgCamCarg son opcionales (DE_v150.xsd:1825-1875); hasta v0.1.5 los numéricos se emitían sin guardas (PK-08).
+        if (isset($this->cUniMedTotVol)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotVol', $this->getCUniMedTotVol()));
+        }
+        if (!is_null($this->dDesUniMedTotVol) && strlen($this->dDesUniMedTotVol) > 0) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotVol', $this->dDesUniMedTotVol));
+        }
+        if (isset($this->dTotVolMerc)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dTotVolMerc', $this->getDTotVolMerc()));
+        }
+        if (isset($this->cUniMedTotPes)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'cUniMedTotPes', $this->getCUniMedTotPes()));
+        }
+        if (!is_null($this->dDesUniMedTotPes) && strlen($this->dDesUniMedTotPes) > 0) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesUniMedTotPes', $this->dDesUniMedTotPes));
+        }
+        if (isset($this->dTotPesMerc)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dTotPesMerc', $this->getDTotPesMerc()));
+        }
+        if (isset($this->iCarCarga)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'iCarCarga', $this->getICarCarga()));
+        }
+        if (!is_null($this->dDesCarCarga) && strlen($this->dDesCarCarga) > 0) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesCarCarga', $this->dDesCarCarga));
+        }
+        return $res;
+    }
+
+    /**
+     * FromSifenResponseObject
+     *
+     * @param  mixed $object
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new GCamCarg();
+        if (isset($object->cUniMedTotVol)) {
+            $res->setCUniMedTotVol(intval($object->cUniMedTotVol));
+        }
+        if (isset($object->dTotVolMerc)) {
+            $res->setDTotVolMerc(intval($object->dTotVolMerc));
+        }
+        if (isset($object->cUniMedTotPes)) {
+            $res->setCUniMedTotPes(intval($object->cUniMedTotPes));
+        }
+        if (isset($object->dTotPesMerc)) {
+            $res->setDTotPesMerc(intval($object->dTotPesMerc));
+        }
+        if (isset($object->iCarCarga)) {
+            $res->setICarCarga(intval($object->iCarCarga));
+        }
+
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GCamCarg a partir de un DOMElement que representa el nodo XML del objeto.
+     *
+     * @param DOMElement $node
+     *
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gCamCarg') != 0) {
+            throw new ValidacionException('[GCamCarg] El nombre del nodo no corresponde a gCamGen: ' . $node->nodeName, 1);
+        }
+        $res = new GCamCarg();
+        if ($node->getElementsByTagName('cUniMedTotVol')->length > 0) {
+            $res->setCUniMedTotVol(intval($node->getElementsByTagName('cUniMedTotVol')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dDesUniMedTotVol')->length > 0) {
+            $res->setDDesUniMedTotVol($node->getElementsByTagName('dDesUniMedTotVol')->item(0)->nodeValue);
+        }
+        if ($node->getElementsByTagName('dTotVolMerc')->length > 0) {
+            $res->setDTotVolMerc(intval($node->getElementsByTagName('dTotVolMerc')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('cUniMedTotPes')->length > 0) {
+            $res->setCUniMedTotPes(intval($node->getElementsByTagName('cUniMedTotPes')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dDesUniMedTotPes')->length > 0) {
+            $res->setDDesUniMedTotPes($node->getElementsByTagName('dDesUniMedTotPes')->item(0)->nodeValue);
+        }
+        if ($node->getElementsByTagName('dTotPesMerc')->length > 0) {
+            $res->setDTotPesMerc(intval($node->getElementsByTagName('dTotPesMerc')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('iCarCarga')->length > 0) {
+            $res->setICarCarga(intval($node->getElementsByTagName('iCarCarga')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('dDesCarCarga')->length > 0) {
+            $res->setDDesCarCarga($node->getElementsByTagName('dDesCarCarga')->item(0)->nodeValue);
+        }
+        return $res;
+    }
 }

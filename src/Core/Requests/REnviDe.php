@@ -13,7 +13,7 @@ use SoapVar;
 
 class REnviDe
 {
-                        // Id - Longitud - Ocurrencia - Descripción
+    // Id - Longitud - Ocurrencia - Descripción
     public int $dId;    // ASch02 - 1-15 - 1-1 - Identificador  de control de envío
     public SoapVar $xDE; // ASch03 - XML  - 1-1 - XML del DE transmitido
 
