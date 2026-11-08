@@ -121,6 +121,14 @@ comportamiento para quien emite documentos.
   manual, los tres tests que se omiten sin `docs/sifen-ai` y cómo clonar ekuat-ia para correrlos, el flujo de las
   capturas reales y el enlace a `SECURITY.md`. Las notas para las GitHub Releases v0.1.0–v0.1.4 quedaron preparadas
   para publicarlas con `gh release edit`.
+- **Anonimizador de capturas versionado** (D13, deuda D-A8, decisión Q-D5): `tools/anonimizar-capturas.php` y la
+  clase `tools/AnonimizadorCapturas.php` traen la lógica que vivía en el harness privado del mantenedor (CDC con
+  dígito verificador recalculado, RUC y DV del emisor y del receptor, timbrado, razón social, números de casa,
+  literales también con referencias numéricas, certificado, firma, digests y hashes del QR a marcadores, `xContenDE`
+  escapado, ZIP del lote), con el mapa de valores reales → ficticios **fuera del repositorio** (`--mapa=`;
+  `anonimizar-capturas.mapa.ejemplo.json` muestra la forma con valores inventados) y un control final de cadenas
+  sensibles. Los grabadores siguen siendo privados (necesitan el certificado); CONTRIBUTING documenta el flujo
+  completo. Test `AnonimizadorCapturasTest` (una captura ya anonimizada queda idéntica).
 
 ### Cambiado
 

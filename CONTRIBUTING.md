@@ -114,10 +114,25 @@ Si `CatalogosSincroniaTest` falla porque ekuat-ia cambió, regenerá los catálo
 ### Capturas reales del SIFEN
 
 Las respuestas reales de `tests/Resources/sifen/respuestas-ws/` salen del ambiente de pruebas del SIFEN
-(`sifen-test`), se anonimizan (RUC, CDC, nombres, protocolos) y se indexan también en ekuat-ia
-(`06-ejemplos/respuestas-ws/`). Grabarlas requiere un certificado habilitado por la DNIT, así que lo hace el
-mantenedor con un harness privado; si tenés una captura que aporta un caso nuevo, abrí un issue describiéndolo y
-coordinamos cómo incorporarla anonimizada.
+(`sifen-test`) y se indexan también en ekuat-ia (`06-ejemplos/respuestas-ws/`). El flujo:
+
+1. **Grabar.** Requiere un certificado habilitado por la DNIT, así que lo hace el mantenedor con un harness privado
+   que llama al SIFEN con `Sifen::SetSoapClientFactory()` y guarda cada solicitud y respuesta cruda
+   (`__getLastRequest()`/`__getLastResponse()`) en una carpeta por fecha, con un `meta.json` de resumen.
+2. **Anonimizar** con la herramienta versionada:
+   `php tools/anonimizar-capturas.php --dir=<capturas> --out=<destino> --mapa=<mapa.json>`. El mapa de valores
+   reales → ficticios (RUC y DV del emisor y del receptor, razón social, direcciones, teléfonos, correos, números de
+   casa) vive **fuera del repositorio**; `tools/anonimizar-capturas.mapa.ejemplo.json` muestra su forma con valores
+   inventados. La herramienta reemplaza además los CDC (con el dígito verificador recalculado), el timbrado, el
+   certificado, la firma, los digests y los hashes del QR por marcadores, también dentro del `xContenDE` escapado, y
+   sale con 1 si alguna cadena sensible del mapa sigue presente. Su lógica está en `tools/AnonimizadorCapturas.php`
+   (test `AnonimizadorCapturasTest`).
+3. **Archivar.** Copiar la salida a `tests/Resources/sifen/respuestas-ws/<fecha>/` y a
+   `ekuat-ia/06-ejemplos/respuestas-ws/<fecha>/`, indexarla en el README de esa carpeta y correr los tests de
+   sincronía (ver arriba). Revisar el diff a mano antes de commitear: ningún dato real puede entrar al repositorio.
+
+Si tenés una captura que aporta un caso nuevo y no podés grabarla, abrí un issue describiéndolo y coordinamos cómo
+incorporarla.
 
 ### Auditoría de la API pública
 
