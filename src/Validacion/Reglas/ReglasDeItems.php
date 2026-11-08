@@ -42,9 +42,10 @@ final class ReglasDeItems extends ConjuntoDeReglas
       // E786 dCilin: el XSD de producción declara el patrón "/d" (un error del XSD) y el SIFEN lo aplica tal cual, así que
       // cualquier valor responde 0160 "XML malformado [El valor N del elemento: dCilin es invalido]" (sifen-test, 13/10/2026).
       $cilindrada = self::texto(self::v($item, 'gVehNuevo'), 'dCilin');
-      if ($cilindrada !== null)
+      if ($cilindrada !== null) {
         $r->agregar(new ErrorValidacion(OrigenError::Regla, 'XML malformado: el SIFEN rechaza dCilin con cualquier valor (el patrón del XSD de producción es "/d").', '0160', 'E786', 'dCilin',
           $ruta . '.gVehNuevo', $cilindrada, 'No informar dCilin: sifen-test lo rechazó con 0160 el 13/10/2026 (captura 05-rEnviDe-cilin del 2026-10-13); GVehNuevo::setDCilin() no tiene un valor que el SIFEN acepte.'));
+      }
 
       $cantidad = self::monto($item, 'dCantProSer');
       $total = null;
@@ -76,8 +77,9 @@ final class ReglasDeItems extends ConjuntoDeReglas
           }
           if ($total !== null && $precio !== null && $cantidad !== null) {
             $unitario = $precio;
-            foreach (['dDescItem', 'dDescGloItem', 'dAntPreUniIt', 'dAntGloPreUniIt'] as $campo)
+            foreach (['dDescItem', 'dDescGloItem', 'dAntPreUniIt', 'dAntGloPreUniIt'] as $campo) {
               $unitario = bcsub($unitario, self::monto($resta, $campo) ?? '0', 10);
+            }
             $esperado = bcmul($unitario, $cantidad, 10);
             self::regla($r, self::difiere($total, $esperado), '1853', 'dTotOpeItem', $rutaResta, $total, "EA008 = (E721 − EA002 − EA004 − EA006 − EA007) × E711 = $esperado.");
           }
@@ -90,8 +92,9 @@ final class ReglasDeItems extends ConjuntoDeReglas
       }
 
       $iva = self::v($item, 'gCamIVA');
-      if ($iva === null)
+      if ($iva === null) {
         continue;
+      }
       $rutaIva = $ruta . '.gCamIVA';
       $afectacion = self::entero($iva, 'iAfecIVA');
       $proporcion = self::monto($iva, 'dPropIVA');
@@ -114,18 +117,21 @@ final class ReglasDeItems extends ConjuntoDeReglas
         // NT-013: E735 = 100 × EA008 × E733 / (10000 + E734 × E733); con E733 = 100 equivale a EA008 / 1,05 o EA008 / 1,1.
         $divisor = bcadd('10000', bcmul((string) $tasa, $proporcion, 10), 10);
         $baseEsperada = bcdiv(bcmul(bcmul('100', $total, 10), $proporcion, 10), $divisor, 10);
-        if ($base !== null)
+        if ($base !== null) {
           self::regla($r, self::difiere($base, $baseEsperada, '0.01'), $tasa === 5 ? '1910' : '1911', 'dBasGravIVA', $rutaIva, $base, "E735 = 100 × EA008 × E733 / (10000 + E734 × E733) = $baseEsperada (NT-013; el SIFEN admite 0,01).");
-        if ($afectacion === 4)
+        }
+        if ($afectacion === 4) {
           $baseExentaEsperada = bcdiv(bcmul(bcmul('100', $total, 10), bcsub('100', $proporcion, 10), 10), $divisor, 10);
+        }
       }
       if ($gravado && $base !== null && $liquidacion !== null && $tasa !== null) {
         $esperado = bcdiv(bcmul($base, (string) $tasa, 10), '100', 10);
         self::regla($r, self::difiere($liquidacion, $esperado, '0.01'), '1913', 'dLiqIVAItem', $rutaIva, $liquidacion, "E736 = E735 × E734 / 100 = $esperado (el SIFEN admite 0,01).");
       }
-      if ($baseExenta !== null && $baseExentaEsperada !== null)
+      if ($baseExenta !== null && $baseExentaEsperada !== null) {
         self::reglaConMensaje($r, self::difiere($baseExenta, $baseExentaEsperada, '0.01'), '1921', 'E737', 'Error en el cálculo de la base exenta por ítem', 'dBasExe', $rutaIva, $baseExenta,
           "NT-013 §2.1: E737 = 100 × EA008 × (100 − E733) / (10000 + E734 × E733) con E731 = 4, y 0 con E731 = 1, 2 o 3: $baseExentaEsperada.");
+      }
     }
   }
 }

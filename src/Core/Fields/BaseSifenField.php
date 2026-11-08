@@ -4,7 +4,6 @@ namespace IonysDev\Pkuatia\Core\Fields;
 
 use DOMDocument;
 use DOMElement;
-use ReflectionClass;
 use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;
 
 /**
@@ -14,16 +13,16 @@ abstract class BaseSifenField
 {
     /**
      * Convierte el objeto a un DOMElement.
-     * 
+     *
      * @return DOMElement
      */
     abstract public function toDOMElement(DOMDocument $doc): DOMElement;
 
     /**
      * Instancia un objeto a partir de un DOMElement que representa el nodo XML del objeto.
-     * 
+     *
      * @param DOMElement $node Nodo XML que representa el objeto.
-     * 
+     *
      * @return self Objeto instanciado.
      */
     abstract public static function FromDOMElement(DOMElement $node): self;
@@ -36,10 +35,9 @@ abstract class BaseSifenField
       $doc = new DOMDocument('1.0', 'UTF-8');
       $domElement = $this->toDOMElement($doc);
       $xmlString = $domElement->ownerDocument->saveXML($domElement);
-      if(!$xmlString)
+      if (!$xmlString) {
         throw new PkuatiaException('[' . self::class . '] Error al convertir el objeto a XML.');
+      }
       return $xmlString;
     }
 }
-
-?>

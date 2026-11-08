@@ -21,9 +21,9 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
                                   // ID - DESCRIPCION - LONGITUD - OCURRENCIA
   public DateTime $dFecProc;      // FSch02 - Fecha y hora del procesamiento - 19 - 1-1
   public DateTime $dFecArchivo;   // FSch03 - Fecha del archivo - 10 - 0-1
-  public int      $dCodRes;       // FSch04 - Código del resultado de la consulta - 1-4 - 1-1
-  public string   $dMsgRes;       // FSch05 - Mensaje del resultado de la consulta - 1-255 - 1-1
-  public string   $rConsDte;      // FSch06 - Archivo de RUC comprimido (ZIP) codificado en Base64 - 0-1
+  public int $dCodRes;       // FSch04 - Código del resultado de la consulta - 1-4 - 1-1
+  public string $dMsgRes;       // FSch05 - Mensaje del resultado de la consulta - 1-255 - 1-1
+  public string $rConsDte;      // FSch06 - Archivo de RUC comprimido (ZIP) codificado en Base64 - 0-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -155,8 +155,9 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
    */
   public function getArchivoZip(): ?string
   {
-    if (!isset($this->rConsDte))
+    if (!isset($this->rConsDte)) {
       return null;
+    }
     $contenido = base64_decode($this->rConsDte, true);
     return $contenido === false ? null : $contenido;
   }
@@ -183,8 +184,9 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
     // da null (B13b); se devuelve con su código y su mensaje, como en las demás respuestas (QA de la Fase B).
     if (isset($object->rProtDe)) {
       $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
-      if (isset($prot->dFecProc))
+      if (isset($prot->dFecProc)) {
         $res->setDFecProc($prot->getDFecProc());
+      }
       $proc = $prot->getGResProc()[0] ?? null;
       if ($proc !== null) {
         $res->setDCodRes(intval($proc->getDCodRes()));

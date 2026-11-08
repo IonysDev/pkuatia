@@ -6,7 +6,6 @@ use IonysDev\Pkuatia\Utils\NumberStringFormatter;
 use IonysDev\Pkuatia\Utils\ValueValidations;
 use DOMDocument;
 use DOMElement;
-use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
@@ -14,8 +13,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 /**
  * Nodo Id:     F001
  * Nombre:      gTotSub
- * Descripción: Campos de subtotales y totales 
- * Nodo Padre:  A001 - DE - Campos firmados del DE 
+ * Descripción: Campos de subtotales y totales
+ * Nodo Padre:  A001 - DE - Campos firmados del DE
  */
 
 class GTotSub
@@ -25,15 +24,15 @@ class GTotSub
   public string $dSubExo;        // F003 - 1-15p(0-8) - 0-1 - Subtotal de la operación exonerada
   public string $dSub5;          // F004 - 1-15p(0-8) - 0-1 - Subtotal de la operación con IVA incluido a la tasa 5%
   public string $dSub10;         // F005 - 1-15p(0-8) - 0-1 - Subtotal de la  operación con IVA  incluido a la tasa 10%
-  public string $dTotOpe;        // F008 - 1-15p(0-8) - 1-1 - Total Bruto de la operación 
+  public string $dTotOpe;        // F008 - 1-15p(0-8) - 1-1 - Total Bruto de la operación
   public string $dTotDesc;       // F009 - 1-15p(0-8) - 1-1 - Total descuento particular por ítem
   public string $dTotDescGlotem; // F033 - 1-15p(0-8) - 1-1 - Total descuento global  por ítem
   public string $dTotAntItem;    // F034 - 1-15p(0-8) - 1-1 - Total Anticipo por ítem
   public string $dTotAnt;        // F035 - 1-15p(0-8) - 1-1 - Total Anticipo global por ítem
   public string $dPorcDescTotal; // F010 - 1-3p(0-8)  - 1-1 - Porcentaje de descuento global sobre total de la operación
-  public string $dDescTotal;     // F011 - 1-15p(0-8) - 1-1 - Total Descuentos de la operación 
-  public string $dAnticipo;      // F012 - 1-15p(0-8) - 1-1 - Total Anticipos de la operación 
-  public string $dRedon;         // F013 - 1-3p(0-4)  - 1-1 - Redondeo de la operación 
+  public string $dDescTotal;     // F011 - 1-15p(0-8) - 1-1 - Total Descuentos de la operación
+  public string $dAnticipo;      // F012 - 1-15p(0-8) - 1-1 - Total Anticipos de la operación
+  public string $dRedon;         // F013 - 1-3p(0-4)  - 1-1 - Redondeo de la operación
   public string $dComi;          // F025 - 1-15p(0-8) - 0-1 - Comisión de la operación
   public string $dTotGralOpe;    // F014 - 1-15p(0-8) - 1-1 - Total Neto de la operación
   public string $dIVA5;          // F015 - 1-15p(0-8) - 0-1 - Liquidación del IVA a la tasa del 5%
@@ -41,10 +40,10 @@ class GTotSub
   public string $dLiqTotIVA5;    // F036 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 5%
   public string $dLiqTotIVA10;   // F037 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 10%
   public string $dIVAComi;       // F026 - 1-15p(0-8) - 0-1 - Liquidación total del IVA de la comisión
-  public string $dTotIVA;        // F017 - 1-15p(0-8) - 0-1 - Liquidación total del IVA 
+  public string $dTotIVA;        // F017 - 1-15p(0-8) - 0-1 - Liquidación total del IVA
   public string $dBaseGrav5;     // F018 - 1-15p(0-8) - 0-1 - Total base gravada al 5%
   public string $dBaseGrav10;    // F019 - 1-15p(0-8) - 0-1 - Total base gravada al 10%
-  public string $dTBasGraIVA;    // F020 - 1-15p(0-8) - 0-1 - Total de la base gravada de IVA F018+F019 
+  public string $dTBasGraIVA;    // F020 - 1-15p(0-8) - 0-1 - Total de la base gravada de IVA F018+F019
   public string $dTotalGs;       // F023 - 1-15p(0-8) - 0-1 - Total general de la operación en Guaraníes
   // Representación de números como cadenas para trabajar con BCMath para evitar errores de redondeo o truncamiento
 
@@ -75,7 +74,7 @@ class GTotSub
     $this->dRedon = '0';
     $this->dTotGralOpe = '0';
   }
-  
+
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
@@ -90,8 +89,9 @@ class GTotSub
   public function setDSubExe(string $dSubExe): self
   {
     $newVal = trim($dSubExe);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dSubExe: $newVal");
+    }
     $this->dSubExe = $newVal;
     return $this;
   }
@@ -107,8 +107,9 @@ class GTotSub
   public function setDSubExo(string $dSubExo): self
   {
     $newVal = trim($dSubExo);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dSubExo: $newVal");
+    }
     $this->dSubExo = $newVal;
     return $this;
   }
@@ -124,8 +125,9 @@ class GTotSub
   public function setDSub5(string $dSub5): self
   {
     $newVal = trim($dSub5);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dSub5: $newVal");
+    }
     $this->dSub5 = $newVal;
     return $this;
   }
@@ -141,8 +143,9 @@ class GTotSub
   public function setDSub10(string $dSub10): self
   {
     $newVal = trim($dSub10);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dSub10: $newVal");
+    }
     $this->dSub10 = $newVal;
     return $this;
   }
@@ -158,8 +161,9 @@ class GTotSub
   public function setDTotOpe(string $dTotOpe): self
   {
     $newVal = trim($dTotOpe);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotOpe: $newVal");
+    }
     $this->dTotOpe = $newVal;
     return $this;
   }
@@ -175,8 +179,9 @@ class GTotSub
   public function setDTotDesc(string $dTotDesc): self
   {
     $newVal = trim($dTotDesc);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotDesc: $newVal");
+    }
     $this->dTotDesc = $newVal;
     return $this;
   }
@@ -184,7 +189,7 @@ class GTotSub
 
   /**
    * Establece el valor de dTotDescGlotem que representa el total descuento global por ítem.
-   * 
+   *
    * @param String $dTotDescGlotem El valor del total descuento global por ítem expresado en cadena numérica de caracteres.
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
@@ -192,8 +197,9 @@ class GTotSub
   public function setDTotDescGlotem(string $dTotDescGlotem): self
   {
     $newVal = trim($dTotDescGlotem);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotDescGlotem: $newVal");
+    }
     $this->dTotDescGlotem = $newVal;
     return $this;
   }
@@ -209,8 +215,9 @@ class GTotSub
   public function setDTotAntItem(string $dTotAntItem): self
   {
     $newVal = trim($dTotAntItem);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotAntItem: $newVal");
+    }
     $this->dTotAntItem = $newVal;
     return $this;
   }
@@ -226,8 +233,9 @@ class GTotSub
   public function setDTotAnt(string $dTotAnt): self
   {
     $newVal = trim($dTotAnt);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotAnt: $newVal");
+    }
     $this->dTotAnt = $newVal;
     return $this;
   }
@@ -243,8 +251,9 @@ class GTotSub
   public function setDPorcDescTotal(string $dPorcDescTotal): self
   {
     $newVal = trim($dPorcDescTotal);
-    if(!ValueValidations::isValidStringDecimal($newVal, 3, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 3, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dPorcDescTotal: $newVal");
+    }
     $this->dPorcDescTotal = $newVal;
     return $this;
   }
@@ -260,8 +269,9 @@ class GTotSub
   public function setDDescTotal(string $dDescTotal): self
   {
     $newVal = trim($dDescTotal);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dDescTotal: $newVal");
+    }
     $this->dDescTotal = $newVal;
     return $this;
   }
@@ -277,8 +287,9 @@ class GTotSub
   public function setDAnticipo(string $dAnticipo): self
   {
     $newVal = trim($dAnticipo);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dAnticipo: $newVal");
+    }
     $this->dAnticipo = $newVal;
     return $this;
   }
@@ -294,8 +305,9 @@ class GTotSub
   public function setDRedon(string $dRedon): self
   {
     $newVal = trim($dRedon);
-    if(!ValueValidations::isValidStringDecimal($newVal, 4, 0, 4))
+    if (!ValueValidations::isValidStringDecimal($newVal, 4, 0, 4)) {
       throw new ValidacionException("[GTotSub] Valor no válido para el campo dRedon: $newVal");
+    }
     $this->dRedon = $newVal;
     return $this;
   }
@@ -311,8 +323,9 @@ class GTotSub
   public function setDComi(string $dComi): self
   {
     $newVal = trim($dComi);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dComi: $newVal");
+    }
     $this->dComi = $newVal;
     return $this;
   }
@@ -328,8 +341,9 @@ class GTotSub
   public function setDTotGralOpe(string $dTotGralOpe): self
   {
     $newVal = trim($dTotGralOpe);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotGralOpe: $newVal");
+    }
     $this->dTotGralOpe = $newVal;
     return $this;
   }
@@ -345,8 +359,9 @@ class GTotSub
   public function setDIVA5(string $dIVA5): self
   {
     $newVal = trim($dIVA5);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dIVA5: $newVal");
+    }
     $this->dIVA5 = $newVal;
     return $this;
   }
@@ -362,8 +377,9 @@ class GTotSub
   public function setDIVA10(string $dIVA10): self
   {
     $newVal = trim($dIVA10);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dIVA10: $newVal");
+    }
     $this->dIVA10 = $newVal;
     return $this;
   }
@@ -379,8 +395,9 @@ class GTotSub
   public function setDLiqTotIVA5(string $dLiqTotIVA5): self
   {
     $newVal = trim($dLiqTotIVA5);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dLiqTotIVA5: $newVal");
+    }
     $this->dLiqTotIVA5 = $newVal;
     return $this;
   }
@@ -396,8 +413,9 @@ class GTotSub
   public function setDLiqTotIVA10(string $dLiqTotIVA10): self
   {
     $newVal = trim($dLiqTotIVA10);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dLiqTotIVA10: $newVal");
+    }
     $this->dLiqTotIVA10 = $newVal;
     return $this;
   }
@@ -407,14 +425,15 @@ class GTotSub
    * Establece el valor de dIVAComi que representa la liquidación total del IVA de la comisión.
    *
    * @param String $dIVAComi El valor de la liquidación total del IVA de la comisión expresado en cadena numérica de caracteres.
-   *  
+   *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
   public function setDIVAComi(string $dIVAComi): self
   {
     $newVal = trim($dIVAComi);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dIVAComi: $newVal");
+    }
     $this->dIVAComi = $newVal;
     return $this;
   }
@@ -430,8 +449,9 @@ class GTotSub
   public function setDTotIVA(string $dTotIVA): self
   {
     $newVal = trim($dTotIVA);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotIVA: $newVal");
+    }
     $this->dTotIVA = $newVal;
     return $this;
   }
@@ -447,8 +467,9 @@ class GTotSub
   public function setDBaseGrav5(string $dBaseGrav5): self
   {
     $newVal = trim($dBaseGrav5);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dBaseGrav5: $newVal");
+    }
     $this->dBaseGrav5 = $newVal;
     return $this;
   }
@@ -463,8 +484,9 @@ class GTotSub
   public function setDBaseGrav10(string $dBaseGrav10): self
   {
     $newVal = trim($dBaseGrav10);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("[GTotSub] Valor no válido para el campo dBaseGrav10: $newVal");
+    }
     $this->dBaseGrav10 = $dBaseGrav10;
     return $this;
   }
@@ -480,8 +502,9 @@ class GTotSub
   public function setDTBasGraIVA(string $dTBasGraIVA): self
   {
     $newVal = trim($dTBasGraIVA);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("[GTotSub] Valor no válido para el campo dTBasGraIVA: $newVal");
+    }
     $this->dTBasGraIVA = $newVal;
     return $this;
   }
@@ -497,8 +520,9 @@ class GTotSub
   public function setDTotalGs(string $dTotalGs): self
   {
     $newVal = trim($dTotalGs);
-    if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8)) {
       throw new ValidacionException("Valor no válido para el campo dTotalGs: $newVal");
+    }
     $this->dTotalGs = $newVal;
     return $this;
   }
@@ -515,27 +539,28 @@ class GTotSub
    */
   public function getDSubExe(): ?string
   {
-    if(isset($this->dSubExe))
+    if (isset($this->dSubExe)) {
       return $this->dSubExe;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
    * Obtiene el valor de dSubExo que representa el subtotal de la operación exonerada en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
-   * 
+   *
    */
   public function getFormattedDSubExe(int $precision = 8): ?string
   {
-    if(isset($this->dSubExe)) {
+    if (isset($this->dSubExe)) {
       $rounded = bcadd($this->dSubExe, '0', $precision);
       return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    } else {
+    return null;
     }
-    else
-      return null;
   }
 
   /**
@@ -545,26 +570,27 @@ class GTotSub
    */
   public function getDSubExo(): ?string
   {
-    if(isset($this->dSubExo))
+    if (isset($this->dSubExo)) {
       return $this->dSubExo;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
    * Obtiene el valor de dSubExo que representa el subtotal de la operación exonerada en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
    */
   public function getFormattedDSubExo(int $precision = 8): ?string
   {
-    if(isset($this->dSubExo)) {
+    if (isset($this->dSubExo)) {
       $rounded = bcadd($this->dSubExo, '0', $precision);
       return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    } else {
+    return null;
     }
-    else
-      return null;
   }
 
   /**
@@ -574,28 +600,29 @@ class GTotSub
    */
   public function getDSub5(): ?string
   {
-    if(isset($this->dSub5))
+    if (isset($this->dSub5)) {
       return $this->dSub5;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
    * Obtiene el valor de dSub5 que representa el subtotal de la operación con IVA incluido a la tasa 5% en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica formateada de caracteres.
    */
   public function getFormattedDSub5(int $precision = 8): ?string
   {
-    if(isset($this->dSub5)) {
+    if (isset($this->dSub5)) {
       $rounded = bcadd($this->dSub5, '0', $precision);
       return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    } else {
+    return null;
     }
-    else
-      return null;
   }
- 
+
 
   /**
    * Obtiene el valor de dSub10 que representa el subtotal de la operación con IVA incluido a la tasa 10%.
@@ -604,25 +631,26 @@ class GTotSub
    */
   public function getDSub10(): ?string
   {
-   if(isset($this->dSub10))
+   if (isset($this->dSub10)) {
       return $this->dSub10;
-    else
-      return null;
+   } else {
+   return null;
+   }
   }
 
   /**
    * Obtiene el valor de dSub10 que representa el subtotal de la operación con IVA incluido a la tasa 10% en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica formateada de caracteres.
    */
   public function getFormattedDSub10(int $precision = 8): ?string
   {
-    if(isset($this->dSub10)) {
+    if (isset($this->dSub10)) {
       $rounded = bcadd($this->dSub10, '0', $precision);
       return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    } else {
+    return null;
     }
-    else
-      return null;
   }
 
   /**
@@ -724,10 +752,11 @@ class GTotSub
    */
   public function getDComi(): ?string
   {
-   if(isset($this->dComi))
+   if (isset($this->dComi)) {
       return $this->dComi;
-    else
-      return null;
+   } else {
+   return null;
+   }
   }
 
   /**
@@ -753,25 +782,26 @@ class GTotSub
    */
   public function getDIVA5(): ?string
   {
-    if(isset($this->dIVA5))
+    if (isset($this->dIVA5)) {
       return $this->dIVA5;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
    * Obtiene el valor de dIVA5 que representa la liquidación del IVA a la tasa del 5% en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica formateada de caracteres.
    */
   public function getFormattedDIVA5(int $precision = 8): ?string
   {
-    if(isset($this->dIVA5)) {
+    if (isset($this->dIVA5)) {
       $rounded = bcadd($this->dIVA5, '0', $precision);
       return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    } else {
+    return null;
     }
-    else
-      return null;
   }
 
   /**
@@ -779,27 +809,28 @@ class GTotSub
    *
    * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica de caracteres.
    */
-  public function getDIVA10(): ?string  
+  public function getDIVA10(): ?string
   {
-    if(isset($this->dIVA10))
+    if (isset($this->dIVA10)) {
       return $this->dIVA10;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
    * Obtiene el valor de dIVA10 que representa la liquidación del IVA a la tasa del 10% en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDIVA10(int $precision = 8): ?string  
+  public function getFormattedDIVA10(int $precision = 8): ?string
   {
-    if(isset($this->dIVA10)) {
+    if (isset($this->dIVA10)) {
       $rounded = bcadd($this->dIVA10, '0', $precision);
       return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    } else {
+    return null;
     }
-    else
-      return null;
   }
 
   /**
@@ -809,10 +840,11 @@ class GTotSub
    */
   public function getDLiqTotIVA5(): ?string
   {
-    if(isset($this->dLiqTotIVA5))
+    if (isset($this->dLiqTotIVA5)) {
       return $this->dLiqTotIVA5;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -822,10 +854,11 @@ class GTotSub
    */
   public function getDLiqTotIVA10(): ?string
   {
-    if(isset($this->dLiqTotIVA10))
+    if (isset($this->dLiqTotIVA10)) {
       return $this->dLiqTotIVA10;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -835,10 +868,11 @@ class GTotSub
    */
   public function getDIVAComi(): ?string
   {
-    if(isset($this->dIVAComi))
+    if (isset($this->dIVAComi)) {
       return $this->dIVAComi;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -848,25 +882,26 @@ class GTotSub
    */
   public function getDTotIVA(): ?string
   {
-    if(isset($this->dTotIVA))
+    if (isset($this->dTotIVA)) {
       return $this->dTotIVA;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
    * Devuelve el valor dTotIVA (F017 - Liquidación total del IVA) en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
    */
   public function getFormattedDTotIVA(int $precision = 8): ?string
   {
-    if(isset($this->dTotIVA)) {
+    if (isset($this->dTotIVA)) {
       $rounded = bcadd($this->dTotIVA, '0', $precision);
       return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+    } else {
+    return null;
     }
-    else
-      return null;
   }
 
   /**
@@ -876,10 +911,11 @@ class GTotSub
    */
   public function getDBaseGrav5(): ?string
   {
-    if(isset($this->dBaseGrav5))
+    if (isset($this->dBaseGrav5)) {
       return $this->dBaseGrav5;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -902,7 +938,7 @@ class GTotSub
     return $this->dTBasGraIVA;
   }
 
-  /** 
+  /**
    * Obtiene el valor de dTotalGs que representa el total general de la operación en Guaraníes.
    *
    * @return String El valor del total general de la operación en Guaraníes expresado en cadena numérica de caracteres.
@@ -914,7 +950,7 @@ class GTotSub
 
   /**
    * Obtiene el valor de dTotalGs que representa el total general de la operación en Guaraníes en formato de cadena formateada con separador de miles.
-   * 
+   *
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del total general de la operación en Guaraníes expresado en cadena numérica formateada de caracteres.
    */
@@ -927,27 +963,32 @@ class GTotSub
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
   ///////////////////////////////////////////////////////////////////////
-  
+
   /**
    * Instancia un objeto GTotSub a partir de un DOMElement que lo representa.
-   * 
+   *
    * @param DOMElement $node El DOMElement que contiene la representación XML de un GTotSub.
-   * 
+   *
    * @return self
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gTotSub') != 0)
+    if (strcmp($node->nodeName, 'gTotSub') != 0) {
       throw new ValidacionException('[GTotSub] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new GTotSub();
-    if($node->getElementsByTagName('dSubExe')->length > 0)
+    if ($node->getElementsByTagName('dSubExe')->length > 0) {
       $res->setDSubExe($node->getElementsByTagName('dSubExe')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dSubExo')->length > 0)
+    }
+    if ($node->getElementsByTagName('dSubExo')->length > 0) {
       $res->setDSubExo($node->getElementsByTagName('dSubExo')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dSub5')->length > 0)
+    }
+    if ($node->getElementsByTagName('dSub5')->length > 0) {
       $res->setDSub5($node->getElementsByTagName('dSub5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dSub10')->length > 0)
+    }
+    if ($node->getElementsByTagName('dSub10')->length > 0) {
       $res->setDSub10($node->getElementsByTagName('dSub10')->item(0)->nodeValue);
+    }
     $res->setDTotOpe($node->getElementsByTagName('dTotOpe')->item(0)->nodeValue);
     $res->setDTotDesc($node->getElementsByTagName('dTotDesc')->item(0)->nodeValue);
     $res->setDTotDescGlotem($node->getElementsByTagName('dTotDescGlotem')->item(0)->nodeValue);
@@ -957,43 +998,55 @@ class GTotSub
     $res->setDDescTotal($node->getElementsByTagName('dDescTotal')->item(0)->nodeValue);
     $res->setDAnticipo($node->getElementsByTagName('dAnticipo')->item(0)->nodeValue);
     $res->setDRedon($node->getElementsByTagName('dRedon')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dComi')->length > 0)
+    if ($node->getElementsByTagName('dComi')->length > 0) {
       $res->setDComi($node->getElementsByTagName('dComi')->item(0)->nodeValue);
+    }
     $res->setDTotGralOpe($node->getElementsByTagName('dTotGralOpe')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dIVA5')->length > 0)
+    if ($node->getElementsByTagName('dIVA5')->length > 0) {
       $res->setDIVA5($node->getElementsByTagName('dIVA5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dIVA10')->length > 0)
+    }
+    if ($node->getElementsByTagName('dIVA10')->length > 0) {
       $res->setDIVA10($node->getElementsByTagName('dIVA10')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dLiqTotIVA5')->length > 0)
+    }
+    if ($node->getElementsByTagName('dLiqTotIVA5')->length > 0) {
       $res->setDLiqTotIVA5($node->getElementsByTagName('dLiqTotIVA5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dLiqTotIVA10')->length > 0)
+    }
+    if ($node->getElementsByTagName('dLiqTotIVA10')->length > 0) {
       $res->setDLiqTotIVA10($node->getElementsByTagName('dLiqTotIVA10')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dIVAComi')->length > 0)
+    }
+    if ($node->getElementsByTagName('dIVAComi')->length > 0) {
       $res->setDIVAComi($node->getElementsByTagName('dIVAComi')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dTotIVA')->length > 0)
+    }
+    if ($node->getElementsByTagName('dTotIVA')->length > 0) {
       $res->setDTotIVA($node->getElementsByTagName('dTotIVA')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dBaseGrav5')->length > 0)
+    }
+    if ($node->getElementsByTagName('dBaseGrav5')->length > 0) {
       $res->setDBaseGrav5($node->getElementsByTagName('dBaseGrav5')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dBaseGrav10')->length > 0)
+    }
+    if ($node->getElementsByTagName('dBaseGrav10')->length > 0) {
       $res->setDBaseGrav10($node->getElementsByTagName('dBaseGrav10')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dTBasGraIVA')->length > 0)
+    }
+    if ($node->getElementsByTagName('dTBasGraIVA')->length > 0) {
       $res->setDTBasGraIVA($node->getElementsByTagName('dTBasGraIVA')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dTotalGs')->length > 0)
+    }
+    if ($node->getElementsByTagName('dTotalGs')->length > 0) {
       $res->setDTotalGs($node->getElementsByTagName('dTotalGs')->item(0)->nodeValue);
+    }
     return $res;
   }
 
   /**
    * Instancia un objeto de la clase a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $xml
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
-    if(strcmp($xml->getName(), 'gTotSub') != 0)
+    if (strcmp($xml->getName(), 'gTotSub') != 0) {
       throw new ValidacionException("El nombre del elemento no es del tipo gTotSub");
+    }
     $res = new GTotSub();
     if (isset($xml->dSubExe)) {
       $res->setDSubExe($xml->dSubExe);
@@ -1016,7 +1069,7 @@ class GTotSub
     $res->setDDescTotal($xml->dDescTotal);
     $res->setDAnticipo($xml->dAnticipo);
     $res->setDRedon($xml->dRedon);
-    if(isset($xml->dComi)) {
+    if (isset($xml->dComi)) {
       $res->setDComi($xml->dComi);
     }
     $res->setDTotGralOpe($xml->dTotGralOpe);
@@ -1138,7 +1191,7 @@ class GTotSub
     }
     if (isset($object->dTotalGs)) {
       $res->setDTotalGs($object->dTotalGs);
-    }    
+    }
     return $res;
   }
 
@@ -1148,7 +1201,7 @@ class GTotSub
 
   /**
    * Convierte este GTotSub en un DOMElement perteneciente a un DOMDocument
-   * 
+   *
    * @param DOMDocument $doc El DOMDocument que generará el DOMElement sin insertarlo.
    *
    * @return DOMElement El DOMElement que representa a este GTotSub.
@@ -1156,14 +1209,18 @@ class GTotSub
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gTotSub');
-    if(isset($this->dSubExe))
+    if (isset($this->dSubExe)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dSubExe', $this->getDSubExe()));
-    if(isset($this->dSubExo))
+    }
+    if (isset($this->dSubExo)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dSubExo', $this->getDSubExo()));
-    if(isset($this->dSub5))
+    }
+    if (isset($this->dSub5)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dSub5', $this->getDSub5()));
-    if(isset($this->dSub10))
+    }
+    if (isset($this->dSub10)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dSub10', $this->getDSub10()));
+    }
     $res->appendChild(XmlHelper::elemento($doc, 'dTotOpe', $this->getDTotOpe()));
     $res->appendChild(XmlHelper::elemento($doc, 'dTotDesc', $this->getDTotDesc()));
     $res->appendChild(XmlHelper::elemento($doc, 'dTotDescGlotem', $this->getDTotDescGlotem()));
@@ -1173,29 +1230,40 @@ class GTotSub
     $res->appendChild(XmlHelper::elemento($doc, 'dDescTotal', $this->getDDescTotal()));
     $res->appendChild(XmlHelper::elemento($doc, 'dAnticipo', $this->getDAnticipo()));
     $res->appendChild(XmlHelper::elemento($doc, 'dRedon', $this->getDRedon()));
-    if(isset($this->dComi))
+    if (isset($this->dComi)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dComi', $this->getDComi()));
+    }
     $res->appendChild(XmlHelper::elemento($doc, 'dTotGralOpe', $this->getDTotGralOpe()));
-    if(isset($this->dIVA5))
+    if (isset($this->dIVA5)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dIVA5', $this->getDIVA5()));
-    if(isset($this->dIVA10))
+    }
+    if (isset($this->dIVA10)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dIVA10', $this->getDIVA10()));
-    if(isset($this->dLiqTotIVA5))
+    }
+    if (isset($this->dLiqTotIVA5)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dLiqTotIVA5', $this->getDLiqTotIVA5()));
-    if(isset($this->dLiqTotIVA10))
+    }
+    if (isset($this->dLiqTotIVA10)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dLiqTotIVA10', $this->getDLiqTotIVA10()));
-    if(isset($this->dIVAComi))
+    }
+    if (isset($this->dIVAComi)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dIVAComi', $this->getDIVAComi()));
-    if(isset($this->dTotIVA))
+    }
+    if (isset($this->dTotIVA)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTotIVA', $this->getDTotIVA()));
-    if(isset($this->dBaseGrav5))
+    }
+    if (isset($this->dBaseGrav5)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dBaseGrav5', $this->dBaseGrav5));
-    if(isset($this->dBaseGrav10))
+    }
+    if (isset($this->dBaseGrav10)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dBaseGrav10', $this->getDBaseGrav10()));
-    if(isset($this->dTBasGraIVA))
+    }
+    if (isset($this->dTBasGraIVA)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTBasGraIVA', $this->getDTBasGraIVA()));
-    if(isset($this->dTotalGs))
+    }
+    if (isset($this->dTotalGs)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTotalGs', $this->getDTotalGs()));
+    }
     return $res;
   }
 
@@ -1205,7 +1273,7 @@ class GTotSub
 
   /**
    * Calcula el parámetro dTotOpe (total BRUTO de la operación) a partir de la suma de los parámetros dSubExe, dSubExo, dSub5 y dSub10.
-   * 
+   *
    * @return String dTotOpe calculado
    */
   public function calcDTotOpe(): string
@@ -1218,7 +1286,7 @@ class GTotSub
 
   /**
    * Calcula el parámetro dTotGralOpe (total NETO de la operación) a partir de dTotOpe - dRedon + dComi.
-   * 
+   *
    * @return String dTotGralOpe calculado
    */
   public function calcDTotGralOpe(): string
@@ -1230,7 +1298,7 @@ class GTotSub
 
   /**
    * Calcula el parámetro dTBasGraIVA (total de la base gravada de IVA) a partir de la suma de los parámetros dBaseGrav5 y dBaseGrav10.
-   * 
+   *
    * @return String dTBasGraIVA calculado
    */
   public function calcDTBasGraIVA(): string

@@ -26,8 +26,9 @@ trait RespuestaSifenTrait
   /** Código entero o texto a cuatro dígitos con cero inicial; null si no hay código. */
   private static function codigoTexto(int|string|null $codigo): ?string
   {
-    if ($codigo === null)
+    if ($codigo === null) {
       return null;
+    }
     $texto = trim((string) $codigo);
     return $texto === '' ? null : str_pad($texto, 4, '0', STR_PAD_LEFT);
   }

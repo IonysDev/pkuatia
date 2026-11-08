@@ -4,17 +4,17 @@ namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
  * Enumeración que contiene las condiciones posibles de anticipo de una operación comercial.
- * Estos valores corresponden al campo iCondAnt (D019), asi como a su descripción correspondiente del campo dDesCondAnt (D20) 
+ * Estos valores corresponden al campo iCondAnt (D019), asi como a su descripción correspondiente del campo dDesCondAnt (D20)
  * del grupo gOpeCom (D010).
  */
-enum OpeComCondAnt: int {
-
+enum OpeComCondAnt: int
+{
     case AnticipoGlobal = 1;
     case AnticipoPorItem = 2;
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::AnticipoGlobal => 'Anticipo Global',
             self::AnticipoPorItem => 'Anticipo por Ítem'
         };
@@ -53,5 +53,3 @@ enum OpeComCondAnt: int {
         return self::getDescriptionFromValue($value);
     }
 }
-
-?>

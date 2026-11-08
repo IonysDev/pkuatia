@@ -43,8 +43,9 @@ class RespuestaException extends PkuatiaException
     $e->campoFaltante = $campo;
     $e->operacion = $operacion;
     $e->contexto['campoFaltante'] = $campo;
-    if ($operacion !== null)
+    if ($operacion !== null) {
       $e->contexto['operacion'] = $operacion;
+    }
     return $e;
   }
 

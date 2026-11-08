@@ -76,7 +76,7 @@ class RContEv
 
     ///////////////////////////////////////////////////////////////////////
     // Conversiones XML
-    /////////////////////////////////////////////////////////////////////// 
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * toDOMElement
@@ -132,12 +132,11 @@ class RContEv
 
         $res = new self();
 
-        if(isset($node->xEvento)) {
+        if (isset($node->xEvento)) {
            $res->setXEvento(RGesEve::FromSimpleXMLElement($node->xEvento->rGesEve));
-        } 
+        }
 
-        if(isset($node->rResEnviEventoDe))
-        {
+        if (isset($node->rResEnviEventoDe)) {
           $res->setRResEnviEventoDe(RRetEnviEventoDe::FromSimpleXMLElement($node->rResEnviEventoDe->rRetEnviEventoDe));
         }
 

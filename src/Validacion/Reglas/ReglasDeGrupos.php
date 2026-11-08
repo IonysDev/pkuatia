@@ -17,8 +17,9 @@ final class ReglasDeGrupos extends ConjuntoDeReglas
   public static function aplicar(VistaDocumento $v, ResultadoValidacion $r, DateTime $ahora): void
   {
     $tipo = $v->tipoDocumento();
-    if ($tipo === null)
+    if ($tipo === null) {
       return;
+    }
     $esNR = $tipo === 7;
     $esAF = $tipo === 4;
     $esNC = $tipo === 5 || $tipo === 6;

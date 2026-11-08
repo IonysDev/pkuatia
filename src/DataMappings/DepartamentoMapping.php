@@ -6,7 +6,7 @@ namespace IonysDev\Pkuatia\DataMappings;
 use DOMDocument;
 
 class DepartamentoMapping
-{  
+{
   /**
    * getArray
    *
@@ -17,7 +17,7 @@ class DepartamentoMapping
     $xml = new DOMDocument();
     $xml->load(__DIR__ . '/Sources/Departamentos_v141.xsd');
     $xml->preserveWhiteSpace = true;
-    $parseObj = str_replace($xml->lastChild->prefix.':',"", $xml->saveXML($xml->lastChild));
+    $parseObj = str_replace($xml->lastChild->prefix.':', "", $xml->saveXML($xml->lastChild));
     $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
     //retorna el array con la lista de paises
     return $array['simpleType'][0]['restriction']['enumeration'];

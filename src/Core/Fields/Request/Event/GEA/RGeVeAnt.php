@@ -85,7 +85,7 @@ class RGeVeAnt
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     $res = new RGeVeAnt();
     $res->setId($node->Id);

@@ -171,7 +171,7 @@ class RContRUC
    * @return String
    */
   public function getDRUCFactElec(): string
-  { 
+  {
     return $this->dRUCFactElec;
   }
 
@@ -194,7 +194,7 @@ class RContRUC
 
   ///////////////////////////////////////////////////////////////////////
   ///XML ELEMENT
-  ///////////////////////////////////////////////////////////////////////    
+  ///////////////////////////////////////////////////////////////////////
   /**
    * toDOMElement
    *
@@ -213,7 +213,7 @@ class RContRUC
     return $res;
   }
 
-  ///create a objet from a objectClass  
+  ///create a objet from a objectClass
   /**
    * FromSifenResponseObject
    *
@@ -223,21 +223,21 @@ class RContRUC
   public static function fromStdClassObject($object): RContRUC
   {
     $res = new RContRUC();
-    if(isset($object->dRUCCons)){
+    if (isset($object->dRUCCons)) {
       $res->setDRUCCons($object->dRUCCons);
     }
-    if(isset($object->dRazCons)){
+    if (isset($object->dRazCons)) {
       $res->setDRazCons($object->dRazCons);
     }
-    if(isset($object->dCodEstCons)){
+    if (isset($object->dCodEstCons)) {
       $res->setDCodEstCons($object->dCodEstCons);
     }
     // ContRUC05: hasta 0.2.0 se descartaba (PK-29). Queda en la propiedad con el literal del SIFEN (p. ej. "ACTIVO",
     // respuestas-ws/2026-10-09/01-rEnviConsRUC-response.xml); getDDesEstCons() sigue derivándolo del código.
-    if(isset($object->dDesEstCons)){
+    if (isset($object->dDesEstCons)) {
       $res->setDDesEstCons((string) $object->dDesEstCons);
     }
-    if(isset($object->dRUCFactElec)){
+    if (isset($object->dRUCFactElec)) {
       $res->setDRUCFactElec($object->dRUCFactElec);
     }
     return $res;
@@ -245,31 +245,31 @@ class RContRUC
 
   /**
    * Instantiates a RContRUC from a SimpleXMLElement.
-   * 
+   *
    * @param  SimpleXMLElement $xml
-   * 
+   *
    * @return RContRUC
    */
   public static function fromSimpleXMLElement(SimpleXMLElement $xml): RContRUC
   {
-    if(strcmp($xml->getName(),'rContRUC') != 0) {
+    if (strcmp($xml->getName(), 'rContRUC') != 0) {
       throw new RespuestaException("Invalid XML Element: $xml->getName()");
     }
     $res = new RContRUC();
-    if(isset($xml->dRUCCons)){
-      $res->setDRUCCons((String)$xml->dRUCCons);
+    if (isset($xml->dRUCCons)) {
+      $res->setDRUCCons((string) $xml->dRUCCons);
     }
-    if(isset($xml->dRazCons)){
-      $res->setDRazCons((String)$xml->dRazCons);
+    if (isset($xml->dRazCons)) {
+      $res->setDRazCons((string) $xml->dRazCons);
     }
-    if(isset($xml->dCodEstCons)){
-      $res->setDCodEstCons((String)$xml->dCodEstCons);
+    if (isset($xml->dCodEstCons)) {
+      $res->setDCodEstCons((string) $xml->dCodEstCons);
     }
-    if(isset($xml->dDesEstCons)){
-      $res->setDDesEstCons((String)$xml->dDesEstCons); // hasta 0.2.0 se guardaba en dRUCFactElec (PK-29)
+    if (isset($xml->dDesEstCons)) {
+      $res->setDDesEstCons((string) $xml->dDesEstCons); // hasta 0.2.0 se guardaba en dRUCFactElec (PK-29)
     }
-    if(isset($xml->dRUCFactElec)){
-      $res->setDRUCFactElec((String)$xml->dRUCFactElec);
+    if (isset($xml->dRUCFactElec)) {
+      $res->setDRUCFactElec((string) $xml->dRUCFactElec);
     }
     return $res;
   }

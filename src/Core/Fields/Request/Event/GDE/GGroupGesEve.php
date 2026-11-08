@@ -8,7 +8,7 @@ use DOMElement;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo: GEC000 - gGroupGesEve - Raíz del grupo deeventos 
+ * Nodo: GEC000 - gGroupGesEve - Raíz del grupo deeventos
  * Padre: GSch03 - dEvReg - Evento a ser registrado
  */
 class GGroupGesEve
@@ -47,7 +47,7 @@ class GGroupGesEve
 
 
   ///////////////////////////////////////////////////////////////////////
-  // XML Element 
+  // XML Element
   ///////////////////////////////////////////////////////////////////////
 
 
@@ -89,7 +89,7 @@ class GGroupGesEve
   // public static function fromDOMElement(DOMElement $xml): GGroupGesEve
   // {
   //   if(strcmp($xml->tagName, 'gGroupGesEve') == 0 && $xml->childElementCount  == 2)
-  //   { 
+  //   {
   //     $res = new GGroupGesEve();
   //     //Children
   //     // $res->setRGesEve($res->rGesEve->fromDOMElement($xml->getElementsByTagName('rGesEve')->item(0)->nodeValue));

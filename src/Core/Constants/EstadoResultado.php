@@ -19,8 +19,9 @@ enum EstadoResultado: string
   /** Reconoce el texto con tolerancia a espacios, mayúsculas y tildes. Null si no es un estado conocido. */
   public static function fromTexto(?string $texto): ?self
   {
-    if ($texto === null)
+    if ($texto === null) {
       return null;
+    }
     $n = mb_strtolower(trim($texto));
     $n = strtr($n, ['á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u']);
     $n = preg_replace('/\s+/', ' ', $n);

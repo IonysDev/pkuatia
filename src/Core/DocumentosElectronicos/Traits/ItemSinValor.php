@@ -8,8 +8,8 @@ use IonysDev\Pkuatia\Core\Fields\DE\E\GRasMerc;
 use DateTime;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GVehNuevo;
 
-trait ItemSinValor {
-
+trait ItemSinValor
+{
     /**
      * E700 - Lista de ítems sin valor del documento electrónico.
      */
@@ -17,7 +17,7 @@ trait ItemSinValor {
 
     /**
      * Agrega un ítem sin valor al documento electrónico. Este método es utilizado en la conformación notas de remisión.
-     * 
+     *
      * @param String $codigo Código interno del ítem.
      * @param String $descripcion Descripción del ítem.
      * @param int $codUnidadMedida Código de unidad de medida del ítem.
@@ -38,7 +38,7 @@ trait ItemSinValor {
      * @param CamItemRelMerc|null $tipoTolerancia código de datos de relevancia de las mercaderías (opcional solo cuando es nota de remisión, no informar para todo lo demás).
      * @param String|null $cantTolerancia Cantidad de tolerancia (solo si se informa $tipoTolerancia).
      * @param String|null $porcTolerancia Porcentaje de tolerancia (solo si se informa $tipoTolerancia).
-     * 
+     *
      * @return self
      */
     public function addItem(
@@ -63,58 +63,72 @@ trait ItemSinValor {
         ?string $cantTolerancia = null,
         ?string $porcTolerancia = null,
         ?GVehNuevo $detalleVehiculoNuevo = null,
-    ) : self {
+    ): self {
         $gCamItem = new GCamItem();
         $gCamItem->setDCodInt($codigo);
-        if($partidaArancelaria)
+        if ($partidaArancelaria) {
             $gCamItem->setDParAranc($partidaArancelaria);
-        if($ncmMercosur)
+        }
+        if ($ncmMercosur) {
             $gCamItem->setDNCM($ncmMercosur);
-        if($dncpCodigoGeneral)
+        }
+        if ($dncpCodigoGeneral) {
             $gCamItem->setDDncpG($dncpCodigoGeneral);
-        if($dncpCodigoEspecifico)
+        }
+        if ($dncpCodigoEspecifico) {
             $gCamItem->setDDncpE($dncpCodigoEspecifico);
-        if($dncpCodigoGTINProducto)
+        }
+        if ($dncpCodigoGTINProducto) {
             $gCamItem->setDGtin($dncpCodigoGTINProducto);
-        if($dncpCodigoGTINPaquete)
+        }
+        if ($dncpCodigoGTINPaquete) {
             $gCamItem->setDGtinPq($dncpCodigoGTINPaquete);
+        }
         $gCamItem->setDDesProSer($descripcion);
         $gCamItem->setCUniMed($codUnidadMedida);
         $gCamItem->setDCantProSer($cantidad);
-        if($codPaisOrigen)
+        if ($codPaisOrigen) {
             $gCamItem->setCPaisOrig($codPaisOrigen);
-        if($infoEmisor)
+        }
+        if ($infoEmisor) {
             $gCamItem->setDInfItem($infoEmisor);
-        if($tipoTolerancia){
+        }
+        if ($tipoTolerancia) {
             $gCamItem->setCRelMerc($tipoTolerancia->value);
             $gCamItem->setDCanQuiMer($cantTolerancia);
             $gCamItem->setDPorQuiMer($porcTolerancia);
         }
-        if($cdcFacturaAnticipo)
+        if ($cdcFacturaAnticipo) {
             $gCamItem->setDCDCAnticipo($cdcFacturaAnticipo);
-        if($nroLote || $fechaVencimiento || $nroSerie || $nroPedido){
+        }
+        if ($nroLote || $fechaVencimiento || $nroSerie || $nroPedido) {
             $gRasMerc = new GRasMerc();
-            if($nroLote)
+            if ($nroLote) {
                 $gRasMerc->setDNumLote($nroLote);
-            if($fechaVencimiento)
+            }
+            if ($fechaVencimiento) {
                 $gRasMerc->setDVencMerc($fechaVencimiento);
-            if($nroSerie)
+            }
+            if ($nroSerie) {
                 $gRasMerc->setDNSerie($nroSerie);
-            if($nroPedido)
+            }
+            if ($nroPedido) {
                 $gRasMerc->setDNumPedi($nroPedido);
+            }
             $gCamItem->setGRasMerc($gRasMerc);
         }
 
         ////////////////////////////////////////////////////////////////////////////
         // START - GVehNuevo
-        if($detalleVehiculoNuevo){
+        if ($detalleVehiculoNuevo) {
             $gCamItem->setGVehNuevo($detalleVehiculoNuevo);
         }
         // END - GVehNuevo
         ////////////////////////////////////////////////////////////////////////////
 
-        if(!isset($this->items))
+        if (!isset($this->items)) {
             $this->items = [];
+        }
         $this->items[] = $gCamItem;
         return $this;
     }

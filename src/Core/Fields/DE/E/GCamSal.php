@@ -12,8 +12,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E920
- *Campos que identifican el local de salida de las mercaderías 
- *PADRE:E900 
+ *Campos que identifican el local de salida de las mercaderías
+ *PADRE:E900
  */
 class GCamSal extends BaseSifenField
 {
@@ -203,7 +203,7 @@ class GCamSal extends BaseSifenField
   }
 
   /**
-   * E926 
+   * E926
    *Descripción del departamento del local de salida
    *
    * @return String
@@ -265,7 +265,7 @@ class GCamSal extends BaseSifenField
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  ///XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -285,11 +285,13 @@ class GCamSal extends BaseSifenField
       $res->appendChild(XmlHelper::elemento($doc, 'dNumCasSal', 0));
     }
 
-    if (isset($this->dComp1Sal))
+    if (isset($this->dComp1Sal)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dComp1Sal', $this->getDComp1Sal()));
-    
-    if (isset($this->dComp2Sal))
+    }
+
+    if (isset($this->dComp2Sal)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dComp2Sal', $this->getDComp2Sal()));
+    }
 
     $res->appendChild(XmlHelper::elemento($doc, 'cDepSal', $this->getCDisSal()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesDepSal', $this->getDDesDepSal()));
@@ -297,13 +299,14 @@ class GCamSal extends BaseSifenField
     if (isset($this->cDisSal)) {
       $res->appendChild(XmlHelper::elemento($doc, 'cDisSal', $this->getCDisSal()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesDisSal', $this->getDDesDisSal()));
-    }      
-      
+    }
+
     $res->appendChild(XmlHelper::elemento($doc, 'cCiuSal', $this->getCCiuSal()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuSal', $this->getDDesCiuSal()));
 
-    if (isset($this->dTelSal))
+    if (isset($this->dTelSal)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTelSal', $this->getDTelSal()));
+    }
 
     return $res;
   }
@@ -335,41 +338,50 @@ class GCamSal extends BaseSifenField
 
   /**
    * Instancia un objeto GCamSal a partir de un DOMElement que representa el nodo XML del objeto.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto.
-   * 
+   *
    * @return self Objeto instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamSal') != 0)
+    if (strcmp($node->nodeName, 'gCamSal') != 0) {
       throw new ValidacionException('[GCamSal] El nombre del nodo no corresponde a gCamSal: ' . $node->nodeName);
+    }
     $res = new GCamSal();
-    
-    if($node->getElementsByTagName('dDirLocSal')->length > 0)
+
+    if ($node->getElementsByTagName('dDirLocSal')->length > 0) {
       $res->setDDirLocSal($node->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNumCasSal')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNumCasSal')->length > 0) {
       $res->setDNumCasSal(intval($node->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dComp1Sal')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dComp1Sal')->length > 0) {
       $res->setDComp1Sal($node->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dComp2Sal')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dComp2Sal')->length > 0) {
       $res->setDComp2Sal($node->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('cDepSal')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cDepSal')->length > 0) {
       $res->setCDepSal(intval($node->getElementsByTagName('cDepSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cDisSal')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cDisSal')->length > 0) {
       $res->setCDisSal(intval($node->getElementsByTagName('cDisSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cCiuSal')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cCiuSal')->length > 0) {
       $res->setCCiuSal(intval($node->getElementsByTagName('cCiuSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dTelSal')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dTelSal')->length > 0) {
       $res->setDTelSal($node->getElementsByTagName('dTelSal')->item(0)->nodeValue);
-    
+    }
+
     return $res;
   }
 
@@ -382,31 +394,31 @@ class GCamSal extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GCamSal();
-    if(isset($object->dDirLocSal)){
+    if (isset($object->dDirLocSal)) {
       $res->setDDirLocSal($object->dDirLocSal);
     }
-    if(isset($object->dNumCasSal)){
+    if (isset($object->dNumCasSal)) {
       $res->setDNumCasSal($object->dNumCasSal);
     }
-    if(isset($object->dComp1Sal)){
+    if (isset($object->dComp1Sal)) {
       $res->setDComp1Sal($object->dComp1Sal);
     }
-    if(isset($object->dComp2Sal)){
+    if (isset($object->dComp2Sal)) {
       $res->setDComp2Sal($object->dComp2Sal);
     }
-    if(isset($object->cDepSal)){
+    if (isset($object->cDepSal)) {
       $res->setCDepSal($object->cDepSal);
     }
-    if(isset($object->cDisSal)){
+    if (isset($object->cDisSal)) {
       $res->setCDisSal($object->cDisSal);
     }
-    if(isset($object->cCiuSal)){
+    if (isset($object->cCiuSal)) {
       $res->setCCiuSal($object->cCiuSal);
     }
-    if(isset($object->dTelSal)){
+    if (isset($object->dTelSal)) {
       $res->setDTelSal($object->dTelSal);
     }
-    
+
     return $res;
   }
 

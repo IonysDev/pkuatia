@@ -5,7 +5,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
 /**
  * Enumeración del parámetro E905 iRespFlete relacionada a la tabla 10 del MT (v150) que lista los responsables del flete.
  */
-enum GTranspRespFlete: int {
+enum GTranspRespFlete: int
+{
     case EmisorFactura = 1;
     case ReceptorFactura = 2;
     case Tercero = 3;
@@ -14,7 +15,7 @@ enum GTranspRespFlete: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::EmisorFactura => 'Emisor de la Factura Electrónica',
             self::ReceptorFactura => 'Receptor de la Factura Electrónica',
             self::Tercero => 'Tercero',

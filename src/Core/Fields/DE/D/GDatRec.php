@@ -51,25 +51,25 @@ class GDatRec extends BaseSifenField
     public const TIPO_DOCUMENTO_IDENTIDAD_OTRO = 9;
 
                                 // Id - Longitud - Ocurrencia - Descripción
-    public int    $iNatRec;     // D201 - 1     - 1-1 - Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
-    public int    $iTiOpe;      // D202 - 1     - 1-1 - Tipo de operación: 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
+    public int $iNatRec;     // D201 - 1     - 1-1 - Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
+    public int $iTiOpe;      // D202 - 1     - 1-1 - Tipo de operación: 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
     public string $cPaisRec;    // D203 - 3     - 1-1 - Código de país del receptor
     public string $dDesPaisRe;  // D204 - 4-50  - 1-1 - Descripción del país del receptor
-    public int    $iTiContRec;  // D205 - 1     - 0-1 - Tipo de contribuyente receptor: 1 = Persona Física | 2 = Persona Jurídica
+    public int $iTiContRec;  // D205 - 1     - 0-1 - Tipo de contribuyente receptor: 1 = Persona Física | 2 = Persona Jurídica
     public string $dRucRec;     // D206 - 3-8   - 0-1 - RUC del receptor
-    public int    $dDVRec;      // D207 - 1     - 0-1 - Dígito verificador del RUC del receptor
-    public int    $iTipIDRec;   // D208 - 1     - 0-1 - Tipo de documento de identidad del receptor: 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
+    public int $dDVRec;      // D207 - 1     - 0-1 - Dígito verificador del RUC del receptor
+    public int $iTipIDRec;   // D208 - 1     - 0-1 - Tipo de documento de identidad del receptor: 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
     public string $dDTipIDRec;  // D209 - 9-41  - 0-1 - Descripción del tipo de documento de identidad del receptor
     public string $dNumIDRec;   // D210 - 1-20  - 0-1 - Número de documento de identidad
     public string $dNomRec;     // D211 - 4-255 - 1-1 - Nombre o razón social del receptor del DE
     public string $dNomFanRec;  // D212 - 4-255 - 0-1 - Nombre de fantasía
     public string $dDirRec;     // D213 - 1-255 - 0-1 - Dirección del receptor
-    public int    $dNumCasRec;  // D218 - 1-6   - 0-1 - Número de casa del receptor
-    public int    $cDepRec;     // D219 - 1-2   - 0-1 - Código del departamento del receptor
+    public int $dNumCasRec;  // D218 - 1-6   - 0-1 - Número de casa del receptor
+    public int $cDepRec;     // D219 - 1-2   - 0-1 - Código del departamento del receptor
     public string $dDesDepRec;  // D220 - 6-16  - 0-1 - Descripción del departamento del receptor
-    public int    $cDisRec;     // D221 - 1-4   - 0-1 - Código del distrito del receptor
+    public int $cDisRec;     // D221 - 1-4   - 0-1 - Código del distrito del receptor
     public string $dDesDisRec;  // D222 - 1-30  - 0-1 - Descripción del distrito del receptor
-    public int    $cCiuRec;     // D223 - 1-5   - 0-1 - Código del ciudad del receptor
+    public int $cCiuRec;     // D223 - 1-5   - 0-1 - Código del ciudad del receptor
     public string $dDesCiuRec;  // D224 - 1-30  - 0-1 - Descripción del ciudad del receptor
     public string $dTelRec;     // D214 - 6-15  - 0-1 - Número de teléfono del receptor
     public string $dCelRec;     // D215 - 10-20 - 0-1 - Número de celular del receptor
@@ -77,13 +77,13 @@ class GDatRec extends BaseSifenField
     public string $dCodCliente; // D217 - 3-15  - 0-1 - Código del cliente
 
     /**
-     * Constructor de la clase  
-     * Inicializa los valores por defecto       
-     *      > iNatRec = No contribuyente        
-     *      > iTiOpe = B2C      
-     *      > cPaisRec = PRY        
-     *      > dDesPaisRe = Paraguay     
-     *      > dNomRec = Sin Nombre      
+     * Constructor de la clase
+     * Inicializa los valores por defecto
+     *      > iNatRec = No contribuyente
+     *      > iTiOpe = B2C
+     *      > cPaisRec = PRY
+     *      > dDesPaisRe = Paraguay
+     *      > dNomRec = Sin Nombre
      */
     public function __construct()
     {
@@ -101,20 +101,19 @@ class GDatRec extends BaseSifenField
 
     /**
      * Establece el valor de iNatRec (D201) que representa la naturaleza del receptor.
-     * 
+     *
      * @param int|RecNat $iNatRec Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
-     * 
+     *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setINatRec(int|RecNat $iNatRec): self
     {
         $this->iNatRec = $iNatRec instanceof RecNat ? $iNatRec->value : $iNatRec;
-        if($this->iNatRec == self::NATURALEZA_CONTRIBUYENTE) {
+        if ($this->iNatRec == self::NATURALEZA_CONTRIBUYENTE) {
             unset($this->iTipIDRec);
             unset($this->dDTipIDRec);
             unset($this->dNumIDRec);
-        }
-        else {
+        } else {
             unset($this->dRucRec);
             unset($this->dDVRec);
         }
@@ -135,8 +134,9 @@ class GDatRec extends BaseSifenField
     public function setCPaisRec(string $cPaisRec): void
     {
         $desc = CountryMapping::getCountryDesc($cPaisRec);
-        if ($desc === null)
+        if ($desc === null) {
           throw new ValidacionException("[GDatRec] El código de país $cPaisRec (cPaisRec) no existe en Paises_v100.xsd (PK-30, 0.2.1).");
+        }
         $this->cPaisRec = $cPaisRec;
         $this->dDesPaisRe = $desc;
     }
@@ -280,8 +280,9 @@ class GDatRec extends BaseSifenField
     public function setCDepRec(int $cDepRec): void
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepRec));
-        if ($desc === null)
+        if ($desc === null) {
           throw new ValidacionException("[GDatRec] El código de departamento $cDepRec (cDepRec) no existe en Departamentos_v141.xsd (PK-30, 0.2.1).");
+        }
         $this->cDepRec = $cDepRec;
         $this->dDesDepRec = $desc;
     }
@@ -295,8 +296,9 @@ class GDatRec extends BaseSifenField
     public function setCDisRec(int $cDisRec): self
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisRec));
-        if ($desc === null)
+        if ($desc === null) {
           throw new ValidacionException("[GDatRec] El código de distrito $cDisRec (cDisRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+        }
         $this->cDisRec = $cDisRec;
         $this->dDesDisRec = $desc;
         return $this;
@@ -311,8 +313,9 @@ class GDatRec extends BaseSifenField
     public function setCCiuRec(int $cCiuRec): self
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuRec));
-        if ($desc === null)
+        if ($desc === null) {
           throw new ValidacionException("[GDatRec] El código de ciudad $cCiuRec (cCiuRec) no existe en el catálogo geográfico (DataMappings/Sources/PyGeoCodes.xml) (PK-30, 0.2.1).");
+        }
         $this->cCiuRec = $cCiuRec;
         $this->dDesCiuRec = $desc;
         return $this;
@@ -332,21 +335,23 @@ class GDatRec extends BaseSifenField
      */
     public function getINatRec(): ?int
     {
-        if(isset($this->iNatRec))
+        if (isset($this->iNatRec)) {
             return $this->iNatRec;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
      * Obtiene el valor de iTiOpe
      */
-    public function getITiOpe() : ?int
+    public function getITiOpe(): ?int
     {
-        if(isset($this->iTiOpe))
+        if (isset($this->iTiOpe)) {
             return $this->iTiOpe;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
@@ -356,10 +361,11 @@ class GDatRec extends BaseSifenField
      */
     public function getCPaisRec(): ?string
     {
-        if(isset($this->cPaisRec))
+        if (isset($this->cPaisRec)) {
             return $this->cPaisRec;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
@@ -369,23 +375,25 @@ class GDatRec extends BaseSifenField
      */
     public function getDDesPaisRe(): ?string
     {
-        if(isset($this->dDesPaisRe))
+        if (isset($this->dDesPaisRe)) {
             return $this->dDesPaisRe;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
 
     /**
      * Obtiene el valor de iTiContRec
      */
-    public function getITiContRec() : ?int
+    public function getITiContRec(): ?int
     {
-        if(isset($this->iTiContRec))
+        if (isset($this->iTiContRec)) {
             return $this->iTiContRec;
-        else
-            return null;
-    }       
+        } else {
+        return null;
+        }
+    }
 
     /**
      * Devuelve el valor de dRucRec (D206 - RUC del receptor)
@@ -394,10 +402,11 @@ class GDatRec extends BaseSifenField
      */
     public function getDRucRec(): ?string
     {
-        if(isset($this->dRucRec))
+        if (isset($this->dRucRec)) {
             return $this->dRucRec;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
@@ -413,12 +422,13 @@ class GDatRec extends BaseSifenField
     /**
      * Obtiene el valor de iTipIDRec
      */
-    public function getITipIDRec() : ?int
+    public function getITipIDRec(): ?int
     {
-        if(isset($this->iTipIDRec))
+        if (isset($this->iTipIDRec)) {
             return $this->iTipIDRec;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
@@ -430,11 +440,13 @@ class GDatRec extends BaseSifenField
     {
         // Si hay una descripción establecida (texto libre para "Otro" o asignada automáticamente
         // para los demás tipos en setITipIDRec) se devuelve tal cual.
-        if(isset($this->dDTipIDRec))
+        if (isset($this->dDTipIDRec)) {
             return $this->dDTipIDRec;
+        }
         // Compatibilidad: si solo se conoce el código, se deriva la descripción estándar.
-        if(isset($this->iTipIDRec))
+        if (isset($this->iTipIDRec)) {
             return TipIDRec::getDescriptionFromValue($this->iTipIDRec);
+        }
         return null;
     }
 
@@ -445,10 +457,11 @@ class GDatRec extends BaseSifenField
      */
     public function getDNumIDRec(): ?string
     {
-        if(isset($this->dNumIDRec))
+        if (isset($this->dNumIDRec)) {
             return $this->dNumIDRec;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
@@ -468,23 +481,25 @@ class GDatRec extends BaseSifenField
      */
     public function getDNomFanRec(): ?string
     {
-        if(isset($this->dNomFanRec))
+        if (isset($this->dNomFanRec)) {
             return $this->dNomFanRec;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
-     * Obtiene el valor de dDirRec 
+     * Obtiene el valor de dDirRec
      *
      * @return String
      */
     public function getDDirRec(): ?string
     {
-        if(isset($this->dDirRec))
+        if (isset($this->dDirRec)) {
             return $this->dDirRec;
-        else
-            return null;
+        } else {
+        return null;
+        }
     }
 
     /**
@@ -604,14 +619,14 @@ class GDatRec extends BaseSifenField
 
     /**
      * Instancia la clase a partir de un SimpleXMLElement
-     * 
+     *
      * @param SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
-        if(strcmp($node->getName(), 'gDatRec') != 0){
+        if (strcmp($node->getName(), 'gDatRec') != 0) {
             throw new ValidacionException("El nombre del elemento no es gDatRec");
         }
         // Hasta 0.2.0 esta vía tenía su propia lectura con cuatro defectos: intval() sobre dNumIDRec (tdNumDocId es
@@ -633,19 +648,22 @@ class GDatRec extends BaseSifenField
      */
     private function validarDDTipIDRec(): void
     {
-        if ($this->getITipIDRec() !== self::TIPO_DOCUMENTO_IDENTIDAD_OTRO)
+        if ($this->getITipIDRec() !== self::TIPO_DOCUMENTO_IDENTIDAD_OTRO) {
             return;
+        }
 
-        if (!isset($this->dDTipIDRec) || $this->dDTipIDRec === '')
+        if (!isset($this->dDTipIDRec) || $this->dDTipIDRec === '') {
             throw new ValidacionException(
                 '[GDatRec] Cuando iTipIDRec (D208) es 9 (Otro), el campo dDTipIDRec (D209) es obligatorio y debe contener una descripción de texto libre del tipo de documento de identidad del receptor.'
             );
+        }
 
         $longitud = mb_strlen($this->dDTipIDRec);
-        if ($longitud < 9 || $longitud > 41)
+        if ($longitud < 9 || $longitud > 41) {
             throw new ValidacionException(
                 '[GDatRec] dDTipIDRec (D209) debe tener entre 9 y 41 caracteres cuando iTipIDRec (D208) es 9 (Otro). Se encontraron ' . $longitud . '.'
             );
+        }
     }
 
     /**
@@ -680,35 +698,48 @@ class GDatRec extends BaseSifenField
         //check is the name get the & character
         $res->appendChild(XmlHelper::elemento($doc, 'dNomRec', $this->getDNomRec()));
         //$res->appendChild(new DOMElement('dNomRec', $this->getDNomRec()));
-        if(isset($this->dNomFanRec))
+        if (isset($this->dNomFanRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dNomFanRec', $this->getDNomFanRec()));
-        if(isset($this->dDirRec))
+        }
+        if (isset($this->dDirRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dDirRec', $this->getDDirRec()));
-        if(isset($this->dNumCasRec))
+        }
+        if (isset($this->dNumCasRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dNumCasRec', $this->getDNumCasRec()));
-        if(isset($this->cDepRec))
+        }
+        if (isset($this->cDepRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'cDepRec', $this->getCDepRec()));
-        if(isset($this->dDesDepRec))
+        }
+        if (isset($this->dDesDepRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dDesDepRec', $this->getDDesDepRec()));
-        if(isset($this->cDisRec))
+        }
+        if (isset($this->cDisRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'cDisRec', $this->getCDisRec()));
-        if(isset($this->dDesDisRec))
+        }
+        if (isset($this->dDesDisRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dDesDisRec', $this->getDDesDisRec()));
-        if(isset($this->cCiuRec))
+        }
+        if (isset($this->cCiuRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'cCiuRec', $this->getCCiuRec()));
-        if(isset($this->dDesCiuRec))
+        }
+        if (isset($this->dDesCiuRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuRec', $this->getDDesCiuRec()));
-        if(isset($this->dTelRec))
+        }
+        if (isset($this->dTelRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dTelRec', $this->getDTelRec()));
-        if(isset($this->dCelRec))
+        }
+        if (isset($this->dCelRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dCelRec', $this->getDCelRec()));
-        if(isset($this->dEmailRec))
+        }
+        if (isset($this->dEmailRec)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dEmailRec', $this->getDEmailRec()));
-        if(isset($this->dCodCliente))
+        }
+        if (isset($this->dCodCliente)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dCodCliente', $this->getDCodCliente()));
+        }
         return $res;
     }
-    
+
     /**
      * FromSifenResponseObject
      *
@@ -717,10 +748,10 @@ class GDatRec extends BaseSifenField
      */
     public static function FromSifenResponseObject($object): self
     {
-       
+
 
         $res = new GDatRec();
-        if(isset($object->iNatRec)){
+        if (isset($object->iNatRec)) {
             $res->setINatRec(intval($object->iNatRec));
         }
         if (isset($object->iTiOpe)) {
@@ -782,59 +813,79 @@ class GDatRec extends BaseSifenField
 
     /**
      * Instancia un objeto GDatRec a partir de un DOMElement
-     * 
+     *
      * @param DOMElement $node Nodo DOM que contiene los datos.
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(DOMElement $node): self
     {
-        if(strcmp($node->nodeName, 'gDatRec') != 0)
+        if (strcmp($node->nodeName, 'gDatRec') != 0) {
             throw new ValidacionException('[GDatRec] Nodo con nombre inválido: ' . $node->nodeName);
+        }
         $res = new self();
         $res->setINatRec(intval(trim($node->getElementsByTagName('iNatRec')->item(0)->nodeValue)));
         $res->setITiOpe(intval(trim($node->getElementsByTagName('iTiOpe')->item(0)->nodeValue)));
         $res->setCPaisRec(trim($node->getElementsByTagName('cPaisRec')->item(0)->nodeValue));
         $res->setDDesPaisRe(trim($node->getElementsByTagName('dDesPaisRe')->item(0)->nodeValue));
-        if($node->getElementsByTagName('iTiContRec')->length > 0)
+        if ($node->getElementsByTagName('iTiContRec')->length > 0) {
             $res->setITiContRec(intval(trim($node->getElementsByTagName('iTiContRec')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dRucRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dRucRec')->length > 0) {
             $res->setDRucRec(trim($node->getElementsByTagName('dRucRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dDVRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDVRec')->length > 0) {
             $res->setDDVRec(intval(trim($node->getElementsByTagName('dDVRec')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('iTipIDRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('iTipIDRec')->length > 0) {
             $res->setITipIDRec(intval(trim($node->getElementsByTagName('iTipIDRec')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dDTipIDRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDTipIDRec')->length > 0) {
             $res->setDDTipIDRec(trim($node->getElementsByTagName('dDTipIDRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dNumIDRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dNumIDRec')->length > 0) {
             $res->setDNumIDRec(trim($node->getElementsByTagName('dNumIDRec')->item(0)->nodeValue));
+        }
         $res->setDNomRec(trim($node->getElementsByTagName('dNomRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dNomFanRec')->length > 0)
+        if ($node->getElementsByTagName('dNomFanRec')->length > 0) {
             $res->setDNomFanRec(trim($node->getElementsByTagName('dNomFanRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dDirRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDirRec')->length > 0) {
             $res->setDDirRec(trim($node->getElementsByTagName('dDirRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dNumCasRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dNumCasRec')->length > 0) {
             $res->setDNumCasRec(intval(trim($node->getElementsByTagName('dNumCasRec')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('cDepRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('cDepRec')->length > 0) {
             $res->setCDepRec(intval(trim($node->getElementsByTagName('cDepRec')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dDesDepRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDesDepRec')->length > 0) {
             $res->setDDesDepRec(trim($node->getElementsByTagName('dDesDepRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('cDisRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('cDisRec')->length > 0) {
             $res->setCDisRec(intval(trim($node->getElementsByTagName('cDisRec')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dDesDisRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDesDisRec')->length > 0) {
             $res->setDDesDisRec(trim($node->getElementsByTagName('dDesDisRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('cCiuRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('cCiuRec')->length > 0) {
             $res->setCCiuRec(intval(trim($node->getElementsByTagName('cCiuRec')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dDesCiuRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDesCiuRec')->length > 0) {
             $res->setDDesCiuRec(trim($node->getElementsByTagName('dDesCiuRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dTelRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dTelRec')->length > 0) {
             $res->setDTelRec(trim($node->getElementsByTagName('dTelRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dCelRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dCelRec')->length > 0) {
             $res->setDCelRec(trim($node->getElementsByTagName('dCelRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dEmailRec')->length > 0)
+        }
+        if ($node->getElementsByTagName('dEmailRec')->length > 0) {
             $res->setDEmailRec(trim($node->getElementsByTagName('dEmailRec')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dCodCliente')->length > 0)
+        }
+        if ($node->getElementsByTagName('dCodCliente')->length > 0) {
             $res->setDCodCliente(trim($node->getElementsByTagName('dCodCliente')->item(0)->nodeValue));
+        }
         return $res;
     }
 }

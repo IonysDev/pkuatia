@@ -2,7 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\Response;
 
-use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
@@ -11,7 +10,7 @@ use IonysDev\Pkuatia\Validacion\CatalogoValidaciones;
 use IonysDev\Pkuatia\Validacion\InfoValidacion;
 
 /**
- * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01 
+ * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01
  */
 class GResProc
 {
@@ -80,13 +79,13 @@ class GResProc
 
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
-  ///////////////////////////////////////////////////////////////////////  
-  
+  ///////////////////////////////////////////////////////////////////////
+
   /**
    * Instancia un GResProc a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
-   * 
+   *
    * @param stdClass $object
-   * 
+   *
    * @return GResProc
    */
   public static function FromSifenResponseObject($object): GResProc
@@ -107,10 +106,12 @@ class GResProc
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): GResProc
   {
-    if (strcmp($node->getName(), 'gResProc') != 0)
+    if (strcmp($node->getName(), 'gResProc') != 0) {
       throw new ValidacionException('[GResProc] El nombre del nodo no corresponde a gResProc: ' . $node->getName());
-    if (!isset($node->dCodRes) || !isset($node->dMsgRes))
+    }
+    if (!isset($node->dCodRes) || !isset($node->dMsgRes)) {
       throw new ValidacionException('[GResProc] gResProc debe contener dCodRes y dMsgRes.');
+    }
     $res = new GResProc();
     $res->setDCodRes((string) $node->dCodRes);
     $res->setDMsgRes((string) $node->dMsgRes);

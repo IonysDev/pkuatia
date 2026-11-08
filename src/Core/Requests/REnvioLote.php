@@ -6,7 +6,8 @@ namespace IonysDev\Pkuatia\Core\Requests;
     // Nombre: rEnvioLote
     // Descripción: Clase que conforma la solicitud de envío de lote de documentos electrónicos.
     // Nodo Padre: Es raíz.
-class REnvioLote {
+class REnvioLote
+{
                         // Id - Longitud - Ocurrencia - Descripción
     public int $dId;    // BSch02 - 1-15 - 1-1 - Identificador de control de envío.
     public string $xDE; // BSch01  -  no tiene  - 1-1 - Campo comprimido en formato Base64 según el esquema del Protocolo de procesamiento del Lote.
@@ -55,7 +56,7 @@ class REnvioLote {
     // Getters
     //////////////////////////////////////////////////////////////////////////
 
-    
+
 
     /**
      * Obtiene el valor de dId
@@ -77,6 +78,3 @@ class REnvioLote {
         return $this->xDE;
     }
 }
-
-
-

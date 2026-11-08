@@ -14,7 +14,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GGrupAdi
 {
-  public ?string $dCiclo;     //E821 Ciclo 
+  public ?string $dCiclo;     //E821 Ciclo
   public ?DateTime $dFecIniC; //E822 Fecha de inicio de ciclo
   public ?DateTime $dFecFinC; //E823 Fecha de fin de ciclo
   public ?DateTime $dVencPag; //E824 Fecha de vencimiento de pago
@@ -137,7 +137,7 @@ class GGrupAdi
   /////////////////////////////////////////////
   //GETTERS
   /////////////////////////////////////////////
-  
+
 
   /**
    * Obtiene el valor de ciclo
@@ -195,8 +195,9 @@ class GGrupAdi
       $this->dVencPag = $dVencPag;
       return $this;
     }
-    if (1 + count($this->dVencPagAdicionales) >= 3)
+    if (1 + count($this->dVencPagAdicionales) >= 3) {
       throw new ValidacionException('[GGrupAdi] dVencPag admite como máximo 3 ocurrencias (tgGrupAdi, DE_v150.xsd:829).');
+    }
     $this->dVencPagAdicionales[] = $dVencPag;
     return $this;
   }
@@ -257,7 +258,7 @@ class GGrupAdi
   /////////////////////////////////////////////
   //FUNCTIONS
   /////////////////////////////////////////////
-  
+
   /**
    * toDOMElement
    *
@@ -268,41 +269,47 @@ class GGrupAdi
     $res = $doc->createElement('gGrupAdi');
     // Todos los campos de tgGrupAdi son opcionales (DE_v150.xsd:811-846) y las fechas son tFecAAAAMMDDguion (AAAA-MM-DD).
     // Hasta v0.1.5 se emitían sin guardas (Error en propiedades sin inicializar) y con el formato 'yyyy-mm-dd' (PK-07).
-    if (isset($this->dCiclo))
+    if (isset($this->dCiclo)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCiclo', $this->dCiclo));
-    if (isset($this->dFecIniC))
+    }
+    if (isset($this->dFecIniC)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dFecIniC', $this->dFecIniC->format('Y-m-d')));
-    if (isset($this->dFecFinC))
+    }
+    if (isset($this->dFecFinC)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dFecFinC', $this->dFecFinC->format('Y-m-d')));
-    foreach ($this->getDVencPags() as $vencimiento) // hasta 3 ocurrencias (DE_v150.xsd:829; Q-B9)
+    }
+    foreach ($this->getDVencPags() as $vencimiento) { // hasta 3 ocurrencias (DE_v150.xsd:829; Q-B9)
       $res->appendChild(XmlHelper::elemento($doc, 'dVencPag', $vencimiento->format('Y-m-d')));
-    if (isset($this->dContrato))
+    }
+    if (isset($this->dContrato)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dContrato', $this->dContrato));
-    if (isset($this->dSalAnt))
+    }
+    if (isset($this->dSalAnt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dSalAnt', $this->dSalAnt));
-    if (isset($this->dCodConDncp))
+    }
+    if (isset($this->dCodConDncp)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCodConDncp', $this->dCodConDncp));
+    }
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     // Hasta 0.2.0 se buscaba "ciclo" (el elemento es dCiclo) y las fechas llegaban como texto a setters
     // DateTime: TypeError en cuanto había una fecha (PK-25).
     $res = new GGrupAdi();
-    foreach(get_object_vars($object) as $campo => $valor)
-    {
+    foreach (get_object_vars($object) as $campo => $valor) {
       // Los elementos repetidos (dVencPag, hasta 3) llegan como arreglo (Q-B9).
-      foreach((is_array($valor) ? $valor : [$valor]) as $unValor)
-      {
-        if(is_scalar($unValor))
+      foreach ((is_array($valor) ? $valor : [$valor]) as $unValor) {
+        if (is_scalar($unValor)) {
           self::asignar($res, $campo, (string) $unValor);
+        }
       }
     }
     return $res;
@@ -318,12 +325,14 @@ class GGrupAdi
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if (strcmp($node->localName, 'gGrupAdi') != 0)
+    if (strcmp($node->localName, 'gGrupAdi') != 0) {
       throw new ValidacionException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->localName);
+    }
     $res = new GGrupAdi();
     foreach ($node->childNodes as $hijo) {
-      if ($hijo instanceof DOMElement)
+      if ($hijo instanceof DOMElement) {
         self::asignar($res, $hijo->localName, $hijo->nodeValue);
+      }
     }
     return $res;
   }
@@ -338,11 +347,13 @@ class GGrupAdi
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if (strcmp($node->getName(), 'gGrupAdi') != 0)
+    if (strcmp($node->getName(), 'gGrupAdi') != 0) {
       throw new ValidacionException('[GGrupAdi] El nombre del nodo no corresponde a gGrupAdi: ' . $node->getName());
+    }
     $res = new GGrupAdi();
-    foreach ($node->children() as $hijo)
+    foreach ($node->children() as $hijo) {
       self::asignar($res, $hijo->getName(), (string) $hijo);
+    }
     return $res;
   }
 
@@ -364,8 +375,9 @@ class GGrupAdi
   private static function fecha(string $valor, string $campo): DateTime
   {
     $fecha = DateTime::createFromFormat('!Y-m-d', trim($valor));
-    if ($fecha === false)
+    if ($fecha === false) {
       throw new ValidacionException("[GGrupAdi] $campo debe tener el formato AAAA-MM-DD (tFecAAAAMMDDguion): '$valor'");
+    }
     return $fecha;
   }
 }

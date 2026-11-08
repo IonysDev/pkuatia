@@ -6,8 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración que contiene los tipos de impuestos de una operación comercial para los campos
  * iTipTra (D013) y dDesTipTra (D014) del grupo gOpeCom (D010).
  */
-enum OpeComTipImp: int {
-
+enum OpeComTipImp: int
+{
     case IVA = 1;
     case ISC = 2;
     case Renta = 3;
@@ -16,7 +16,7 @@ enum OpeComTipImp: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::IVA => 'IVA',
             self::ISC => 'ISC',
             self::Renta => 'Renta',
@@ -59,5 +59,3 @@ enum OpeComTipImp: int {
         return self::getDescriptionFromValue($tipImp);
     }
 }
-
-?>

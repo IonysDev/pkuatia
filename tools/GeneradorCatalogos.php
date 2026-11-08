@@ -37,12 +37,14 @@ final class GeneradorCatalogos
     $entradas = [];
     foreach (self::tablas($md) as $tabla) {
       $c = self::columnas($tabla['columnas'], ['id' => ['ID'], 'mensaje' => ['Mensaje'], 'codigo' => ['Código'], 'estado' => ['Tipo'], 'observacion' => ['Observación']]);
-      if ($c === null)
+      if ($c === null) {
         continue;
+      }
       foreach ($tabla['filas'] as $fila) {
         $entrada = self::entrada($fila, $c, $tabla['seccion'], 'errores-validacion.md');
-        if ($entrada !== null)
+        if ($entrada !== null) {
           $entradas[] = $entrada;
+        }
       }
     }
     return ['origen' => 'ekuat-ia 08-errores-y-respuestas/errores-validacion.md (MT v150 §12.4)', 'entradas' => $entradas];
@@ -54,12 +56,14 @@ final class GeneradorCatalogos
     $entradas = [];
     foreach (self::tablas($md) as $tabla) {
       $c = self::columnas($tabla['columnas'], ['id' => ['ID'], 'mensaje' => ['Mensaje de Validación'], 'codigo' => ['Código'], 'estado' => ['E'], 'observacion' => ['Observación']]);
-      if ($c === null || !in_array('N° Val', $tabla['columnas'], true))
+      if ($c === null || !in_array('N° Val', $tabla['columnas'], true)) {
         continue;
+      }
       foreach ($tabla['filas'] as $fila) {
         $entrada = self::entrada($fila, $c, $tabla['seccion'], 'eventos-respuesta.md');
-        if ($entrada !== null)
+        if ($entrada !== null) {
           $entradas[] = $entrada;
+        }
       }
     }
     return ['origen' => 'ekuat-ia 08-errores-y-respuestas/eventos-respuesta.md (MT v150 §11.6)', 'entradas' => $entradas];
@@ -74,8 +78,9 @@ final class GeneradorCatalogos
       if ($tabla['columnas'][0] === 'Código' && in_array('Fuente', $tabla['columnas'], true)) {
         foreach ($tabla['filas'] as $fila) {
           $codigo = self::codigo($fila['celdas'][0]);
-          if ($codigo === null)
+          if ($codigo === null) {
             continue;
+          }
           $entradas[] = [
             'codigo' => $codigo,
             'id' => self::IDS_CONSULTA_DE[$codigo] ?? null,
@@ -90,8 +95,9 @@ final class GeneradorCatalogos
         continue;
       }
       $c = self::columnas($tabla['columnas'], ['id' => ['ID'], 'mensaje' => ['Resultado de Validación'], 'codigo' => ['Código'], 'estado' => ['E'], 'observacion' => ['Observaciones']]);
-      if ($c === null || str_contains($tabla['columnas'][$c['codigo']], 'MT 12.3.4.3'))
+      if ($c === null || str_contains($tabla['columnas'][$c['codigo']], 'MT 12.3.4.3')) {
         continue;
+      }
       foreach ($tabla['filas'] as $fila) {
         $entrada = self::entrada($fila, $c, $tabla['seccion'], 'respuestas-ws.md');
         if ($entrada !== null) {
@@ -109,13 +115,15 @@ final class GeneradorCatalogos
     $ids = [];
     foreach (self::tablas($md) as $tabla) {
       $c = self::columnas($tabla['columnas'], ['id' => ['ID'], 'campo' => ['Campo']]);
-      if ($c === null)
+      if ($c === null) {
         continue;
+      }
       foreach ($tabla['filas'] as $fila) {
         $campo = self::limpiar($fila['celdas'][$c['campo']] ?? '');
         $id = self::limpiar($fila['celdas'][$c['id']] ?? '');
-        if ($campo !== '' && preg_match('/^[A-Z]{1,3}\d{3}[a-z]?$/', $id) && !isset($ids[$campo]))
+        if ($campo !== '' && preg_match('/^[A-Z]{1,3}\d{3}[a-z]?$/', $id) && !isset($ids[$campo])) {
           $ids[$campo] = $id;
+        }
       }
     }
     return $ids;
@@ -183,11 +191,13 @@ final class GeneradorCatalogos
         'campoMT' => $idsPorCampo[$nombre] ?? null,
         'esGrupo' => $tieneHijos || ($tipo !== null && str_starts_with($tipo, 'tg')) || $tipo === 'tDE',
       ];
-      if ($padre === null)
+      if ($padre === null) {
         continue;
+      }
       $elementos[$nombre][] = $ocurrencia;
-      if (isset($tipos[$padre]))
+      if (isset($tipos[$padre])) {
         $tipos[$padre]['hijos'][] = $nombre;
+      }
     }
     return ['origen' => 'ekuat-ia 00-fuentes/xsd/DE_v150.xsd (copia fiel, líneas citables) + 03-estructura-xml/campos-obligatorios.md (ID del MT)', 'tipos' => $tipos, 'elementos' => $elementos];
   }
@@ -200,19 +210,22 @@ final class GeneradorCatalogos
 
   private static function exportar(mixed $valor, int $nivel): string
   {
-    if (!is_array($valor))
+    if (!is_array($valor)) {
       return var_export($valor, true);
+    }
     $lista = array_is_list($valor);
     if (array_filter($valor, 'is_array') === []) {
       $partes = [];
-      foreach ($valor as $k => $x)
+      foreach ($valor as $k => $x) {
         $partes[] = ($lista ? '' : var_export($k, true) . ' => ') . var_export($x, true);
+      }
       return '[' . implode(', ', $partes) . ']';
     }
     $sangria = str_repeat('  ', $nivel + 1);
     $partes = [];
-    foreach ($valor as $k => $x)
+    foreach ($valor as $k => $x) {
       $partes[] = $sangria . ($lista ? '' : var_export($k, true) . ' => ') . self::exportar($x, $nivel + 1) . ',';
+    }
     return "[\n" . implode("\n", $partes) . "\n" . str_repeat('  ', $nivel) . ']';
   }
 
@@ -288,8 +301,9 @@ final class GeneradorCatalogos
         }
       }
       if ($indice === null) {
-        if ($clave === 'observacion')
+        if ($clave === 'observacion') {
           continue;
+        }
         return null;
       }
       $res[$clave] = $indice;
@@ -301,8 +315,9 @@ final class GeneradorCatalogos
   {
     $celdas = $fila['celdas'];
     $codigo = self::codigo($celdas[$c['codigo']] ?? '');
-    if ($codigo === null)
+    if ($codigo === null) {
       return null;
+    }
     return [
       'codigo' => $codigo,
       'id' => self::limpiar($celdas[$c['id']] ?? '') ?: null,

@@ -99,17 +99,18 @@ class RRetEnviEventoDe implements RespuestaSifen
     // un gResProcEVe con el estado y los mensajes, sin id.
     if (isset($object->rProtDe)) {
       $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
-      if (isset($prot->dFecProc))
+      if (isset($prot->dFecProc)) {
         $res->setDFecProc($prot->getDFecProc());
+      }
       $res->seGResProcEVe([(new GResProcEVe())->setDEstRes($prot->getDEstRes())->setGResProc($prot->getGResProc())]);
       return $res;
     }
     // Con zona en la respuesta directa, sin zona dentro de xContEv: FechaHelper acepta los dos (PK-29).
     $res->setDFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
-    $gResProcEVe = array();
+    $gResProcEVe = [];
     if (isset($object->gResProcEVe)) {
-      if(is_array($object->gResProcEVe)) {
-        foreach($object->gResProcEVe as $item) {
+      if (is_array($object->gResProcEVe)) {
+        foreach ($object->gResProcEVe as $item) {
           $aux = GResProcEVe::FromSifenResponseObject($item);
           array_push($gResProcEVe, $aux);
         }
@@ -122,9 +123,9 @@ class RRetEnviEventoDe implements RespuestaSifen
     return $res;
   }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(),'rRetEnviEventoDe') != 0) {
+    if (strcmp($node->getName(), 'rRetEnviEventoDe') != 0) {
       throw new RespuestaException("Invalid XML Element:" . $node->getName());
     }
 
@@ -132,7 +133,7 @@ class RRetEnviEventoDe implements RespuestaSifen
     // Hasta 0.2.0 solo se aceptaba la fecha sin zona; la respuesta directa la trae con zona (PK-29).
     $res->setDFecProc(FechaHelper::FromSifen($node->dFecProc, 'dFecProc'));
     ///create the array
-    $gResProcEVe = array();
+    $gResProcEVe = [];
     if (isset($node->gResProcEVe)) {
       foreach ($node->gResProcEVe as $procNode) {
         $gResProcEVe[] = GResProcEVe::FromSimpleXMLElement($procNode);
@@ -177,11 +178,13 @@ class RRetEnviEventoDe implements RespuestaSifen
   public function todosAprobados(): bool
   {
     $resultados = $this->getResultados();
-    if ($resultados === [])
+    if ($resultados === []) {
       return false;
+    }
     foreach ($resultados as $resultado) {
-      if (!$resultado->esAprobado())
+      if (!$resultado->esAprobado()) {
         return false;
+      }
     }
     return true;
   }
@@ -196,8 +199,9 @@ class RRetEnviEventoDe implements RespuestaSifen
   public function getResultadoDelEvento(int|string $id): ?GResProcEVe
   {
     foreach ($this->getResultados() as $resultado) {
-      if ($resultado->getIdEvento() === (string) $id)
+      if ($resultado->getIdEvento() === (string) $id) {
         return $resultado;
+      }
     }
     return null;
   }

@@ -16,8 +16,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeConf
 {
   // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public string   $Id;        // GCO002 CDC del DTE 44- 1-1
-  public int      $iTipConf;  // GCO003 Tipo de Conformidad - 1 - 1-1
+  public string $Id;        // GCO002 CDC del DTE 44- 1-1
+  public int $iTipConf;  // GCO003 Tipo de Conformidad - 1 - 1-1
   public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción - 19 -0-1
 
 
@@ -26,7 +26,7 @@ class RGeVeConf
   ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Establece el valor de Id - CDC del DTE 
+   * Establece el valor de Id - CDC del DTE
    *
    * @param String $Id
    *
@@ -67,10 +67,10 @@ class RGeVeConf
 
   ///////////////////////////////////////////////////////////////////////
   // Getters
-  ///////////////////////////////////////////////////////////////////////  
+  ///////////////////////////////////////////////////////////////////////
 
   /**
-   * Obtiene el valor de Id - CDC del DTE 
+   * Obtiene el valor de Id - CDC del DTE
    *
    * @return String
    */
@@ -100,7 +100,7 @@ class RGeVeConf
   }
 
   ///////////////////////////////////////////////////////////////////////
-  // Conversiones XML  
+  // Conversiones XML
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -141,8 +141,9 @@ class RGeVeConf
 
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if ($node->getName() != 'rGeVeConf')
+    if ($node->getName() != 'rGeVeConf') {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
+    }
 
     $res = new RGeVeConf();
     $res->setId((string) $node->Id);
@@ -151,8 +152,9 @@ class RGeVeConf
     $res->setITipConf(intval((string) $node->iTipConf));
     if (isset($node->dFecRecep)) {
       $fecha = DateTime::createFromFormat('Y-m-d\TH:i:s', trim((string) $node->dFecRecep));
-      if ($fecha === false)
+      if ($fecha === false) {
         throw new ValidacionException("[RGeVeConf] dFecRecep debe tener el formato AAAA-MM-DDThh:mm:ss (fecHhmmss): '" . $node->dFecRecep . "'");
+      }
       $res->setDFecRecep($fecha);
     }
 

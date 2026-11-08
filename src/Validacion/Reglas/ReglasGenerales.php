@@ -56,11 +56,13 @@ final class ReglasGenerales extends ConjuntoDeReglas
     $timb = $v->gTimb();
     $emision = $v->dFeEmiDE();
     $inicio = self::fecha($timb, 'dFeIniT');
-    if ($inicio !== null && $emision !== null)
+    if ($inicio !== null && $emision !== null) {
       self::regla($r, $inicio->format('Y-m-d') > $emision->format('Y-m-d'), '1103', 'dFeIniT', 'DE.gTimb', $inicio->format('Y-m-d'), 'La fecha de emisión debe ser igual o posterior al inicio de vigencia del timbrado.');
+    }
     $serie = self::texto($timb, 'dSerieNum');
-    if ($serie !== null)
+    if ($serie !== null) {
       self::regla($r, !TimbradoUtils::ValidarSerie($serie), '1110', 'dSerieNum', 'DE.gTimb', $serie, 'Dos letras mayúsculas de AA a ZZ.');
+    }
 
     // D002: fecha de emisión
     if ($emision !== null) {
@@ -90,8 +92,9 @@ final class ReglasGenerales extends ConjuntoDeReglas
     $emis = $v->gEmis();
     $ruc = self::texto($emis, 'dRucEm');
     $dvEmisor = self::entero($emis, 'dDVEmi');
-    if ($ruc !== null && $dvEmisor !== null)
+    if ($ruc !== null && $dvEmisor !== null) {
       self::regla($r, RucUtils::CalcDV($ruc) !== $dvEmisor, '1253', 'dDVEmi', 'DE.gDatGralOpe.gEmis', $dvEmisor, 'El dígito verificador calculado es ' . RucUtils::CalcDV($ruc) . '.');
+    }
     self::geografia($r, $emis, 'cDepEmi', 'cDisEmi', 'cCiuEmi', '1255', 'DE.gDatGralOpe.gEmis');
     self::geografia($r, $v->gDatRec(), 'cDepRec', 'cDisRec', 'cCiuRec', '1328', 'DE.gDatGralOpe.gDatRec');
     $ae = $v->gCamAE();
@@ -100,21 +103,24 @@ final class ReglasGenerales extends ConjuntoDeReglas
     $transp = $v->gTransp();
     if ($transp !== null) {
       self::geografia($r, self::v($transp, 'gCamSal'), 'cDepSal', 'cDisSal', 'cCiuSal', '2153', 'DE.gDtipDE.gTransp.gCamSal');
-      foreach (self::lista($transp, 'gCamEnt') as $i => $entrega)
+      foreach (self::lista($transp, 'gCamEnt') as $i => $entrega) {
         self::geografia($r, $entrega, 'cDepEnt', 'cDisEnt', 'cCiuEnt', '2203', 'DE.gDtipDE.gTransp.gCamEnt[' . ($i + 1) . ']');
+      }
     }
   }
 
   /** Departamento, distrito (si viene) y ciudad deben pertenecer a una misma fila de PyGeoCodes. */
   private static function geografia(ResultadoValidacion $r, ?object $g, string $depProp, string $distProp, string $ciuProp, string $codigo, string $ruta): void
   {
-    if ($g === null)
+    if ($g === null) {
       return;
+    }
     $dep = self::entero($g, $depProp);
     $dist = self::entero($g, $distProp);
     $ciu = self::entero($g, $ciuProp);
-    if ($dep === null || $ciu === null)
+    if ($dep === null || $ciu === null) {
       return;
+    }
     self::regla($r, !PyGeoCodesMapping::estanRelacionados($dep, $dist, $ciu), $codigo, $ciuProp, $ruta, "$dep/" . ($dist ?? '-') . "/$ciu", 'Códigos de PyGeoCodes.xml (departamento, distrito y ciudad de una misma fila).');
   }
 }

@@ -6,15 +6,15 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeraración que lista las formas de procesamiento de los pagos por tarjetas de crédito y débito.
  * Corresponde a los valores posibles del campo gPagTarCD (E626).
  */
-enum PagTarCDForProPa: int {
-
+enum PagTarCDForProPa: int
+{
     case POS = 1;
     case PagoElectronico = 2;
     case Otro = 9;
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::POS => 'POS',
             self::PagoElectronico => 'Pago Electrónico',
             self::Otro => 'Otro'
@@ -46,5 +46,3 @@ enum PagTarCDForProPa: int {
         return $list;
     }
 }
-
-?>

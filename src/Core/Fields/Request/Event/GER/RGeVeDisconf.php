@@ -116,10 +116,11 @@ class RGeVeDisconf
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if($node->getName() != 'rGeVeDisconf')
+    if ($node->getName() != 'rGeVeDisconf') {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
+    }
 
     $res = new RGeVeDisconf();
     $res->setId($node->Id);

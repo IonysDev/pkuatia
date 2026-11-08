@@ -223,16 +223,21 @@ class GGrupSup
   {
     $res = $doc->createElement('gGrupSup');
     // Todos los campos de tgGrupSup son opcionales (DE_v150.xsd:663-690); hasta v0.1.5 se emitían sin guardas (PK-08).
-    if (isset($this->dNomCaj))
+    if (isset($this->dNomCaj)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNomCaj', $this->getDNomCaj()));
-    if (isset($this->dEfectivo))
+    }
+    if (isset($this->dEfectivo)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dEfectivo', $this->getDEfectivoDecimal()));
-    if (isset($this->dVuelto))
+    }
+    if (isset($this->dVuelto)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dVuelto', $this->getDVueltoDecimal()));
-    if (isset($this->dDonac))
+    }
+    if (isset($this->dDonac)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dDonac', $this->getDDonacDecimal()));
-    if (isset($this->dDesDonac))
+    }
+    if (isset($this->dDesDonac)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dDesDonac', $this->getDDesDonac()));
+    }
     return $res;
   }
 
@@ -274,12 +279,14 @@ class GGrupSup
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if (strcmp($node->localName, 'gGrupSup') != 0)
+    if (strcmp($node->localName, 'gGrupSup') != 0) {
       throw new ValidacionException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->localName);
+    }
     $res = new GGrupSup();
     foreach ($node->childNodes as $hijo) {
-      if ($hijo instanceof DOMElement)
+      if ($hijo instanceof DOMElement) {
         self::asignar($res, $hijo->localName, $hijo->nodeValue);
+      }
     }
     return $res;
   }
@@ -294,11 +301,13 @@ class GGrupSup
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if (strcmp($node->getName(), 'gGrupSup') != 0)
+    if (strcmp($node->getName(), 'gGrupSup') != 0) {
       throw new ValidacionException('[GGrupSup] El nombre del nodo no corresponde a gGrupSup: ' . $node->getName());
+    }
     $res = new GGrupSup();
-    foreach ($node->children() as $hijo)
+    foreach ($node->children() as $hijo) {
       self::asignar($res, $hijo->getName(), (string) $hijo);
+    }
     return $res;
   }
 

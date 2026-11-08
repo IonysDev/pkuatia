@@ -259,7 +259,7 @@ class RGeVeRetAce
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  ///XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -271,16 +271,18 @@ class RGeVeRetAce
   {
     $res = $doc->createElement('rGeVeRetAce');
     $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
-    if (isset($this->dRuc))
-      $res->appendChild(XmlHelper::elemento($doc, 'dRuc', $this->dRuc)); // orden de trGeVeRetAce (Evento_v150.xsd:112-130)
+    if (isset($this->dRuc)) {
+      $res->appendChild(XmlHelper::elemento($doc, 'dRuc', $this->dRuc));
+    } // orden de trGeVeRetAce (Evento_v150.xsd:112-130)
     $res->appendChild(XmlHelper::elemento($doc, 'dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dEstRet', $this->getDEstRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dPunExpRet', $this->getDPunExpRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dNumDocRet', $this->getDNumDocRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dCodConRet', $this->getDCodConRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
-    if (isset($this->dMonRet))
+    if (isset($this->dMonRet)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dMonRet', $this->dMonRet));
+    }
     return $res;
   }
 
@@ -308,31 +310,34 @@ class RGeVeRetAce
   //     return null;
   //   }
   // }
-  
+
   /**
    * FromSimpleXMLElement
    *
    * @param  mixed $node
    * @return self
    */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if($node->getName() != 'rGeVeRetAce')
+    if ($node->getName() != 'rGeVeRetAce') {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
+    }
 
 
     $res = new self();
     $res->setId($node->Id);
-    if (isset($node->dRuc))
+    if (isset($node->dRuc)) {
       $res->setDRuc((string) $node->dRuc);
+    }
     $res->setDNumTimRet(intval($node->dNumTimRet));
     $res->setDEstRet($node->dEstRet);
     $res->setDPunExpRet($node->dPunExpRet);
     $res->setDNumDocRet($node->dNumDocRet);
     $res->setDCodConRet($node->dCodConRet);
     $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFeEmiRet)));
-    if (isset($node->dMonRet))
+    if (isset($node->dMonRet)) {
       $res->setDMonRet((string) $node->dMonRet);
+    }
      return $res;
   }
 }

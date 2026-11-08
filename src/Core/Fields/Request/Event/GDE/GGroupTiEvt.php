@@ -1,4 +1,5 @@
 <?php
+
 namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GEA\RGeDevCCFFCue;
@@ -18,38 +19,37 @@ use SimpleXMLElement;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento 
+ * Nodo: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  * Padre: GDE002 - rEve - Grupos de campos generales del evento
  */
 
 class GGroupTiEvt
 {
-
   // Eventos de Emisor
-  public RGeVeCan  $rGeVeCan; // GEC001 - Raíz Gestión de Eventos Cancelación 
-  public RGeVeInu  $rGeVeInu; // GEI001 - Raiz Gestión de Eventos Inutilización
-  public RGeVeTr   $rGeVeTr;  // GET001 - Raíz Gestión de Eventos por actualización de datos del transporte
+  public RGeVeCan $rGeVeCan; // GEC001 - Raíz Gestión de Eventos Cancelación
+  public RGeVeInu $rGeVeInu; // GEI001 - Raiz Gestión de Eventos Inutilización
+  public RGeVeTr $rGeVeTr;  // GET001 - Raíz Gestión de Eventos por actualización de datos del transporte
 
   // Eventos de Receptor
-  public RGeVeNotRec   $rGeVeNotRec;  // GEN001 - Raíz Gestión de Eventos Notificación – Recepción DE o DTE
-  public RGeVeConf     $rGeVeConf;    // GCO001 - Raiz Gestión de Eventos Conformidad
-  public RGeVeDisconf  $rGeVeDisconf; // GDI001 - Raiz Gestión de Eventos Disconformidad 
-  public RGeVeDescon   $rGeVeDescon;  // GED001 - Raiz Gestión de Eventos Desconocimiento
+  public RGeVeNotRec $rGeVeNotRec;  // GEN001 - Raíz Gestión de Eventos Notificación – Recepción DE o DTE
+  public RGeVeConf $rGeVeConf;    // GCO001 - Raiz Gestión de Eventos Conformidad
+  public RGeVeDisconf $rGeVeDisconf; // GDI001 - Raiz Gestión de Eventos Disconformidad
+  public RGeVeDescon $rGeVeDescon;  // GED001 - Raiz Gestión de Eventos Desconocimiento
 
   // Eventos Automáticos
-  public RGeVeRetAce   $rGeVeRetAce;  // GER001  - Raíz Gestión de Eventos de retención
-  public RGeVeRetAnu   $rGeVeRetAnu;  // GERA001 - Gestión de Eventos de retención anulación
-  public RGeVeCCFF     $rGeVeCCFF;    // GECF001 - Raíz Gestión de Eventos de créditos  fiscales
+  public RGeVeRetAce $rGeVeRetAce;  // GER001  - Raíz Gestión de Eventos de retención
+  public RGeVeRetAnu $rGeVeRetAnu;  // GERA001 - Gestión de Eventos de retención anulación
+  public RGeVeCCFF $rGeVeCCFF;    // GECF001 - Raíz Gestión de Eventos de créditos  fiscales
   public RGeDevCCFFCue $rGeDevCCFFCue; // GEDF001 - Raíz Gestión de Eventos de devolución de créditos fiscales - Cuestionado
   public RGeDevCCFFDev $rGeDevCCFFDev; // GEDD001 - Raíz Gestión de Eventos de devolución de créditos fiscales -Devuelto
-  public RGeVeAnt      $rGeVeAnt;     // GEA001  - Raíz Gestión de Eventos anticipo
-  public RGeVeRem      $rGeVeRem;     // GERE001 - Raíz Gestión de Eventos remisión 
+  public RGeVeAnt $rGeVeAnt;     // GEA001  - Raíz Gestión de Eventos anticipo
+  public RGeVeRem $rGeVeRem;     // GERE001 - Raíz Gestión de Eventos remisión
 
   // Eventos de Nominación
   // La clase es RGEveNom (como el elemento rGEveNom de Evento_v150.xsd:379). Hasta 0.2.0 se declaraba "RGeVeNom":
   // PHP no distingue mayúsculas, pero el autoload PSR-4 en un sistema de archivos que sí distingue (Linux) no
   // encontraba RGeVeNom.php (PK-27). La propiedad conserva su nombre.
-  public RGEveNom      $rGeVeNom;     // GENFE001 - Raíz Gestión de Eventos de Nominación
+  public RGEveNom $rGeVeNom;     // GENFE001 - Raíz Gestión de Eventos de Nominación
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -257,7 +257,7 @@ class GGroupTiEvt
     return $this;
   }
 
-  
+
   /**
    * Establece el valor de rGeVeNom (elemento rGEveNom)
    *
@@ -273,7 +273,7 @@ class GGroupTiEvt
 
   ///////////////////////////////////////////////////////////////////////
   // Getters
-  ///////////////////////////////////////////////////////////////////////  
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Obtiene el valor de rGeVeCan
@@ -453,48 +453,65 @@ class GGroupTiEvt
     // tgGroupEvt es un xs:choice (Evento_v150.xsd:363-380): cada rEve lleva exactamente un evento.
     $informados = [];
     foreach (['rGeVeCan', 'rGeVeInu', 'rGeVeTr', 'rGeVeNotRec', 'rGeVeConf', 'rGeVeDisconf', 'rGeVeDescon', 'rGeVeRetAce', 'rGeVeRetAnu', 'rGeVeCCFF', 'rGeDevCCFFCue', 'rGeDevCCFFDev', 'rGeVeAnt', 'rGeVeRem', 'rGeVeNom'] as $evento) {
-      if (isset($this->$evento))
+      if (isset($this->$evento)) {
         $informados[] = $evento;
+      }
     }
-    if (count($informados) !== 1)
+    if (count($informados) !== 1) {
       throw new ValidacionException('[GGroupTiEvt] Cada rEve debe contener exactamente un evento (xs:choice de tgGroupEvt, Evento_v150.xsd:363-380); ' . (count($informados) === 0 ? 'no se informó ninguno.' : 'se informaron ' . count($informados) . ': ' . implode(', ', $informados) . '. Use un rEve por evento.'));
+    }
     $res = $doc->createElement('gGroupTiEvt');
 
     // Eventos de Emisor
-    if(isset($this->rGeVeCan))
+    if (isset($this->rGeVeCan)) {
       $res->appendChild($this->rGeVeCan->toDOMElement($doc));
-    if(isset($this->rGeVeInu))
+    }
+    if (isset($this->rGeVeInu)) {
     $res->appendChild($this->rGeVeInu->toDOMElement($doc));
-    if(isset($this->rGeVeTr))
+    }
+    if (isset($this->rGeVeTr)) {
     $res->appendChild($this->rGeVeTr->toDOMElement($doc));
+    }
 
     // Eventos de Receptor
-    if(isset($this->rGeVeNotRec))
+    if (isset($this->rGeVeNotRec)) {
     $res->appendChild($this->rGeVeNotRec->toDOMElement($doc));
-    if(isset($this->rGeVeConf))
+    }
+    if (isset($this->rGeVeConf)) {
     $res->appendChild($this->rGeVeConf->toDOMElement($doc));
-    if(isset($this->rGeVeDisconf))
+    }
+    if (isset($this->rGeVeDisconf)) {
     $res->appendChild($this->rGeVeDisconf->toDOMElement($doc));
-    if(isset($this->rGeVeDescon))
+    }
+    if (isset($this->rGeVeDescon)) {
     $res->appendChild($this->rGeVeDescon->toDOMElement($doc));
+    }
 
     // Eventos Automáticos
-    if(isset($this->rGeVeRetAce))
+    if (isset($this->rGeVeRetAce)) {
     $res->appendChild($this->rGeVeRetAce->toDOMElement($doc));
-    if(isset($this->rGeVeRetAnu))
+    }
+    if (isset($this->rGeVeRetAnu)) {
     $res->appendChild($this->rGeVeRetAnu->toDOMElement($doc));
-    if(isset($this->rGeVeCCFF))
+    }
+    if (isset($this->rGeVeCCFF)) {
     $res->appendChild($this->rGeVeCCFF->toDOMElement($doc));
-    if(isset($this->rGeDevCCFFCue))
+    }
+    if (isset($this->rGeDevCCFFCue)) {
     $res->appendChild($this->rGeDevCCFFCue->toDOMElement($doc));
-    if(isset($this->rGeDevCCFFDev))
+    }
+    if (isset($this->rGeDevCCFFDev)) {
     $res->appendChild($this->rGeDevCCFFDev->toDOMElement($doc));
-    if(isset($this->rGeVeAnt))
+    }
+    if (isset($this->rGeVeAnt)) {
     $res->appendChild($this->rGeVeAnt->toDOMElement($doc));
-    if(isset($this->rGeVeRem))
+    }
+    if (isset($this->rGeVeRem)) {
     $res->appendChild($this->rGeVeRem->toDOMElement($doc));
-    if(isset($this->rGeVeNom))
+    }
+    if (isset($this->rGeVeNom)) {
     $res->appendChild($this->rGeVeNom->toDOMElement($doc));
+    }
     return $res;
   }
 
@@ -575,89 +592,74 @@ class GGroupTiEvt
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-      if(strcmp($node->getName(),'gGroupTiEvt') != 0) {
+      if (strcmp($node->getName(), 'gGroupTiEvt') != 0) {
           throw new ValidacionException("Invalid XML Element:". $node->getName());
       }
 
       $res = new GGroupTiEvt();
 
-      if(isset($node->rGeVeCan))
-      {
+      if (isset($node->rGeVeCan)) {
 
           $res->setRGeVeCan(RGeVeCan::FromSimpleXMLElement($node->rGeVeCan));
       }
 
-      if(isset($node->rGeVeInu))
-      {
+      if (isset($node->rGeVeInu)) {
           $res->setRGeVeInu(RGeVeInu::FromSimpleXMLElement($node->rGeVeInu));
       }
 
-      if(isset($node->rGeVeTr))
-      {
+      if (isset($node->rGeVeTr)) {
           $res->setRGeVeTr(RGeVeTr::FromSimpleXMLElement($node->rGeVeTr));
       }
 
 
-      if(isset($node->rGeVeNotRec))
-      {
+      if (isset($node->rGeVeNotRec)) {
           $res->setRGeVeNotRec(RGeVeNotRec::FromSimpleXMLElement($node->rGeVeNotRec));
       }
 
-      if(isset($node->rGeVeConf))
-      {
+      if (isset($node->rGeVeConf)) {
           $res->setRGeVeConf(RGeVeConf::FromSimpleXMLElement($node->rGeVeConf));
       }
 
-      if(isset($node->rGeVeDisconf))
-      {
+      if (isset($node->rGeVeDisconf)) {
           $res->setRGeVeDisconf(RGeVeDisconf::FromSimpleXMLElement($node->rGeVeDisconf));
       }
 
-      if(isset($node->rGeVeDescon))
-      {
+      if (isset($node->rGeVeDescon)) {
           $res->setRGeVeDescon(RGeVeDescon::FromSimpleXMLElement($node->rGeVeDescon));
       }
 
-      if(isset($node->rGeVeRetAce))
-      {
+      if (isset($node->rGeVeRetAce)) {
           $res->setrGeVeRetAce(rGeVeRetAce::FromSimpleXMLElement($node->rGeVeRetAce));
       }
 
-      if(isset($node->rGeVeRetAnu))
-      {
+      if (isset($node->rGeVeRetAnu)) {
           $res->setrGeVeRetAnu(rGeVeRetAnu::FromSimpleXMLElement($node->rGeVeRetAnu));
       }
 
-      if(isset($node->rGeVeCCFF))
-      {
+      if (isset($node->rGeVeCCFF)) {
           $res->setrGeVeCCFF(rGeVeCCFF::FromSimpleXMLElement($node->rGeVeCCFF));
       }
 
-      if(isset($node->rGeDevCCFFCue))
-      {
+      if (isset($node->rGeDevCCFFCue)) {
           $res->setGeDevCCFFCue(rGeDevCCFFCue::FromSimpleXMLElement($node->rGeDevCCFFCue));
       }
 
-      if(isset($node->rGeDevCCFFDev))
-      {
+      if (isset($node->rGeDevCCFFDev)) {
           $res->setGeDevCCFFDev(RGeDevCCFFDev::FromSimpleXMLElement($node->rGeDevCCFFDev));
       }
 
-      if(isset($node->rGeVeAnt))
-      {
+      if (isset($node->rGeVeAnt)) {
           $res->setRGeVeAnt(RGeVeAnt::FromSimpleXMLElement($node->rGeVeAnt));
       }
 
-      if(isset($node->rGeVeRem))
-      {
+      if (isset($node->rGeVeRem)) {
           $res->setRGeVeRem(RGeVeRem::FromSimpleXMLElement($node->rGeVeRem));
       }
 
       // El elemento es rGEveNom (Evento_v150.xsd:379); hasta 0.2.0 se buscaba rGeVeNom y la nominación nunca se leía (PK-27).
-      if(isset($node->rGEveNom))
-      {
+      if (isset($node->rGEveNom)) {
           $res->setRGeVeNom(RGEveNom::FromSimpleXMLElement($node->rGEveNom));
       }
 

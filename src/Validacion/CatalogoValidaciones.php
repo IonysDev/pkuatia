@@ -31,8 +31,9 @@ final class CatalogoValidaciones
   {
     $todas = self::describirTodos($codigo);
     foreach ($todas as $info) {
-      if ($info->vigente)
+      if ($info->vigente) {
         return $info;
+      }
     }
     return $todas[0] ?? null;
   }
@@ -45,13 +46,15 @@ final class CatalogoValidaciones
   public static function describirTodos(int|string $codigo): array
   {
     $c = self::normalizar($codigo);
-    if ($c === null)
+    if ($c === null) {
       return [];
+    }
     $res = [];
     foreach (self::ORIGENES as $origen => $archivo) {
       foreach (self::datos($archivo)['entradas'] as $e) {
-        if ($e['codigo'] === $c)
+        if ($e['codigo'] === $c) {
           $res[] = self::info($e, $origen);
+        }
       }
     }
     $ws = CodigoResultadoWS::fromAny($c);
@@ -76,8 +79,9 @@ final class CatalogoValidaciones
     $patron = '/^' . preg_quote($idMT, '/') . '[a-z]?$/';
     foreach (['de', 'evento'] as $origen) {
       foreach (self::datos(self::ORIGENES[$origen])['entradas'] as $e) {
-        if ($e['id'] !== null && preg_match($patron, $e['id']))
+        if ($e['id'] !== null && preg_match($patron, $e['id'])) {
           $res[] = self::info($e, $origen);
+        }
       }
     }
     return $res;
@@ -92,10 +96,12 @@ final class CatalogoValidaciones
   {
     $res = [];
     foreach (self::ORIGENES as $o => $archivo) {
-      if ($origen !== null && $origen !== $o)
+      if ($origen !== null && $origen !== $o) {
         continue;
-      foreach (self::datos($archivo)['entradas'] as $e)
+      }
+      foreach (self::datos($archivo)['entradas'] as $e) {
         $res[] = self::info($e, $o);
+      }
     }
     return $res;
   }
@@ -129,15 +135,17 @@ final class CatalogoValidaciones
     $tipo = $tipoOElemento;
     if (!isset($datos['tipos'][$tipo])) {
       $elemento = self::elemento($tipoOElemento);
-      if ($elemento === null)
+      if ($elemento === null) {
         return [];
+      }
       $tipo = $elemento->tipo ?? $elemento->nombre; // tipo en línea: los hijos cuelgan del nombre del elemento
       if (!isset($datos['tipos'][$tipo])) {
         $res = [];
         foreach ($datos['elementos'] as $ocurrencias) {
           foreach ($ocurrencias as $o) {
-            if ($o['padre'] === $tipo)
+            if ($o['padre'] === $tipo) {
               $res[] = self::infoElemento($o);
+            }
           }
         }
         usort($res, static fn (InfoElemento $a, InfoElemento $b): int => $a->linea <=> $b->linea);
@@ -166,8 +174,9 @@ final class CatalogoValidaciones
   public static function metodoPkuatia(string $idMT): ?string
   {
     $mapa = self::datos('campos-metodos');
-    if (isset($mapa[$idMT]))
+    if (isset($mapa[$idMT])) {
       return $mapa[$idMT];
+    }
     $base = preg_replace('/[a-z]$/', '', $idMT);
     return $mapa[$base] ?? null;
   }
@@ -187,8 +196,9 @@ final class CatalogoValidaciones
   private static function normalizar(int|string $codigo): ?string
   {
     $texto = trim((string) $codigo);
-    if ($texto === '' || !ctype_digit($texto))
+    if ($texto === '' || !ctype_digit($texto)) {
       return null;
+    }
     return str_pad($texto, 4, '0', STR_PAD_LEFT);
   }
 

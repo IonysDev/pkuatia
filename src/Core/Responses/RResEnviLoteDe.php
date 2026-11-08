@@ -9,23 +9,22 @@ use IonysDev\Pkuatia\Helpers\FechaHelper;
 use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 
 /**
- * Nodo Id:     BRSch01        
- * Nombre:      rResEnviLoteDe       
+ * Nodo Id:     BRSch01
+ * Nombre:      rResEnviLoteDe
  * Descripción: Nodo raiz de Respuesta del WS Recepción Lote de Documentos Electrónicos
  * Nodo Padre:  Es raíz.
  */
 class RResEnviLoteDe implements RespuestaSifen
 {
-
     public const COD_RES_ACEPTADO = 300;
     public const COD_RES_RECHAZADO = 301;
 
-                                    // Id - Longitud - Ocurrencia - Descripción        
+                                    // Id - Longitud - Ocurrencia - Descripción
     public DateTime $dFecProc;      // BRSch02 - 19    - 1-1 - Fecha y hora de recepción
-    public int      $dCodRes;       // BRSch03 - 4     - 1.1 - Código del resultado de recepción 
-    public string   $dMsgRes;       // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
-    public string   $dProtConsLote; // BRSch05 - 1-20  - 0-1 - Número de Lote (se genera solo si el estado es Aceptado) como cadena de texto debido a la longitud de la respuesta del WS.
-    public int      $dTpoProces;    // BRSch06 - 1-5   - 1-1 - Tiempo medio de procesamiento en segundos
+    public int $dCodRes;       // BRSch03 - 4     - 1.1 - Código del resultado de recepción
+    public string $dMsgRes;       // BRSch04 - 1-255 - 1-1 - Mensaje de resultado de recepción
+    public string $dProtConsLote; // BRSch05 - 1-20  - 0-1 - Número de Lote (se genera solo si el estado es Aceptado) como cadena de texto debido a la longitud de la respuesta del WS.
+    public int $dTpoProces;    // BRSch06 - 1-5   - 1-1 - Tiempo medio de procesamiento en segundos
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -178,9 +177,9 @@ class RResEnviLoteDe implements RespuestaSifen
     /**
      * Crea una nueva instancia de RResEnviConsDe a partir de un objeto stdClass.
      * Pensado para castear la respuesta de una llamada SOAP.
-     * 
+     *
      * @param stdClass $object
-     * 
+     *
      * @return self
      */
     public static function FromSifenResponseObject($object)
@@ -193,7 +192,9 @@ class RResEnviLoteDe implements RespuestaSifen
         // respuestas-ws/2026-10-06; para lotes [PENDIENTE DE VERIFICACIÓN]).
         if (isset($object->rProtDe)) {
             $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
-            if (isset($prot->dFecProc)) $res->setdFecProc($prot->getDFecProc());
+            if (isset($prot->dFecProc)) {
+            $res->setdFecProc($prot->getDFecProc());
+            }
             $proc = $prot->getGResProc()[0] ?? null;
             if ($proc !== null) {
                 $res->setDCodRes(intval($proc->getDCodRes()));
@@ -201,25 +202,41 @@ class RResEnviLoteDe implements RespuestaSifen
             }
             return $res;
         }
-        if (isset($object->dFecProc)) $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc')); // con o sin zona (PK-29)
-        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');
-        
-        if(isset($object->dCodRes)) $res->setDCodRes($object->dCodRes);
-        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 'dCodRes');
-        
-        if(isset($object->dMsgRes)) $res->setDMsgRes($object->dMsgRes);
-        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 'dMsgRes');
-        
-        if(isset($object->dProtConsLote)) {
-            if(ctype_digit($object->dProtConsLote)) 
-                $res->setdProtConsLote($object->dProtConsLote);
-            else throw new RespuestaException("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
+        if (isset($object->dFecProc)) {
+        $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
+        } // con o sin zona (PK-29)
+        else {
+        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');
         }
-        else if($res->getDCodRes() == self::COD_RES_ACEPTADO) throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 'dProtConsLote');
 
-        if(isset($object->dTpoProces)) $res->setDTpoProces($object->dTpoProces);
-        else throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 'dTpoProces');
-        
+        if (isset($object->dCodRes)) {
+        $res->setDCodRes($object->dCodRes);
+        } else {
+        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dCodRes", 'dCodRes');
+        }
+
+        if (isset($object->dMsgRes)) {
+        $res->setDMsgRes($object->dMsgRes);
+        } else {
+        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dMsgRes", 'dMsgRes');
+        }
+
+        if (isset($object->dProtConsLote)) {
+            if (ctype_digit($object->dProtConsLote)) {
+                $res->setdProtConsLote($object->dProtConsLote);
+            } else {
+            throw new RespuestaException("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
+            }
+        } elseif ($res->getDCodRes() == self::COD_RES_ACEPTADO) {
+        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dProtConsLote", 'dProtConsLote');
+        }
+
+        if (isset($object->dTpoProces)) {
+        $res->setDTpoProces($object->dTpoProces);
+        } else {
+        throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dTpoProces", 'dTpoProces');
+        }
+
         return $res;
     }
 

@@ -11,9 +11,9 @@ use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo:        E800  
- * Nombre:      gGrupSeg  
- * Descripción: Grupo del sector de seguros  
+ * Nodo:        E800
+ * Nombre:      gGrupSeg
+ * Descripción: Grupo del sector de seguros
  * Nodo Padre:  E790
  */
 
@@ -21,7 +21,7 @@ class GGrupSeg extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
   public string $dCodEmpSeg;   // E801  - 20 - 0-1   - Código de la empresa de seguros en la Superintendencia de Seguros
-  public array  $gGrupPolSeg;  // EA790 -    - 1-999 - Grupos de pólizas de seguros (GGrupPolSeg[])
+  public array $gGrupPolSeg;  // EA790 -    - 1-999 - Grupos de pólizas de seguros (GGrupPolSeg[])
 
   ///////////////////////////////////////////////////////////////////////
   // Constructor
@@ -98,27 +98,23 @@ class GGrupSeg extends BaseSifenField
 
   /**
    * Instancia un objeto GGrupSeg a partir de un objeto SimpleXMLElement
-   * 
+   *
    * @param  SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gGrupSeg') != 0)
-    {
+    if (strcmp($node->getName(), 'gGrupSeg') != 0) {
       throw new ValidacionException('[gGrupSeg] El nombre del nodo no corresponde a gGrupSeg: ' . $node->getName(), 1);
     }
     $res = new GGrupSeg();
-    if(isset($node->dCodEmpSeg))
-    {
-      $res->setDCodEmpSeg((String) $node->dCodEmpSeg);
+    if (isset($node->dCodEmpSeg)) {
+      $res->setDCodEmpSeg((string) $node->dCodEmpSeg);
     }
     // Hasta 0.2.0 se buscaba "gGrupoPolSeg" (el elemento es gGrupPolSeg) y las pólizas se perdían (PK-25).
-    if(isset($node->gGrupPolSeg))
-    {
-      foreach($node->gGrupPolSeg as $gGrupPolSeg)
-      {
+    if (isset($node->gGrupPolSeg)) {
+      foreach ($node->gGrupPolSeg as $gGrupPolSeg) {
         $res->gGrupPolSeg[] = GGrupPolSeg::FromSimpleXMLElement($gGrupPolSeg);
       }
     }
@@ -127,29 +123,23 @@ class GGrupSeg extends BaseSifenField
 
   /**
    * Instancia un objeto GGrupSeg a partir de un objeto stdClass de respuesta a una petición SOAP al SIFEN
-   * 
+   *
    * @param  stdClass $object
-   * 
+   *
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GGrupSeg();
-    if(isset($object->dCodEmpSeg))
-    {
+    if (isset($object->dCodEmpSeg)) {
       $res->setDCodEmpSeg($object->dCodEmpSeg);
     }
     // Hasta 0.2.0 se buscaba "gGrupoPolSeg" (el elemento es gGrupPolSeg) y las pólizas se perdían (PK-25).
-    if(isset($object->gGrupPolSeg))
-    {
-      if(!is_array($object->gGrupPolSeg))
-      {
+    if (isset($object->gGrupPolSeg)) {
+      if (!is_array($object->gGrupPolSeg)) {
         $res->gGrupPolSeg[] = GGrupPolSeg::FromSifenResponseObject($object->gGrupPolSeg);
-      }
-      else if(count($object->gGrupPolSeg) > 0)
-      {
-        foreach($object->gGrupPolSeg as $gGrupPolSeg)
-        {
+      } elseif (count($object->gGrupPolSeg) > 0) {
+        foreach ($object->gGrupPolSeg as $gGrupPolSeg) {
           $res->gGrupPolSeg[] = GGrupPolSeg::FromSifenResponseObject($gGrupPolSeg);
         }
       }
@@ -186,17 +176,15 @@ class GGrupSeg extends BaseSifenField
   {
     $res = $doc->createElement('gGrupSeg');
     $res->appendChild(XmlHelper::elemento($doc, 'dCodEmpSeg', $this->getDCodEmpSeg()));
-    if(isset($this->gGrupPolSeg) && count($this->gGrupPolSeg) > 0)
-    {
-      foreach($this->gGrupPolSeg as $gGrupPolSeg)
-      {
+    if (isset($this->gGrupPolSeg) && count($this->gGrupPolSeg) > 0) {
+      foreach ($this->gGrupPolSeg as $gGrupPolSeg) {
         $res->appendChild($gGrupPolSeg->toDOMElement($doc));
       }
     }
     return $res;
   }
-  
- 
 
-  
+
+
+
 }

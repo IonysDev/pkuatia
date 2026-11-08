@@ -6,8 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de documento de identidad del responsable de la generación del DE: campos iTipIDRespDE (D141)
  * y dDTipIDRespDE (D142) del grupo gRespDE (D140), según Manual Técnico SIFEN v150.
  */
-enum TipIDRespDE: int {
-
+enum TipIDRespDE: int
+{
     case CedulaParaguaya = 1;
     case Pasaporte = 2;
     case CedulaExtranjera = 3;
@@ -16,7 +16,7 @@ enum TipIDRespDE: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CedulaParaguaya => 'Cédula paraguaya',
             self::Pasaporte => 'Pasaporte',
             self::CedulaExtranjera => 'Cédula extranjera',

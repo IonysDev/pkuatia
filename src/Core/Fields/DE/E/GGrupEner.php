@@ -12,15 +12,15 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;
 
 /**
- * Nodo Id:     E791 
+ * Nodo Id:     E791
  * Nombre:      gGrupoEner
- * Descripción: Grupo del sector de energía eléctrica 
+ * Descripción: Grupo del sector de energía eléctrica
  * Nodo Padre:  E790
  */
 class GGrupEner
 {
   public string $dNroMed; // E792 - 1-50   - 0-1 - Número de medidor
-  public int    $dActiv;  // E793 - 2      - 0-1 - Código de actividad
+  public int $dActiv;  // E793 - 2      - 0-1 - Código de actividad
   public string $dCateg;  // E794 - 3      - 0-1 - Código de categoría
   public string $dLecAnt; // E795 - 1-11p2 - 0-1 - Lectura anterior (decimal BCMath)
   public string $dLecAct; // E796 - 1-11p2 - 0-1 - Lectura actual (decimal BCMath)
@@ -81,8 +81,9 @@ class GGrupEner
    */
   public function setDLecAnt(string $dLecAnt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0, 2))
+    if (!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0, 2)) {
       throw new ValidacionException('[GGrupEner] dLecAnt debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAnt, 1);
+    }
     $this->dLecAnt = $dLecAnt;
     return $this;
   }
@@ -97,8 +98,9 @@ class GGrupEner
    */
   public function setDLecAct(string $dLecAct): self
   {
-    if(!ValueValidations::isValidStringDecimal($dLecAct, 11, 0, 2))
+    if (!ValueValidations::isValidStringDecimal($dLecAct, 11, 0, 2)) {
       throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAct, 1);
+    }
     $this->dLecAct = $dLecAct;
     return $this;
   }
@@ -112,8 +114,9 @@ class GGrupEner
    */
   public function setDConKwh(string $dConKwh): self
   {
-    if(!ValueValidations::isValidStringDecimal($dConKwh, 11, 0, 2))
+    if (!ValueValidations::isValidStringDecimal($dConKwh, 11, 0, 2)) {
       throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dConKwh, 1);
+    }
     $this->dConKwh = $dConKwh;
     return $this;
   }
@@ -187,42 +190,37 @@ class GGrupEner
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
   ///////////////////////////////////////////////////////////////////////
-  
+
   /**
    * Instancia un objeto GGrupEner a partir de un SimpleXMLElement
-   * 
+   *
    * @param  SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gGrupEner') != 0)
+    if (strcmp($node->getName(), 'gGrupEner') != 0) {
       throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->getName(), 1);
+    }
     $res = new GGrupEner();
     // Hasta 0.2.0 se pasaba el SimpleXMLElement a setDActiv(int): TypeError con cualquier dActiv (PK-25).
-    if(isset($node->dNroMed))
-    {
+    if (isset($node->dNroMed)) {
       $res->setDNroMed((string) $node->dNroMed);
     }
-    if(isset($node->dActiv))
-    {
+    if (isset($node->dActiv)) {
       $res->setDActiv(intval((string) $node->dActiv));
     }
-    if(isset($node->dCateg))
-    {
+    if (isset($node->dCateg)) {
       $res->setDCateg((string) $node->dCateg);
     }
-    if(isset($node->dLecAnt))
-    {
+    if (isset($node->dLecAnt)) {
       $res->setDLecAnt((string) $node->dLecAnt);
     }
-    if(isset($node->dLecAct))
-    {
+    if (isset($node->dLecAct)) {
       $res->setDLecAct((string) $node->dLecAct);
     }
-    if(isset($node->dConKwh))
-    {
+    if (isset($node->dConKwh)) {
       $res->setDConKwh((string) $node->dConKwh);
     }
     return $res;
@@ -238,14 +236,15 @@ class GGrupEner
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->localName, 'gGrupEner') != 0)
+    if (strcmp($node->localName, 'gGrupEner') != 0) {
       throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->localName);
+    }
     $res = new GGrupEner();
-    foreach($node->childNodes as $hijo)
-    {
-      if(!$hijo instanceof DOMElement)
+    foreach ($node->childNodes as $hijo) {
+      if (!$hijo instanceof DOMElement) {
         continue;
-      match($hijo->localName) {
+      }
+      match ($hijo->localName) {
         'dNroMed' => $res->setDNroMed($hijo->nodeValue),
         'dActiv'  => $res->setDActiv(intval($hijo->nodeValue)),
         'dCateg'  => $res->setDCateg($hijo->nodeValue),
@@ -262,34 +261,28 @@ class GGrupEner
    * Instancia un objeto GGrupEner a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
    * @param stdClass $object
-   * 
+   *
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GGrupEner();
-    if(isset($object->dNroMed))
-    {
+    if (isset($object->dNroMed)) {
       $res->setDNroMed($object->dNroMed);
     }
-    if(isset($object->dActiv))
-    {
+    if (isset($object->dActiv)) {
       $res->setDActiv($object->dActiv);
     }
-    if(isset($object->dCateg))
-    {
+    if (isset($object->dCateg)) {
       $res->setDCateg($object->dCateg);
     }
-    if(isset($object->dLecAnt))
-    {
+    if (isset($object->dLecAnt)) {
       $res->setDLecAnt($object->dLecAnt);
     }
-    if(isset($object->dLecAct))
-    {
+    if (isset($object->dLecAct)) {
       $res->setDLecAct($object->dLecAct);
     }
-    if(isset($object->dConKwh))
-    {
+    if (isset($object->dConKwh)) {
       $res->setDConKwh($object->dConKwh);
     }
     return $res;
@@ -307,32 +300,39 @@ class GGrupEner
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement("gGrupEner");
-    if(isset($this->dNroMed))
+    if (isset($this->dNroMed)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNroMed', $this->getDNroMed()));
-    if(isset($this->dActiv))
+    }
+    if (isset($this->dActiv)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dActiv', $this->getDActiv()));
-    if(isset($this->dCateg))
+    }
+    if (isset($this->dCateg)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCateg', $this->getDCateg()));
-    if(isset($this->dLecAnt))
+    }
+    if (isset($this->dLecAnt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dLecAnt', $this->getDLecAnt()));
-    if(isset($this->dLecAct))
+    }
+    if (isset($this->dLecAct)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dLecAct', $this->getDLecAct()));
-    if(isset($this->dConKwh))
+    }
+    if (isset($this->dConKwh)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dConKwh', $this->getDConKwh()));
+    }
     return $res;
   }
 
   /**
    * Convierte este GGrupEner en un String XML
-   * 
+   *
    * @return String
    */
   public function toXMLString(): string
   {
     $domElement = $this->toDOMElement(new DOMDocument());
     $xmlString = $domElement->ownerDocument->saveXML($domElement);
-    if(!$xmlString)
+    if (!$xmlString) {
       throw new PkuatiaException('[GGrupEner] Error al convertir el objeto a XML.');
+    }
     return $xmlString;
   }
 
@@ -349,5 +349,5 @@ class GGrupEner
   {
     return bcsub($this->getDLecAct(), $this->getDLecAnt(), 2);
   }
-  
+
 }

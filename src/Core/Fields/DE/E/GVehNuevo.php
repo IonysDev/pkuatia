@@ -5,7 +5,6 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
-use Exception;
 use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Utils\DecimalXsd;
@@ -23,17 +22,17 @@ class GVehNuevo extends BaseSifenField
   public ?int $dPotencia; ///E775 Potencia del motor (CV)
   public ?int $dCapMot; ///E776 Capacidad del motor
   /** @deprecated 0.2.1 Parte entera del peso neto (E777 admite 4 decimales): usar getDPNetDecimal(). */
-  public ?int $dPNet; ///E777 Peso Neto 
+  public ?int $dPNet; ///E777 Peso Neto
   /** @deprecated 0.2.1 Parte entera del peso bruto (E778 admite 4 decimales): usar getDPBrutoDecimal(). */
   public ?int $dPBruto; ///E778 Peso Bruto
   public ?int $iTipCom; ///E779 Tipo de combustible
   public ?string $dDesTipCom; ///E780 Descripción del tipo de combustible
   public string $dNroMotor; ///E781 Numero de Motor
   /** @deprecated 0.2.1 Parte entera de la capacidad de tracción (E782 admite 4 decimales): usar getDCapTraccDecimal(). */
-  public ?int $dCapTracc; ///E782 Capacidad máxima de  tracción 
+  public ?int $dCapTracc; ///E782 Capacidad máxima de  tracción
   public ?int $dAnoFab; ///E783 Año de fabricación
   public string $cTipVeh; ///E784 Tipo de vehículo
-  public ?int $dCapac; ///E785 Capacidad máxima de pasajeros 
+  public ?int $dCapac; ///E785 Capacidad máxima de pasajeros
   public string $dCilin; ///E786  Cilindradas del motor
 
   // Q-B12 (0.2.1): valor exacto de las medidas tMontoBase6, con sus decimales. Las propiedades enteras de arriba guardan
@@ -189,11 +188,11 @@ class GVehNuevo extends BaseSifenField
     return $this;
   }
 
-  /** 
+  /**
    * Establece el valor de dDesTipCom
-   * 
+   *
    * @param String $dDesTipCom
-   * 
+   *
    * @return self
    */
   public function setDDesTipCom(string $dDesTipCom): self
@@ -312,7 +311,7 @@ class GVehNuevo extends BaseSifenField
   }
 
   /**
-   * E772 
+   * E772
    *Descripción del tipo de operación de venta de vehículos
    *
    * @return String
@@ -541,99 +540,128 @@ class GVehNuevo extends BaseSifenField
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  ///XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
    * Convierte este GVehNuevo en un DOMElement que puede insertarse en el DOMDocument especificado.
-   * 
+   *
    * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
-   * 
+   *
    * @return DOMElement El DOMElement creado.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gVehNuevo');
-    if(isset($this->iTipOpVN)) {
+    if (isset($this->iTipOpVN)) {
       // E771 lleva el código (tiTipOpVN, DE_Types_v150.xsd:1470-1487); hasta 0.2.0 se emitía la descripción (B12).
       $res->appendChild(XmlHelper::elemento($doc, 'iTipOpVN', $this->getITipOpVN()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipOpVN', $this->getDDesTipOpVN()));
     }
-    if(isset($this->dChasis))
+    if (isset($this->dChasis)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dChasis', $this->getDChasis()));
-    if(isset($this->dColor))
+    }
+    if (isset($this->dColor)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dColor', $this->getDColor()));
-    if(isset($this->dPotencia))
+    }
+    if (isset($this->dPotencia)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dPotencia', $this->getDPotencia()));
-    if(isset($this->dCapMot))
+    }
+    if (isset($this->dCapMot)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCapMot', $this->getDCapMot()));
-    if(isset($this->dPNet))
+    }
+    if (isset($this->dPNet)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dPNet', $this->getDPNetDecimal()));
-    if(isset($this->dPBruto))
+    }
+    if (isset($this->dPBruto)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dPBruto', $this->getDPBrutoDecimal()));
-    if(isset($this->iTipCom)) {
+    }
+    if (isset($this->iTipCom)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipCom', $this->getITipCom()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipCom', $this->getDDesTipCom()));
     }
-    if(isset($this->dNroMotor))
+    if (isset($this->dNroMotor)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNroMotor', $this->getDNroMotor()));
-    if(isset($this->dCapTracc))
+    }
+    if (isset($this->dCapTracc)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCapTracc', $this->getDCapTraccDecimal()));
-    if(isset($this->dAnoFab))
+    }
+    if (isset($this->dAnoFab)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dAnoFab', $this->getDAnoFab()));
-    if(isset($this->cTipVeh))
+    }
+    if (isset($this->cTipVeh)) {
       $res->appendChild(XmlHelper::elemento($doc, 'cTipVeh', $this->getCTipVeh()));
-    if(isset($this->dCapac))
+    }
+    if (isset($this->dCapac)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCapac', $this->getDCapac()));
-    if(isset($this->dCilin))
+    }
+    if (isset($this->dCilin)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCilin', $this->getDCilin()));
+    }
     return $res;
   }
 
   /**
      * Instancia un objeto GVehNuevo a partir de un DOMElement que representa al objeto.
-     * 
+     *
      * @param DOMElement $node Nodo XML que representa el objeto GVehNuevo
-     * 
+     *
      * @return GVehNuevo Objeto GVehNuevo instanciado
      */
     public static function FromDOMElement(DOMElement $node): self
     {
-        if(strcmp($node->nodeName, 'gVehNuevo') != 0)
+        if (strcmp($node->nodeName, 'gVehNuevo') != 0) {
             throw new ValidacionException('[GVehNuevo] Nodo con nombre inválido: ' . $node->nodeName);
+        }
         $res = new self();
-        if($node->getElementsByTagName('iTipOpVN')->length > 0)
+        if ($node->getElementsByTagName('iTipOpVN')->length > 0) {
           $res->setITipOpVN(intval(trim($node->getElementsByTagName('iTipOpVN')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dDesTipOpVN')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDesTipOpVN')->length > 0) {
           $res->setDDesTipOpVN(trim($node->getElementsByTagName('dDesTipOpVN')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dChasis')->length > 0)
+        }
+        if ($node->getElementsByTagName('dChasis')->length > 0) {
           $res->setDChasis(trim($node->getElementsByTagName('dChasis')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dColor')->length > 0)
+        }
+        if ($node->getElementsByTagName('dColor')->length > 0) {
           $res->setDColor(trim($node->getElementsByTagName('dColor')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dPotencia')->length > 0)
+        }
+        if ($node->getElementsByTagName('dPotencia')->length > 0) {
           $res->setDPotencia(intval(trim($node->getElementsByTagName('dPotencia')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dCapMot')->length > 0)
+        }
+        if ($node->getElementsByTagName('dCapMot')->length > 0) {
           $res->setDCapMot(intval(trim($node->getElementsByTagName('dCapMot')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dPNet')->length > 0)
+        }
+        if ($node->getElementsByTagName('dPNet')->length > 0) {
           $res->setDPNet(trim($node->getElementsByTagName('dPNet')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dPBruto')->length > 0)
+        }
+        if ($node->getElementsByTagName('dPBruto')->length > 0) {
           $res->setDPBruto(trim($node->getElementsByTagName('dPBruto')->item(0)->nodeValue));
-        if($node->getElementsByTagName('iTipCom')->length > 0)
+        }
+        if ($node->getElementsByTagName('iTipCom')->length > 0) {
           $res->setITipCom(intval(trim($node->getElementsByTagName('iTipCom')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dDesTipCom')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDesTipCom')->length > 0) {
           $res->setDDesTipCom(trim($node->getElementsByTagName('dDesTipCom')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dNroMotor')->length > 0)
+        }
+        if ($node->getElementsByTagName('dNroMotor')->length > 0) {
           $res->setDNroMotor(trim($node->getElementsByTagName('dNroMotor')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dCapTracc')->length > 0)
+        }
+        if ($node->getElementsByTagName('dCapTracc')->length > 0) {
           $res->setDCapTracc(trim($node->getElementsByTagName('dCapTracc')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dAnoFab')->length > 0)
+        }
+        if ($node->getElementsByTagName('dAnoFab')->length > 0) {
           $res->setDAnoFab(intval(trim($node->getElementsByTagName('dAnoFab')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('cTipVeh')->length > 0)
+        }
+        if ($node->getElementsByTagName('cTipVeh')->length > 0) {
           $res->setCTipVeh(trim($node->getElementsByTagName('cTipVeh')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dCapac')->length > 0)
+        }
+        if ($node->getElementsByTagName('dCapac')->length > 0) {
           $res->setDCapac(intval(trim($node->getElementsByTagName('dCapac')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dCilin')->length > 0)
+        }
+        if ($node->getElementsByTagName('dCilin')->length > 0) {
           $res->setDCilin(trim($node->getElementsByTagName('dCilin')->item(0)->nodeValue));
+        }
         return $res;
     }
 
@@ -648,38 +676,54 @@ class GVehNuevo extends BaseSifenField
   public static function FromSifenResponseObject(stdClass $object): self
   {
     $res = new self();
-    if(isset($object->iTipOpVN))
+    if (isset($object->iTipOpVN)) {
       $res->setITipOpVN(intval($object->iTipOpVN));
-    if(isset($object->dDesTipOpVN))
+    }
+    if (isset($object->dDesTipOpVN)) {
       $res->setDDesTipOpVN(strval($object->dDesTipOpVN));
-    if(isset($object->dChasis))
+    }
+    if (isset($object->dChasis)) {
       $res->setDChasis(strval($object->dChasis));
-    if(isset($object->dColor))
+    }
+    if (isset($object->dColor)) {
       $res->setDColor(strval($object->dColor));
-    if(isset($object->dPotencia))
+    }
+    if (isset($object->dPotencia)) {
       $res->setDPotencia(intval($object->dPotencia));
-    if(isset($object->dCapMot))
+    }
+    if (isset($object->dCapMot)) {
       $res->setDCapMot(intval($object->dCapMot));
-    if(isset($object->dPNet))
+    }
+    if (isset($object->dPNet)) {
       $res->setDPNet(trim(strval($object->dPNet)));
-    if(isset($object->dPBruto))
+    }
+    if (isset($object->dPBruto)) {
       $res->setDPBruto(trim(strval($object->dPBruto)));
-    if(isset($object->iTipCom))
+    }
+    if (isset($object->iTipCom)) {
       $res->setITipCom(intval($object->iTipCom));
-    if(isset($object->dDesTipCom))
+    }
+    if (isset($object->dDesTipCom)) {
       $res->setDDesTipCom(strval($object->dDesTipCom));
-    if(isset($object->dNroMotor))
+    }
+    if (isset($object->dNroMotor)) {
       $res->setDNroMotor(strval($object->dNroMotor));
-    if(isset($object->dCapTracc))
+    }
+    if (isset($object->dCapTracc)) {
       $res->setDCapTracc(trim(strval($object->dCapTracc)));
-    if(isset($object->dAnoFab))
+    }
+    if (isset($object->dAnoFab)) {
       $res->setDAnoFab(intval($object->dAnoFab));
-    if(isset($object->cTipVeh))
+    }
+    if (isset($object->cTipVeh)) {
       $res->setCTipVeh(strval($object->cTipVeh));
-    if(isset($object->dCapac))
+    }
+    if (isset($object->dCapac)) {
       $res->setDCapac(intval($object->dCapac));
-    if(isset($object->dCilin))
+    }
+    if (isset($object->dCilin)) {
       $res->setDCilin(strval($object->dCilin));
+    }
     return $res;
   }
 

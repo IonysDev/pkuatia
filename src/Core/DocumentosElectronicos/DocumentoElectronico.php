@@ -44,9 +44,8 @@ use IonysDev\Pkuatia\Validacion\ValidadorDE;
  */
 class DocumentoElectronico
 {
-
   public GOpeDE $gOpeDE; // B001 - Campos que describen la operación del documento electrónico
-  public GTimb  $gTimb; // C001 - Campos que describen el timbrado del documento electrónico
+  public GTimb $gTimb; // C001 - Campos que describen el timbrado del documento electrónico
 
   public GDatGralOpe $gDatGralOpe; // D001 -Campos generales del documento electrónico
   public GEmis $gEmis; // D100 - Campos que describen al emisor del documento electrónico
@@ -67,17 +66,18 @@ class DocumentoElectronico
 
   /**
    * Constructor
-   * 
+   *
    * @param GTimb $timbrado datos de timbrado del documento electrónico
    */
   public function __construct(?GTimb $timbrado = null)
   {
     $this->gOpeDE = new GOpeDE();
     $this->gDtipDE = new GDtipDE();
-    if ($timbrado)
+    if ($timbrado) {
       $this->gTimb = $timbrado;
-    else
-      $this->gTimb = new GTimb();
+    } else {
+    $this->gTimb = new GTimb();
+    }
     $this->gDatGralOpe = new GDatGralOpe();
     $this->gEmis = new GEmis();
   }
@@ -104,36 +104,42 @@ class DocumentoElectronico
     $this->gDatGralOpe->setGDatRec($this->gDatRec);
     $de->setGDatGralOpe($this->gDatGralOpe);
 
-    // E. Campos específicos por tipo de Documento Electrónico (E001-E009) 
+    // E. Campos específicos por tipo de Documento Electrónico (E001-E009)
     $de->setGDtipDE($this->gDtipDE);
     // E790 gCamEsp: se emiten todos los grupos sectoriales informados, en el orden de tgCamEsp (DE_v150.xsd:794-806).
     // Hasta 0.2.0 una cadena if/else if emitía solo el primero y descartaba el resto sin aviso (decisión Q-B8, 0.2.1).
-    if(isset($this->gGrupEner) || isset($this->gGrupSeg) || isset($this->gGrupSup) || isset($this->gGrupAdi)){
+    if (isset($this->gGrupEner) || isset($this->gGrupSeg) || isset($this->gGrupSup) || isset($this->gGrupAdi)) {
       $gCamEsp = new GCamEsp();
-      if(isset($this->gGrupEner)) {
+      if (isset($this->gGrupEner)) {
         $gCamEsp->setGGrupEner($this->gGrupEner);
-        foreach($this->gGrupEnerAdicionales as $gGrupEner) // Q-B9: hasta 9 medidores
+        foreach ($this->gGrupEnerAdicionales as $gGrupEner) { // Q-B9: hasta 9 medidores
           $gCamEsp->addGGrupEner($gGrupEner);
+        }
       }
-      if(isset($this->gGrupSeg))
+      if (isset($this->gGrupSeg)) {
         $gCamEsp->setGGrupSeg($this->gGrupSeg);
-      if(isset($this->gGrupSup))
+      }
+      if (isset($this->gGrupSup)) {
         $gCamEsp->setGGrupSup($this->gGrupSup);
-      if(isset($this->gGrupAdi))
+      }
+      if (isset($this->gGrupAdi)) {
         $gCamEsp->setGGrupAdi($this->gGrupAdi);
+      }
       $de->gDtipDe->setGCamEsp($gCamEsp);
-    }    
-    if(isset($this->gTransp)){
+    }
+    if (isset($this->gTransp)) {
       $de->gDtipDe->setGTransp($this->gTransp);
     }
 
     // G. Campos de uso general (G001-G049)
-    if(isset($this->gCamGen))
+    if (isset($this->gCamGen)) {
       $de->setGCamGen($this->gCamGen);
+    }
 
     // H. Campos que identifican al documento asociado (H001-H049)
-    if(isset($this->gCamDEAsoc) && count($this->gCamDEAsoc) > 0)
+    if (isset($this->gCamDEAsoc) && count($this->gCamDEAsoc) > 0) {
       $de->setGCamDEAsoc($this->gCamDEAsoc);
+    }
 
     // Se genera el CDC y se asigna a los campos correspondientes
     $cdc = CDCHelper::Generate($de);
@@ -163,7 +169,7 @@ class DocumentoElectronico
 
   /**
    * Devuelve el número completo del documento electrónico formateado.
-   * 
+   *
    * @return String el número completo del documento electrónico formateado 000-000-0000000
    */
   public function getNumeroDocumentoCompleto(): string
@@ -193,9 +199,9 @@ class DocumentoElectronico
    * Establece información y/o comentarios de interés del emisor.
    * ESTA INFORMACIÓN SE INCLUYE EN EL DOCUMENTO ELECTRÓNICO.
    * Valor OPCIONAL.
-   * 
+   *
    * @param String $dInfEmi comentarios del emisor
-   * 
+   *
    * @return self
    */
   public function setInformacionDeInteresEmisor(string $infoEmi): self
@@ -209,9 +215,9 @@ class DocumentoElectronico
    * ESTA INFORMACIÓN SE INCLUYE EN EL DOCUMENTO ELECTRÓNICO.
    * Valor OPCIONAL salvo para notas de remisión s/ art. 3 inc. 7 de la resolución 41/2014 de la SET donde dice:
    * La indicación expresa de «Mercaderías con cadena de Frío»; «Carga Peligrosa», u otro dato de relevancia similar, cuando se transporten productos que cumplan algunas de estas características.
-   * 
+   *
    * @param String $dInfFisc comentarios para fisco
-   * 
+   *
    * @return self
    */
   public function setInfoDeInteresFiscal(string $infoFisc): self
@@ -223,14 +229,14 @@ class DocumentoElectronico
   /**
    * Establece los datos del timbrado, la serie y el número de documento.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param int $numTimb número de timbrado
    * @param DateTime $fechaInicio fecha de inicio del timbrado
    * @param int $numEst número de establecimiento
    * @param int $numExp número de punto de expedición
    * @param int $numDoc número de documento electrónico
    * @param String $serie serie del número de timbrado (opcional)
-   * 
+   *
    * @return self
    */
   public function setTimbrado(int $numTimb, DateTime $fechaInicio, int $numEst, int $numExp, int $numDoc, ?string $serie = null): self
@@ -240,17 +246,18 @@ class DocumentoElectronico
     $this->setNumeroEstablecimiento($numEst);
     $this->setNumeroPuntoExpedicion($numExp);
     $this->setNumeroDocumento($numDoc);
-    if ($serie)
-      $this->setSerieNumeroTimbrado($serie);	
+    if ($serie) {
+      $this->setSerieNumeroTimbrado($serie);
+    }
     return $this;
   }
 
   /**
    * Establece el número de timbrado del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param int $numTimb número de timbrado
-   * 
+   *
    * @return self
    */
   public function setNumeroDeTimbrado(int $numTimb): self
@@ -262,9 +269,9 @@ class DocumentoElectronico
   /**
    * Establece la fecha de inicio del timbrado del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param DateTime $fechaInicio fecha de inicio del timbrado
-   * 
+   *
    * @return self
    */
   public function setFechaInicioTimbrado(DateTime $fechaInicio): self
@@ -278,15 +285,16 @@ class DocumentoElectronico
    * Valor OPCIONAL. Solo se utiliza cuando se han agotado los números de timbrado originales y se debe utilizar una nueva serie del mismo timbrado.
    *
    * @param String $serie serie del número de timbrado
-   * 
+   *
    * @return self
-   * 
-   * @throws Exception si la serie no es válida 
+   *
+   * @throws Exception si la serie no es válida
    */
   public function setSerieNumeroTimbrado(string $serie): self
   {
-    if (!TimbradoUtils::ValidarSerie($serie))
+    if (!TimbradoUtils::ValidarSerie($serie)) {
       throw new ValidacionException("[DocumentoElectronico::setSerieNumeroTimbrado] Valor de serie inválido. Valor recibido: $serie");
+    }
     $this->gTimb->setDSerieNum($serie);
     return $this;
   }
@@ -296,17 +304,18 @@ class DocumentoElectronico
    * EST-EXP-NÚMEROD
    *  ^
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param int $numEst número de establecimiento
-   * 
+   *
    * @return self
-   * 
+   *
    * @throws Exception si el número de establecimiento no es válido
    */
   public function setNumeroEstablecimiento(int $numEst): self
   {
-    if ($numEst < 1 || $numEst > 999)
+    if ($numEst < 1 || $numEst > 999) {
       throw new ValidacionException("[DocumentoElectronico::setNumeroEstablecimiento] El número de establecimiento debe ser un valor entre 1 y 999. Valor recibido: $numEst");
+    }
     $this->gTimb->setDEst(str_pad(strval($numEst), 3, "0", STR_PAD_LEFT));
     return $this;
   }
@@ -316,17 +325,18 @@ class DocumentoElectronico
    * EST-EXP-NÚMEROD
    *      ^
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param int $numExp número de punto de expedición
-   * 
+   *
    * @return self
-   * 
+   *
    * @throws Exception si el número de punto de expedición no es válido
    */
   public function setNumeroPuntoExpedicion(int $numExp): self
   {
-    if ($numExp < 1 || $numExp > 999)
+    if ($numExp < 1 || $numExp > 999) {
       throw new ValidacionException("[DocumentoElectronico::setNumeroPuntoExpedicion] El número de punto de expedición debe ser un valor entre 1 y 999. Valor recibido: $numExp");
+    }
     $this->gTimb->setDPunExp(str_pad(strval($numExp), 3, "0", STR_PAD_LEFT));
     return $this;
   }
@@ -337,17 +347,18 @@ class DocumentoElectronico
    * EST-EXP-NÚMEROD
    *           ^
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param int $numDoc número de documento electrónico
-   * 
+   *
    * @return self
-   * 
+   *
    * @throws Exception si el número de documento electrónico no es válido.
    */
   public function setNumeroDocumento(int $numDoc): self
   {
-    if ($numDoc < 1 || $numDoc > 9999999)
+    if ($numDoc < 1 || $numDoc > 9999999) {
       throw new ValidacionException("[DocumentoElectronico::setNumeroDocumento] El número de documento debe ser un valor entre 1 y 9999999. Valor recibido: $numDoc");
+    }
     $this->gTimb->setDNumDoc(str_pad($numDoc, 7, '0', STR_PAD_LEFT));
     return $this;
   }
@@ -355,9 +366,9 @@ class DocumentoElectronico
   /**
    * Establece la fecha y hora de emisión del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param DateTime $fechaEmision fecha y hora de emisión
-   * 
+   *
    * @return self
    */
   public function setFechaEmision(DateTime $fechaEmision): self
@@ -373,7 +384,7 @@ class DocumentoElectronico
   /**
    * Establece los datos del Emisor del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $rucEmisor RUC del emisor (obligatorio)
    * @param int $dv dígito verificador del RUC del emisor (obligatorio)
    * @param EmisRecTipCont $tipoContribuyente tipo de contribuyente del emisor (obligatorio)
@@ -390,7 +401,7 @@ class DocumentoElectronico
    * @param String $telefono número de teléfono del emisor (obligatorio)
    * @param String $email dirección de correo electrónico del emisor (obligatorio)
    * @param String $nombreSucursal denominación de la sucursal del emisor (opcional)
-   * 
+   *
    * @return self Instancia de la clase DocumentoElectronico con los datos del emisor establecidos para poder encadenar métodos.
    */
   public function setEmisor(
@@ -414,47 +425,54 @@ class DocumentoElectronico
     $this->setEmisorRUC($rucEmisor, $dv);
     $this->setEmisorTipoContribuyente($tipoContribuyente);
 
-    if ($tipoRegimen)
+    if ($tipoRegimen) {
       $this->setEmisorTipoRegimen($tipoRegimen);
+    }
 
     $this->setEmisorNombre($nombreEmisor);
 
-    if ($nombreFantasia)
+    if ($nombreFantasia) {
       $this->setEmisorNombreFantasia($nombreFantasia);
+    }
 
     $this->setEmisorDireccionLocal($callePrincipal);
     $this->setEmisorNumCasa($casaNro);
-    if ($calleSecundaria)
+    if ($calleSecundaria) {
       $this->setEmisorCalleSecundaria($calleSecundaria);
-    if ($complementoDir)
+    }
+    if ($complementoDir) {
       $this->setEmisorComplementoDireccion($complementoDir);
+    }
 
     $this->setEmisorCodigoDepartamento($codDep);
-    if ($codDistrito)
+    if ($codDistrito) {
       $this->setEmisorCodigoDistrito($codDistrito);
+    }
     $this->setEmisorCodigoCiudad($codCiud);
 
     $this->setEmisorTelefono($telefono);
     $this->setEmisorEmail($email);
 
-    if ($nombreSucursal)
+    if ($nombreSucursal) {
       $this->setEmisorDenominacionSucursal($nombreSucursal);
+    }
     return $this;
   }
 
   /**
    * Establece el RUC, junto con su digito verificador, del contribuyente emisor del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $rucEmisor RUC del contribuyente emisor
    * @param int $dv dígito verificador del RUC del contribuyente emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorRUC(string $rucEmisor, int $dv): self
   {
-    if (!RucUtils::ValidarRUCconDV($rucEmisor . '-' . $dv))
+    if (!RucUtils::ValidarRUCconDV($rucEmisor . '-' . $dv)) {
       throw new ValidacionException("[DocumentoElectronico::setEmisorRUC] El RUC del emisor no es válido. Valor recibido: $rucEmisor-$dv");
+    }
     $this->gEmis->setDRucEm($rucEmisor);
     $this->gEmis->setDDVEmi($dv);
     return $this;
@@ -463,9 +481,9 @@ class DocumentoElectronico
   /**
    * Establece el tipo de contribuyente emisor del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param EmisRecTipCont $tipoContribuyente tipo de contribuyente emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorTipoContribuyente(int|EmisRecTipCont $tipoContribuyente): self
@@ -477,9 +495,9 @@ class DocumentoElectronico
   /**
    * Establece el tipo de régimen tributario del contribuyente emisor del documento electrónico.
    * Valor OPCIONAL.
-   * 
+   *
    * @param TipoDeRegimen $tipoRegimen tipo de régimen tributario del contribuyente emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorTipoRegimen(int|TipoDeRegimen $tipoRegimen): self
@@ -491,9 +509,9 @@ class DocumentoElectronico
   /**
    * Establece el nombre o razón social del contribuyente emisor del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $nombreEmisor nombre o razón social del contribuyente emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorNombre(string $nombreEmisor): self
@@ -506,9 +524,9 @@ class DocumentoElectronico
    * Establece el nombre de fantasía del contribuyente emisor del documento electrónico.
    * El valor debe corresponder a lo declarado en el RUC.
    * Valor opcional.
-   * 
+   *
    * @param String $nombreFantasia nombre de fantasía del contribuyente emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorNombreFantasia(string $nombreFantasia): self
@@ -521,9 +539,9 @@ class DocumentoElectronico
    * Establece el nombre de la calle principal de la dirección del local emisor del documento electrónico.
    * El valor debe corresponder a lo declarado en el RUC.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $callePrincipal calle principal de la dirección del local emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorDireccionLocal(string $callePrincipal): self
@@ -536,9 +554,9 @@ class DocumentoElectronico
    * Establece el número de casa de la dirección del local emisor del documento electrónico. Si no tiene se completa con 0.
    * El valor debe corresponder a lo declarado en el RUC.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $casaNro numero de casa de la dirección del local emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorNumCasa(string $casaNro): self
@@ -550,9 +568,9 @@ class DocumentoElectronico
   /**
    * Establece el nombre de la calle secundaria de la dirección del local emisor del documento electrónico.
    * Valor opcional.
-   * 
+   *
    * @param String $calleSecundaria nombre de la calle secundaria de la dirección del local emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorCalleSecundaria(string $calleSecundaria): self
@@ -564,9 +582,9 @@ class DocumentoElectronico
   /**
    * Establece el numero de departamento, piso, local, edificio o alguna otra referencia de la dirección del local de emisión.
    * Valor opcional.
-   * 
+   *
    * @param String $complementoDir nombre de la calle terciaria de la dirección del local emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorComplementoDireccion(string $complementoDir): self
@@ -580,9 +598,9 @@ class DocumentoElectronico
    * Su valor debe coincidir con lo declarado en el RUC.
    * Su valor debe corresponderse con el código de la tabla de códigos de departamentos del SIFEN.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param int $codDep código del departamento nacional donde se encuentra el local emisor.
-   * 
+   *
    * @return self
    */
   public function setEmisorCodigoDepartamento(int $codDep): self
@@ -592,14 +610,14 @@ class DocumentoElectronico
   }
 
   /**
-   * Establece el código del distrito y su descripción, donde se encuentra el local emisor del documento electrónico. 
+   * Establece el código del distrito y su descripción, donde se encuentra el local emisor del documento electrónico.
    * Su valor debe coincidir con lo declarado en el RUC.
    * El distrito debe ubicarse en el departamento indicado en el campo cDepEmi.
    * Su valor debe corresponderse con el código de la tabla de códigos de distritos del SIFEN
    * Valor opcional.
-   * 
+   *
    * @param int $codDist código del distrito donde se encuentra el local emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorCodigoDistrito(int $codDist): self
@@ -614,9 +632,9 @@ class DocumentoElectronico
    * La ciudad debe ubicarse en el departamento indicado en el campo cDepEmi.
    * Su valor debe corresponderse con el código de la tabla de códigos de ciudades del SIFEN.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param int $codCiud código de la ciudad donde se encuentra el local emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorCodigoCiudad(int $codCiud): self
@@ -629,9 +647,9 @@ class DocumentoElectronico
    * Establece el número de teléfono del local emisor del documento electrónico.
    * Debe incluir el prefijo de ciudad y corresponderse con lo declarado en el RUC.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $telefono número de teléfono del local emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorTelefono(string $telefono): self
@@ -644,9 +662,9 @@ class DocumentoElectronico
    * Establece la dirección de correo electrónico del emisor del documento electrónico.
    * Debe corresponderse con lo declarado en el RUC.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $email dirección de correo electrónico del emisor
-   * 
+   *
    * @return self
    */
   public function setEmisorEmail(string $email): self
@@ -670,12 +688,12 @@ class DocumentoElectronico
   /**
    * Establece la persona responsable de la generación del documento electrónico dentro de la organización del emisor.
    * Valor opcional.
-   * 
+   *
    * @param TipIDRespDE $tipoID tipo de documento de identidad del responsable de la generación del DE
    * @param String $nroID número de documento de identidad del responsable de la generación del DE
    * @param String $nombre nombre o razón social del responsable de la generación del DE
    * @param String $cargo cargo del responsable de la generación del DE
-   * 
+   *
    * @return self
    */
   public function setEmisorResponsableDelDE(TipIDRespDE $tipoID, string $nroID, string $nombre, string $cargo): self
@@ -700,7 +718,7 @@ class DocumentoElectronico
   /**
    * Establece los datos del receptor del documento electrónico.
    * Valor OBLIGATORIO para todos los documentos electrónicos.
-   * 
+   *
    * @param String $nombre nombre o razón social del receptor (obligatorio)
    * @param bool $esContribuyente si el receptor es contribuyente (obligatorio)
    * @param RecTiOpe $tipoOperacion tipo de operación (obligatorio)
@@ -753,25 +771,32 @@ class DocumentoElectronico
     }
     // Validación de tipo de identidad y estado de contribuyente
     if ($esContribuyente) {
-      if (!$tipoContribuyente)
+      if (!$tipoContribuyente) {
         throw new ValidacionException("[DocumentoElectronico::setReceptor] El tipo de contribuyente es obligatorio si el receptor es contribuyente.");
-      if (is_null($ruc))
+      }
+      if (is_null($ruc)) {
         throw new ValidacionException("[DocumentoElectronico::setReceptor] El RUC del receptor es obligatorio si el receptor es contribuyente.");
-      if (is_null($dv))
+      }
+      if (is_null($dv)) {
         throw new ValidacionException("[DocumentoElectronico::setReceptor] El dígito verificador del RUC del receptor es obligatorio si el receptor es contribuyente.");
+      }
     } else {
-      if ($tipoIdentificacion === null)
+      if ($tipoIdentificacion === null) {
         throw new ValidacionException("[DocumentoElectronico::setReceptor] El tipo de identificación es obligatorio si el receptor no es contribuyente.");
+      }
       // '0' es el valor que el MT exige en D210 para el receptor innominado (D208 = 5) y antes se rechazaba por ser falsy.
-      if ($nroIdentificacion === null || $nroIdentificacion === '')
+      if ($nroIdentificacion === null || $nroIdentificacion === '') {
         throw new ValidacionException("[DocumentoElectronico::setReceptor] El número de identificación es obligatorio si el receptor no es contribuyente (para el innominado, D208 = 5, informar '0').");
+      }
       // Para "Otro" (9), D209 (dDTipIDRec) es de texto libre, obligatorio y de 9 a 41 caracteres.
       if ($tipoIdInt === TipIDRec::Otro->value) {
-        if (is_null($descTipoIdentificacion) || $descTipoIdentificacion === '')
+        if (is_null($descTipoIdentificacion) || $descTipoIdentificacion === '') {
           throw new ValidacionException("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) es obligatoria cuando el tipo de identificación es 9 (Otro).");
+        }
         $descLen = mb_strlen($descTipoIdentificacion);
-        if ($descLen < 9 || $descLen > 41)
+        if ($descLen < 9 || $descLen > 41) {
           throw new ValidacionException("[DocumentoElectronico::setReceptor] La descripción del tipo de identificación (dDTipIDRec / D209) debe tener entre 9 y 41 caracteres cuando el tipo de identificación es 9 (Otro). Se encontraron " . $descLen . ".");
+        }
       }
     }
 
@@ -784,13 +809,13 @@ class DocumentoElectronico
       $this->gDatRec->setITiContRec($tipoContribuyente);
       $this->gDatRec->setDRucRec($ruc);
       $this->gDatRec->setDDVRec($dv);
-    }
-    else {
+    } else {
       $this->gDatRec->setITipIDRec($tipoIdentificacion);
       $this->gDatRec->setDNumIDRec($nroIdentificacion);
       // Solo para "Otro" (9) se traslada la descripción de texto libre del usuario a D209.
-      if ($tipoIdInt === TipIDRec::Otro->value)
+      if ($tipoIdInt === TipIDRec::Otro->value) {
         $this->gDatRec->setDDTipIDRec($descTipoIdentificacion);
+      }
     }
 
     if ($tipoIdentificacion == TipIDRec::Innominado) {
@@ -799,8 +824,9 @@ class DocumentoElectronico
       $this->gDatRec->setDNomRec($nombre);
     }
 
-    if (isset($nombreFantasia))
+    if (isset($nombreFantasia)) {
       $this->gDatRec->setDNomFanRec($nombreFantasia);
+    }
 
     if ($tipoOpInt === RecTiOpe::B2F->value && $callePrincipal == null) {
       throw new ValidacionException("[DocumentoElectronico::setReceptor] La calle principal es obligatoria para un receptor extranjero.");
@@ -808,26 +834,34 @@ class DocumentoElectronico
 
     if (isset($callePrincipal)) {
       $this->gDatRec->setDDirRec($callePrincipal);
-      if (!isset($numeroCasa))
+      if (!isset($numeroCasa)) {
         throw new ValidacionException("[DocumentoElectronico::setReceptor] El número de casa es obligatorio si se establece la calle principal.");
+      }
       $this->gDatRec->setDNumCasRec($numeroCasa);
       if ($tipoOpInt !== RecTiOpe::B2F->value) {
-        if (!isset($codigoDepartamento))
+        if (!isset($codigoDepartamento)) {
           throw new ValidacionException("[DocumentoElectronico::setReceptor] El código de departamento es obligatorio si se establece la calle principal.");
+        }
         $this->gDatRec->setCDepRec($codigoDepartamento);
-        if (isset($codigoDistrito))
+        if (isset($codigoDistrito)) {
           $this->gDatRec->setCDisRec($codigoDistrito);
-        if (!isset($codigoCiudad))
+        }
+        if (!isset($codigoCiudad)) {
           throw new ValidacionException("[DocumentoElectronico::setReceptor] El código de ciudad es obligatorio si se establece la calle principal.");
+        }
         $this->gDatRec->setCCiuRec($codigoCiudad);
-        if (isset($telefono))
+        if (isset($telefono)) {
           $this->gDatRec->setDTelRec($telefono);
-        if (isset($celular))
+        }
+        if (isset($celular)) {
           $this->gDatRec->setDCelRec($celular);
-        if (isset($email))
+        }
+        if (isset($email)) {
           $this->gDatRec->setDEmailRec($email);
-        if (isset($codigoDeCliente))
+        }
+        if (isset($codigoDeCliente)) {
           $this->gDatRec->setDCodCliente($codigoDeCliente);
+        }
       }
     }
     return $this;
@@ -841,14 +875,14 @@ class DocumentoElectronico
 
   /**
    * Establece los datos complementarios de uso específico para el sector de energía eléctrica.
-   * 
+   *
    * @param String $nroMedidor número de medidor
    * @param int $codActividad código de actividad
    * @param String $codCategoria código de categoría
    * @param String $lecturaAnterior lectura anterior
    * @param String $lecturaActual lectura actual
    * @param String $consumoKwh consumo en Kwh
-   * 
+   *
    * @return self
    */
   public function setDatosComplementariosSectorEnergia(
@@ -886,10 +920,12 @@ class DocumentoElectronico
     string $lecturaActual,
     string $consumoKwh
   ): self {
-    if (!isset($this->gGrupEner))
+    if (!isset($this->gGrupEner)) {
       return $this->setDatosComplementariosSectorEnergia($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
-    if (1 + count($this->gGrupEnerAdicionales) >= 9)
+    }
+    if (1 + count($this->gGrupEnerAdicionales) >= 9) {
       throw new ValidacionException('[DocumentoElectronico] El sector de energía eléctrica admite como máximo 9 medidores (gGrupEner, DE_v150.xsd:802; NT-023).');
+    }
     $this->gGrupEnerAdicionales[] = self::crearGGrupEner($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
     return $this;
   }
@@ -908,7 +944,7 @@ class DocumentoElectronico
 
   /**
    * Establece los datos complementarios de uso específico para el sector de supermercados.
-   * 
+   *
    * @param String $nombreCajero nombre del cajero
    * @param String $montoPagoEfectivo monto de pago en efectivo (decimal BCMath)
    * @param String $montoVuelto monto de vuelto (decimal BCMath)
@@ -923,22 +959,27 @@ class DocumentoElectronico
     ?string $descripcionDonacion
   ): self {
     $this->gGrupSup = new GGrupSup();
-    if (isset($nombreCajero))
+    if (isset($nombreCajero)) {
       $this->gGrupSup->setDNomCaj($nombreCajero);
-    if (isset($montoPagoEfectivo))
+    }
+    if (isset($montoPagoEfectivo)) {
       $this->gGrupSup->setDEfectivo($montoPagoEfectivo);
-    if (isset($montoVuelto))
+    }
+    if (isset($montoVuelto)) {
       $this->gGrupSup->setDVuelto($montoVuelto);
-    if (isset($montoDonacion))
+    }
+    if (isset($montoDonacion)) {
       $this->gGrupSup->setDDonac($montoDonacion);
-    if (isset($descripcionDonacion))
+    }
+    if (isset($descripcionDonacion)) {
       $this->gGrupSup->setDDesDonac($descripcionDonacion);
+    }
     return $this;
   }
 
   /**
    * Establece los datos adicionales de uso comercial que hacen relación a las operaciones de carácter cíclico como ser suscripciones o contratos de facturacion periódica.
-   * 
+   *
    * @param String $cicloDeFacturacion descripción del ciclo de facturación al se refiere el documento electrónico.
    * @param DateTime $fechaInicioCiclo fecha de inicio del ciclo de facturación.
    * @param DateTime $fechaFinCiclo fecha de fin del ciclo de facturación.
@@ -955,18 +996,24 @@ class DocumentoElectronico
     ?string $saldoAnteriorAdeudado
   ): self {
     $this->gGrupAdi = new GGrupAdi();
-    if (isset($cicloDeFacturacion))
+    if (isset($cicloDeFacturacion)) {
       $this->gGrupAdi->setDCiclo($cicloDeFacturacion);
-    if (isset($fechaInicioCiclo))
+    }
+    if (isset($fechaInicioCiclo)) {
       $this->gGrupAdi->setDFecIniC($fechaInicioCiclo);
-    if (isset($fechaFinCiclo))
+    }
+    if (isset($fechaFinCiclo)) {
       $this->gGrupAdi->setDFecFinC($fechaFinCiclo);
-    if (isset($fechaVencimiento))
+    }
+    if (isset($fechaVencimiento)) {
       $this->gGrupAdi->setDVencPag($fechaVencimiento);
-    if (isset($numeroContrato))
+    }
+    if (isset($numeroContrato)) {
       $this->gGrupAdi->setDContrato($numeroContrato);
-    if (isset($saldoAnteriorAdeudado))
+    }
+    if (isset($saldoAnteriorAdeudado)) {
       $this->gGrupAdi->setDSalAnt($saldoAnteriorAdeudado);
+    }
     return $this;
   }
 
@@ -981,53 +1028,57 @@ class DocumentoElectronico
    */
   public function addVencimientoDePagoDeUsoComercial(DateTime $fechaVencimiento): self
   {
-    if (!isset($this->gGrupAdi))
+    if (!isset($this->gGrupAdi)) {
       $this->gGrupAdi = new GGrupAdi();
+    }
     $this->gGrupAdi->addDVencPag($fechaVencimiento);
     return $this;
   }
 
   /**
    * Establece el número de orden de compra del documento electrónico (G002).
-   * 
+   *
    * @param String $nroOrdenCompra número de orden de compra
-   * 
+   *
    * @return self
    */
   public function setNroDeOrdenDeCompra(string $nroOrdenCompra): self
   {
-    if(!isset($this->gCamGen))
+    if (!isset($this->gCamGen)) {
       $this->gCamGen = new GCamGen();
+    }
     $this->gCamGen->setDOrdCompra($nroOrdenCompra);
     return $this;
   }
 
   /**
    * Establece el número de orden de venta del documento electrónico (G003).
-   * 
+   *
    * @param String $nroOrdenVenta número de orden de venta
-   * 
+   *
    * @return self
    */
   public function setNroDeOrdenDeVenta(string $nroOrdenVenta): self
   {
-    if(!isset($this->gCamGen))
+    if (!isset($this->gCamGen)) {
       $this->gCamGen = new GCamGen();
+    }
     $this->gCamGen->setDOrdVta($nroOrdenVenta);
     return $this;
   }
 
   /**
    * Establece el número de asiento contable del documento electrónico (G004).
-   * 
+   *
    * @param String $nroAsiento número de asiento contable
-   * 
+   *
    * @return self
    */
   public function setNroDeAsientoContable(string $nroAsiento): self
   {
-    if(!isset($this->gCamGen))
+    if (!isset($this->gCamGen)) {
       $this->gCamGen = new GCamGen();
+    }
     $this->gCamGen->setDAsiento($nroAsiento);
     return $this;
   }
@@ -1041,10 +1092,10 @@ class DocumentoElectronico
   /**
    * Agrega una actividad económica al emisor del documento electrónico.
    * Tanto el código como la descripción deben corresponderse con lo declarado en el RUC.
-   * 
+   *
    * @param int $codigo código de la actividad económica
    * @param String $descripcion descripción de la actividad económica
-   * 
+   *
    * @return self
    */
   public function addEmisorActividadEconomica(int $codigo, string $descripcion): self
@@ -1067,29 +1118,33 @@ class DocumentoElectronico
       $this->gGrupSeg = new GGrupSeg();
       $this->gGrupSeg->setDCodEmpSeg($codigoEmpresaSeguros);
     } else {
-      if (strcmp($this->gGrupSeg->getDCodEmpSeg(), $codigoEmpresaSeguros) != 0)
+      if (strcmp($this->gGrupSeg->getDCodEmpSeg(), $codigoEmpresaSeguros) != 0) {
         throw new ValidacionException("[DocumentoElectronico::addDatosComplementariosSectorSegurosPoliza] No se puede agregar una póliza de una empresa de seguros diferente a la ya agregada. Valor recibido: $codigoEmpresaSeguros");
+      }
     }
     $poliza = new GGrupPolSeg();
     $poliza->setDPoliza($codigoPoliza);
     $poliza->setDUnidVig($unidadTiempoVigencia);
     $poliza->setDVigencia($cantTiempoVigencia);
     $poliza->setDNumPoliza($numeroPoliza);
-    if (isset($fechaInicioVigencia))
+    if (isset($fechaInicioVigencia)) {
       $poliza->setDFecIniVig($fechaInicioVigencia);
-    if (isset($fechaFinVigencia))
+    }
+    if (isset($fechaFinVigencia)) {
       $poliza->setDFecFinVig($fechaFinVigencia);
-    if (isset($codigoInternoItem))
+    }
+    if (isset($codigoInternoItem)) {
       $poliza->setDCodInt($codigoInternoItem);
+    }
     $this->gGrupSeg->addGrupPolSeg($poliza);
     return $this;
   }
 
   /**
    * Agrega un documento electrónico asociado a este documento electrónico.
-   * 
+   *
    * @param String $cdc código de documento electrónico asociado
-   * 
+   *
    * @return self
    */
   public function addDocumentoElectronicoAsociado(string $cdc): self
@@ -1103,7 +1158,7 @@ class DocumentoElectronico
 
   /**
    * Agrega un documento impreso asociado a este documento electrónico.
-   * 
+   *
    * @param int $numTimbrado número de timbrado del documento impreso asociado
    * @param int $numEstablecimiento número de establecimiento del documento impreso asociado
    * @param int $numPuntoExpedicion número de punto de expedición del documento impreso asociado
@@ -1112,7 +1167,7 @@ class DocumentoElectronico
    * @param DateTime $fechaEmisionDocImpreso fecha de emisión del documento impreso asociado
    * @param String|null $numComprobanteRetencion número de comprobante de retención asociado (opcional, solo para tipo de documento impreso asociado "Comprobante de Retención")
    * @param String|null $numResolucionCreditoFiscal número de resolución de crédito fiscal asociado (opcional, solo se informa cuando D011 vale 12 - tipo de operación venta de credito fiscal)
-   * 
+   *
    * @return self
    */
   public function addDocumentoImpresoAsociado(
@@ -1124,8 +1179,7 @@ class DocumentoElectronico
     DateTime $fechaEmisionDocImpreso,
     ?string $numComprobanteRetencion = null,
     ?string $numResolucionCreditoFiscal = null
-  ): self 
-  {
+  ): self {
     $gCamDIAsoc = new GCamDEAsoc();
     $gCamDIAsoc->setITipDocAso(TipDocAso::Impreso);
     $gCamDIAsoc->setDNTimDI($numTimbrado);
@@ -1134,10 +1188,12 @@ class DocumentoElectronico
     $gCamDIAsoc->setDNumDocAso($numDocumento);
     $gCamDIAsoc->setITipoDocAso($tipoDocumentoImpreso);
     $gCamDIAsoc->setDFecEmiDI($fechaEmisionDocImpreso);
-    if ($numComprobanteRetencion)
+    if ($numComprobanteRetencion) {
       $gCamDIAsoc->setDNumComRet($numComprobanteRetencion);
-    if ($numResolucionCreditoFiscal)
+    }
+    if ($numResolucionCreditoFiscal) {
       $gCamDIAsoc->setDNumResCF($numResolucionCreditoFiscal);
+    }
     $this->gCamDEAsoc[] = $gCamDIAsoc;
     return $this;
   }

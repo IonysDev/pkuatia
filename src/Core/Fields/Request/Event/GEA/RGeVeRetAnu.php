@@ -6,7 +6,6 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
-use stdClass;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
@@ -14,7 +13,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  *  ID:GERA001 Raíz Gestión de Eventos de retención anulación PADRE:GDE007
  */
 class RGeVeRetAnu
-{ 
+{
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public string $Id;          // GERA002 - CDC del DE/DTE - 44 - 1-1
   public int $dNumTimRet;     // GERA003 - Número de timbrado del documento de retención - 8 - 1-1
@@ -284,7 +283,7 @@ class RGeVeRetAnu
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element 
+  ///XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -296,8 +295,9 @@ class RGeVeRetAnu
   {
     $res = $doc->createElement('rGeVeRetAnu');
     $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
-    if (isset($this->dRuc))
-      $res->appendChild(XmlHelper::elemento($doc, 'dRuc', $this->dRuc)); // orden de trGeVeRetAnu (Evento_v150.xsd:131-150)
+    if (isset($this->dRuc)) {
+      $res->appendChild(XmlHelper::elemento($doc, 'dRuc', $this->dRuc));
+    } // orden de trGeVeRetAnu (Evento_v150.xsd:131-150)
     $res->appendChild(XmlHelper::elemento($doc, 'dNumTimRet', $this->getDNumTimRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dEstRet', $this->getDEstRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dPunExpRet', $this->getDPunExpRet()));
@@ -305,8 +305,9 @@ class RGeVeRetAnu
     $res->appendChild(XmlHelper::elemento($doc, 'dCodConRet', $this->getDCodConRet()));
     $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiRet', $this->getDFeEmiRet()->format('Y-m-d\TH:i:s')));
     $res->appendChild(XmlHelper::elemento($doc, 'dFecAnRet', $this->getDFecAnRet()->format('Y-m-d\TH:i:s')));
-    if (isset($this->dMonRet))
+    if (isset($this->dMonRet)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dMonRet', $this->dMonRet));
+    }
 
     return $res;
   }
@@ -337,15 +338,17 @@ class RGeVeRetAnu
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if($node->getName() != 'rGeVeRetAnu')
+    if ($node->getName() != 'rGeVeRetAnu') {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
+    }
 
     $res = new RGeVeRetAnu();
     $res->setId($node->Id);
-    if (isset($node->dRuc))
+    if (isset($node->dRuc)) {
       $res->setDRuc((string) $node->dRuc);
+    }
     $res->setDNumTimRet(intval($node->dNumTimRet));
     $res->setDEstRet($node->dEstRet);
     $res->setDPunExpRet($node->dPunExpRet);
@@ -353,8 +356,9 @@ class RGeVeRetAnu
     $res->setDCodConRet($node->dCodConRet);
     $res->setDFeEmiRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFeEmiRet)));
     $res->setDFecAnRet(DateTime::createFromFormat('Y-m-d\TH:i:s', strval($node->dFecAnRet)));
-    if (isset($node->dMonRet))
+    if (isset($node->dMonRet)) {
       $res->setDMonRet((string) $node->dMonRet);
+    }
 
     return $res;
   }

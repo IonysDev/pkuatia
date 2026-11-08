@@ -7,13 +7,14 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Estos valores corresponden al campo iTipCont (D103) del grupo gEmis(D100), y al campo iTiContRec (D205) del grupo gDatRec (D200).
  */
 
-enum EmisRecTipCont: int {
+enum EmisRecTipCont: int
+{
     case PersonaFisica = 1;
     case PersonaJuridica = 2;
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PersonaFisica => 'PersonaFisica',
             self::PersonaJuridica => 'PersonaJuridica'
         };

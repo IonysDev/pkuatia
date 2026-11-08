@@ -54,8 +54,9 @@ final class ValidadorDE
     $ahora ??= new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE));
     $resultado = new ResultadoValidacion();
     self::revisar('tDE', $vista->raiz(), 'DE', $resultado);
-    foreach (self::CONJUNTOS as $conjunto)
+    foreach (self::CONJUNTOS as $conjunto) {
       $conjunto::aplicar($vista, $resultado, $ahora);
+    }
     return $resultado;
   }
 
@@ -65,27 +66,32 @@ final class ValidadorDE
   private static function revisar(string $tipo, array|object $nodo, string $ruta, ResultadoValidacion $r): void
   {
     foreach (CatalogoValidaciones::hijosDe($tipo) as $hijo) {
-      if (in_array($hijo->nombre, self::GENERADOS, true))
+      if (in_array($hijo->nombre, self::GENERADOS, true)) {
         continue;
+      }
       $valor = self::leer($nodo, $hijo->nombre);
-      if ($valor === self::DERIVADO)
-        continue; // lo genera toDOMElement a partir de otro campo, que sí se revisa (p. ej. cDepSal)
+      if ($valor === self::DERIVADO) {
+        continue;
+      } // lo genera toDOMElement a partir de otro campo, que sí se revisa (p. ej. cDepSal)
       $presente = $valor !== null && $valor !== [] && $valor !== '';
       if (!$presente) {
-        if ($hijo->esObligatorio())
+        if ($hijo->esObligatorio()) {
           $r->agregar(new ErrorValidacion(OrigenError::Completitud,
             sprintf('Falta %s%s, obligatorio en %s (%s).', $hijo->nombre, $hijo->campoMT !== null ? " ({$hijo->campoMT})" : '', self::nombreDelGrupo($ruta), $hijo->cita()),
             '0160', $hijo->campoMT, $hijo->nombre, $ruta, null, self::sugerencia($hijo)));
+        }
         continue;
       }
-      if (!$hijo->esGrupo)
+      if (!$hijo->esGrupo) {
         continue;
+      }
       $tipoHijo = $hijo->tipo ?? $hijo->nombre;
       if ($hijo->esLista()) {
         $lista = is_array($valor) ? array_values($valor) : [$valor];
         foreach ($lista as $i => $item) {
-          if (is_object($item) || is_array($item))
+          if (is_object($item) || is_array($item)) {
             self::revisar($tipoHijo, $item, $ruta . '.' . $hijo->nombre . '[' . ($i + 1) . ']', $r);
+          }
         }
       } elseif (is_object($valor) || is_array($valor)) {
         self::revisar($tipoHijo, $valor, $ruta . '.' . $hijo->nombre, $r);
@@ -96,11 +102,13 @@ final class ValidadorDE
   /** Valor de un elemento en un nodo (arreglo sintético de la vista u objeto del modelo), sin getters ni Error. */
   private static function leer(array|object $nodo, string $nombre): mixed
   {
-    if (is_array($nodo))
+    if (is_array($nodo)) {
       return $nodo[$nombre] ?? null;
+    }
     foreach ([$nombre, self::ALIAS[$nombre] ?? null] as $propiedad) {
-      if ($propiedad !== null && property_exists($nodo, $propiedad))
+      if ($propiedad !== null && property_exists($nodo, $propiedad)) {
         return isset($nodo->{$propiedad}) ? $nodo->{$propiedad} : null;
+      }
     }
     // Sin propiedad: el modelo lo deriva al serializar (descripciones de departamento, distrito y ciudad del transporte).
     return self::DERIVADO;
@@ -108,8 +116,9 @@ final class ValidadorDE
 
   private static function sugerencia(InfoElemento $hijo): ?string
   {
-    if ($hijo->campoMT === null)
+    if ($hijo->campoMT === null) {
       return null;
+    }
     $metodo = CatalogoValidaciones::metodoPkuatia($hijo->campoMT);
     return $metodo !== null ? "Informar {$hijo->campoMT} con $metodo." : null;
   }

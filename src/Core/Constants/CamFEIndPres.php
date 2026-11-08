@@ -4,11 +4,11 @@ namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
  * Enumeración que contiene los indicadores de presencia para la emisión de una factura electrónica.
- * Estos valores corresponden al campo iIndPres (E011), asi como a su descripción correspondiente del campo dDesIndPres (E012) 
+ * Estos valores corresponden al campo iIndPres (E011), asi como a su descripción correspondiente del campo dDesIndPres (E012)
  * del grupo gCamFE (E010).
  */
-enum CamFEIndPres: int {
-
+enum CamFEIndPres: int
+{
     case Presencial = 1;
     case Electronica = 2;
     case Telemarketing = 3;
@@ -19,7 +19,7 @@ enum CamFEIndPres: int {
 
     /**
      * Devuelve la descripción del indicador de presencia.
-     * 
+     *
      * @param int $value Valor del indicador de presencia.
      * @return string
      * @throws Exception
@@ -27,7 +27,7 @@ enum CamFEIndPres: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Presencial => 'Operación presencial',
             self::Electronica => 'Operación electrónica',
             self::Telemarketing => 'Operación telemarketing',

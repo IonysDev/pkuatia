@@ -101,8 +101,9 @@ final class ReglasDeTransporteYAsociadosTest extends TestCase
     $a->setDNumDocAso(1234567);
     $a->setITipoDocAso($tipo);
     $a->setDFecEmiDI(new DateTime('2026-01-10'));
-    if ($retencion !== null)
+    if ($retencion !== null) {
       $a->setDNumComRet($retencion);
+    }
     return $a;
   }
 
@@ -119,21 +120,89 @@ final class ReglasDeTransporteYAsociadosTest extends TestCase
   /** @return iterable<string, array{callable(): DE, string}> */
   public static function transporte(): iterable
   {
-    yield '2102 NR sin tipo de transporte' => [function () { $d = self::nr(); $t = $d->gDtipDe->gTransp; unset($t->iTipTrans, $t->dDesTipTrans); return $d; }, '2102'];
-    yield '2107 NR sin inicio de traslado' => [function () { $d = self::nr(); unset($d->gDtipDe->gTransp->dIniTras); return $d; }, '2107'];
-    yield '2108 inicio de traslado anterior al SIFEN' => [function () { $d = self::nr(); $d->gDtipDe->gTransp->dIniTras = new DateTime('2018-01-01'); return $d; }, '2108'];
-    yield '2109 NR sin fin de traslado' => [function () { $d = self::nr(); unset($d->gDtipDe->gTransp->dFinTras); return $d; }, '2109'];
-    yield '2110 fin de traslado anterior al inicio' => [function () { $d = self::nr(); $d->gDtipDe->gTransp->dFinTras = new DateTime('2026-01-15'); return $d; }, '2110'];
-    yield '2252 aéreo sin número de vuelo' => [function () { $d = self::nr(); $d->gDtipDe->gTransp->setIModTrans(GTranspModTrans::Aereo); return $d; }, '2252'];
-    yield '2253 número de vuelo fuera del aéreo' => [function () { $d = self::nr(); $d->gDtipDe->gTransp->gVehTras[0]->dNroVuelo = 'AB1234'; return $d; }, '2253'];
-    yield '2254 matrícula no informada' => [function () { $d = self::nr(); $d->gDtipDe->gTransp->gVehTras[0]->dTipIdenVeh = 2; return $d; }, '2254'];
-    yield '2255 identificación no informada' => [function () { $d = self::nrMatricula(); $d->gDtipDe->gTransp->gVehTras[0]->dTipIdenVeh = 1; return $d; }, '2255'];
-    yield '2302 transportista contribuyente sin RUC' => [function () { $d = self::nr(); $d->gDtipDe->gTransp->gCamTrans->iNatTrans = 1; return $d; }, '2302'];
-    yield '2305 RUC del transportista no contribuyente' => [function () { $d = self::nr(); $d->gDtipDe->gTransp->gCamTrans->dRucTrans = '80012345'; return $d; }, '2305'];
-    yield '2306 DV del RUC del transportista' => [function () { $d = self::nr(); $t = $d->gDtipDe->gTransp->gCamTrans; $t->iNatTrans = 1; $t->dRucTrans = '80012345'; $t->dDVTrans = 9; unset($t->iTipIDTrans, $t->dNumIDTrans); return $d; }, '2306'];
-    yield '2307 no contribuyente sin tipo de documento' => [function () { $d = self::nr(); unset($d->gDtipDe->gTransp->gCamTrans->iTipIDTrans); return $d; }, '2307'];
-    yield '2308 contribuyente con tipo de documento' => [function () { $d = self::nr(); $t = $d->gDtipDe->gTransp->gCamTrans; $t->iNatTrans = 1; $t->dRucTrans = '80012345'; $t->dDVTrans = 0; return $d; }, '2308'];
-    yield '2311 tipo de documento sin número' => [function () { $d = self::nr(); unset($d->gDtipDe->gTransp->gCamTrans->dNumIDTrans); return $d; }, '2311'];
+    yield '2102 NR sin tipo de transporte' => [function () {
+    $d = self::nr();
+    $t = $d->gDtipDe->gTransp;
+    unset($t->iTipTrans, $t->dDesTipTrans);
+    return $d;
+    }, '2102'];
+    yield '2107 NR sin inicio de traslado' => [function () {
+    $d = self::nr();
+    unset($d->gDtipDe->gTransp->dIniTras);
+    return $d;
+    }, '2107'];
+    yield '2108 inicio de traslado anterior al SIFEN' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gTransp->dIniTras = new DateTime('2018-01-01');
+    return $d;
+    }, '2108'];
+    yield '2109 NR sin fin de traslado' => [function () {
+    $d = self::nr();
+    unset($d->gDtipDe->gTransp->dFinTras);
+    return $d;
+    }, '2109'];
+    yield '2110 fin de traslado anterior al inicio' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gTransp->dFinTras = new DateTime('2026-01-15');
+    return $d;
+    }, '2110'];
+    yield '2252 aéreo sin número de vuelo' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gTransp->setIModTrans(GTranspModTrans::Aereo);
+    return $d;
+    }, '2252'];
+    yield '2253 número de vuelo fuera del aéreo' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gTransp->gVehTras[0]->dNroVuelo = 'AB1234';
+    return $d;
+    }, '2253'];
+    yield '2254 matrícula no informada' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gTransp->gVehTras[0]->dTipIdenVeh = 2;
+    return $d;
+    }, '2254'];
+    yield '2255 identificación no informada' => [function () {
+    $d = self::nrMatricula();
+    $d->gDtipDe->gTransp->gVehTras[0]->dTipIdenVeh = 1;
+    return $d;
+    }, '2255'];
+    yield '2302 transportista contribuyente sin RUC' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gTransp->gCamTrans->iNatTrans = 1;
+    return $d;
+    }, '2302'];
+    yield '2305 RUC del transportista no contribuyente' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gTransp->gCamTrans->dRucTrans = '80012345';
+    return $d;
+    }, '2305'];
+    yield '2306 DV del RUC del transportista' => [function () {
+    $d = self::nr();
+    $t = $d->gDtipDe->gTransp->gCamTrans;
+    $t->iNatTrans = 1;
+    $t->dRucTrans = '80012345';
+    $t->dDVTrans = 9;
+    unset($t->iTipIDTrans, $t->dNumIDTrans);
+    return $d;
+    }, '2306'];
+    yield '2307 no contribuyente sin tipo de documento' => [function () {
+    $d = self::nr();
+    unset($d->gDtipDe->gTransp->gCamTrans->iTipIDTrans);
+    return $d;
+    }, '2307'];
+    yield '2308 contribuyente con tipo de documento' => [function () {
+    $d = self::nr();
+    $t = $d->gDtipDe->gTransp->gCamTrans;
+    $t->iNatTrans = 1;
+    $t->dRucTrans = '80012345';
+    $t->dDVTrans = 0;
+    return $d;
+    }, '2308'];
+    yield '2311 tipo de documento sin número' => [function () {
+    $d = self::nr();
+    unset($d->gDtipDe->gTransp->gCamTrans->dNumIDTrans);
+    return $d;
+    }, '2311'];
   }
 
   #[DataProvider('transporte')]
@@ -145,12 +214,38 @@ final class ReglasDeTransporteYAsociadosTest extends TestCase
   /** @return iterable<string, array{callable(): DE, string}> */
   public static function ciclos(): iterable
   {
-    yield '2050 ciclo sin fecha de inicio' => [function () { $d = self::feCiclo(); $d->gDtipDe->gCamEsp->gGrupAdi->dFecIniC = null; return $d; }, '2050'];
-    yield '2051 fecha de inicio sin ciclo' => [function () { $d = self::feCiclo(); $d->gDtipDe->gCamEsp->gGrupAdi->dCiclo = null; return $d; }, '2051'];
-    yield '2052 inicio sin fin de ciclo' => [function () { $d = self::feCiclo(); $d->gDtipDe->gCamEsp->gGrupAdi->dFecFinC = null; return $d; }, '2052'];
-    yield '2053 fin de ciclo sin inicio' => [function () { $d = self::feCiclo(); $g = $d->gDtipDe->gCamEsp->gGrupAdi; $g->dCiclo = null; $g->dFecIniC = null; return $d; }, '2053'];
-    yield '2054 fin de ciclo anterior al inicio' => [function () { $d = self::feCiclo(); $d->gDtipDe->gCamEsp->gGrupAdi->dFecFinC = new DateTime('2025-12-31'); return $d; }, '2054'];
-    yield '2055 vencimiento anterior a la emisión' => [function () { $d = self::feCiclo(); $d->gDtipDe->gCamEsp->gGrupAdi->dVencPag = new DateTime('2026-01-14'); return $d; }, '2055'];
+    yield '2050 ciclo sin fecha de inicio' => [function () {
+    $d = self::feCiclo();
+    $d->gDtipDe->gCamEsp->gGrupAdi->dFecIniC = null;
+    return $d;
+    }, '2050'];
+    yield '2051 fecha de inicio sin ciclo' => [function () {
+    $d = self::feCiclo();
+    $d->gDtipDe->gCamEsp->gGrupAdi->dCiclo = null;
+    return $d;
+    }, '2051'];
+    yield '2052 inicio sin fin de ciclo' => [function () {
+    $d = self::feCiclo();
+    $d->gDtipDe->gCamEsp->gGrupAdi->dFecFinC = null;
+    return $d;
+    }, '2052'];
+    yield '2053 fin de ciclo sin inicio' => [function () {
+    $d = self::feCiclo();
+    $g = $d->gDtipDe->gCamEsp->gGrupAdi;
+    $g->dCiclo = null;
+    $g->dFecIniC = null;
+    return $d;
+    }, '2053'];
+    yield '2054 fin de ciclo anterior al inicio' => [function () {
+    $d = self::feCiclo();
+    $d->gDtipDe->gCamEsp->gGrupAdi->dFecFinC = new DateTime('2025-12-31');
+    return $d;
+    }, '2054'];
+    yield '2055 vencimiento anterior a la emisión' => [function () {
+    $d = self::feCiclo();
+    $d->gDtipDe->gCamEsp->gGrupAdi->dVencPag = new DateTime('2026-01-14');
+    return $d;
+    }, '2055'];
   }
 
   #[DataProvider('ciclos')]
@@ -162,33 +257,147 @@ final class ReglasDeTransporteYAsociadosTest extends TestCase
   /** @return iterable<string, array{callable(): DE, string}> */
   public static function asociados(): iterable
   {
-    yield '2415 NC con dos asociados' => [function () { $d = self::nc(); $d->gCamDEAsoc[] = self::electronico(); return $d; }, '2415'];
-    yield '2416 AF con asociado electrónico' => [function () { $d = self::af(); $d->gCamDEAsoc = [self::electronico()]; return $d; }, '2416'];
-    yield '2434 FE con constancia' => [function () { $d = self::fe(); $d->gCamDEAsoc = [self::constancia()]; return $d; }, '2434'];
-    yield '2402 electrónico sin CDC' => [function () { $d = self::nc(); unset($d->gCamDEAsoc[0]->dCdCDERef); return $d; }, '2402'];
-    yield '2418 constancia con CDC' => [function () { $d = self::af(); $d->gCamDEAsoc[0]->dCdCDERef = F::CDC_ASOCIADO; return $d; }, '2418'];
-    yield '2405 impreso sin timbrado' => [function () { $d = self::ncImpreso(); unset($d->gCamDEAsoc[0]->dNTimDI); return $d; }, '2405'];
-    yield '2406 impreso sin establecimiento' => [function () { $d = self::ncImpreso(); unset($d->gCamDEAsoc[0]->dEstDocAso); return $d; }, '2406'];
-    yield '2407 impreso sin punto de expedición' => [function () { $d = self::ncImpreso(); unset($d->gCamDEAsoc[0]->dPExpDocAso); return $d; }, '2407'];
-    yield '2408 impreso sin número' => [function () { $d = self::ncImpreso(); unset($d->gCamDEAsoc[0]->dNumDocAso); return $d; }, '2408'];
-    yield '2409 impreso sin tipo' => [function () { $d = self::ncImpreso(); unset($d->gCamDEAsoc[0]->iTipoDocAso); return $d; }, '2409'];
-    yield '2419 electrónico con timbrado' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setDNTimDI(12345678); return $d; }, '2419'];
-    yield '2420 electrónico con establecimiento' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setDEstDocAso(1); return $d; }, '2420'];
-    yield '2421 electrónico con punto de expedición' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setDPExpDocAso(1); return $d; }, '2421'];
-    yield '2422 electrónico con número' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setDNumDocAso(1234567); return $d; }, '2422'];
-    yield '2423 electrónico con tipo de impreso' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setITipoDocAso(TipoDocImpresoAso::Factura); return $d; }, '2423'];
-    yield '2424 tipo de impreso sin descripción' => [function () { $d = self::ncImpreso(); $d->gCamDEAsoc[0]->dDTipoDocAso = null; return $d; }, '2424'];
-    yield '2435 descripción de impreso sin tipo' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->dDTipoDocAso = 'Factura'; return $d; }, '2435'];
-    yield '2411 impreso sin fecha' => [function () { $d = self::ncImpreso(); unset($d->gCamDEAsoc[0]->dFecEmiDI); return $d; }, '2411'];
-    yield '2425 electrónico con fecha de impreso' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setDFecEmiDI(new DateTime('2026-01-10')); return $d; }, '2425'];
-    yield '2413 venta de crédito fiscal sin resolución' => [function () { $d = self::fe(); $d->gDatGralOpe->gOpeCom->setITipTra(OpeComTipTrans::VentaCreditoFiscal); return $d; }, '2413'];
-    yield '2426 constancia sin tipo' => [function () { $d = self::af(); $a = $d->gCamDEAsoc[0]; unset($a->iTipCons); $a->dDesTipCons = null; return $d; }, '2426'];
-    yield '2427 electrónico con tipo de constancia' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setITipCons(1); return $d; }, '2427'];
-    yield '2430 microproductor sin número de constancia' => [function () { $d = self::af(); $a = $d->gCamDEAsoc[0]; $a->setITipCons(2); unset($a->dNumCons); return $d; }, '2430'];
-    yield '2431 electrónico con número de constancia' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setDNumCons(12345678901); return $d; }, '2431'];
-    yield '2432 microproductor sin número de control' => [function () { $d = self::af(); $a = $d->gCamDEAsoc[0]; $a->setITipCons(2); unset($a->dNumControl); return $d; }, '2432'];
-    yield '2433 electrónico con número de control' => [function () { $d = self::nc(); $d->gCamDEAsoc[0]->setDNumControl('A1B2C3D4'); return $d; }, '2433'];
-    yield '2436 retención sin pago por retención' => [function () { $d = self::fe(); $d->gCamDEAsoc = [self::impreso(TipoDocImpresoAso::ComprobanteRetencion, '123456789012345')]; return $d; }, '2436'];
+    yield '2415 NC con dos asociados' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[] = self::electronico();
+    return $d;
+    }, '2415'];
+    yield '2416 AF con asociado electrónico' => [function () {
+    $d = self::af();
+    $d->gCamDEAsoc = [self::electronico()];
+    return $d;
+    }, '2416'];
+    yield '2434 FE con constancia' => [function () {
+    $d = self::fe();
+    $d->gCamDEAsoc = [self::constancia()];
+    return $d;
+    }, '2434'];
+    yield '2402 electrónico sin CDC' => [function () {
+    $d = self::nc();
+    unset($d->gCamDEAsoc[0]->dCdCDERef);
+    return $d;
+    }, '2402'];
+    yield '2418 constancia con CDC' => [function () {
+    $d = self::af();
+    $d->gCamDEAsoc[0]->dCdCDERef = F::CDC_ASOCIADO;
+    return $d;
+    }, '2418'];
+    yield '2405 impreso sin timbrado' => [function () {
+    $d = self::ncImpreso();
+    unset($d->gCamDEAsoc[0]->dNTimDI);
+    return $d;
+    }, '2405'];
+    yield '2406 impreso sin establecimiento' => [function () {
+    $d = self::ncImpreso();
+    unset($d->gCamDEAsoc[0]->dEstDocAso);
+    return $d;
+    }, '2406'];
+    yield '2407 impreso sin punto de expedición' => [function () {
+    $d = self::ncImpreso();
+    unset($d->gCamDEAsoc[0]->dPExpDocAso);
+    return $d;
+    }, '2407'];
+    yield '2408 impreso sin número' => [function () {
+    $d = self::ncImpreso();
+    unset($d->gCamDEAsoc[0]->dNumDocAso);
+    return $d;
+    }, '2408'];
+    yield '2409 impreso sin tipo' => [function () {
+    $d = self::ncImpreso();
+    unset($d->gCamDEAsoc[0]->iTipoDocAso);
+    return $d;
+    }, '2409'];
+    yield '2419 electrónico con timbrado' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setDNTimDI(12345678);
+    return $d;
+    }, '2419'];
+    yield '2420 electrónico con establecimiento' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setDEstDocAso(1);
+    return $d;
+    }, '2420'];
+    yield '2421 electrónico con punto de expedición' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setDPExpDocAso(1);
+    return $d;
+    }, '2421'];
+    yield '2422 electrónico con número' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setDNumDocAso(1234567);
+    return $d;
+    }, '2422'];
+    yield '2423 electrónico con tipo de impreso' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setITipoDocAso(TipoDocImpresoAso::Factura);
+    return $d;
+    }, '2423'];
+    yield '2424 tipo de impreso sin descripción' => [function () {
+    $d = self::ncImpreso();
+    $d->gCamDEAsoc[0]->dDTipoDocAso = null;
+    return $d;
+    }, '2424'];
+    yield '2435 descripción de impreso sin tipo' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->dDTipoDocAso = 'Factura';
+    return $d;
+    }, '2435'];
+    yield '2411 impreso sin fecha' => [function () {
+    $d = self::ncImpreso();
+    unset($d->gCamDEAsoc[0]->dFecEmiDI);
+    return $d;
+    }, '2411'];
+    yield '2425 electrónico con fecha de impreso' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setDFecEmiDI(new DateTime('2026-01-10'));
+    return $d;
+    }, '2425'];
+    yield '2413 venta de crédito fiscal sin resolución' => [function () {
+    $d = self::fe();
+    $d->gDatGralOpe->gOpeCom->setITipTra(OpeComTipTrans::VentaCreditoFiscal);
+    return $d;
+    }, '2413'];
+    yield '2426 constancia sin tipo' => [function () {
+    $d = self::af();
+    $a = $d->gCamDEAsoc[0];
+    unset($a->iTipCons);
+    $a->dDesTipCons = null;
+    return $d;
+    }, '2426'];
+    yield '2427 electrónico con tipo de constancia' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setITipCons(1);
+    return $d;
+    }, '2427'];
+    yield '2430 microproductor sin número de constancia' => [function () {
+    $d = self::af();
+    $a = $d->gCamDEAsoc[0];
+    $a->setITipCons(2);
+    unset($a->dNumCons);
+    return $d;
+    }, '2430'];
+    yield '2431 electrónico con número de constancia' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setDNumCons(12345678901);
+    return $d;
+    }, '2431'];
+    yield '2432 microproductor sin número de control' => [function () {
+    $d = self::af();
+    $a = $d->gCamDEAsoc[0];
+    $a->setITipCons(2);
+    unset($a->dNumControl);
+    return $d;
+    }, '2432'];
+    yield '2433 electrónico con número de control' => [function () {
+    $d = self::nc();
+    $d->gCamDEAsoc[0]->setDNumControl('A1B2C3D4');
+    return $d;
+    }, '2433'];
+    yield '2436 retención sin pago por retención' => [function () {
+    $d = self::fe();
+    $d->gCamDEAsoc = [self::impreso(TipoDocImpresoAso::ComprobanteRetencion, '123456789012345')];
+    return $d;
+    }, '2436'];
   }
 
   #[DataProvider('asociados')]
@@ -200,12 +409,36 @@ final class ReglasDeTransporteYAsociadosTest extends TestCase
   /** @return iterable<string, array{callable(): DE, string}> */
   public static function especificas(): iterable
   {
-    yield '2604 fecha futura de la factura en otro mes' => [function () { $d = self::nr(); $d->gDtipDe->gCamNRE->dFecEm = new DateTime('2026-02-01'); return $d; }, '2604'];
-    yield '2605 traslado por venta sin asociado ni fecha futura' => [function () { $d = self::nr(); $d->gCamDEAsoc = []; return $d; }, '2605'];
-    yield '2606 traslado entre locales con otro receptor' => [function () { $d = self::nr(); $d->gDtipDe->gCamNRE->setIMotEmiNR(MotEmiNR::TrasladoEntreLocales); return $d; }, '2606'];
-    yield '1400 B2G sin compras públicas' => [function () { $d = self::fe(); $d->gDatGralOpe->gDatRec->iTiOpe = 3; return $d; }, '1400'];
-    yield '1401 compras públicas fuera de B2G' => [function () { $d = self::feCompras(); $d->gDatGralOpe->gDatRec->iTiOpe = 1; return $d; }, '1401'];
-    yield '1402 código de contratación posterior a la emisión' => [function () { $d = self::feCompras(); $d->gDtipDe->gCamFE->gCompPub->dFeCodCont = new DateTime('2026-02-01'); return $d; }, '1402'];
+    yield '2604 fecha futura de la factura en otro mes' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gCamNRE->dFecEm = new DateTime('2026-02-01');
+    return $d;
+    }, '2604'];
+    yield '2605 traslado por venta sin asociado ni fecha futura' => [function () {
+    $d = self::nr();
+    $d->gCamDEAsoc = [];
+    return $d;
+    }, '2605'];
+    yield '2606 traslado entre locales con otro receptor' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gCamNRE->setIMotEmiNR(MotEmiNR::TrasladoEntreLocales);
+    return $d;
+    }, '2606'];
+    yield '1400 B2G sin compras públicas' => [function () {
+    $d = self::fe();
+    $d->gDatGralOpe->gDatRec->iTiOpe = 3;
+    return $d;
+    }, '1400'];
+    yield '1401 compras públicas fuera de B2G' => [function () {
+    $d = self::feCompras();
+    $d->gDatGralOpe->gDatRec->iTiOpe = 1;
+    return $d;
+    }, '1401'];
+    yield '1402 código de contratación posterior a la emisión' => [function () {
+    $d = self::feCompras();
+    $d->gDtipDe->gCamFE->gCompPub->dFeCodCont = new DateTime('2026-02-01');
+    return $d;
+    }, '1402'];
   }
 
   #[DataProvider('especificas')]

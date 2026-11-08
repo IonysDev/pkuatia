@@ -27,7 +27,7 @@ class RDE extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
   public int $dVerFor;         // AA002 - 3 - 1-1 - Versión del formato
-  
+
   public DE $DE;               // A001  - G - 1-1 - Campos firmados del  DE
   public Signature $Signature; // I001  - G - 1-1 - Firma Digital del DTE
   public GCamFuFD $gCamFuFD;   // J001  - G - 1-1 - Campos fuera de la firma digital
@@ -105,7 +105,7 @@ class RDE extends BaseSifenField
   {
     $this->gCamFuFD = $gCamFuFD;
     return $this;
-  }  
+  }
 
   ///////////////////////////////////////////////////////////////////////
   // Getters
@@ -146,12 +146,13 @@ class RDE extends BaseSifenField
    *
    * @return GCamFuFD Campos fuera de la firma digital
    */
-  public function getGCamFuFD() : ?GCamFuFD
+  public function getGCamFuFD(): ?GCamFuFD
   {
-    if(!isset($this->gCamFuFD))
+    if (!isset($this->gCamFuFD)) {
       return null;
+    }
     return $this->gCamFuFD;
-  }  
+  }
 
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
@@ -166,46 +167,54 @@ class RDE extends BaseSifenField
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'rDE') != 0)
+    if (strcmp($node->getName(), 'rDE') != 0) {
       throw new ValidacionException('[RDE] Invalid XML Node Name: ' . $node->getName());
+    }
     $res = new RDE();
-    if(isset($node->dVerFor))
+    if (isset($node->dVerFor)) {
       $res->setDVerFor(intval($node->dVerFor));
-    if(isset($node->DE))
+    }
+    if (isset($node->DE)) {
       $res->setDE(DE::FromSimpleXMLElement($node->DE));
-    if(isset($node->Signature)) {
+    }
+    if (isset($node->Signature)) {
       $res->setSignature(Signature::FromSimpleXMLElement($node->Signature));
       $res->signatureXml = $node->Signature->asXML();
     }
-    if(isset($node->gCamFuFD))
+    if (isset($node->gCamFuFD)) {
       $res->setGCamFuFD(GCamFuFD::FromSimpleXMLElement($node->gCamFuFD));
+    }
     $res->leidoDeXml = true;
     return $res;
   }
 
   /**
    * Instancia un objeto RDE a partir de un DOMElement que representa el nodo XML del objeto RDE
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto RDE
-   * 
+   *
    * @return self Objeto RDE instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'rDE') != 0)
+    if (strcmp($node->nodeName, 'rDE') != 0) {
       throw new ValidacionException('[RDE] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new RDE();
-    if($node->getElementsByTagName('dVerFor')->length > 0)
+    if ($node->getElementsByTagName('dVerFor')->length > 0) {
       $res->setDVerFor(intval($node->getElementsByTagName('dVerFor')->item(0)->nodeValue));
-    if($node->getElementsByTagName('DE')->length > 0)
+    }
+    if ($node->getElementsByTagName('DE')->length > 0) {
       $res->setDE(DE::FromDOMElement($node->getElementsByTagName('DE')->item(0)));
-    if($node->getElementsByTagName('Signature')->length > 0) {
+    }
+    if ($node->getElementsByTagName('Signature')->length > 0) {
       $firma = $node->getElementsByTagName('Signature')->item(0);
       $res->setSignature(Signature::FromDOMElement($firma));
       $res->signatureXml = $firma->ownerDocument->saveXML($firma);
     }
-    if($node->getElementsByTagName('gCamFuFD')->length > 0)
+    if ($node->getElementsByTagName('gCamFuFD')->length > 0) {
       $res->setGCamFuFD(GCamFuFD::FromDOMElement($node->getElementsByTagName('gCamFuFD')->item(0)));
+    }
     $res->leidoDeXml = true;
     return $res;
   }
@@ -217,16 +226,14 @@ class RDE extends BaseSifenField
    *
    * @return self Objeto RDE instanciado
    */
-  public static function FromSifenResponseObject($object) : self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new RDE();
-    if(isset($object->DE))
-    {
+    if (isset($object->DE)) {
       $res->setDE(DE::FromSifenResponseObject($object->DE));
     }
 
-    if(isset($object->gCamFuFD))
-    {
+    if (isset($object->gCamFuFD)) {
       $res->setGCamFuFD(GCamFuFD::FromSifenResponseObject($object->gCamFuFD));
     }
     return $res;
@@ -238,7 +245,7 @@ class RDE extends BaseSifenField
 
   /**
    * Convertir el objeto RDE a un DOMElement
-   * 
+   *
    * @param DOMDocument $doc Objeto DOMDocument que representa el documento XML.
    *
    * @return DOMElement Objeto DOMElement que representa el objeto RDE
@@ -246,10 +253,12 @@ class RDE extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     // Validaciones
-    if(!isset($this->dVerFor))
+    if (!isset($this->dVerFor)) {
       throw new ValidacionException('[RDE] El campo dVerFor no puede ser nulo.');
-    if(!isset($this->DE))
+    }
+    if (!isset($this->DE)) {
       throw new ValidacionException('[RDE] El campo DE no puede ser nulo.');
+    }
 
     // Conversión
     $res = $doc->createElement('rDE');
@@ -260,10 +269,12 @@ class RDE extends BaseSifenField
     $res->appendChild($this->DE->toDOMElement($doc));
     // Orden de rDE: dVerFor, DE, Signature, gCamFuFD (DE_v150.xsd:1939-1960). Hasta 0.2.0 se perdían Signature y
     // gCamFuFD al re-serializar un rDE leído (PK-32). Ver $signatureXml.
-    if($this->signatureXml !== null)
+    if ($this->signatureXml !== null) {
       $res->appendChild(self::copiarFirma($doc, $this->signatureXml));
-    if($this->leidoDeXml && isset($this->gCamFuFD))
+    }
+    if ($this->leidoDeXml && isset($this->gCamFuFD)) {
       $res->appendChild($this->gCamFuFD->toDOMElement($doc));
+    }
     return $res;
   }
 
@@ -282,21 +293,25 @@ class RDE extends BaseSifenField
 
   private static function copiarNodo(DOMDocument $doc, \DOMNode $nodo, ?string $nsPadre): \DOMNode
   {
-    if(!$nodo instanceof DOMElement)
+    if (!$nodo instanceof DOMElement) {
       return $doc->importNode($nodo, true);
+    }
     $copia = $doc->createElement($nodo->nodeName);
-    if($nodo->namespaceURI !== null && $nodo->namespaceURI !== $nsPadre)
+    if ($nodo->namespaceURI !== null && $nodo->namespaceURI !== $nsPadre) {
       $copia->setAttribute($nodo->prefix ? 'xmlns:' . $nodo->prefix : 'xmlns', $nodo->namespaceURI);
-    foreach($nodo->attributes as $atributo)
+    }
+    foreach ($nodo->attributes as $atributo) {
       $copia->setAttribute($atributo->nodeName, $atributo->nodeValue);
-    foreach($nodo->childNodes as $hijo)
+    }
+    foreach ($nodo->childNodes as $hijo) {
       $copia->appendChild(self::copiarNodo($doc, $hijo, $nodo->namespaceURI));
+    }
     return $copia;
   }
 
   /**
    * Convierte este RDE a un DOMDocument
-   * 
+   *
    * @return DOMDocument Objeto DOMDocument que representa el objeto RDE
    */
   public function toDOMDocument(): DOMDocument
@@ -315,8 +330,9 @@ class RDE extends BaseSifenField
   public function toXMLString(): string
   {
     $xmlString = $this->toDOMDocument()->saveXML();
-    if(!$xmlString)
+    if (!$xmlString) {
       throw new PkuatiaException('[RDE] Error al convertir el objeto a XML.');
+    }
     return $xmlString;
   }
 }

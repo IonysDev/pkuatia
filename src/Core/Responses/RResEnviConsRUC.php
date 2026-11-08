@@ -12,14 +12,14 @@ use DateTime;
 /**
  * RespuestaConsultaRUC
  */
-class RResEnviConsRUC implements RespuestaSifen 
+class RResEnviConsRUC implements RespuestaSifen
 {
   public const COD_RES_RUC_NOT_FOUND = 500;
   public const COD_RES_FORBIDDEN = 501;
   public const COD_RES_RUC_FOUND = 502;
-  
+
                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public int    $dCodRes;    // RRSch02 - Código del resultado de la consulta RUC  - 4 - 1-1
+  public int $dCodRes;    // RRSch02 - Código del resultado de la consulta RUC  - 4 - 1-1
   public string $dMsgRes;    // RRSch03 - Mensaje del resultado  de  la consulta RUC - 1-255 - 1-1
   public RContRUC $rContRuc; // RRSch04 - Contenedor del RUC consultado - X - 1-1
 
@@ -103,12 +103,9 @@ class RResEnviConsRUC implements RespuestaSifen
    */
   public function getRContRUC(): RContRUC
   {
-    if(isset($this->rContRuc))
-    {
+    if (isset($this->rContRuc)) {
       return $this->rContRuc;
-    }
-    else
-    {
+    } else {
       return new RContRUC();
     }
   }
@@ -120,9 +117,9 @@ class RResEnviConsRUC implements RespuestaSifen
   /**
    * Crea una nueva instancia de RResEnviConsRUC a partir de un objeto stdClass.
    * Pensado para castear la respuesta de una llamada SOAP.
-   * 
+   *
    * @param stdClass $object
-   * 
+   *
    * @return RResEnviConsRUC
    */
 
@@ -144,13 +141,13 @@ class RResEnviConsRUC implements RespuestaSifen
     }
     $res->setDCodRes($object->dCodRes);
     $res->setDMsgRes($object->dMsgRes);
-    if ($object->dCodRes == "0502")
-    {
-      if(isset($object->xContRUC))
+    if ($object->dCodRes == "0502") {
+      if (isset($object->xContRUC)) {
         //  RRSch04 - rContRUC se denomina xContRUC en las respuestas del SIFEN
         $res->setRContRUC(RContRUC::fromStdClassObject($object->xContRUC));
-      else if(isset($object->rContRUC))
+      } elseif (isset($object->rContRUC)) {
         $res->setRContRUC(RContRUC::fromStdClassObject($object->rContRUC));
+      }
     }
     return $res;
   }

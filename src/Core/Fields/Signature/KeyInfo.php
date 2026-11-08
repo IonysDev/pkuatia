@@ -5,9 +5,8 @@ namespace IonysDev\Pkuatia\Core\Fields\Signature;
 /**
  * Clase que representa el campo KeyData de la firma
  */
-class KeyInfo 
+class KeyInfo
 {
-
     public X509Data $X509Data;
 
     /**
@@ -35,9 +34,9 @@ class KeyInfo
 
     /**
      * Instancia un objeto KeyData a partir de un SimpleXMLElement
-     * 
+     *
      * @param \SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
@@ -46,12 +45,12 @@ class KeyInfo
         $res->setX509Data(X509Data::FromSimpleXMLElement($node->X509Data));
         return $res;
     }
-    
+
     /**
      * Instancia un objeto KeyData a partir de un DOMElement
-     * 
+     *
      * @param \DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(\DOMElement $node): self
@@ -63,7 +62,7 @@ class KeyInfo
 
     /**
      * Convierte el objeto a un DOMElement
-     * 
+     *
      * @return \DOMElement
      */
     public function toDOMElement(): \DOMElement
@@ -78,5 +77,3 @@ class KeyInfo
         return $KeyInfo;
     }
 }
-
-?>

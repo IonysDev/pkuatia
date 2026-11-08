@@ -46,19 +46,25 @@ enum TipoFallaTransporte: string
     $m = strtolower($mensaje);
     $contiene = static fn (string ...$patrones): bool => array_reduce($patrones, static fn (bool $r, string $p): bool => $r || str_contains($m, strtolower($p)), false);
 
-    if ($codigo === 'WSDL' || $contiene('Parsing WSDL', 'Parsing Schema', "Couldn't load from", 'failed to load external entity', "can't import schema"))
+    if ($codigo === 'WSDL' || $contiene('Parsing WSDL', 'Parsing Schema', "Couldn't load from", 'failed to load external entity', "can't import schema")) {
       return self::Wsdl;
-    if ($contiene('Document is empty', 'looks like we got no XML document', 'Start tag expected', 'Premature end of data', 'Extra content at the end of the document'))
+    }
+    if ($contiene('Document is empty', 'looks like we got no XML document', 'Start tag expected', 'Premature end of data', 'Extra content at the end of the document')) {
       return self::RespuestaVaciaONoXml;
-    if ($contiene('Error Fetching http headers', 'timed out', 'timeout'))
+    }
+    if ($contiene('Error Fetching http headers', 'timed out', 'timeout')) {
       return self::TiempoAgotado;
-    if ($contiene('SSL', 'TLS', 'certificate', 'handshake', 'crypto'))
+    }
+    if ($contiene('SSL', 'TLS', 'certificate', 'handshake', 'crypto')) {
       return self::Tls;
-    if ($contiene('Could not connect to host', 'Connection refused', 'Connection reset', 'getaddrinfo', 'php_network_getaddresses', 'Name or service not known', 'No route to host', 'Broken pipe', 'Network is unreachable'))
+    }
+    if ($contiene('Could not connect to host', 'Connection refused', 'Connection reset', 'getaddrinfo', 'php_network_getaddresses', 'Name or service not known', 'No route to host', 'Broken pipe', 'Network is unreachable')) {
       return self::Conexion;
+    }
     if (in_array($codigo, ['CLIENT', 'SERVER', 'RECEIVER', 'SENDER', 'VERSIONMISMATCH', 'MUSTUNDERSTAND', 'DATAENCODINGUNKNOWN'], true)
-      || str_contains($codigo, ':'))
+      || str_contains($codigo, ':')) {
       return self::SoapFault;
+      }
     return self::Desconocida;
   }
 }

@@ -48,8 +48,9 @@ final class VistaDocumento
 
   public static function desde(DocumentoElectronico|DE|RDE $documento): self
   {
-    if ($documento instanceof RDE)
+    if ($documento instanceof RDE) {
       return new self(null, isset($documento->DE) ? $documento->DE : new DE(), $documento);
+    }
     return $documento instanceof DE ? new self(null, $documento) : new self($documento, null);
   }
 
@@ -95,11 +96,13 @@ final class VistaDocumento
   public function raiz(): array
   {
     $gCamEsp = null;
-    if ($this->gGrupEner() !== [] || $this->gGrupSeg() !== null || $this->gGrupSup() !== null || $this->gGrupAdi() !== null)
+    if ($this->gGrupEner() !== [] || $this->gGrupSeg() !== null || $this->gGrupSup() !== null || $this->gGrupAdi() !== null) {
       $gCamEsp = ['gGrupEner' => $this->gGrupEner(), 'gGrupSeg' => $this->gGrupSeg(), 'gGrupSup' => $this->gGrupSup(), 'gGrupAdi' => $this->gGrupAdi()];
+    }
     $gCamFE = $this->gCamFE();
-    if ($gCamFE !== null && $this->esBuilder() && $this->gCompPub() !== null && !isset($gCamFE->gCompPub))
+    if ($gCamFE !== null && $this->esBuilder() && $this->gCompPub() !== null && !isset($gCamFE->gCompPub)) {
       $gCamFE = get_object_vars($gCamFE) + ['gCompPub' => $this->gCompPub()];
+    }
     return [
       'gOpeDE' => $this->gOpeDE(),
       'gTimb' => $this->gTimb(),
@@ -139,8 +142,9 @@ final class VistaDocumento
 
   public function gOpeCom(): ?GOpeCom
   {
-    if ($this->builder !== null)
+    if ($this->builder !== null) {
       return $this->builder instanceof DocumentoElectronicoComercial ? $this->prop($this->builder, 'gOpeCom') : null;
+    }
     return $this->prop($this->prop($this->de, 'gDatGralOpe'), 'gOpeCom');
   }
 
@@ -156,43 +160,49 @@ final class VistaDocumento
 
   public function gCamFE(): ?GCamFE
   {
-    if ($this->builder !== null)
+    if ($this->builder !== null) {
       return $this->builder instanceof Factura ? $this->prop($this->builder, 'gCamFE') : null;
+    }
     return $this->prop($this->gDtipDe(), 'gCamFE');
   }
 
   public function gCompPub(): ?GCompPub
   {
-    if ($this->builder instanceof Factura && isset($this->builder->gCompPub))
+    if ($this->builder instanceof Factura && isset($this->builder->gCompPub)) {
       return $this->builder->gCompPub;
+    }
     return $this->prop($this->gCamFE(), 'gCompPub');
   }
 
   public function gCamAE(): ?GCamAE
   {
-    if ($this->builder !== null)
+    if ($this->builder !== null) {
       return $this->builder instanceof Autofactura ? $this->prop($this->builder, 'gCamAE') : null;
+    }
     return $this->prop($this->gDtipDe(), 'gCamAE');
   }
 
   public function gCamNCDE(): ?GCamNCDE
   {
-    if ($this->builder !== null)
+    if ($this->builder !== null) {
       return ($this->builder instanceof NotaDeCredito || $this->builder instanceof NotaDeDebito) ? $this->prop($this->builder, 'gCamNCDE') : null;
+    }
     return $this->prop($this->gDtipDe(), 'gCamNCDE');
   }
 
   public function gCamNRE(): ?GCamNRE
   {
-    if ($this->builder !== null)
+    if ($this->builder !== null) {
       return $this->builder instanceof NotaDeRemision ? $this->prop($this->builder, 'gCamNRE') : null;
+    }
     return $this->prop($this->gDtipDe(), 'gCamNRE');
   }
 
   public function gCamCond(): ?GCamCond
   {
-    if ($this->builder !== null)
+    if ($this->builder !== null) {
       return ($this->builder instanceof Factura || $this->builder instanceof Autofactura) ? $this->prop($this->builder, 'gCamCond') : null;
+    }
     return $this->prop($this->gDtipDe(), 'gCamCond');
   }
 
@@ -208,13 +218,15 @@ final class VistaDocumento
   {
     if ($this->builder !== null) {
       $principal = $this->prop($this->builder, 'gGrupEner');
-      if ($principal === null)
+      if ($principal === null) {
         return [];
+      }
       return array_merge([$principal], $this->privada($this->builder, 'gGrupEnerAdicionales') ?? []);
     }
     $esp = $this->prop($this->gDtipDe(), 'gCamEsp');
-    if ($esp === null || !isset($esp->gGrupEner))
+    if ($esp === null || !isset($esp->gGrupEner)) {
       return [];
+    }
     return method_exists($esp, 'getGGrupEners') ? array_values($esp->getGGrupEners()) : [$esp->gGrupEner];
   }
 
@@ -263,8 +275,9 @@ final class VistaDocumento
   /** Propiedad pública inicializada y no nula, o null (sin getters ni Error). */
   private function prop(?object $objeto, string $nombre): mixed
   {
-    if ($objeto === null || !property_exists($objeto, $nombre))
+    if ($objeto === null || !property_exists($objeto, $nombre)) {
       return null;
+    }
     return isset($objeto->{$nombre}) ? $objeto->{$nombre} : null;
   }
 

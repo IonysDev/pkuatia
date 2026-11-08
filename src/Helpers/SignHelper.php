@@ -39,23 +39,25 @@ class SignHelper
 
   /**
    * Inicializa el firmador de XML.
-   * 
-   * @param String $keyFilePath Ruta del archivo de llave privada. 
+   *
+   * @param String $keyFilePath Ruta del archivo de llave privada.
    * @param String $passphrase Contraseña de la llave privada.
-   * 
+   *
    * @return void
    */
   public static function Init(string $keyFilePath, string $passphrase, string $certificateFormat, ?string $certFilePath = null)
   {
-    if (!file_exists($keyFilePath))
+    if (!file_exists($keyFilePath)) {
       throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");
+    }
 
     $format = Config::normalizeCertificateFormat($certificateFormat);
     $usesCombinedPem = $format === Config::CERT_FORMAT_PEM
       && PemHelper::usesCombinedFile($certFilePath, $keyFilePath);
 
-    if (!$usesCombinedPem && !is_null($certFilePath) && !file_exists($certFilePath))
+    if (!$usesCombinedPem && !is_null($certFilePath) && !file_exists($certFilePath)) {
       throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[SignHelper] No se encontró el archivo de certificado en la ruta especificada.");
+    }
 
     $clave = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, ['type' => 'private']);
     $clave->passphrase = $passphrase;
@@ -65,26 +67,24 @@ class SignHelper
     $leer = static function (string $ruta): string {
       // En Linux leer una carpeta devuelve '' (no false, como en Windows); un archivo vacío tampoco sirve.
       $contenido = is_dir($ruta) ? false : @file_get_contents($ruta);
-      if ($contenido === false || $contenido === '')
+      if ($contenido === false || $contenido === '') {
         throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, "[SignHelper] No se pudo leer el archivo del certificado o de la clave (vacío, carpeta o sin permisos): $ruta");
+      }
       return $contenido;
     };
     if ($format === Config::CERT_FORMAT_PEM) {
       if ($usesCombinedPem) {
         $x509Cert = PemHelper::extractCertificatePem($leer($keyFilePath));
-      }
-      else {
+      } else {
         $x509Cert = $leer((string) $certFilePath);
       }
       $clave->loadKey($keyFilePath, true);
-    }
-    else if ($format === Config::CERT_FORMAT_PKCS12) {
+    } elseif ($format === Config::CERT_FORMAT_PKCS12) {
       $keys = $leer($keyFilePath);
       $componentes = Pkcs12Helper::read($keys, $passphrase);
       $x509Cert = $componentes['cert'];
       $clave->loadKey($componentes['pkey'], false);
-    }
-    else {
+    } else {
       throw CertificadoException::porMotivo(MotivoCertificado::NoSoportado, "[SignHelper] Formato de certificado no soportado.");
     }
 
@@ -128,15 +128,16 @@ class SignHelper
 
   /**
    * Firma un documento DE contenido en un objeto RDE
-   * 
+   *
    * @param RDE $rde Contenedor RDE del documento DE.
-   * 
+   *
    * @return DOMDocument  Documento XML firmado.
    */
   public static function SignRDE(RDE $rde, DateTime $fechaFirma = new DateTime('now', new DateTimeZone(Constants::SIFEN_TIMEZONE))): DOMDocument
   {
-    if (self::$clave === null || self::$x509Cert === null)
+    if (self::$clave === null || self::$x509Cert === null) {
       throw new FirmaException("[SignHelper] No se ha inicializado el firmador de XML.");
+    }
 
     $rde->DE->setDFecFirma($fechaFirma);
 
@@ -148,8 +149,9 @@ class SignHelper
     // de nuevo; FirmarDE() agrega después el gCamFuFD con el QR nuevo. En un rDE armado a mano no hay nada que quitar.
     $rdeLeido = $xmlDocument->getElementsByTagName("rDE")->item(0);
     foreach (iterator_to_array($rdeLeido->childNodes) as $hijo) {
-      if ($hijo instanceof \DOMElement && in_array($hijo->localName, ['Signature', 'gCamFuFD'], true))
+      if ($hijo instanceof \DOMElement && in_array($hijo->localName, ['Signature', 'gCamFuFD'], true)) {
         $rdeLeido->removeChild($hijo);
+      }
     }
     $deNode = $xmlDocument->getElementsByTagName("DE")->item(0);
 
@@ -169,8 +171,9 @@ class SignHelper
 
   public static function SingEvents(GGroupGesEve $raiz, $config)
   {
-    if (self::$clave === null || self::$x509Cert === null)
+    if (self::$clave === null || self::$x509Cert === null) {
       throw new FirmaException("[SignHelper] No se ha inicializado el firmador de XML.");
+    }
 
     $xmlDocument = new DOMDocument('1.0', 'UTF-8');
     $xmlDocument->formatOutput = false;

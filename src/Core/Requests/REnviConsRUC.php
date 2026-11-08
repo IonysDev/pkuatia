@@ -4,11 +4,11 @@ namespace IonysDev\Pkuatia\Core\Requests;
 
 /**
  * ID RSch01: Clase que compone la solicitud de consulta de RUC
- * 
+ *
  */
 
-class REnviConsRUC {
-
+class REnviConsRUC
+{
                              // id - DESCRIPCION- LONGITUD - OCURRENCIA
     public int $dId;         // RSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud - 1-15 - 1-1
     public string $dRUCCons; // RSch03 - RUC que se desea consultar sin dígito verificador - 5-8 - 1-1
@@ -16,7 +16,8 @@ class REnviConsRUC {
     /**
      * Constructor de la clase
      */
-    public function __construct($dId, $dRUCCons) {
+    public function __construct($dId, $dRUCCons)
+    {
         $this->dId = $dId;
         $this->dRUCCons = $dRUCCons;
     }
@@ -75,5 +76,3 @@ class REnviConsRUC {
         return $this->dRUCCons;
     }
 }
-
-?>

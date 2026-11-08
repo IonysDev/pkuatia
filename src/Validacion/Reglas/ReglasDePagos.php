@@ -17,8 +17,9 @@ final class ReglasDePagos extends ConjuntoDeReglas
   public static function aplicar(VistaDocumento $v, ResultadoValidacion $r, DateTime $ahora): void
   {
     $cond = $v->gCamCond();
-    if ($cond === null)
+    if ($cond === null) {
       return;
+    }
     $ruta = 'DE.gDtipDE.gCamCond';
     $tipo = $v->tipoDocumento();
     $condicion = self::entero($cond, 'iCondOpe');

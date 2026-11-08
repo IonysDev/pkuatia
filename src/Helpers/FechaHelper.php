@@ -36,8 +36,9 @@ final class FechaHelper
       $fecha = DateTime::createFromFormat($formato, $texto, $zonaSifen);
       $errores = DateTime::getLastErrors();
       $sinAvisos = $errores === false || ($errores['warning_count'] === 0 && $errores['error_count'] === 0);
-      if ($fecha !== false && $sinAvisos)
+      if ($fecha !== false && $sinAvisos) {
         return $fecha;
+      }
     }
     throw new ValidacionException("[FechaHelper] $campo no es una fecha y hora del SIFEN (AAAA-MM-DDThh:mm:ss, con o sin zona horaria): '$texto'");
   }

@@ -18,8 +18,8 @@ use IonysDev\Pkuatia\Core\Fields\DE\F\GTotSub;
 use DateTime;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
-trait ItemValorado {
-
+trait ItemValorado
+{
     /**
      * E700 - Lista de ítems con valor del documento electrónico.
      */
@@ -68,7 +68,7 @@ trait ItemValorado {
 
     /**
      * Agrega un ítem con valor al documento electrónico.
-     * 
+     *
      * @param String $codigo Código interno del ítem.
      * @param String $descripcion Descripción del ítem.
      * @param int $codUnidadMedida Código de unidad de medida del ítem.
@@ -99,7 +99,7 @@ trait ItemValorado {
      * @param String|null $dncpCodigoGTINProducto Código GTIN (código comercial global) de producto registrado en DNCP (opcional cuando receptor es B2G).
      * @param String|null $dncpCodigoGTINPaquete Código GTIN del paquete registrado en DNCP (opcional cuando receptor es B2G).
      * @param GVehNuevo|null $detalleVehiculoNuevo Detalle del vehículo nuevo. Se informa solo en caso de venta de vehiculo automor nuevo.
-     * 
+     *
      * @return self
      */
     public function addItem(
@@ -118,11 +118,11 @@ trait ItemValorado {
         ?string $descuentoUnitarioParticular = null,
         ?string $descuentoUnitarioGlobal = null,
         ?string $anticipoUnitarioParticular = null,
-        ?string $anticipoUnitarioGlobal = null,        
+        ?string $anticipoUnitarioGlobal = null,
 
         ?bool $esTipoCambioPorItem = null,
         ?string $tipoDeCambioItem = null,
-        
+
         ?string $nroLote = null,
         ?DateTime $fechaVencimiento = null,
         ?string $nroSerie = null,
@@ -138,18 +138,20 @@ trait ItemValorado {
         ?string $dncpCodigoGTINProducto = null,
         ?string $dncpCodigoGTINPaquete = null,
         ?GVehNuevo $detalleVehiculoNuevo = null,
-    ) : GCamItem {
+    ): GCamItem {
 
         ////////////////////////////////////////////////////////////////////////////
         // Conversiones de enumeraciones y enteros
-        if(is_int($afectIVA))
+        if (is_int($afectIVA)) {
             $afectacionIVA = CamIVAAfecIVA::tryFrom($afectIVA);
-        else
-            $afectacionIVA = $afectIVA;
-        if(is_int($tasaDeIVA))
+        } else {
+        $afectacionIVA = $afectIVA;
+        }
+        if (is_int($tasaDeIVA)) {
             $tasaIVA = CamIVATasaIVA::tryFrom($tasaDeIVA);
-        else
-            $tasaIVA = $tasaDeIVA;
+        } else {
+        $tasaIVA = $tasaDeIVA;
+        }
         ////////////////////////////////////////////////////////////////////////////
         // START - GValorItem
         // Calculo de cantidad, precio unitario y total del item según caso
@@ -157,56 +159,66 @@ trait ItemValorado {
         $pu = '0';
         $totalB = '0';
         // 1. Si se informa cantidad, precio unitario, se calcula el total bruto.
-        if($cantidad && $precioUnit){
+        if ($cantidad && $precioUnit) {
             $cant = $cantidad;
             $pu = $precioUnit;
             $totalB = bcmul($cantidad, $precioUnit, 8);
         }
         // 2. Si se informa cantidad y total bruto, se calcula el precio unitario.
-        else if($cantidad && $totalBruto){
+        elseif ($cantidad && $totalBruto) {
             $cant = $cantidad;
             $totalB = $totalBruto;
             $pu = bcdiv($totalBruto, $cantidad, 8);
         }
         // 3. Si se informa precio unitario y total bruto, se calcula la cantidad.
-        else if($precioUnit && $totalBruto){
+        elseif ($precioUnit && $totalBruto) {
             $pu = $precioUnit;
             $totalB = $totalBruto;
             $cant = bcdiv($totalBruto, $precioUnit, 4);
         }
         $gValorItem = new GValorItem();
         $gValorItem->setDPUniProSer($pu);
-        if($esTipoCambioPorItem)
+        if ($esTipoCambioPorItem) {
             $gValorItem->setDTiCamIt($tipoDeCambioItem);
+        }
         $gValorItem->setDTotBruOpeItem($totalB);
         // END - GValorItem
-        ////////////////////////////////////////////////////////////////////////////        
+        ////////////////////////////////////////////////////////////////////////////
 
         ////////////////////////////////////////////////////////////////////////////
         // START - GCamItem
         $gCamItem = new GCamItem();
         $gCamItem->setDCodInt($codigo);
-        if($partidaArancelaria)
+        if ($partidaArancelaria) {
             $gCamItem->setDParAranc($partidaArancelaria);
-        if($ncmMercosur)
+        }
+        if ($ncmMercosur) {
             $gCamItem->setDNCM($ncmMercosur);
-        if($dncpCodigoGeneral)
+        }
+        if ($dncpCodigoGeneral) {
             $gCamItem->setDDncpG($dncpCodigoGeneral);
-        if($dncpCodigoEspecifico)
+        }
+        if ($dncpCodigoEspecifico) {
             $gCamItem->setDDncpE($dncpCodigoEspecifico);
-        if($dncpCodigoGTINProducto)
+        }
+        if ($dncpCodigoGTINProducto) {
             $gCamItem->setDGtin($dncpCodigoGTINProducto);
-        if($dncpCodigoGTINPaquete)
+        }
+        if ($dncpCodigoGTINPaquete) {
             $gCamItem->setDGtinPq($dncpCodigoGTINPaquete);
+        }
         $gCamItem->setDDesProSer($descripcion);
         $gCamItem->setCUniMed($codUnidadMedida);
         $gCamItem->setDCantProSer($cant);
-        if($codPaisOrigen)
+        if ($codPaisOrigen) {
             $gCamItem->setCPaisOrig($codPaisOrigen);
-        if($infoEmisor)
+        }
+        if ($infoEmisor) {
             $gCamItem->setDInfItem($infoEmisor);
-        if($cdcFacturaAnticipo)
+        }
+        if ($cdcFacturaAnticipo) {
             $gCamItem->setDCDCAnticipo($cdcFacturaAnticipo);
+        }
         // END - GCamItem
         ////////////////////////////////////////////////////////////////////////////
 
@@ -214,66 +226,64 @@ trait ItemValorado {
         // START - GValorRestaItem
         $totOpeItem = '0';
         $gValorRestaItem = new GValorRestaItem();
-        if($this->gOpeCom->getITImp() != OpeComTipImp::ISC->value && $this->gTimb->getITiDE() != TimbTiDE::Autofactura->value) {
+        if ($this->gOpeCom->getITImp() != OpeComTipImp::ISC->value && $this->gTimb->getITiDE() != TimbTiDE::Autofactura->value) {
             $puFinal = $pu;
-            if($descuentoUnitarioParticular) {
+            if ($descuentoUnitarioParticular) {
                 $gValorRestaItem->setDDescItem($descuentoUnitarioParticular);
                 $gValorRestaItem->setDPorcDesIt(bcdiv(bcmul($descuentoUnitarioParticular, '100', 8), $pu, 8));
                 $puFinal = bcsub($puFinal, $descuentoUnitarioParticular, 8);
             }
-            if($descuentoUnitarioGlobal) {
+            if ($descuentoUnitarioGlobal) {
                 $gValorRestaItem->setDDescGloItem($descuentoUnitarioGlobal);
                 $puFinal = bcsub($puFinal, $descuentoUnitarioGlobal, 8);
             }
-            if($anticipoUnitarioParticular) {
+            if ($anticipoUnitarioParticular) {
                 $gValorRestaItem->setDAntPreUniIt($anticipoUnitarioParticular);
                 $puFinal = bcsub($puFinal, $anticipoUnitarioParticular, 8);
             }
-            if($anticipoUnitarioGlobal) {
+            if ($anticipoUnitarioGlobal) {
                 $gValorRestaItem->setDAntGloPreUniIt($anticipoUnitarioGlobal);
                 $puFinal = bcsub($puFinal, $anticipoUnitarioGlobal, 8);
             }
             $totOpeItem = BC::round(bcmul($puFinal, $cant, $precisionMoneda + 2), $precisionMoneda);
-        }
-        else if($this->gTimb->getITiDE() == TimbTiDE::Autofactura->value) {
+        } elseif ($this->gTimb->getITiDE() == TimbTiDE::Autofactura->value) {
             $totOpeItem = bcmul($pu, $cant, 8);
         }
         $gValorRestaItem->setDTotOpeItem($totOpeItem);
         // EA009 en guaraníes, redondeado al guaraní entero (Q-C8, 0.3.0): hasta 0.2.1 bcmul() sin escala lo truncaba y con
         // fracción cada ítem quedaba hasta 1 Gs por debajo del valor exacto (EA009 = EA008 × E725, validación 1858).
-        if($esTipoCambioPorItem)
+        if ($esTipoCambioPorItem) {
             $gValorRestaItem->setDTotOpeGs(BC::round(bcmul($totOpeItem, $tipoDeCambioItem, 8), 0));
+        }
         $gValorItem->setGValorRestaItem($gValorRestaItem);
         $gCamItem->setGValorItem($gValorItem);
         // END - GValorRestaItem
         ////////////////////////////////////////////////////////////////////////////
-        
+
         ////////////////////////////////////////////////////////////////////////////
         // START - GCamIVA
-        if($this->gOpeCom->getITImp() != OpeComTipImp::ISC->value && $this->gTimb->getITiDE() != TimbTiDE::Autofactura->value && $this->gTimb->getITiDE() != TimbTiDE::NotaDeRemision->value) {
+        if ($this->gOpeCom->getITImp() != OpeComTipImp::ISC->value && $this->gTimb->getITiDE() != TimbTiDE::Autofactura->value && $this->gTimb->getITiDE() != TimbTiDE::NotaDeRemision->value) {
             $gCamIVA = new GCamIVA();
             $gCamIVA->setIAfecIVA($afectacionIVA);
             $gCamIVA->setDPropIVA($proporcionGravadaIVA);
             $gCamIVA->setDTasaIVA($tasaIVA);
             // E735 y E736
-            if($afectacionIVA == CamIVAAfecIVA::Exento || $afectacionIVA == CamIVAAfecIVA::Exonerado) {
+            if ($afectacionIVA == CamIVAAfecIVA::Exento || $afectacionIVA == CamIVAAfecIVA::Exonerado) {
                 $gCamIVA->setDBasGravIVA('0');
                 $gCamIVA->setDLiqIVAItem('0');
-            }
-            else {
+            } else {
                 $baseGravada = bcmul(bcmul(100, $totOpeItem, 10), $proporcionGravadaIVA, 10);
                 $baseGravada = bcdiv($baseGravada, bcadd(10000, bcmul($tasaIVA->value, $proporcionGravadaIVA, 10), 10), 10);
                 $gCamIVA->setDBasGravIVA(BC::round($baseGravada, 8));
                 $gCamIVA->setDLiqIVAItem(BC::round(bcmul($baseGravada, bcdiv(strval($tasaIVA->value), 100, 10), 10), 8));
             }
             // E737 (ver NT13)
-            if($afectacionIVA == CamIVAAfecIVA::GravadoParcial) {
+            if ($afectacionIVA == CamIVAAfecIVA::GravadoParcial) {
                 $dBasExe = bcmul(bcmul(100, $totOpeItem, 10), bcsub(100, $proporcionGravadaIVA, 10), 10);
                 $dBasExe = bcdiv($dBasExe, bcadd(10000, bcmul($tasaIVA->value, $proporcionGravadaIVA, 10), 10), 10);
                 $gCamIVA->setDBasExe(BC::round($dBasExe, 8));
-                
-            }
-            else {
+
+            } else {
                 $gCamIVA->setDBasExe('0');
             }
             $gCamItem->setGCamIVA($gCamIVA);
@@ -283,16 +293,20 @@ trait ItemValorado {
 
         ////////////////////////////////////////////////////////////////////////////
         // START - GRasMerc
-        if($nroLote || $fechaVencimiento || $nroSerie || $nroPedido){
+        if ($nroLote || $fechaVencimiento || $nroSerie || $nroPedido) {
             $gRasMerc = new GRasMerc();
-            if($nroLote)
+            if ($nroLote) {
                 $gRasMerc->setDNumLote($nroLote);
-            if($fechaVencimiento)
+            }
+            if ($fechaVencimiento) {
                 $gRasMerc->setDVencMerc($fechaVencimiento);
-            if($nroSerie)
+            }
+            if ($nroSerie) {
                 $gRasMerc->setDNSerie($nroSerie);
-            if($nroPedido)
+            }
+            if ($nroPedido) {
                 $gRasMerc->setDNumPedi($nroPedido);
+            }
             $gCamItem->setGRasMerc($gRasMerc);
         }
         // END - GRasMerc
@@ -300,7 +314,7 @@ trait ItemValorado {
 
         ////////////////////////////////////////////////////////////////////////////
         // START - GVehNuevo
-        if($detalleVehiculoNuevo){
+        if ($detalleVehiculoNuevo) {
             $gCamItem->setGVehNuevo($detalleVehiculoNuevo);
         }
         // END - GVehNuevo
@@ -312,28 +326,27 @@ trait ItemValorado {
 
     /**
      * Calcula los subtotales y totales del documento electrónico.
-     * 
+     *
      * @param bool $redondeoSedeco Indica si se debe redondear el total de operación según las reglas de redondeo de la SEDECO (opcional, por defecto FALSO).
      * @param String $comision Comisión (IVA 10% incluido) de la operación comercial, expresado en cadena de texto decimal BCMath (opcional, por defecto NULL).
      * @param String|null $redondeo Redondeo explícito de la operación (F013), expresado en cadena de texto decimal BCMath de hasta 4 decimales (opcional, por defecto NULL). Si se informa, se usa tal cual como F013, no se calculan F036/F037 y F014 = F008 - F013 + comisión con la precisión indicada. Excluyente con $redondeoSedeco.
-     * 
+     *
      * @return void
-     * 
+     *
      * @throws \InvalidArgumentException Si se informan $redondeo y $redondeoSedeco a la vez.
      */
-    public function calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, ?string $comision = null, ?string $redondeo = null) : GTotSub {
-        if($redondeoSedeco && $redondeo !== null)
+    public function calcTotSub(int $precisionMoneda = 0, bool $redondeoSedeco = false, ?string $comision = null, ?string $redondeo = null): GTotSub
+    {
+        if ($redondeoSedeco && $redondeo !== null) {
             throw new ValidacionException('[ItemValorado] calcTotSub: los parámetros $redondeo y $redondeoSedeco son excluyentes.');
-        $sumaSubtBruto = '0';
-        if(!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value)
-        {
-            $this->gTotSub = null;   
         }
-        else{
+        $sumaSubtBruto = '0';
+        if (!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value) {
+            $this->gTotSub = null;
+        } else {
             $this->gTotSub = new GTotSub();
 
-            foreach($this->items as $item)
-            {
+            foreach ($this->items as $item) {
                 // F009
                 $this->gTotSub->setDTotDesc(bcadd($this->gTotSub->getDTotDesc(), bcmul($item->getGValorItem()->getGValorRestaItem()->getDDescItem(), $item->getDCantProSer(), 8), 8));
                 // F033
@@ -348,44 +361,40 @@ trait ItemValorado {
 
             // F011
             $this->gTotSub->setDDescTotal(bcadd($this->gTotSub->getDTotDesc(), $this->gTotSub->getDTotDescGlotem(), 8));
-            
+
             // F012
             $this->gTotSub->setDAnticipo(bcadd($this->gTotSub->getDTotAntItem(), $this->gTotSub->getDTotAnt(), 8));
 
-            if($this->gTimb->getITiDE() == TimbTiDE::Autofactura->value) {
+            if ($this->gTimb->getITiDE() == TimbTiDE::Autofactura->value) {
                 // F008: suma de EA008 de TODOS los ítems (hasta v0.1.5 se tomaba solo el último, PK-02)
-                foreach($this->items as $item)
-                {
+                foreach ($this->items as $item) {
                     $this->gTotSub->setDTotOpe(bcadd($this->gTotSub->getDTotOpe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
                 }
-            }
-            else
-            {
+            } else {
                 $this->gTotSub->setDSubExe('0');
                 $this->gTotSub->setDSubExo('0');
-                foreach($this->items as $item)
-                {
+                foreach ($this->items as $item) {
                     // F002
-                    if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exento->value)
+                    if ($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exento->value) {
                         $this->gTotSub->setDSubExe(bcadd($this->gTotSub->getDSubExe(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
+                    }
                     // F003
-                    if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exonerado->value)
+                    if ($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Exonerado->value) {
                         $this->gTotSub->setDSubExo(bcadd($this->gTotSub->getDSubExo(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeItem(), 8));
+                    }
                 }
 
-                if($this->gOpeCom->getITImp() == OpeComTipImp::IVA->value || $this->gOpeCom->getITImp() == OpeComTipImp::IVARenta->value) {
+                if ($this->gOpeCom->getITImp() == OpeComTipImp::IVA->value || $this->gOpeCom->getITImp() == OpeComTipImp::IVARenta->value) {
                     $this->gTotSub->setDSub5('0');
                     $this->gTotSub->setDSub10('0');
                     $this->gTotSub->setDIVA5('0');
                     $this->gTotSub->setDIVA10('0');
                     $this->gTotSub->setDBaseGrav5('0');
                     $this->gTotSub->setDBaseGrav10('0');
-                    foreach($this->items as $item)
-                    {
-                        if($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Gravado->value || $item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::GravadoParcial->value)
-                        {
-                            
-                            if($item->getGCamIVA()->getDTasaIVA() == 5) {
+                    foreach ($this->items as $item) {
+                        if ($item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::Gravado->value || $item->getGCamIVA()->getIAfecIVA() == CamIVAAfecIVA::GravadoParcial->value) {
+
+                            if ($item->getGCamIVA()->getDTasaIVA() == 5) {
                                 // F004
                                 $this->gTotSub->setDSub5(bcadd($this->gTotSub->getDSub5(), bcadd($item->getGCamIVA()->getDBasGravIVA(), $item->getGCamIVA()->getDLiqIVAItem(), 8), 8));
                                 // F015
@@ -393,7 +402,7 @@ trait ItemValorado {
                                 // F018
                                 $this->gTotSub->setDBaseGrav5(bcadd($this->gTotSub->getDBaseGrav5(), $item->getGCamIVA()->getDBasGravIVA(), 8));
                             }
-                            if($item->getGCamIVA()->getDTasaIVA() == 10) {
+                            if ($item->getGCamIVA()->getDTasaIVA() == 10) {
                                 // F005
                                 $this->gTotSub->setDSub10(bcadd($this->gTotSub->getDSub10(), bcadd($item->getGCamIVA()->getDBasGravIVA(), $item->getGCamIVA()->getDLiqIVAItem(), 8), 8));
                                 // F016
@@ -419,7 +428,7 @@ trait ItemValorado {
                     );
 
                     // Con redondeo explícito no se informan F036/F037 (F017 = F015 + F016, validación 2371)
-                    if($redondeo === null && $this->gTotSub->getDRedon() && bccomp($this->gTotSub->getDRedon(), '0', 8) != 0) {
+                    if ($redondeo === null && $this->gTotSub->getDRedon() && bccomp($this->gTotSub->getDRedon(), '0', 8) != 0) {
                         // Para el IVA sobre el redondeo se hará un reparto proporcional del valor del redondeo
                         $base = bcsub($this->gTotSub->getDTotOpe(), bcadd($this->gTotSub->getDIVA5() ?? '0', $this->gTotSub->getDIVA10() ?? '0', 8), 8);
                         $prop5 = bcdiv($this->gTotSub->getDBaseGrav5(), $base, 10);
@@ -431,7 +440,7 @@ trait ItemValorado {
                     }
 
                     // F025
-                    if($comision) {
+                    if ($comision) {
                         $this->gTotSub->setDComi($comision);
                         // El iva de comisiones es 10%
                         $this->gTotSub->setDIVAComi(BC::round(bcdiv($comision, '11', 10), 8));
@@ -451,7 +460,7 @@ trait ItemValorado {
                     );
                 }
             }
-            
+
             // F010: porcentaje del descuento global sobre la suma de E721. Sin base (todos los ítems con valor 0:
             // donaciones, muestras) el porcentaje es 0 en lugar de DivisionByZeroError.
             $this->gTotSub->setDPorcDescTotal(bccomp($sumaSubtBruto, '0', 8) === 0
@@ -459,36 +468,32 @@ trait ItemValorado {
                 : bcdiv(bcmul($this->gTotSub->getDTotDescGlotem(), '100', 8), $sumaSubtBruto, 8));
 
             // F013
-            if($redondeo !== null) {
+            if ($redondeo !== null) {
                 $this->gTotSub->setDRedon($redondeo);
-            }
-            else if($redondeoSedeco) {
-                if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') == 0) {
+            } elseif ($redondeoSedeco) {
+                if (strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') == 0) {
                     $this->gTotSub->setDRedon(bcmod($this->gTotSub->getDTotOpe(), '50', 4));
-                }
-                else {
+                } else {
                     $divVal = bcdiv($this->gTotSub->getDTotOpe(), '0.5', 1);
                     $roundedVal = bcmul($divVal, '0.5', 1);
                     $this->gTotSub->setDRedon(bcsub($this->gTotSub->getDTotOpe(), $roundedVal, 4));
                 }
-            }
-            else{
+            } else {
                 $this->gTotSub->setDRedon('0');
             }
 
             // F14
             $this->gTotSub->setDTotGralOpe(BC::round(bcadd(bcsub($this->gTotSub->getDTotOpe(), $this->gTotSub->getDRedon(), 8), $this->gTotSub->getDComi() ?? '0', $precisionMoneda + 2), $precisionMoneda));
-            
+
 
             // F23
-            if(strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') != 0) {
+            if (strcmp(strtoupper($this->gOpeCom->getCMoneOpe()), 'PYG') != 0) {
                 $this->gOpeCom->validarTipoDeCambio(); // D017/D018 obligatorios con moneda distinta de PYG (antes Error de propiedad sin inicializar)
-                if($this->gOpeCom->getDCondTiCam() == OpeComCondTipCam::Global->value)
+                if ($this->gOpeCom->getDCondTiCam() == OpeComCondTipCam::Global->value) {
                     $this->gTotSub->setDTotalGs(bcmul($this->gTotSub->getDTotGralOpe(), $this->gOpeCom->getDTiCam(), 8));
-                else {
+                } else {
                     $this->gTotSub->setDTotalGs('0');
-                    foreach($this->items as $item)
-                    {
+                    foreach ($this->items as $item) {
                         $this->gTotSub->setDTotalGs(bcadd($this->gTotSub->getDTotalGs(), $item->getGValorItem()->getGValorRestaItem()->getDTotOpeGs(), 8));
                     }
                 }
@@ -504,21 +509,23 @@ trait ItemValorado {
     /**
      * Avisa (E_USER_DEPRECATED) que un setter de ítem está obsoleto y qué parámetro de addItem() lo reemplaza (PK-34).
      */
-    private function avisarSetterObsoleto(string $setter, string $parametro): void {
+    private function avisarSetterObsoleto(string $setter, string $parametro): void
+    {
         trigger_error(static::class . "::$setter() está obsoleto desde 0.2.1 y no tiene efecto en el documento: el valor se "
             . "informa con el parámetro \$$parametro de addItem().", E_USER_DEPRECATED);
     }
 
     /**
      * Establece el si el tipo de cambio es por ítem (true) o global (false).
-     * 
+     *
      * @param bool $esTipoCambioPorItem Indica si el tipo de cambio es por ítem.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: si el tipo de cambio es por ítem se informa con el parámetro $esTipoCambioPorItem de addItem().
      */
-    public function setEsTipoCambioPorItem(bool $esTipoCambioPorItem) : self {
+    public function setEsTipoCambioPorItem(bool $esTipoCambioPorItem): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'esTipoCambioPorItem');
         $this->esTipoCambioPorItem = $esTipoCambioPorItem;
         return $this;
@@ -526,14 +533,15 @@ trait ItemValorado {
 
     /**
      * Establece el tipo de cambio del ítem.
-     * 
+     *
      * @param String $tipoDeCambioItem valor numerico del tipo de cambio del documento electrónico, expresado en cadena de texto decimal BCMath.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el tipo de cambio del ítem se informa con el parámetro $tipoDeCambioItem de addItem().
      */
-    public function setTipoDeCambioItem(string $tipoDeCambioItem) : self {
+    public function setTipoDeCambioItem(string $tipoDeCambioItem): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'tipoDeCambioItem');
         $this->tipoDeCambioItem = $tipoDeCambioItem;
         return $this;
@@ -541,14 +549,15 @@ trait ItemValorado {
 
     /**
      * Establece el número de lote del ítem.
-     * 
+     *
      * @param String $nroLote Número de lote del ítem.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el número de lote se informa con el parámetro $nroLote de addItem().
      */
-    public function setNroLote(string $nroLote) : self {
+    public function setNroLote(string $nroLote): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'nroLote');
         $this->nroLote = $nroLote;
         return $this;
@@ -556,14 +565,15 @@ trait ItemValorado {
 
     /**
      * Establece la fecha de vencimiento del ítem.
-     * 
+     *
      * @param DateTime $fechaVencimiento Fecha de vencimiento del ítem.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: la fecha de vencimiento se informa con el parámetro $fechaVencimiento de addItem().
      */
-    public function setFechaVencimiento(DateTime $fechaVencimiento) : self {
+    public function setFechaVencimiento(DateTime $fechaVencimiento): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'fechaVencimiento');
         $this->fechaVencimiento = $fechaVencimiento;
         return $this;
@@ -571,14 +581,15 @@ trait ItemValorado {
 
     /**
      * Establece el número de serie del ítem.
-     * 
+     *
      * @param String $nroSerie Número de serie del ítem.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el número de serie se informa con el parámetro $nroSerie de addItem().
      */
-    public function setNroSerie(string $nroSerie) : self {
+    public function setNroSerie(string $nroSerie): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'nroSerie');
         $this->nroSerie = $nroSerie;
         return $this;
@@ -586,14 +597,15 @@ trait ItemValorado {
 
     /**
      * Establece el número de pedido del ítem.
-     * 
+     *
      * @param String $nroPedido Número de pedido del ítem.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el número de pedido se informa con el parámetro $nroPedido de addItem().
      */
-    public function setNroPedido(string $nroPedido) : self {
+    public function setNroPedido(string $nroPedido): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'nroPedido');
         $this->nroPedido = $nroPedido;
         return $this;
@@ -601,14 +613,15 @@ trait ItemValorado {
 
     /**
      * Establece información del emisor acerca del ítem.
-     * 
+     *
      * @param String $infoEmisor Información adicional del ítem de interés del emisor.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: la información de interés del emisor se informa con el parámetro $infoEmisor de addItem().
      */
-    public function setInfoEmisor(string $infoEmisor) : self {
+    public function setInfoEmisor(string $infoEmisor): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'infoEmisor');
         $this->infoEmisor = $infoEmisor;
         return $this;
@@ -616,14 +629,15 @@ trait ItemValorado {
 
     /**
      * Establece el CDC de la factura donde se registra el anticipo particular o global que afecta al ítem.
-     * 
+     *
      * @param String $cdcFacturaAnticipo Código de la factura de anticipo. Es obligatorio cuando exista anticipo particular o global, o cuando el tipo de pago de la factura sea anticipo.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el CDC de la factura de anticipo se informa con el parámetro $cdcFacturaAnticipo de addItem().
      */
-    public function setCDCFacturaAnticipo(string $cdcFacturaAnticipo) : self {
+    public function setCDCFacturaAnticipo(string $cdcFacturaAnticipo): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'cdcFacturaAnticipo');
         $this->cdcFacturaAnticipo = $cdcFacturaAnticipo;
         return $this;
@@ -631,14 +645,15 @@ trait ItemValorado {
 
     /**
      * Establece el número de partida arancelaria aduanera del ítem.
-     * 
+     *
      * @param int $partidaArancelaria Código de la partida arancelaria aduanera del ítem (4 dígitos).
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: la partida arancelaria se informa con el parámetro $partidaArancelaria de addItem().
      */
-    public function setPartidaArancelaria(int $partidaArancelaria) : self {
+    public function setPartidaArancelaria(int $partidaArancelaria): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'partidaArancelaria');
         $this->partidaArancelaria = $partidaArancelaria;
         return $this;
@@ -646,14 +661,15 @@ trait ItemValorado {
 
     /**
      * Establece el código NCM Mercosur del ítem.
-     * 
+     *
      * @param int $ncmMercosur Código del Nomenclador Común del Mercosur del ítem (6 a 8 dígitos).
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el código NCM se informa con el parámetro $ncmMercosur de addItem().
      */
-    public function setNcmMercosur(int $ncmMercosur) : self {
+    public function setNcmMercosur(int $ncmMercosur): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'ncmMercosur');
         $this->ncmMercosur = $ncmMercosur;
         return $this;
@@ -661,14 +677,15 @@ trait ItemValorado {
 
     /**
      * Establece el código ISO3166 del país de origen del ítem.
-     * 
+     *
      * @param String $codPaisOrigen Código ISO3166 del país de origen del ítem.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el país de origen se informa con el parámetro $codPaisOrigen de addItem().
      */
-    public function setCodPaisOrigen(string $codPaisOrigen) : self {
+    public function setCodPaisOrigen(string $codPaisOrigen): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'codPaisOrigen');
         $this->codPaisOrigen = $codPaisOrigen;
         return $this;
@@ -676,14 +693,15 @@ trait ItemValorado {
 
     /**
      * Establece el código general del ítem según el Catálogo de Bienes y Servicios de la DNCP.
-     * 
+     *
      * @param String $dncpCodigoGeneral Código general del ítem según el Catálogo de Bienes y Servicios de la DNCP (obligatorio solo cuando receptor es B2G).
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el código general DNCP se informa con el parámetro $dncpCodigoGeneral de addItem().
      */
-    public function setDncpCodigoGeneral(string $dncpCodigoGeneral) : self {
+    public function setDncpCodigoGeneral(string $dncpCodigoGeneral): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoGeneral');
         $this->dncpCodigoGeneral = $dncpCodigoGeneral;
         return $this;
@@ -691,14 +709,15 @@ trait ItemValorado {
 
     /**
      * Establece el código específico del ítem según el Catálogo de Bienes y Servicios de la DNCP.
-     * 
+     *
      * @param String $dncpCodigoEspecifico Código específico del ítem según el Catálogo de Bienes y Servicios de la DNCP (obligatorio solo cuando receptor es B2G).
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el código específico DNCP se informa con el parámetro $dncpCodigoEspecifico de addItem().
      */
-    public function setDncpCodigoEspecifico(string $dncpCodigoEspecifico) : self {
+    public function setDncpCodigoEspecifico(string $dncpCodigoEspecifico): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoEspecifico');
         $this->dncpCodigoEspecifico = $dncpCodigoEspecifico;
         return $this;
@@ -706,14 +725,15 @@ trait ItemValorado {
 
     /**
      * Establece el código GTIN (código comercial global) de producto registrado en DNCP.
-     * 
+     *
      * @param String $dncpCodigoGTINProducto Código GTIN (código comercial global) de producto registrado en DNCP (opcional cuando receptor es B2G).
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el GTIN del producto se informa con el parámetro $dncpCodigoGTINProducto de addItem().
      */
-    public function setDncpCodigoGTINProducto(string $dncpCodigoGTINProducto) : self {
+    public function setDncpCodigoGTINProducto(string $dncpCodigoGTINProducto): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoGTINProducto');
         $this->dncpCodigoGTINProducto = $dncpCodigoGTINProducto;
         return $this;
@@ -721,14 +741,15 @@ trait ItemValorado {
 
     /**
      * Establece el código GTIN del paquete registrado en DNCP.
-     * 
+     *
      * @param String $dncpCodigoGTINPaquete Código GTIN del paquete registrado en DNCP (opcional cuando receptor es B2G).
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el GTIN del paquete se informa con el parámetro $dncpCodigoGTINPaquete de addItem().
      */
-    public function setDncpCodigoGTINPaquete(string $dncpCodigoGTINPaquete) : self {
+    public function setDncpCodigoGTINPaquete(string $dncpCodigoGTINPaquete): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'dncpCodigoGTINPaquete');
         $this->dncpCodigoGTINPaquete = $dncpCodigoGTINPaquete;
         return $this;
@@ -736,17 +757,18 @@ trait ItemValorado {
 
     /**
      * Establece el detalle del vehículo nuevo. Se informa solo en caso de venta de vehiculo automor nuevo.
-     * 
+     *
      * @param GVehNuevo $detalleVehiculoNuevo Detalle del vehículo nuevo.
-     * 
+     *
      * @return self
      *
      * @deprecated 0.2.1 No tiene efecto en el documento: el detalle del vehículo nuevo se informa con el parámetro $detalleVehiculoNuevo de addItem().
      */
-    public function setDetalleVehiculoNuevo(GVehNuevo $detalleVehiculoNuevo) : self {
+    public function setDetalleVehiculoNuevo(GVehNuevo $detalleVehiculoNuevo): self
+    {
         $this->avisarSetterObsoleto(__FUNCTION__, 'detalleVehiculoNuevo');
         $this->detalleVehiculoNuevo = $detalleVehiculoNuevo;
         return $this;
-    }   
+    }
 
 }

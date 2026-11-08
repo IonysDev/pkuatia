@@ -8,8 +8,6 @@ use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 use IonysDev\Pkuatia\Core\DocumentosElectronicos\Traits\ItemValorado;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\DE\E\GCamNCDE;
-use IonysDev\Pkuatia\Core\Fields\DE\H\GCamDEAsoc;
-use DateTime;
 use IonysDev\Pkuatia\Core\Constants\MotEmi;
 
 /**
@@ -22,19 +20,19 @@ class NotaDeCredito extends DocumentoElectronicoComercial
     //////////////////////////////////////////
     // Atributos
     //////////////////////////////////////////
-    
+
     public GCamNCDE $gCamNCDE; // E030 - Campos que componen la nota de crédito electrónica
-    
+
     //////////////////////////////////////////
     // Constructor
     //////////////////////////////////////////
-    
+
     /**
      * Constructor de la clase. Establece el tipo de documento electrónico como Nota de Crédito.
      * Adicionalmente inicializa el campo de impuesto afectado como IVA y la moneda como Guaraníes (PYG).
-     * 
+     *
      * @param int|CamCondOpe $condicion Condición de operación de la nota de crédito (Contado o Crédito).
-     * 
+     *
      * @return void
      */
     public function __construct(int|MotEmi $motivoEmision)
@@ -53,12 +51,12 @@ class NotaDeCredito extends DocumentoElectronicoComercial
 
     /**
      * Establece el motivo de emisión de la nota de crédito.
-     * 
+     *
      * @param String $motivo Motivo de emisión de la nota de crédito.
-     * 
+     *
      * @return self
      */
-    public function setMotivoEmision(int|MotEmi $motivoEmision) : self
+    public function setMotivoEmision(int|MotEmi $motivoEmision): self
     {
         $this->gCamNCDE->setIMotEmi($motivoEmision);
         return $this;

@@ -102,7 +102,7 @@ class RGeVeCCFF
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML ELEMENT  
+  ///XML ELEMENT
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -119,7 +119,7 @@ class RGeVeCCFF
     return $res;
   }
 
-  
+
   // /**
   //  * fromDOMElement
   //  *
@@ -133,7 +133,7 @@ class RGeVeCCFF
   //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
   //     $res->setDNumTraCCFF($xml->getElementsByTagName('dNumTraCCFF')->item(0)->nodeValue);
   //     $res->setDFeAceTraCCFF(DateTime::createFromFormat('Y-m-d', $xml->getElementsByTagName('dFeAceTraCCFF')->item(0)->nodeValue));
-    
+
   //     return $res;
   //   } else {
   //     throw new \Exception("Invalid XML Element: $xml->tagName");
@@ -142,10 +142,11 @@ class RGeVeCCFF
   // }
 
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if($node->getName() != 'rGeVeCCFF')
+    if ($node->getName() != 'rGeVeCCFF') {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
+    }
 
     $res = new RGeVeCCFF();
     $res->setId($node->Id);

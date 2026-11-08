@@ -23,10 +23,11 @@ final class ResultadoValidacion implements Countable, IteratorAggregate
 
   public function agregar(ErrorValidacion $error): self
   {
-    if ($error->esAdvertencia)
+    if ($error->esAdvertencia) {
       $this->advertencias[] = $error;
-    else
-      $this->errores[] = $error;
+    } else {
+    $this->errores[] = $error;
+    }
     return $this;
   }
 
@@ -74,8 +75,9 @@ final class ResultadoValidacion implements Countable, IteratorAggregate
   /** Lanza DocumentoInvalidoException (una ValidacionException) si hay errores; con solo advertencias no lanza. */
   public function lanzarSiInvalido(string $mensaje = 'El documento no es válido'): void
   {
-    if (!$this->esValido())
+    if (!$this->esValido()) {
       throw DocumentoInvalidoException::desde($this, $mensaje);
+    }
   }
 
   public function count(): int
@@ -91,8 +93,9 @@ final class ResultadoValidacion implements Countable, IteratorAggregate
   public function __toString(): string
   {
     $texto = $this->esValido() ? 'Válido' : count($this->errores) . ' error(es):' . "\n- " . implode("\n- ", array_map('strval', $this->errores));
-    if ($this->advertencias !== [])
+    if ($this->advertencias !== []) {
       $texto .= ($this->esValido() ? ' con ' : "\n") . count($this->advertencias) . ' advertencia(s)' . ($this->esValido() ? '' : ":\n- " . implode("\n- ", array_map('strval', $this->advertencias)));
+    }
     return $texto;
   }
 }

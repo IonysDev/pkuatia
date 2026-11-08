@@ -14,14 +14,12 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  * Nodo Id:     E400
  * Nombre:      GCamNCDE
  * Descripción: Campos que componen la Nota de Crédito/Débito Electrónica NCE-NDE (E400-E499)
- * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico 
+ * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico
  */
 class GCamNCDE extends BaseSifenField
 {
-  
-
                               // Id - Longitud - Ocurrencia - Descripción
-  public int    $iMotEmi;     // E401 - 1-2  - 1-1 - Motivo de emisión
+  public int $iMotEmi;     // E401 - 1-2  - 1-1 - Motivo de emisión
   public string $dDesMotEmi;  // E402 - 6-30 - 1-1 - Descripción del motivo de emisión
 
   ///////////////////////////////////////////////////////////////////////
@@ -46,9 +44,9 @@ class GCamNCDE extends BaseSifenField
   /**
    * Establece el valor de dDesMotEmi (Descripción del motivo de emisión).
    * NO SE RECOMIENDA USAR ESTE MÉTODO. Se recomienda usar el método setIMotEmi(int $iMotEmi) que establece el valor de iMotEmi y a la vez establece el valor de dDesMotEmi.
-   * 
+   *
    * @param String $dDesMotEmi Descripción del motivo de emisión
-   * 
+   *
    * @return self Retorna una instancia del objeto para encadenar métodos.
    */
   public function setDDesMotEmi(string $dDesMotEmi): self
@@ -87,15 +85,16 @@ class GCamNCDE extends BaseSifenField
 
   /**
    * Instancia un objeto del tipo GCamNCDE a partir de un DOMElement que representa el nodo XML del objeto GCamNCDE.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GCamNCDE.
-   * 
+   *
    * @return self Objeto GCamNCDE instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamNCDE') != 0)
+    if (strcmp($node->nodeName, 'gCamNCDE') != 0) {
       throw new ValidacionException('[GCamNCDE] El nombre del nodo no corresponde a gCamNCDE: ' . $node->nodeName, 1);
+    }
     $res = new GCamNCDE();
     $res->iMotEmi = intval($node->getElementsByTagName('iMotEmi')->item(0)->nodeValue);
     $res->dDesMotEmi = strval($node->getElementsByTagName('dDesMotEmi')->item(0)->nodeValue);
@@ -103,7 +102,7 @@ class GCamNCDE extends BaseSifenField
   }
 
   /**
-   * Instancia un objeto del tipo GCamNCDE a partir de un objeto stdClass recibido como respuesta desde el SIFEN 
+   * Instancia un objeto del tipo GCamNCDE a partir de un objeto stdClass recibido como respuesta desde el SIFEN
    * que representa el nodo XML del objeto GCamNCDE.
    *
    * @param  mixed $object Objeto stdClass que representa el nodo XML del objeto GCamNCDE.
@@ -113,8 +112,7 @@ class GCamNCDE extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GCamNCDE();
-    if(isset($object->iMotEmi))
-    {
+    if (isset($object->iMotEmi)) {
       $res->iMotEmi = intval($object->iMotEmi);
       $res->dDesMotEmi = strval($object->dDesMotEmi);
     }
@@ -132,8 +130,7 @@ class GCamNCDE extends BaseSifenField
      */
   public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gCamNCDE') != 0)
-    {
+    if (strcmp($node->getName(), 'gCamNCDE') != 0) {
       throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a 'gCamNCDE'");
     }
     $res = new GCamNCDE();
@@ -148,12 +145,12 @@ class GCamNCDE extends BaseSifenField
 
   /**
    * Convierte este objeto GCamNCDE a un DOMElement mediante el DOMDocument proporcionado.
-   * 
+   *
    * @param DOMDocument $doc - Documento DOM donde se creará el elemento.
    *
    * @return DOMElement El elemento DOM que representa este objeto GCamNCDE.
    */
-  public  function toDOMElement(DOMDocument $doc): DOMElement
+  public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gCamNCDE');
     $res->appendChild(XmlHelper::elemento($doc, 'iMotEmi', $this->getIMotEmi()));

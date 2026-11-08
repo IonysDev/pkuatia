@@ -7,7 +7,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * utilizado en notas de crédito y notas de débito electrónicas. *
  * Cada valor corresponde a la descripción `dDesMotEmi` (E402).
  */
-enum MotEmiNR: int {
+enum MotEmiNR: int
+{
     case TrasladoPorVentas = 1;
     case TrasladoPorConsignacion = 2;
     case Exportacion = 3;
@@ -26,7 +27,7 @@ enum MotEmiNR: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::TrasladoPorVentas => 'Traslado por ventas',
             self::TrasladoPorConsignacion => 'Traslado por consignación',
             self::Exportacion => 'Exportación',

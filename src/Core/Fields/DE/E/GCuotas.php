@@ -12,7 +12,7 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     E650 
+ * Nodo Id:     E650
  * Nombre:      gCuotas
  * Descripción: Campos que describen las cuotas
  * Nodo Padre:  E640
@@ -20,9 +20,9 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GCuotas
 {
                               // Id - Longitud - Ocurrencia - Descripción
-  public string   $cMoneCuo;  // E653 - 3          - 1-1 - Moneda de las cuotas
-  public string   $dDMoneCuo; // E654 - 3-20       - 1-1 - Descripción de la moneda de las cuotas
-  public string   $dMonCuota; // E651 - 1-15p(0-4) - 1-1 - Monto de cada cuota (decimal BCMath)
+  public string $cMoneCuo;  // E653 - 3          - 1-1 - Moneda de las cuotas
+  public string $dDMoneCuo; // E654 - 3-20       - 1-1 - Descripción de la moneda de las cuotas
+  public string $dMonCuota; // E651 - 1-15p(0-4) - 1-1 - Monto de cada cuota (decimal BCMath)
   public DateTime $dVencCuo;  // E652 - 10         - 0-1 - Fecha de vencimiento de cada cuota AAAA-MM-DD
 
   ///////////////////////////////////////////////////////////////////////
@@ -40,8 +40,7 @@ class GCuotas
   {
     $this->cMoneCuo = $cMoneCuo;
     $this->dDMoneCuo = MonedaMapping::GetDescription($cMoneCuo);
-    if($this->dDMoneCuo == null)
-    {
+    if ($this->dDMoneCuo == null) {
       throw new ValidacionException("Moneda (cMoneCuo) no válida: " . $cMoneCuo, 1);
     }
     return $this;
@@ -49,9 +48,9 @@ class GCuotas
 
   /**
    * Establece la descripción de la moneda de las cuotas.
-   * 
+   *
    * @param String $dDMoneCuo
-   * 
+   *
    * @return self
    */
   public function setDDMoneCuo(string $dDMoneCuo): self
@@ -69,8 +68,9 @@ class GCuotas
    */
   public function setDMonCuota(string $dMonCuota): self
   {
-    if(!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0, 4))
+    if (!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0, 4)) {
       throw new ValidacionException("[GCuotas] Monto de la cuota (dMonCuota) no válido: " . $dMonCuota, 1);
+    }
     $this->dMonCuota = $dMonCuota;
     return $this;
   }
@@ -138,20 +138,22 @@ class GCuotas
 
   /**
    * Instancia un objeto GCuotas a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gCuotas') != 0)
+    if (strcmp($node->getName(), 'gCuotas') != 0) {
       throw new ValidacionException("No corresponde a un nodo gCuotas válido: " . $node->getName(), 1);
+    }
     $res = new GCuotas();
     $res->setCMoneCuo($node->cMoneCuo);
     $res->setDMonCuota($node->dMonCuota);
-    if(isset($node->dVencCuo))
+    if (isset($node->dVencCuo)) {
       $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $node->dVencCuo));
+    }
     return $res;
   }
 
@@ -169,26 +171,23 @@ class GCuotas
     $res->appendChild(XmlHelper::elemento($doc, 'dVencCuo', $this->getDVencCuo()->format("Y-m-d")));
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCuotas();
-    if(isset($object->cMoneCuo))
-    {
+    if (isset($object->cMoneCuo)) {
       $res->setCMoneCuo($object->cMoneCuo);
     }
-    if(isset($object->dMonCuota))
-    {
+    if (isset($object->dMonCuota)) {
       $res->setDMonCuota($object->dMonCuota);
     }
-    if(isset($object->dVencCuo))
-    {
+    if (isset($object->dVencCuo)) {
       $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $object->dVencCuo));
     }
 
@@ -198,21 +197,23 @@ class GCuotas
 
   /**
    * Instancia un objeto GCuotas a partir de un DOMElement que representa el nodo XML del objeto GCuotas.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GCuotas
-   * 
+   *
    * @return self Objeto GCuotas instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCuotas') != 0)
+    if (strcmp($node->nodeName, 'gCuotas') != 0) {
       throw new ValidacionException('[GCuotas] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new GCuotas();
     $res->setCMoneCuo($node->getElementsByTagName('cMoneCuo')->item(0)->nodeValue);
     $res->setDDMoneCuo($node->getElementsByTagName('dDMoneCuo')->item(0)->nodeValue);
     $res->setDMonCuota($node->getElementsByTagName('dMonCuota')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dVencCuo')->length > 0)
+    if ($node->getElementsByTagName('dVencCuo')->length > 0) {
       $res->setDVencCuo(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dVencCuo')->item(0)->nodeValue));
+    }
     return $res;
   }
 

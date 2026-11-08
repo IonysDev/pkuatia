@@ -15,18 +15,17 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class RGeVeNotRec
 {
-
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public string   $Id;        // GEN002 - Identificador del DE/DTE - 44 -1-1
+  public string $Id;        // GEN002 - Identificador del DE/DTE - 44 -1-1
   public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE - 19 - 1-1
   public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE - 19 - 1-1
-  public int      $iTipRec;   // GEN005 - Tipo de Receptor - 1 - 1-1
-  public string   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
-  public string   $dRucRec;   // GEN007 - RUC del Receptor - 3-8 - 0-1
-  public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor - 1- 0-1
-  public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor - 1- 0-1
-  public string   $dNumID;    // GEN010 - Número de documento de identidad  - 1-20 - 0-1
-  public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes - 1-15p(0-8) - 1-1
+  public int $iTipRec;   // GEN005 - Tipo de Receptor - 1 - 1-1
+  public string $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
+  public string $dRucRec;   // GEN007 - RUC del Receptor - 3-8 - 0-1
+  public int $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor - 1- 0-1
+  public int $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor - 1- 0-1
+  public string $dNumID;    // GEN010 - Número de documento de identidad  - 1-20 - 0-1
+  public int $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes - 1-15p(0-8) - 1-1
 
 
   ///////////////////////////////////////////////////////////////////////
@@ -61,7 +60,7 @@ class RGeVeNotRec
   }
 
   /**
-   * Establece el valor de dFecRecep - Fecha Recepción DE 
+   * Establece el valor de dFecRecep - Fecha Recepción DE
    *
    * @param DateTime $dFecRecep
    *
@@ -103,7 +102,7 @@ class RGeVeNotRec
   }
 
   /**
-   * Establece el valor de dRucRec - RUC del Receptor 
+   * Establece el valor de dRucRec - RUC del Receptor
    *
    * @param String $dRucRec
    *
@@ -141,15 +140,16 @@ class RGeVeNotRec
   {
     // tiTipDoc admite solo 1 a 4 (DE_Types_v150.xsd:645-653; lo usa Evento_v150.xsd para dTipIDRec): en los eventos del
     // receptor no existen el innominado (5) ni "Otro" (9) del DE.
-    if ($dTipIDRec < 1 || $dTipIDRec > 4)
+    if ($dTipIDRec < 1 || $dTipIDRec > 4) {
       throw new ValidacionException("[RGeVeNotRec] dTipIDRec (tipo de documento de identidad del receptor) debe ser 1 Cédula paraguaya, 2 Pasaporte, 3 Cédula extranjera o 4 Carnet de residencia (tiTipDoc, DE_Types_v150.xsd:645-653); se recibió $dTipIDRec.");
+    }
     $this->dTipIDRec = $dTipIDRec;
 
     return $this;
   }
 
   /**
-   * Establece el valor de dNumID - Número de documento de identidad 
+   * Establece el valor de dNumID - Número de documento de identidad
    *
    * @param String $dNumID
    *
@@ -202,7 +202,7 @@ class RGeVeNotRec
   }
 
   /**
-   * Obtiene el valor de dFecRecep - Fecha Recepción DE 
+   * Obtiene el valor de dFecRecep - Fecha Recepción DE
    *
    * @return DateTime
    */
@@ -283,7 +283,7 @@ class RGeVeNotRec
 
 
   ///////////////////////////////////////////////////////////////////////
-  // Conversiones XML  
+  // Conversiones XML
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -341,10 +341,11 @@ class RGeVeNotRec
   //   return $res;
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if($node->getName() != 'rGeVeNotRec')
+    if ($node->getName() != 'rGeVeNotRec') {
       throw new ValidacionException("Invalid XML Element: $node->tagName");
+    }
 
     $res = new RGeVeNotRec();
 
@@ -353,14 +354,12 @@ class RGeVeNotRec
     $res->setDFecRecep(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecRecep));
     $res->setITipRec(intval($node->iTipRec));
     $res->setDNomRec($node->dNomRec);
-    if(isset($node->dRucRec))
-    {
+    if (isset($node->dRucRec)) {
       $res->setDRucRec($node->dRucRec);
       $res->setDDVRec(intval($node->dDVRec));
     }
 
-    if(isset($node->dTipIDRec))
-    {
+    if (isset($node->dTipIDRec)) {
       $res->setDTipIDRec(intval($node->dTipIDRec));
       $res->setDNumID($node->dNumID);
     }

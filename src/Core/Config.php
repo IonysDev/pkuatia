@@ -11,7 +11,7 @@ use IonysDev\Pkuatia\Helpers\PemHelper;
  * Clase que contiene los parámetros de la instancia del SIFEN utilizada.
  */
 class Config
-{  
+{
     public const ENV_DEV = "dev";
     public const ENV_PROD = "prod";
 
@@ -103,74 +103,77 @@ class Config
         );
     }
 
-    public static function ParseObject($config): Config {
+    public static function ParseObject($config): Config
+    {
         $res = new Config();
-        
-        if(is_null($config)) {
+
+        if (is_null($config)) {
             throw new ConfiguracionException("Objeto de configuración no puede ser nulo.");
         }
-        
-        if(isset($config->env)) {
+
+        if (isset($config->env)) {
             $res->env = $config->env;
-        }        
-        
-        if(isset($config->certificateFormat)) {
+        }
+
+        if (isset($config->certificateFormat)) {
             $res->setCertificateFormat($config->certificateFormat);
         }
 
-        if(isset($config->certificateFilePath)) {
+        if (isset($config->certificateFilePath)) {
             $res->certificateFilePath = $config->certificateFilePath;
         }
 
-        if(!isset($config->privateKeyFilePath)) {
+        if (!isset($config->privateKeyFilePath)) {
             throw new ConfiguracionException("Ruta del archivo de la clave privada debe ser especificada.");
         }
         $res->privateKeyFilePath = $config->privateKeyFilePath;
 
-        if(!isset($config->privateKeyPassphrase)) {
+        if (!isset($config->privateKeyPassphrase)) {
             throw new ConfiguracionException("Contraseña de la clave privada debe ser especificada.");
         }
         $res->privateKeyPassphrase = $config->privateKeyPassphrase;
 
-        if(isset($config->idCsc)) {
+        if (isset($config->idCsc)) {
             $res->idCsc = $config->idCsc;
         }
-        
-        if(isset($config->csc)) {
+
+        if (isset($config->csc)) {
             $res->csc = $config->csc;
         }
 
-        if(isset($config->dIdFilePath)) {
+        if (isset($config->dIdFilePath)) {
             $res->dIdFilePath = $config->dIdFilePath;
         }
 
-        if(isset($config->wsdlCacheEnabled)) {
+        if (isset($config->wsdlCacheEnabled)) {
             $res->wsdlCacheEnabled = filter_var($config->wsdlCacheEnabled, FILTER_VALIDATE_BOOLEAN); // "false" y "0" son falso (QA de la Fase C)
         }
 
-        if(isset($config->soapConnectionTimeout)) {
+        if (isset($config->soapConnectionTimeout)) {
             $res->soapConnectionTimeout = intval($config->soapConnectionTimeout);
         }
 
-        if(isset($config->soapUserAgent)) {
+        if (isset($config->soapUserAgent)) {
             $res->soapUserAgent = strval($config->soapUserAgent);
         }
-        if(isset($config->soapTrace)) {
+        if (isset($config->soapTrace)) {
             $res->soapTrace = filter_var($config->soapTrace, FILTER_VALIDATE_BOOLEAN);
         }
-        if(isset($config->validarXsdAntesDeEnviar)) {
+        if (isset($config->validarXsdAntesDeEnviar)) {
             $res->validarXsdAntesDeEnviar = filter_var($config->validarXsdAntesDeEnviar, FILTER_VALIDATE_BOOLEAN);
         }
 
         return $res;
     }
 
-    public static function ParseJsonFile(string $jsonConfigFilePath) {
+    public static function ParseJsonFile(string $jsonConfigFilePath)
+    {
         $config = json_decode(file_get_contents($jsonConfigFilePath));
         return self::ParseObject($config);
     }
 
-    public static function ParseJson(string $jsonConfig) {
+    public static function ParseJson(string $jsonConfig)
+    {
         $obj = json_decode($jsonConfig);
         return self::ParseObject($obj);
     }
@@ -397,7 +400,7 @@ class Config
 
     /**
      * Devuelve el valor de IdCDC
-     * 
+     *
      * @return String
      */
     public function getIdCsc(): string
@@ -407,7 +410,7 @@ class Config
 
     /**
      * Devuelve el valor de env (entorno)
-     * 
+     *
      * @return String
      */
     public function getEnv(): string
@@ -417,13 +420,13 @@ class Config
 
     /**
      * Devuelve el valor del CSC (clave secreta de comunicación)
-     * 
+     *
      * @return String
      */
     public function getCsc(): string
     {
         return $this->csc;
     }
-    
+
 
 }

@@ -7,14 +7,15 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Estos valores corresponden al campo dTasaIVA (E734) del grupo gCamIVA (E730).
  */
 
-enum CamIVATasaIVA: int {
+enum CamIVATasaIVA: int
+{
     case ExentoExonerado = 0;
     case IVA5 = 5;
     case IVA10 = 10;
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ExentoExonerado => 'Exento o Exonerado',
             self::IVA5 => 'IVA5',
             self::IVA10 => 'IVA10'

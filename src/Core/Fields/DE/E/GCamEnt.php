@@ -11,15 +11,15 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     E940    
- * Nombre:      gCamEnt    
+ * Nodo Id:     E940
+ * Nombre:      gCamEnt
  * Descripción: Campos que identifican el local de la entrega de las mercaderías
  * Nodo Padre:  E900 - gTransp - Campos que describen  el transporte de mercaderías
  */
 class GCamEnt extends BaseSifenField
 {
                              // Id - Longitud - Ocurrencia - Descripción
-  public string $dDirLocEnt; // E941 - 1-255 - 1-1 - Dirección del local de la entrega 
+  public string $dDirLocEnt; // E941 - 1-255 - 1-1 - Dirección del local de la entrega
   public ?int $dNumCasEnt;   // E942 - 1-6   - 1-1 - Número de casa de Entrega
   public string $dComp1Ent;  // E943 - 1-255 - 0-1 - Complemento de dirección 1 Entrega
   public string $dComp2Ent;  // E944 - 1-255 - 0-1 - Complemento de dirección 2 Entrega
@@ -267,7 +267,7 @@ class GCamEnt extends BaseSifenField
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  ///XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -283,16 +283,17 @@ class GCamEnt extends BaseSifenField
 
     if (isset($this->dNumCasEnt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumCasEnt', $this->getDNumCasEnt()));
-    }
-    else {
+    } else {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumCasEnt', 0));
     }
 
-    if (isset($this->dComp1Ent))
+    if (isset($this->dComp1Ent)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dComp1Ent', $this->getDComp1Ent()));
+    }
 
-    if (isset($this->dComp2Ent))
+    if (isset($this->dComp2Ent)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dComp2Ent', $this->getDComp2Ent()));
+    }
 
     $res->appendChild(XmlHelper::elemento($doc, 'cDepEnt', $this->getCDepEnt()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesDepEnt', $this->getDDesDepEnt()));
@@ -304,96 +305,98 @@ class GCamEnt extends BaseSifenField
     $res->appendChild(XmlHelper::elemento($doc, 'cCiuEnt', $this->getCCiuEnt()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEnt', $this->getDDesCiuEnt()));
 
-    if (isset($this->dTelEnt))
+    if (isset($this->dTelEnt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTelEnt', $this->getDTelEnt()));
+    }
 
     return $res;
   }
-  
+
   /**
    * Instancia un objeto GCamEnt a partir de un DOMElement que representa el nodo XML del objeto.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto.
-   * 
+   *
    * @return self Objeto instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamEnt') != 0)
+    if (strcmp($node->nodeName, 'gCamEnt') != 0) {
       throw new ValidacionException('[GCamEnt] El nombre del nodo no corresponde a gCamEnt: ' . $node->nodeName);
+    }
     $res = new GCamEnt();
-    
-    if($node->getElementsByTagName('dDirLocEnt')->length > 0)
+
+    if ($node->getElementsByTagName('dDirLocEnt')->length > 0) {
       $res->setDDirLocEnt($node->getElementsByTagName('dDirLocEnt')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNumCasEnt')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNumCasEnt')->length > 0) {
       $res->setDNumCasEnt(intval($node->getElementsByTagName('dNumCasEnt')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dComp1Ent')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dComp1Ent')->length > 0) {
       $res->setDComp1Ent($node->getElementsByTagName('dComp1Ent')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dComp2Ent')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dComp2Ent')->length > 0) {
       $res->setDComp2Ent($node->getElementsByTagName('dComp2Ent')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('cDepEnt')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cDepEnt')->length > 0) {
       $res->setCDepEnt(intval($node->getElementsByTagName('cDepEnt')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cDisEnt')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cDisEnt')->length > 0) {
       $res->setCDisEnt(intval($node->getElementsByTagName('cDisEnt')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cCiuEnt')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cCiuEnt')->length > 0) {
       $res->setCCiuEnt(intval($node->getElementsByTagName('cCiuEnt')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dTelEnt')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dTelEnt')->length > 0) {
       $res->setDTelEnt($node->getElementsByTagName('dTelEnt')->item(0)->nodeValue);
-    
+    }
+
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCamEnt();
-    if(isset($object->dDirLocEnt))
-    {
+    if (isset($object->dDirLocEnt)) {
       $res->setDDirLocEnt($object->dDirLocEnt);
     }
-    if(isset($object->dNumCasEnt))
-    {
+    if (isset($object->dNumCasEnt)) {
       $res->setDNumCasEnt($object->dNumCasEnt);
     }
-    if(isset($object->dComp1Ent))
-    {
+    if (isset($object->dComp1Ent)) {
       $res->setDComp1Ent($object->dComp1Ent);
     }
-    if(isset($object->dComp2Ent))
-    {
+    if (isset($object->dComp2Ent)) {
       $res->setDComp2Ent($object->dComp2Ent);
     }
-    if(isset($object->cDepEnt))
-    {
+    if (isset($object->cDepEnt)) {
       $res->setCDepEnt($object->cDepEnt);
     }
-    if(isset($object->cDisEnt))
-    {
+    if (isset($object->cDisEnt)) {
       $res->setCDisEnt($object->cDisEnt);
     }
-    if(isset($object->cCiuEnt))
-    {
+    if (isset($object->cCiuEnt)) {
       $res->setCCiuEnt($object->cCiuEnt);
     }
-    if(isset($object->dTelEnt))
-    {
+    if (isset($object->dTelEnt)) {
       $res->setDTelEnt($object->dTelEnt);
     }
-    
+
     return $res;
-    
+
   }
 
   /**

@@ -12,9 +12,9 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id: E620 
+ * Nodo Id: E620
  * Descripción: Campos que describen el pago o entrega inicial de la operación con tarjeta de crédito/débito
- * Nodo Padre: E605 
+ * Nodo Padre: E605
  */
 
 class GPagTarCD extends BaseSifenField
@@ -49,20 +49,17 @@ class GPagTarCD extends BaseSifenField
 
   /**
    * Establece la descripción de la Denominación de la tarjeta
-   * 
+   *
    * @param String $dDesDenTarj
-   * 
+   *
    * @return self
    */
   public function setDDesDenTarj(string $dDesDenTarj): self
   {
     $this->dDesDenTarj = $dDesDenTarj;
-    if(is_null($dDesDenTarj) || strlen($dDesDenTarj) == 0)
-    {
+    if (is_null($dDesDenTarj) || strlen($dDesDenTarj) == 0) {
       $this->dDesDenTarj;
-    }
-    else
-    {
+    } else {
       $this->dDesDenTarj = substr($dDesDenTarj, 0, 20);
     }
     return $this;
@@ -124,8 +121,7 @@ class GPagTarCD extends BaseSifenField
    */
   public function setIForProPa(int|PagTarCDForProPa $iForProPa): self
   {
-    if(is_int($iForProPa) && $iForProPa != 1 && $iForProPa != 2 && $iForProPa != 9)
-    {
+    if (is_int($iForProPa) && $iForProPa != 1 && $iForProPa != 2 && $iForProPa != 9) {
       throw new ValidacionException("[GPagTarCD] Valor de iForProPa inválido: $iForProPa");
     }
     $this->iForProPa = $iForProPa instanceof PagTarCDForProPa ? $iForProPa->value : $iForProPa;
@@ -276,43 +272,36 @@ class GPagTarCD extends BaseSifenField
 
   /**
    * Instancia un objeto gPagTarCD a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $node
-   * 
+   *
    * @return GPagTarCD
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): GPagTarCD
   {
-    if(strcmp($node->getName(), 'gPagTarCD') != 0)
-    {
+    if (strcmp($node->getName(), 'gPagTarCD') != 0) {
       throw new ValidacionException("El nodo '" . $node->getName() . "' no es gPagTarCD");
     }
     $res = new GPagTarCD();
     $res->setIDenTarj(intval($node->iDenTarj));
     $res->setDDesDenTarj(strval($node->dDesDenTarj));
-    if(isset($node->dRSProTar))
-    {
+    if (isset($node->dRSProTar)) {
       $res->setDRSProTar(strval($node->dRSProTar));
     }
-    if(isset($node->dRUCProTar))
-    {
+    if (isset($node->dRUCProTar)) {
       $res->setDRUCProTar(strval($node->dRUCProTar));
     }
-    if(isset($node->dDVProTar))
-    {
+    if (isset($node->dDVProTar)) {
       $res->setDDVProTar(intval($node->dDVProTar));
     }
     $res->setIForProPa(intval($node->iForProPa));
-    if(isset($node->dCodAuOpe))
-    {  
+    if (isset($node->dCodAuOpe)) {
       $res->setDCodAuOpe(intval($node->dCodAuOpe));
     }
-    if(isset($node->dNomTit))
-    {
+    if (isset($node->dNomTit)) {
       $res->setDNomTit(strval($node->dNomTit));
     }
-    if(isset($node->dNumTarj))
-    {
+    if (isset($node->dNumTarj)) {
       $res->setDNumTarj(intval($node->dNumTarj));
     }
     return $res;
@@ -320,7 +309,7 @@ class GPagTarCD extends BaseSifenField
 
   /**
    * Convierte este objeto a un DOMElement para embutirse en un DOMDocument especifico.
-   * 
+   *
    * @param DOMDocument $doc Documento DOM en el que se va a embutir el DOMElement
    *
    * @return DOMElement
@@ -330,29 +319,35 @@ class GPagTarCD extends BaseSifenField
     $res = $doc->createElement('gPagTarCD');
     $res->appendChild(XmlHelper::elemento($doc, 'iDenTarj', $this->getIDenTarj()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesDenTarj', $this->getDDesDenTarj()));
-    
-    if(isset($this->dRSProTar) && strlen($this->getDRSProTar()) > 0)
+
+    if (isset($this->dRSProTar) && strlen($this->getDRSProTar()) > 0) {
       $res->appendChild(XmlHelper::elemento($doc, 'dRSProTar', $this->getDRSProTar()));
-    
-    if(isset($this->dRUCProTar) && strlen($this->getDRUCProTar()) > 0)
+    }
+
+    if (isset($this->dRUCProTar) && strlen($this->getDRUCProTar()) > 0) {
       $res->appendChild(XmlHelper::elemento($doc, 'dRUCProTar', $this->getDRUCProTar()));
-    
-    if(isset($this->dDVProTar))
+    }
+
+    if (isset($this->dDVProTar)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dDVProTar', $this->getDDVProTar()));
-    
+    }
+
     $res->appendChild(XmlHelper::elemento($doc, 'iForProPa', $this->getIForProPa()));
 
-    if(isset($this->dCodAuOpe))
+    if (isset($this->dCodAuOpe)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCodAuOpe', $this->getDCodAuOpe()));
-    
-    if(isset($this->dNomTit) && strlen($this->getDNomTit()) > 0)
+    }
+
+    if (isset($this->dNomTit) && strlen($this->getDNomTit()) > 0) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNomTit', $this->getDNomTit()));
-    
-    if(isset($this->dNumTarj))
+    }
+
+    if (isset($this->dNumTarj)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumTarj', $this->getDNumTarj()));
+    }
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
@@ -362,36 +357,28 @@ class GPagTarCD extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GPagTarCD();
-    if(isset($object->iDenTarj))
-    {
+    if (isset($object->iDenTarj)) {
       $res->setIDenTarj(intval($object->iDenTarj));
     }
-    if(isset($object->dRSProTar))
-    {
+    if (isset($object->dRSProTar)) {
       $res->setDRSProTar($object->dRSProTar);
     }
-    if(isset($object->dRUCProTar))
-    {
+    if (isset($object->dRUCProTar)) {
       $res->setDRUCProTar($object->dRUCProTar);
     }
-    if(isset($object->dDVProTar))
-    {
+    if (isset($object->dDVProTar)) {
       $res->setDDVProTar(intval($object->dDVProTar));
     }
-    if(isset($object->iForProPa))
-    {
+    if (isset($object->iForProPa)) {
       $res->setIForProPa(intval($object->iForProPa));
     }
-    if(isset($object->dCodAuOpe))
-    {
+    if (isset($object->dCodAuOpe)) {
       $res->setDCodAuOpe(intval($object->dCodAuOpe));
     }
-    if(isset($object->dNomTit))
-    {
+    if (isset($object->dNomTit)) {
       $res->setDNomTit($object->dNomTit);
     }
-    if(isset($object->dNumTarj))
-    {
+    if (isset($object->dNumTarj)) {
       $res->setDNumTarj(intval($object->dNumTarj));
     }
     return $res;
@@ -399,31 +386,38 @@ class GPagTarCD extends BaseSifenField
 
   /**
    * Instancia un objeto gPagTarCD a partir de un DOMElement que representa el nodo XML del objeto gPagTarCD.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el gPagTarCD
-   * 
+   *
    * @return GPagTarCD Objeto instanciado
    */
   public static function FromDOMElement(DOMElement $node): GPagTarCD
   {
-    if(strcmp($node->nodeName, 'gPagTarCD') != 0)
+    if (strcmp($node->nodeName, 'gPagTarCD') != 0) {
       throw new ValidacionException('[GPagTarCD] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new GPagTarCD();
     $res->setIDenTarj(intval($node->getElementsByTagName('iDenTarj')->item(0)->nodeValue));
     $res->setDDesDenTarj(strval($node->getElementsByTagName('dDesDenTarj')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dRSProTar')->length > 0)
+    if ($node->getElementsByTagName('dRSProTar')->length > 0) {
       $res->setDRSProTar(strval($node->getElementsByTagName('dRSProTar')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dRUCProTar')->length > 0)
+    }
+    if ($node->getElementsByTagName('dRUCProTar')->length > 0) {
       $res->setDRUCProTar(strval($node->getElementsByTagName('dRUCProTar')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dDVProTar')->length > 0)
+    }
+    if ($node->getElementsByTagName('dDVProTar')->length > 0) {
       $res->setDDVProTar(intval($node->getElementsByTagName('dDVProTar')->item(0)->nodeValue));
+    }
     $res->setIForProPa(intval($node->getElementsByTagName('iForProPa')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dCodAuOpe')->length > 0)
+    if ($node->getElementsByTagName('dCodAuOpe')->length > 0) {
       $res->setDCodAuOpe(intval($node->getElementsByTagName('dCodAuOpe')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNomTit')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNomTit')->length > 0) {
       $res->setDNomTit(strval($node->getElementsByTagName('dNomTit')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumTarj')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumTarj')->length > 0) {
       $res->setDNumTarj(intval($node->getElementsByTagName('dNumTarj')->item(0)->nodeValue));
+    }
     return $res;
   }
 }

@@ -10,14 +10,14 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * ID:E630 
+ * ID:E630
  * Campos que describen el pago o entrega inicial de la operación con cheque
  * PADRE:E605
  */
 class GPagCheq extends BaseSifenField
 {
                            // Id - Longitud - Ocurrencia - Descripción
-  public string $dNumCheq; // E631 - 8 -    1-1 - Número de cheque  
+  public string $dNumCheq; // E631 - 8 -    1-1 - Número de cheque
   public string $dBcoEmi;  // E632 - 4-20 - 1-1 - Banco emisor
 
   ///////////////////////////////////////////////////////////////////////
@@ -34,12 +34,13 @@ class GPagCheq extends BaseSifenField
    */
   public function setDNumCheq(string $dNumCheq): self
   {
-    if(strlen($dNumCheq) > 8)
+    if (strlen($dNumCheq) > 8) {
       $this->dNumCheq = substr($dNumCheq, 0, 8);
-    else if(strlen($dNumCheq) < 8)
+    } elseif (strlen($dNumCheq) < 8) {
       $this->dNumCheq = str_pad($dNumCheq, 8, "0", STR_PAD_LEFT);
-    else
-      $this->dNumCheq = $dNumCheq;
+    } else {
+    $this->dNumCheq = $dNumCheq;
+    }
     return $this;
   }
 
@@ -53,12 +54,13 @@ class GPagCheq extends BaseSifenField
    */
   public function setDBcoEmi(string $dBcoEmi): self
   {
-    if(strlen($dBcoEmi) < 4)
+    if (strlen($dBcoEmi) < 4) {
       $this->dBcoEmi = str_pad($dBcoEmi, 4, " ", STR_PAD_RIGHT);
-    else if(strlen($dBcoEmi) > 20)
+    } elseif (strlen($dBcoEmi) > 20) {
       $this->dBcoEmi = substr($dBcoEmi, 0, 20);
-    else
-      $this->dBcoEmi = $dBcoEmi;
+    } else {
+    $this->dBcoEmi = $dBcoEmi;
+    }
     return $this;
   }
 
@@ -90,12 +92,12 @@ class GPagCheq extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
   ///XML Element
   ///////////////////////////////////////////////////////////////////////
-  
+
   /**
    * Instancia un objeto GPagCheq a partir de un SimpleXMLElement
-   * 
+   *
    * @param  SimpleXMLElement $xml
-   * 
+   *
    * @return GPagCheq
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
@@ -105,7 +107,7 @@ class GPagCheq extends BaseSifenField
     $res->setDBcoEmi($xml->dBcoEmi);
     return $res;
   }
-  
+
   /**
    * toDOMElement
    *
@@ -120,7 +122,7 @@ class GPagCheq extends BaseSifenField
 
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
@@ -130,12 +132,10 @@ class GPagCheq extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GPagCheq();
-    if(isset($object->dNumCheq))
-    {
+    if (isset($object->dNumCheq)) {
       $res->setDNumCheq($object->dNumCheq);
     }
-    if(isset($object->dBcoEmi))
-    {
+    if (isset($object->dBcoEmi)) {
       $res->setDBcoEmi($object->dBcoEmi);
     }
     return $res;
@@ -143,20 +143,23 @@ class GPagCheq extends BaseSifenField
 
   /**
    * Instancia un objeto GPagCheq a partir de un DOMElement que representa el nodo XML del objeto GPagCheq.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GPagCheq
-   * 
+   *
    * @return self Objeto GPagCheq instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gPagCheq') != 0)
+    if (strcmp($node->nodeName, 'gPagCheq') != 0) {
       throw new ValidacionException("El nodo '" . $node->nodeName . "' no corresponde a gPagCheq", 1);
+    }
     $res = new GPagCheq();
-    if($node->getElementsByTagName('dNumCheq')->length > 0)
+    if ($node->getElementsByTagName('dNumCheq')->length > 0) {
       $res->setDNumCheq($node->getElementsByTagName('dNumCheq')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dBcoEmi')->length > 0)
+    }
+    if ($node->getElementsByTagName('dBcoEmi')->length > 0) {
       $res->setDBcoEmi($node->getElementsByTagName('dBcoEmi')->item(0)->nodeValue);
+    }
     return $res;
   }
 }

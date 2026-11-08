@@ -123,22 +123,22 @@ class GResProcEve
     return $this;
   }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-      if(strcmp($node->getName(),'gResProcEVe') != 0) {
+      if (strcmp($node->getName(), 'gResProcEVe') != 0) {
         throw new RespuestaException("Invalid XML Element: $node->getName()");
       }
 
       $res = new GResProcEVe();
       $res->setDEstRes($node->dEstRes);
-      if(isset($node->dProtAut)) {
+      if (isset($node->dProtAut)) {
         $res->setDProtAut($node->dProtAut);
       }
-      if(isset($node->id)) {
+      if (isset($node->id)) {
         $res->setId($node->id);
       }
       ///array for gResProc
-      $gResProc = array();
+      $gResProc = [];
       // Un gResProc por mensaje (0-100). Hasta 0.2.0 había una rama con "echo" de depuración (inalcanzable: un
       // SimpleXMLElement nunca es un array) y se leía solo el primer mensaje (PK-43).
       foreach ($node->gResProc as $g) {

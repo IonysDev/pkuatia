@@ -11,10 +11,9 @@ use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
-
 /**
  * Nodo Id:     E720
- * Nombre:      gValorItem 
+ * Nombre:      gValorItem
  * Descripción: Campos que describen los precios, descuentos y valor total por ítem.
  * Nodo Padre:  E700
  */
@@ -23,7 +22,7 @@ class GValorItem extends BaseSifenField
   public string $dPUniProSer;              // E721  - 1-15p(0-8) - 1-1 - Precio unitario del producto y/o servicio (incluidos impuestos)
   public string $dTiCamIt;                 // E725  - 1-5p(0-4)  - 0-1 - Tipo de cambio por ítem
   public string $dTotBruOpeItem;           // E727  - 1-15p(0-8) - 1-1 - Total bruto de la operación por ítem
-  public GValorRestaItem $gValorRestaItem; // EA001 -            - 1-1 - Campos que describen los descuentos, anticipos valor total por ítem 
+  public GValorRestaItem $gValorRestaItem; // EA001 -            - 1-1 - Campos que describen los descuentos, anticipos valor total por ítem
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -38,8 +37,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDPUniProSer(string $dPUniProSer): self
   {
-    if(ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0, 8) === false)
-    {
+    if (ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0, 8) === false) {
       throw new ValidacionException("El valor dPUniProSer no es válido:" . $dPUniProSer);
     }
     $this->dPUniProSer = $dPUniProSer;
@@ -56,8 +54,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDTiCamIt(string $dTiCamIt): self
   {
-    if(ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0, 4) === false)
-    {
+    if (ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0, 4) === false) {
       throw new ValidacionException("El valor dTiCamIt no es válido:" . $dTiCamIt);
     }
     $this->dTiCamIt = $dTiCamIt;
@@ -74,8 +71,7 @@ class GValorItem extends BaseSifenField
    */
   public function setDTotBruOpeItem(string $dTotBruOpeItem): self
   {
-    if(ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0, 8) === false)
-    {
+    if (ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0, 8) === false) {
       throw new ValidacionException("El valor dTotBruOpeItem no es válido:" . $dTotBruOpeItem);
     }
     $this->dTotBruOpeItem = $dTotBruOpeItem;
@@ -113,7 +109,7 @@ class GValorItem extends BaseSifenField
 
   /**
    * Obtiene el valor de dPUniProSer formateado con separador de miles
-   * 
+   *
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String
    */
@@ -159,25 +155,22 @@ class GValorItem extends BaseSifenField
 
   /**
    * Instancia un objeto GValorItem a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $node
-   * 
+   *
    * @return GValorItem
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): GValorItem
   {
-    if(strcmp($node->getName(), 'gValorItem') !== 0)
-    {
+    if (strcmp($node->getName(), 'gValorItem') !== 0) {
       throw new ValidacionException("El elemento '" . $node->getName() . "' no corresponde a un gValorItem.");
     }
     $res = new GValorItem();
     $res->setDPUniProSer(strval($node->dPUniProSer));
-    if(isset($node->dTiCamIt))
-    {
+    if (isset($node->dTiCamIt)) {
       $res->setDTiCamIt(strval($node->dTiCamIt));
     }
-    if(isset($node->dTotBruOpeItem))
-    {
+    if (isset($node->dTotBruOpeItem)) {
       $res->setDTotBruOpeItem(strval($node->dTotBruOpeItem));
     }
     $res->setGValorRestaItem(GValorRestaItem::fromSimpleXMLElement($node->gValorRestaItem));
@@ -186,7 +179,7 @@ class GValorItem extends BaseSifenField
 
   /**
    * Convierte este GValorItem en un DOMElement que puede ser insertado en el DOMDocument especificado.
-   * 
+   *
    * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
    * @return DOMElement El DOMElement creado.
@@ -195,8 +188,9 @@ class GValorItem extends BaseSifenField
   {
     $res = $doc->createElement('gValorItem');
     $res->appendChild(XmlHelper::elemento($doc, 'dPUniProSer', $this->getDPUniProSer()));
-    if(isset($this->dTiCamIt))
+    if (isset($this->dTiCamIt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTiCamIt', $this->getDTiCamIt()));
+    }
     $res->appendChild(XmlHelper::elemento($doc, 'dTotBruOpeItem', $this->getDTotBruOpeItem()));
     $res->appendChild($this->gValorRestaItem->toDOMElement($doc));
     return $res;
@@ -206,32 +200,28 @@ class GValorItem extends BaseSifenField
   // Others
   ///////////////////////////////////////////////////////////////////////
 
-  
-  
+
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GValorItem();
-    if(isset($object->dPUniProSer))
-    {
+    if (isset($object->dPUniProSer)) {
       $res->setDPUniProSer(strval($object->dPUniProSer));
     }
-    if(isset($object->dTiCamIt))
-    {
+    if (isset($object->dTiCamIt)) {
       $res->setDTiCamIt(strval($object->dTiCamIt));
     }
-    if(isset($object->dTotBruOpeItem))
-    {
+    if (isset($object->dTotBruOpeItem)) {
       $res->setDTotBruOpeItem(strval($object->dTotBruOpeItem));
     }
     ///children
-    if(isset($object->gValorRestaItem))
-    {
+    if (isset($object->gValorRestaItem)) {
       $res->setGValorRestaItem(GValorRestaItem::FromSifenResponseObject($object->gValorRestaItem));
     }
     return $res;
@@ -239,19 +229,21 @@ class GValorItem extends BaseSifenField
 
   /**
    * Instancia un objeto GValorItem a partir de un DOMElement que lo representa.
-   * 
+   *
    * @param  DOMElement $node
-   * 
+   *
    * @return self
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gValorItem') != 0)
+    if (strcmp($node->nodeName, 'gValorItem') != 0) {
         throw new ValidacionException('[GValorItem] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new self();
     $res->setDPUniProSer(trim($node->getElementsByTagName('dPUniProSer')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dTiCamIt')->length > 0)
+    if ($node->getElementsByTagName('dTiCamIt')->length > 0) {
       $res->setDTiCamIt(trim($node->getElementsByTagName('dTiCamIt')->item(0)->nodeValue));
+    }
     $res->setDTotBruOpeItem(trim($node->getElementsByTagName('dTotBruOpeItem')->item(0)->nodeValue));
     $res->setGValorRestaItem(GValorRestaItem::FromDOMElement($node->getElementsByTagName('gValorRestaItem')->item(0)));
     return $res;

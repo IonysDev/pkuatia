@@ -29,20 +29,24 @@ class ValueValidations
      */
     public static function isValidStringDecimal(string $value, int $intPartLenght, int $decPartMinPrecision, int $decPartMaxPrecision = 99): bool
     {
-        if($decPartMinPrecision > $decPartMaxPrecision)
+        if ($decPartMinPrecision > $decPartMaxPrecision) {
             throw new ValidacionException("The minimum precision cannot be greater than the maximum precision.");
-        if($decPartMinPrecision < 0 || $decPartMaxPrecision < 0)
+        }
+        if ($decPartMinPrecision < 0 || $decPartMaxPrecision < 0) {
             throw new ValidacionException("The precision cannot be negative.");
-        if($intPartLenght < 0)
+        }
+        if ($intPartLenght < 0) {
             throw new ValidacionException("The integer part lenght cannot be negative.");
+        }
 
         // is_numeric descarta espacios, comas y texto; la expresión regular excluye además signos,
         // notación científica y puntos sin dígitos.
-        if($value === '' || !is_numeric($value))
+        if ($value === '' || !is_numeric($value)) {
             return false;
+        }
 
         $parteEntera = '[0-9]{1,' . $intPartLenght . '}';
-        if($decPartMaxPrecision === 0) {
+        if ($decPartMaxPrecision === 0) {
             $parteDecimal = '';
         } else {
             $minimo = max(1, $decPartMinPrecision);

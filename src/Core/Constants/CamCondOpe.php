@@ -4,17 +4,17 @@ namespace IonysDev\Pkuatia\Core\Constants;
 
 /**
  * Enumeración que contiene las condiciones posibles de operación de una factura o autofactura electrónica.
- * Estos valores corresponden al campo iCondOpe (E601), asi como a su descripción correspondiente del campo dDCondOpe (E602) 
+ * Estos valores corresponden al campo iCondOpe (E601), asi como a su descripción correspondiente del campo dDCondOpe (E602)
  * del grupo gCamCond (E600).
  */
-enum CamCondOpe: int {
-
+enum CamCondOpe: int
+{
     case Contado = 1;
     case Credito = 2;
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Contado => 'Contado',
             self::Credito => 'Crédito'
         };
@@ -61,5 +61,3 @@ enum CamCondOpe: int {
         return self::toIdNameList();
     }
 }
-
-?>

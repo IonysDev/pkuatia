@@ -6,12 +6,12 @@ use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
 
-class SignedInfo 
+class SignedInfo
 {
     public CanonicalizationMethod $CanonicalizationMethod;
     public SignatureMethod $SignatureMethod;
     public Reference $Reference;
-    
+
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
@@ -95,9 +95,9 @@ class SignedInfo
 
     /**
      * Instancia un objeto SignedInfo a partir de un SimpleXMLElement
-     * 
+     *
      * @param \SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -111,9 +111,9 @@ class SignedInfo
 
     /**
      * Instancia un objeto SignedInfo a partir de un DOMElement
-     * 
+     *
      * @param DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(DOMElement $node): self
@@ -133,7 +133,7 @@ class SignedInfo
      * Convierte este SignedInfo a un DOMElement para ser usado en un DOMDocument determinado.
      *
      * @param DOMDocument $doc DOMDocument con el que se generará el elemento.
-     * 
+     *
      * @return DOMElement Elemento DOM que representa este SignedInfo.
      */
     public function toDOMElement(DOMDocument $doc): \DOMElement
@@ -145,5 +145,3 @@ class SignedInfo
         return $res;
     }
 }
-
-?>

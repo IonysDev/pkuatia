@@ -18,8 +18,8 @@ class GResProcEVe
   public string $dEstRes; // GRSch030 - 8-30 - 1-1   - Estado del resultado
   public int $dProtAut;   // GRSch031 - 10   - 0-1   - Número de transacción
   public int $id;         // GRSch032 - 10   - 1-1   - Identificador del evento
-  public array $gResProc; // GRSch033 - G    - 1-100 - Grupo Resultado de Procesamiento 
-                        
+  public array $gResProc; // GRSch033 - G    - 1-100 - Grupo Resultado de Procesamiento
+
 
   /**
    * Establece el valor de id
@@ -125,24 +125,24 @@ class GResProcEVe
     return $this;
   }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-      if(strcmp($node->getName(),'gResProcEVe') != 0) {
+      if (strcmp($node->getName(), 'gResProcEVe') != 0) {
         throw new RespuestaException("Invalid XML Element: $node->getName()");
       }
 
       $res = new GResProcEVe();
       $res->setDEstRes($node->dEstRes);
-      if(isset($node->dProtAut)) {
+      if (isset($node->dProtAut)) {
         $res->setDProtAut($node->dProtAut);
       }
-      if(isset($node->id)) {
+      if (isset($node->id)) {
         $res->setId($node->id);
       }
       // gResProc puede ocurrir de 1 a 100 veces: iterar con foreach recorre todos los
       // hermanos del mismo nombre en SimpleXML (un if is_array() jamás se cumple aquí).
-      $gResProc = array();
-      foreach($node->gResProc as $proc) {
+      $gResProc = [];
+      foreach ($node->gResProc as $proc) {
         $aux = new GResProc();
         $aux->setDCodRes($proc->dCodRes);
         $aux->setDMsgRes($proc->dMsgRes);
@@ -155,7 +155,7 @@ class GResProcEVe
 
   /**
    * Creates a GResProcEVe instance from a Sifen Response Object
-   * 
+   *
    * @param mixed $object The response object from Sifen
    * @return self
    * @throws \Exception If object is null or invalid
@@ -172,8 +172,8 @@ class GResProcEVe
       $res->setDProtAut($object->dProtAut);
     }
     $res->setId($object->id);
-    
-    $gResProc = array();
+
+    $gResProc = [];
     if (isset($object->gResProc)) {
       if (is_array($object->gResProc)) {
         foreach ($object->gResProc as $proc) {
@@ -202,8 +202,9 @@ class GResProcEVe
   public function esAprobado(): bool
   {
     $estado = $this->getEstado();
-    if ($estado !== null)
+    if ($estado !== null) {
       return $estado->esAprobado();
+    }
     return ($this->getMotivos()[0] ?? null)?->esAprobacion() === true;
   }
 

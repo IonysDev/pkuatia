@@ -1,6 +1,8 @@
 <?php
 
-namespace IonysDev\Pkuatia\Core\Fields\Response\DE;;
+namespace IonysDev\Pkuatia\Core\Fields\Response\DE;
+
+;
 
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use SimpleXMLElement;
@@ -78,8 +80,9 @@ class RContDe
    */
   public function addRContEv(RContEv $rContEv): self
   {
-    if (!isset($this->rContEv))
+    if (!isset($this->rContEv)) {
       return $this->setRContEv($rContEv);
+    }
     $this->rContEvs[] = $rContEv;
     return $this;
   }
@@ -128,28 +131,29 @@ class RContDe
    */
   public function getRContEvs(): array
   {
-    if (!empty($this->rContEvs))
+    if (!empty($this->rContEvs)) {
       return $this->rContEvs;
+    }
     return isset($this->rContEv) ? [$this->rContEv] : [];
   }
 
   /**
    * Crea una nueva instancia de RContDe a partir de un objeto SimpleXMLElement.
-   * 
+   *
    * @param SimpleXMLElement $xml
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): self
   {
 
-    if(strcmp($xml->getName(),'rContDe') != 0) {
+    if (strcmp($xml->getName(), 'rContDe') != 0) {
       throw new RespuestaException("Invalid XML Element:". $xml->getName());
     }
-    
+
     $res = new self();
     if (isset($xml->dProtAut)) {
-      $res->setDProtAut((String) $xml->dProtAut);
+      $res->setDProtAut((string) $xml->dProtAut);
     }
     if (isset($xml->rDE)) {
       $res->setRDe(RDE::FromSimpleXMLElement($xml->rDE));
@@ -157,8 +161,9 @@ class RContDe
     ///el nodo xcontEv  siempre viene, pero puede estar vacio, asi que no se valida
     //se valida su hijo que es rContEv
     if (isset($xml->xContEv->rContEv)) {
-      foreach ($xml->xContEv->rContEv as $rContEv) // ContDE04 es 0-n: hasta 0.2.0 se leía solo el primero (PK-29)
+      foreach ($xml->xContEv->rContEv as $rContEv) { // ContDE04 es 0-n: hasta 0.2.0 se leía solo el primero (PK-29)
         $res->addRContEv(RContEv::FromSimpleXMLElement($rContEv));
+      }
     }
     return $res;
   }
@@ -167,10 +172,10 @@ class RContDe
    * Crea una nueva instancia de RContDe a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
    *
    * @param stdClass $object
-   * 
+   *
    * @return self
    */
-  public static function FromSifenResponseObject($object) : self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new self();
     if (isset($object->dProtAut)) {
@@ -195,12 +200,14 @@ class RContDe
    */
   public static function FromXContenDE(string $xContenDE): self
   {
-    if (!preg_match('/<rDE[\s>]/', $xContenDE, $m, PREG_OFFSET_CAPTURE))
+    if (!preg_match('/<rDE[\s>]/', $xContenDE, $m, PREG_OFFSET_CAPTURE)) {
       throw new ValidacionException('[RContDe] xContenDE no contiene el elemento rDE.');
+    }
     $inicio = $m[0][1];
     $fin = strrpos($xContenDE, '</rDE>');
-    if ($fin === false || $fin < $inicio)
+    if ($fin === false || $fin < $inicio) {
       throw new ValidacionException('[RContDe] xContenDE no contiene el cierre del elemento rDE.');
+    }
     $fin += strlen('</rDE>');
 
     $res = new self();
@@ -209,13 +216,15 @@ class RContDe
     $posEventos = strpos($resto, '<xContEv>');
     // El dProtAut del DE va antes de xContEv; dentro de xContEv cada evento trae el suyo.
     $antesDeEventos = $posEventos === false ? $resto : substr($resto, 0, $posEventos);
-    if (preg_match('#<dProtAut>(.*?)</dProtAut>#s', $antesDeEventos, $p))
+    if (preg_match('#<dProtAut>(.*?)</dProtAut>#s', $antesDeEventos, $p)) {
       $res->setDProtAut(trim($p[1]));
+    }
     if ($posEventos !== false && preg_match('#<xContEv>(.*)</xContEv>#s', $resto, $e) && trim($e[1]) !== '') {
       // Cada xEvento empieza con su propia declaración XML: se quita para cargar el contenedor como un documento.
       $contenedor = self::cargar('<xContEv>' . preg_replace('/<\?xml[^>]*\?>/', '', $e[1]) . '</xContEv>');
-      foreach ($contenedor->rContEv as $rContEv)
+      foreach ($contenedor->rContEv as $rContEv) {
         $res->addRContEv(RContEv::FromSimpleXMLElement($rContEv));
+      }
     }
     return $res;
   }

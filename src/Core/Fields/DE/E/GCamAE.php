@@ -26,26 +26,26 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GCamAE
 {
                                    // Id - Longitud - Ocurrencia - Descripción (manual SIFEN)
-  public int    $iNatVen;     // E301 - 1     - 1-1 - Naturaleza del vendedor
+  public int $iNatVen;     // E301 - 1     - 1-1 - Naturaleza del vendedor
   public string $dDesNatVen;  // E302 - 10-16 - 1-1 - Descripción de la naturaleza del vendedor
-  public int    $iTipIDVen;   // E304 - 1     - 1-1 - Tipo de documento de identidad del vendedor
+  public int $iTipIDVen;   // E304 - 1     - 1-1 - Tipo de documento de identidad del vendedor
   public string $dDTipIDVen;  // E305 - 9-20  - 1-1 - Descripción del tipo de documento de identidad del vendedor
   public string $dNumIDVen;   // E306 - 1-20  - 1-1 - Número de documento de identidad del vendedor
   public string $dNomVen;     // E307 - 4-60  - 1-1 - Nombre y apellido del vendedor
   public string $dDirVen;     // E308 - 1-255 - 1-1 - Dirección del vendedor (calle principal)
-  public int    $dNumCasVen;  // E309 - 1-6   - 1-1 - Número de casa del vendedor
-  public int    $cDepVen;     // E310 - 1-2   - 1-1 - Código de departamento del vendedor
+  public int $dNumCasVen;  // E309 - 1-6   - 1-1 - Número de casa del vendedor
+  public int $cDepVen;     // E310 - 1-2   - 1-1 - Código de departamento del vendedor
   public string $dDesDepVen;  // E311 - 6-16  - 1-1 - Descripción del departamento del vendedor
-  public int    $cDisVen;    // E312 - 1-4   - 0-1 - Código de distrito del vendedor
+  public int $cDisVen;    // E312 - 1-4   - 0-1 - Código de distrito del vendedor
   public string $dDesDisVen;  // E313 - 1-30  - 0-1 - Descripción del distrito del vendedor
-  public int    $cCiuVen;     // E314 - 1-5   - 1-1 - Código de ciudad del vendedor
+  public int $cCiuVen;     // E314 - 1-5   - 1-1 - Código de ciudad del vendedor
   public string $dDesCiuVen;  // E315 - 1-30  - 1-1 - Descripción de la ciudad del vendedor
   public string $dDirProv;    // E316 - 1-255 - 1-1 - Lugar donde se realiza la transacción (dirección en el lugar de la operación)
-  public int    $cDepProv;    // E317 - 1-2   - 1-1 - Código de departamento del lugar de la transacción
+  public int $cDepProv;    // E317 - 1-2   - 1-1 - Código de departamento del lugar de la transacción
   public string $dDesDepProv; // E318 - 6-16  - 1-1 - Descripción del departamento del lugar de la transacción
-  public int    $cDisProv;    // E319 - 1-4   - 0-1 - Código de distrito del lugar de la transacción
+  public int $cDisProv;    // E319 - 1-4   - 0-1 - Código de distrito del lugar de la transacción
   public string $dDesDisProv; // E320 - 1-30  - 0-1 - Descripción del distrito del lugar de la transacción
-  public int    $cCiuProv;    // E321 - 1-5   - 1-1 - Código de ciudad del lugar de la transacción
+  public int $cCiuProv;    // E321 - 1-5   - 1-1 - Código de ciudad del lugar de la transacción
   public string $dDesCiuProv; // E322 - 1-30  - 1-1 - Descripción de la ciudad del lugar de la transacción
 
   ///////////////////////////////////////////////////////////////////////
@@ -88,8 +88,9 @@ class GCamAE
    */
   public function setDDesNatVen(string $dDesNatVen): self
   {
-    if($dDesNatVen != "No contribuyente" && $dDesNatVen != "Extranjero")
+    if ($dDesNatVen != "No contribuyente" && $dDesNatVen != "Extranjero") {
       throw new ValidacionException("[GCamAE] dDesNatVen debe ser 'No contribuyente' o 'Extranjero', valor dado: $dDesNatVen");
+    }
     $this->dDesNatVen = $dDesNatVen;
     return $this;
   }
@@ -128,25 +129,27 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDTipIDVen(string $dDTipIDVen): self 
+  public function setDDTipIDVen(string $dDTipIDVen): self
   {
-    if($dDTipIDVen != "Cédula paraguaya" && $dDTipIDVen != "Pasaporte" && $dDTipIDVen != "Cédula extranjera" && $dDTipIDVen != "Carnet de residencia")
+    if ($dDTipIDVen != "Cédula paraguaya" && $dDTipIDVen != "Pasaporte" && $dDTipIDVen != "Cédula extranjera" && $dDTipIDVen != "Carnet de residencia") {
       throw new ValidacionException("[GCamAE] dDTipIDVen debe ser 'Cédula paraguaya', 'Pasaporte', 'Cédula extranjera' o 'Carnet de residencia', valor dado: $dDTipIDVen");
+    }
     $this->dDTipIDVen = $dDTipIDVen;
     return $this;
   }
 
   /**
    * Establece el valor de dNumIDVen (E306) que representa el número de documento de identidad del vendedor.
-   * 
+   *
    * @param String $dNumIDVen Número de documento de identidad del vendedor.
    *
    * @return self Encadenamiento fluido.
    */
   public function setDNumIDVen(string $dNumIDVen): self
   {
-    if(strlen($dNumIDVen) < 1 || strlen($dNumIDVen) > 20)
+    if (strlen($dNumIDVen) < 1 || strlen($dNumIDVen) > 20) {
       throw new ValidacionException("[GCamAE] dNumIDVen debe tener entre 1 y 20 caracteres, valor dado: $dNumIDVen");
+    }
     $this->dNumIDVen = $dNumIDVen;
     return $this;
   }
@@ -154,15 +157,16 @@ class GCamAE
 
   /**
    * Establece el valor de dNomVen (E307) que representa el nombre y apellido del vendedor.
-   * 
+   *
    * @param String $dNomVen Nombre y apellido del vendedor.
    *
    * @return self Encadenamiento fluido.
    */
   public function setDNomVen(string $dNomVen): self
   {
-    if(strlen($dNomVen) < 4 || strlen($dNomVen) > 60)
+    if (strlen($dNomVen) < 4 || strlen($dNomVen) > 60) {
       throw new ValidacionException("[GCamAE] dNomVen debe tener entre 4 y 60 caracteres, valor dado: $dNomVen");
+    }
     $this->dNomVen = $dNomVen;
     return $this;
   }
@@ -178,8 +182,9 @@ class GCamAE
    */
   public function setDDirVen(string $dDirVen): self
   {
-    if(strlen($dDirVen) < 1 || strlen($dDirVen) > 255)
+    if (strlen($dDirVen) < 1 || strlen($dDirVen) > 255) {
       throw new ValidacionException("[GCamAE] dDirVen debe tener entre 1 y 255 caracteres, valor dado: $dDirVen");
+    }
     $this->dDirVen = $dDirVen;
     return $this;
   }
@@ -195,8 +200,9 @@ class GCamAE
    */
   public function setDNumCasVen(int $dNumCasVen): self
   {
-    if($dNumCasVen < 0 || $dNumCasVen > 999999)
+    if ($dNumCasVen < 0 || $dNumCasVen > 999999) {
       throw new ValidacionException("[GCamAE] dNumCasVen debe tener entre 0 y 999999, valor dado: $dNumCasVen");
+    }
     $this->dNumCasVen = $dNumCasVen;
     return $this;
   }
@@ -205,7 +211,7 @@ class GCamAE
   /**
    * Establece cDepVen (E310) y valida contra catálogo; rellena dDesDepVen (E311) vía {@see DepartamentoMapping}.
    * Para vendedor extranjero, usar el departamento donde se realizó la operación (manual SIFEN).
-   * 
+   *
    * @param int $cDepVen Código del departamento del vendedor.
    *
    * @return self Encadenamiento fluido.
@@ -213,8 +219,9 @@ class GCamAE
   public function setCDepVen(int $cDepVen): self
   {
     $desc = DepartamentoMapping::getDepName(strval($cDepVen));
-    if ($desc === null)
+    if ($desc === null) {
       throw new ValidacionException("[GCamAE] cDepVen debe ser un código de departamento válido, valor dado: $cDepVen");
+    }
     $this->dDesDepVen = $desc;
     $this->cDepVen = $cDepVen;
     return $this;
@@ -237,20 +244,21 @@ class GCamAE
   /**
    * Establece cDisVen (E312) y rellena dDesDisVen (E313) vía {@see PyGeoCodesMapping::getDistName()}.
    * Para vendedor extranjero, distrito donde se realizó la transacción.
-   * 
+   *
    * @param int $cDisVen Código del distrito del vendedor.
    *
    * @return self Encadenamiento fluido.
    */
   public function setCDisVen(int|null $cDisVen): self
   {
-    if($cDisVen === null) {
+    if ($cDisVen === null) {
       unset($this->cDisVen, $this->dDesDisVen);
       return $this;
     }
     $desc = PyGeoCodesMapping::getDistName(strval($cDisVen));
-    if ($desc === null)
+    if ($desc === null) {
       throw new ValidacionException("[GCamAE] cDisVen debe ser un código de distrito válido, valor dado: $cDisVen");
+    }
     $this->cDisVen = $cDisVen;
     $this->dDesDisVen = $desc;
     return $this;
@@ -267,8 +275,9 @@ class GCamAE
   public function setCCiuVen(int $cCiuVen): self
   {
     $desc = PyGeoCodesMapping::getCiudName(strval($cCiuVen));
-    if ($desc === null)
+    if ($desc === null) {
       throw new ValidacionException("[GCamAE] cCiuVen debe ser un código de ciudad válido, valor dado: $cCiuVen");
+    }
     $this->cCiuVen = $cCiuVen;
     $this->dDesCiuVen = $desc;
     return $this;
@@ -300,8 +309,9 @@ class GCamAE
   public function setCDepProv(int $cDepProv): self
   {
     $desc = DepartamentoMapping::getDepName(strval($cDepProv));
-    if ($desc === null)
+    if ($desc === null) {
       throw new ValidacionException("[GCamAE] cDepProv debe ser un código de departamento válido, valor dado: $cDepProv");
+    }
     $this->cDepProv = $cDepProv;
     $this->dDesDepProv = $desc;
     return $this;
@@ -319,13 +329,14 @@ class GCamAE
   {
     // cDisProv es 0-1 (tgCamAE, DE_v150.xsd:1351). Autofactura::setLugarTransaccion() declara el distrito
     // como opcional y hasta 0.2.0 terminaba en TypeError al pasarle null; ahora null lo quita, como setCDisVen().
-    if($cDisProv === null) {
+    if ($cDisProv === null) {
       unset($this->cDisProv, $this->dDesDisProv);
       return $this;
     }
     $desc = PyGeoCodesMapping::getDistName(strval($cDisProv));
-    if ($desc === null)
+    if ($desc === null) {
       throw new ValidacionException("[GCamAE] cDisProv debe ser un código de distrito válido, valor dado: $cDisProv");
+    }
     $this->cDisProv = $cDisProv;
     $this->dDesDisProv = $desc;
     return $this;
@@ -342,8 +353,9 @@ class GCamAE
   public function setCCiuProv(int $cCiuProv): self
   {
     $desc = PyGeoCodesMapping::getCiudName(strval($cCiuProv));
-    if ($desc === null)
+    if ($desc === null) {
       throw new ValidacionException("[GCamAE] cCiuProv debe ser un código de ciudad válido, valor dado: $cCiuProv");
+    }
     $this->cCiuProv = $cCiuProv;
     $this->dDesCiuProv = $desc;
     return $this;
@@ -675,14 +687,15 @@ class GCamAE
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->localName, 'gCamAE') != 0)
+    if (strcmp($node->localName, 'gCamAE') != 0) {
       throw new ValidacionException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->localName);
+    }
     // Hasta 0.2.0 se pasaba el DOMElement (no su valor) a intval()/strval(): Error en toda autofactura (PK-25).
     $valores = [];
-    foreach($node->childNodes as $hijo)
-    {
-      if($hijo instanceof DOMElement)
+    foreach ($node->childNodes as $hijo) {
+      if ($hijo instanceof DOMElement) {
         $valores[$hijo->localName] = $hijo->nodeValue;
+      }
     }
     return self::desdeValores($valores);
   }
@@ -697,11 +710,13 @@ class GCamAE
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gCamAE') != 0)
+    if (strcmp($node->getName(), 'gCamAE') != 0) {
       throw new ValidacionException('[GCamAE] El nombre del nodo no corresponde a gCamAE: ' . $node->getName());
+    }
     $valores = [];
-    foreach($node->children() as $hijo)
+    foreach ($node->children() as $hijo) {
       $valores[$hijo->getName()] = (string) $hijo;
+    }
     return self::desdeValores($valores);
   }
 
@@ -715,10 +730,10 @@ class GCamAE
   {
     $obligatorios = ['iNatVen', 'dDesNatVen', 'iTipIDVen', 'dDTipIDVen', 'dNumIDVen', 'dNomVen', 'dDirVen', 'dNumCasVen',
       'cDepVen', 'dDesDepVen', 'cCiuVen', 'dDesCiuVen', 'dDirProv', 'cDepProv', 'dDesDepProv', 'cCiuProv', 'dDesCiuProv'];
-    foreach($obligatorios as $campo)
-    {
-      if(!isset($v[$campo]))
+    foreach ($obligatorios as $campo) {
+      if (!isset($v[$campo])) {
         throw new ValidacionException("[GCamAE] Falta el elemento obligatorio $campo (tgCamAE, DE_v150.xsd:1351).");
+      }
     }
     $res = new GCamAE();
     $res->setINatVen(intval($v['iNatVen']));
@@ -731,19 +746,23 @@ class GCamAE
     $res->setDNumCasVen(intval($v['dNumCasVen']));
     $res->setCDepVen(intval($v['cDepVen']));
     $res->setDDesDepVen($v['dDesDepVen']);
-    if(isset($v['cDisVen']))
+    if (isset($v['cDisVen'])) {
       $res->setCDisVen(intval($v['cDisVen']));
-    if(isset($v['dDesDisVen']))
+    }
+    if (isset($v['dDesDisVen'])) {
       $res->setDDesDisVen($v['dDesDisVen']);
+    }
     $res->setCCiuVen(intval($v['cCiuVen']));
     $res->setDDesCiuVen($v['dDesCiuVen']);
     $res->setDDirProv($v['dDirProv']);
     $res->setCDepProv(intval($v['cDepProv']));
     $res->setDDesDepProv($v['dDesDepProv']);
-    if(isset($v['cDisProv']))
+    if (isset($v['cDisProv'])) {
       $res->setCDisProv(intval($v['cDisProv']));
-    if(isset($v['dDesDisProv']))
+    }
+    if (isset($v['dDesDisProv'])) {
       $res->setDDesDisProv($v['dDesDisProv']);
+    }
     $res->setCCiuProv(intval($v['cCiuProv']));
     $res->setDDesCiuProv($v['dDesCiuProv']);
     return $res;

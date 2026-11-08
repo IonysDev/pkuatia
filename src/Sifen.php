@@ -4,7 +4,6 @@ namespace IonysDev\Pkuatia;
 
 use DateTime;
 use DateTimeZone;
-use Exception;
 use IonysDev\Pkuatia\Core\Config;
 use IonysDev\Pkuatia\Core\Constants;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
@@ -22,7 +21,6 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 use IonysDev\Pkuatia\Core\Requests\REnviConsRUC;
 use IonysDev\Pkuatia\Core\Requests\REnviConsDe;
 use IonysDev\Pkuatia\Core\Responses\RResEnviConsRUC;
-use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use IonysDev\Pkuatia\Core\Fields\DE\A\DE;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\DE\I\Signature;
@@ -61,7 +59,6 @@ use IonysDev\Pkuatia\Validacion\VerificadorFirma;
 use SoapClient;
 use SoapFault;
 use SoapVar;
-use Stringable;
 use ZipArchive;
 
 class Sifen
@@ -78,29 +75,31 @@ class Sifen
   /**
    * Inicializa la clase Sifen con la configuración necesaria para realizar las peticiones.
    * Es obligatorio que se llame a este método antes de realizar cualquier petición.
-   * 
+   *
    * @param Config $config
-   * 
+   *
    * @return void
    */
   public static function Init(Config $config)
   {
-    if (!file_exists($config->privateKeyFilePath))
+    if (!file_exists($config->privateKeyFilePath)) {
       throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[Sifen] El archivo de clave privada no ha sido encontrado en: " . $config->privateKeyFilePath . ".");
+    }
     // Q-C6 (0.3.0): con el CSC de fábrica (el del ambiente de pruebas) el SIFEN de producción rechaza todo DE con 2501
     // (J002a), así que no se arranca en producción con él. En desarrollo no cambia nada.
-    if ($config->env === Config::ENV_PROD && $config->usaCscDePrueba())
+    if ($config->env === Config::ENV_PROD && $config->usaCscDePrueba()) {
       throw new ConfiguracionException('[Sifen] El CSC configurado es el del ambiente de pruebas (' . Config::CSC_DE_PRUEBA . '): en producción '
         . '(env = prod) el SIFEN rechaza cada DE con 2501 (J002a). Informe en Config el CSC ($csc) y su identificador ($idCsc) asignados por el SIFEN.');
+    }
     $config->certificateFormat = Config::normalizeCertificateFormat($config->certificateFormat);
     self::$config = $config;
 
     if ($config->isPem() && $config->usesCombinedCertificateFile()) {
       PemHelper::validateCombinedPemFile($config->privateKeyFilePath);
-    }
-    else if ($config->isPem()) {
-      if (!$config->certificateFilePath || !file_exists($config->certificateFilePath))
+    } elseif ($config->isPem()) {
+      if (!$config->certificateFilePath || !file_exists($config->certificateFilePath)) {
         throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[Sifen] El archivo de certificado no ha sido encontrado en: " . $config->certificateFilePath . ".");
+      }
     }
 
     self::borrarTemporales(); // PK-39: un Init() repetido no deja en disco los temporales del anterior
@@ -113,17 +112,14 @@ class Sifen
       ];
       if ($config->usesCombinedCertificateFile()) {
         $sslOptions['local_cert'] = $config->privateKeyFilePath;
-      }
-      else {
+      } else {
         $sslOptions['local_cert'] = $config->certificateFilePath;
         $sslOptions['local_pk'] = $config->privateKeyFilePath;
       }
       $sslContext = stream_context_create(['ssl' => $sslOptions]);
-    }
-    else if ($config->isPkcs12()) {
+    } elseif ($config->isPkcs12()) {
       $sslContext = self::createStreamContextFromPkcs12($config->privateKeyFilePath, $config->privateKeyPassphrase);
-    }
-    else {
+    } else {
       throw CertificadoException::porMotivo(MotivoCertificado::NoSoportado, "[Sifen] Formato de certificado no soportado.");
     }
 
@@ -137,12 +133,14 @@ class Sifen
       'stream_context' => $sslContext,
     ];
     // Opcionales (PK-31, 0.2.1): sin configurar no se agregan y rige el comportamiento de PHP, como hasta 0.2.0.
-    if ($config->soapConnectionTimeout !== null)
+    if ($config->soapConnectionTimeout !== null) {
       self::$options['connection_timeout'] = $config->soapConnectionTimeout;
-    if ($config->soapUserAgent !== null)
+    }
+    if ($config->soapUserAgent !== null) {
       self::$options['user_agent'] = $config->soapUserAgent;
+    }
     self::$client = null;
-    
+
     SignHelper::Init($config->privateKeyFilePath, $config->privateKeyPassphrase, $config->certificateFormat, $config->certificateFilePath);
   }
 
@@ -211,12 +209,15 @@ class Sifen
   private static function excepcionDeOperacion(\Throwable $e, string $operacion, string $prefijo): \Throwable
   {
     // Una RespuestaException de una clase de respuesta (campo faltante) se completa con la operación y la respuesta cruda.
-    if ($e instanceof RespuestaException)
+    if ($e instanceof RespuestaException) {
       return RespuestaException::desde($e, $operacion, $prefijo . ': ' . $e->getMessage(), self::respuestaCrudaSinFallar());
-    if ($e instanceof PkuatiaExceptionInterface)
+    }
+    if ($e instanceof PkuatiaExceptionInterface) {
       return $e;
-    if ($e instanceof SoapFault)
+    }
+    if ($e instanceof SoapFault) {
       return TransporteException::desde($e, $operacion, $prefijo);
+    }
     return RespuestaException::desde($e, $operacion, $prefijo . ': ' . $e->getMessage(), self::respuestaCrudaSinFallar());
   }
 
@@ -249,9 +250,9 @@ class Sifen
 
   /**
    * Realiza la consulta de un RUC en el SIFEN.
-   * 
+   *
    * @param String $ruc RUC a consultar.
-   * 
+   *
    * @return RResEnviConsRUC
    */
   public static function ConsultarRUC(string $ruc): RResEnviConsRUC
@@ -291,9 +292,9 @@ class Sifen
 
   /**
    * Realiza la consulta de un Documento Electrónico en el SIFEN.
-   * 
+   *
    * @param String $cdc Código de Control del Documento Electrónico a consultar.
-   * 
+   *
    * @return RResEnviConsDe
    */
   public static function ConsultarDE(string $cdc): RResEnviConsDe
@@ -352,11 +353,13 @@ class Sifen
    */
   private static function exigirXsd(string $xml, bool $esEvento, string $operacion, string $descripcion): void
   {
-    if (!isset(self::$config) || !self::$config->validarXsdAntesDeEnviar)
+    if (!isset(self::$config) || !self::$config->validarXsdAntesDeEnviar) {
       return;
+    }
     $resultado = $esEvento ? ValidadorXsd::validarEvento($xml) : ValidadorXsd::validarRde($xml);
-    if ($resultado->esValido())
+    if ($resultado->esValido()) {
       return;
+    }
     $primero = $resultado->getErrores()[0];
     throw DocumentoInvalidoException::desde($resultado, "[Sifen] $operacion: $descripcion no cumple el XSD y no se envió (Config::\$validarXsdAntesDeEnviar está activo). "
       . count($resultado->getErrores()) . ' error(es); el primero' . ($primero->linea !== null ? " (línea {$primero->linea})" : '') . ': ' . $primero->mensaje);
@@ -364,9 +367,9 @@ class Sifen
 
   /**
    * Firma un DE (contenido en un RDE) y devuelve en forma de cadena el XML firmado.
-   * Además genera el link para el código QR del DE. 
+   * Además genera el link para el código QR del DE.
    * Este XML estará listo para envío al SIFEN.
-   *  
+   *
    * @param RDE $rde Contenedor del DE a firmar.
    * @param DateTime $fechaFirma Fecha y hora de la firma (dFecFirma); se respeta tal cual, con la zona horaria que traiga.
    * @param String $infoAdicionalEmisor **Dejar vacío**: el SIFEN rechaza el DE con 2503 si J003 va informado (verificado en sifen-test el 13/10/2026; el validador de reglas lo marca como error). Información adicional de interés del emisor (J003 dInfAdic, 1 a 5000 caracteres, DE_v150.xsd:1922-1931); se emite fuera de la firma, en gCamFuFD. Vacío = no se emite.
@@ -379,7 +382,7 @@ class Sifen
     self::ValidarUmbralInnominadoNT024($rde->getDE());
 
     // Si el ambiente es "dev", se establece el valor de gEmis->dNomEmi a  "DE generado en ambiente de prueba - sin valor comercial ni fiscal
-    if(self::$config->env == Config::ENV_DEV) {
+    if (self::$config->env == Config::ENV_DEV) {
       $rde->getDE()->getGDatGralOpe()->getGEmis()->setDNomEmi("DE generado en ambiente de prueba - sin valor comercial ni fiscal");
     }
 
@@ -391,9 +394,9 @@ class Sifen
 
     // Verifica si en los campos fuera de la firma hay datos
     $gCamFuFD = $rde->getGCamFuFD();
-    if (is_null($gCamFuFD))
+    if (is_null($gCamFuFD)) {
       $gCamFuFD = new GCamFuFD();
-    else {
+    } else {
       // Eliminar el nodo del gCamFuFD si es que existe del xmlDocument firmado
       $rdeNode = $xmlDocument->getElementsByTagName("rDE")->item(0);
       for ($i = 0; $i < $rdeNode->childNodes->length; $i++) {
@@ -404,7 +407,7 @@ class Sifen
       }
     }
 
-    // Establece el valor del link para el QR 
+    // Establece el valor del link para el QR
     $gCamFuFD->setDCarQR(QRHelper::GenerateQRContent(self::$config, $rde->getDE(), $Signature));
 
     // J003 dInfAdic (1 a 5000 caracteres, DE_v150.xsd:1922-1931) se establece antes de serializar el grupo;
@@ -423,9 +426,9 @@ class Sifen
 
   /**
    * Realiza el envío de un Documento Electrónico al SIFEN.
-   * 
+   *
    * @param String $rdeXML Cadena XML del DE firmado en un contenedor XML.
-   * 
+   *
    * @return RRetEnviDe Respuesta del SIFEN a la solicitud de Envío.
    */
   public static function EnviarDE(string $rdeXML): RRetEnviDe
@@ -458,10 +461,12 @@ class Sifen
    */
   public static function EnviarLoteDE(array $lote): RResEnviLoteDe
   {
-    if (count($lote) == 0)
+    if (count($lote) == 0) {
       throw new ValidacionException("[Sifen] El lote debe contener al menos un documento electrónico.");
-    if (count($lote) > Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE)
+    }
+    if (count($lote) > Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE) {
       throw new ValidacionException("[Sifen] El lote no puede contener más de " . Constants::MAX_DOCUMENTOS_ELECTRONICOS_POR_LOTE . " documentos electrónicos.");
+    }
 
     // Conforma el contenedor rLoteDE validando, antes de la red, lo que el SIFEN rechaza (0301) o castiga con un
     // bloqueo temporal de 10 a 60 minutos de la recepción del RUC emisor (guía de mejores prácticas de envío de la
@@ -473,26 +478,33 @@ class Sifen
     $rLotDe = '<rLoteDE>';
     foreach (array_values($lote) as $i => $rde) {
       $n = $i + 1;
-      if (!is_string($rde))
+      if (!is_string($rde)) {
         throw new ValidacionException("[Sifen] El lote debe contener documentos electrónicos en formato de cadena XML.");
-      if (preg_match('/<(?:[\w.-]+:)?DE\s[^>]*?\bId\s*=\s*(["\'])([^"\']*)\1/', $rde, $matches) !== 1)
+      }
+      if (preg_match('/<(?:[\w.-]+:)?DE\s[^>]*?\bId\s*=\s*(["\'])([^"\']*)\1/', $rde, $matches) !== 1) {
         throw new ValidacionException("[Sifen] El documento $n del lote no tiene el CDC (atributo Id de DE). Enviar documentos firmados y completos: el SIFEN bloquea temporalmente la recepción del RUC emisor ante un lote con contenido inválido.");
+      }
       $cdc = $matches[2];
-      if (isset($cdcs[$cdc]))
+      if (isset($cdcs[$cdc])) {
         throw new ValidacionException("[Sifen] El CDC $cdc está repetido en el lote (documentos " . $cdcs[$cdc] . " y $n). El SIFEN bloquea la recepción del RUC emisor de 10 a 60 minutos ante un CDC repetido.");
+      }
       $cdcs[$cdc] = $n;
-      if (preg_match('/<(?:[\w.-]+:)?iTiDE>\s*(\d+)\s*<\/(?:[\w.-]+:)?iTiDE>/', $rde, $matches) !== 1)
+      if (preg_match('/<(?:[\w.-]+:)?iTiDE>\s*(\d+)\s*<\/(?:[\w.-]+:)?iTiDE>/', $rde, $matches) !== 1) {
         throw new ValidacionException("[Sifen] El documento $n del lote ($cdc) no tiene el tipo de documento (iTiDE).");
-      if (is_null($tipoLote))
+      }
+      if (is_null($tipoLote)) {
         $tipoLote = $matches[1];
-      else if (strcmp($tipoLote, $matches[1]) != 0)
+      } elseif (strcmp($tipoLote, $matches[1]) != 0) {
         throw new ValidacionException("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo tipo (C002). Se encontraron documentos de tipo " . $tipoLote . " y tipo " . $matches[1] . ".");
-      if (preg_match('/<(?:[\w.-]+:)?dRucEm>\s*([^<]*?)\s*<\/(?:[\w.-]+:)?dRucEm>/', $rde, $matches) !== 1)
+      }
+      if (preg_match('/<(?:[\w.-]+:)?dRucEm>\s*([^<]*?)\s*<\/(?:[\w.-]+:)?dRucEm>/', $rde, $matches) !== 1) {
         throw new ValidacionException("[Sifen] El documento $n del lote ($cdc) no tiene el RUC emisor (dRucEm).");
-      if (is_null($rucLote))
+      }
+      if (is_null($rucLote)) {
         $rucLote = $matches[1];
-      else if (strcmp($rucLote, $matches[1]) != 0)
+      } elseif (strcmp($rucLote, $matches[1]) != 0) {
         throw new ValidacionException("[Sifen] Todos los documentos electrónicos del lote deben ser del mismo RUC emisor. Se encontraron los RUC " . $rucLote . " y " . $matches[1] . ".");
+      }
       self::exigirXsd($rde, false, 'EnviarLoteDE', "el documento $n del lote ($cdc)");
       $rLotDe .= $rde;
     }
@@ -501,12 +513,14 @@ class Sifen
     // Comprime el lote en un archivo ZIP temporal (evita colisiones de concurrencia
     // y problemas de permisos en el directorio de trabajo).
     $zipFilePath = tempnam(sys_get_temp_dir(), 'pkuatia_lote_');
-    if ($zipFilePath === false)
+    if ($zipFilePath === false) {
       throw new ConfiguracionException("[Sifen] No se pudo crear el archivo temporal para el ZIP del lote.");
+    }
     try {
       $zip = new ZipArchive();
-      if ($zip->open($zipFilePath, ZipArchive::OVERWRITE) !== true)
+      if ($zip->open($zipFilePath, ZipArchive::OVERWRITE) !== true) {
         throw new ConfiguracionException("[Sifen] No se pudo crear el archivo ZIP del lote en: " . $zipFilePath);
+      }
       $zip->addFromString("rLoteDE.xml", $rLotDe);
       $zip->close();
       $zipContent = file_get_contents($zipFilePath);
@@ -515,8 +529,9 @@ class Sifen
     }
     // El mensaje de entrada del WS no debe superar 1000 KB (guía, §4 motivo e): ZIP en Base64 más el sobre SOAP.
     $tamanoMensaje = 4 * intdiv(strlen($zipContent) + 2, 3) + 1024;
-    if ($tamanoMensaje > Constants::MAX_BYTES_MENSAJE_LOTE)
+    if ($tamanoMensaje > Constants::MAX_BYTES_MENSAJE_LOTE) {
       throw new ValidacionException("[Sifen] El lote supera el tamaño máximo del mensaje del WS (1000 KB): con el ZIP en Base64 son unos " . ceil($tamanoMensaje / 1000) . " KB. Dividirlo en lotes más chicos.");
+    }
 
     // Realiza el envío del lote de documentos electrónicos al SIFEN.
     // El WSDL declara xDE como base64Binary (verificado contra sifen-test en junio/2026), por lo que
@@ -581,20 +596,24 @@ class Sifen
     ?callable $esperar = null
   ): RResEnviConsLoteDe {
     $minimo = Constants::ESPERA_MINIMA_CONSULTA_LOTE_SEG;
-    if ($esperaInicialSeg < $minimo || $intervaloSeg < $minimo)
+    if ($esperaInicialSeg < $minimo || $intervaloSeg < $minimo) {
       throw new ValidacionException("[Sifen] La guía de la DNIT pide consultar el lote pasados $minimo segundos de la recepción y luego a intervalos no menores a $minimo segundos; se recibió una espera inicial de $esperaInicialSeg y un intervalo de $intervaloSeg.");
-    if ($maxIntentos < 1)
+    }
+    if ($maxIntentos < 1) {
       throw new ValidacionException("[Sifen] La cantidad máxima de consultas del lote debe ser al menos 1; se recibió $maxIntentos.");
+    }
     $esperar ??= static function (int $segundos): void {
       sleep($segundos);
     };
     $esperar($esperaInicialSeg);
     for ($intento = 1; ; $intento++) {
       $respuesta = self::ConsultaLote($nroLote);
-      if ($onIntento !== null)
+      if ($onIntento !== null) {
         $onIntento($intento, $respuesta);
-      if ($respuesta->getDCodResLot() !== RResEnviConsLoteDe::COD_RES_EN_PROCESAMIENTO || $intento >= $maxIntentos)
+      }
+      if ($respuesta->getDCodResLot() !== RResEnviConsLoteDe::COD_RES_EN_PROCESAMIENTO || $intento >= $maxIntentos) {
         return $respuesta;
+      }
       $esperar($intervaloSeg);
     }
   }
@@ -609,14 +628,16 @@ class Sifen
    */
   public static function RegistrarEvento(GGroupGesEve $raiz): RRetEnviEventoDe
   {
-    if (count($raiz->getRGesEve()) > Constants::MAX_EVENTOS_POR_TRANSMISION)
+    if (count($raiz->getRGesEve()) > Constants::MAX_EVENTOS_POR_TRANSMISION) {
       throw new ValidacionException("[Sifen] No se pueden registrar más de " . Constants::MAX_EVENTOS_POR_TRANSMISION . " eventos por transmisión.");
+    }
     // El atributo Id de cada rEve (tdIdEve, Evento_v150.xsd:487) es la URI de su firma: debe ser único dentro del sobre.
     $ids = [];
     foreach ($raiz->getRGesEve() as $rGesEve) {
       $id = $rGesEve->getREve()->getId();
-      if (in_array($id, $ids, true))
+      if (in_array($id, $ids, true)) {
         throw new ValidacionException("[Sifen] El Id $id de rEve está repetido dentro del sobre: cada evento debe llevar un Id distinto (Evento_v150.xsd:487), porque es la referencia de su firma.");
+      }
       $ids[] = $id;
     }
 
@@ -681,32 +702,44 @@ class Sifen
 
     $tipoDEId = $tipoDE instanceof TimbTiDE ? $tipoDE->value : $tipoDE;
 
-    if($nroDocumentoFinal < $nroDocumentoInicial)
+    if ($nroDocumentoFinal < $nroDocumentoInicial) {
       throw new ValidacionException("[Sifen] El número de documento final debe ser mayor al número de documento inicial.");
-    if($nroDocumentoInicial < 1)
+    }
+    if ($nroDocumentoInicial < 1) {
       throw new ValidacionException("[Sifen] El número de documento inicial debe ser mayor a 0.");
-    if($nroDocumentoFinal < 1)
+    }
+    if ($nroDocumentoFinal < 1) {
       throw new ValidacionException("[Sifen] El número de documento final debe ser mayor a 0.");
-    if($timbrado < 1)
+    }
+    if ($timbrado < 1) {
       throw new ValidacionException("[Sifen] El timbrado debe ser mayor a 0.");
-    if($nroEstablecimiento < 1)
+    }
+    if ($nroEstablecimiento < 1) {
       throw new ValidacionException("[Sifen] El número de establecimiento debe ser mayor a 0.");
-    if($nroPuntoEmision < 1)
+    }
+    if ($nroPuntoEmision < 1) {
       throw new ValidacionException("[Sifen] El número de punto de emisión debe ser mayor a 0.");
-    if($tipoDEId < 1)
+    }
+    if ($tipoDEId < 1) {
       throw new ValidacionException("[Sifen] El tipo de documento electrónico debe ser mayor a 0.");
+    }
     // iTiDE del evento es tiTiDEEv, de 1 a 9 (Evento_Types_v150.xsd); el 10 de TimbTiDE (boleta resimple) no aplica (PK-42).
-    if($tipoDEId > 9)
+    if ($tipoDEId > 9) {
       throw new ValidacionException("[Sifen] El tipo de documento a inutilizar debe estar entre 1 y 9 (tiTiDEEv, Evento_Types_v150.xsd); se recibió $tipoDEId.");
+    }
     // dSerieNum de trGeVeInu es 0-1 y tserieNum es [A-Z][A-Z] (Evento_v150.xsd); hasta 0.2.0 no se podía informar (PK-42).
-    if($serie !== null && !preg_match('/^[A-Z]{2}$/', $serie))
+    if ($serie !== null && !preg_match('/^[A-Z]{2}$/', $serie)) {
       throw new ValidacionException("[Sifen] La serie debe tener dos letras mayúsculas (tserieNum); se recibió '$serie'.");
-    if($motivo == '')
+    }
+    if ($motivo == '') {
       throw new ValidacionException("[Sifen] El motivo de la inutilización no puede ser vacío.");
-    if(strlen($motivo) < 5)
+    }
+    if (strlen($motivo) < 5) {
       throw new ValidacionException("[Sifen] El motivo de la inutilización debe tener al menos 5 caracteres.");
-    if($nroDocumentoFinal - $nroDocumentoInicial > 1000)
+    }
+    if ($nroDocumentoFinal - $nroDocumentoInicial > 1000) {
       throw new ValidacionException("[Sifen] La diferencia entre el número de documento inicial y el número de documento final no puede ser mayor a 1000.");
+    }
 
     $rGeVeInu = new RGeVeInu();
     $rGeVeInu->setDNumTim($timbrado);
@@ -715,8 +748,9 @@ class Sifen
     $rGeVeInu->setDNumIn(str_pad($nroDocumentoInicial, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setDNumFin(str_pad($nroDocumentoFinal, 7, '0', STR_PAD_LEFT));
     $rGeVeInu->setITiDE($tipoDEId);
-    if($serie !== null)
+    if ($serie !== null) {
       $rGeVeInu->setDSerieNum($serie);
+    }
     self::ValidarMotivoEvento($motivo, 'inutilización');
     $rGeVeInu->setMOtEve($motivo);
 
@@ -753,11 +787,11 @@ class Sifen
     int|TipIDRec|null $tipoDocumentoIdentidad = null,
     ?string $nroDocumentoIdentidad = null,
     ?DateTime $fechaFirma = null
-  ): RRetEnviEventoDe
-  {
+  ): RRetEnviEventoDe {
     $esContribuyente = !is_null($rucReceptor);
-    if (!$esContribuyente && (is_null($tipoDocumentoIdentidad) || is_null($nroDocumentoIdentidad)))
+    if (!$esContribuyente && (is_null($tipoDocumentoIdentidad) || is_null($nroDocumentoIdentidad))) {
       throw new ValidacionException("[Sifen] Si el receptor no es contribuyente, debe informarse el tipo y número de documento de identidad.");
+    }
 
     self::ValidarCdcEvento($cdc);
     $rGeVeNotRec = new RGeVeNotRec();
@@ -768,8 +802,9 @@ class Sifen
     $rGeVeNotRec->setDNomRec($nombreReceptor);
     if ($esContribuyente) {
       $rGeVeNotRec->setDRucRec($rucReceptor);
-      if (!is_null($dvReceptor))
+      if (!is_null($dvReceptor)) {
         $rGeVeNotRec->setDDVRec($dvReceptor);
+      }
     } else {
       $rGeVeNotRec->setDTipIDRec($tipoDocumentoIdentidad instanceof TipIDRec ? $tipoDocumentoIdentidad->value : $tipoDocumentoIdentidad);
       $rGeVeNotRec->setDNumID($nroDocumentoIdentidad);
@@ -794,17 +829,20 @@ class Sifen
    */
   public static function ConformarDE(string $cdc, int $tipoConformidad = 1, ?DateTime $fechaRecepcion = null, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
-    if ($tipoConformidad != 1 && $tipoConformidad != 2)
+    if ($tipoConformidad != 1 && $tipoConformidad != 2) {
       throw new ValidacionException("[Sifen] El tipo de conformidad debe ser 1 (total) o 2 (parcial).");
-    if ($tipoConformidad == 2 && is_null($fechaRecepcion))
+    }
+    if ($tipoConformidad == 2 && is_null($fechaRecepcion)) {
       throw new ValidacionException("[Sifen] La fecha estimada de recepción es obligatoria cuando la conformidad es parcial.");
+    }
 
     self::ValidarCdcEvento($cdc);
     $rGeVeConf = new RGeVeConf();
     $rGeVeConf->setId($cdc);
     $rGeVeConf->setITipConf($tipoConformidad);
-    if (!is_null($fechaRecepcion))
+    if (!is_null($fechaRecepcion)) {
       $rGeVeConf->setDFecRecep($fechaRecepcion);
+    }
 
     $gGroupTiEvt = new GGroupTiEvt();
     $gGroupTiEvt->setRGeVeConf($rGeVeConf);
@@ -863,13 +901,13 @@ class Sifen
     int|TipIDRec|null $tipoDocumentoIdentidad = null,
     ?string $nroDocumentoIdentidad = null,
     ?DateTime $fechaFirma = null
-  ): RRetEnviEventoDe
-  {
+  ): RRetEnviEventoDe {
     self::ValidarCdcEvento($cdc);
     self::ValidarMotivoEvento($motivo, 'desconocimiento');
     $esContribuyente = !is_null($rucReceptor);
-    if (!$esContribuyente && (is_null($tipoDocumentoIdentidad) || is_null($nroDocumentoIdentidad)))
+    if (!$esContribuyente && (is_null($tipoDocumentoIdentidad) || is_null($nroDocumentoIdentidad))) {
       throw new ValidacionException("[Sifen] Si el receptor no es contribuyente, debe informarse el tipo y número de documento de identidad.");
+    }
 
     $rGeVeDescon = new RGeVeDescon();
     $rGeVeDescon->setId($cdc);
@@ -879,8 +917,9 @@ class Sifen
     $rGeVeDescon->setDNomRec($nombreReceptor);
     if ($esContribuyente) {
       $rGeVeDescon->setDRucRec($rucReceptor);
-      if (!is_null($dvReceptor))
+      if (!is_null($dvReceptor)) {
         $rGeVeDescon->setDDVRec($dvReceptor);
+      }
     } else {
       $rGeVeDescon->setDTipIDRec($tipoDocumentoIdentidad instanceof TipIDRec ? $tipoDocumentoIdentidad->value : $tipoDocumentoIdentidad);
       $rGeVeDescon->setDNumID($nroDocumentoIdentidad);
@@ -935,9 +974,10 @@ class Sifen
    */
   private static function ValidarCdcEvento(string $cdc): void
   {
-    if (!preg_match('/^[0-9]{9}[0-9A-D][0-9]{34}$/', $cdc))
+    if (!preg_match('/^[0-9]{9}[0-9A-D][0-9]{34}$/', $cdc)) {
       throw CampoInvalidoException::deCampo("[Sifen] El CDC debe tener 44 caracteres (dígitos; la posición 10 admite A-D) según tId (Evento_Types_v150.xsd:71-80); se recibió '" . $cdc . "' (" . strlen($cdc) . " caracteres).",
         null, 'Id', $cdc, 'tId: 44 caracteres, dígitos salvo la posición 10 que admite A-D (Evento_Types_v150.xsd:71-80)');
+    }
   }
 
   /**
@@ -948,9 +988,10 @@ class Sifen
   private static function ValidarMotivoEvento(string $motivo, string $evento): void
   {
     $largo = mb_strlen($motivo);
-    if ($largo < 5 || $largo > 500)
+    if ($largo < 5 || $largo > 500) {
       throw CampoInvalidoException::deCampo("[Sifen] El motivo de la $evento debe tener entre 5 y 500 caracteres (tmotEve, Evento_Types_v150.xsd:86-95); se recibieron $largo.",
         null, 'mOtEve', $motivo, 'tmotEve: de 5 a 500 caracteres (Evento_Types_v150.xsd:86-95)');
+    }
   }
 
   /**
@@ -971,22 +1012,25 @@ class Sifen
    */
   private static function RespuestaOGenerica(mixed $object): mixed
   {
-    if ($object !== null || self::$client === null)
+    if ($object !== null || self::$client === null) {
       return $object;
+    }
     try {
       $crudo = self::$client->__getLastResponse();
     } catch (\Throwable $e) {
       return $object;
     }
-    if (!is_string($crudo) || trim($crudo) === '')
+    if (!is_string($crudo) || trim($crudo) === '') {
       return $object;
+    }
     $doc = new \DOMDocument();
     $previo = libxml_use_internal_errors(true);
     $leido = $doc->loadXML($crudo, LIBXML_NONET); // contenido del SIFEN: sin acceso a la red por DTD o entidades (0.3.0)
     libxml_clear_errors();
     libxml_use_internal_errors($previo);
-    if (!$leido)
+    if (!$leido) {
       return $object;
+    }
     $generico = $doc->getElementsByTagNameNS('*', 'rRetEnviDe')->item(0);
     return $generico instanceof \DOMElement ? self::NodoComoObjeto($generico) : $object;
   }
@@ -1000,16 +1044,18 @@ class Sifen
     $res = new \stdClass();
     $conHijos = false;
     foreach ($nodo->childNodes as $hijo) {
-      if (!$hijo instanceof \DOMElement)
+      if (!$hijo instanceof \DOMElement) {
         continue;
+      }
       $conHijos = true;
       $nombre = $hijo->localName;
       $valor = self::NodoComoObjeto($hijo);
       if (!property_exists($res, $nombre)) {
         $res->{$nombre} = $valor;
       } else {
-        if (!is_array($res->{$nombre}))
+        if (!is_array($res->{$nombre})) {
           $res->{$nombre} = [$res->{$nombre}];
+        }
         $res->{$nombre}[] = $valor;
       }
     }
@@ -1064,29 +1110,35 @@ class Sifen
    */
   private static function ValidarUmbralInnominadoNT024(DE $de): void
   {
-    if (!isset($de->gDatGralOpe) || !isset($de->gDatGralOpe->gDatRec) || !isset($de->gTotSub))
+    if (!isset($de->gDatGralOpe) || !isset($de->gDatGralOpe->gDatRec) || !isset($de->gTotSub)) {
       return;
-    if ($de->gDatGralOpe->gDatRec->getITipIDRec() !== TipIDRec::Innominado->value)
+    }
+    if ($de->gDatGralOpe->gDatRec->getITipIDRec() !== TipIDRec::Innominado->value) {
       return;
+    }
 
     // Las operaciones de muestras médicas están exceptuadas de la regla
     if (isset($de->gDatGralOpe->gOpeCom) && isset($de->gDatGralOpe->gOpeCom->iTipTra)
-      && $de->gDatGralOpe->gOpeCom->iTipTra == OpeComTipTrans::MuestrasMedicas->value)
+      && $de->gDatGralOpe->gOpeCom->iTipTra == OpeComTipTrans::MuestrasMedicas->value) {
       return;
+      }
 
     // Determina el total general de la operación expresado en guaraníes
     $esPYG = !isset($de->gDatGralOpe->gOpeCom) || strcmp($de->gDatGralOpe->gOpeCom->getCMoneOpe(), 'PYG') == 0;
     $totalGs = null;
-    if ($esPYG && isset($de->gTotSub->dTotGralOpe))
+    if ($esPYG && isset($de->gTotSub->dTotGralOpe)) {
       $totalGs = $de->gTotSub->dTotGralOpe;
-    else if (!$esPYG && isset($de->gTotSub->dTotalGs))
+    } elseif (!$esPYG && isset($de->gTotSub->dTotalGs)) {
       $totalGs = $de->gTotSub->dTotalGs;
-    if (is_null($totalGs))
+    }
+    if (is_null($totalGs)) {
       return;
+    }
 
-    if (bccomp($totalGs, Constants::UMBRAL_INNOMINADO_PYG, 8) >= 0)
+    if (bccomp($totalGs, Constants::UMBRAL_INNOMINADO_PYG, 8) >= 0) {
       throw CampoInvalidoException::deCampo("[Sifen] NT-024: el receptor no puede ser innominado cuando el total general de la operación es mayor o igual a " . Constants::UMBRAL_INNOMINADO_PYG . " guaraníes (total de la operación: " . $totalGs . "). Identifique al receptor con su documento de identidad.",
         'D208', 'iTipIDRec', TipIDRec::Innominado->value, 'NT-024 (validación 1321): D208 distinto de 5 cuando el total en guaraníes es mayor o igual a ' . Constants::UMBRAL_INNOMINADO_PYG, '1321');
+    }
   }
 
   /**
@@ -1098,8 +1150,9 @@ class Sifen
   private static function GetDId(): int
   {
     $fp = fopen(self::$config->dIdFilePath, 'c+');
-    if ($fp === false)
+    if ($fp === false) {
       throw new ConfiguracionException("[Sifen] No se pudo abrir el archivo del dId: " . self::$config->dIdFilePath);
+    }
     try {
       flock($fp, LOCK_EX);
       $dId = 1;
@@ -1112,7 +1165,7 @@ class Sifen
       }
       ftruncate($fp, 0);
       rewind($fp);
-      fwrite($fp, json_encode(array('dId' => $dId)));
+      fwrite($fp, json_encode(['dId' => $dId]));
       fflush($fp);
       return $dId;
     } finally {
@@ -1129,24 +1182,27 @@ class Sifen
    * garantizado), la clave se exporta cifrada con la misma passphrase, una falla intermedia no deja restos y los
    * archivos se borran en Shutdown(), en el siguiente Init() y al terminar el script. Hasta 0.2.1 iban a
    * sys_get_temp_dir() como cert_* y key_*, con la clave en claro, y solo se borraban al terminar el script.
-   * 
+   *
    */
   private static function createStreamContextFromPkcs12(string $pkcs12FilePath, string $password)
   {
     $certs = Pkcs12Helper::read((string) file_get_contents($pkcs12FilePath), $password);
     $claveCifrada = '';
-    if (!openssl_pkey_export($certs['pkey'], $claveCifrada, $password))
+    if (!openssl_pkey_export($certs['pkey'], $claveCifrada, $password)) {
       throw CertificadoException::porMotivo(MotivoCertificado::PemInvalido, '[Sifen] No se pudo exportar la clave privada del PKCS#12: ' . (openssl_error_string() ?: 'error desconocido'));
+    }
     $carpeta = rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . 'pkuatia-' . bin2hex(random_bytes(8));
-    if (!@mkdir($carpeta, 0700) && !is_dir($carpeta))
+    if (!@mkdir($carpeta, 0700) && !is_dir($carpeta)) {
       throw new ConfiguracionException('[Sifen] No se pudo crear la carpeta temporal para el certificado: ' . $carpeta);
+    }
     self::$carpetaTemporal = $carpeta;
     self::registrarLimpieza();
     try {
       $certFile = $carpeta . DIRECTORY_SEPARATOR . 'cert.pem';
       $keyFile = $carpeta . DIRECTORY_SEPARATOR . 'key.pem';
-      if (file_put_contents($certFile, $certs['cert']) === false || file_put_contents($keyFile, $claveCifrada) === false)
+      if (file_put_contents($certFile, $certs['cert']) === false || file_put_contents($keyFile, $claveCifrada) === false) {
         throw new ConfiguracionException('[Sifen] No se pudieron escribir los archivos temporales del certificado en: ' . $carpeta);
+      }
       @chmod($keyFile, 0600);
       return stream_context_create([
         'ssl' => [
@@ -1166,8 +1222,9 @@ class Sifen
   /** Registra una sola vez el borrado de los temporales al terminar el script (también tras un error fatal). */
   private static function registrarLimpieza(): void
   {
-    if (self::$limpiezaRegistrada)
+    if (self::$limpiezaRegistrada) {
       return;
+    }
     self::$limpiezaRegistrada = true;
     register_shutdown_function(static function (): void {
       self::borrarTemporales();
@@ -1179,10 +1236,12 @@ class Sifen
   {
     $carpeta = self::$carpetaTemporal;
     self::$carpetaTemporal = null;
-    if ($carpeta === null || !is_dir($carpeta))
+    if ($carpeta === null || !is_dir($carpeta)) {
       return;
-    foreach (['cert.pem', 'key.pem'] as $archivo)
+    }
+    foreach (['cert.pem', 'key.pem'] as $archivo) {
       @unlink($carpeta . DIRECTORY_SEPARATOR . $archivo);
+    }
     @rmdir($carpeta);
   }
 }

@@ -8,7 +8,6 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
 use DOMElement;
-use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
@@ -26,23 +25,23 @@ class GCamDEAsoc extends BaseSifenField
   public const TIPO_DE_DOCUMENTO_ASOCIADO_IMPRESO = 2;
   public const TIPO_DE_DOCUMENTO_ASOCIADO_CONSTANCIA_ELECTRONICA = 3;
 
-  public int      $iTipDocAso;    // H002 - 1     - 1-1 - Tipo de documento asociado
-  public string   $dDesTipDocAso; // H003 - 7-11  - 1-1 - Descripción del tipo de documento asociado
-  public string   $dCdCDERef;     // H004 - 44    - 0-1 - CDC del DTE referenciado
-  public int      $dNTimDI;       // H005 - 8     - 0-1 - Nro. timbrado documento impreso de referencia
-  public string   $dEstDocAso;    // H006 - 3     - 0-1 - Establecimiento
-  public string   $dPExpDocAso;   // H007 - 3     - 0-1 - Punto de expedición
-  public string   $dNumDocAso;    // H008 - 7     - 0-1 - Número del documento
-  public int      $iTipoDocAso;   // H009 - 1     - 0-1 - Tipo de documento  impreso
-  public ?string  $dDTipoDocAso = null;  // H010 - 7-16  - 0-1 - Descripción del tipo de documento impreso
+  public int $iTipDocAso;    // H002 - 1     - 1-1 - Tipo de documento asociado
+  public string $dDesTipDocAso; // H003 - 7-11  - 1-1 - Descripción del tipo de documento asociado
+  public string $dCdCDERef;     // H004 - 44    - 0-1 - CDC del DTE referenciado
+  public int $dNTimDI;       // H005 - 8     - 0-1 - Nro. timbrado documento impreso de referencia
+  public string $dEstDocAso;    // H006 - 3     - 0-1 - Establecimiento
+  public string $dPExpDocAso;   // H007 - 3     - 0-1 - Punto de expedición
+  public string $dNumDocAso;    // H008 - 7     - 0-1 - Número del documento
+  public int $iTipoDocAso;   // H009 - 1     - 0-1 - Tipo de documento  impreso
+  public ?string $dDTipoDocAso = null;  // H010 - 7-16  - 0-1 - Descripción del tipo de documento impreso
   public DateTime $dFecEmiDI;     // H011 - 10    - 0-1 - Fecha de emisión del documento impreso de referencia AAAA-MM-DD
-  public string   $dNumComRet;    // H012 - 15    - 0-1 - Número de comprobante de retención
-  public string   $dNumResCF;     // H013 - 15    - 0-1 - Número de resolución de crédito fiscal
-  public int      $iTipCons;      // H014 - 1     - 0-1 - Tipo de constancia
-  public ?string  $dDesTipCons = null;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
-  public int      $dNumCons;      // H016 - 11    - 0-1 - Número de constancia 
-  public string   $dNumControl;   // H017 - 8     - 0-1 - Número de control de la constancia 
-  public string   $dRucFus;       // H018 - 3-8   - 0-1 - Obligatorio cuando el CDC del DTE  referenciado corresponda a un  RUC fusionado
+  public string $dNumComRet;    // H012 - 15    - 0-1 - Número de comprobante de retención
+  public string $dNumResCF;     // H013 - 15    - 0-1 - Número de resolución de crédito fiscal
+  public int $iTipCons;      // H014 - 1     - 0-1 - Tipo de constancia
+  public ?string $dDesTipCons = null;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
+  public int $dNumCons;      // H016 - 11    - 0-1 - Número de constancia
+  public string $dNumControl;   // H017 - 8     - 0-1 - Número de control de la constancia
+  public string $dRucFus;       // H018 - 3-8   - 0-1 - Obligatorio cuando el CDC del DTE  referenciado corresponda a un  RUC fusionado
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -64,9 +63,9 @@ class GCamDEAsoc extends BaseSifenField
 
   /**
    * Establece el valor de dDesTipDocAso
-   * 
+   *
    * @param String $dDesTipDocAso
-   * 
+   *
    * @return self
    */
   public function setDDesTipDocAso(string $dDesTipDocAso): self
@@ -167,9 +166,9 @@ class GCamDEAsoc extends BaseSifenField
 
   /**
    * Establece el valor de dDTipoDocAso
-   * 
+   *
    * @param String $dDTipoDocAso
-   * 
+   *
    * @return self
    */
   public function setDDTipoDocAso(?string $dDTipoDocAso): self
@@ -251,9 +250,9 @@ class GCamDEAsoc extends BaseSifenField
 
   /**
    * Establece el valor de dDesTipCons
-   * 
+   *
    * @param String $dDesTipCons
-   * 
+   *
    * @return self
    */
   public function setDDesTipCons(?string $dDesTipCons): self
@@ -278,8 +277,9 @@ class GCamDEAsoc extends BaseSifenField
    */
   public function setDNumCons(int $dNumCons): self
   {
-    if ($dNumCons < 1 || $dNumCons > 99999999999)
+    if ($dNumCons < 1 || $dNumCons > 99999999999) {
       throw new ValidacionException("[GCamDEAsoc] El número de constancia (dNumCons, H016) debe ser un entero positivo de hasta 11 dígitos; se recibió $dNumCons.");
+    }
     $this->dNumCons = $dNumCons;
 
     return $this;
@@ -298,8 +298,9 @@ class GCamDEAsoc extends BaseSifenField
    */
   public function setDNumControl(string $dNumControl): self
   {
-    if (preg_match('/^[0-9A-Za-z\-]{8}$/D', $dNumControl) !== 1)
+    if (preg_match('/^[0-9A-Za-z\-]{8}$/D', $dNumControl) !== 1) {
       throw new ValidacionException("[GCamDEAsoc] El número de control de la constancia (dNumControl, H017) debe tener 8 caracteres entre letras, números y guion; se recibió '$dNumControl'.");
+    }
     $this->dNumControl = $dNumControl;
 
     return $this;
@@ -361,7 +362,7 @@ class GCamDEAsoc extends BaseSifenField
   public function getDNTimDI(): int
   {
     return $this->dNTimDI;
-  }  
+  }
 
   /**
    * Obtiene el valor de dEstDocAso
@@ -405,7 +406,7 @@ class GCamDEAsoc extends BaseSifenField
 
   /**
    * Obtiene el valor de dDTipoDocAso
-   * 
+   *
    * @return String
    */
   public function getDDTipoDocAso(): ?string
@@ -499,125 +500,125 @@ class GCamDEAsoc extends BaseSifenField
 
   /**
    * Instancia un objeto GCamDEAsoc a partir de un DOMElement que representa al objeto.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GCamFuFD
-   * 
+   *
    * @return GCamDEAsoc Objeto GCamDEAsoc instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamDEAsoc') != 0)
+    if (strcmp($node->nodeName, 'gCamDEAsoc') != 0) {
         throw new ValidacionException('[GCamDEAsoc] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new self();
     $res->setITipDocAso(intval(trim($node->getElementsByTagName('iTipDocAso')->item(0)->nodeValue)));
     $res->setDDesTipDocAso(trim($node->getElementsByTagName('dDesTipDocAso')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dCdCDERef')->length > 0)
+    if ($node->getElementsByTagName('dCdCDERef')->length > 0) {
       $res->setDCdCDERef(trim($node->getElementsByTagName('dCdCDERef')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNTimDI')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNTimDI')->length > 0) {
       $res->setDNTimDI(intval(trim($node->getElementsByTagName('dNTimDI')->item(0)->nodeValue)));
-    if($node->getElementsByTagName('dEstDocAso')->length > 0)
+    }
+    if ($node->getElementsByTagName('dEstDocAso')->length > 0) {
       $res->setDEstDocAso(trim($node->getElementsByTagName('dEstDocAso')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dPExpDocAso')->length > 0)
+    }
+    if ($node->getElementsByTagName('dPExpDocAso')->length > 0) {
       $res->setDPExpDocAso(trim($node->getElementsByTagName('dPExpDocAso')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumDocAso')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumDocAso')->length > 0) {
       $res->setDNumDocAso(trim($node->getElementsByTagName('dNumDocAso')->item(0)->nodeValue));
-    if($node->getElementsByTagName('iTipoDocAso')->length > 0)
+    }
+    if ($node->getElementsByTagName('iTipoDocAso')->length > 0) {
       $res->setITipoDocAso(trim($node->getElementsByTagName('iTipoDocAso')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dDTipoDocAso')->length > 0)
+    }
+    if ($node->getElementsByTagName('dDTipoDocAso')->length > 0) {
       $res->setDDTipoDocAso(trim($node->getElementsByTagName('dDTipoDocAso')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dFecEmiDI')->length > 0)
+    }
+    if ($node->getElementsByTagName('dFecEmiDI')->length > 0) {
       $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dFecEmiDI')->item(0)->nodeValue)));
-    if($node->getElementsByTagName('dNumComRet')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumComRet')->length > 0) {
       $res->setDNumComRet(trim($node->getElementsByTagName('dNumComRet')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumResCF')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumResCF')->length > 0) {
       $res->setDNumResCF(trim($node->getElementsByTagName('dNumResCF')->item(0)->nodeValue));
-    if($node->getElementsByTagName('iTipCons')->length > 0)
+    }
+    if ($node->getElementsByTagName('iTipCons')->length > 0) {
       $res->setITipCons(intval(trim($node->getElementsByTagName('iTipCons')->item(0)->nodeValue)));
-    if($node->getElementsByTagName('dDesTipCons')->length > 0)
+    }
+    if ($node->getElementsByTagName('dDesTipCons')->length > 0) {
       $res->setDDesTipCons(trim($node->getElementsByTagName('dDesTipCons')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumCons')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumCons')->length > 0) {
       $res->setDNumCons(intval(trim($node->getElementsByTagName('dNumCons')->item(0)->nodeValue)));
-    if($node->getElementsByTagName('dNumControl')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumControl')->length > 0) {
       $res->setDNumControl(trim($node->getElementsByTagName('dNumControl')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dRucFus')->length > 0)
+    }
+    if ($node->getElementsByTagName('dRucFus')->length > 0) {
       $res->setDRucFus(trim($node->getElementsByTagName('dRucFus')->item(0)->nodeValue));
+    }
     return $res;
   }
 
   /**
    * Instancia un objeto GCamDEAsoc a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $nodo
-   * 
+   *
    * @return GCamDEAsoc
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $nodo): GCamDEAsoc
   {
-    if(strcmp($nodo->getName(), 'gCamDEAsoc') != 0)
-    {
+    if (strcmp($nodo->getName(), 'gCamDEAsoc') != 0) {
       throw new ValidacionException("El nombre del nodo no es gCamDEAsoc");
     }
     $res = new GCamDEAsoc();
     $res->setITipDocAso(intval($nodo->iTipDocAso));
     $res->setDDesTipDocAso(strval($nodo->dDesTipDocAso));
-    if(isset($nodo->dCdCDERef))
-    {
+    if (isset($nodo->dCdCDERef)) {
       $res->setDCdCDERef(strval($nodo->dCdCDERef));
     }
-    if(isset($nodo->dNTimDI))
-    {
+    if (isset($nodo->dNTimDI)) {
       $res->setDNTimDI(intval($nodo->dNTimDI));
     }
-    if(isset($nodo->dEstDocAso))
-    {
+    if (isset($nodo->dEstDocAso)) {
       $res->setDEstDocAso(strval($nodo->dEstDocAso));
     }
-    if(isset($nodo->dPExpDocAso))
-    {
+    if (isset($nodo->dPExpDocAso)) {
       $res->setDPExpDocAso(strval($nodo->dPExpDocAso));
     }
-    if(isset($nodo->dNumDocAso))
-    {
+    if (isset($nodo->dNumDocAso)) {
       $res->setDNumDocAso(strval($nodo->dNumDocAso));
     }
-    if(isset($nodo->iTipoDocAso))
-    {
+    if (isset($nodo->iTipoDocAso)) {
       $res->setITipoDocAso(intval($nodo->iTipoDocAso));
     }
-    if(isset($nodo->dDTipoDocAso))
-    {
+    if (isset($nodo->dDTipoDocAso)) {
       $res->setDDTipoDocAso(strval($nodo->dDTipoDocAso));
     }
-    if(isset($nodo->dFecEmiDI))
-    {
+    if (isset($nodo->dFecEmiDI)) {
       $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', strval($nodo->dFecEmiDI)));
     }
-    if(isset($nodo->dNumComRet))
-    {
+    if (isset($nodo->dNumComRet)) {
       $res->setDNumComRet(strval($nodo->dNumComRet));
     }
-    if(isset($nodo->dNumResCF))
-    {
+    if (isset($nodo->dNumResCF)) {
       $res->setDNumResCF(strval($nodo->dNumResCF));
     }
-    if(isset($nodo->iTipCons))
-    {
+    if (isset($nodo->iTipCons)) {
       $res->setITipCons(intval($nodo->iTipCons));
     }
-    if(isset($nodo->dDesTipCons))
-    {
+    if (isset($nodo->dDesTipCons)) {
       $res->setDDesTipCons(strval($nodo->dDesTipCons));
     }
-    if(isset($nodo->dNumCons))
-    {
+    if (isset($nodo->dNumCons)) {
       $res->setDNumCons(intval($nodo->dNumCons));
     }
-    if(isset($nodo->dNumControl))
-    {
+    if (isset($nodo->dNumControl)) {
       $res->setDNumControl(strval($nodo->dNumControl));
     }
-    if(isset($nodo->dRucFus))
-    {
+    if (isset($nodo->dRucFus)) {
       $res->setDRucFus(strval($nodo->dRucFus));
     }
     return $res;
@@ -632,63 +633,49 @@ class GCamDEAsoc extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GCamDEAsoc();
-    if(isset($object->iTipDocAso))
-    {
+    if (isset($object->iTipDocAso)) {
       $res->setITipDocAso(intval($object->iTipDocAso));
     }
-    if(isset($object->dCdCDERef))
-    {
+    if (isset($object->dCdCDERef)) {
       $res->setDCdCDERef($object->dCdCDERef);
     }
-    if(isset($object->dNTimDI))
-    {
+    if (isset($object->dNTimDI)) {
       $res->setDNTimDI(intval($object->dNTimDI));
     }
-    if(isset($object->dEstDocAso))
-    {
+    if (isset($object->dEstDocAso)) {
       $res->setDEstDocAso($object->dEstDocAso);
     }
-    if(isset($object->dPExpDocAso))
-    {
+    if (isset($object->dPExpDocAso)) {
       $res->setDPExpDocAso($object->dPExpDocAso);
     }
-    if(isset($object->dNumDocAso))
-    {
+    if (isset($object->dNumDocAso)) {
       $res->setDNumDocAso(intval($object->dNumDocAso));
     }
-    if(isset($object->iTipoDocAso))
-    {
+    if (isset($object->iTipoDocAso)) {
       $res->setITipoDocAso(intval($object->iTipoDocAso));
     }
-    if(isset($object->dFecEmiDI))
-    {
+    if (isset($object->dFecEmiDI)) {
       $res->setDFecEmiDI(DateTime::createFromFormat('Y-m-d', $object->dFecEmiDI));
     }
-    if(isset($object->dNumComRet))
-    {
+    if (isset($object->dNumComRet)) {
       $res->setDNumComRet($object->dNumComRet);
     }
-    if(isset($object->dNumResCF))
-    {
+    if (isset($object->dNumResCF)) {
       $res->setDNumResCF($object->dNumResCF);
     }
-    if(isset($object->iTipCons))
-    {
+    if (isset($object->iTipCons)) {
       $res->setITipCons(intval($object->iTipCons));
     }
-    if(isset($object->dNumCons))
-    {
+    if (isset($object->dNumCons)) {
       $res->setDNumCons(intval($object->dNumCons));
     }
-    if(isset($object->dNumControl))
-    {
+    if (isset($object->dNumControl)) {
       $res->setDNumControl($object->dNumControl);
     }
-    if(isset($object->dRucFus))
-    {
+    if (isset($object->dRucFus)) {
       $res->setDRucFus($object->dRucFus);
     }
-    
+
     return $res;
   }
 
@@ -698,7 +685,7 @@ class GCamDEAsoc extends BaseSifenField
 
   /**
    * Convierte el objeto GCamDEAsoc a un DOMElement
-   * 
+   *
    * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO se insertará.
    *
    * @return DOMElement Nodo DOM creado NO insertado en el documento.
@@ -712,14 +699,14 @@ class GCamDEAsoc extends BaseSifenField
 
     if ($this->iTipDocAso == 1) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCdCDERef', $this->getDCdCDERef()));
-    }
-    else if ($this->iTipDocAso == 2) {
+    } elseif ($this->iTipDocAso == 2) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNTimDI', $this->getDNTimDI()));
       $res->appendChild(XmlHelper::elemento($doc, 'dEstDocAso', str_pad($this->dEstDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(XmlHelper::elemento($doc, 'dPExpDocAso', str_pad($this->dPExpDocAso, 3, '0', STR_PAD_LEFT)));
       $res->appendChild(XmlHelper::elemento($doc, 'dNumDocAso', str_pad($this->dNumDocAso, 7, '0', STR_PAD_LEFT)));
-      if ($this->getITipoDocAso() === TipoDocImpresoAso::ComprobanteRetencion->value)
+      if ($this->getITipoDocAso() === TipoDocImpresoAso::ComprobanteRetencion->value) {
         throw new ValidacionException('[GCamDEAsoc] El tipo de documento impreso asociado 5 (Comprobante de retención) no existe en el XSD de producción (tiTIpoDoc admite 1-4, DE_Types_v150.xsd) y el SIFEN lo rechaza. Use 1 Factura, 2 Nota de crédito, 3 Nota de débito o 4 Nota de remisión.');
+      }
       $res->appendChild(XmlHelper::elemento($doc, 'iTipoDocAso', $this->getITipoDocAso()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDTipoDocAso', $this->getDDTipoDocAso()));
     }
@@ -728,13 +715,15 @@ class GCamDEAsoc extends BaseSifenField
       $res->appendChild(XmlHelper::elemento($doc, 'dFecEmiDI', $this->getDFecEmiDI()->format('Y-m-d')));
     }
 
-    if(isset($this->dNumComRet))
+    if (isset($this->dNumComRet)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumComRet', $this->getDNumComRet()));
-    
-    if(isset($this->dNumResCF))
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumResCF', $this->getDNumResCF()));
+    }
 
-    if($this->iTipDocAso == 3) {
+    if (isset($this->dNumResCF)) {
+      $res->appendChild(XmlHelper::elemento($doc, 'dNumResCF', $this->getDNumResCF()));
+    }
+
+    if ($this->iTipDocAso == 3) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipCons', $this->getITipCons()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipCons', $this->getDDesTipCons()));
     }
@@ -743,13 +732,16 @@ class GCamDEAsoc extends BaseSifenField
     // contribuyente (H014 = 1), que también trae número y control en el formulario de la DNIT. Hasta 0.2.0 solo se
     // emitían con H014 = 2 y con la de no ser contribuyente se perdían (PK-35, decisión Q-B11). El número va con 11
     // dígitos (patrón [0-9]{11}).
-    if ($this->iTipDocAso == 3 && ($this->iTipCons == 2 || isset($this->dNumCons)))
+    if ($this->iTipDocAso == 3 && ($this->iTipCons == 2 || isset($this->dNumCons))) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumCons', str_pad((string) $this->getDNumCons(), 11, '0', STR_PAD_LEFT)));
-    if ($this->iTipDocAso == 3 && ($this->iTipCons == 2 || isset($this->dNumControl)))
+    }
+    if ($this->iTipDocAso == 3 && ($this->iTipCons == 2 || isset($this->dNumControl))) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumControl', $this->getDNumControl()));
+    }
 
-    if(isset($this->dRucFus))
+    if (isset($this->dRucFus)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dRucFus', $this->getDRucFus()));
+    }
 
     return $res;
   }

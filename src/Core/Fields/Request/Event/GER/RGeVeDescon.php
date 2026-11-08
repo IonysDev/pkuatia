@@ -146,8 +146,9 @@ class RGeVeDescon
   {
     // tiTipDoc admite solo 1 a 4 (DE_Types_v150.xsd:645-653; lo usa Evento_v150.xsd para dTipIDRec): en los eventos del
     // receptor no existen el innominado (5) ni "Otro" (9) del DE.
-    if ($dTipIDRec < 1 || $dTipIDRec > 4)
+    if ($dTipIDRec < 1 || $dTipIDRec > 4) {
       throw new ValidacionException("[RGeVeDescon] dTipIDRec (tipo de documento de identidad del receptor) debe ser 1 Cédula paraguaya, 2 Pasaporte, 3 Cédula extranjera o 4 Carnet de residencia (tiTipDoc, DE_Types_v150.xsd:645-653); se recibió $dTipIDRec.");
+    }
     $this->dTipIDRec = $dTipIDRec;
 
     return $this;
@@ -289,7 +290,7 @@ class RGeVeDescon
   }
 
   ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
+  ///XML Element
   ///////////////////////////////////////////////////////////////////////
 
   /**
@@ -346,10 +347,11 @@ class RGeVeDescon
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if($node->getName() != 'rGeVeDescon')
+    if ($node->getName() != 'rGeVeDescon') {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
+    }
 
 
     $res = new RGeVeDescon();
@@ -359,13 +361,11 @@ class RGeVeDescon
     // Hasta 0.2.0 los tres campos enteros recibían el SimpleXMLElement: TypeError al leer cualquier desconocimiento (PK-28).
     $res->setITipRec(intval((string) $node->iTipRec));
     $res->setDNomRec((string) $node->dNomRec);
-    if(isset($node->dRucRec))
-    {
+    if (isset($node->dRucRec)) {
       $res->setDRucRec((string) $node->dRucRec);
       $res->setDDVRec(intval((string) $node->dDVRec));
     }
-    if(isset($node->dTipIDRec))
-    {
+    if (isset($node->dTipIDRec)) {
       $res->setDTipIDRec(intval((string) $node->dTipIDRec));
       $res->setDNumID((string) $node->dNumID);
     }

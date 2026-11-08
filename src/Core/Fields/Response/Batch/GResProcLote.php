@@ -2,8 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\Response\Batch;
 
-
-use DOMElement;
 use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
@@ -12,18 +10,18 @@ use IonysDev\Pkuatia\Validacion\CatalogoValidaciones;
 use IonysDev\Pkuatia\Validacion\InfoValidacion;
 
 /**
- * Nodo Id:     CRSch05        
- * Nombre:      gResProcLote       
- * Descripción: Grupo Resultado de Procesamiento del Lote   
+ * Nodo Id:     CRSch05
+ * Nombre:      gResProcLote
+ * Descripción: Grupo Resultado de Procesamiento del Lote
  * Nodo Padre:  CRSch01 - rResEnviConsLoteDe - Respuesta del WS Consulta Resultado Lote
  */
 class GResProcLote
 {
   // Id - Longirud - Ocurrencia - Descripción
-  public string    $id;       // CRSch050 - 44   - 1-1   - CDC del DE
-  public string    $dEstRes;  // CRSch051 - 8-30 - 1-1   - Estado del resultado (Aprobado, Aprobado con Obs. o Rechazado)
-  public int       $dProtAut; // CRSch052 - 10   - 0-1   - Número de transacción (se genera solo si el estado es Aprobado)
-  public array     $gResProc; // CRSch053 - G    - 1-100 - Grupo Mensaje de Resultado
+  public string $id;       // CRSch050 - 44   - 1-1   - CDC del DE
+  public string $dEstRes;  // CRSch051 - 8-30 - 1-1   - Estado del resultado (Aprobado, Aprobado con Obs. o Rechazado)
+  public int $dProtAut; // CRSch052 - 10   - 0-1   - Número de transacción (se genera solo si el estado es Aprobado)
+  public array $gResProc; // CRSch053 - G    - 1-100 - Grupo Mensaje de Resultado
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -134,39 +132,48 @@ class GResProcLote
 
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
-  ///////////////////////////////////////////////////////////////////////  
+  ///////////////////////////////////////////////////////////////////////
 
   /**
    * Instancia un GResProcLote a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
-   * 
+   *
    * @param stdClass $object
-   * 
+   *
    * @return GResProcLote
    */
   public static function FromSifenResponseObject($object): GResProcLote
   {
     $res = new GResProcLote();
 
-    if (isset($object->id)) $res->setId($object->id);
-    else throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: id", 'id');
+    if (isset($object->id)) {
+    $res->setId($object->id);
+    } else {
+    throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: id", 'id');
+    }
 
-    if (isset($object->dEstRes)) $res->setDEstRes($object->dEstRes);
-    else throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: dEstRes", 'dEstRes');
+    if (isset($object->dEstRes)) {
+    $res->setDEstRes($object->dEstRes);
+    } else {
+    throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: dEstRes", 'dEstRes');
+    }
 
-    if (isset($object->dProtAut)) $res->setDProtAut($object->dProtAut);
+    if (isset($object->dProtAut)) {
+    $res->setDProtAut($object->dProtAut);
+    }
 
     if (isset($object->gResProc)) {
-      $aux = array();
+      $aux = [];
       if (is_array($object->gResProc)) {
         foreach ($object->gResProc as $item) {
           array_push($aux, GResProc::FromSifenResponseObject($item));
-        }        
-      }
-      else {
+        }
+      } else {
         array_push($aux, GResProc::FromSifenResponseObject($object->gResProc));
       };
       $res->setGResProc($aux);
-    } else throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: gResProc", 'gResProc');
+    } else {
+    throw RespuestaException::porCampoFaltante("[GResProcLote] Error al instanciar respuesta, falta parametro: gResProc", 'gResProc');
+    }
 
     return $res;
   }
@@ -183,8 +190,9 @@ class GResProcLote
   public function esAprobado(): bool
   {
     $estado = $this->getEstado();
-    if ($estado !== null)
+    if ($estado !== null) {
       return $estado->esAprobado();
+    }
     return ($this->getMotivos()[0] ?? null)?->esAprobacion() === true;
   }
 

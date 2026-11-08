@@ -7,12 +7,13 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Este campo representa el sistema de facturación del documento electrónico (DE).
  */
 
-enum DESisFact: int {
+enum DESisFact: int
+{
     case Contribuyente = 1;
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Contribuyente => 'Contribuyente'
         };
     }

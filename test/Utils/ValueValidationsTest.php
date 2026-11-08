@@ -18,5 +18,3 @@ foreach ($values as $key => $value) {
     $isValid = ValueValidations::isValidStringDecimal($value, 10, 1, 8);
     echo $value . ' is ' . ($isValid ? 'valid' : 'invalid') . PHP_EOL;
 }
-
-?>

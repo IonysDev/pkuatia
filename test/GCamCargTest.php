@@ -96,7 +96,7 @@ $g->setDDesUniMedTotPes(str_repeat('B', 30)); // max 10
 $g->setDDesCarCarga(str_repeat('C', 80));     // max 50
 assertEq(10, strlen($g->getDDesUniMedTotVol()), 'dDesUniMedTotVol truncado a 10');
 assertEq(10, strlen($g->getdDesUniMedTotPes()), 'dDesUniMedTotPes truncado a 10');
-assertEq(50, strlen($g->getDDesCarCarga()),    'dDesCarCarga truncado a 50');
+assertEq(50, strlen($g->getDDesCarCarga()), 'dDesCarCarga truncado a 50');
 
 echo "Caso 8: setter con vacio limpia el valor\n";
 $g = new GCamCarg();
@@ -109,9 +109,9 @@ $g = new GCamCarg();
 $g->setDDesUniMedTotVol(null);
 $g->setDDesUniMedTotPes(null);
 $g->setDDesCarCarga(null);
-assertEq(null, $g->getDDesUniMedTotVol(),  'dDesUniMedTotVol sigue null');
+assertEq(null, $g->getDDesUniMedTotVol(), 'dDesUniMedTotVol sigue null');
 assertEq(null, $g->getdDesUniMedTotPes(), 'dDesUniMedTotPes sigue null');
-assertEq(null, $g->getDDesCarCarga(),     'dDesCarCarga sigue null');
+assertEq(null, $g->getDDesCarCarga(), 'dDesCarCarga sigue null');
 
 echo "\n";
 if ($failures === 0) {

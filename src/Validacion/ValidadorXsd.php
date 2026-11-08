@@ -40,8 +40,9 @@ final class ValidadorXsd
    */
   public static function validar(string $xml, string $xsd): ResultadoValidacion
   {
-    if (!is_file($xsd))
+    if (!is_file($xsd)) {
       throw new ConfiguracionException("[ValidadorXsd] No se encontró el esquema XSD: $xsd");
+    }
     $resultado = new ResultadoValidacion();
     $previo = libxml_use_internal_errors(true);
     libxml_clear_errors();
@@ -55,10 +56,12 @@ final class ValidadorXsd
           '0160', null, null, null, null, 'Revisar que el XML esté completo y bien formado antes de validarlo contra el esquema.', $primero !== null && $primero->line > 0 ? $primero->line : null));
         return $resultado;
       }
-      if ($doc->schemaValidate($xsd, LIBXML_NONET)) // tampoco los includes del esquema salen a la red
+      if ($doc->schemaValidate($xsd, LIBXML_NONET)) { // tampoco los includes del esquema salen a la red
         return $resultado;
-      foreach (libxml_get_errors() as $error)
+      }
+      foreach (libxml_get_errors() as $error) {
         $resultado->agregar(self::desdeLibxml($error));
+      }
       return $resultado;
     } finally {
       libxml_clear_errors();
@@ -85,8 +88,9 @@ final class ValidadorXsd
       foreach ($faltantes as $faltante) {
         $campoFaltante = CatalogoValidaciones::campoMT($faltante);
         $metodo = $campoFaltante !== null ? CatalogoValidaciones::metodoPkuatia($campoFaltante) : null;
-        if ($metodo !== null)
+        if ($metodo !== null) {
           $partes[] = "Informar $faltante ($campoFaltante) con $metodo.";
+        }
       }
       return implode(' ', $partes);
     }
@@ -96,8 +100,9 @@ final class ValidadorXsd
       $partes[] = 'El valor no cumple el tipo que el XSD exige para ' . ($elemento ?? 'el elemento') . ($campo !== null ? " ($campo)" : '') . '.';
     }
     $metodo = $campo !== null ? CatalogoValidaciones::metodoPkuatia($campo) : null;
-    if ($metodo !== null)
+    if ($metodo !== null) {
       $partes[] = "Ver $metodo.";
+    }
     return $partes === [] ? null : implode(' ', $partes);
   }
 }

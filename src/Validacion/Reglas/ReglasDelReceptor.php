@@ -20,8 +20,9 @@ final class ReglasDelReceptor extends ConjuntoDeReglas
   public static function aplicar(VistaDocumento $v, ResultadoValidacion $r, DateTime $ahora): void
   {
     $rec = $v->gDatRec();
-    if ($rec === null)
+    if ($rec === null) {
       return;
+    }
     $ruta = 'DE.gDatGralOpe.gDatRec';
     $tipo = $v->tipoDocumento();
     $esAF = $tipo === 4;
@@ -52,8 +53,9 @@ final class ReglasDelReceptor extends ConjuntoDeReglas
     self::regla($r, $noContribuyente && $rucRec !== null, '1305', 'dRucRec', $ruta, $rucRec);
     $rucEmisor = self::texto($v->gEmis(), 'dRucEm');
     self::regla($r, $esAF && $rucRec !== null && $rucEmisor !== null && $rucRec !== $rucEmisor, '1317', 'dRucRec', $ruta, $rucRec, "En la autofactura el receptor es el emisor ($rucEmisor).");
-    if ($rucRec !== null && $dvRec !== null)
+    if ($rucRec !== null && $dvRec !== null) {
       self::regla($r, RucUtils::CalcDV($rucRec) !== $dvRec, '1309', 'dDVRec', $ruta, $dvRec, 'El dígito verificador calculado es ' . RucUtils::CalcDV($rucRec) . '.');
+    }
 
     // Documento de identidad
     $tipId = self::entero($rec, 'iTipIDRec');
@@ -63,8 +65,9 @@ final class ReglasDelReceptor extends ConjuntoDeReglas
     self::regla($r, $tipId === 5 && $tiOpe !== null && $tiOpe !== 2, '1319', 'iTipIDRec', $ruta, $tipId, 'El receptor innominado (5) solo se admite en B2C.');
     self::regla($r, $noContribuyente && $numId === null, '1314', 'dNumIDRec', $ruta);
     self::regla($r, $contribuyente && $numId !== null, '1323', 'dNumIDRec', $ruta, $numId);
-    if ($tipId === 5)
+    if ($tipId === 5) {
       self::nt024($v, $r, $ruta);
+    }
 
     // Dirección
     $dir = self::texto($rec, 'dDirRec');
@@ -80,15 +83,18 @@ final class ReglasDelReceptor extends ConjuntoDeReglas
   private static function nt024(VistaDocumento $v, ResultadoValidacion $r, string $ruta): void
   {
     $ope = $v->gOpeCom();
-    if (self::entero($ope, 'iTipTra') === 13)
+    if (self::entero($ope, 'iTipTra') === 13) {
       return;
+    }
     $tot = $v->gTotSub();
-    if ($tot === null)
+    if ($tot === null) {
       return;
+    }
     $esPYG = strtoupper((string) (self::texto($ope, 'cMoneOpe') ?? 'PYG')) === 'PYG';
     $total = $esPYG ? self::texto($tot, 'dTotGralOpe') : self::texto($tot, 'dTotalGs');
-    if ($total === null || !is_numeric($total))
+    if ($total === null || !is_numeric($total)) {
       return;
+    }
     self::regla($r, bccomp($total, Constants::UMBRAL_INNOMINADO_PYG, 8) >= 0, '1321', 'iTipIDRec', $ruta, $total,
       'NT-024: desde el 01/01/2025 el receptor debe identificarse cuando el total en guaraníes llega a ' . Constants::UMBRAL_INNOMINADO_PYG . '.');
   }

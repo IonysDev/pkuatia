@@ -77,30 +77,132 @@ final class ReglasDeItemsYTotalesTest extends TestCase
   /** @return iterable<string, array{callable(): DE, string}> */
   public static function items(): iterable
   {
-    yield '1800 B2G sin DNCP general' => [function () { $d = self::fe(); $d->gDatGralOpe->gDatRec->iTiOpe = 3; return $d; }, '1800'];
-    yield '1801 DNCP general sin específico' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->dDncpG = '12345678'; return $d; }, '1801'];
-    yield '1807 relevancia fuera de la NR' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->cRelMerc = 1; $d->gDtipDe->gCamItem[0]->dDesRelMerc = 'Tolerancia de quiebra'; return $d; }, '1807'];
-    yield '1808 relevancia sin cantidad ni porcentaje' => [function () { $d = self::nr(); $d->gDtipDe->gCamItem[0]->cRelMerc = 1; $d->gDtipDe->gCamItem[0]->dDesRelMerc = 'Tolerancia de quiebra'; return $d; }, '1808'];
-    yield '1859 total bruto del ítem' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gValorItem->dTotBruOpeItem = '999'; return $d; }, '1859'];
-    yield '1853 total del ítem' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeItem = '999'; return $d; }, '1853'];
-    yield '1853 total del ítem de la AF' => [function () { $d = self::af(); $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeItem = '999'; return $d; }, '1853'];
-    yield '1852 descuento sin porcentaje' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dDescItem = '10'; return $d; }, '1852'];
-    yield '1861 porcentaje de descuento' => [function () { $d = self::fe(); $v = $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem; $v->dDescItem = '10'; $v->dPorcDesIt = '50'; return $d; }, '1861'];
-    yield '1854 tipo de cambio por ítem no informado' => [function () { $d = self::feUsdPorItem(); unset($d->gDtipDe->gCamItem[0]->gValorItem->dTiCamIt); return $d; }, '1854'];
-    yield '1855 tipo de cambio por ítem con condición global' => [function () { $d = self::feUsd(); $d->gDtipDe->gCamItem[0]->gValorItem->dTiCamIt = '7300'; return $d; }, '1855'];
-    yield '1856 tipo de cambio por ítem en PYG' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gValorItem->dTiCamIt = '7300'; return $d; }, '1856'];
-    yield '1857 tipo de cambio por ítem sin total en guaraníes' => [function () { $d = self::feUsdPorItem(); unset($d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeGs); return $d; }, '1857'];
-    yield '1858 total en guaraníes del ítem' => [function () { $d = self::feUsdPorItem(); $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeGs = '1'; return $d; }, '1858'];
-    yield '1904 gravado con proporción distinta de 100' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gCamIVA->dPropIVA = '50'; return $d; }, '1904'];
-    yield '1905 exento con proporción distinta de 0' => [function () { $d = self::feCuotas(); $d->gDtipDe->gCamItem[0]->gCamIVA->dPropIVA = '100'; return $d; }, '1905'];
-    yield '1906 gravado parcial con proporción 100' => [function () { $d = self::fe(); $i = $d->gDtipDe->gCamItem[0]->gCamIVA; $i->iAfecIVA = 4; $i->dDesAfecIVA = 'Gravado parcial (Grav- Exento)'; return $d; }, '1906'];
-    yield '1907 exento con tasa' => [function () { $d = self::feCuotas(); $d->gDtipDe->gCamItem[0]->gCamIVA->dTasaIVA = 10; return $d; }, '1907'];
-    yield '1908 gravado con tasa 0' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gCamIVA->dTasaIVA = 0; return $d; }, '1908'];
-    yield '1909 exento con base gravada' => [function () { $d = self::feCuotas(); $d->gDtipDe->gCamItem[0]->gCamIVA->dBasGravIVA = '100'; return $d; }, '1909'];
-    yield '1910 base gravada al 5 %' => [function () { $d = self::feCuotas(); $d->gDtipDe->gCamItem[1]->gCamIVA->dBasGravIVA = '1'; return $d; }, '1910'];
-    yield '1911 base gravada al 10 %' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gCamIVA->dBasGravIVA = '1'; return $d; }, '1911'];
-    yield '1912 exento con liquidación' => [function () { $d = self::feCuotas(); $d->gDtipDe->gCamItem[0]->gCamIVA->dLiqIVAItem = '5'; return $d; }, '1912'];
-    yield '1913 liquidación del IVA' => [function () { $d = self::fe(); $d->gDtipDe->gCamItem[0]->gCamIVA->dLiqIVAItem = '1'; return $d; }, '1913'];
+    yield '1800 B2G sin DNCP general' => [function () {
+    $d = self::fe();
+    $d->gDatGralOpe->gDatRec->iTiOpe = 3;
+    return $d;
+    }, '1800'];
+    yield '1801 DNCP general sin específico' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->dDncpG = '12345678';
+    return $d;
+    }, '1801'];
+    yield '1807 relevancia fuera de la NR' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->cRelMerc = 1;
+    $d->gDtipDe->gCamItem[0]->dDesRelMerc = 'Tolerancia de quiebra';
+    return $d;
+    }, '1807'];
+    yield '1808 relevancia sin cantidad ni porcentaje' => [function () {
+    $d = self::nr();
+    $d->gDtipDe->gCamItem[0]->cRelMerc = 1;
+    $d->gDtipDe->gCamItem[0]->dDesRelMerc = 'Tolerancia de quiebra';
+    return $d;
+    }, '1808'];
+    yield '1859 total bruto del ítem' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gValorItem->dTotBruOpeItem = '999';
+    return $d;
+    }, '1859'];
+    yield '1853 total del ítem' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeItem = '999';
+    return $d;
+    }, '1853'];
+    yield '1853 total del ítem de la AF' => [function () {
+    $d = self::af();
+    $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeItem = '999';
+    return $d;
+    }, '1853'];
+    yield '1852 descuento sin porcentaje' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dDescItem = '10';
+    return $d;
+    }, '1852'];
+    yield '1861 porcentaje de descuento' => [function () {
+    $d = self::fe();
+    $v = $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem;
+    $v->dDescItem = '10';
+    $v->dPorcDesIt = '50';
+    return $d;
+    }, '1861'];
+    yield '1854 tipo de cambio por ítem no informado' => [function () {
+    $d = self::feUsdPorItem();
+    unset($d->gDtipDe->gCamItem[0]->gValorItem->dTiCamIt);
+    return $d;
+    }, '1854'];
+    yield '1855 tipo de cambio por ítem con condición global' => [function () {
+    $d = self::feUsd();
+    $d->gDtipDe->gCamItem[0]->gValorItem->dTiCamIt = '7300';
+    return $d;
+    }, '1855'];
+    yield '1856 tipo de cambio por ítem en PYG' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gValorItem->dTiCamIt = '7300';
+    return $d;
+    }, '1856'];
+    yield '1857 tipo de cambio por ítem sin total en guaraníes' => [function () {
+    $d = self::feUsdPorItem();
+    unset($d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeGs);
+    return $d;
+    }, '1857'];
+    yield '1858 total en guaraníes del ítem' => [function () {
+    $d = self::feUsdPorItem();
+    $d->gDtipDe->gCamItem[0]->gValorItem->gValorRestaItem->dTotOpeGs = '1';
+    return $d;
+    }, '1858'];
+    yield '1904 gravado con proporción distinta de 100' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dPropIVA = '50';
+    return $d;
+    }, '1904'];
+    yield '1905 exento con proporción distinta de 0' => [function () {
+    $d = self::feCuotas();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dPropIVA = '100';
+    return $d;
+    }, '1905'];
+    yield '1906 gravado parcial con proporción 100' => [function () {
+    $d = self::fe();
+    $i = $d->gDtipDe->gCamItem[0]->gCamIVA;
+    $i->iAfecIVA = 4;
+    $i->dDesAfecIVA = 'Gravado parcial (Grav- Exento)';
+    return $d;
+    }, '1906'];
+    yield '1907 exento con tasa' => [function () {
+    $d = self::feCuotas();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dTasaIVA = 10;
+    return $d;
+    }, '1907'];
+    yield '1908 gravado con tasa 0' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dTasaIVA = 0;
+    return $d;
+    }, '1908'];
+    yield '1909 exento con base gravada' => [function () {
+    $d = self::feCuotas();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dBasGravIVA = '100';
+    return $d;
+    }, '1909'];
+    yield '1910 base gravada al 5 %' => [function () {
+    $d = self::feCuotas();
+    $d->gDtipDe->gCamItem[1]->gCamIVA->dBasGravIVA = '1';
+    return $d;
+    }, '1910'];
+    yield '1911 base gravada al 10 %' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dBasGravIVA = '1';
+    return $d;
+    }, '1911'];
+    yield '1912 exento con liquidación' => [function () {
+    $d = self::feCuotas();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dLiqIVAItem = '5';
+    return $d;
+    }, '1912'];
+    yield '1913 liquidación del IVA' => [function () {
+    $d = self::fe();
+    $d->gDtipDe->gCamItem[0]->gCamIVA->dLiqIVAItem = '1';
+    return $d;
+    }, '1913'];
   }
 
   #[DataProvider('items')]
@@ -144,35 +246,157 @@ final class ReglasDeItemsYTotalesTest extends TestCase
   /** @return iterable<string, array{callable(): DE, string}> */
   public static function totales(): iterable
   {
-    yield '2352 exento sin subtotal exento' => [function () { $d = self::feCuotas(); unset($d->gTotSub->dSubExe); return $d; }, '2352'];
-    yield '2353 subtotal exento' => [function () { $d = self::feCuotas(); $d->gTotSub->dSubExe = '1'; return $d; }, '2353'];
-    yield '2354 exonerado sin subtotal exonerado' => [function () { $d = self::feCuotas(); $i = $d->gDtipDe->gCamItem[0]->gCamIVA; $i->iAfecIVA = 2; $i->dDesAfecIVA = 'Exonerado (Art. 100 - Ley 6380/2019)'; unset($d->gTotSub->dSubExo); return $d; }, '2354'];
-    yield '2355 subtotal exonerado' => [function () { $d = self::feCuotas(); $i = $d->gDtipDe->gCamItem[0]->gCamIVA; $i->iAfecIVA = 2; $i->dDesAfecIVA = 'Exonerado (Art. 100 - Ley 6380/2019)'; $d->gTotSub->dSubExo = '1'; return $d; }, '2355'];
-    yield '2356 tasa 5 sin subtotal al 5' => [function () { $d = self::feCuotas(); unset($d->gTotSub->dSub5); return $d; }, '2356'];
-    yield '2357 subtotal al 5' => [function () { $d = self::feCuotas(); $d->gTotSub->dSub5 = '1'; return $d; }, '2357'];
-    yield '2358 tasa 10 sin subtotal al 10' => [function () { $d = self::fe(); unset($d->gTotSub->dSub10); return $d; }, '2358'];
-    yield '2359 subtotal al 10' => [function () { $d = self::fe(); $d->gTotSub->dSub10 = '1'; return $d; }, '2359'];
-    yield '2362 total de la operación' => [function () { $d = self::fe(); $d->gTotSub->dTotOpe = '1'; return $d; }, '2362'];
-    yield '2362 total de la operación de la AF' => [function () { $d = self::af(); $d->gTotSub->dTotOpe = '1'; return $d; }, '2362'];
-    yield '2363 total de descuentos por ítem' => [function () { $d = self::fe(); $d->gTotSub->dTotDesc = '1'; return $d; }, '2363'];
-    yield '2364 total de descuentos' => [function () { $d = self::fe(); $d->gTotSub->dDescTotal = '1'; return $d; }, '2364'];
-    yield '2365 total general' => [function () { $d = self::fe(); $d->gTotSub->dTotGralOpe = '1'; return $d; }, '2365'];
-    yield '2365 total general de la AF' => [function () { $d = self::af(); $d->gTotSub->dTotGralOpe = '1'; return $d; }, '2365'];
-    yield '2366 tasa 5 sin liquidación al 5' => [function () { $d = self::feCuotas(); unset($d->gTotSub->dIVA5); return $d; }, '2366'];
-    yield '2367 liquidación al 5' => [function () { $d = self::feCuotas(); $d->gTotSub->dIVA5 = '1'; return $d; }, '2367'];
-    yield '2368 tasa 10 sin liquidación al 10' => [function () { $d = self::fe(); unset($d->gTotSub->dIVA10); return $d; }, '2368'];
-    yield '2369 liquidación al 10' => [function () { $d = self::fe(); $d->gTotSub->dIVA10 = '1'; return $d; }, '2369'];
-    yield '2370 sin liquidación total' => [function () { $d = self::fe(); unset($d->gTotSub->dTotIVA); return $d; }, '2370'];
-    yield '2371 liquidación total' => [function () { $d = self::fe(); $d->gTotSub->dTotIVA = '1'; return $d; }, '2371'];
-    yield '2372 tasa 5 sin base al 5' => [function () { $d = self::feCuotas(); unset($d->gTotSub->dBaseGrav5); return $d; }, '2372'];
-    yield '2373 base al 5' => [function () { $d = self::feCuotas(); $d->gTotSub->dBaseGrav5 = '1'; return $d; }, '2373'];
-    yield '2374 tasa 10 sin base al 10' => [function () { $d = self::fe(); unset($d->gTotSub->dBaseGrav10); return $d; }, '2374'];
-    yield '2375 base al 10' => [function () { $d = self::fe(); $d->gTotSub->dBaseGrav10 = '1'; return $d; }, '2375'];
-    yield '2376 sin base total' => [function () { $d = self::fe(); unset($d->gTotSub->dTBasGraIVA); return $d; }, '2376'];
-    yield '2377 base total' => [function () { $d = self::fe(); $d->gTotSub->dTBasGraIVA = '1'; return $d; }, '2377'];
-    yield '2382 moneda extranjera sin total en guaraníes' => [function () { $d = self::feUsd(); unset($d->gTotSub->dTotalGs); return $d; }, '2382'];
-    yield '2385 total en guaraníes con tipo de cambio global' => [function () { $d = self::feUsd(); $d->gTotSub->dTotalGs = '1'; return $d; }, '2385'];
-    yield '2386 total en guaraníes con tipo de cambio por ítem' => [function () { $d = self::feUsdPorItem(); $d->gTotSub->dTotalGs = '1'; return $d; }, '2386'];
+    yield '2352 exento sin subtotal exento' => [function () {
+    $d = self::feCuotas();
+    unset($d->gTotSub->dSubExe);
+    return $d;
+    }, '2352'];
+    yield '2353 subtotal exento' => [function () {
+    $d = self::feCuotas();
+    $d->gTotSub->dSubExe = '1';
+    return $d;
+    }, '2353'];
+    yield '2354 exonerado sin subtotal exonerado' => [function () {
+    $d = self::feCuotas();
+    $i = $d->gDtipDe->gCamItem[0]->gCamIVA;
+    $i->iAfecIVA = 2;
+    $i->dDesAfecIVA = 'Exonerado (Art. 100 - Ley 6380/2019)';
+    unset($d->gTotSub->dSubExo);
+    return $d;
+    }, '2354'];
+    yield '2355 subtotal exonerado' => [function () {
+    $d = self::feCuotas();
+    $i = $d->gDtipDe->gCamItem[0]->gCamIVA;
+    $i->iAfecIVA = 2;
+    $i->dDesAfecIVA = 'Exonerado (Art. 100 - Ley 6380/2019)';
+    $d->gTotSub->dSubExo = '1';
+    return $d;
+    }, '2355'];
+    yield '2356 tasa 5 sin subtotal al 5' => [function () {
+    $d = self::feCuotas();
+    unset($d->gTotSub->dSub5);
+    return $d;
+    }, '2356'];
+    yield '2357 subtotal al 5' => [function () {
+    $d = self::feCuotas();
+    $d->gTotSub->dSub5 = '1';
+    return $d;
+    }, '2357'];
+    yield '2358 tasa 10 sin subtotal al 10' => [function () {
+    $d = self::fe();
+    unset($d->gTotSub->dSub10);
+    return $d;
+    }, '2358'];
+    yield '2359 subtotal al 10' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dSub10 = '1';
+    return $d;
+    }, '2359'];
+    yield '2362 total de la operación' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dTotOpe = '1';
+    return $d;
+    }, '2362'];
+    yield '2362 total de la operación de la AF' => [function () {
+    $d = self::af();
+    $d->gTotSub->dTotOpe = '1';
+    return $d;
+    }, '2362'];
+    yield '2363 total de descuentos por ítem' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dTotDesc = '1';
+    return $d;
+    }, '2363'];
+    yield '2364 total de descuentos' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dDescTotal = '1';
+    return $d;
+    }, '2364'];
+    yield '2365 total general' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dTotGralOpe = '1';
+    return $d;
+    }, '2365'];
+    yield '2365 total general de la AF' => [function () {
+    $d = self::af();
+    $d->gTotSub->dTotGralOpe = '1';
+    return $d;
+    }, '2365'];
+    yield '2366 tasa 5 sin liquidación al 5' => [function () {
+    $d = self::feCuotas();
+    unset($d->gTotSub->dIVA5);
+    return $d;
+    }, '2366'];
+    yield '2367 liquidación al 5' => [function () {
+    $d = self::feCuotas();
+    $d->gTotSub->dIVA5 = '1';
+    return $d;
+    }, '2367'];
+    yield '2368 tasa 10 sin liquidación al 10' => [function () {
+    $d = self::fe();
+    unset($d->gTotSub->dIVA10);
+    return $d;
+    }, '2368'];
+    yield '2369 liquidación al 10' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dIVA10 = '1';
+    return $d;
+    }, '2369'];
+    yield '2370 sin liquidación total' => [function () {
+    $d = self::fe();
+    unset($d->gTotSub->dTotIVA);
+    return $d;
+    }, '2370'];
+    yield '2371 liquidación total' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dTotIVA = '1';
+    return $d;
+    }, '2371'];
+    yield '2372 tasa 5 sin base al 5' => [function () {
+    $d = self::feCuotas();
+    unset($d->gTotSub->dBaseGrav5);
+    return $d;
+    }, '2372'];
+    yield '2373 base al 5' => [function () {
+    $d = self::feCuotas();
+    $d->gTotSub->dBaseGrav5 = '1';
+    return $d;
+    }, '2373'];
+    yield '2374 tasa 10 sin base al 10' => [function () {
+    $d = self::fe();
+    unset($d->gTotSub->dBaseGrav10);
+    return $d;
+    }, '2374'];
+    yield '2375 base al 10' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dBaseGrav10 = '1';
+    return $d;
+    }, '2375'];
+    yield '2376 sin base total' => [function () {
+    $d = self::fe();
+    unset($d->gTotSub->dTBasGraIVA);
+    return $d;
+    }, '2376'];
+    yield '2377 base total' => [function () {
+    $d = self::fe();
+    $d->gTotSub->dTBasGraIVA = '1';
+    return $d;
+    }, '2377'];
+    yield '2382 moneda extranjera sin total en guaraníes' => [function () {
+    $d = self::feUsd();
+    unset($d->gTotSub->dTotalGs);
+    return $d;
+    }, '2382'];
+    yield '2385 total en guaraníes con tipo de cambio global' => [function () {
+    $d = self::feUsd();
+    $d->gTotSub->dTotalGs = '1';
+    return $d;
+    }, '2385'];
+    yield '2386 total en guaraníes con tipo de cambio por ítem' => [function () {
+    $d = self::feUsdPorItem();
+    $d->gTotSub->dTotalGs = '1';
+    return $d;
+    }, '2386'];
   }
 
   #[DataProvider('totales')]

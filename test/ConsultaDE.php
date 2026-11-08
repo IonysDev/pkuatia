@@ -10,12 +10,12 @@ ini_set('display_errors', 1);
 
 // Leer los argumentos --cert, --key --pass --cdc --prod (opcional) de la línea de comandos
 $shortopts = '';
-$longopts = array(
+$longopts = [
     'cert:',
     'key:',
     'pass:',
     'cdc:'
-);
+];
 $options = getopt($shortopts, $longopts);
 if (!isset($options['cert']) || !isset($options['key']) || !isset($options['pass']) || !isset($options['cdc'])) {
     echo "Uso: php ConsultaDE.php [--prod] --cert=<certFile> --key=<keyFile> --pass=<keyPassphrase> --cdc=<cdc>\n";

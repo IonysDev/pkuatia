@@ -23,7 +23,7 @@ class RProtDe
   public string $dDigVal;    // PP04 - DigestValue del DE procesado - 28 - 1-1
   public string $dEstRes;    // PP050 - Estado del resultado - 8-30 - 1-1
   public string $dProtAut;   // PP051 - Número de Transacción - 10 - 1-1
-  public array  $gResProc;   // PP05 - Grupo Resultado de Procesamiento - x - 1-100
+  public array $gResProc;   // PP05 - Grupo Resultado de Procesamiento - x - 1-100
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -233,7 +233,7 @@ class RProtDe
 
   /**
    * Converts XML String representation to object
-   * 
+   *
    * @param String $xml
    * @return RProtDe
    */
@@ -246,9 +246,9 @@ class RProtDe
 
   /**
    * Converts SimpleXMLElement to object
-   * 
+   *
    * @param SimpleXMLElement $xml
-   * 
+   *
    * @return RProtDe
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $xml): RProtDe
@@ -259,17 +259,21 @@ class RProtDe
     $res = new RProtDe();
     // Hasta 0.2.0: se leía "id" (el SIFEN manda Id), la fecha con un formato que nunca coincide ("Y-m-d H:i:s")
     // y los campos ausentes en un rechazo quedaban como cadenas vacías (PK-29).
-    if (isset($xml->Id))
+    if (isset($xml->Id)) {
       $res->setId((string) $xml->Id);
-    elseif (isset($xml->id))
+    } elseif (isset($xml->id)) {
       $res->setId((string) $xml->id);
-    if (isset($xml->dFecProc))
+    }
+    if (isset($xml->dFecProc)) {
       $res->setDFecProc(FechaHelper::FromSifen($xml->dFecProc, 'dFecProc'));
-    if (isset($xml->dDigVal))
+    }
+    if (isset($xml->dDigVal)) {
       $res->setDDigVal((string) $xml->dDigVal);
+    }
     $res->setDEstRes((string) $xml->dEstRes);
-    if (isset($xml->dProtAut))
+    if (isset($xml->dProtAut)) {
       $res->setDProtAut((string) $xml->dProtAut);
+    }
     $res->gResProc = [];
     foreach ($xml->gResProc as $gResProc) {
       $res->gResProc[] = GResProc::FromSimpleXMLElement($gResProc);
@@ -279,9 +283,9 @@ class RProtDe
 
   /**
    * Converts SimpleXMLElement to object
-   * 
+   *
    * @param stdClass $node
-   * 
+   *
    * @return RProtDe
    */
   public static function FromSifenResponseObject($node): RProtDe
@@ -289,17 +293,21 @@ class RProtDe
     $res = new RProtDe();
     // El CDC llega como "Id" con mayúscula (respuestas-ws/2026-10-09/03-rEnviDe-response.xml, observación 1);
     // hasta 0.2.0 se leía "id" y se perdía (PK-29). Se acepta también "id".
-    if (isset($node->Id))
+    if (isset($node->Id)) {
       $res->setId((string) $node->Id);
-    elseif (isset($node->id))
+    } elseif (isset($node->id)) {
       $res->setId((string) $node->id);
-    if (isset($node->dFecProc))
+    }
+    if (isset($node->dFecProc)) {
       $res->setDFecProc(FechaHelper::FromSifen($node->dFecProc, 'dFecProc'));
-    if (isset($node->dDigVal))
+    }
+    if (isset($node->dDigVal)) {
       $res->setDDigVal($node->dDigVal);
+    }
     $res->setDEstRes($node->dEstRes);
-    if (isset($node->dProtAut))
+    if (isset($node->dProtAut)) {
       $res->setDProtAut($node->dProtAut);
+    }
     $res->gResProc = [];
     if (isset($node->gResProc)) {
       if (is_array($node->gResProc)) {
@@ -325,8 +333,9 @@ class RProtDe
   public function esAprobado(): bool
   {
     $estado = $this->getEstado();
-    if ($estado !== null)
+    if ($estado !== null) {
       return $estado->esAprobado();
+    }
     return ($this->getMotivos()[0] ?? null)?->esAprobacion() === true;
   }
 

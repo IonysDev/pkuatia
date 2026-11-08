@@ -8,7 +8,7 @@ use SimpleXMLElement;
 /**
  * Clase que representa el campo DigestMethod de la firma
  */
-class DigestMethod 
+class DigestMethod
 {
     public string $Algorithm;
 
@@ -42,9 +42,9 @@ class DigestMethod
 
     /**
      * Instancia un objeto DigestMethod a partir de un SimpleXMLElement
-     * 
+     *
      * @param SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -56,9 +56,9 @@ class DigestMethod
 
     /**
      * Instancia un objeto DigestMethod a partir de un DOMElement
-     * 
+     *
      * @param DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(DOMElement $node): self
@@ -70,7 +70,7 @@ class DigestMethod
 
     /**
      * Convierte el objeto a un DOMElement
-     * 
+     *
      * @return DOMElement
      */
     public function toDOMElement(): DOMElement
@@ -82,5 +82,3 @@ class DigestMethod
     }
 
 }
-
-?>

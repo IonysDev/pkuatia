@@ -17,9 +17,9 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class Signature extends BaseSifenField
 {
   public SignedInfo $SignedInfo;
-  public string     $SignatureValue;
-  public KeyInfo    $KeyInfo;
-  
+  public string $SignatureValue;
+  public KeyInfo $KeyInfo;
+
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ class Signature extends BaseSifenField
       return $this;
   }
 
-  
+
   ///////////////////////////////////////////////////////////////////////
   // Getters
   ///////////////////////////////////////////////////////////////////////
@@ -75,8 +75,9 @@ class Signature extends BaseSifenField
    */
   public function getSignedInfo(): ?SignedInfo
   {
-      if(!isset($this->SignedInfo))
+      if (!isset($this->SignedInfo)) {
         return null;
+      }
       return $this->SignedInfo;
   }
 
@@ -87,8 +88,9 @@ class Signature extends BaseSifenField
    */
   public function getSignatureValue(): ?string
   {
-      if(!isset($this->SignatureValue))
+      if (!isset($this->SignatureValue)) {
         return null;
+      }
       return $this->SignatureValue;
   }
 
@@ -99,27 +101,29 @@ class Signature extends BaseSifenField
    */
   public function getKeyInfo(): ?KeyInfo
   {
-      if(!isset($this->KeyInfo))
+      if (!isset($this->KeyInfo)) {
         return null;
+      }
       return $this->KeyInfo;
   }
 
-  
+
   ///////////////////////////////////////////////////////////////////////
   // Instanciadores
   ///////////////////////////////////////////////////////////////////////
 
   /**
    * Instancia un objeto Signature a partir de un SimpleXMLElement
-   * 
+   *
    * @param \SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'Signature') != 0)
+    if (strcmp($node->getName(), 'Signature') != 0) {
       throw new ValidacionException("[Signature] Invalid XML Node Name: " . $node->getName());
+    }
     $res = new Signature();
     $res->setSignedInfo(SignedInfo::FromSimpleXMLElement($node->SignedInfo));
     $res->setSignatureValue($node->SignatureValue);
@@ -129,15 +133,16 @@ class Signature extends BaseSifenField
 
   /**
    * Instancia un objeto Signature a partir de un DOMElement
-   * 
+   *
    * @param DOMElement $node
-   * 
+   *
    * @return self
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'Signature') != 0)
+    if (strcmp($node->nodeName, 'Signature') != 0) {
       throw new ValidacionException("[Signature] Nodo de nombre inválido: " . $node->nodeName);
+    }
     $res = new Signature();
     $res->setSignedInfo(SignedInfo::FromDOMElement($node->getElementsByTagName('SignedInfo')->item(0)));
     $res->setSignatureValue($node->getElementsByTagName('SignatureValue')->item(0)->nodeValue);
@@ -151,9 +156,9 @@ class Signature extends BaseSifenField
 
   /**
    * Convierte el objeto a un DOMElement con solo la cabecera
-   * 
+   *
    * @param DOMDocument $doc Documento DOM donde se agregará el nodo
-   * 
+   *
    * @return \DOMElement Nodo DOM que representa el objeto
    */
   public function toHeaderOnlyDOMElement(DOMDocument $doc): \DOMElement
@@ -166,7 +171,7 @@ class Signature extends BaseSifenField
 
   /**
    * Convierte este objeto Signature a un DOMElement que puede ser insertado en el DOMDocument especificado.
-   * 
+   *
    * @param DOMDocument $doc DOMDocument que crea el DOMElement
    *
    * @return DOMElement Objeto Signature convertido a DOMElement
@@ -180,5 +185,5 @@ class Signature extends BaseSifenField
     return $res;
   }
 
-  
+
 }

@@ -17,7 +17,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  * Nodo Id:     E500
  * Nombre:      GCamNRE
  * Descripción: Campos que componen la Nota de Remisión Electrónica (E500-E599)
- * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico 
+ * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico
  */
 class GCamNRE extends BaseSifenField
 {
@@ -28,7 +28,7 @@ class GCamNRE extends BaseSifenField
   public string $dDesRespEmiNR; // E504 - 20-36 - 1-1 - Descripción del responsable de la emisión de la Nota Remisión Electrónica
   public int $dKmR;             // E505 - 1-5   - 1-1 - Kilómetros estimados de recorrido (minOccurs=1 en tgCamNRE, DE_v150.xsd; NT-010)
   public DateTime $dFecEm;      // E506 - 10    - 0-1 - Fecha futura de emisión de la factura
-  
+
   ///////////////////////////////////////////////////////////////////////
   ///Setters
   ///////////////////////////////////////////////////////////////////////
@@ -45,8 +45,9 @@ class GCamNRE extends BaseSifenField
     $valor = is_int($iMotEmiNR) ? $iMotEmiNR : $iMotEmiNR->value;
     $this->iMotEmiNR = $valor;
     // E502: para 99 (Otro) la descripción es texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd); no se pisa si ya fue informada con setDDesMotEmiNR().
-    if ($valor === MotEmiNR::Otro->value && isset($this->dDesMotEmiNR) && $this->dDesMotEmiNR !== MotEmiNR::Otro->getDescripcion())
+    if ($valor === MotEmiNR::Otro->value && isset($this->dDesMotEmiNR) && $this->dDesMotEmiNR !== MotEmiNR::Otro->getDescripcion()) {
       return $this;
+    }
     $this->dDesMotEmiNR = is_int($iMotEmiNR) ? MotEmiNR::getDescripcionFromInt($iMotEmiNR) : $iMotEmiNR->getDescripcion();
     return $this;
   }
@@ -55,10 +56,10 @@ class GCamNRE extends BaseSifenField
    * Establece el valor de dDesMotEmiNR (Descripción del motivo de emisión).
    * Solo usarlo para iMotEmiNR = 99 - Otro (Describir motivo).
    * No se recomienda usar este método, ya que se puede establecer el valor de iMotEmiNR, que a la vez establece el valor de dDesMotEmiNR.
-   * 
+   *
    * @param String $dDesMotEmiNR - Descripción del motivo de emisión
-   * 
-   * @return self 
+   *
+   * @return self
    */
   public function setDDesMotEmiNR(string $dDesMotEmiNR): self
   {
@@ -75,7 +76,7 @@ class GCamNRE extends BaseSifenField
    */
   public function setIRespEmiNR(int|RespEmiNR $iRespEmiNR): self
   {
-    if(is_int($iRespEmiNR)){
+    if (is_int($iRespEmiNR)) {
       $this->dDesRespEmiNR = RespEmiNR::getDescripcionFromInt($iRespEmiNR);
       $this->iRespEmiNR = $iRespEmiNR;
     } else {
@@ -89,10 +90,10 @@ class GCamNRE extends BaseSifenField
   /**
    * Establece el valor de dDesRespEmiNR (Descripción del responsable de la emisión de la Nota Remisión Electrónica).
    * No se recomienda usar este método, ya que se puede establecer el valor de iRespEmiNR, que a la vez establece el valor de dDesRespEmiNR.
-   * 
+   *
    * @param String $dDesRespEmiNR - Descripción del responsable de la emisión de la Nota Remisión Electrónica
-   * 
-   * @return self 
+   *
+   * @return self
    */
   public function setDDesRespEmiNR(string $dDesRespEmiNR): self
   {
@@ -163,7 +164,7 @@ class GCamNRE extends BaseSifenField
   public function getIRespEmiNR(): int
   {
     return $this->iRespEmiNR;
-  } 
+  }
 
   /**
    * Obtiene el valor de dDesRespEmiNR (Descripción del responsable de la emisión de la Nota Remisión Electrónica)
@@ -173,7 +174,7 @@ class GCamNRE extends BaseSifenField
   public function getDDesRespEmiNR(): string
   {
     return $this->dDesRespEmiNR;
-  } 
+  }
 
   /**
    * Obtiene el valor de dKmR (Kilómetros estimados de recorrido)
@@ -183,7 +184,7 @@ class GCamNRE extends BaseSifenField
   public function getDKmR(): int
   {
     return $this->dKmR;
-  } 
+  }
 
   /**
    * Obtiene el valor de dFecEm (Fecha futura de emisión de la factura)
@@ -192,10 +193,11 @@ class GCamNRE extends BaseSifenField
    */
   public function getDFecEm(): DateTime | null
   {
-    if(!isset($this->dFecEm))
+    if (!isset($this->dFecEm)) {
       return null;
+    }
     return $this->dFecEm;
-  }   
+  }
 
   ///////////////////////////////////////////////////////////////////////
   ///XML Element
@@ -203,42 +205,45 @@ class GCamNRE extends BaseSifenField
 
   /**
    * Convierte este objeto GCamNRE a un DOMElement mediante el DOMDocument proporcionado.
-   * 
+   *
    * @param DOMDocument $doc - Documento DOM donde se creará el elemento.
    *
    * @return DOMElement El elemento DOM que representa este objeto GCamNRE.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    if ($this->getIMotEmiNR() === MotEmiNR::Otro->value && (mb_strlen($this->getDDesMotEmiNR()) < 5 || mb_strlen($this->getDDesMotEmiNR()) > 60))
+    if ($this->getIMotEmiNR() === MotEmiNR::Otro->value && (mb_strlen($this->getDDesMotEmiNR()) < 5 || mb_strlen($this->getDDesMotEmiNR()) > 60)) {
       throw new ValidacionException("[GCamNRE] Con iMotEmiNR = 99 (Otro), dDesMotEmiNR (E502) debe ser un texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd): informarlo con setDDesMotEmiNR(). Valor actual: '" . $this->getDDesMotEmiNR() . "'.");
+    }
     $res = $doc->createElement('gCamNRE');
     $res->appendChild(XmlHelper::elemento($doc, 'iMotEmiNR', $this->getIMotEmiNR()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesMotEmiNR', $this->getDDesMotEmiNR()));
     $res->appendChild(XmlHelper::elemento($doc, 'iRespEmiNR', $this->getIRespEmiNR()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesRespEmiNR', $this->getDDesRespEmiNR()));
     $res->appendChild(XmlHelper::elemento($doc, 'dKmR', $this->getDKmR()));
-    if(isset($this->dFecEm))
+    if (isset($this->dFecEm)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dFecEm', $this->getDFecEm()->format('Y-m-d')));
+    }
     return $res;
   }
 
   /**
    * Instancia un objeto del tipo GCamNRE a partir de un DOMElement que representa el nodo XML del objeto GCamNRE.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GCamNRE
-   * 
+   *
    * @return self Objeto GCamNRE instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamNRE') != 0)
+    if (strcmp($node->nodeName, 'gCamNRE') != 0) {
       throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $valores = [];
-    foreach($node->childNodes as $hijo)
-    {
-      if($hijo instanceof DOMElement)
+    foreach ($node->childNodes as $hijo) {
+      if ($hijo instanceof DOMElement) {
         $valores[$hijo->localName] = $hijo->nodeValue;
+      }
     }
     return self::desdeValores($valores);
   }
@@ -253,11 +258,13 @@ class GCamNRE extends BaseSifenField
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gCamNRE') != 0)
+    if (strcmp($node->getName(), 'gCamNRE') != 0) {
       throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->getName());
+    }
     $valores = [];
-    foreach($node->children() as $hijo)
+    foreach ($node->children() as $hijo) {
       $valores[$hijo->getName()] = (string) $hijo;
+    }
     return self::desdeValores($valores);
   }
 
@@ -272,10 +279,10 @@ class GCamNRE extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $valores = [];
-    foreach(get_object_vars($object) as $campo => $valor)
-    {
-      if(is_scalar($valor))
+    foreach (get_object_vars($object) as $campo => $valor) {
+      if (is_scalar($valor)) {
         $valores[$campo] = (string) $valor;
+      }
     }
     return self::desdeValores($valores);
   }
@@ -288,10 +295,10 @@ class GCamNRE extends BaseSifenField
    */
   private static function desdeValores(array $v): self
   {
-    foreach(['iMotEmiNR', 'dDesMotEmiNR', 'iRespEmiNR', 'dDesRespEmiNR', 'dKmR'] as $campo)
-    {
-      if(!isset($v[$campo]))
+    foreach (['iMotEmiNR', 'dDesMotEmiNR', 'iRespEmiNR', 'dDesRespEmiNR', 'dKmR'] as $campo) {
+      if (!isset($v[$campo])) {
         throw new ValidacionException("[GCamNRE] Elemento requerido $campo no encontrado.");
+      }
     }
     $res = new GCamNRE();
     $res->setIMotEmiNR(intval($v['iMotEmiNR']));
@@ -299,12 +306,12 @@ class GCamNRE extends BaseSifenField
     $res->setIRespEmiNR(intval($v['iRespEmiNR']));
     $res->setDDesRespEmiNR($v['dDesRespEmiNR']);
     $res->setDKmR(intval($v['dKmR']));
-    if(isset($v['dFecEm']))
-    {
+    if (isset($v['dFecEm'])) {
       // tFecAAAAMMDDguion; '!' deja la hora en cero (antes quedaba la hora actual).
       $fecha = DateTime::createFromFormat('!Y-m-d', trim($v['dFecEm']));
-      if($fecha === false)
+      if ($fecha === false) {
         throw new ValidacionException("[GCamNRE] dFecEm debe tener el formato AAAA-MM-DD: '{$v['dFecEm']}'");
+      }
       $res->setDFecEm($fecha);
     }
     return $res;

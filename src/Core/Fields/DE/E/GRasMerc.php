@@ -12,22 +12,22 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     E750    
- * Nombre:      gRasMerc    
- * Descripción: Grupo de rastreo de la mercadería     
+ * Nodo Id:     E750
+ * Nombre:      gRasMerc
+ * Descripción: Grupo de rastreo de la mercadería
  * Nodo Padre:  E700 - gCamItem - Campos que describen los ítems de la operación
  */
 class GRasMerc extends BaseSifenField
 {
-  public string   $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote (texto; hasta v0.1.5 era int y rechazaba lotes alfanuméricos)
+  public string $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote (texto; hasta v0.1.5 era int y rechazaba lotes alfanuméricos)
   public DateTime $dVencMerc;     // E752 - 10    - 0-1 - Fecha de vencimiento  de la mercadería
-  public string   $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
-  public string   $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
-  public string   $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
-  public string   $dNumReg;       // E759 - 1-20  - 0-1 - Número de registro del  producto otorgado por  el SENAVE
-  public string   $dNumRegEntCom; // E760 - 1-20  - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
-  public string   $dNomPro;       // E761 - 1-30  - 0-1 - Nombre del Producto
-  
+  public string $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
+  public string $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
+  public string $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
+  public string $dNumReg;       // E759 - 1-20  - 0-1 - Número de registro del  producto otorgado por  el SENAVE
+  public string $dNumRegEntCom; // E760 - 1-20  - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
+  public string $dNomPro;       // E761 - 1-30  - 0-1 - Nombre del Producto
+
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -254,7 +254,7 @@ class GRasMerc extends BaseSifenField
 
   /**
    * Convierte este GRasMerc en un DOMElement que puede ser insertado en el DOMDocument especificado.
-   * 
+   *
    * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
    * @return DOMElement El DOMElement creado.
@@ -263,22 +263,30 @@ class GRasMerc extends BaseSifenField
   {
     $res = $doc->createElement('gRasMerc');
     // Todos los campos de tgRasMerc son opcionales (DE_v150.xsd:430-495); hasta v0.1.5 se emitían sin guardas (PK-08).
-    if (isset($this->dNumLote))
+    if (isset($this->dNumLote)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumLote', $this->dNumLote));
-    if (isset($this->dVencMerc))
+    }
+    if (isset($this->dVencMerc)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dVencMerc', $this->dVencMerc->format('Y-m-d')));
-    if (isset($this->dNSerie))
+    }
+    if (isset($this->dNSerie)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNSerie', $this->dNSerie));
-    if (isset($this->dNumPedi))
+    }
+    if (isset($this->dNumPedi)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumPedi', $this->dNumPedi));
-    if (isset($this->dNumSegui))
+    }
+    if (isset($this->dNumSegui)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumSegui', $this->dNumSegui));
-    if (isset($this->dNumReg))
+    }
+    if (isset($this->dNumReg)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumReg', $this->dNumReg));
-    if (isset($this->dNumRegEntCom))
+    }
+    if (isset($this->dNumRegEntCom)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumRegEntCom', $this->dNumRegEntCom));
-    if (isset($this->dNomPro))
+    }
+    if (isset($this->dNomPro)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNomPro', $this->dNomPro));
+    }
     return $res;
   }
 
@@ -293,29 +301,37 @@ class GRasMerc extends BaseSifenField
   public static function FromSifenResponseObject(stdClass $object): self
   {
     $res = new self();
-    if (isset($object->dNumLote))
+    if (isset($object->dNumLote)) {
       $res->setDNumLote((string) $object->dNumLote);
+    }
     if (isset($object->dVencMerc)) {
       $fecha = DateTime::createFromFormat('!Y-m-d', trim((string) $object->dVencMerc));
-      if ($fecha === false)
+      if ($fecha === false) {
         throw new ValidacionException("[GRasMerc] dVencMerc debe tener el formato AAAA-MM-DD: '{$object->dVencMerc}'");
+      }
       $res->setDVencMerc($fecha);
     }
-    if (isset($object->dNSerie))
+    if (isset($object->dNSerie)) {
       $res->setDNSerie((string) $object->dNSerie);
-    if (isset($object->dNumPedi))
+    }
+    if (isset($object->dNumPedi)) {
       $res->setDNumPedi((string) $object->dNumPedi);
-    if (isset($object->dNumSegui))
+    }
+    if (isset($object->dNumSegui)) {
       $res->setDNumSegui((string) $object->dNumSegui);
-    if (isset($object->dNumReg))
+    }
+    if (isset($object->dNumReg)) {
       $res->setDNumReg((string) $object->dNumReg);
-    if (isset($object->dNumRegEntCom))
+    }
+    if (isset($object->dNumRegEntCom)) {
       $res->setDNumRegEntCom((string) $object->dNumRegEntCom);
-    if (isset($object->dNomPro))
+    }
+    if (isset($object->dNomPro)) {
       $res->setDNomPro((string) $object->dNomPro);
+    }
     return $res;
   }
-  
+
   /**
    * FromSimpleXMLElement
    *
@@ -325,40 +341,33 @@ class GRasMerc extends BaseSifenField
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
 
-    if(strcmp($node->getName(), 'gRasMerc') != 0)
+    if (strcmp($node->getName(), 'gRasMerc') != 0) {
       throw new ValidacionException("Invalid gRasMerc XML Node Name: " . $node->getName());
+    }
 
     $res = new GRasMerc();
-    if(isset($node->dNumLote))
-    {
+    if (isset($node->dNumLote)) {
       $res->setDNumLote($node->dNumLote);
     }
-    if(isset($node->dVencMerc))
-    {
+    if (isset($node->dVencMerc)) {
       $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', $node->dVencMerc));
     }
-    if(isset($node->dNSerie))
-    {
+    if (isset($node->dNSerie)) {
       $res->setDNSerie($node->dNSerie);
     }
-    if(isset($node->dNumPedi))
-    {
+    if (isset($node->dNumPedi)) {
       $res->setDNumPedi($node->dNumPedi);
     }
-    if(isset($node->dNumSegui))
-    {
+    if (isset($node->dNumSegui)) {
       $res->setDNumSegui($node->dNumSegui);
     }
-    if(isset($node->dNumReg))
-    {
+    if (isset($node->dNumReg)) {
       $res->setDNumReg($node->dNumReg);
     }
-    if(isset($node->dNumRegEntCom))
-    {
+    if (isset($node->dNumRegEntCom)) {
       $res->setDNumRegEntCom($node->dNumRegEntCom);
     }
-    if(isset($node->dNomPro))
-    {
+    if (isset($node->dNomPro)) {
       $res->setDNomPro($node->dNomPro);
     }
     return $res;
@@ -366,32 +375,41 @@ class GRasMerc extends BaseSifenField
 
   /**
    * Instancia un objeto GRasMerc a partir de un DOMElement que lo representa.
-   * 
+   *
    * @param DOMElement $node
-   * 
+   *
    * @return self
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gRasMerc') != 0)
+    if (strcmp($node->nodeName, 'gRasMerc') != 0) {
         throw new ValidacionException('[GRasMerc] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new self();
-    if($node->getElementsByTagName('dNumLote')->length > 0)
-      $res->setDNumLote(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue)); // texto 1-80 (DE_v150.xsd:437); hasta 0.2.0 intval() lo volvía 0 (PK-25)
-    if($node->getElementsByTagName('dVencMerc')->length > 0)
+    if ($node->getElementsByTagName('dNumLote')->length > 0) {
+      $res->setDNumLote(trim($node->getElementsByTagName('dNumLote')->item(0)->nodeValue));
+    } // texto 1-80 (DE_v150.xsd:437); hasta 0.2.0 intval() lo volvía 0 (PK-25)
+    if ($node->getElementsByTagName('dVencMerc')->length > 0) {
       $res->setDVencMerc(DateTime::createFromFormat('Y-m-d', trim($node->getElementsByTagName('dVencMerc')->item(0)->nodeValue)));
-    if($node->getElementsByTagName('dNSerie')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNSerie')->length > 0) {
       $res->setDNSerie(trim($node->getElementsByTagName('dNSerie')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumPedi')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumPedi')->length > 0) {
       $res->setDNumPedi(trim($node->getElementsByTagName('dNumPedi')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumSegui')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumSegui')->length > 0) {
       $res->setDNumSegui(trim($node->getElementsByTagName('dNumSegui')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumReg')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumReg')->length > 0) {
       $res->setDNumReg(trim($node->getElementsByTagName('dNumReg')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNumRegEntCom')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNumRegEntCom')->length > 0) {
       $res->setDNumRegEntCom(trim($node->getElementsByTagName('dNumRegEntCom')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dNomPro')->length > 0)
+    }
+    if ($node->getElementsByTagName('dNomPro')->length > 0) {
       $res->setDNomPro(trim($node->getElementsByTagName('dNomPro')->item(0)->nodeValue));
+    }
     return $res;
   }
 }

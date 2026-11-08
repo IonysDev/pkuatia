@@ -6,8 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de pago al contado / entrega inicial: campos iTiPago (E606) y dDesTiPag (E607)
  * del grupo gPaConEIni (E605), según Manual Técnico SIFEN v150.
  */
-enum PaConEIniTiPago: int {
-
+enum PaConEIniTiPago: int
+{
     case Efectivo = 1;
     case Cheque = 2;
     case TarjetaCredito = 3;
@@ -33,7 +33,7 @@ enum PaConEIniTiPago: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Efectivo => 'Efectivo',
             self::Cheque => 'Cheque',
             self::TarjetaCredito => 'Tarjeta de crédito',
@@ -92,5 +92,3 @@ enum PaConEIniTiPago: int {
         return self::getDescriptionFromValue($value);
     }
 }
-
-?>

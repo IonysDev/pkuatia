@@ -131,21 +131,25 @@ final class ReglasDeDescripciones extends ConjuntoDeReglas
    */
   private static function par(ResultadoValidacion $r, ?object $g, string $codigoProp, string $descProp, callable $resolver, string $codigo, string $ruta, array $libres = []): void
   {
-    if ($g === null)
+    if ($g === null) {
       return;
+    }
     $c = self::v($g, $codigoProp);
     $d = self::texto($g, $descProp);
-    if ($c === null || $c === '' || $d === null)
+    if ($c === null || $c === '' || $d === null) {
       return;
-    if (in_array(is_numeric($c) ? (int) $c : $c, $libres, true))
+    }
+    if (in_array(is_numeric($c) ? (int) $c : $c, $libres, true)) {
       return;
+    }
     try {
       $esperada = $resolver($c);
     } catch (\Throwable) {
       $esperada = null;
     }
-    if ($esperada === null || trim((string) $esperada) === '')
+    if ($esperada === null || trim((string) $esperada) === '') {
       return;
+    }
     $esperada = trim((string) $esperada);
     self::regla($r, $esperada !== $d, $codigo, $descProp, $ruta, $d, "Para el código $c la descripción es '$esperada'.");
   }
@@ -159,11 +163,13 @@ final class ReglasDeDescripciones extends ConjuntoDeReglas
   {
     self::par($r, $g, $codigoProp, $descProp, [MonedaMapping::class, 'GetDescription'], $codigo, $ruta);
     $c = self::texto($g, $codigoProp);
-    if ($c === null)
+    if ($c === null) {
       return;
+    }
     $nombre = MonedaMapping::GetCodeName($c);
-    if ($nombre === null || mb_strlen($nombre) <= MonedaMapping::MAX_LONGITUD_DESCRIPCION)
+    if ($nombre === null || mb_strlen($nombre) <= MonedaMapping::MAX_LONGITUD_DESCRIPCION) {
       return;
+    }
     $info = CatalogoValidaciones::describir($codigo);
     $r->agregar(new ErrorValidacion(OrigenError::Regla,
       ($info?->mensaje ?? "Validación $codigo") . " (D-A3): el nombre de la moneda $c en Monedas_v150.xsd ('$nombre') supera los 20 caracteres que admite el XSD; el SIFEN rechazó la descripción recortada y no hay una descripción conocida que acepte.",

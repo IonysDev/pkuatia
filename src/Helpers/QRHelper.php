@@ -15,11 +15,11 @@ class QRHelper
 
   /**
    * Genera el contenido del QR para la consulta de un documento electrónico.
-   * 
+   *
    * @param Config $config Configuración del entorno del Pkuatia
    * @param DE $de Documento electrónico
    * @param Signature $signature Firma del documento electrónico
-   * 
+   *
    * @return String
    */
   public static function GenerateQRContent(Config $config, DE $de, Signature $signature)
@@ -30,26 +30,30 @@ class QRHelper
 
     $dRucRec = null;
     $dNumIDRec = null;
-    if ($de->getGDatGralOpe()->getGDatRec()->getDRucRec() !== null)
+    if ($de->getGDatGralOpe()->getGDatRec()->getDRucRec() !== null) {
       $dRucRec = $de->getGDatGralOpe()->getGDatRec()->getDRucRec();
-    else if ($de->getGDatGralOpe()->getGDatRec()->getDNumIDRec() !== null)
+    } elseif ($de->getGDatGralOpe()->getGDatRec()->getDNumIDRec() !== null) {
       $dNumIDRec = $de->getGDatGralOpe()->getGDatRec()->getDNumIDRec();
+    }
 
     $dTotGralOpe = '0';
-    if ($de->getGTotSub() != null)
+    if ($de->getGTotSub() != null) {
       $dTotGralOpe = $de->getGTotSub()->getDTotGralOpe();
+    }
 
     // NT-010: dTotIVA debe informarse como 0 cuando el DE no tiene IVA (p. ej. Autofactura); hasta v0.1.5 iba vacío (PK-10)
     $dTotIVA = '0';
     if ($de->getGTotSub() != null) {
       $iva = $de->getGTotSub()->getDTotIVA();
-      if ($iva !== null && $iva !== '')
+      if ($iva !== null && $iva !== '') {
         $dTotIVA = $iva;
+      }
     }
 
     $cItems = '0';
-    if ($de->getGDtipDe() != null)
+    if ($de->getGDtipDe() != null) {
       $cItems = $de->getGDtipDe()->getGCamItem() != null ? count($de->getGDtipDe()->getGCamItem()) : 0;
+    }
 
     $DigestValue = bin2hex($signature->getSignedInfo()->getReference()->getDigestValue());
 
@@ -66,13 +70,14 @@ class QRHelper
     $hash = hash('sha256', $step2);
 
     $qrUrl = null;
-    if (strcmp(strtolower($config->getEnv()), 'prod') == 0)
+    if (strcmp(strtolower($config->getEnv()), 'prod') == 0) {
       $qrUrl = Constants::SIFEN_URL_CONSULTA_QR_PROD;
-    else
-      $qrUrl = Constants::SIFEN_URL_CONSULTA_QR_DEV;
+    } else {
+    $qrUrl = Constants::SIFEN_URL_CONSULTA_QR_DEV;
+    }
 
     $qrUrl .= $step1 . '&cHashQR=' . $hash;
-    
+
     return $qrUrl;
   }
 

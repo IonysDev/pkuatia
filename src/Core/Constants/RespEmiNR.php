@@ -2,7 +2,8 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-enum RespEmiNR: int {
+enum RespEmiNR: int
+{
     case EmisorFactura = 1;
     case PoseedorFacturaYBienes = 2;
     case EmpresaTransportista = 3;
@@ -11,7 +12,7 @@ enum RespEmiNR: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::EmisorFactura => 'Emisor de la factura',
             self::PoseedorFacturaYBienes => 'Poseedor de la factura y bienes',
             self::EmpresaTransportista => 'Empresa transportista',

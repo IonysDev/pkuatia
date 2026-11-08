@@ -6,8 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de transacción de la operación comercial: campos iTipTra (D011) y dDesTipTra (D012)
  * del grupo gOpeCom (D010), según Manual Técnico SIFEN v150.
  */
-enum OpeComTipTrans: int {
-
+enum OpeComTipTrans: int
+{
     case VentaMercaderia = 1;
     case PrestacionServicios = 2;
     case MixtoMercaderiaServicios = 3;
@@ -24,7 +24,7 @@ enum OpeComTipTrans: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::VentaMercaderia => 'Venta de mercadería',
             self::PrestacionServicios => 'Prestación de servicios',
             self::MixtoMercaderiaServicios => 'Mixto (Venta de mercadería y servicios)',
@@ -74,5 +74,3 @@ enum OpeComTipTrans: int {
         return self::getDescriptionFromValue($tipTrans);
     }
 }
-
-?>

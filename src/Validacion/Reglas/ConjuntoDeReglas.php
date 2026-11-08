@@ -26,8 +26,9 @@ abstract class ConjuntoDeReglas
    */
   protected static function regla(ResultadoValidacion $r, bool $condicion, string $codigo, string $elemento, string $ruta, mixed $valor = null, ?string $detalle = null, bool $soloAdvertencia = false): void
   {
-    if (!$condicion)
+    if (!$condicion) {
       return;
+    }
     $info = CatalogoValidaciones::describir($codigo);
     $campo = $info?->id !== null ? preg_replace('/[a-z]$/', '', $info->id) : null;
     $metodo = $campo !== null ? CatalogoValidaciones::metodoPkuatia($campo) : null;
@@ -42,8 +43,9 @@ abstract class ConjuntoDeReglas
    */
   protected static function reglaConMensaje(ResultadoValidacion $r, bool $condicion, string $codigo, string $campo, string $mensaje, string $elemento, string $ruta, mixed $valor = null, ?string $detalle = null): void
   {
-    if (!$condicion)
+    if (!$condicion) {
       return;
+    }
     if (CatalogoValidaciones::describir($codigo) !== null) {
       self::regla($r, true, $codigo, $elemento, $ruta, $valor, $detalle);
       return;
@@ -56,8 +58,9 @@ abstract class ConjuntoDeReglas
   /** Propiedad pública inicializada y no nula, o null (sin getters ni Error). */
   protected static function v(?object $objeto, string $propiedad): mixed
   {
-    if ($objeto === null || !property_exists($objeto, $propiedad))
+    if ($objeto === null || !property_exists($objeto, $propiedad)) {
       return null;
+    }
     return isset($objeto->{$propiedad}) ? $objeto->{$propiedad} : null;
   }
 
@@ -70,8 +73,9 @@ abstract class ConjuntoDeReglas
   protected static function texto(?object $objeto, string $propiedad): ?string
   {
     $x = self::v($objeto, $propiedad);
-    if ($x === null || is_object($x) || is_array($x))
+    if ($x === null || is_object($x) || is_array($x)) {
       return null;
+    }
     $t = trim((string) $x);
     return $t === '' ? null : $t;
   }
@@ -87,8 +91,9 @@ abstract class ConjuntoDeReglas
   protected static function lista(?object $objeto, string $propiedad): array
   {
     $x = self::v($objeto, $propiedad);
-    if ($x === null)
+    if ($x === null) {
       return [];
+    }
     return is_array($x) ? array_values(array_filter($x, 'is_object')) : (is_object($x) ? [$x] : []);
   }
 
@@ -108,10 +113,12 @@ abstract class ConjuntoDeReglas
   protected static function difiere(string $informado, string $esperado, ?string $tolerancia = null): bool
   {
     $diferencia = bcsub($informado, $esperado, 10);
-    if (bccomp($diferencia, '0', 10) < 0)
+    if (bccomp($diferencia, '0', 10) < 0) {
       $diferencia = bcmul($diferencia, '-1', 10);
-    if ($tolerancia !== null)
-      return bccomp($diferencia, $tolerancia, 8) > 0; // a 8 decimales, los que admite el XSD: 0,0100000009 no supera 0,01
+    }
+    if ($tolerancia !== null) {
+      return bccomp($diferencia, $tolerancia, 8) > 0;
+    } // a 8 decimales, los que admite el XSD: 0,0100000009 no supera 0,01
     $punto = strpos($informado, '.');
     $decimales = $punto === false ? 0 : strlen($informado) - $punto - 1;
     $unidad = $decimales === 0 ? '1' : '0.' . str_repeat('0', $decimales - 1) . '1';

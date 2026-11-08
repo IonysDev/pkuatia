@@ -162,11 +162,13 @@ enum CodigoResultadoWS: string
    */
   public static function fromAny(int|string|null $codigo): ?self
   {
-    if ($codigo === null)
+    if ($codigo === null) {
       return null;
+    }
     $texto = trim((string) $codigo);
-    if ($texto === '' || !ctype_digit($texto))
+    if ($texto === '' || !ctype_digit($texto)) {
       return null;
+    }
     return self::tryFrom(str_pad($texto, 4, '0', STR_PAD_LEFT));
   }
 

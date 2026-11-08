@@ -9,9 +9,8 @@ use SimpleXMLElement;
 /**
  * Clase que representa el campo Transform de la firma
  */
-class Transform 
+class Transform
 {
-
     public string $Algorithm;
 
     ///////////////////////////////////////////////////////////////////////
@@ -51,9 +50,9 @@ class Transform
 
     /**
      * Instancia un objeto Transform a partir de un SimpleXMLElement
-     * 
+     *
      * @param SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -65,9 +64,9 @@ class Transform
 
     /**
      * Instancia un objeto Transform a partir de un DOMElement
-     * 
-     * @param DOMElement $node 
-     * 
+     *
+     * @param DOMElement $node
+     *
      * @return self
      */
     public static function FromDOMElement(DOMElement $node): self
@@ -83,7 +82,7 @@ class Transform
 
     /**
      * Convierte el objeto a un DOMElement
-     * 
+     *
      * @return DOMElement
      */
     public function toDOMElement(DOMDocument $doc): DOMElement
@@ -92,7 +91,5 @@ class Transform
         $Transform->setAttribute('Algorithm', $this->getAlgorithm());
         return $Transform;
     }
-    
-}
 
-?>
+}

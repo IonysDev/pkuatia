@@ -12,22 +12,22 @@ use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     EA790   
- * Nombre:      gGrupPolSeg   
- * Descripción: Grupo de póliza de seguros  
- * Nodo Padre:  E800  
+ * Nodo Id:     EA790
+ * Nombre:      gGrupPolSeg
+ * Descripción: Grupo de póliza de seguros
+ * Nodo Padre:  E800
  */
 
 class GGrupPolSeg extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
-  public string   $dPoliza;    // EA791 - 1-20  - 1-1 - Código de la póliza
-  public string   $dUnidVig;   // EA792 - 3-15  - 1-1 - Descripción de la unidad de tiempo de vigencia
-  public string   $dVigencia;  // EA793 - 1-5p1 - 1-1 - Vigencia de la póliza (decimal BCMath)
-  public string   $dNumPoliza; // EA794 - 1-25  - 1-1 - Número de la póliza
+  public string $dPoliza;    // EA791 - 1-20  - 1-1 - Código de la póliza
+  public string $dUnidVig;   // EA792 - 3-15  - 1-1 - Descripción de la unidad de tiempo de vigencia
+  public string $dVigencia;  // EA793 - 1-5p1 - 1-1 - Vigencia de la póliza (decimal BCMath)
+  public string $dNumPoliza; // EA794 - 1-25  - 1-1 - Número de la póliza
   public DateTime $dFecIniVig; // EA795 - 19    - 0-1 - Fecha de inicio de vigencia en formato AAAA-MM-DDThh:mm:ss
   public DateTime $dFecFinVig; // EA796 - 19    - 0-1 - Fecha de fin de vigencia en formato AAAA-MM-DDThh:mm:ss
-  public string   $dCodInt;    // EA797 - 1-50  - 0-1 - Código interno de referencia a un ítem
+  public string $dCodInt;    // EA797 - 1-50  - 0-1 - Código interno de referencia a un ítem
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -94,7 +94,7 @@ class GGrupPolSeg extends BaseSifenField
 
 
   /**
-   * Establece el valor de dFecIniVig (Fecha/hora de inicio de vigencia)  
+   * Establece el valor de dFecIniVig (Fecha/hora de inicio de vigencia)
    *
    * @param DateTime $dFecIniVig
    *
@@ -218,26 +218,30 @@ class GGrupPolSeg extends BaseSifenField
 
   /**
    * Instancia un GGrupPolSeg a partir de un objeto SimpleXMLElement
-   * 
+   *
    * @param  SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gGrupPolSeg') != 0)
+    if (strcmp($node->getName(), 'gGrupPolSeg') != 0) {
       throw new ValidacionException('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->getName(), 1);
+    }
     $res = new GGrupPolSeg();
     $res->setDPoliza($node->dPoliza)
         ->setDUnidVig($node->dUnidVig)
         ->setDVigencia($node->dVigencia)
         ->setDNumPoliza($node->dNumPoliza);
-    if(isset($node->dFecIniVig))
+    if (isset($node->dFecIniVig)) {
       $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecIniVig));
-    if(isset($node->dFecFinVig))
+    }
+    if (isset($node->dFecFinVig)) {
       $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecFinVig));
-    if(isset($node->dCodInt))
+    }
+    if (isset($node->dCodInt)) {
       $res->setDCodInt($node->dCodInt);
+    }
     return $res;
   }
 
@@ -245,7 +249,7 @@ class GGrupPolSeg extends BaseSifenField
    * Instancia un GGrupPolSeg a partir de un objeto stdClass correspondiente a la respuesta del SIFEN a una consulta SOAP.
    *
    * @param  mixed $object
-   * 
+   *
    * @return self
    */
   public static function FromSifenResponseObject($object): self
@@ -255,30 +259,37 @@ class GGrupPolSeg extends BaseSifenField
     $res->setDUnidVig($object->dUnidVig);
     $res->setDVigencia($object->dVigencia);
     $res->setDNumPoliza($object->dNumPoliza);
-    if(isset($object->dFecIniVig))
+    if (isset($object->dFecIniVig)) {
       $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecIniVig));
-    if(isset($object->dFecFinVig))
+    }
+    if (isset($object->dFecFinVig)) {
       $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecFinVig));
-    if(isset($object->dCodInt))
+    }
+    if (isset($object->dCodInt)) {
       $res->setDCodInt($object->dCodInt);
+    }
     return $res;
   }
 
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gGrupPolSeg') != 0)
+    if (strcmp($node->nodeName, 'gGrupPolSeg') != 0) {
       throw new ValidacionException('[GGrupPolSeg] El nombre del nodo no corresponde a gGrupPolSeg: ' . $node->nodeName, 1);
+    }
     $res = new GGrupPolSeg();
     $res->setDPoliza($node->getElementsByTagName('dPoliza')->item(0)->nodeValue)
         ->setDUnidVig($node->getElementsByTagName('dUnidVig')->item(0)->nodeValue)
         ->setDVigencia($node->getElementsByTagName('dVigencia')->item(0)->nodeValue)
         ->setDNumPoliza($node->getElementsByTagName('dNumPoliza')->item(0)->nodeValue);
-    if($node->getElementsByTagName('dFecIniVig')->length > 0)
+    if ($node->getElementsByTagName('dFecIniVig')->length > 0) {
       $res->setDFecIniVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->getElementsByTagName('dFecIniVig')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dFecFinVig')->length > 0)
+    }
+    if ($node->getElementsByTagName('dFecFinVig')->length > 0) {
       $res->setDFecFinVig(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->getElementsByTagName('dFecFinVig')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dCodInt')->length > 0)
+    }
+    if ($node->getElementsByTagName('dCodInt')->length > 0) {
       $res->setDCodInt($node->getElementsByTagName('dCodInt')->item(0)->nodeValue);
+    }
     return $res;
   }
 
@@ -298,12 +309,15 @@ class GGrupPolSeg extends BaseSifenField
     $res->appendChild(XmlHelper::elemento($doc, 'dUnidVig', $this->getDUnidVig()));
     $res->appendChild(XmlHelper::elemento($doc, 'dVigencia', $this->getDVigencia()));
     $res->appendChild(XmlHelper::elemento($doc, 'dNumPoliza', $this->getDNumPoliza()));
-    if($this->getDFecIniVig() != null)
+    if ($this->getDFecIniVig() != null) {
       $res->appendChild(XmlHelper::elemento($doc, 'dFecIniVig', $this->getDFecIniVig()->format('Y-m-d\TH:i:s')));
-    if($this->getDFecFinVig() != null)
+    }
+    if ($this->getDFecFinVig() != null) {
       $res->appendChild(XmlHelper::elemento($doc, 'dFecFinVig', $this->getDFecFinVig()->format('Y-m-d\TH:i:s')));
-    if($this->getDCodInt() != null)
+    }
+    if ($this->getDCodInt() != null) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCodInt', $this->getDCodInt()));
+    }
     return $res;
   }
 }

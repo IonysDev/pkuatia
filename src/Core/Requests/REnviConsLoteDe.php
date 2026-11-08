@@ -6,7 +6,7 @@ namespace IonysDev\Pkuatia\Core\Requests;
 
 class REnviConsLoteDe
 {                               // ID - DESC - LONG - OCURRENCIA
-  public int    $dId;           // CSch02 - Identificador de control de envío - 1-15 - 1-1
+  public int $dId;           // CSch02 - Identificador de control de envío - 1-15 - 1-1
   public string $dProtConsLote; // CSch03 - Número de lote - 1-20 - 1-1
 
 
@@ -15,7 +15,7 @@ class REnviConsLoteDe
     $this->dId = $dId;
     $this->dProtConsLote = $dProtConsLote;
   }
-  
+
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ class REnviConsLoteDe
   ///////////////////////////////////////////////////////////////////////
   // Getters
   ///////////////////////////////////////////////////////////////////////
-  
+
 
   /**
    * Obtiene el valor de dId

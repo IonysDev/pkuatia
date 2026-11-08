@@ -11,7 +11,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E980 gCamTrans  PADRE:E900
- * 
+ *
  */
 /**
  * Nodo Id:     E980
@@ -22,18 +22,18 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GCamTrans extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
-   public int    $iNatTrans;   // E981 - 1     - 1-1 - Naturaleza del transportista
-   public string $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista 
-   public string $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista 
-   public int    $dDVTrans;    // E984 - 1     - 0-1 - Dígito verificador del RUC del transportista (obligatorio si E981 = 1)
-   public int    $iTipIDTrans; // E985 - 1     - 0-1 - Tipo de documento de identidad del transportista
+   public int $iNatTrans;   // E981 - 1     - 1-1 - Naturaleza del transportista
+   public string $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista
+   public string $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista
+   public int $dDVTrans;    // E984 - 1     - 0-1 - Dígito verificador del RUC del transportista (obligatorio si E981 = 1)
+   public int $iTipIDTrans; // E985 - 1     - 0-1 - Tipo de documento de identidad del transportista
    public string $dNumIDTrans; // E987 - 1-20  - 0-1 - Número de documento de identidad del transportista
-   public string $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista 
+   public string $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista
    public string $dNumIDChof;  // E990 - 1-20  - 1-1 - Número de documento de identidad del chofer (DE_v150.xsd:971)
    public string $dNomChof;    // E991 - 4-60  - 1-1 - Nombre y apellido del chofer
    public string $dDomFisc;    // E992 - 1-150 - 1-1 - Domicilio fiscal del transportista (DE_v150.xsd:973; el MT v150 lo listaba como opcional)
    public string $dDirChof;    // E993 - 1-255 - 1-1 - Dirección del chofer (DE_v150.xsd:986; el MT v150 lo listaba como opcional)
-   public string $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente 
+   public string $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente
    public string $dRucAg;      // E995 - 3-8   - 0-1 - RUC del agente
    public string $dDVAg;       // E996 - 1     - 0-1 - Dígito verificador del  RUC del agente
    public string $dDirAge;     // E997 - 1-255 - 0-1 - Dirección del agente
@@ -458,7 +458,7 @@ class GCamTrans extends BaseSifenField
    }
 
    ///////////////////////////////////////////////////////////////////////
-   //XML Element  
+   //XML Element
    ///////////////////////////////////////////////////////////////////////
 
    /**
@@ -473,24 +473,33 @@ class GCamTrans extends BaseSifenField
       // Obligatorios en tgCamTrans (DE_v150.xsd:958-959, :971-973, :986). El MT v150 listaba E990, E992 y E993 como
       // opcionales, pero el XSD de producción los exige (minOccurs="1") y el SIFEN rechaza el DE por esquema si faltan.
       $faltantes = [];
-      if (!isset($this->iNatTrans))
+      if (!isset($this->iNatTrans)) {
          $faltantes[] = 'iNatTrans (E981, naturaleza del transportista)';
-      if (!isset($this->dNomTrans))
+      }
+      if (!isset($this->dNomTrans)) {
          $faltantes[] = 'dNomTrans (E982, nombre o razón social del transportista)';
-      if (isset($this->iNatTrans) && $this->iNatTrans == 1 && (!isset($this->dRucTrans) || !isset($this->dDVTrans)))
+      }
+      if (isset($this->iNatTrans) && $this->iNatTrans == 1 && (!isset($this->dRucTrans) || !isset($this->dDVTrans))) {
          $faltantes[] = 'dRucTrans y dDVTrans (E983-E984, obligatorios cuando E981 = 1 contribuyente)';
-      if (isset($this->iNatTrans) && $this->iNatTrans == 2 && (!isset($this->iTipIDTrans) || !isset($this->dNumIDTrans)))
+      }
+      if (isset($this->iNatTrans) && $this->iNatTrans == 2 && (!isset($this->iTipIDTrans) || !isset($this->dNumIDTrans))) {
          $faltantes[] = 'iTipIDTrans y dNumIDTrans (E985 y E987, obligatorios cuando E981 = 2 no contribuyente)';
-      if (!isset($this->dNumIDChof))
+      }
+      if (!isset($this->dNumIDChof)) {
          $faltantes[] = 'dNumIDChof (E990, documento de identidad del chofer)';
-      if (!isset($this->dNomChof))
+      }
+      if (!isset($this->dNomChof)) {
          $faltantes[] = 'dNomChof (E991, nombre y apellido del chofer)';
-      if (!isset($this->dDomFisc))
+      }
+      if (!isset($this->dDomFisc)) {
          $faltantes[] = 'dDomFisc (E992, domicilio fiscal del transportista; DE_v150.xsd:973)';
-      if (!isset($this->dDirChof))
+      }
+      if (!isset($this->dDirChof)) {
          $faltantes[] = 'dDirChof (E993, dirección del chofer; DE_v150.xsd:986)';
-      if (count($faltantes) > 0)
+      }
+      if (count($faltantes) > 0) {
          throw new ValidacionException('[GCamTrans] Faltan campos obligatorios del transportista (E980): ' . implode('; ', $faltantes) . '. Con los builders se informan en setTransporteTransportista().');
+      }
 
       $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
@@ -523,138 +532,158 @@ class GCamTrans extends BaseSifenField
       // E992 y E993: obligatorios en el XSD (ya verificados arriba)
       $res->appendChild(XmlHelper::elemento($doc, 'dDomFisc', $this->getDDomFisc()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDirChof', $this->getDDirChof()));
-      
-      if (isset($this->dNombAg))
+
+      if (isset($this->dNombAg)) {
          $res->appendChild(XmlHelper::elemento($doc, 'dNombAg', $this->getDNombAg()));
+      }
 
-      if (isset($this->dRucAg))
+      if (isset($this->dRucAg)) {
          $res->appendChild(XmlHelper::elemento($doc, 'dRucAg', $this->getDRucAg()));
+      }
 
-      if (isset($this->dDVAg))
+      if (isset($this->dDVAg)) {
          $res->appendChild(XmlHelper::elemento($doc, 'dDVAg', $this->getDDVAg()));
+      }
 
-      if (isset($this->dDirAge))
+      if (isset($this->dDirAge)) {
          $res->appendChild(XmlHelper::elemento($doc, 'dDirAge', $this->getDDirAge()));
+      }
 
       return $res;
    }
 
   /**
    * Instancia un objeto GCamTrans a partir de un DOMElement que representa el nodo XML del objeto.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto.
-   * 
+   *
    * @return self Objeto instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamTrans') != 0)
+    if (strcmp($node->nodeName, 'gCamTrans') != 0) {
       throw new ValidacionException('[GCamTrans] El nombre del nodo no corresponde a gCamTrans: ' . $node->nodeName);
+    }
     $res = new GCamTrans();
-    
-    if($node->getElementsByTagName('iNatTrans')->length > 0)
+
+    if ($node->getElementsByTagName('iNatTrans')->length > 0) {
       $res->setINatTrans(intval($node->getElementsByTagName('iNatTrans')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dNomTrans')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNomTrans')->length > 0) {
       $res->setDNomTrans($node->getElementsByTagName('dNomTrans')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dRucTrans')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dRucTrans')->length > 0) {
       $res->setDRucTrans($node->getElementsByTagName('dRucTrans')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dDVTrans')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dDVTrans')->length > 0) {
       $res->setDDVTrans(intval($node->getElementsByTagName('dDVTrans')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('iTipIDTrans')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('iTipIDTrans')->length > 0) {
       $res->setITipIDTrans(intval($node->getElementsByTagName('iTipIDTrans')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dNumIDTrans')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNumIDTrans')->length > 0) {
       $res->setDNumIDTrans($node->getElementsByTagName('dNumIDTrans')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('cNacTrans')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cNacTrans')->length > 0) {
       $res->setCNacTrans($node->getElementsByTagName('cNacTrans')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNumIDChof')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNumIDChof')->length > 0) {
       $res->setDNumIDChof($node->getElementsByTagName('dNumIDChof')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNomChof')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNomChof')->length > 0) {
       $res->setDNomChof($node->getElementsByTagName('dNomChof')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dDomFisc')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dDomFisc')->length > 0) {
       $res->setDDomFisc($node->getElementsByTagName('dDomFisc')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dDirChof')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dDirChof')->length > 0) {
       $res->setDDirChof($node->getElementsByTagName('dDirChof')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNombAg')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNombAg')->length > 0) {
       $res->setDNombAg($node->getElementsByTagName('dNombAg')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dRucAg')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dRucAg')->length > 0) {
       $res->setDRucAg($node->getElementsByTagName('dRucAg')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dDVAg')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dDVAg')->length > 0) {
       $res->setDDVAg(intval($node->getElementsByTagName('dDVAg')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dDirAge')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dDirAge')->length > 0) {
       $res->setDDirAge($node->getElementsByTagName('dDirAge')->item(0)->nodeValue);
-    
+    }
+
     return $res;
   }
-    
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
-   {
+  public static function FromSifenResponseObject($object): self
+  {
       $res = new GCamTrans();
-      if(isset($object->iNatTrans)){
+      if (isset($object->iNatTrans)) {
          $res->setINatTrans(intval($object->iNatTrans));
       }
-      if(isset($object->dNomTrans)){
+      if (isset($object->dNomTrans)) {
          $res->setDNomTrans($object->dNomTrans);
       }
-      if(isset($object->dRucTrans)){
+      if (isset($object->dRucTrans)) {
          $res->setDRucTrans($object->dRucTrans);
       }
-      if(isset($object->dDVTrans)){
+      if (isset($object->dDVTrans)) {
          $res->setDDVTrans(intval($object->dDVTrans));
       }
-      if(isset($object->iTipIDTrans)){
+      if (isset($object->iTipIDTrans)) {
          $res->setITipIDTrans(intval($object->iTipIDTrans));
       }
-      if(isset($object->dNumIDTrans)){
+      if (isset($object->dNumIDTrans)) {
          $res->setDNumIDTrans($object->dNumIDTrans);
       }
-      if(isset($object->cNacTrans)){
+      if (isset($object->cNacTrans)) {
          $res->setCNacTrans($object->cNacTrans);
       }
-      if(isset($object->dNumIDChof)){
+      if (isset($object->dNumIDChof)) {
          $res->setDNumIDChof($object->dNumIDChof);
       }
-      if(isset($object->dNomChof)){
+      if (isset($object->dNomChof)) {
          $res->setDNomChof($object->dNomChof);
       }
-      if(isset($object->dDomFisc)){
+      if (isset($object->dDomFisc)) {
          $res->setDDomFisc($object->dDomFisc);
       }
-      if(isset($object->dDirChof)){
+      if (isset($object->dDirChof)) {
          $res->setDDirChof($object->dDirChof);
       }
-      if(isset($object->dNombAg)){
+      if (isset($object->dNombAg)) {
          $res->setDNombAg($object->dNombAg);
       }
-      if(isset($object->dRucAg)){
+      if (isset($object->dRucAg)) {
          $res->setDRucAg($object->dRucAg);
       }
-      if(isset($object->dDVAg)){
+      if (isset($object->dDVAg)) {
          $res->setDDVAg(intval($object->dDVAg));
       }
-      if(isset($object->dDirAge)){
+      if (isset($object->dDirAge)) {
          $res->setDDirAge($object->dDirAge);
       }
-      
+
 
       return $res;
    }

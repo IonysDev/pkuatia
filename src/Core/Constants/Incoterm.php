@@ -6,7 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
 /**
  * Enumeración relacionada a la tabla 10 del MT (v150) que lista los INCOTERMS soportados por el Sifen.
  */
-enum Incoterm: string {
+enum Incoterm: string
+{
     /**
      * Costo y flete
      */
@@ -54,7 +55,7 @@ enum Incoterm: string {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CFR => 'CFR',
             self::CIF => 'CIF',
             self::CIP => 'CIP',
@@ -102,5 +103,3 @@ enum Incoterm: string {
         return self::getDescriptionFromValue($value);
     }
 }
-
-?>

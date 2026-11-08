@@ -2,7 +2,6 @@
 
 namespace IonysDev\Pkuatia\Tests\Unit\Fields;
 
-use DateTime;
 use DOMDocument;
 use IonysDev\Pkuatia\Core\Constants\PagCredCondCred;
 use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;

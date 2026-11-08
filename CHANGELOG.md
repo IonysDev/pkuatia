@@ -63,6 +63,12 @@ comportamiento para quien emite documentos.
   así que ninguna firma cambia), tres `: Self` pasan a `: self`, y los dos parámetros `String $tasaDeCambio = null`
   de `Factura` pasan a `?string $tasaDeCambio = null` (`nullable_type_declaration_for_default_null_value`; la forma
   implícita está deprecada en PHP 8.4 y el tipo ya era anulable). Los docblocks no cambian.
+- **Estilo PSR-12 sin indentación** (D3): un solo commit de php-cs-fixer con las reglas de `.php-cs-fixer.dist.php`
+  salvo las de indentación: sin `?>` de cierre (34 archivos), `elseif` en vez de `else if`, llaves en todas las
+  estructuras de control, `if (`/`foreach (` con espacio, `) : tipo` → `): tipo`, `array()` → `[]`, importaciones
+  sin uso eliminadas (18, ninguna referenciada), una línea en blanco tras `namespace`, sin espacios al final de línea
+  ni en líneas vacías, `public static` en ese orden. Sin cambio de comportamiento: la serialización de los
+  documentos de referencia y la API pública son idénticas; los docblocks y las cadenas no se tocan.
 
 ## [0.3.0] — 2026-10-15
 

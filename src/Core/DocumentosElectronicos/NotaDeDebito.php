@@ -19,19 +19,19 @@ class NotaDeDebito extends DocumentoElectronicoComercial
     //////////////////////////////////////////
     // Atributos
     //////////////////////////////////////////
-    
+
     public GCamNCDE $gCamNCDE; // E040 - Campos que componen la nota de débito electrónica
-    
+
     //////////////////////////////////////////
     // Constructor
     //////////////////////////////////////////
-    
+
     /**
      * Constructor de la clase. Establece el tipo de documento electrónico como Nota de Débito.
      * Adicionalmente inicializa el campo de impuesto afectado como IVA y la moneda como Guaraníes (PYG).
-     * 
+     *
      * @param int|MotEmi $motivoEmision Motivo de emisión de la nota de débito.
-     * 
+     *
      * @return void
      */
     public function __construct(int|MotEmi $motivoEmision)
@@ -50,12 +50,12 @@ class NotaDeDebito extends DocumentoElectronicoComercial
 
     /**
      * Establece el motivo de emisión de la nota de débito.
-     * 
+     *
      * @param int|MotEmi $motivoEmision Motivo de emisión de la nota de débito.
-     * 
+     *
      * @return self
      */
-    public function setMotivoEmision(int|MotEmi $motivoEmision) : self
+    public function setMotivoEmision(int|MotEmi $motivoEmision): self
     {
         $this->gCamNCDE->setIMotEmi($motivoEmision);
         return $this;

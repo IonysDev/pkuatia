@@ -29,13 +29,12 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class Factura extends DocumentoElectronicoComercial
 {
-  
   use ItemValorado;
 
   //////////////////////////////////////////
   // Atributos
   //////////////////////////////////////////
-  
+
   public GCamFE $gCamFE; // E010 - Campos que componen la factura electrónica (FE)
   public GCompPub $gCompPub; // E020 - Campos que describen las informaciones de compras públicas
   public GCamCond $gCamCond; // E600 - Campos que describen las condiciones de pago de la factura electrónica
@@ -43,13 +42,13 @@ class Factura extends DocumentoElectronicoComercial
   //////////////////////////////////////////
   // Constructor
   //////////////////////////////////////////
-  
+
   /**
    * Constructor de la clase. Establece el tipo de documento electrónico como Factura.
    * Adicionalmente inicializa el campo de impuesto afectado como IVA y la moneda como Guaraníes (PYG).
-   * 
+   *
    * @param int|CamCondOpe $condicion Condición de operación de la factura electrónica (Contado o Crédito).
-   * 
+   *
    * @return void
    */
   public function __construct(int | CamCondOpe $condicion)
@@ -61,7 +60,7 @@ class Factura extends DocumentoElectronicoComercial
     $this->gCamCond->setICondOpe($condicion);
     $this->setTipoDeImpuestoAfectado(OpeComTipImp::IVA);
     $this->setMoneda('PYG');
-  }  
+  }
 
   //////////////////////////////////////////
   // Setters
@@ -70,12 +69,12 @@ class Factura extends DocumentoElectronicoComercial
   /**
    * Establece el indicador de presencia para la emisión de la factura electrónica.
    * Valor OBLIGATORIO.
-   * 
+   *
    * @param CamFEIndPres $indPres Indicador de presencia.
-   * 
+   *
    * @return self
    */
-  public function setIndicadorPresencia(CamFEIndPres $indPres) : self
+  public function setIndicadorPresencia(CamFEIndPres $indPres): self
   {
     $this->gCamFE->setIIndPres($indPres);
     return $this;
@@ -83,12 +82,12 @@ class Factura extends DocumentoElectronicoComercial
 
   /**
    * Establece la fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda.
-   * 
+   *
    * @param DateTime $fecha Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda.
-   * 
+   *
    * @return self
    */
-  public function setFechaDeRemision(DateTime $fecha) : self
+  public function setFechaDeRemision(DateTime $fecha): self
   {
     $this->gCamFE->setDFecEmNR($fecha);
     return $this;
@@ -97,14 +96,14 @@ class Factura extends DocumentoElectronicoComercial
   /**
    * Establece los datos adicionales necesarios para facturas electrónicas emitidas a entidades públicas (B2G).
    * Estos valores son obligatorios solo en caso de que el receptor sea una entidad pública.
-   * 
+   *
    * @param String $codigoDNCPModalidad Código de modalidad emitido por la DNCP.
    * @param String $codigoDNCPEntidad Código de entidad pública emitido por la DNCP.
    * @param int $anho Año de contratación según registros de la DNCP, con dos dígitos (tdAnoCont: p. ej. 26 para 2026).
    * @param int $nroDNCPSecuencia Número de secuencia del registro de la DNCP.
    * @param DateTime $fechaEmisionCodigoContratacion Fecha de emisión del código de contratación por la DNCP.
    */
-  public function setDatosComprasPublicas(string $codigoDNCPModalidad, string $codigoDNCPEntidad, int $anho, int $nroDNCPSecuencia, DateTime $fechaEmisionCodigoContratacion) : self
+  public function setDatosComprasPublicas(string $codigoDNCPModalidad, string $codigoDNCPEntidad, int $anho, int $nroDNCPSecuencia, DateTime $fechaEmisionCodigoContratacion): self
   {
     $this->gCompPub = new GCompPub();
     $this->gCompPub->setDModCont($codigoDNCPModalidad);
@@ -120,29 +119,29 @@ class Factura extends DocumentoElectronicoComercial
   //////////////////////////////////////////
 
   /**
-   * Agrega un pago a la factura electrónica. No utilizar para pagos con tarjeta de crédito, débito o cheque. 
+   * Agrega un pago a la factura electrónica. No utilizar para pagos con tarjeta de crédito, débito o cheque.
    * Para estos casos, utilizar los métodos addPagoPYGPorTarjeta, addPagoPYGPorCheque y addPagoUSDPorCheque.
-   * 
+   *
    * @param int|PaConEIniTiPago $tipoDePago Tipo de pago.
    * @param String $monto Monto del pago para uso como decimal tipo BCMath.
    * @param String $moneda Código de moneda ISO 4217.
-   * 
-   * @return self 
+   *
+   * @return self
    */
   public function addPago(
     int|PaConEIniTiPago $tipoDePago,
     string $monto,
     string $moneda = 'PYG',
-    ?string $tasaDeCambio = null) : self
+    ?string $tasaDeCambio = null): self
   {
-    if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
+    if (strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
       throw new ValidacionException('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
     }
     $gPaConEIni = new GPaConEIni();
     $gPaConEIni->setITiPago($tipoDePago);
     $gPaConEIni->setDMonTiPag($monto);
     $gPaConEIni->setCMoneTiPag($moneda);
-    if(isset($tasaDeCambio)) {
+    if (isset($tasaDeCambio)) {
       $gPaConEIni->setDTiCamTiPag($tasaDeCambio);
     }
     $this->gCamCond->addGPaConEIni($gPaConEIni);
@@ -151,7 +150,7 @@ class Factura extends DocumentoElectronicoComercial
 
   /**
    * Agrega un pago en Guaraníes por tarjeta de crédito o débito a la factura electrónica.
-   * 
+   *
    * @param bool $esTarjetaCredito Indica si el pago es por tarjeta de crédito (true) o débito (false).
    * @param String $monto Monto del pago para uso como decimal tipo BCMath.
    * @param PagTarCDDenTarj $denomTarjeta Denominación de la tarjeta.
@@ -161,30 +160,30 @@ class Factura extends DocumentoElectronicoComercial
    * @param String|null $ult4NroTarjeta Últimos 4 números de la tarjeta (opcional).
    */
   public function addPagoPYGPorTarjeta(
-    bool $esTarjetaCredito, 
-    string $monto, 
-    string|int|PagTarCDDenTarj $denomTarjeta, 
-    int|PagTarCDForProPa $formaProc, 
-    ?int $codAutorizacion = null, 
+    bool $esTarjetaCredito,
+    string $monto,
+    string|int|PagTarCDDenTarj $denomTarjeta,
+    int|PagTarCDForProPa $formaProc,
+    ?int $codAutorizacion = null,
     ?string $nombreTitular = null,
-    ?string $ult4NroTarjeta = null) : self
+    ?string $ult4NroTarjeta = null): self
   {
     $gPagTarCD = new GPagTarCD();
 
-    if($denomTarjeta instanceof PagTarCDDenTarj || is_int($denomTarjeta)) {
+    if ($denomTarjeta instanceof PagTarCDDenTarj || is_int($denomTarjeta)) {
       $gPagTarCD->setIDenTarj($denomTarjeta);
     } else {
       $gPagTarCD->setIDenTarj(PagTarCDDenTarj::Otro);
       $gPagTarCD->setDDesDenTarj($denomTarjeta);
     }
     $gPagTarCD->setIForProPa($formaProc);
-    if(isset($codAutorizacion)) {
+    if (isset($codAutorizacion)) {
       $gPagTarCD->setDCodAuOpe($codAutorizacion);
     }
-    if(isset($nombreTitular)) {
+    if (isset($nombreTitular)) {
       $gPagTarCD->setDNomTit($nombreTitular);
     }
-    if(isset($ult4NroTarjeta)) {
+    if (isset($ult4NroTarjeta)) {
       $gPagTarCD->setDNumTarj($ult4NroTarjeta);
     }
 
@@ -200,21 +199,21 @@ class Factura extends DocumentoElectronicoComercial
 
   /**
    * Agrega un pago por cheque a la factura electrónica.
-   * 
+   *
    * @param String $monto Monto del pago para uso como decimal tipo BCMath.
    * @param String $numeroCheque Número de cheque (hasta 8 caracteres)
    * @param String $bancoEmisor Banco emisor del cheque.
    * @param String $moneda Código de moneda ISO 4217. Valor por defecto: PYG.
    * @param String $tasaDeCambio Tasa de cambio para la conversión a Guaraníes del monto del pago (Decimal BCMath).
-   * 
+   *
    * @return self
    */
   public function addPagoPorCheque(
-    string $monto, 
-    string $numeroCheque, 
+    string $monto,
+    string $numeroCheque,
     string $bancoEmisor,
     string $moneda = 'PYG',
-    ?string $tasaDeCambio = null) : self
+    ?string $tasaDeCambio = null): self
   {
     $gPagCheq = new GPagCheq();
     $gPagCheq->setDNumCheq($numeroCheque);
@@ -224,10 +223,10 @@ class Factura extends DocumentoElectronicoComercial
     $gPaConEIni->setITiPago(PaConEIniTiPago::Cheque);
     $gPaConEIni->setDMonTiPag($monto);
     $gPaConEIni->setCMoneTiPag($moneda);
-    if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
+    if (strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
       throw new ValidacionException('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
     }
-    if(isset($tasaDeCambio)) {
+    if (isset($tasaDeCambio)) {
       $gPaConEIni->setDTiCamTiPag($tasaDeCambio);
     }
     $gPaConEIni->setGPagCheq($gPagCheq);
@@ -238,17 +237,17 @@ class Factura extends DocumentoElectronicoComercial
 
   /**
    * Agrega un pago en Guaraníes por cheque a la factura electrónica.
-   * 
+   *
    * @param String $monto Monto del pago para uso como decimal tipo BCMath.
    * @param String $numeroCheque Número de cheque (hasta 8 caracteres)
    * @param String $bancoEmisor Banco emisor del cheque.
-   * 
+   *
    * @return self
    */
   public function addPagoPYGPorCheque(
-    string $monto, 
-    string $numeroCheque, 
-    string $bancoEmisor) : self
+    string $monto,
+    string $numeroCheque,
+    string $bancoEmisor): self
   {
     $gPagCheq = new GPagCheq();
     $gPagCheq->setDNumCheq($numeroCheque);
@@ -266,19 +265,19 @@ class Factura extends DocumentoElectronicoComercial
 
   /**
    * Agrega un pago en Dólares por cheque a la factura electrónica.
-   * 
+   *
    * @param String $monto Monto del pago para uso como decimal tipo BCMath.
    * @param String $tipoCambio Tipo de cambio para la conversión a Guaraníes del monto del pago.
    * @param String $numeroCheque Número de cheque (hasta 8 caracteres)
    * @param String $bancoEmisor Banco emisor del cheque.
-   * 
+   *
    * @return self
    */
   public function addPagoUSDPorCheque(
     string $monto,
     string $tipoCambio,
-    string $numeroCheque, 
-    string $bancoEmisor) : self
+    string $numeroCheque,
+    string $bancoEmisor): self
   {
     $gPagCheq = new GPagCheq();
     $gPagCheq->setDNumCheq($numeroCheque);
@@ -297,18 +296,18 @@ class Factura extends DocumentoElectronicoComercial
 
   /**
    * Establece la condicion de crédito a plazo para la factura electrónica.
-   * 
+   *
    * @param String $descripcionPlazo Descripción del plazo de crédito (Ej.: 30 días)
    * @param String|null $montoEntregaInicial Monto de la entrega inicial expresando en cadena decimal BCMath (opcional).
-   * 
+   *
    * @return self
    */
-  public function setOperacionCreditoAPlazo(string $descripcionPlazo, ?string $montoEntregaInicial) : self
+  public function setOperacionCreditoAPlazo(string $descripcionPlazo, ?string $montoEntregaInicial): self
   {
     $gPagCred = new GPagCred();
     $gPagCred->setICondCred(PagCredCondCred::Plazo);
     $gPagCred->setDPlazoCre($descripcionPlazo);
-    if($montoEntregaInicial) {
+    if ($montoEntregaInicial) {
       $gPagCred->setDMonEnt($montoEntregaInicial);
     }
     $this->gCamCond->setGPagCred($gPagCred);
@@ -317,28 +316,28 @@ class Factura extends DocumentoElectronicoComercial
 
   /**
    * Establece la condicion de crédito en cuotas para la factura electrónica.
-   * 
+   *
    * @param array $montoCuotas Montos de las cuotas expresados en cadena decimal BCMath.
    * @param array $vencimientos Fechas de vencimiento de las cuotas.
    * @param String|null $monedaCuotas Moneda de las cuotas (opcional, valor por defecto PYG).
    * @param String|null $montoEntregaInicial Monto de la entrega inicial expresando en cadena decimal BCMath (opcional).
-   * 
+   *
    * @return self
    */
-  public function setOperacionCreditoEnCuotas(array $montoCuotas, array $vencimientos, ?string $montoEntregaInicial = null, ?string $monedaCuotas = null) : self
+  public function setOperacionCreditoEnCuotas(array $montoCuotas, array $vencimientos, ?string $montoEntregaInicial = null, ?string $monedaCuotas = null): self
   {
-    if(count($montoCuotas) != count($vencimientos)) {
+    if (count($montoCuotas) != count($vencimientos)) {
       throw new ValidacionException('[Factura] La cantidad de montos de cuotas y vencimientos no coinciden.');
     }
-    if(isset($montoEntregaInicial) && ValueValidations::isValidStringDecimal($montoEntregaInicial, 15, 0, 4) === false) {
+    if (isset($montoEntregaInicial) && ValueValidations::isValidStringDecimal($montoEntregaInicial, 15, 0, 4) === false) {
       throw new ValidacionException('[Factura] El monto de la entrega inicial no es una cadena decimal válida para este campo: ' . $montoEntregaInicial);
     }
     $gCuotas = [];
-    foreach($montoCuotas as $i => $monto) {
-      if(ValueValidations::isValidStringDecimal($monto, 15, 0, 4) === false) {
+    foreach ($montoCuotas as $i => $monto) {
+      if (ValueValidations::isValidStringDecimal($monto, 15, 0, 4) === false) {
         throw new ValidacionException('[Factura] El monto de la cuota ' . ($i + 1) . ' no es un decimal válido: ' . $monto);
       }
-      if(!($vencimientos[$i] instanceof DateTime)) {
+      if (!($vencimientos[$i] instanceof DateTime)) {
         throw new ValidacionException('[Factura] El vencimiento de la cuota ' . ($i + 1) . ' no es una instancia de DateTime.');
       }
       $gCuota = new GCuotas();
@@ -351,7 +350,7 @@ class Factura extends DocumentoElectronicoComercial
     $gPagCred->setICondCred(PagCredCondCred::Cuota);
     $gPagCred->setDCuotas(count($gCuotas));
     $gPagCred->setGCuotas($gCuotas);
-    if(isset($montoEntregaInicial)) {
+    if (isset($montoEntregaInicial)) {
       $gPagCred->setDMonEnt($montoEntregaInicial);
     }
     $this->gCamCond->setGPagCred($gPagCred);
@@ -363,7 +362,7 @@ class Factura extends DocumentoElectronicoComercial
    */
   public function facturaToRDE(): RDE
   {
-    if(isset($this->gCompPub)) {
+    if (isset($this->gCompPub)) {
       $this->gCamFE->gCompPub = $this->gCompPub;
     }
     $this->gDtipDE->gCamFE = $this->gCamFE;

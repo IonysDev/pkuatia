@@ -5,13 +5,13 @@ namespace IonysDev\Pkuatia\Core\Fields\Signature;
 use DOMElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 
-class Reference 
+class Reference
 {
     public string $URI;
     public array $Transforms;
     public DigestMethod $DigestMethod;
     public string $DigestValue;
-    
+
     /**
      * Constructor de la clase Reference
      */
@@ -126,45 +126,43 @@ class Reference
 
     /**
      * Instancia un objeto Reference a partir de SimpleXMLElement
-     * 
+     *
      * @param SimpleXMLElement $Reference
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(\SimpleXMLElement $Reference): self
     {
         $res = new self();
-        $res->setURI((String) $Reference->attributes()->URI);
-        if(isset($Reference->Transforms) && isset($Reference->Transforms->Transform) && count($Reference->Transforms->Transform) > 0) 
-        {
-            foreach($Reference->Transforms->Transform as $t)
-            {
+        $res->setURI((string) $Reference->attributes()->URI);
+        if (isset($Reference->Transforms) && isset($Reference->Transforms->Transform) && count($Reference->Transforms->Transform) > 0) {
+            foreach ($Reference->Transforms->Transform as $t) {
                 $res->Transforms[] = Transform::FromSimpleXMLElement($t);
             }
         }
         $res->setDigestMethod(DigestMethod::FromSimpleXMLElement($Reference->DigestMethod));
-        $res->setDigestValue((String) $Reference->DigestValue);
+        $res->setDigestValue((string) $Reference->DigestValue);
         return $res;
     }
 
     /**
      * Instancia un objeto Reference a partir de un DOMElement
-     * 
+     *
      * @param DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(DOMElement $node): self
     {
         $res = new self();
-        $res->setURI((String) $node->getAttribute('URI'));
-        if($node->getElementsByTagName("Transforms")->length > 0)
-        {
-            foreach($node->getElementsByTagName("Transforms") as $t)
+        $res->setURI((string) $node->getAttribute('URI'));
+        if ($node->getElementsByTagName("Transforms")->length > 0) {
+            foreach ($node->getElementsByTagName("Transforms") as $t) {
                 $res->Transforms[] = Transform::FromDOMElement($t);
+            }
         }
         $res->setDigestMethod(DigestMethod::FromDOMElement($node->getElementsByTagName("DigestMethod")->item(0)));
-        $res->setDigestValue((String) $node->getElementsByTagName("DigestValue")->item(0)->nodeValue);
+        $res->setDigestValue((string) $node->getElementsByTagName("DigestValue")->item(0)->nodeValue);
         return $res;
     }
 
@@ -174,7 +172,7 @@ class Reference
 
     /**
      * Convierte el objeto a un DOMElement
-     * 
+     *
      * @return \DOMElement
      */
     public function toDOMElement(): \DOMElement
@@ -182,11 +180,9 @@ class Reference
         $doc = new \DOMDocument();
         $res = $doc->createElement('Reference');
         $res->setAttribute('URI', $this->getURI());
-        if(count($this->getTransforms()) > 0)
-        {
+        if (count($this->getTransforms()) > 0) {
             $transforms = $doc->createElement('Transforms');
-            foreach($this->getTransforms() as $t)
-            {
+            foreach ($this->getTransforms() as $t) {
                 $importNode = $doc->importNode($t->toDOMElement(), true);
                 $transforms->appendChild($importNode);
             }
@@ -194,10 +190,10 @@ class Reference
             $trf->setAlgorithm('http://www.w3.org/2001/10/xml-exc-c14n#');
             $importNode = $doc->importNode($trf->toDOMElement(), true);
             $transforms->appendChild($importNode);*/
-            
+
             $res->appendChild($transforms);
         }
-        
+
         $importNode = $doc->importNode($this->getDigestMethod()->toDOMElement(), true);
         $res->appendChild($importNode);
 
@@ -206,5 +202,3 @@ class Reference
     }
 
 }
-
-?>

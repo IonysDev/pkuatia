@@ -2,53 +2,50 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\DE\D;
 
-use IonysDev\Pkuatia\Config;
 use IonysDev\Pkuatia\Core\Constants\EmisRecTipCont;
 use IonysDev\Pkuatia\Core\Constants\TipoDeRegimen;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
-use IonysDev\Pkuatia\Utils\RucUtils;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
 use DOMElement;
-use InvalidArgumentException;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     D100        
- * Nombre:      gEmis       
- * Descripción: Grupo de campos que identifican al emisor gEmis     
- * Nodo Padre:  D001 - gDatGralOpe - Campos generales del DE    
+ * Nodo Id:     D100
+ * Nombre:      gEmis
+ * Descripción: Grupo de campos que identifican al emisor gEmis
+ * Nodo Padre:  D001 - gDatGralOpe - Campos generales del DE
  */
 
 class GEmis extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
-    public string  $dRucEm;     // D101 - 3-8   - 1-1 - RUC del contribuyente emisor
-    public int     $dDVEmi;     // D102 - 1     - 1-1 - Dígito verificador del RUC del contribuyente emisor
-    public int     $iTipCont;   // D103 - 1     - 1-1 - Tipo de contribuyente: 1 = Persona Física | 2 = Persona Jurídica
-    public int     $cTipReg;    // D104 - 1-2   - 0-1 - Tipo de régimen: 1 = Régimen de Turismo | 2 = Importador | 3 = Exportador | 4 = Maquila | 5 = Ley N° 60/90 | 6 = Régimen del Pequeño Productor | 7 = Régimen del Mediano Productor | 8 = Régimen Contable
-    public string  $dNomEmi;    // D105 - 4-255 - 1-1 - Nombre o razón social del emisor del DE
-    public string  $dNomFanEmi; // D106 - 4-255 - 0-1 - Nombre de fantasía
-    public string  $dDirEmi;    // D107 - 1-255 - 1-1 - Dirección del local donde se emite el DE
-    public int     $dNumCas;    // D108 - 1-6   - 1-1 - Número de casa
-    public string  $dCompDir1;  // D109 - 1-255 - 0-1 - Complemento de dirección 1
-    public string  $dCompDir2;  // D110 - 1-255 - 0-1 - Complemento de dirección 2
-    public int     $cDepEmi;    // D111 - 1-2   - 1-1 - Código del departamento de emisión
-    public string  $dDesDepEmi; // D112 - 6-16  - 1-1 - Descripción del departamento de emisión
-    public int     $cDisEmi;    // D113 - 1-4   - 0-1 - Código de la distrito de emisión
-    public string  $dDesDisEmi; // D114 - 1-30  - 0-1 - Descripción de la distrito de emisión
-    public int     $cCiuEmi;    // D115 - 1-5   - 1-1 - Código de la ciudad de emisión
-    public string  $dDesCiuEmi; // D116 - 1-30  - 1-1 - Descripción de la ciudad de emisión
-    public string  $dTelEmi;    // D117 - 6-15  - 1-1 - Teléfono local de emisión de DE 
-    public string  $dEmailE;    // D118 - 3-80  - 1-1 - Correo electrónico del emisor
-    public string  $dDenSuc;    // D119 - 1-30  - 0-1 - Denominación comercial de la sucursal
-    public array   $gActEco;    // D130 -       - 1-9 - Grupo de campos que describen la actividad económica del emisor del tipo GActEco (D130)
+    public string $dRucEm;     // D101 - 3-8   - 1-1 - RUC del contribuyente emisor
+    public int $dDVEmi;     // D102 - 1     - 1-1 - Dígito verificador del RUC del contribuyente emisor
+    public int $iTipCont;   // D103 - 1     - 1-1 - Tipo de contribuyente: 1 = Persona Física | 2 = Persona Jurídica
+    public int $cTipReg;    // D104 - 1-2   - 0-1 - Tipo de régimen: 1 = Régimen de Turismo | 2 = Importador | 3 = Exportador | 4 = Maquila | 5 = Ley N° 60/90 | 6 = Régimen del Pequeño Productor | 7 = Régimen del Mediano Productor | 8 = Régimen Contable
+    public string $dNomEmi;    // D105 - 4-255 - 1-1 - Nombre o razón social del emisor del DE
+    public string $dNomFanEmi; // D106 - 4-255 - 0-1 - Nombre de fantasía
+    public string $dDirEmi;    // D107 - 1-255 - 1-1 - Dirección del local donde se emite el DE
+    public int $dNumCas;    // D108 - 1-6   - 1-1 - Número de casa
+    public string $dCompDir1;  // D109 - 1-255 - 0-1 - Complemento de dirección 1
+    public string $dCompDir2;  // D110 - 1-255 - 0-1 - Complemento de dirección 2
+    public int $cDepEmi;    // D111 - 1-2   - 1-1 - Código del departamento de emisión
+    public string $dDesDepEmi; // D112 - 6-16  - 1-1 - Descripción del departamento de emisión
+    public int $cDisEmi;    // D113 - 1-4   - 0-1 - Código de la distrito de emisión
+    public string $dDesDisEmi; // D114 - 1-30  - 0-1 - Descripción de la distrito de emisión
+    public int $cCiuEmi;    // D115 - 1-5   - 1-1 - Código de la ciudad de emisión
+    public string $dDesCiuEmi; // D116 - 1-30  - 1-1 - Descripción de la ciudad de emisión
+    public string $dTelEmi;    // D117 - 6-15  - 1-1 - Teléfono local de emisión de DE
+    public string $dEmailE;    // D118 - 3-80  - 1-1 - Correo electrónico del emisor
+    public string $dDenSuc;    // D119 - 1-30  - 0-1 - Denominación comercial de la sucursal
+    public array $gActEco;    // D130 -       - 1-9 - Grupo de campos que describen la actividad económica del emisor del tipo GActEco (D130)
     public GRespDE $gRespDE;    // D140 -       - 0-1 - Grupo de campos que identifican al responsable de la generación del DE
-    
+
     ///////////////////////////////////////////////////////////////////////
     ///Constructor
     ///////////////////////////////////////////////////////////////////////
@@ -124,16 +121,17 @@ class GEmis extends BaseSifenField
     /**
      * Establece el código de departamento de emisión (D111) y su descripción (D112).
      * Valida que el código de departamento exista en la lista de departamentos del SIFEN.
-     * 
+     *
      * @param int $cDepEmi Código de departamento de emisión.
-     * 
+     *
      * @return self
      */
     public function setCDepEmi(int $cDepEmi): self
     {
         $desc = DepartamentoMapping::getDepName(strval($cDepEmi));
-        if ($desc === null)
+        if ($desc === null) {
           throw new ValidacionException("[GEmis::setCDepEmi] El código de departamento $cDepEmi no existe.");
+        }
         $this->dDesDepEmi = $desc;
         $this->cDepEmi = $cDepEmi;
         return $this;
@@ -142,9 +140,9 @@ class GEmis extends BaseSifenField
     /**
      * Establece la descripción del departamento de emisión (D114).
      * Este método solo debería utilizarse al deserializar un objeto GEmis de un XML.
-     * 
+     *
      * @param String $dDesDepEmi Descripción del departamento de emisión.
-     * 
+     *
      * @return self
      */
     public function setDDesDepEmi(string $dDesDepEmi): self
@@ -156,16 +154,17 @@ class GEmis extends BaseSifenField
     /**
      * Establece el código del distrito de emisión (D113) y su descripción (D114).
      * Valida que el código de distrito exista en la lista de distritos del SIFEN.
-     * 
+     *
      * @param int $cDisEmi Código del distrito de emisión (D113).
-     * 
+     *
      * @return self
      */
     public function setCDisEmi(int $cDisEmi): self
     {
         $desc = PyGeoCodesMapping::getDistName(strval($cDisEmi));
-        if ($desc === null)
+        if ($desc === null) {
           throw new ValidacionException("[GEmis::setCDisEmi] El código de distrito $cDisEmi no existe.");
+        }
         $this->dDesDisEmi = $desc;
         $this->cDisEmi = $cDisEmi;
         return $this;
@@ -174,9 +173,9 @@ class GEmis extends BaseSifenField
     /**
      * Establece la descripción del distrito de emisión (D114).
      * Este método solo debería utilizarse al deserializar un objeto GEmis de un XML.
-     * 
+     *
      * @param String $dDesDisEmi Descripción del distrito de emisión.
-     * 
+     *
      * @return self
      */
     public function setDDesDisEmi(string $dDesDisEmi): self
@@ -188,8 +187,9 @@ class GEmis extends BaseSifenField
     public function setCCiuEmi(int $cCiuEmi): self
     {
         $desc = PyGeoCodesMapping::getCiudName(strval($cCiuEmi));
-        if ($desc === null)
+        if ($desc === null) {
           throw new ValidacionException("[GEmis::setCCiuEmi] El código de ciudad $cCiuEmi no existe.");
+        }
         $this->cCiuEmi = $cCiuEmi;
         $this->dDesCiuEmi = $desc;
         return $this;
@@ -260,7 +260,7 @@ class GEmis extends BaseSifenField
         return $this->dNomEmi;
     }
 
-    public function getDNomFanEmi(): string 
+    public function getDNomFanEmi(): string
     {
         return $this->dNomFanEmi;
     }
@@ -292,7 +292,7 @@ class GEmis extends BaseSifenField
 
     /**
      * D112 Descripción del departamento de emisión
-     * 
+     *
      * @return String
      */
     public function getDDesDepEmi(): string
@@ -362,102 +362,115 @@ class GEmis extends BaseSifenField
 
     /**
      * Instancia la clase a partir de un SimpleXMLElement
-     * 
+     *
      * @param SimpleXMLElement $node
-     * 
+     *
      * @return GEmis
      */
-    public static function FromSimpleXMLElement(SimpleXMLElement $node) : self
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
-        if(strcmp($node->getName(), 'gEmis') != 0){
+        if (strcmp($node->getName(), 'gEmis') != 0) {
             throw new ValidacionException('El nombre del elemento no es gEmis');
         }
         $res = new GEmis();
         $res->dRucEm = strval($node->dRucEm);
         $res->dDVEmi = intval($node->dDVEmi);
         $res->iTipCont = intval($node->iTipCont);
-        if(isset($node->cTipReg))
+        if (isset($node->cTipReg)) {
             $res->cTipReg = intval($node->cTipReg);
+        }
         $res->dNomEmi = strval($node->dNomEmi);
-        if(isset($node->dNomFanEmi))
+        if (isset($node->dNomFanEmi)) {
             $res->dNomFanEmi = strval($node->dNomFanEmi);
+        }
         $res->dDirEmi = strval($node->dDirEmi);
         $res->dNumCas = intval($node->dNumCas);
-        if(isset($node->dCompDir1))
+        if (isset($node->dCompDir1)) {
             $res->dCompDir1 = strval($node->dCompDir1);
-        if(isset($node->dCompDir2))
+        }
+        if (isset($node->dCompDir2)) {
             $res->dCompDir2 = strval($node->dCompDir2);
+        }
         $res->cDepEmi = intval($node->cDepEmi);
         $res->dDesDepEmi = strval($node->dDesDepEmi);
-        if(isset($node->cDisEmi))
+        if (isset($node->cDisEmi)) {
             $res->cDisEmi = intval($node->cDisEmi);
-        if(isset($node->dDesDisEmi))
+        }
+        if (isset($node->dDesDisEmi)) {
             $res->dDesDisEmi = strval($node->dDesDisEmi);
+        }
         $res->cCiuEmi = intval($node->cCiuEmi);
         $res->dDesCiuEmi = strval($node->dDesCiuEmi);
         $res->dTelEmi = strval($node->dTelEmi);
         $res->dEmailE = strval($node->dEmailE);
-        if(isset($node->dDenSuc))
+        if (isset($node->dDenSuc)) {
             $res->dDenSuc = strval($node->dDenSuc);
-        if(isset($node->gActEco) && count($node->gActEco) > 0)
-        {
-            foreach($node->gActEco as $g)
-            {
+        }
+        if (isset($node->gActEco) && count($node->gActEco) > 0) {
+            foreach ($node->gActEco as $g) {
                 $res->gActEco[] = GActEco::FromSimpleXMLElement($g);
             }
         }
-        if(isset($node->gRespDE))
+        if (isset($node->gRespDE)) {
             $res->gRespDE = GRespDE::FromSimpleXMLElement($node->gRespDE);
+        }
         return $res;
     }
 
     /**
      * Instancia un objeto GEmis a partir de un DOMElement que lo representa.
-     * 
+     *
      * @param DOMElement $node El DOMElement que representa al GEmis.
-     * 
+     *
      * @return GEmis El GEmis representado por el DOMElement dado.
      */
-    public static function FromDOMElement(DOMElement $node) : self
+    public static function FromDOMElement(DOMElement $node): self
     {
-        if(strcmp($node->nodeName, 'gEmis') != 0)
+        if (strcmp($node->nodeName, 'gEmis') != 0) {
             throw new ValidacionException('[GEmis] Nodo con nombre inválido: ' . $node->nodeName);
+        }
         $res = new self();
         $res->dRucEm = trim($node->getElementsByTagName('dRucEm')->item(0)->nodeValue);
         $res->dDVEmi = intval(trim($node->getElementsByTagName('dDVEmi')->item(0)->nodeValue));
         $res->iTipCont = intval(trim($node->getElementsByTagName('iTipCont')->item(0)->nodeValue));
-        if($node->getElementsByTagName('cTipReg')->length > 0)
+        if ($node->getElementsByTagName('cTipReg')->length > 0) {
             $res->cTipReg = intval(trim($node->getElementsByTagName('cTipReg')->item(0)->nodeValue));
+        }
         $res->dNomEmi = trim($node->getElementsByTagName('dNomEmi')->item(0)->nodeValue);
-        if($node->getElementsByTagName('dNomFanEmi')->length > 0)
+        if ($node->getElementsByTagName('dNomFanEmi')->length > 0) {
             $res->dNomFanEmi = trim($node->getElementsByTagName('dNomFanEmi')->item(0)->nodeValue);
+        }
         $res->dDirEmi = trim($node->getElementsByTagName('dDirEmi')->item(0)->nodeValue);
         $res->dNumCas = intval(trim($node->getElementsByTagName('dNumCas')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dCompDir1')->length > 0)
+        if ($node->getElementsByTagName('dCompDir1')->length > 0) {
             $res->dCompDir1 = trim($node->getElementsByTagName('dCompDir1')->item(0)->nodeValue);
-        if($node->getElementsByTagName('dCompDir2')->length > 0)
+        }
+        if ($node->getElementsByTagName('dCompDir2')->length > 0) {
             $res->dCompDir2 = trim($node->getElementsByTagName('dCompDir2')->item(0)->nodeValue);
+        }
         $res->cDepEmi = intval(trim($node->getElementsByTagName('cDepEmi')->item(0)->nodeValue));
         $res->dDesDepEmi = trim($node->getElementsByTagName('dDesDepEmi')->item(0)->nodeValue);
-        if($node->getElementsByTagName('cDisEmi')->length > 0)
+        if ($node->getElementsByTagName('cDisEmi')->length > 0) {
             $res->cDisEmi = intval(trim($node->getElementsByTagName('cDisEmi')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dDesDisEmi')->length > 0)
+        }
+        if ($node->getElementsByTagName('dDesDisEmi')->length > 0) {
             $res->dDesDisEmi = trim($node->getElementsByTagName('dDesDisEmi')->item(0)->nodeValue);
+        }
         $res->cCiuEmi = intval(trim($node->getElementsByTagName('cCiuEmi')->item(0)->nodeValue));
         $res->dDesCiuEmi = trim($node->getElementsByTagName('dDesCiuEmi')->item(0)->nodeValue);
         $res->dTelEmi = trim($node->getElementsByTagName('dTelEmi')->item(0)->nodeValue);
         $res->dEmailE = trim($node->getElementsByTagName('dEmailE')->item(0)->nodeValue);
-        if($node->getElementsByTagName('dDenSuc')->length > 0)
+        if ($node->getElementsByTagName('dDenSuc')->length > 0) {
             $res->dDenSuc = trim($node->getElementsByTagName('dDenSuc')->item(0)->nodeValue);
-        if($node->getElementsByTagName('gActEco')->length > 0)
-        {
-            foreach($node->getElementsByTagName('gActEco') as $g)
-            {
+        }
+        if ($node->getElementsByTagName('gActEco')->length > 0) {
+            foreach ($node->getElementsByTagName('gActEco') as $g) {
                 $res->gActEco[] = GActEco::FromDOMElement($g);
             }
         }
-        if($node->getElementsByTagName('gRespDE')->length > 0)
+        if ($node->getElementsByTagName('gRespDE')->length > 0) {
             $res->gRespDE = GRespDE::FromDOMElement($node->getElementsByTagName('gRespDE')->item(0));
+        }
         return $res;
     }
 
@@ -465,7 +478,7 @@ class GEmis extends BaseSifenField
      * Instancia un objeto GEmis a partir de un objeto stdClass producido por una respuesta del SIFEN
      *
      * @param stdClass $object Objeto stdClass que contiene los datos de la respuesta del SIFEN.
-     * 
+     *
      * @return self Objeto GEmis instanciado.
      */
     public static function FromSifenResponseObject($object): self
@@ -523,12 +536,11 @@ class GEmis extends BaseSifenField
         }
         //Children
         if (isset($object->gActEco)) {
-            if(is_array($object->gActEco)) {
-                foreach($object->gActEco as $g) {
+            if (is_array($object->gActEco)) {
+                foreach ($object->gActEco as $g) {
                     $gEmis->gActEco[] = GActEco::FromSifenResponseObject($g);
                 }
-            }
-            else {
+            } else {
                 $gEmis->gActEco[] = GActEco::FromSifenResponseObject($object->gActEco);
             }
         }
@@ -544,9 +556,9 @@ class GEmis extends BaseSifenField
 
     /**
      * Convierte este GEmis en un DOMElement que puede ser insertado en un DOMDocument.
-     * 
+     *
      * @param DOMDocument $doc Documento DOM donde se creará el DOMElement sin insertarse.
-     * 
+     *
      * @return DOMElement El DOMElement que representa a este GEmis.
      */
     public function toDOMElement(DOMDocument $doc): DOMElement
@@ -555,35 +567,44 @@ class GEmis extends BaseSifenField
         $res->appendChild(XmlHelper::elemento($doc, 'dRucEm', $this->dRucEm));
         $res->appendChild(XmlHelper::elemento($doc, 'dDVEmi', $this->dDVEmi));
         $res->appendChild(XmlHelper::elemento($doc, 'iTipCont', $this->iTipCont));
-        if(isset($this->cTipReg))
+        if (isset($this->cTipReg)) {
             $res->appendChild(XmlHelper::elemento($doc, 'cTipReg', $this->cTipReg));
+        }
         $res->appendChild(XmlHelper::elemento($doc, 'dNomEmi', $this->dNomEmi));
-        if(isset($this->dNomFanEmi))
+        if (isset($this->dNomFanEmi)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dNomFanEmi', $this->dNomFanEmi));
+        }
         $res->appendChild(XmlHelper::elemento($doc, 'dDirEmi', $this->dDirEmi));
         $res->appendChild(XmlHelper::elemento($doc, 'dNumCas', $this->dNumCas));
-        if(isset($this->dCompDir1))
+        if (isset($this->dCompDir1)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dCompDir1', $this->dCompDir1));
-        if(isset($this->dCompDir2))
+        }
+        if (isset($this->dCompDir2)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dCompDir2', $this->dCompDir2));
+        }
         $res->appendChild(XmlHelper::elemento($doc, 'cDepEmi', $this->cDepEmi));
         $res->appendChild(XmlHelper::elemento($doc, 'dDesDepEmi', $this->getDDesDepEmi()));
-        if(isset($this->cDisEmi))
+        if (isset($this->cDisEmi)) {
             $res->appendChild(XmlHelper::elemento($doc, 'cDisEmi', $this->cDisEmi));
-        if(isset($this->dDesDisEmi))
+        }
+        if (isset($this->dDesDisEmi)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dDesDisEmi', $this->getDDesDisEmi()));
+        }
         $res->appendChild(XmlHelper::elemento($doc, 'cCiuEmi', $this->cCiuEmi));
         $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEmi', $this->getDDesCiuEmi()));
         $res->appendChild(XmlHelper::elemento($doc, 'dTelEmi', $this->dTelEmi));
         $res->appendChild(XmlHelper::elemento($doc, 'dEmailE', $this->dEmailE));
-        if(isset($this->dDenSuc))
+        if (isset($this->dDenSuc)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dDenSuc', $this->dDenSuc));
-        if(isset($this->gActEco)) {
-            foreach ($this->gActEco as $g)
-                $res->appendChild($g->toDOMElement($doc));
         }
-        if (isset($this->gRespDE))
+        if (isset($this->gActEco)) {
+            foreach ($this->gActEco as $g) {
+                $res->appendChild($g->toDOMElement($doc));
+            }
+        }
+        if (isset($this->gRespDE)) {
             $res->appendChild($this->gRespDE->toDOMElement($doc));
+        }
         return $res;
     }
 
@@ -594,10 +615,10 @@ class GEmis extends BaseSifenField
     /**
      * Agrega una actividad económica (objeto GActEco) a este emisor.
      * El código y la descripción deben corresponder a lo declarado en el RUC.
-     * 
+     *
      * @param int $cod Código de la actividad económica.
      * @param String $desc Descripción de la actividad económica.
-     * 
+     *
      * @return self
      */
     public function addActEco(int $cod, string $desc): self

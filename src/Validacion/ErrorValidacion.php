@@ -43,19 +43,25 @@ final class ErrorValidacion
   public function __toString(): string
   {
     $partes = [strtoupper($this->origen->value)];
-    if ($this->codigoSifen !== null)
+    if ($this->codigoSifen !== null) {
       $partes[] = $this->codigoSifen;
-    if ($this->campoMT !== null)
+    }
+    if ($this->campoMT !== null) {
       $partes[] = $this->campoMT;
-    if ($this->elemento !== null)
+    }
+    if ($this->elemento !== null) {
       $partes[] = $this->elemento;
+    }
     $texto = '[' . implode(' ', $partes) . '] ' . $this->mensaje;
-    if ($this->ruta !== null)
+    if ($this->ruta !== null) {
       $texto .= " (en {$this->ruta})";
-    if ($this->linea !== null)
+    }
+    if ($this->linea !== null) {
       $texto .= " (línea {$this->linea})";
-    if ($this->sugerencia !== null)
+    }
+    if ($this->sugerencia !== null) {
       $texto .= '. Sugerencia: ' . $this->sugerencia;
+    }
     return $texto;
   }
 }

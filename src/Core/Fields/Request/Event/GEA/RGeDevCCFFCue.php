@@ -255,10 +255,11 @@ class RGeDevCCFFCue
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if($node->getName() != 'rGeDevCCFFCue')
+    if ($node->getName() != 'rGeDevCCFFCue') {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
+    }
 
     $res = new RGeDevCCFFCue();
     $res->setId($node->Id);
@@ -266,8 +267,8 @@ class RGeDevCCFFCue
     $res->setDNumDevInf($node->dNumDevInf);
     $res->setDNumDevRes($node->dNumDevRes);
     $res->setDFeEmiSol(DateTime::createFromFormat('Y-m-d', $node->dFeEmiSol));
-    $res->setDFeEmiInf(DateTime::createFromFormat('Y-m-d',$node->dFeEmiInf));
-    $res->setDFeEmiRes(DateTime::createFromFormat('Y-m-d',$node->dFeEmiRes));
+    $res->setDFeEmiInf(DateTime::createFromFormat('Y-m-d', $node->dFeEmiInf));
+    $res->setDFeEmiRes(DateTime::createFromFormat('Y-m-d', $node->dFeEmiRes));
 
     return $res;
   }

@@ -44,8 +44,9 @@ final class VerificadorFirma
   {
     $errores = [];
     $doc = self::cargar($xml, $errores);
-    if ($doc === null)
+    if ($doc === null) {
       return new ResultadoFirma([], $errores, 'desconocido');
+    }
     $raiz = $doc->documentElement->localName;
     $tipo = in_array($raiz, self::TIPOS, true) ? $raiz : 'desconocido';
     $cantidad = self::xpath($doc)->query('//ds:Signature')->length;
@@ -125,8 +126,9 @@ final class VerificadorFirma
     if ($certificado !== null) {
       try {
         $clave = $dsig->locateKey();
-        if ($clave === null)
+        if ($clave === null) {
           throw new \RuntimeException('SignatureMethod no reconocido');
+        }
         XMLSecEnc::staticLocateKeyInfo($clave, $sig);
         $firmaValida = $dsig->verify($clave) === 1;
       } catch (Throwable $e) {
@@ -158,8 +160,9 @@ final class VerificadorFirma
       ? '//*[local-name()="DE"]/*[local-name()="dFecFirma"]'
       : '(//*[local-name()="rEve"])[' . ($pos + 1) . ']/*[local-name()="dFecFirma"]';
     $nodo = $xp->query($consulta)->item(0);
-    if ($nodo === null)
+    if ($nodo === null) {
       return null;
+    }
     try {
       return FechaHelper::FromSifen(trim($nodo->textContent), 'dFecFirma');
     } catch (Throwable) {

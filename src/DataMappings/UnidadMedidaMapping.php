@@ -28,7 +28,7 @@ class UnidadMedidaMapping
       $xml = new DOMDocument();
       $xml->load(__DIR__ . '/Sources/Unidades_Medida_v141.xsd');
       $xml->preserveWhiteSpace = true;
-      $parseObj = str_replace($xml->lastChild->prefix.':',"", $xml->saveXML($xml->lastChild));
+      $parseObj = str_replace($xml->lastChild->prefix.':', "", $xml->saveXML($xml->lastChild));
       $array = json_decode(json_encode(simplexml_load_string($parseObj)), true);
       self::$catalogo = $array['simpleType'][0]['restriction']['enumeration'];
     }

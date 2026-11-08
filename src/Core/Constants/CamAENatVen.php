@@ -6,8 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Naturaleza del vendedor en documentos de autofactura electrónica (grupo gCamAE, E300).
  * Valores del campo iNatVen (E301) y descripciones del campo dDesNatVen (E302).
  */
-enum CamAENatVen: int {
-
+enum CamAENatVen: int
+{
     case NoContribuyente = 1;
     case Extranjero = 2;
 
@@ -44,5 +44,3 @@ enum CamAENatVen: int {
         return $list;
     }
 }
-
-?>

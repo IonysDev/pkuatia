@@ -15,12 +15,12 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeInu
 {
                             //RAIZ - DESCRIPCION- LONGITUD - OCURRENCIA
-  public int    $dNumTim;   // GEI002 - Número del Timbrado - 8 - 1-1
+  public int $dNumTim;   // GEI002 - Número del Timbrado - 8 - 1-1
   public string $dEst;      // GEI003 - Establecimiento - 3 - 1-1
   public string $dPunExp;   // GEI004 - Punto de expedición 3 -1-1
   public string $dNumIn;    // GEI005 - Número Inicio del rango del documento - 7 - 1-1
   public string $dNumFin;   // GEI006 - Número Final del rango del documento - 7 - 1-1
-  public int    $iTiDE;     // GEI007 - Tipo de Documento Electrónico  -1-2 - 1-1
+  public int $iTiDE;     // GEI007 - Tipo de Documento Electrónico  -1-2 - 1-1
   public string $mOtEve;    // GEI008 - Motivo del Evento 5-500 - 1-1
   public string $dSerieNum; // GEI009 - Serie del número del documento: OCURRENCIA - 2 - 0-1
 
@@ -271,16 +271,16 @@ class RGeVeInu
 
     return $this;
   }
-  
+
   /**
    * FromSimpleXMLElement
    *
    * @param  mixed $node
    * @return self
    */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-     if(strcmp($node->getName(),'rGeVeInu') != 0) {
+     if (strcmp($node->getName(), 'rGeVeInu') != 0) {
        throw new ValidacionException("Invalid XML Element: ". $node->getName());
      }
 
@@ -292,7 +292,7 @@ class RGeVeInu
       $res->setDNumFin($node->dNumFin);
       $res->setITiDE(intval($node->iTiDE));
       $res->setMOtEve($node->mOtEve);
-      if(isset($node->dSerieNum)) {
+      if (isset($node->dSerieNum)) {
         $res->setDSerieNum($node->dSerieNum);
       }
 

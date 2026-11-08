@@ -89,8 +89,9 @@ final class ValidadorCompletitudTest extends TestCase
     foreach (glob(R::DIR . '/*/*-firmada-anonimizada.xml') as $ruta) {
       // Los de la homologación del 13/10/2026 (C14) se enviaron con una violación a propósito, salvo los aprobados
       // (11, 12, 14 y 15); los cubre CapturasHomologacionFaseCTest con el código que cada uno debía dar.
-      if (str_contains($ruta, '2026-10-13') && preg_match('/^(0[2-7]|10|13)-/', basename($ruta)) === 1)
+      if (str_contains($ruta, '2026-10-13') && preg_match('/^(0[2-7]|10|13)-/', basename($ruta)) === 1) {
         continue;
+      }
       yield basename(dirname($ruta)) . '/' . basename($ruta) => [$ruta];
     }
   }
@@ -140,26 +141,108 @@ final class ValidadorCompletitudTest extends TestCase
   /** @return iterable<string, array{callable(): (DocumentoElectronico|DE), string, string}> */
   public static function presenciaDeGrupos(): iterable
   {
-    yield 'NR sin transporte → 2100' => [function () { $nr = F::notaDeRemision(); unset($nr->gTransp); return $nr; }, '2100', 'E900'];
-    yield 'FE sin condición de la operación → 1500' => [function () { $fe = F::facturaContado(); unset($fe->gCamCond); return $fe; }, '1500', 'E600'];
-    yield 'NC sin documento asociado → 2400' => [function () { $nc = F::notaDeCredito(); $nc->gCamDEAsoc = []; return $nc; }, '2400', 'H001'];
-    yield 'FE sin gCamFE → 1350' => [function () { $fe = F::facturaContado(); unset($fe->gCamFE); return $fe; }, '1350', 'E010'];
-    yield 'AF sin gCamAE → 2550' => [function () { $af = F::autofactura(); unset($af->gCamAE); return $af; }, '2550', 'E300'];
-    yield 'NC sin gCamNCDE → 1450' => [function () { $nc = F::notaDeCredito(); unset($nc->gCamNCDE); return $nc; }, '1450', 'E400'];
-    yield 'NR sin gCamNRE → 2600' => [function () { $nr = F::notaDeRemision(); unset($nr->gCamNRE); return $nr; }, '2600', 'E500'];
-    yield 'FE sin totales → 2350' => [function () { $fe = F::facturaContado(); unset($fe->gTotSub); return $fe; }, '2350', 'F001'];
-    yield 'FE sin gOpeCom (DE) → 1200' => [function () { $de = self::aRde(F::facturaContado())->getDE(); unset($de->gDatGralOpe->gOpeCom); return $de; }, '1200', 'D010'];
-    yield 'NR con gOpeCom (DE) → 1201' => [function () { $de = self::aRde(F::notaDeRemision())->getDE(); $de->gDatGralOpe->gOpeCom = new GOpeCom(); return $de; }, '1201', 'D010'];
-    yield 'NR con gCamFE (DE) → 1351' => [function () { $de = self::aRde(F::notaDeRemision())->getDE(); $de->gDtipDe->gCamFE = new GCamFE(); return $de; }, '1351', 'E010'];
-    yield 'FE con gCamNRE (DE) → 2601' => [function () { $de = self::aRde(F::facturaContado())->getDE(); $de->gDtipDe->gCamNRE = new GCamNRE(); return $de; }, '2601', 'E500'];
-    yield 'NR con gCamCond (DE) → 1501' => [function () { $de = self::aRde(F::notaDeRemision())->getDE(); $de->gDtipDe->gCamCond = new GCamCond(); return $de; }, '1501', 'E600'];
-    yield 'NR con totales (DE) → 2351' => [function () { $de = self::aRde(F::notaDeRemision())->getDE(); $de->gTotSub = new GTotSub(); return $de; }, '2351', 'F001'];
-    yield 'AF con transporte (DE) → 2101' => [function () { $de = self::aRde(F::autofactura())->getDE(); $de->gDtipDe->gTransp = self::aRde(F::notaDeRemision())->getDE()->gDtipDe->gTransp; return $de; }, '2101', 'E900'];
-    yield 'NR con gValorItem en un ítem (DE) → 1851' => [function () { $de = self::aRde(F::notaDeRemision())->getDE(); $de->gDtipDe->gCamItem[0]->gValorItem = self::aRde(F::facturaContado())->getDE()->gDtipDe->gCamItem[0]->gValorItem; return $de; }, '1851', 'E720'];
-    yield 'FE sin gValorItem en un ítem (DE) → 1850' => [function () { $de = self::aRde(F::facturaContado())->getDE(); unset($de->gDtipDe->gCamItem[0]->gValorItem); return $de; }, '1850', 'E720'];
-    yield 'FE sin gCamIVA en un ítem (DE) → 1900' => [function () { $de = self::aRde(F::facturaContado())->getDE(); unset($de->gDtipDe->gCamItem[0]->gCamIVA); return $de; }, '1900', 'E730'];
-    yield 'NR con gCamIVA en un ítem (DE) → 1901' => [function () { $de = self::aRde(F::notaDeRemision())->getDE(); $de->gDtipDe->gCamItem[0]->gCamIVA = new GCamIVA(); return $de; }, '1901', 'E730'];
-    yield 'NC con carga (DE) → 2390' => [function () { $de = self::aRde(F::notaDeCredito())->getDE(); $g = new GCamGen(); $g->gCamCarg = new GCamCarg(); $de->gCamGen = $g; return $de; }, '2390', 'G050'];
+    yield 'NR sin transporte → 2100' => [function () {
+    $nr = F::notaDeRemision();
+    unset($nr->gTransp);
+    return $nr;
+    }, '2100', 'E900'];
+    yield 'FE sin condición de la operación → 1500' => [function () {
+    $fe = F::facturaContado();
+    unset($fe->gCamCond);
+    return $fe;
+    }, '1500', 'E600'];
+    yield 'NC sin documento asociado → 2400' => [function () {
+    $nc = F::notaDeCredito();
+    $nc->gCamDEAsoc = [];
+    return $nc;
+    }, '2400', 'H001'];
+    yield 'FE sin gCamFE → 1350' => [function () {
+    $fe = F::facturaContado();
+    unset($fe->gCamFE);
+    return $fe;
+    }, '1350', 'E010'];
+    yield 'AF sin gCamAE → 2550' => [function () {
+    $af = F::autofactura();
+    unset($af->gCamAE);
+    return $af;
+    }, '2550', 'E300'];
+    yield 'NC sin gCamNCDE → 1450' => [function () {
+    $nc = F::notaDeCredito();
+    unset($nc->gCamNCDE);
+    return $nc;
+    }, '1450', 'E400'];
+    yield 'NR sin gCamNRE → 2600' => [function () {
+    $nr = F::notaDeRemision();
+    unset($nr->gCamNRE);
+    return $nr;
+    }, '2600', 'E500'];
+    yield 'FE sin totales → 2350' => [function () {
+    $fe = F::facturaContado();
+    unset($fe->gTotSub);
+    return $fe;
+    }, '2350', 'F001'];
+    yield 'FE sin gOpeCom (DE) → 1200' => [function () {
+    $de = self::aRde(F::facturaContado())->getDE();
+    unset($de->gDatGralOpe->gOpeCom);
+    return $de;
+    }, '1200', 'D010'];
+    yield 'NR con gOpeCom (DE) → 1201' => [function () {
+    $de = self::aRde(F::notaDeRemision())->getDE();
+    $de->gDatGralOpe->gOpeCom = new GOpeCom();
+    return $de;
+    }, '1201', 'D010'];
+    yield 'NR con gCamFE (DE) → 1351' => [function () {
+    $de = self::aRde(F::notaDeRemision())->getDE();
+    $de->gDtipDe->gCamFE = new GCamFE();
+    return $de;
+    }, '1351', 'E010'];
+    yield 'FE con gCamNRE (DE) → 2601' => [function () {
+    $de = self::aRde(F::facturaContado())->getDE();
+    $de->gDtipDe->gCamNRE = new GCamNRE();
+    return $de;
+    }, '2601', 'E500'];
+    yield 'NR con gCamCond (DE) → 1501' => [function () {
+    $de = self::aRde(F::notaDeRemision())->getDE();
+    $de->gDtipDe->gCamCond = new GCamCond();
+    return $de;
+    }, '1501', 'E600'];
+    yield 'NR con totales (DE) → 2351' => [function () {
+    $de = self::aRde(F::notaDeRemision())->getDE();
+    $de->gTotSub = new GTotSub();
+    return $de;
+    }, '2351', 'F001'];
+    yield 'AF con transporte (DE) → 2101' => [function () {
+    $de = self::aRde(F::autofactura())->getDE();
+    $de->gDtipDe->gTransp = self::aRde(F::notaDeRemision())->getDE()->gDtipDe->gTransp;
+    return $de;
+    }, '2101', 'E900'];
+    yield 'NR con gValorItem en un ítem (DE) → 1851' => [function () {
+    $de = self::aRde(F::notaDeRemision())->getDE();
+    $de->gDtipDe->gCamItem[0]->gValorItem = self::aRde(F::facturaContado())->getDE()->gDtipDe->gCamItem[0]->gValorItem;
+    return $de;
+    }, '1851', 'E720'];
+    yield 'FE sin gValorItem en un ítem (DE) → 1850' => [function () {
+    $de = self::aRde(F::facturaContado())->getDE();
+    unset($de->gDtipDe->gCamItem[0]->gValorItem);
+    return $de;
+    }, '1850', 'E720'];
+    yield 'FE sin gCamIVA en un ítem (DE) → 1900' => [function () {
+    $de = self::aRde(F::facturaContado())->getDE();
+    unset($de->gDtipDe->gCamItem[0]->gCamIVA);
+    return $de;
+    }, '1900', 'E730'];
+    yield 'NR con gCamIVA en un ítem (DE) → 1901' => [function () {
+    $de = self::aRde(F::notaDeRemision())->getDE();
+    $de->gDtipDe->gCamItem[0]->gCamIVA = new GCamIVA();
+    return $de;
+    }, '1901', 'E730'];
+    yield 'NC con carga (DE) → 2390' => [function () {
+    $de = self::aRde(F::notaDeCredito())->getDE();
+    $g = new GCamGen();
+    $g->gCamCarg = new GCamCarg();
+    $de->gCamGen = $g;
+    return $de;
+    }, '2390', 'G050'];
   }
 
   #[DataProvider('presenciaDeGrupos')]

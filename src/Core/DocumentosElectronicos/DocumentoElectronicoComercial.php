@@ -8,7 +8,6 @@ use IonysDev\Pkuatia\Core\Constants\OpeComCondTipCam;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipImp;
 use IonysDev\Pkuatia\Core\Constants\OpeComTipTrans;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
-use IonysDev\Pkuatia\Core\DocumentosElectronicos\DocumentoElectronico;
 use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 use IonysDev\Pkuatia\Core\Fields\DE\D\GOblAfe;
 use IonysDev\Pkuatia\Core\Fields\DE\D\GOpeCom;
@@ -18,22 +17,21 @@ use IonysDev\Pkuatia\Core\Fields\DE\D\GOpeCom;
  */
 class DocumentoElectronicoComercial extends DocumentoElectronico
 {
-  
   //////////////////////////////////////////
   // Atributos
   //////////////////////////////////////////
-  
+
   public GOpeCom $gOpeCom; // D010 -Campos inherentes a la operación comercial
 
   //////////////////////////////////////////
   // Constructor
   //////////////////////////////////////////
-  
+
   public function __construct()
   {
     parent::__construct();
     $this->gOpeCom = new GOpeCom();
-  }  
+  }
 
   //////////////////////////////////////////
   // Setters
@@ -42,11 +40,11 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
   /**
    * Establece el tipo de transacción de la operación comercial.
    * Valor obligatorio para los documentos electrónicos comerciales.
-   * 
+   *
    * @param OpeComTipTrans $tipTra Tipo de transacción de la operación comercial
-   * 
+   *
    * @return self
-   * 
+   *
    */
   public function setTipoDeTransaccion(int|OpeComTipTrans $tipTra): self
   {
@@ -56,9 +54,9 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
 
   /**
    * Establece el tipo de impuesto afectado por la operación comercial.
-   * 
+   *
    * @param OpeComTipImp $tipImp Tipo de impuesto afectado por la operación comercial
-   * 
+   *
    * @return self
    */
   public function setTipoDeImpuestoAfectado(int|OpeComTipImp $tipImp): self
@@ -70,9 +68,9 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
   /**
    * Establece la moneda de la operación comercial. Se debe expresar en código de moneda ISO 4217.
    * Valor por defecto: PYG
-   * 
+   *
    * @param String $moneda Código de moneda ISO 4217
-   * 
+   *
    * @return self
    */
   public function setMoneda(string $moneda): self
@@ -83,9 +81,9 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
 
   /**
    * Establece la condición de aplicación de tipo de cambio. Valor obligatorio para los documentos electrónicos comerciales con moneda diferente a PYG.
-   * 
+   *
    * @param OpeComCondTipCam $condTipCam Condición de tipo de cambio
-   * 
+   *
    * @return self
    */
   public function setCondicionTipoDeCambio(int|OpeComCondTipCam $condTipCam): self
@@ -96,9 +94,9 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
 
   /**
    * Establece la tasa de cambio. Valor obligatorio para los documentos electrónicos comerciales con moneda diferente a PYG.
-   * 
+   *
    * @param string $tasaDeCambio Tasa de cambio expresada en cadena decimal para procesarse con BCMath.
-   * 
+   *
    * @return self
    */
   public function setTipoDeCambio(string $tasaDeCambio): self
@@ -139,9 +137,9 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
   // Getters
   //////////////////////////////////////////
 
-  
 
-  
+
+
 
   //////////////////////////////////////////
   // Otros Métodos
@@ -153,7 +151,7 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
   public function documentoElectronicoComercialToRDE(): RDE
   {
     $rde = $this->documentoElectronicoToRDE();
-    if($this->getTipoDocumentoElectronico() != TimbTiDE::Factura && $this->getTipoDocumentoElectronico() != TimbTiDE::Autofactura) {
+    if ($this->getTipoDocumentoElectronico() != TimbTiDE::Factura && $this->getTipoDocumentoElectronico() != TimbTiDE::Autofactura) {
       $this->gOpeCom->setITipTra(null);
     }
     $rde->DE->gDatGralOpe->gOpeCom = $this->gOpeCom;

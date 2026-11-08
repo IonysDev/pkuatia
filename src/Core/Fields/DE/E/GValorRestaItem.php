@@ -12,7 +12,7 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     EA001 
+ * Nodo Id:     EA001
  * Nombre:      gValorRestaItem
  * Descripción: Campos que describen los descuentos, anticipos valor total por ítem.
  * Nodo Padre:  E720
@@ -25,7 +25,7 @@ class GValorRestaItem extends BaseSifenField
   public string $dDescGloItem;    // EA004 - 1-15p(0-8) - 0-1 - Descuento global sobre el precio unitario por ítem (incluidos impuestos)
   public string $dAntPreUniIt;    // EA006 - 1-15p(0-8) - 0-1 - Anticipo particular sobre el precio unitario por ítem (incluidos impuestos)
   public string $dAntGloPreUniIt; // EA007 - 1-15p(0-8) - 0-1 - Anticipo global sobre el  precio unitario por ítem  (incluidos impuestos)
-  public string $dTotOpeItem;     // EA008 - 1-15p(0-8) - 1-1 - Valor total de la operación por ítem 
+  public string $dTotOpeItem;     // EA008 - 1-15p(0-8) - 1-1 - Valor total de la operación por ítem
   public string $dTotOpeGs;       // EA009 - 1-15p(0-8) - 0-1 - Valor total de la operación por ítem en guaraníes
 
   ///////////////////////////////////////////////////////////////////////
@@ -41,8 +41,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDDescItem(string $dDescItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dDescItem, 15, 0, 8))
-    {
+    if (!ValueValidations::isValidStringDecimal($dDescItem, 15, 0, 8)) {
       throw new ValidacionException("Valor inválido de dDescItem: $dDescItem");
     }
     $this->dDescItem = $dDescItem;
@@ -58,8 +57,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDPorcDesIt(string $dPorcDesIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0, 8))
-    {
+    if (!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0, 8)) {
       throw new ValidacionException("Valor inválido de dPorcDesIt: $dPorcDesIt");
     }
     $this->dPorcDesIt = $dPorcDesIt;
@@ -76,8 +74,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDDescGloItem(string $dDescGloItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0, 8))
-    {
+    if (!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0, 8)) {
       throw new ValidacionException("Valor inválido de dDescGloItem: $dDescGloItem");
     }
     $this->dDescGloItem = $dDescGloItem;
@@ -94,8 +91,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDAntPreUniIt(string $dAntPreUniIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0, 8))
-    {
+    if (!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0, 8)) {
       throw new ValidacionException("Valor inválido de dAntPreUniIt: $dAntPreUniIt");
     }
     $this->dAntPreUniIt = $dAntPreUniIt;
@@ -112,8 +108,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDAntGloPreUniIt(string $dAntGloPreUniIt): self
   {
-    if(!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0, 8))
-    {
+    if (!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0, 8)) {
       throw new ValidacionException("Valor inválido de dAntGloPreUniIt: $dAntGloPreUniIt");
     }
     $this->dAntGloPreUniIt = $dAntGloPreUniIt;
@@ -130,8 +125,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDTotOpeItem(string $dTotOpeItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0, 8))
-    {
+    if (!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0, 8)) {
       throw new ValidacionException("Valor inválido de dTotOpeItem: $dTotOpeItem");
     }
     $this->dTotOpeItem = $dTotOpeItem;
@@ -147,8 +141,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function setDTotOpeGs(string $dTotOpeGs): self
   {
-    if(!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0, 8))
-    {
+    if (!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0, 8)) {
       throw new ValidacionException("Valor inválido de dTotOpeGs: $dTotOpeGs");
     }
     $this->dTotOpeGs = $dTotOpeGs;
@@ -166,8 +159,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDDescItem(): string
   {
-    if(!isset($this->dDescItem))
-    {
+    if (!isset($this->dDescItem)) {
       return '0';
     }
     return $this->dDescItem;
@@ -187,8 +179,7 @@ class GValorRestaItem extends BaseSifenField
 
   public function getDPorcDesIt(): string
   {
-    if(!isset($this->dPorcDesIt))
-    {
+    if (!isset($this->dPorcDesIt)) {
       return '0';
     }
     return $this->dPorcDesIt;
@@ -201,8 +192,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDDescGloItem(): string
   {
-    if(!isset($this->dDescGloItem))
-    {
+    if (!isset($this->dDescGloItem)) {
       return '0';
     }
     return $this->dDescGloItem;
@@ -234,8 +224,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDAntPreUniIt(): string
   {
-    if(!isset($this->dAntPreUniIt))
-    {
+    if (!isset($this->dAntPreUniIt)) {
       return '0';
     }
     return $this->dAntPreUniIt;
@@ -255,8 +244,7 @@ class GValorRestaItem extends BaseSifenField
    */
   public function getDAntGloPreUniIt(): string
   {
-    if(!isset($this->dAntGloPreUniIt))
-    {
+    if (!isset($this->dAntGloPreUniIt)) {
       return '0';
     }
     return $this->dAntGloPreUniIt;
@@ -309,41 +297,34 @@ class GValorRestaItem extends BaseSifenField
 
   /**
    * Instancia un objeto GValorRestaItem desde un SimpleXMLElement
-   * 
+   *
    * @param  SimpleXMLElement $node
-   * 
+   *
    * @return GValorRestaItem
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): GValorRestaItem
   {
-    if(strcmp($node->getName(), 'gValorRestaItem') != 0)
-    {
+    if (strcmp($node->getName(), 'gValorRestaItem') != 0) {
       throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a gValorRestaItem");
     }
     $res = new GValorRestaItem();
-    if(isset($node->dDescItem))
-    {
+    if (isset($node->dDescItem)) {
       $res->setDDescItem(strval($node->dDescItem));
     }
-    if(isset($node->dPorcDesIt))
-    {
+    if (isset($node->dPorcDesIt)) {
       $res->setDPorcDesIt(strval($node->dPorcDesIt));
     }
-    if(isset($node->dDescGloItem))
-    {
+    if (isset($node->dDescGloItem)) {
       $res->setDDescGloItem(strval($node->dDescGloItem));
     }
-    if(isset($node->dAntPreUniIt))
-    {
+    if (isset($node->dAntPreUniIt)) {
       $res->setDAntPreUniIt(strval($node->dAntPreUniIt));
     }
-    if(isset($node->dAntGloPreUniIt))
-    {
+    if (isset($node->dAntGloPreUniIt)) {
       $res->setDAntGloPreUniIt(strval($node->dAntGloPreUniIt));
     }
     $res->setDTotOpeItem(strval($node->dTotOpeItem));
-    if(isset($node->dTotOpeGs))
-    {
+    if (isset($node->dTotOpeGs)) {
       $res->setDTotOpeGs(strval($node->dTotOpeGs));
     }
     return $res;
@@ -351,7 +332,7 @@ class GValorRestaItem extends BaseSifenField
 
   /**
    * Convierte este GValorRestaItem en un DOMElement que puede ser insertado en el DOMDocument especificado.
-   * 
+   *
    * @param  DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
    * @return DOMElement El DOMElement creado.
@@ -359,92 +340,98 @@ class GValorRestaItem extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gValorRestaItem');
-    if(isset($this->dDescItem))
+    if (isset($this->dDescItem)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dDescItem', $this->dDescItem));
-    if(isset($this->dPorcDesIt))
+    }
+    if (isset($this->dPorcDesIt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dPorcDesIt', $this->getDPorcDesIt()));
-    if(isset($this->dDescGloItem))
+    }
+    if (isset($this->dDescGloItem)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dDescGloItem', $this->getDDescGloItem()));
-    if(isset($this->dAntPreUniIt))
+    }
+    if (isset($this->dAntPreUniIt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dAntPreUniIt', $this->getDAntPreUniIt()));
-    if(isset($this->dAntGloPreUniIt))
+    }
+    if (isset($this->dAntGloPreUniIt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dAntGloPreUniIt', $this->getDAntGloPreUniIt()));
+    }
     $res->appendChild(XmlHelper::elemento($doc, 'dTotOpeItem', $this->getDTotOpeItem()));
-    if(isset($this->dTotOpeGs))
+    if (isset($this->dTotOpeGs)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTotOpeGs', $this->getDTotOpeGs()));
+    }
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GValorRestaItem();
-    if( isset($object->dDescItem))
-    {
+    if (isset($object->dDescItem)) {
       $res->setDDescItem(strval($object->dDescItem));
     }
-    if( isset($object->dPorcDesIt))
-    {
+    if (isset($object->dPorcDesIt)) {
       $res->setDPorcDesIt(strval($object->dPorcDesIt));
     }
-    if( isset($object->dDescGloItem))
-    {
+    if (isset($object->dDescGloItem)) {
       $res->setDDescGloItem(strval($object->dDescGloItem));
     }
 
-    if( isset($object->dAntPreUniIt))
-    {
+    if (isset($object->dAntPreUniIt)) {
       $res->setDAntPreUniIt(strval($object->dAntPreUniIt));
     }
 
-    if( isset($object->dAntGloPreUniIt))
-    {
+    if (isset($object->dAntGloPreUniIt)) {
       $res->setDAntGloPreUniIt(strval($object->dAntGloPreUniIt));
     }
 
-    if( isset($object->dTotOpeItem))
-    {
+    if (isset($object->dTotOpeItem)) {
       $res->setDTotOpeItem(strval($object->dTotOpeItem));
     }
 
-    if( isset($object->dTotOpeGs))
-    {
+    if (isset($object->dTotOpeGs)) {
       $res->setDTotOpeGs(strval($object->dTotOpeGs));
     }
-    
+
     return $res;
   }
 
   /**
    * Instancia un objeto GValorRestaItem a partir de un DOMElement que lo representa.
-   * 
+   *
    * @param  DOMElement $node
-   * 
+   *
    * @return self
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gValorRestaItem') != 0)
+    if (strcmp($node->nodeName, 'gValorRestaItem') != 0) {
         throw new ValidacionException('[GValorRestaItem] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new self();
-    if($node->getElementsByTagName('dDescItem')->length > 0)
+    if ($node->getElementsByTagName('dDescItem')->length > 0) {
       $res->setDDescItem(trim($node->getElementsByTagName('dDescItem')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dPorcDesIt')->length > 0)
+    }
+    if ($node->getElementsByTagName('dPorcDesIt')->length > 0) {
       $res->setDPorcDesIt(trim($node->getElementsByTagName('dPorcDesIt')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dDescGloItem')->length > 0)
+    }
+    if ($node->getElementsByTagName('dDescGloItem')->length > 0) {
       $res->setDDescGloItem(trim($node->getElementsByTagName('dDescGloItem')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dAntPreUniIt')->length > 0)
+    }
+    if ($node->getElementsByTagName('dAntPreUniIt')->length > 0) {
       $res->setDAntPreUniIt(trim($node->getElementsByTagName('dAntPreUniIt')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dAntGloPreUniIt')->length > 0)
+    }
+    if ($node->getElementsByTagName('dAntGloPreUniIt')->length > 0) {
       $res->setDAntGloPreUniIt(trim($node->getElementsByTagName('dAntGloPreUniIt')->item(0)->nodeValue));
+    }
     $res->setDTotOpeItem(trim($node->getElementsByTagName('dTotOpeItem')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dTotOpeGs')->length > 0)
+    if ($node->getElementsByTagName('dTotOpeGs')->length > 0) {
       $res->setDTotOpeGs(trim($node->getElementsByTagName('dTotOpeGs')->item(0)->nodeValue));
+    }
     return $res;
   }
 

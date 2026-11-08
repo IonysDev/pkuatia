@@ -12,34 +12,33 @@ use DateTime;
 use DOMDocument;
 use DOMElement;
 use SimpleXMLElement;
-use Stringable;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     E900    
- * Nombre:      gTransp    
- * Descripción: Campos que describen  el transporte de mercaderías    
+ * Nodo Id:     E900
+ * Nombre:      gTransp
+ * Descripción: Campos que describen  el transporte de mercaderías
  * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico
  */
 class GTransp extends BaseSifenField
 {
                                    // Id - Longitud - Ocurrencia - Descripción
-  public int        $iTipTrans;    // E901 - 1    - 0-1  - Tipo de transporte
-  public string     $dDesTipTrans; // E902 - 6-7  - 0-1  - Descripción del tipo de transporte
-  public int        $iModTrans;    // E903 - 1    - 1-1  - Modalidad de transporte
-  public string     $dDesModTrans; // E904 - 5-10 - 1-1  - Descripción de la modalidad del transporte
-  public int        $iRespFlete;   // E905 - 1    - 1-1  - Responsable del costo del flete
-  public ?string    $cCondNeg;     // E906 - 3    - 0-1  - Condición de la negociación 
-  public ?string    $dNuManif;     // E907 - 1-15 - 0-1  - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional 
-  public ?string    $dNuDespImp;   // E908 - 16   - 0-1  - Número de despacho de importación
-  public ?DateTime  $dIniTras;     // E909 - 10   - 0-1  - Fecha estimada de inicio de traslado
-  public ?DateTime  $dFinTras;     // E910 - 10   - 0-1  - Fecha estimada de fin  de traslado
-  public ?string    $cPaisDest;    // E911 - 3    - 0-1  - Código del país de destino
-  public ?string    $dPaisDest;    // E912 - 5-50 - 0-1  - Descripción del país de destino
-  public ?GCamSal   $gCamSal;      // E920 - G    - 0-1  - Campos que identifican el local de salida de las mercaderías 
-  public ?array     $gCamEnt;      // E940 - G    - 0-99 - Campos que identifican el local de la entrega de las mercaderías
-  public ?array     $gVehTras;     // E960 - G    - 0-4  - Campos que identifican al vehículo del traslado de mercaderías
+  public int $iTipTrans;    // E901 - 1    - 0-1  - Tipo de transporte
+  public string $dDesTipTrans; // E902 - 6-7  - 0-1  - Descripción del tipo de transporte
+  public int $iModTrans;    // E903 - 1    - 1-1  - Modalidad de transporte
+  public string $dDesModTrans; // E904 - 5-10 - 1-1  - Descripción de la modalidad del transporte
+  public int $iRespFlete;   // E905 - 1    - 1-1  - Responsable del costo del flete
+  public ?string $cCondNeg;     // E906 - 3    - 0-1  - Condición de la negociación
+  public ?string $dNuManif;     // E907 - 1-15 - 0-1  - Número de manifiesto o conocimiento de carga/declaración de tránsito aduanero/ Carta de porte internacional
+  public ?string $dNuDespImp;   // E908 - 16   - 0-1  - Número de despacho de importación
+  public ?DateTime $dIniTras;     // E909 - 10   - 0-1  - Fecha estimada de inicio de traslado
+  public ?DateTime $dFinTras;     // E910 - 10   - 0-1  - Fecha estimada de fin  de traslado
+  public ?string $cPaisDest;    // E911 - 3    - 0-1  - Código del país de destino
+  public ?string $dPaisDest;    // E912 - 5-50 - 0-1  - Descripción del país de destino
+  public ?GCamSal $gCamSal;      // E920 - G    - 0-1  - Campos que identifican el local de salida de las mercaderías
+  public ?array $gCamEnt;      // E940 - G    - 0-99 - Campos que identifican el local de la entrega de las mercaderías
+  public ?array $gVehTras;     // E960 - G    - 0-4  - Campos que identifican al vehículo del traslado de mercaderías
   public ?GCamTrans $gCamTrans;    // E980 - G    - 0-1  - Campos que identifican al transportista
 
   ///////////////////////////////////////////////////////////////////////
@@ -54,8 +53,8 @@ class GTransp extends BaseSifenField
    * - 2: Tercero
    *
    * @param int|GTranspTipTrans $iTipTrans Código del tipo de transporte.
-   * 
-   * @return self 
+   *
+   * @return self
    */
   public function setITipTrans(int|GTranspTipTrans $iTipTrans): self
   {
@@ -67,9 +66,9 @@ class GTransp extends BaseSifenField
   /**
    * Establece la descripción del tipo de transporte (E902).
    * Esta función no debería ser llamada directamente, salvo para deserializar un DE existente, ya que el valor de este campo se establece automáticamente al establecer el valor de iTipTrans (E901).
-   * 
+   *
    * @param String $dDesTipTrans Descripción del tipo de transporte.
-   * 
+   *
    * @return self
    */
   public function setDDesTipTrans(string $dDesTipTrans): self
@@ -96,9 +95,9 @@ class GTransp extends BaseSifenField
   /**
    * Establece la descripción de la modalidad de transporte (E904).
    * Esta función no debería ser llamada directamente, salvo para deserializar un DE existente, ya que el valor de este campo se establece automáticamente al establecer el valor de iModTrans (E903).
-   * 
+   *
    * @param String $dDesModTrans Descripción de la modalidad de transporte.
-   * 
+   *
    * @return self
    */
   public function setDDesModTrans(string $dDesModTrans): self
@@ -220,7 +219,7 @@ class GTransp extends BaseSifenField
   }
 
   /**
-   * E902 Descripción del tipo de transporte 
+   * E902 Descripción del tipo de transporte
    *
    * @return String
    */
@@ -419,147 +418,159 @@ class GTransp extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gTransp');
-    
+
     // E901 - iTipTrans (0-1, obligatorio si C002 = 7)
     if (isset($this->iTipTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipTrans', $this->getITipTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipTrans', $this->getDDesTipTrans()));
     }
-    
+
     // E903 - iModTrans (1-1, obligatorio)
     $res->appendChild(XmlHelper::elemento($doc, 'iModTrans', $this->getIModTrans()));
     $res->appendChild(XmlHelper::elemento($doc, 'dDesModTrans', $this->getDDesModTrans()));
-    
+
     // E905 - iRespFlete (1-1, obligatorio)
     $res->appendChild(XmlHelper::elemento($doc, 'iRespFlete', $this->getIRespFlete()));
-    
+
     // E906 - cCondNeg (0-1, opcional)
     if (isset($this->cCondNeg)) {
       $res->appendChild(XmlHelper::elemento($doc, 'cCondNeg', $this->getCCondNeg()));
     }
-    
+
     // E907 - dNuManif (0-1, opcional)
     if (isset($this->dNuManif)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNuManif', $this->getDNuManif()));
     }
-    
+
     // E908 - dNuDespImp (0-1, opcional, obligatorio si E501 = 5)
     if (isset($this->dNuDespImp)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNuDespImp', $this->getDNuDespImp()));
     }
-    
+
     // E909 - dIniTras (0-1, opcional, obligatorio si C002 = 7)
     if (isset($this->dIniTras)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dIniTras', $this->getDIniTras()->format('Y-m-d')));
     }
-    
+
     // E910 - dFinTras (0-1, opcional, obligatorio si existe E909)
     if (isset($this->dFinTras)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dFinTras', $this->getDFinTras()->format('Y-m-d')));
     }
-    
+
     // E911 - cPaisDest (0-1, opcional)
     if (isset($this->cPaisDest)) {
       $res->appendChild(XmlHelper::elemento($doc, 'cPaisDest', $this->getCPaisDest()));
       // E912 - dDesPaisDest (0-1, obligatorio si existe E911)
       $res->appendChild(XmlHelper::elemento($doc, 'dDesPaisDest', $this->getDDesPaisDest()));
     }
-    
+
     // E920 - gCamSal (0-1, obligatorio si C002 = 7)
     if (isset($this->gCamSal)) {
       $res->appendChild($this->gCamSal->toDOMElement($doc));
     }
-    
+
     // E940 - gCamEnt (0-99, obligatorio si C002 = 7, es un array)
     if (isset($this->gCamEnt) && is_array($this->gCamEnt)) {
       foreach ($this->gCamEnt as $gCamEntItem) {
         $res->appendChild($gCamEntItem->toDOMElement($doc));
       }
     }
-    
+
     // E960 - gVehTras (0-4, obligatorio si C002 = 7, es un array)
     if (isset($this->gVehTras) && is_array($this->gVehTras)) {
       foreach ($this->gVehTras as $gVehTrasItem) {
         $res->appendChild($gVehTrasItem->toDOMElement($doc));
       }
     }
-    
+
     // E980 - gCamTrans (0-1, obligatorio si C002 = 7)
     if (isset($this->gCamTrans)) {
       $res->appendChild($this->gCamTrans->toDOMElement($doc));
     }
-    
+
     return $res;
   }
 
   /**
    * Instancia un objeto GTransp a partir de un DOMElement obtenido de un documento XML.
-   * 
+   *
    * @param DOMElement $node Nodo DOMElement que contiene los datos.
-   * 
+   *
    * @return self Objeto GTransp instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gTransp') != 0)
+    if (strcmp($node->nodeName, 'gTransp') != 0) {
       throw new ValidacionException('[GTransp] El nombre del nodo no es gTransp: ' . $node->nodeName);
+    }
     $res = new self();
-    
-    if($node->getElementsByTagName('iTipTrans')->length > 0)
+
+    if ($node->getElementsByTagName('iTipTrans')->length > 0) {
       $res->setITipTrans(intval($node->getElementsByTagName('iTipTrans')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('iModTrans')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('iModTrans')->length > 0) {
       $res->setIModTrans(intval($node->getElementsByTagName('iModTrans')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('iRespFlete')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('iRespFlete')->length > 0) {
       $res->setIRespFlete(intval($node->getElementsByTagName('iRespFlete')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cCondNeg')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cCondNeg')->length > 0) {
       $res->setCCondNeg($node->getElementsByTagName('cCondNeg')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNuManif')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNuManif')->length > 0) {
       $res->setDNuManif($node->getElementsByTagName('dNuManif')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNuDespImp')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dNuDespImp')->length > 0) {
       $res->setDNuDespImp($node->getElementsByTagName('dNuDespImp')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dIniTras')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dIniTras')->length > 0) {
       $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dIniTras')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dFinTras')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('dFinTras')->length > 0) {
       $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $node->getElementsByTagName('dFinTras')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cPaisDest')->length > 0)
+    }
+
+    if ($node->getElementsByTagName('cPaisDest')->length > 0) {
       $res->setCPaisDest($node->getElementsByTagName('cPaisDest')->item(0)->nodeValue);
-    
+    }
+
     // E920 - gCamSal (0-1, puede haber solo uno)
-    if($node->getElementsByTagName('gCamSal')->length > 0)
+    if ($node->getElementsByTagName('gCamSal')->length > 0) {
       $res->setGCamSal(GCamSal::FromDOMElement($node->getElementsByTagName('gCamSal')->item(0)));
-    
+    }
+
     // E940 - gCamEnt (0-99, es un array, puede haber múltiples)
     $gCamEntNodes = $node->getElementsByTagName('gCamEnt');
-    if($gCamEntNodes->length > 0) {
+    if ($gCamEntNodes->length > 0) {
       $gCamEntArray = [];
-      foreach($gCamEntNodes as $gCamEntNode) {
+      foreach ($gCamEntNodes as $gCamEntNode) {
         $gCamEntArray[] = GCamEnt::FromDOMElement($gCamEntNode);
       }
       $res->setGCamEnt($gCamEntArray);
     }
-    
+
     // E960 - gVehTras (0-4, es un array, puede haber múltiples)
     $gVehTrasNodes = $node->getElementsByTagName('gVehTras');
-    if($gVehTrasNodes->length > 0) {
+    if ($gVehTrasNodes->length > 0) {
       $gVehTrasArray = [];
-      foreach($gVehTrasNodes as $gVehTrasNode) {
+      foreach ($gVehTrasNodes as $gVehTrasNode) {
         $gVehTrasArray[] = GVehTras::FromDOMElement($gVehTrasNode);
       }
       $res->setGVehTras($gVehTrasArray);
     }
-    
+
     // E980 - gCamTrans (0-1, puede haber solo uno)
-    if($node->getElementsByTagName('gCamTrans')->length > 0)
+    if ($node->getElementsByTagName('gCamTrans')->length > 0) {
       $res->setGCamTrans(GCamTrans::FromDOMElement($node->getElementsByTagName('gCamTrans')->item(0)));
-    
+    }
+
     return $res;
   }
 
@@ -672,40 +683,31 @@ class GTransp extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GTransp();
-    if(isset($object->iModTrans))
-    {
+    if (isset($object->iModTrans)) {
       $res->setIModTrans(intval($object->iModTrans));
     }
-    if(isset($object->iTipTrans))
-    {
+    if (isset($object->iTipTrans)) {
       $res->setITipTrans(intval($object->iTipTrans));
     }
-    if(isset($object->iRespFlete))
-    {
+    if (isset($object->iRespFlete)) {
       $res->setIRespFlete(intval($object->iRespFlete));
     }
-    if(isset($object->cCondNeg))
-    {
+    if (isset($object->cCondNeg)) {
       $res->setCCondNeg($object->cCondNeg);
     }
-    if(isset($object->dNuManif))
-    {
+    if (isset($object->dNuManif)) {
       $res->setDNuManif($object->dNuManif);
     }
-    if(isset($object->dNuDespImp))
-    {
+    if (isset($object->dNuDespImp)) {
       $res->setDNuDespImp($object->dNuDespImp);
     }
-    if(isset($object->dIniTras))
-    {
+    if (isset($object->dIniTras)) {
       $res->setDIniTras(DateTime::createFromFormat('Y-m-d', $object->dIniTras));
     }
-    if(isset($object->dFinTras))
-    {
+    if (isset($object->dFinTras)) {
       $res->setDFinTras(DateTime::createFromFormat('Y-m-d', $object->dFinTras));
     }
-    if(isset($object->cPaisDest))
-    {
+    if (isset($object->cPaisDest)) {
       $res->setCPaisDest($object->cPaisDest);
     }
     if (isset($object->gCamSal)) {

@@ -33,15 +33,18 @@ final class CertificadoFirma
   /** Desde un PEM (si trae varios bloques o una clave, toma el primer certificado). */
   public static function desdePem(string $pem): self
   {
-    if (!preg_match('/-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/s', $pem, $m))
+    if (!preg_match('/-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/s', $pem, $m)) {
       throw new ValidacionException('[CertificadoFirma] El texto no contiene un certificado PEM.');
+    }
     $certificado = $m[0];
     $info = @openssl_x509_parse($certificado);
-    if ($info === false)
+    if ($info === false) {
       throw new ValidacionException('[CertificadoFirma] No se pudo leer el certificado X.509.');
+    }
     $serial = $info['subject']['serialNumber'] ?? null;
-    if (is_array($serial))
+    if (is_array($serial)) {
       $serial = implode(', ', $serial);
+    }
     $san = $info['extensions']['subjectAltName'] ?? '';
     $zona = new DateTimeZone(Constants::SIFEN_TIMEZONE);
     return new self(
@@ -72,8 +75,9 @@ final class CertificadoFirma
   /** RUC con dígito verificador ("80000000-5") a partir de un texto del certificado, o null. */
   public static function extraerRuc(string $texto): ?string
   {
-    if (preg_match('/RUC\s*[:=\-]?\s*([0-9]{3,8})\s*-?\s*([0-9A-D])\b/i', $texto, $m))
+    if (preg_match('/RUC\s*[:=\-]?\s*([0-9]{3,8})\s*-?\s*([0-9A-D])\b/i', $texto, $m)) {
       return $m[1] . '-' . strtoupper($m[2]);
+    }
     return null;
   }
 
@@ -81,8 +85,9 @@ final class CertificadoFirma
   private static function nombre(array $dn): string
   {
     $partes = [];
-    foreach ($dn as $clave => $valor)
+    foreach ($dn as $clave => $valor) {
       $partes[] = $clave . '=' . (is_array($valor) ? implode('+', $valor) : $valor);
+    }
     return implode(', ', $partes);
   }
 }

@@ -2,7 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\Request\Event\GDE;
 
-use IonysDev\Pkuatia\DataMappings\CountryMapping;
 use IonysDev\Pkuatia\DataMappings\DepartamentoMapping;
 use IonysDev\Pkuatia\DataMappings\PyGeoCodesMapping;
 use DOMDocument;
@@ -12,39 +11,39 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo: GET001 - rGeVeTr - Grupos de Campos Generales del Evento 
+ * Nodo: GET001 - rGeVeTr - Grupos de Campos Generales del Evento
  * Padre: GDE007 - gGroupTiEvt - Grupo de campos del tipo de evento
  */
 class RGeVeTr
 {
                                // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public string $Id;           // GET002 - CDC del DTE - 44 - 1 - 1-1
-  public int    $dMotEv;       // GET003 - Motivo del evento 1-1
-  public int    $cDepEnt;      // GET004 - Código del departamento del local de la entrega - 1-2 - 0-1
+  public int $dMotEv;       // GET003 - Motivo del evento 1-1
+  public int $cDepEnt;      // GET004 - Código del departamento del local de la entrega - 1-2 - 0-1
   public string $dDesDepEnt;   // GET005 - Descripción del departamento del local de la entrega - 6-16 - 0-1
-  public int    $cDisEnt;      // GET006 - Código del distrito del  local de la entrega - 1-4 - 0-1
+  public int $cDisEnt;      // GET006 - Código del distrito del  local de la entrega - 1-4 - 0-1
   public string $dDesDisEnt;   // GET007 - Descripción de distrito del local de la entrega -  1-30 - 0-1
-  public int    $cCiuEnt;      // GET008 - Código de la ciudad del local de la entrega - 1-5 - 0-1
+  public int $cCiuEnt;      // GET008 - Código de la ciudad del local de la entrega - 1-5 - 0-1
   public string $dDesCiuEnt;   // GET009 - Descripción de ciudad del local de la entrega - 1-30 - 0-1
   public string $dDirEnt;      // GET010 - Dirección del local de la entrega - 1-255 - 0-1
-  public int    $dNumCas;      // GET011 - Número de casa del local de la entrega - 1-6 - 0-1
+  public int $dNumCas;      // GET011 - Número de casa del local de la entrega - 1-6 - 0-1
   public string $dCompDir1;    // GET012 - Complemento de dirección del local de la entrega - 1-255 - 0-1
   public string $dNomChof;     // GET013 - Nombre y apellido del chofer - 4-69 - 1-1
   public string $dNumIDChof;   // GET014 - Número de documento  de identidad del chofer -  1-20 - 0-1
-  public int    $iNatTrans;    // GET015 - Naturaleza del transportista - 1- 0-1
+  public int $iNatTrans;    // GET015 - Naturaleza del transportista - 1- 0-1
   public string $dRucTrans;    // GET016 - RUC del transportista 3-8 - 0-1
-  public int    $dDVTrans;     // GET017 - Dígito verificador del RUC del transportista - 1 - 0-1
+  public int $dDVTrans;     // GET017 - Dígito verificador del RUC del transportista - 1 - 0-1
   public string $dNomTrans;    // GET018 - Nombre o razón social del transportista - 4-60 - 0-1
-  public int    $iTipIDTrans;  // GET019 - Tipo de documento de  identidad del  transportista - 1- 0-1
+  public int $iTipIDTrans;  // GET019 - Tipo de documento de  identidad del  transportista - 1- 0-1
   public string $dDTipIDTrans; // GET020 - Descripción del tipo de documento de identidad del transportista - 9-20 - 0-1
   public string $dNumIDTrans;  // GET021 - Número de documento de identidad del transportista - 1-20 - 0-1
-  public int    $iTipTrans;    // GET022 - Tipo de transporte - 1 - 0-1
+  public int $iTipTrans;    // GET022 - Tipo de transporte - 1 - 0-1
   public string $dDesTipTrans; // GET023 - Descripción del tipo de transporte - 6-7 - 0-1
-  public int    $iModTrans;    // GET024 - Modalidad del transporte - 1 - 0-1
+  public int $iModTrans;    // GET024 - Modalidad del transporte - 1 - 0-1
   public string $dDesModTrans; // GET025 - Descripción de la modalidad del transporte - 5-10 - 0-1
   public string $dTiVehTras;   // GET026 - Tipo de vehículo - 4-10 - 0-1
   public string $dMarVeh;      // GET027 - Marca del vehículo - 1-10  - 0-1
-  public int    $dTipIdenVeh;  // GET028 - Tipo de identificación del vehículo - 1 - 0-1
+  public int $dTipIdenVeh;  // GET028 - Tipo de identificación del vehículo - 1 - 0-1
   public string $dNroIDVeh;    // GET029 - Número de identificación del vehículo 1-20 - 0-1
   public string $dNroMatVeh;   // GET030 - Número de matrícula del vehículo - 6 (longitud exacta, tdNroMatVeh) - 0-1
 
@@ -758,11 +757,14 @@ class RGeVeTr
    */
   public function validar(): void
   {
-    if (!isset($this->Id) || !isset($this->dMotEv))
+    if (!isset($this->Id) || !isset($this->dMotEv)) {
       throw new ValidacionException('[RGeVeTr] Id (GET002, CDC de la Nota de Remisión) y dMotEv (GET003, motivo) son obligatorios.');
+    }
     $faltan = [];
     $req = function (string $prop, string $desc) use (&$faltan): void {
-      if (!isset($this->$prop)) $faltan[] = "$prop ($desc)";
+      if (!isset($this->$prop)) {
+      $faltan[] = "$prop ($desc)";
+      }
     };
     switch ($this->dMotEv) {
       case 1: // Cambio del local de entrega
@@ -793,17 +795,23 @@ class RGeVeTr
         $req('dTiVehTras', 'GET026 tipo de vehículo');
         $req('dMarVeh', 'GET027 marca');
         $req('dTipIdenVeh', 'GET028 tipo de identificación del vehículo');
-        if (isset($this->dTipIdenVeh) && $this->dTipIdenVeh == 1) $req('dNroIDVeh', 'GET029 número de identificación del vehículo');
-        if (isset($this->dTipIdenVeh) && $this->dTipIdenVeh == 2) $req('dNroMatVeh', 'GET030 matrícula');
+        if (isset($this->dTipIdenVeh) && $this->dTipIdenVeh == 1) {
+        $req('dNroIDVeh', 'GET029 número de identificación del vehículo');
+        }
+        if (isset($this->dTipIdenVeh) && $this->dTipIdenVeh == 2) {
+        $req('dNroMatVeh', 'GET030 matrícula');
+        }
         break;
       default:
         throw new ValidacionException("[RGeVeTr] dMotEv (GET003) debe ser 1 cambio del local de entrega, 2 cambio del chofer, 3 cambio del transportista o 4 cambio de vehículo; se recibió {$this->dMotEv}.");
     }
-    if (count($faltan) > 0)
+    if (count($faltan) > 0) {
       throw new ValidacionException('[RGeVeTr] Para dMotEv = ' . $this->dMotEv . ' faltan: ' . implode(', ', $faltan) . '.');
+    }
     // tdNroMatVeh exige longitud exacta 6 (Evento_Types_v150.xsd:524-533), a diferencia del DE (hasta 7).
-    if (isset($this->dNroMatVeh) && mb_strlen($this->dNroMatVeh) !== 6)
+    if (isset($this->dNroMatVeh) && mb_strlen($this->dNroMatVeh) !== 6) {
       throw new ValidacionException("[RGeVeTr] dNroMatVeh (GET030) debe tener exactamente 6 caracteres en el evento (tdNroMatVeh, Evento_Types_v150.xsd:524-533); se recibió '{$this->dNroMatVeh}'.");
+    }
   }
 
   /**
@@ -834,30 +842,40 @@ class RGeVeTr
       $res->appendChild(XmlHelper::elemento($doc, 'cCiuEnt', $this->getCCiuEnt()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuEnt', $this->getDDesCiuEnt()));
     }
-    if (isset($this->dDirEnt))
+    if (isset($this->dDirEnt)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dDirEnt', $this->getDDirEnt()));
-    if (isset($this->dNumCas))
+    }
+    if (isset($this->dNumCas)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumCas', $this->getDNumCas()));
-    if (isset($this->dCompDir1))
+    }
+    if (isset($this->dCompDir1)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCompDir1', $this->getDCompDir1()));
-    if (isset($this->dNomChof))
+    }
+    if (isset($this->dNomChof)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNomChof', $this->getDNomChof()));
-    if (isset($this->dNumIDChof))
+    }
+    if (isset($this->dNumIDChof)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumIDChof', $this->getDNumIDChof()));
-    if (isset($this->iNatTrans))
+    }
+    if (isset($this->iNatTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iNatTrans', $this->getINatTrans()));
-    if (isset($this->dRucTrans))
+    }
+    if (isset($this->dRucTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dRucTrans', $this->getDRucTrans()));
-    if (isset($this->dDVTrans))
+    }
+    if (isset($this->dDVTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dDVTrans', $this->getDDVTrans()));
-    if (isset($this->dNomTrans))
+    }
+    if (isset($this->dNomTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNomTrans', $this->getDNomTrans()));
+    }
     if (isset($this->iTipIDTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getdDTipIDTrans()));
     }
-    if (isset($this->dNumIDTrans))
+    if (isset($this->dNumIDTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));
+    }
     if (isset($this->iTipTrans)) {
       $res->appendChild(XmlHelper::elemento($doc, 'iTipTrans', $this->getITipTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesTipTrans', $this->getDDesTipTrans()));
@@ -866,16 +884,21 @@ class RGeVeTr
       $res->appendChild(XmlHelper::elemento($doc, 'iModTrans', $this->getIModTrans()));
       $res->appendChild(XmlHelper::elemento($doc, 'dDesModTrans', $this->getDDesModTrans()));
     }
-    if (isset($this->dTiVehTras))
+    if (isset($this->dTiVehTras)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTiVehTras', $this->getDTiVehTras()));
-    if (isset($this->dMarVeh))
+    }
+    if (isset($this->dMarVeh)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
-    if (isset($this->dTipIdenVeh))
+    }
+    if (isset($this->dTipIdenVeh)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTipIdenVeh', $this->getDTipIdenVeh()));
-    if (isset($this->dNroIDVeh))
+    }
+    if (isset($this->dNroIDVeh)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNroIDVeh', $this->getDNroIDVeh()));
-    if (isset($this->dNroMatVeh))
+    }
+    if (isset($this->dNroMatVeh)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dNroMatVeh', $this->getDNroMatVeh()));
+    }
     return $res;
   }
 

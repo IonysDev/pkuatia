@@ -16,8 +16,8 @@ use IonysDev\Pkuatia\Core\Fields\Response\GResProc;
  * Nodo Padre:  Es raíz.
  */
 
-class RRetEnviDe implements RespuestaSifen {
-
+class RRetEnviDe implements RespuestaSifen
+{
     public RProtDe $rProtDe; // Valor convertido a objeto del XML de protocolo de procesamiento de documento electrónico.
 
     ///////////////////////////////////////////////////////////////////////
@@ -26,9 +26,9 @@ class RRetEnviDe implements RespuestaSifen {
 
     /**
      * Establece el valor en XML del xProtDe de la respuesta.
-     * 
+     *
      * @param RProtDe $rProtDe
-     * 
+     *
      * @return self
      */
     public function setRProtDe(RProtDe $rProtDe): self
@@ -40,10 +40,10 @@ class RRetEnviDe implements RespuestaSifen {
     ///////////////////////////////////////////////////////////////////////
     // Getters
     ///////////////////////////////////////////////////////////////////////
-    
+
     /**
      * Obtiene el valor en XML del xProtDe de la respuesta.
-     * 
+     *
      * @return RProtDe
      */
     public function getRProtDe(): RProtDe
@@ -58,18 +58,17 @@ class RRetEnviDe implements RespuestaSifen {
     /**
      * Crea una nueva instancia de RRetEnviDe a partir de un objeto stdClass.
      * Pensado para castear la respuesta a una llamada SOAP al SIFEN.
-     * 
+     *
      * @param stdClass $object
-     * 
+     *
      * @return self
      */
     public static function FromSifenResponseObject($object)
     {
-        if(is_null($object))
-        {
+        if (is_null($object)) {
             throw new RespuestaException("Error Processing Request: null", 1);
         }
-        
+
         $res = new RRetEnviDe();
         $res->setRProtDe(RProtDe::FromSifenResponseObject($object->rProtDe));
         return $res;

@@ -3,29 +3,27 @@
 namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
-use IonysDev\Pkuatia\Core\Fields\DE\E\GTransp;
 use DOMDocument;
 use DOMElement;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     E001    
- * Nombre:      gDtipDE   
- * Descripción: Campos específicos por tipo de Documento Electrónico (E001-E009)    
- * Nodo Padre:  A001 - DE - Campos firmados del DE    
+ * Nodo Id:     E001
+ * Nombre:      gDtipDE
+ * Descripción: Campos específicos por tipo de Documento Electrónico (E001-E009)
+ * Nodo Padre:  A001 - DE - Campos firmados del DE
  */
 
 class GDtipDE extends BaseSifenField
 {
-
-  public GCamFE   $gCamFE;   // E010 - - 0-1   - Campos que componen la Factura Electrónica
-  public GCamAE   $gCamAE;   // E300 - - 0-1   - Campos que componen la Autofactura Electrónica
+  public GCamFE $gCamFE;   // E010 - - 0-1   - Campos que componen la Factura Electrónica
+  public GCamAE $gCamAE;   // E300 - - 0-1   - Campos que componen la Autofactura Electrónica
   public GCamNCDE $gCamNCDE; // E400 - - 0-1   - Campos que componen la Nota de Crédito o Débito Electrónica
-  public GCamNRE  $gCamNRE;  // E500 - - 0-1   - Campos que componen la Nota de Remisión Electrónica
+  public GCamNRE $gCamNRE;  // E500 - - 0-1   - Campos que componen la Nota de Remisión Electrónica
   public GCamCond $gCamCond; // E600 - - 0-1   - Campos que describen la condición de la operación
-  public array    $gCamItem; // E700 - - 1-999 - Campos que describen los ítems de la operación (GCamItem[])
-  public GCamEsp  $gCamEsp;  // E790 - - 0-1   - Campos complementarios comerciales de uso específico
-  public GTransp  $gTransp;  // E900 - - 0-1   - Campos que describen  el transporte de mercaderías
+  public array $gCamItem; // E700 - - 1-999 - Campos que describen los ítems de la operación (GCamItem[])
+  public GCamEsp $gCamEsp;  // E790 - - 0-1   - Campos complementarios comerciales de uso específico
+  public GTransp $gTransp;  // E900 - - 0-1   - Campos que describen  el transporte de mercaderías
 
   /**
    * Constructor
@@ -46,10 +44,11 @@ class GDtipDE extends BaseSifenField
    */
   public function getGCamFE(): ?GCamFE
   {
-    if(isset($this->gCamFE))
+    if (isset($this->gCamFE)) {
       return $this->gCamFE;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -73,10 +72,11 @@ class GDtipDE extends BaseSifenField
    */
   public function getGCamAE(): ?GCamAE
   {
-    if(isset($this->gCamAE))
+    if (isset($this->gCamAE)) {
       return $this->gCamAE;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -100,10 +100,11 @@ class GDtipDE extends BaseSifenField
    */
   public function getGCamNCDE(): ?GCamNCDE
   {
-    if(isset($this->gCamNCDE))
+    if (isset($this->gCamNCDE)) {
       return $this->gCamNCDE;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -127,10 +128,11 @@ class GDtipDE extends BaseSifenField
    */
   public function getGCamNRE(): ?GCamNRE
   {
-    if(isset($this->gCamNRE))
+    if (isset($this->gCamNRE)) {
       return $this->gCamNRE;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
   /**
    * Establece el valor de gCamNRE
@@ -153,10 +155,11 @@ class GDtipDE extends BaseSifenField
    */
   public function getGCamCond(): ?GCamCond
   {
-    if(isset($this->gCamCond))
+    if (isset($this->gCamCond)) {
       return $this->gCamCond;
-    else
-      return null;
+    } else {
+    return null;
+    }
   }
 
   /**
@@ -219,51 +222,60 @@ class GDtipDE extends BaseSifenField
 
   /**
    * Instancia la clase a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $xml
-   * 
+   *
    * @return GDtipDE
    */
   public static function FromSimpleXMLElement(\SimpleXMLElement $xml): GDtipDE
   {
-    if(strcmp($xml->getName(), 'gDtipDE') != 0)
+    if (strcmp($xml->getName(), 'gDtipDE') != 0) {
       throw new ValidacionException('El nombre del elemento no es gDtipDE');
-
-    $res = new GDtipDE();
-    
-    if(isset($xml->gCamFE))
-      $res->gCamFE = GCamFE::FromSimpleXMLElement($xml->gCamFE);
-    
-    if(isset($xml->gCamAE))
-      $res->gCamAE = GCamAE::FromSimpleXMLElement($xml->gCamAE);
-    
-    if(isset($xml->gCamNCDE))
-      $res->gCamNCDE = GCamNCDE::FromSimpleXMLElement($xml->gCamNCDE);
-    
-    if(isset($xml->gCamNRE))
-      $res->gCamNRE = GCamNRE::FromSimpleXMLElement($xml->gCamNRE);
-    
-    if(isset($xml->gCamCond))
-      $res->gCamCond = GCamCond::FromSimpleXMLElement($xml->gCamCond);
-    
-    if(isset($xml->gCamItem) && count($xml->gCamItem) > 0) {
-      $res->gCamItem = [];
-      foreach($xml->gCamItem as $gCamItem)
-        $res->gCamItem[] = GCamItem::FromSimpleXMLElement($gCamItem);
     }
 
-    if(isset($xml->gCamEsp))
+    $res = new GDtipDE();
+
+    if (isset($xml->gCamFE)) {
+      $res->gCamFE = GCamFE::FromSimpleXMLElement($xml->gCamFE);
+    }
+
+    if (isset($xml->gCamAE)) {
+      $res->gCamAE = GCamAE::FromSimpleXMLElement($xml->gCamAE);
+    }
+
+    if (isset($xml->gCamNCDE)) {
+      $res->gCamNCDE = GCamNCDE::FromSimpleXMLElement($xml->gCamNCDE);
+    }
+
+    if (isset($xml->gCamNRE)) {
+      $res->gCamNRE = GCamNRE::FromSimpleXMLElement($xml->gCamNRE);
+    }
+
+    if (isset($xml->gCamCond)) {
+      $res->gCamCond = GCamCond::FromSimpleXMLElement($xml->gCamCond);
+    }
+
+    if (isset($xml->gCamItem) && count($xml->gCamItem) > 0) {
+      $res->gCamItem = [];
+      foreach ($xml->gCamItem as $gCamItem) {
+        $res->gCamItem[] = GCamItem::FromSimpleXMLElement($gCamItem);
+      }
+    }
+
+    if (isset($xml->gCamEsp)) {
       $res->gCamEsp = GCamEsp::FromSimpleXMLElement($xml->gCamEsp);
-    
-    if(isset($xml->gTransp))
+    }
+
+    if (isset($xml->gTransp)) {
       $res->gTransp = GTransp::FromSimpleXMLElement($xml->gTransp);
-    
-    return $res;    
+    }
+
+    return $res;
   }
 
   /**
    * Convierte este GDtipDE a un DOMElement que puede ser insertado en el DOMDocument especificado.
-   * 
+   *
    * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
    *
    * @return DOMElement El DOMElement creado.
@@ -271,24 +283,32 @@ class GDtipDE extends BaseSifenField
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
     $res = $doc->createElement('gDtipDE');
-    if(isset($this->gCamFE))
+    if (isset($this->gCamFE)) {
       $res->appendChild($this->gCamFE->toDOMElement($doc));
-    if(isset($this->gCamAE))
-      $res->appendChild($this->gCamAE->toDOMElement($doc));
-    if(isset($this->gCamNCDE))
-      $res->appendChild($this->gCamNCDE->toDOMElement($doc));
-    if(isset($this->gCamNRE))
-      $res->appendChild($this->gCamNRE->toDOMElement($doc));
-    if(isset($this->gCamCond))
-      $res->appendChild($this->gCamCond->toDOMElement($doc));
-    if(isset($this->gCamItem)) {
-      foreach($this->gCamItem as $gCamItem)
-        $res->appendChild($gCamItem->toDOMElement($doc));
     }
-    if(isset($this->gCamEsp))
+    if (isset($this->gCamAE)) {
+      $res->appendChild($this->gCamAE->toDOMElement($doc));
+    }
+    if (isset($this->gCamNCDE)) {
+      $res->appendChild($this->gCamNCDE->toDOMElement($doc));
+    }
+    if (isset($this->gCamNRE)) {
+      $res->appendChild($this->gCamNRE->toDOMElement($doc));
+    }
+    if (isset($this->gCamCond)) {
+      $res->appendChild($this->gCamCond->toDOMElement($doc));
+    }
+    if (isset($this->gCamItem)) {
+      foreach ($this->gCamItem as $gCamItem) {
+        $res->appendChild($gCamItem->toDOMElement($doc));
+      }
+    }
+    if (isset($this->gCamEsp)) {
       $res->appendChild($this->gCamEsp->toDOMElement($doc));
-    if(isset($this->gTransp))
+    }
+    if (isset($this->gTransp)) {
       $res->appendChild($this->gTransp->toDOMElement($doc));
+    }
     return $res;
   }
 
@@ -322,7 +342,7 @@ class GDtipDE extends BaseSifenField
     if (isset($object->gCamItem)) {
       ///BANDERA PARA SABER SI ES MAS DE UN ITEM
       //convert the object to array
-      $aux = (array)$object;
+      $aux = (array) $object;
       ///dependE del tipo de response
       if (gettype($aux['gCamItem']) == 'array') { ///mas de un objeto viene en arrays
         $count = count($object->gCamItem);
@@ -330,7 +350,7 @@ class GDtipDE extends BaseSifenField
           ///se deuelve el objeto en el array
           $res->gCamItem[] = GCamItem::FromSifenResponseObject($object->gCamItem[$i]);
         }
-      } else if (gettype($aux['gCamItem']) == 'object') {  ///1 objeto, viene en objeto
+      } elseif (gettype($aux['gCamItem']) == 'object') {  ///1 objeto, viene en objeto
         ///se deuelve el objeto en el array
         $res->gCamItem[] = GCamItem::FromSifenResponseObject($object->gCamItem);
       }
@@ -347,35 +367,44 @@ class GDtipDE extends BaseSifenField
 
   /**
    * Instancia un objeto GDtipDE a partir de un DOMElement que representa el nodo XML del objeto GDtipDE.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GDtipDE.
-   * 
+   *
    * @return self Objeto instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gDtipDE') != 0)
+    if (strcmp($node->nodeName, 'gDtipDE') != 0) {
       throw new ValidacionException('[GDtipDE] El nombre del nodo no corresponde a gDtipDE: ' . $node->nodeName, 1);
-    $res = new GDtipDE();
-    if($node->getElementsByTagName('gCamFE')->length > 0)
-      $res->setGCamFE(GCamFE::FromDOMElement($node->getElementsByTagName('gCamFE')->item(0)));
-    if($node->getElementsByTagName('gCamAE')->length > 0)
-      $res->setGCamAE(GCamAE::FromDOMElement($node->getElementsByTagName('gCamAE')->item(0)));
-    if($node->getElementsByTagName('gCamNCDE')->length > 0)
-      $res->setGCamNCDE(GCamNCDE::FromDOMElement($node->getElementsByTagName('gCamNCDE')->item(0)));
-    if($node->getElementsByTagName('gCamNRE')->length > 0)
-      $res->setGCamNRE(GCamNRE::FromDOMElement($node->getElementsByTagName('gCamNRE')->item(0)));
-    if($node->getElementsByTagName('gCamCond')->length > 0)
-      $res->setGCamCond(GCamCond::FromDOMElement($node->getElementsByTagName('gCamCond')->item(0)));
-    if($node->getElementsByTagName('gCamItem')->length > 0) {
-      $res->gCamItem = [];
-      foreach($node->getElementsByTagName('gCamItem') as $gCamItem)
-        $res->gCamItem[] = GCamItem::FromDOMElement($gCamItem);
     }
-    if($node->getElementsByTagName('gCamEsp')->length > 0)
+    $res = new GDtipDE();
+    if ($node->getElementsByTagName('gCamFE')->length > 0) {
+      $res->setGCamFE(GCamFE::FromDOMElement($node->getElementsByTagName('gCamFE')->item(0)));
+    }
+    if ($node->getElementsByTagName('gCamAE')->length > 0) {
+      $res->setGCamAE(GCamAE::FromDOMElement($node->getElementsByTagName('gCamAE')->item(0)));
+    }
+    if ($node->getElementsByTagName('gCamNCDE')->length > 0) {
+      $res->setGCamNCDE(GCamNCDE::FromDOMElement($node->getElementsByTagName('gCamNCDE')->item(0)));
+    }
+    if ($node->getElementsByTagName('gCamNRE')->length > 0) {
+      $res->setGCamNRE(GCamNRE::FromDOMElement($node->getElementsByTagName('gCamNRE')->item(0)));
+    }
+    if ($node->getElementsByTagName('gCamCond')->length > 0) {
+      $res->setGCamCond(GCamCond::FromDOMElement($node->getElementsByTagName('gCamCond')->item(0)));
+    }
+    if ($node->getElementsByTagName('gCamItem')->length > 0) {
+      $res->gCamItem = [];
+      foreach ($node->getElementsByTagName('gCamItem') as $gCamItem) {
+        $res->gCamItem[] = GCamItem::FromDOMElement($gCamItem);
+      }
+    }
+    if ($node->getElementsByTagName('gCamEsp')->length > 0) {
       $res->setGCamEsp(GCamEsp::FromDOMElement($node->getElementsByTagName('gCamEsp')->item(0)));
-    if($node->getElementsByTagName('gTransp')->length > 0)
+    }
+    if ($node->getElementsByTagName('gTransp')->length > 0) {
       $res->setGTransp(GTransp::FromDOMElement($node->getElementsByTagName('gTransp')->item(0)));
+    }
     return $res;
   }
 

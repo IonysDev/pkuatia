@@ -52,7 +52,7 @@ class RGeVeRem
   ///XML ELEMENT
    ///////////////////////////////////////////////////////////////////////
 
-    
+
   /**
    * toDOMElement
    *
@@ -77,7 +77,7 @@ class RGeVeRem
 //     if (strcmp($xml->tagName, "rGeVeRem") == 0 && $xml->childElementCount == 7) {
 //       $res = new RGeVeRem();
 //       $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-      
+
 //       return $res;
 //     } else {
 //       throw new \Exception("Invalid XML Element: $xml->tagName");

@@ -20,9 +20,9 @@ class RResEnviConsDe implements RespuestaSifen
 {
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
-  public int      $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento
-  public string   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
-  public RContDe  $rContDe;  // ContDE01 - XML   - 0-1 - Objeto del DE consultado
+  public int $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento
+  public string $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
+  public RContDe $rContDe;  // ContDE01 - XML   - 0-1 - Objeto del DE consultado
 
   /**
    * Cadena XML original del DE tal como la devolvió el SIFEN, sin parsear.
@@ -211,9 +211,9 @@ class RResEnviConsDe implements RespuestaSifen
   /**
    * Crea una nueva instancia de RResEnviConsDe a partir de un objeto stdClass.
    * Pensado para castear la respuesta de una llamada SOAP.
-   * 
+   *
    * @param stdClass $object
-   * 
+   *
    * @return self
    */
   public static function FromSifenResponseObject($object)
@@ -226,8 +226,9 @@ class RResEnviConsDe implements RespuestaSifen
     // de RUC, respuestas-ws/2026-10-06; para la consulta de DE [PENDIENTE DE VERIFICACIÓN]).
     if (isset($object->rProtDe)) {
       $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
-      if (isset($prot->dFecProc))
+      if (isset($prot->dFecProc)) {
         $res->setDFecProc($prot->getDFecProc());
+      }
       $proc = $prot->getGResProc()[0] ?? null;
       if ($proc !== null) {
         $res->setDCodRes(intval($proc->getDCodRes()));
@@ -249,12 +250,12 @@ class RResEnviConsDe implements RespuestaSifen
         // DRSch05 - rContDe se denomina xContenDE en la respuesta de consulta SOAP.
         $res->setRContDe(RContDe::FromSifenResponseObject($object->xContenDE));
       }
-    } else if (isset($object->rContDe)) {
+    } elseif (isset($object->rContDe)) {
       $res->setRContDe(RContDe::FromSifenResponseObject($object->rContDe));
     }
     return $res;
   }
-  
+
   /**
    * showData
    *

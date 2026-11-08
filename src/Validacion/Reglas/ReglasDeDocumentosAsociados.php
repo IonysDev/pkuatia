@@ -29,8 +29,9 @@ final class ReglasDeDocumentosAsociados extends ConjuntoDeReglas
     self::regla($r, in_array($tipo, [4, 5, 6], true) && count($asociados) > 1, '2415', 'gCamDEAsoc', 'DE', count($asociados),
       'La autofactura y las notas de crédito y débito llevan un solo documento asociado.');
     $pagoPorRetencion = false;
-    foreach (self::lista($v->gCamCond(), 'gPaConEIni') as $pago)
+    foreach (self::lista($v->gCamCond(), 'gPaConEIni') as $pago) {
       $pagoPorRetencion = $pagoPorRetencion || self::entero($pago, 'iTiPago') === 10;
+    }
     $conResolucion = false;
 
     foreach ($asociados as $i => $a) {

@@ -29,11 +29,11 @@ class GPaConEIni extends BaseSifenField
   public string $dTiCamTiPag;  // E611 - 1-5p(0-4)  - 0-1 - Tasa de cambio por tipo de pago (decimal BCMath)
   public GPagTarCD $gPagTarCD; // E620 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con tarjeta de crédito o débito
   public GPagCheq $gPagCheq;   // E630 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con cheque
-  
+
   ///////////////////////////////////////////////////////////////////////
   // Setters
   ///////////////////////////////////////////////////////////////////////
-  
+
   /**
    * Establece el código de tipo de pago y la descrición en caso de que sea un tipo de pago soportado. Usar código de tipo de pago 99 para otros tipos de pago.
    *
@@ -50,15 +50,14 @@ class GPaConEIni extends BaseSifenField
 
   /**
    * Establece la descripción del tipo de pago
-   * 
+   *
    * @param String $dDesTiPag
-   * 
+   *
    * @return self
    */
   public function setDDesTiPag(string $dDesTiPag): self
   {
-    if(!is_null($dDesTiPag) && strlen($dDesTiPag) != 0)
-    {
+    if (!is_null($dDesTiPag) && strlen($dDesTiPag) != 0) {
       $this->dDesTiPag = substr($dDesTiPag, 0, 30);
     }
     return $this;
@@ -73,12 +72,9 @@ class GPaConEIni extends BaseSifenField
    */
   public function setDMonTiPag(string $dMonTiPag): self
   {
-    if(ValueValidations::isValidStringDecimal($dMonTiPag, 15, 0, 4))
-    {
+    if (ValueValidations::isValidStringDecimal($dMonTiPag, 15, 0, 4)) {
       $this->dMonTiPag = $dMonTiPag;
-    }
-    else
-    {
+    } else {
       throw new ValidacionException("El valor monto por tipo de pago a ser asignado no es válido");
     }
     return $this;
@@ -103,15 +99,14 @@ class GPaConEIni extends BaseSifenField
    * Establece el valor dDMoneTiPag que es la descripción de la moneda por tipo de pago.
    * Este valor debería establecerse automáticamente mediante setCMoneTiPag.
    * Se recomienda no usar esta función.
-   * 
+   *
    * @param String $dDMoneTiPag
-   * 
+   *
    * @return self
    */
   public function setDDMoneTiPag(string $dDMoneTiPag): self
   {
-    if(!is_null($dDMoneTiPag) && strlen($dDMoneTiPag) != 0)
-    {
+    if (!is_null($dDMoneTiPag) && strlen($dDMoneTiPag) != 0) {
       $this->dDMoneTiPag = substr($dDMoneTiPag, 0, 20);
     }
     return $this;
@@ -127,12 +122,9 @@ class GPaConEIni extends BaseSifenField
    */
   public function setDTiCamTiPag(string $dTiCamTiPag): self
   {
-    if(ValueValidations::isValidStringDecimal($dTiCamTiPag, 5, 0, 4))
-    {
+    if (ValueValidations::isValidStringDecimal($dTiCamTiPag, 5, 0, 4)) {
       $this->dTiCamTiPag = $dTiCamTiPag;
-    }
-    else
-    {
+    } else {
       throw new ValidacionException("El valor tasa de cambio por tipo de pago a ser asignado no es válido");
     }
     return $this;
@@ -271,15 +263,14 @@ class GPaConEIni extends BaseSifenField
 
   /**
    * Instancia un objeto GPaConEIni a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gPaConEIni') != 0)
-    {
+    if (strcmp($node->getName(), 'gPaConEIni') != 0) {
       throw new ValidacionException("El elemento '" . $node->getName() . "' no es gPaConEIni");
     }
     $res = new GPaConEIni();
@@ -288,16 +279,13 @@ class GPaConEIni extends BaseSifenField
     $res->setDMonTiPag(intval($node->dMonTiPag));
     $res->setCMoneTiPag($node->cMoneTiPag);
     $res->setDDMoneTiPag(strval($node->dDMoneTiPag));
-    if(isset($node->dTiCamTiPag))
-    {
+    if (isset($node->dTiCamTiPag)) {
       $res->setDTiCamTiPag(strval($node->dTiCamTiPag));
     }
-    if(isset($node->gPagTarCD))
-    {
+    if (isset($node->gPagTarCD)) {
       $res->setGPagTarCD(GPagTarCD::FromSimpleXMLElement($node->gPagTarCD));
     }
-    if(isset($node->gPagCheq))
-    {
+    if (isset($node->gPagCheq)) {
       $res->setGPagCheq(GPagCheq::FromSimpleXMLElement($node->gPagCheq));
     }
     return $res;
@@ -305,7 +293,7 @@ class GPaConEIni extends BaseSifenField
 
   /**
    * Convierte este GPaConEIni a un DOMElement insertable en el DOMDocument indicado.
-   * 
+   *
    * @param DOMDocument $doc Documento DOM en el que se insertará el DOMElement
    *
    * @return DOMElement Elemento DOM que representa este GPaConEIni
@@ -323,13 +311,15 @@ class GPaConEIni extends BaseSifenField
     if (isset($this->dTiCamTiPag)) {
       $res->appendChild(XmlHelper::elemento($doc, 'dTiCamTiPag', $this->getDTiCamTiPag()));
     }
-    if(isset($this->gPagTarCD))
+    if (isset($this->gPagTarCD)) {
       $res->appendChild($this->gPagTarCD->toDOMElement($doc));
-    if(isset($this->gPagCheq))
+    }
+    if (isset($this->gPagCheq)) {
       $res->appendChild($this->gPagCheq->toDOMElement($doc));
+    }
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
@@ -339,59 +329,57 @@ class GPaConEIni extends BaseSifenField
   public static function FromSifenResponseObject($object): self
   {
     $res = new GPaConEIni();
-    if(isset($object->iTiPago))
-    {
+    if (isset($object->iTiPago)) {
       $res->setITiPago(intval($object->iTiPago));
     }
-    if(isset($object->dMonTiPag))
-    {
+    if (isset($object->dMonTiPag)) {
       $res->setDMonTiPag(intval($object->dMonTiPag));
     }
-    if(isset($object->cMoneTiPag))
-    {
+    if (isset($object->cMoneTiPag)) {
       $res->setCMoneTiPag($object->cMoneTiPag);
     }
-    if(isset($object->dTiCamTiPag))
-    {
+    if (isset($object->dTiCamTiPag)) {
       $res->setDTiCamTiPag($object->dTiCamTiPag);
     }
     //Children
-    if(isset($object->gPagTarCD))
-    {
+    if (isset($object->gPagTarCD)) {
       $res->setGPagTarCD(GPagTarCD::FromSifenResponseObject($object->gPagTarCD));
     }
-    if(isset($object->gPagCheq))
-    {
+    if (isset($object->gPagCheq)) {
       $res->setGPagCheq(GPagCheq::FromSifenResponseObject($object->gPagCheq));
-    } 
+    }
 
     return $res;
   }
 
   /**
    * Instancia un objeto GPaConEIni a partir de un DOMElement que representa el nodo XML del objeto GPaConEIni.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GPaConEIni
-   * 
+   *
    * @return self Objeto GPaConEIni instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gPaConEIni') != 0)
+    if (strcmp($node->nodeName, 'gPaConEIni') != 0) {
       throw new ValidacionException('[GPaConEIni] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new GPaConEIni();
     $res->setITiPago(intval(trim($node->getElementsByTagName('iTiPago')->item(0)->nodeValue)));
     $res->setDDesTiPag(trim($node->getElementsByTagName('dDesTiPag')->item(0)->nodeValue));
     $res->setDMonTiPag(intval(trim($node->getElementsByTagName('dMonTiPag')->item(0)->nodeValue)));
     $res->setCMoneTiPag(trim($node->getElementsByTagName('cMoneTiPag')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dTiCamTiPag')->length > 0)
+    if ($node->getElementsByTagName('dTiCamTiPag')->length > 0) {
       $res->setDTiCamTiPag(trim($node->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue));
-    if($node->getElementsByTagName('gPagTarCD')->length > 0)
+    }
+    if ($node->getElementsByTagName('gPagTarCD')->length > 0) {
       $res->setGPagTarCD(GPagTarCD::FromDOMElement($node->getElementsByTagName('gPagTarCD')->item(0)));
-    if($node->getElementsByTagName('gPagCheq')->length > 0)
+    }
+    if ($node->getElementsByTagName('gPagCheq')->length > 0) {
       $res->setGPagCheq(GPagCheq::FromDOMElement($node->getElementsByTagName('gPagCheq')->item(0)));
+    }
     return $res;
   }
-  
-  
+
+
 }

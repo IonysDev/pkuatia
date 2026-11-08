@@ -8,9 +8,8 @@ use stdClass;
 /**
  * Clase que representa el campo X509Data de la firma
  */
-class X509Data 
+class X509Data
 {
-
     public string $X509Certificate;
 
     /**
@@ -38,9 +37,9 @@ class X509Data
 
     /**
      * Instancia un objeto X509Data a partir de un SimpleXMLElement
-     * 
+     *
      * @param \SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
@@ -52,9 +51,9 @@ class X509Data
 
     /**
      * Instancia un objeto X509Data a partir de un DOMElement
-     * 
+     *
      * @param \DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(\DOMElement $node): self
@@ -66,9 +65,9 @@ class X509Data
 
     /**
      * Instancia un objeto X509Data a partir de un objeto stdClass de respuesta a una petición SOAP al SIFEN
-     * 
+     *
      * @param \stdClass $object
-     * 
+     *
      * @return self
      */
     public static function FromSifenResponseObject(\stdClass $object): self
@@ -80,7 +79,7 @@ class X509Data
 
     /**
      * Convierte el objeto a un DOMElement
-     * 
+     *
      * @return \DOMElement
      */
     public function toDOMElement(): \DOMElement
@@ -91,7 +90,5 @@ class X509Data
         $X509Data->appendChild($X509Certificate);
         return $X509Data;
     }
-    
-}
 
-?>
+}

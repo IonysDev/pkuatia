@@ -6,7 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de obligación afectada para los campos cOblAfe (D031) y dDesOblAfe (D032)
  * del grupo gOblAfe (D030), según Tabla 12 - Tipo de Obligaciones de la NT-018.
  */
-enum COblAfe: int {
+enum COblAfe: int
+{
     case ImpuestoALaRentaIracisRegimenEspeciales =  113;
     case TributoUnicoMaquila =  143;
     case ImpuestoAlValorAgregadoGravadasYExoneradasExportadores = 211;
@@ -25,7 +26,7 @@ enum COblAfe: int {
      */
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ImpuestoALaRentaIracisRegimenEspeciales => 'IMPUESTO A LA RENTA IRACIS - REGÍMENES ESPECIALES',
             self::TributoUnicoMaquila => 'TRIBUTO UNICO MAQUILA',
             self::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores => 'IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS - EXPORTADORES',
@@ -73,5 +74,3 @@ enum COblAfe: int {
         return self::getDescriptionFromValue($cOblAfe);
     }
 }
-
-?>

@@ -2,7 +2,6 @@
 
 namespace IonysDev\Pkuatia\Tests\Unit\Responses;
 
-use DateTime;
 use IonysDev\Pkuatia\Core\Constants\TimbTiDE;
 use IonysDev\Pkuatia\Core\Fields\Response\DE\RContDe;
 use IonysDev\Pkuatia\Core\Fields\Response\GResProc;

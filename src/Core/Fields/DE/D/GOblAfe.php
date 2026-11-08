@@ -1,6 +1,7 @@
 <?php
 
 namespace IonysDev\Pkuatia\Core\Fields\DE\D;
+
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use IonysDev\Pkuatia\Core\Constants\COblAfe;
 use DOMDocument;
@@ -28,7 +29,7 @@ class GOblAfe extends BaseSifenField
 
     public function __construct()
     {
-        
+
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -48,8 +49,7 @@ class GOblAfe extends BaseSifenField
     {
         $codigo = $cOblAfe instanceof COblAfe ? $cOblAfe->value : $cOblAfe;
         $descripcion = COblAfe::getDescriptionFromValue($codigo);
-        if(is_null($descripcion))
-        {
+        if (is_null($descripcion)) {
             throw new ValidacionException("[GOblAfe] Código de obligación afectada inválido: " . $codigo . ". Debe pertenecer a la Tabla 12 - Tipo de obligaciones (NT-018).");
         }
         $this->cOblAfe = $codigo;
@@ -61,11 +61,11 @@ class GOblAfe extends BaseSifenField
     /**
      * Establece la descripción de la obligación afectada
      * Este método no debería utilizarse para conformar un nuevo DE. Solo debe usarse para deserializar un DE existente.
-     * 
+     *
      * @param  string  $dDesOblAfe. La descripción de la obligación afectada.
-     * 
+     *
      * @return  self
-     */ 
+     */
     public function setDDesOblAfe($dDesOblAfe)
     {
         $this->dDesOblAfe = $dDesOblAfe;
@@ -103,25 +103,22 @@ class GOblAfe extends BaseSifenField
 
      /**
      * Instancia la clase a partir de un SimpleXMLElement
-     * 
+     *
      * @param SimpleXMLElement $node
-     * 
+     *
      * @return GOblAfe
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): GOblAfe
     {
-        if(strcmp($node->getName(), 'gOblAfe') != 0)
-        {
+        if (strcmp($node->getName(), 'gOblAfe') != 0) {
             throw new ValidacionException("El nombre del elemento debe ser 'gOblAfe'.");
         }
 
         $res = new GOblAfe();
-        if(isset($node->cOblAfe))
-        {
+        if (isset($node->cOblAfe)) {
             $res->cOblAfe = intval($node->cOblAfe);
         }
-        if(isset($node->dDesOblAfe))
-        {
+        if (isset($node->dDesOblAfe)) {
             $res->dDesOblAfe = strval($node->dDesOblAfe);
         }
         return $res;
@@ -129,7 +126,7 @@ class GOblAfe extends BaseSifenField
 
     /**
      * Convierte este GOblAfe a un DOM Element.
-     * 
+     *
      * @param DOMDocument $doc Documento DOM donde se creará el nodo, pero NO será insertado.
      *
      * @return DOMElement Nodo DOM creado pero no insertado.
@@ -137,8 +134,7 @@ class GOblAfe extends BaseSifenField
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
         $res = $doc->createElement('gOblAfe');
-        if(isset($this->cOblAfe))
-        {
+        if (isset($this->cOblAfe)) {
            $res->appendChild(XmlHelper::elemento($doc, 'cOblAfe', $this->getCOblAfe()));
            $res->appendChild(XmlHelper::elemento($doc, 'dDesOblAfe', $this->getDDesOblAfe()));
         }
@@ -156,8 +152,9 @@ class GOblAfe extends BaseSifenField
      */
     public static function FromDOMElement(DOMElement $node): self
     {
-        if(strcmp($node->nodeName, 'gOblAfe') != 0)
+        if (strcmp($node->nodeName, 'gOblAfe') != 0) {
             throw new ValidacionException('[GOblAfe] Nodo con nombre inválido: ' . $node->nodeName);
+        }
         $res = new GOblAfe();
         $res->cOblAfe = intval(trim($node->getElementsByTagName('cOblAfe')->item(0)->nodeValue));
         $res->setDDesOblAfe(trim(strval($node->getElementsByTagName('dDesOblAfe')->item(0)->nodeValue)));

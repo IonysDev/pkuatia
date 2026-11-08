@@ -20,19 +20,18 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GCamIVA extends BaseSifenField
 {
-
   public const AFECTACION_IVA_GRAVADO = 1;
   public const AFECTACION_IVA_EXONERADO = 2;
   public const AFECTACION_IVA_EXENTO = 3;
   public const AFECTACION_IVA_GRAVADO_PARCIAL = 4;
 
-  public int    $iAfecIVA;    // E731 - 1          - 1-1 - Forma de afectación tributaria del IVA: 1 - Gravado | 2 - Exonerado (Art. 100 - Ley 6380/2019) | 3 - Exento | 4 - Gravado parcial (Grav- Exento)
+  public int $iAfecIVA;    // E731 - 1          - 1-1 - Forma de afectación tributaria del IVA: 1 - Gravado | 2 - Exonerado (Art. 100 - Ley 6380/2019) | 3 - Exento | 4 - Gravado parcial (Grav- Exento)
   public string $dDesAfecIVA; // E732 - 6-15       - 1-1 - Descripción de la forma de afectación tributaria del IVA
   public string $dPropIVA;    // E733 - 1-3p(0-8)  - 1-1 - Proporción gravada de IVA
-  public int    $dTasaIVA;    // E734 - 1-2        - 1-1 - Tasa del IVA (% en número entero)
-  public string $dBasGravIVA; // E735 - 1-15p(0-8) - 1-1 - Base gravada del IVA por ítem 
+  public int $dTasaIVA;    // E734 - 1-2        - 1-1 - Tasa del IVA (% en número entero)
+  public string $dBasGravIVA; // E735 - 1-15p(0-8) - 1-1 - Base gravada del IVA por ítem
   public string $dLiqIVAItem; // E736 - 1-15p(0-8) - 1-1 - Liquidación del IVA por ítem
-  public string $dBasExe;     // E737 - 1-15p(0-8) - 1-1 - Base Exenta por ítem 
+  public string $dBasExe;     // E737 - 1-15p(0-8) - 1-1 - Base Exenta por ítem
 
   ///////////////////////////////////////////////////////////////////////
   // Constructor
@@ -74,9 +73,9 @@ class GCamIVA extends BaseSifenField
 
   /**
    * Establece la descripción de la forma de afectación tributaria del IVA
-   * 
+   *
    * @param String $dDesAfecIVA
-   * 
+   *
    * @return self
    */
   public function setDDesAfecIVA(string $dDesAfecIVA): self
@@ -124,8 +123,9 @@ class GCamIVA extends BaseSifenField
    */
   public function setDBasGravIVA(string $dBasGravIVA): self
   {
-    if(!ValueValidations::isValidStringDecimal($dBasGravIVA, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($dBasGravIVA, 15, 0, 8)) {
       throw new ValidacionException("Invalid dBasGravIVA: $dBasGravIVA");
+    }
     $this->dBasGravIVA = $dBasGravIVA;
     return $this;
   }
@@ -140,8 +140,9 @@ class GCamIVA extends BaseSifenField
    */
   public function setDLiqIVAItem(string $dLiqIVAItem): self
   {
-    if(!ValueValidations::isValidStringDecimal($dLiqIVAItem, 15, 0, 8))
+    if (!ValueValidations::isValidStringDecimal($dLiqIVAItem, 15, 0, 8)) {
       throw new ValidacionException("Invalid dBasGravIVA: $dLiqIVAItem");
+    }
     $this->dLiqIVAItem = $dLiqIVAItem;
     return $this;
   }
@@ -217,15 +218,16 @@ class GCamIVA extends BaseSifenField
 
   /**
    * Instancia un objeto GCamIVA desde un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gCamIVA') != 0)
+    if (strcmp($node->getName(), 'gCamIVA') != 0) {
       throw new ValidacionException("Invalid gCamIVA XML Node Name: " . $node->getName());
+    }
     $res = new GCamIVA();
     $res->iAfecIVA    = intval($node->iAfecIVA);
     $res->dDesAfecIVA = strval($node->dDesAfecIVA);
@@ -238,9 +240,9 @@ class GCamIVA extends BaseSifenField
 
   /**
    * Convierte este GCamIVA en un DOMElement que puede ser insertado en el DOMDocument especificado.
-   * 
+   *
    * @param DOMDocument $doc Documento DOM que creará el DOMElement sin insertarlo.
-   * 
+   *
    * @return DOMElement El DOMElement creado.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
@@ -256,7 +258,7 @@ class GCamIVA extends BaseSifenField
     return $res;
   }
 
-  
+
   /**
    * FromSifenResponseObject
    *
@@ -267,31 +269,25 @@ class GCamIVA extends BaseSifenField
   {
 
     $res = new GCamIVA();
-    if(isset($resposne->iAfecIVA))
-    {
+    if (isset($resposne->iAfecIVA)) {
       $res->setIAfecIVA(intval($resposne->iAfecIVA));
     }
-    if(isset($resposne->dPropIVA))
-    {
+    if (isset($resposne->dPropIVA)) {
       $res->setDPropIVA(strval($resposne->dPropIVA));
     }
-    if(isset($resposne->dTasaIVA))
-    {
+    if (isset($resposne->dTasaIVA)) {
       $res->setDTasaIVA(intval($resposne->dTasaIVA));
     }
-    if(isset($resposne->dBasGravIVA))
-    {
+    if (isset($resposne->dBasGravIVA)) {
       $res->setDBasGravIVA(strval($resposne->dBasGravIVA));
     }
-    if(isset($resposne->dLiqIVAItem))
-    {
+    if (isset($resposne->dLiqIVAItem)) {
       $res->setDLiqIVAItem(strval($resposne->dLiqIVAItem));
     }
-    if(isset($resposne->dBasExe))
-    {
+    if (isset($resposne->dBasExe)) {
       $res->setDBasExe(strval($resposne->dBasExe));
-    }    
-     
+    }
+
     return $res;
   }
 
@@ -302,10 +298,11 @@ class GCamIVA extends BaseSifenField
    */
   public function getDBasExe(): string | null
   {
-    if(isset($this->dBasExe))
+    if (isset($this->dBasExe)) {
     return $this->dBasExe;
-    else
+    } else {
     return null;
+    }
   }
 
   /**
@@ -324,15 +321,16 @@ class GCamIVA extends BaseSifenField
 
   /**
    * Instancia un objeto GCamIVA a partir de un DOMElement que lo representa.
-   * 
+   *
    * @param DOMElement $node El DOMElement que representa el objeto.
-   * 
+   *
    * @return self El objeto instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamIVA') != 0)
+    if (strcmp($node->nodeName, 'gCamIVA') != 0) {
         throw new ValidacionException('[GCamIVA] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new self();
     $res->iAfecIVA = intval(trim($node->getElementsByTagName('iAfecIVA')->item(0)->nodeValue));
     $res->dDesAfecIVA = trim($node->getElementsByTagName('dDesAfecIVA')->item(0)->nodeValue);

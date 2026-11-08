@@ -61,8 +61,9 @@ final class ResultadoFirma implements Countable, IteratorAggregate
 
   public function __toString(): string
   {
-    if ($this->esValida())
+    if ($this->esValida()) {
       return sprintf('Firma válida: %d firma(s) en %s', count($this->firmas), $this->tipoDocumento);
+    }
     return sprintf('Firma inválida (%s): %s', $this->tipoDocumento, implode('; ', array_map('strval', $this->errores)));
   }
 }

@@ -10,7 +10,6 @@ use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
-
 /**
  * Nodo Id: E020
  * Descripción: Campos que describen las informaciones de compras públicas
@@ -19,10 +18,10 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GCompPub extends BaseSifenField
 {
-  public string   $dModCont;   // E021 -  2 - 1-1 - Modalidad, Código emitido por la DNCP
-  public int      $dEntCont;   // E022 -  5 - 1-1 - Entidad, Código emitido por la DNCP
-  public int      $dAnoCont;   // E023 -  2 - 1-1 - Año, Código emitido por la DNCP
-  public int      $dSecCont;   // E024 -  7 - 1-1 - Secuencia, emitido por la DNCP
+  public string $dModCont;   // E021 -  2 - 1-1 - Modalidad, Código emitido por la DNCP
+  public int $dEntCont;   // E022 -  5 - 1-1 - Entidad, Código emitido por la DNCP
+  public int $dAnoCont;   // E023 -  2 - 1-1 - Año, Código emitido por la DNCP
+  public int $dSecCont;   // E024 -  7 - 1-1 - Secuencia, emitido por la DNCP
   public DateTime $dFeCodCont; // E025 - 10 - 1-1 - Fecha de emisión del código de contratación por la DNCP
 
   ///////////////////////////////////////////////////////////////////////
@@ -151,19 +150,18 @@ class GCompPub extends BaseSifenField
   ///////////////////////////////////////////////////////////////////////
   ///XML Element
   ///////////////////////////////////////////////////////////////////////
-  
+
   /**
    * Instancia un objeto GCompPub a partir de un SimpleXMLElement
-   * 
+   *
    * @param  SimpleXMLElement $node
-   * 
+   *
    * @return GCompPub
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): GCompPub
   {
-    if(strcmp($node->getName(), 'gCompPub') != 0)
-    {
-      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a 'gCompPub'."); 
+    if (strcmp($node->getName(), 'gCompPub') != 0) {
+      throw new ValidacionException("El nodo '" . $node->getName() . "' no corresponde a 'gCompPub'.");
     }
     $res = new GCompPub();
     $res->setDModCont($node->dModCont);
@@ -173,7 +171,7 @@ class GCompPub extends BaseSifenField
     $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $node->dFeCodCont));
     return $res;
   }
-  
+
   /**
    * toDOMElement
    *
@@ -183,57 +181,53 @@ class GCompPub extends BaseSifenField
   {
     $res = $doc->createElement('gCompPub');
     $res->appendChild(XmlHelper::elemento($doc, 'dModCont', $this->dModCont));
-    $res->appendChild(XmlHelper::elemento($doc, 'dEntCont', str_pad((string)$this->dEntCont, 5, '0', STR_PAD_LEFT)));
-    $res->appendChild(XmlHelper::elemento($doc, 'dAnoCont', str_pad((string)$this->dAnoCont, 2, '0', STR_PAD_LEFT)));
-    $res->appendChild(XmlHelper::elemento($doc, 'dSecCont', str_pad((string)$this->dSecCont, 7, '0', STR_PAD_LEFT)));
+    $res->appendChild(XmlHelper::elemento($doc, 'dEntCont', str_pad((string) $this->dEntCont, 5, '0', STR_PAD_LEFT)));
+    $res->appendChild(XmlHelper::elemento($doc, 'dAnoCont', str_pad((string) $this->dAnoCont, 2, '0', STR_PAD_LEFT)));
+    $res->appendChild(XmlHelper::elemento($doc, 'dSecCont', str_pad((string) $this->dSecCont, 7, '0', STR_PAD_LEFT)));
     $res->appendChild(XmlHelper::elemento($doc, 'dFeCodCont', $this->dFeCodCont->format('Y-m-d')));
     return $res;
   }
-  
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GCompPub();
-    if(isset($object->dModCont))
-    {
+    if (isset($object->dModCont)) {
       $res->setDModCont($object->dModCont);
     }
-    if(isset($object->dEntCont))
-    {
+    if (isset($object->dEntCont)) {
       $res->setDEntCont($object->dEntCont);
     }
-    if(isset($object->dAnoCont))
-    {
+    if (isset($object->dAnoCont)) {
       $res->setDAnoCont($object->dAnoCont);
     }
-    if(isset($object->dSecCont))
-    {
+    if (isset($object->dSecCont)) {
       $res->setDSecCont($object->dSecCont);
     }
-    if(isset($object->dFeCodCont))
-    {
+    if (isset($object->dFeCodCont)) {
       $res->setDFeCodCont(DateTime::createFromFormat('Y-m-d', $object->dFeCodCont));
     }
-    
+
     return $res;
   }
 
   /**
    * Instancia un objeto GCompPub a partir de un DOMElement que representa el nodo XML del objeto.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GCompPub
-   * 
+   *
    * @return GCompPub Objeto GCompPub instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCompPub') != 0)
+    if (strcmp($node->nodeName, 'gCompPub') != 0) {
       throw new ValidacionException('[GCompPub] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new GCompPub();
     $res->setDModCont($node->getElementsByTagName('dModCont')->item(0)->nodeValue);
     $res->setDEntCont(intval($node->getElementsByTagName('dEntCont')->item(0)->nodeValue));
@@ -243,5 +237,7 @@ class GCompPub extends BaseSifenField
     return $res;
   }
 
-  public function validate(): void {}
+  public function validate(): void
+  {
+  }
 }

@@ -10,18 +10,18 @@ use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo Id:     E790 
+ * Nodo Id:     E790
  * Nombre:      gCamEsp
  * Descripción: Campos complementarios comerciales de uso específico
- * Nodo Padre:  E001 
+ * Nodo Padre:  E001
  */
 class GCamEsp extends BaseSifenField
 {
                                 // Id   - Longitud - Ocurrencia - Descripción
   public GGrupEner $gGrupEner;  // E791 - - 0-9    - Campos del sector de energía eléctrica
-  public GGrupSeg  $gGrupSeg;   // E800 - - 0-1    - Campos del sector de seguros
-  public GGrupSup  $gGrupSup;   // E810 - - 0-1    - Campos del sector de supermercados
-  public GGrupAdi  $gGrupAdi;   // E820 - - 0-1    - Grupo  de  datos adicionales de uso comercial
+  public GGrupSeg $gGrupSeg;   // E800 - - 0-1    - Campos del sector de seguros
+  public GGrupSup $gGrupSup;   // E810 - - 0-1    - Campos del sector de supermercados
+  public GGrupAdi $gGrupAdi;   // E820 - - 0-1    - Grupo  de  datos adicionales de uso comercial
 
   /** @var list<GGrupEner> Ocurrencias de gGrupEner después de la primera: hasta 9 en total (DE_v150.xsd:802, NT-023; Q-B9). */
   private array $gGrupEnerAdicionales = [];
@@ -60,8 +60,9 @@ class GCamEsp extends BaseSifenField
       $this->gGrupEner = $gGrupEner;
       return $this;
     }
-    if (1 + count($this->gGrupEnerAdicionales) >= 9)
+    if (1 + count($this->gGrupEnerAdicionales) >= 9) {
       throw new ValidacionException('[GCamEsp] gGrupEner admite como máximo 9 ocurrencias (DE_v150.xsd:802, NT-023).');
+    }
     $this->gGrupEnerAdicionales[] = $gGrupEner;
     return $this;
   }
@@ -180,31 +181,28 @@ class GCamEsp extends BaseSifenField
    * Hasta 0.2.0 los tres lectores llamaban a setGGrupoSeg() (inexistente) y a lectores inexistentes de
    * gGrupSup y gGrupAdi (PK-25): ningún DE con gCamEsp se podía deserializar. Secuencia de tgCamEsp:
    * gGrupEner, gGrupSeg, gGrupSup, gGrupAdi (DE_v150.xsd:794-806).
-   * 
+   *
    * @param  SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gCamEsp') != 0)
+    if (strcmp($node->getName(), 'gCamEsp') != 0) {
       throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->getName(), 1);
+    }
     $res = new GCamEsp();
     // gGrupEner admite hasta 9 ocurrencias: hasta 0.2.0 se leía solo la primera (Q-B9).
-    foreach($node->gGrupEner as $gGrupEner)
-    {
+    foreach ($node->gGrupEner as $gGrupEner) {
       $res->addGGrupEner(GGrupEner::FromSimpleXMLElement($gGrupEner));
     }
-    if(isset($node->gGrupSeg))
-    {
+    if (isset($node->gGrupSeg)) {
       $res->setGGrupSeg(GGrupSeg::FromSimpleXMLElement($node->gGrupSeg));
     }
-    if(isset($node->gGrupSup))
-    {
+    if (isset($node->gGrupSup)) {
       $res->setGGrupSup(GGrupSup::FromSimpleXMLElement($node->gGrupSup));
     }
-    if(isset($node->gGrupAdi))
-    {
+    if (isset($node->gGrupAdi)) {
       $res->setGGrupAdi(GGrupAdi::FromSimpleXMLElement($node->gGrupAdi));
     }
     return $res;
@@ -214,32 +212,29 @@ class GCamEsp extends BaseSifenField
    * Instancia un objeto GCamEsp a partir de un objeto stdClass que contiene datos de la respuesta del Sifen
    *
    * @param  stdClass $object
-   * 
+   *
    * @return self
    */
   public static function FromSifenResponseObject($object): self
   {
     $res = new GCamEsp();
-    if(isset($object->gGrupEner))
-    {
+    if (isset($object->gGrupEner)) {
       // Con más de una ocurrencia, SoapClient entrega un arreglo (Q-B9).
-      foreach((is_array($object->gGrupEner) ? $object->gGrupEner : [$object->gGrupEner]) as $gGrupEner)
+      foreach ((is_array($object->gGrupEner) ? $object->gGrupEner : [$object->gGrupEner]) as $gGrupEner) {
         $res->addGGrupEner(GGrupEner::FromSifenResponseObject($gGrupEner));
+      }
     }
 
-    if(isset($object->gGrupSeg))
-    {
+    if (isset($object->gGrupSeg)) {
       $res->setGGrupSeg(GGrupSeg::FromSifenResponseObject($object->gGrupSeg));
     }
 
-    if(isset($object->gGrupSup))
-    {
+    if (isset($object->gGrupSup)) {
       // Hasta 0.2.0 se buscaba "gGrupoSup" (errata) y el grupo de supermercados nunca se leía (PK-25).
       $res->setGGrupSup(GGrupSup::FromSifenResponseObject($object->gGrupSup));
     }
 
-    if(isset($object->gGrupAdi))
-    {
+    if (isset($object->gGrupAdi)) {
       $res->setGGrupAdi(GGrupAdi::FromSifenResponseObject($object->gGrupAdi));
     }
     return $res;
@@ -247,17 +242,22 @@ class GCamEsp extends BaseSifenField
 
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gCamEsp') != 0)
+    if (strcmp($node->nodeName, 'gCamEsp') != 0) {
       throw new ValidacionException('[GCamEsp] El nombre del nodo no corresponde a gCamEsp: ' . $node->nodeName, 1);
+    }
     $res = new GCamEsp();
-    foreach($node->getElementsByTagName('gGrupEner') as $gGrupEner) // hasta 9 ocurrencias (Q-B9)
+    foreach ($node->getElementsByTagName('gGrupEner') as $gGrupEner) { // hasta 9 ocurrencias (Q-B9)
       $res->addGGrupEner(GGrupEner::FromDOMElement($gGrupEner));
-    if($node->getElementsByTagName('gGrupSeg')->length > 0)
-      $res->setGGrupSeg(GGrupSeg::FromDOMElement($node->getElementsByTagName('gGrupSeg')->item(0))); // hasta 0.2.0 recibía el nodo gGrupSup (PK-25)
-    if($node->getElementsByTagName('gGrupSup')->length > 0)
+    }
+    if ($node->getElementsByTagName('gGrupSeg')->length > 0) {
+      $res->setGGrupSeg(GGrupSeg::FromDOMElement($node->getElementsByTagName('gGrupSeg')->item(0)));
+    } // hasta 0.2.0 recibía el nodo gGrupSup (PK-25)
+    if ($node->getElementsByTagName('gGrupSup')->length > 0) {
       $res->setGGrupSup(GGrupSup::FromDOMElement($node->getElementsByTagName('gGrupSup')->item(0)));
-    if($node->getElementsByTagName('gGrupAdi')->length > 0)
+    }
+    if ($node->getElementsByTagName('gGrupAdi')->length > 0) {
       $res->setGGrupAdi(GGrupAdi::FromDOMElement($node->getElementsByTagName('gGrupAdi')->item(0)));
+    }
     return $res;
   }
 

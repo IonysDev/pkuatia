@@ -21,8 +21,9 @@ final class ReglasDeTotales extends ConjuntoDeReglas
   public static function aplicar(VistaDocumento $v, ResultadoValidacion $r, DateTime $ahora): void
   {
     $tot = $v->gTotSub();
-    if ($tot === null)
+    if ($tot === null) {
       return;
+    }
     $ruta = 'DE.gTotSub';
     $opeCom = $v->gOpeCom();
     $moneda = strtoupper((string) self::texto($opeCom, 'cMoneOpe'));
@@ -45,8 +46,9 @@ final class ReglasDeTotales extends ConjuntoDeReglas
       $s['desc'] = bcadd($s['desc'], bcmul(self::monto($resta, 'dDescItem') ?? '0', $cantidad, 8), 8);
       $s['descGlo'] = bcadd($s['descGlo'], bcmul(self::monto($resta, 'dDescGloItem') ?? '0', $cantidad, 8), 8);
       $iva = self::v($item, 'gCamIVA');
-      if ($iva === null)
+      if ($iva === null) {
         continue;
+      }
       $afectacion = self::entero($iva, 'iAfecIVA');
       $tasa = self::entero($iva, 'dTasaIVA');
       $base = self::monto($iva, 'dBasGravIVA') ?? '0';

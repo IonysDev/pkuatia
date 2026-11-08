@@ -54,8 +54,9 @@ class TransporteException extends SoapFault implements PkuatiaExceptionInterface
     $clase = $tipo->esPosibleSaturacion() ? SifenNoDisponibleException::class : self::class;
     $e = new $clase($prefijo . ': ' . $causa->getMessage(), $operacion, $tipo, $causa, $faultcode);
     foreach (['faultactor', 'detail', 'faultname', 'headerfault'] as $propiedad) {
-      if (isset($causa->{$propiedad}))
+      if (isset($causa->{$propiedad})) {
         $e->{$propiedad} = $causa->{$propiedad};
+      }
     }
     return $e;
   }

@@ -103,8 +103,9 @@ final class CatalogoValidacionesTest extends TestCase
     $sinEstadoEnEkuatIa = ['0364', '0520', '0521', '0522', '0523'];
     foreach (CatalogoValidaciones::todas() as $info) {
       $this->assertMatchesRegularExpression('/^\d{4}$/', $info->codigo, $info->fuente);
-      if ($info->origen === 'ws' && in_array($info->codigo, $sinEstadoEnEkuatIa, true) && $info->estado === '')
+      if ($info->origen === 'ws' && in_array($info->codigo, $sinEstadoEnEkuatIa, true) && $info->estado === '') {
         continue;
+      }
       $this->assertContains($info->estado, ['A', 'AO', 'R'], $info->fuente);
       $this->assertNotSame('', $info->mensaje, $info->fuente);
     }

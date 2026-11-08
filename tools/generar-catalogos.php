@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Regenera los catálogos de src/Resources/codigos/ desde ekuat-ia (Fase C, paso C5).
  *
@@ -11,19 +12,22 @@ require_once __DIR__ . '/GeneradorCatalogos.php';
 
 $docs = __DIR__ . '/../docs/sifen-ai';
 foreach (array_slice($argv, 1) as $arg) {
-  if (str_starts_with($arg, '--docs='))
+  if (str_starts_with($arg, '--docs=')) {
     $docs = substr($arg, 7);
+  }
 }
 if (!is_dir("$docs/08-errores-y-respuestas")) {
   fwrite(STDERR, "No se encontró el clon de ekuat-ia en $docs (usar --docs=<ruta>).\n");
   exit(1);
 }
 $commit = trim((string) @shell_exec('git -C ' . escapeshellarg($docs) . ' rev-parse --short HEAD 2>&1'));
-if (!preg_match('/^[0-9a-f]{7,40}$/', $commit))
+if (!preg_match('/^[0-9a-f]{7,40}$/', $commit)) {
   $commit = '';
+}
 $destino = __DIR__ . '/../src/Resources/codigos';
-if (!is_dir($destino))
+if (!is_dir($destino)) {
   mkdir($destino, 0777, true);
+}
 
 $catalogos = GeneradorCatalogos::generarTodo($docs);
 foreach ($catalogos as $nombre => $datos) {

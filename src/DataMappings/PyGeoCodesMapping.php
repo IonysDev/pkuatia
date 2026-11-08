@@ -2,7 +2,6 @@
 
 namespace IonysDev\Pkuatia\DataMappings;
 
-
 /**
  * PyGeoCodesMapping
  */
@@ -39,7 +38,7 @@ class PyGeoCodesMapping
     return null;
   }
 
-  
+
   /**
    * getDistName
    *
@@ -58,7 +57,7 @@ class PyGeoCodesMapping
     return null;
   }
 
-    
+
   /**
    * por el momento sin suo
    *
@@ -86,14 +85,17 @@ class PyGeoCodesMapping
    */
   public static function estanRelacionados(?int $departamento, ?int $distrito, ?int $ciudad): bool
   {
-    if ($departamento === null || $ciudad === null)
+    if ($departamento === null || $ciudad === null) {
       return true;
+    }
     self::$filas ??= array_values(self::getArray()['geo'] ?? []);
     foreach (self::$filas as $fila) {
-      if ((int) ($fila['CODIGO_DEPTO'] ?? 0) !== $departamento || (int) ($fila['CODIGO_CIUD'] ?? 0) !== $ciudad)
+      if ((int) ($fila['CODIGO_DEPTO'] ?? 0) !== $departamento || (int) ($fila['CODIGO_CIUD'] ?? 0) !== $ciudad) {
         continue;
-      if ($distrito === null || (int) ($fila['CODIGO_DIST'] ?? 0) === $distrito)
+      }
+      if ($distrito === null || (int) ($fila['CODIGO_DIST'] ?? 0) === $distrito) {
         return true;
+      }
     }
     return false;
   }

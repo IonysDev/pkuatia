@@ -2,11 +2,11 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-
 /**
  * Enumeración del parámetro E903 iModTrans relacionada a la tabla 10 del MT (v150) que lista los modos de transporte.
  */
-enum GTranspModTrans: int {
+enum GTranspModTrans: int
+{
     case Terrestre = 1;
     case Fluvial = 2;
     case Aereo = 3;
@@ -14,7 +14,7 @@ enum GTranspModTrans: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Terrestre => 'Terrestre',
             self::Fluvial => 'Fluvial',
             self::Aereo => 'Aéreo',

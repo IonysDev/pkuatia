@@ -39,21 +39,25 @@ final class DecimalXsd
     $texto = $original;
     $pre = $prefijo === '' ? '' : $prefijo . ' ';
     if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)$/D', $texto) !== 1) {
-      if (!is_numeric($texto))
+      if (!is_numeric($texto)) {
         throw new ValidacionException("{$pre}$campo debe ser un número decimal: '$original'");
+      }
       $texto = rtrim(rtrim(sprintf('%.10F', (float) $texto), '0'), '.'); // notación exponencial
     }
     $signo = str_starts_with($texto, '-') ? '-' : '';
     $texto = ltrim($texto, '+-');
-    if (str_starts_with($texto, '.'))
+    if (str_starts_with($texto, '.')) {
       $texto = '0' . $texto;
-    if (str_ends_with($texto, '.'))
+    }
+    if (str_ends_with($texto, '.')) {
       $texto = substr($texto, 0, -1);
+    }
     [$enteros, $parteDecimal] = array_pad(explode('.', $texto, 2), 2, '');
     $enteros = ltrim($enteros, '0');
     $parteDecimal = rtrim($parteDecimal, '0');
-    if (strlen($parteDecimal) > $decimales || strlen($enteros) + strlen($parteDecimal) > $totalDigitos)
+    if (strlen($parteDecimal) > $decimales || strlen($enteros) + strlen($parteDecimal) > $totalDigitos) {
       throw new ValidacionException("{$pre}$campo admite hasta $totalDigitos dígitos, de los cuales hasta $decimales decimales ($tipo): '$original'");
+    }
     return $signo . $texto;
   }
 
@@ -71,8 +75,9 @@ final class DecimalXsd
    */
   public static function esValido(mixed $valor, int $totalDigitos, int $decimales = 4): bool
   {
-    if (!is_int($valor) && !is_string($valor))
+    if (!is_int($valor) && !is_string($valor)) {
       return false;
+    }
     try {
       self::normalizar($valor, 'valor', $totalDigitos, $decimales);
       return true;

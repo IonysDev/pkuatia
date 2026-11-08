@@ -6,8 +6,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de documento impreso asociado: campos iTipoDocAso (H009) y dDTipoDocAso (H010)
  * del grupo gCamDEAsoc, según Manual Técnico SIFEN v150.
  */
-enum TipoDocImpresoAso: int {
-
+enum TipoDocImpresoAso: int
+{
     case Factura = 1;
     case NotaDeCredito = 2;
     case NotaDeDebito = 3;
@@ -17,7 +17,7 @@ enum TipoDocImpresoAso: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Factura => 'Factura',
             self::NotaDeCredito => 'Nota de crédito',
             self::NotaDeDebito => 'Nota de débito',

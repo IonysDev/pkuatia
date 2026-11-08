@@ -23,8 +23,9 @@ final class ReglasDeTransporte extends ConjuntoDeReglas
   public static function aplicar(VistaDocumento $v, ResultadoValidacion $r, DateTime $ahora): void
   {
     $t = $v->gTransp();
-    if ($t === null)
+    if ($t === null) {
       return;
+    }
     $ruta = 'DE.gDtipDE.gTransp';
     $esNR = $v->tipoDocumento() === 7;
     self::regla($r, $esNR && self::entero($t, 'iTipTrans') === null, '2102', 'iTipTrans', $ruta);
@@ -49,8 +50,9 @@ final class ReglasDeTransporte extends ConjuntoDeReglas
     }
 
     $transportista = self::v($t, 'gCamTrans');
-    if ($transportista === null)
+    if ($transportista === null) {
       return;
+    }
     $rutaTransportista = $ruta . '.gCamTrans';
     $naturaleza = self::entero($transportista, 'iNatTrans');
     $ruc = self::texto($transportista, 'dRucTrans');
@@ -58,8 +60,9 @@ final class ReglasDeTransporte extends ConjuntoDeReglas
     $tipoDocumento = self::entero($transportista, 'iTipIDTrans');
     self::regla($r, $naturaleza === 1 && $ruc === null, '2302', 'dRucTrans', $rutaTransportista, null, 'El transportista es contribuyente (E981 = 1).');
     self::regla($r, $naturaleza !== null && $naturaleza !== 1 && $ruc !== null, '2305', 'dRucTrans', $rutaTransportista, $ruc, 'El transportista no es contribuyente (E981 = 2).');
-    if ($ruc !== null && $dv !== null)
+    if ($ruc !== null && $dv !== null) {
       self::regla($r, RucUtils::CalcDV($ruc) !== $dv, '2306', 'dDVTrans', $rutaTransportista, $dv, 'El dígito verificador calculado es ' . RucUtils::CalcDV($ruc) . '.');
+    }
     self::regla($r, $naturaleza === 2 && $tipoDocumento === null, '2307', 'iTipIDTrans', $rutaTransportista, null, 'El transportista no es contribuyente (E981 = 2).');
     self::regla($r, $naturaleza === 1 && $tipoDocumento !== null, '2308', 'iTipIDTrans', $rutaTransportista, $tipoDocumento, 'El transportista es contribuyente (E981 = 1) y se identifica con el RUC.');
     self::regla($r, $tipoDocumento !== null && self::texto($transportista, 'dNumIDTrans') === null, '2311', 'dNumIDTrans', $rutaTransportista);

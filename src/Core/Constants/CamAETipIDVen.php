@@ -7,8 +7,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Valores del campo iTipIDVen (E304) y descripciones del campo dDTipIDVen (E305).
  * En gCamAE solo aplican los códigos 1–4 (el receptor en gDatRec admite valores adicionales).
  */
-enum CamAETipIDVen: int {
-
+enum CamAETipIDVen: int
+{
     case CedulaParaguaya = 1;
     case Pasaporte = 2;
     case CedulaExtranjera = 3;
@@ -49,5 +49,3 @@ enum CamAETipIDVen: int {
         return $list;
     }
 }
-
-?>

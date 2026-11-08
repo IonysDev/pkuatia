@@ -14,22 +14,21 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 /**
  * Nodo Id:     E640
  * Nombre:      gPagCred
- * Descripción: Campos que describen la operación a crédito 
+ * Descripción: Campos que describen la operación a crédito
  * Nodo Padre:  E600
  */
 
 class GPagCred extends BaseSifenField
 {
-
-  public const CONDICION_CREDITO_PLAZO = 1;	
+  public const CONDICION_CREDITO_PLAZO = 1;
   public const CONDICION_CREDITO_CUOTA = 2;
 
-  public int    $iCondCred;  // E641 - 1          - 1-1   - Condición de la  operación a crédito
+  public int $iCondCred;  // E641 - 1          - 1-1   - Condición de la  operación a crédito
   public string $dDCondCred; // E642 - 5-6        - 1-1   - Descripción de la Condición de la operación a crédito
   public string $dPlazoCre;  // E643 - 2-15       - 0-1   - Plazo del crédito
-  public int    $dCuotas;    // E644 - 1-3        - 0-1   - Cantidad de cuotas
+  public int $dCuotas;    // E644 - 1-3        - 0-1   - Cantidad de cuotas
   public string $dMonEnt;    // E645 - 1-15p(0-4) - 0-1   - Monto de la entrega inicial (decimal BCMath)
-  public array  $gCuotas;    // E650 -            - 0-999 - Campos que describen las cuotas (GCuotas)
+  public array $gCuotas;    // E650 -            - 0-999 - Campos que describen las cuotas (GCuotas)
 
   /**
    * Constructor
@@ -46,9 +45,9 @@ class GPagCred extends BaseSifenField
   /**
    * Establece el valor de iCondCred (E641) que representa la condición de la operación a crédito.
    * A su vez establece el valor de dDCondCred (E642) que es la descripción de la condición de la operación a crédito.
-   * 
+   *
    * @param int|PagCredCondCred $iCondCred Condición de la operación a crédito
-   * 
+   *
    * @return self
    */
   public function setICondCred(int|PagCredCondCred $iCondCred): self
@@ -61,9 +60,9 @@ class GPagCred extends BaseSifenField
   /**
    * Establece dDCondCred (E642) que es la descripción de la condición de la operación a crédito.
    * Esta función solo debería utilizarse para deserializar un DE existente.
-   * 
+   *
    * @param String $dDCondCred Descripción de la condición de la operación a crédito.
-   * 
+   *
    * @return self
    */
   public function setDDCondCred(string $dDCondCred): self
@@ -110,8 +109,7 @@ class GPagCred extends BaseSifenField
   public function setDMonEnt(int|string $dMonEnt): self
   {
     $dMonEnt = (string) $dMonEnt;
-    if(!ValueValidations::isValidStringDecimal($dMonEnt, 15, 0, 4))
-    {
+    if (!ValueValidations::isValidStringDecimal($dMonEnt, 15, 0, 4)) {
       throw new ValidacionException("Monto de la entrega inicial (dMonEnt) no válido: " . $dMonEnt, 1);
     }
     $this->dMonEnt = $dMonEnt;
@@ -186,8 +184,9 @@ class GPagCred extends BaseSifenField
    */
   public function getDMonEnt(): ?int
   {
-    if(!isset($this->dMonEnt))
+    if (!isset($this->dMonEnt)) {
       return null;
+    }
     return $this->dMonEnt;
   }
 
@@ -200,7 +199,7 @@ class GPagCred extends BaseSifenField
   public function getDMonEntDecimal(): ?string
   {
     return isset($this->dMonEnt) ? $this->dMonEnt : null;
-  } 
+  }
 
   /**
    * Obtiene el valor de gCuotas
@@ -218,30 +217,29 @@ class GPagCred extends BaseSifenField
 
   /**
    * Instancia un objeto GPagCred a partir de un SimpleXMLElement
-   * 
+   *
    * @param SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gPagCred') != 0)
-    {
+    if (strcmp($node->getName(), 'gPagCred') != 0) {
       throw new ValidacionException("El nombre del nodo no corresponde a gPagCred: " . $node->getName(), 1);
     }
     $res = new self();
     $res->setICondCred(intval($node->iCondCred));
     $res->setDDCondCred(strval($node->dDCondCred));
-    if(isset($node->dPlazoCre))
+    if (isset($node->dPlazoCre)) {
       $res->setDPlazoCre(strval($node->dPlazoCre));
-    if(isset($node->dCuotas))
+    }
+    if (isset($node->dCuotas)) {
       $res->setDCuotas(intval($node->dCuotas));
-    if(isset($node->dMonEnt))
-    {
+    }
+    if (isset($node->dMonEnt)) {
       $res->setDMonEnt(strval($node->dMonEnt));
     }
-    if(isset($node->gCuotas) && count($node->gCuotas) > 0)
-    {
+    if (isset($node->gCuotas) && count($node->gCuotas) > 0) {
       foreach ($node->gCuotas as $g) {
         $res->gCuotas[] = GCuotas::FromSimpleXMLElement($g);
       }
@@ -261,14 +259,14 @@ class GPagCred extends BaseSifenField
     $res->appendChild(XmlHelper::elemento($doc, 'dDCondCred', $this->getDDCondCred()));
     if ($this->iCondCred == 1) {
       $res->appendChild(XmlHelper::elemento($doc, 'dPlazoCre', $this->getDPlazoCre()));
-    } else if ($this->iCondCred == 2) {
+    } elseif ($this->iCondCred == 2) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCuotas', $this->getDCuotas()));
     }
     // E645 se escribe tal como se guardó (cadena decimal): hasta 0.3.0 pasaba por getDMonEnt(): ?int y perdía los decimales.
-    if(isset($this->dMonEnt) && $this->dMonEnt > 0)
+    if (isset($this->dMonEnt) && $this->dMonEnt > 0) {
       $res->appendChild(XmlHelper::elemento($doc, 'dMonEnt', $this->dMonEnt));
-    if(isset($this->gCuotas) && count($this->gCuotas) > 0)
-    {
+    }
+    if (isset($this->gCuotas) && count($this->gCuotas) > 0) {
       foreach ($this->gCuotas as $g) {
         $res->appendChild($g->toDOMElement($doc));
       }
@@ -276,39 +274,34 @@ class GPagCred extends BaseSifenField
     return $res;
   }
 
-    
+
   /**
    * FromSifenResponseObject
    *
    * @param  mixed $object
    * @return self
    */
-  public static function FromSifenResponseObject($object):self
+  public static function FromSifenResponseObject($object): self
   {
     $res = new GPagCred();
 
-    if(isset($object->iCondCred))
-    {
+    if (isset($object->iCondCred)) {
       $res->setICondCred(intval($object->iCondCred));
     }
 
-    if(isset($object->dPlazoCre))
-    {
+    if (isset($object->dPlazoCre)) {
       $res->setDPlazoCre($object->dPlazoCre);
     }
 
-    if(isset($object->dCuotas))
-    {
+    if (isset($object->dCuotas)) {
       $res->setDCuotas(intval($object->dCuotas));
     }
 
-    if(isset($object->dMonEnt))
-    {
+    if (isset($object->dMonEnt)) {
       $res->setDMonEnt(strval($object->dMonEnt));
     }
     //children
-    if(isset($object->gCuotas))
-    {
+    if (isset($object->gCuotas)) {
       //$res->setGCuotas(GCuotas::FromSifenResponseObject($object->gCuotas));
       foreach ($object->gCuotas as $g) {
         $res->gCuotas[] = GCuotas::FromSifenResponseObject($g);
@@ -319,25 +312,29 @@ class GPagCred extends BaseSifenField
 
   /**
    * Instancia un objeto GPagCred a partir de un DOMElement que representa el nodo XML del objeto GPagCred.
-   * 
+   *
    * @param DOMElement $node Nodo XML que representa el objeto GPagCred
-   * 
+   *
    * @return self Objeto GPagCred instanciado
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gPagCred') != 0)
+    if (strcmp($node->nodeName, 'gPagCred') != 0) {
       throw new ValidacionException('[GPagCred] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new GPagCred();
     $res->setICondCred(intval($node->getElementsByTagName('iCondCred')->item(0)->nodeValue));
     $res->setDDCondCred(strval($node->getElementsByTagName('dDCondCred')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dPlazoCre')->length > 0)
+    if ($node->getElementsByTagName('dPlazoCre')->length > 0) {
       $res->setDPlazoCre(strval($node->getElementsByTagName('dPlazoCre')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dCuotas')->length > 0)
+    }
+    if ($node->getElementsByTagName('dCuotas')->length > 0) {
       $res->setDCuotas(intval($node->getElementsByTagName('dCuotas')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dMonEnt')->length > 0)
+    }
+    if ($node->getElementsByTagName('dMonEnt')->length > 0) {
       $res->setDMonEnt(strval($node->getElementsByTagName('dMonEnt')->item(0)->nodeValue));
-    if($node->getElementsByTagName('gCuotas')->length > 0) {
+    }
+    if ($node->getElementsByTagName('gCuotas')->length > 0) {
       $res->gCuotas = [];
       foreach ($node->getElementsByTagName('gCuotas') as $g) {
         $res->gCuotas[] = GCuotas::FromDOMElement($g);

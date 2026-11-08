@@ -6,7 +6,6 @@ use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DateTime;
 use DOMDocument;
 use DOMElement;
-use Exception;
 use SimpleXMLElement;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
@@ -22,9 +21,9 @@ class GDatGralOpe extends BaseSifenField
 {
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFeEmiDE; // D002 - 19 - 1-1 - Fecha y hora de emisión del DE formato AAAA-MM-DDThh:mm:ss
-  public GOpeCom  $gOpeCom;  // D010 -    - 0-1 - Campos inherentes a la operación comercial (obligatorio si C002 != 7)
-  public GEmis    $gEmis;    // D100 -    - 1-1 - Grupo de campos que identifican al emisor (D100)
-  public GDatRec  $gDatRec;  // D200 -    - 1-1 - Grupo de campos que identifican al receptor (D200)
+  public GOpeCom $gOpeCom;  // D010 -    - 0-1 - Campos inherentes a la operación comercial (obligatorio si C002 != 7)
+  public GEmis $gEmis;    // D100 -    - 1-1 - Grupo de campos que identifican al emisor (D100)
+  public GDatRec $gDatRec;  // D200 -    - 1-1 - Grupo de campos que identifican al receptor (D200)
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -132,21 +131,21 @@ class GDatGralOpe extends BaseSifenField
 
   /**
    * Instancia un objeto GDatGralOpe a partir de un SimpleXMLElement
-   * 
+   *
    * @param  SimpleXMLElement $node
-   * 
+   *
    * @return self
    */
   public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
-    if(strcmp($node->getName(), 'gDatGralOpe') != 0)
-    {
+    if (strcmp($node->getName(), 'gDatGralOpe') != 0) {
       throw new ValidacionException("Invalid XML Element: $node->getName()");
     }
     $res = new GDatGralOpe();
     $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFeEmiDE));
-    if(isset($node->gOpeCom))
+    if (isset($node->gOpeCom)) {
       $res->setGOpeCom(GOpeCom::FromSimpleXMLElement($node->gOpeCom));
+    }
     $res->gEmis = GEmis::FromSimpleXMLElement($node->gEmis);
     $res->gDatRec = GDatRec::FromSimpleXMLElement($node->gDatRec);
     return $res;
@@ -156,38 +155,44 @@ class GDatGralOpe extends BaseSifenField
    * Instancia un objeto GDatGralOpe a partir de un objeto stdClass que contiene los datos de respuesa SOAP del SIFEN.
    *
    * @param stdClass $object Objeto respuesta del SIFEN.
-   * 
+   *
    * @return self Objeto GDatGralOpe instanciado.
    */
   public static function FromSifenResponseObject($object): self
   {
     $res = new GDatGralOpe();
-    if(isset($object->dFeEmiDE))
+    if (isset($object->dFeEmiDE)) {
       $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFeEmiDE));
-    if(isset($object->gOpeCom))
+    }
+    if (isset($object->gOpeCom)) {
       $res->setGOpeCom(GOpeCom::FromSifenResponseObject($object->gOpeCom));
-    if(isset($object->gEmis))
+    }
+    if (isset($object->gEmis)) {
       $res->setGEmis(GEmis::FromSifenResponseObject($object->gEmis));
-    if(isset($object->gDatRec))
+    }
+    if (isset($object->gDatRec)) {
       $res->setGDatRec(GDatRec::FromSifenResponseObject($object->gDatRec));
+    }
     return $res;
   }
 
   /**
    * Instancia un objeto GDatGralOpe a partir de un DOMElement con los datos del mismo.
-   * 
+   *
    * @param DOMElement $node Nodo DOM que contiene los datos del objeto.
-   * 
+   *
    * @return self Objeto GDatGralOpe instanciado.
    */
   public static function FromDOMElement(DOMElement $node): self
   {
-    if(strcmp($node->nodeName, 'gDatGralOpe') != 0)
+    if (strcmp($node->nodeName, 'gDatGralOpe') != 0) {
       throw new ValidacionException('[GDatGralOpe] Nodo con nombre inválido: ' . $node->nodeName);
+    }
     $res = new GDatGralOpe();
     $res->setDFeEmiDE(DateTime::createFromFormat('Y-m-d\TH:i:s', trim($node->getElementsByTagName('dFeEmiDE')[0]->nodeValue)));
-    if($node->getElementsByTagName('gOpeCom')->length > 0)
+    if ($node->getElementsByTagName('gOpeCom')->length > 0) {
       $res->setGOpeCom(GOpeCom::FromDOMElement($node->getElementsByTagName('gOpeCom')[0]));
+    }
     $res->setGEmis(GEmis::FromDOMElement($node->getElementsByTagName('gEmis')[0]));
     $res->setGDatRec(GDatRec::FromDOMElement($node->getElementsByTagName('gDatRec')[0]));
     return $res;
@@ -199,23 +204,27 @@ class GDatGralOpe extends BaseSifenField
 
   /**
    * Convierte este GDatGralOpe en un DOMElement generado en el DOMDocument especificado.
-   * 
+   *
    * @param DOMDocument $doc DOMDocument que generará el DOMElement.
    *
    * @return DOMElement DOMElement creado pero no insertado.
    */
   public function toDOMElement(DOMDocument $doc): DOMElement
   {
-    if(!isset($this->dFeEmiDE))
+    if (!isset($this->dFeEmiDE)) {
       throw new ValidacionException('[GDatGralOpe] El campo dFeEmiDE no puede ser nulo');
-    if(!isset($this->gEmis))
+    }
+    if (!isset($this->gEmis)) {
       throw new ValidacionException('[GDatGralOpe] El campo gEmis no puede ser nulo');
-    if(!isset($this->gDatRec))
+    }
+    if (!isset($this->gDatRec)) {
       throw new ValidacionException('[GDatGralOpe] El campo gDatRec no puede ser nulo');
+    }
     $res = $doc->createElement('gDatGralOpe');
     $res->appendChild(XmlHelper::elemento($doc, 'dFeEmiDE', $this->dFeEmiDE->format('Y-m-d\TH:i:s')));
-    if(isset($this->gOpeCom)) 
+    if (isset($this->gOpeCom)) {
       $res->appendChild($this->gOpeCom->toDOMElement($doc));
+    }
     $res->appendChild($this->gEmis->toDOMElement($doc));
     $res->appendChild($this->gDatRec->toDOMElement($doc));
     return $res;

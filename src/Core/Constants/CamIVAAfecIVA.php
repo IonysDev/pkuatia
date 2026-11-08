@@ -6,11 +6,11 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración que contiene los tipos de afectación tributaria de los ítems valorizados.
  * No debe informarse para aquellos items que formen parte de notas de remsión (utilizar ítems no valorizados NoValueItem).
  * Tampoco debe informarse cuando el tipo de impuesto afectado sea el ISC (D013=2).
- * Estos valores corresponden al campo iAfecIVA (E731), asi como a su descripción correspondiente del campo dDesAfecIVA (E732) 
+ * Estos valores corresponden al campo iAfecIVA (E731), asi como a su descripción correspondiente del campo dDesAfecIVA (E732)
  * del grupo gCamIVA (E730).
  */
-enum CamIVAAfecIVA: int {
-
+enum CamIVAAfecIVA: int
+{
     case Gravado = 1;
     case Exonerado = 2;
     case Exento = 3;
@@ -18,7 +18,7 @@ enum CamIVAAfecIVA: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Gravado => 'Gravado IVA',
             self::Exonerado => 'Exonerado (Art. 100 - Ley 6380/2019)',
             self::Exento => 'Exento',
@@ -67,5 +67,3 @@ enum CamIVAAfecIVA: int {
         return self::toIdNameList();
     }
 }
-
-?>
