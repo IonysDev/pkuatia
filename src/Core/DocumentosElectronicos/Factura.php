@@ -133,7 +133,7 @@ class Factura extends DocumentoElectronicoComercial
     int|PaConEIniTiPago $tipoDePago,
     string $monto,
     string $moneda = 'PYG',
-    string $tasaDeCambio = null) : self
+    ?string $tasaDeCambio = null) : self
   {
     if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
       throw new ValidacionException('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
@@ -214,7 +214,7 @@ class Factura extends DocumentoElectronicoComercial
     string $numeroCheque, 
     string $bancoEmisor,
     string $moneda = 'PYG',
-    string $tasaDeCambio = null) : self
+    ?string $tasaDeCambio = null) : self
   {
     $gPagCheq = new GPagCheq();
     $gPagCheq->setDNumCheq($numeroCheque);

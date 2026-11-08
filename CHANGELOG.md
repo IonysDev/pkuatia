@@ -58,6 +58,11 @@ comportamiento para quien emite documentos.
   0100, 0143, 0364 y 0520–0523 (BO04–BO07); `elementos-de` ahora conoce el campo del MT de `gOblAfe` (D030–D032),
   `dBasExe` (E737), `gRasMerc` (E751–E761) y `gVehNuevo` (E771–E786). `CatalogoValidaciones::describir()` describe
   los códigos nuevos; el resto de la librería no cambia.
+- **Tipos en minúscula y anulables explícitos** (D2). `String` pasa a `string` en las 1338 declaraciones de
+  parámetros, retornos y propiedades de 105 archivos (`native_type_declaration_casing`; para PHP es el mismo tipo,
+  así que ninguna firma cambia), tres `: Self` pasan a `: self`, y los dos parámetros `String $tasaDeCambio = null`
+  de `Factura` pasan a `?string $tasaDeCambio = null` (`nullable_type_declaration_for_default_null_value`; la forma
+  implícita está deprecada en PHP 8.4 y el tipo ya era anulable). Los docblocks no cambian.
 
 ## [0.3.0] — 2026-10-15
 
