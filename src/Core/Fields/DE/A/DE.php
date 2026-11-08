@@ -267,7 +267,7 @@ class DE extends BaseSifenField
      *
      * @return GOpeDE Campos inherentes a la operación de DE.
      */
-    public function getGOpeDe(): GOpeDE
+    public function getGOpeDE(): GOpeDE
     {
         return $this->gOpeDe;
     }
@@ -297,7 +297,7 @@ class DE extends BaseSifenField
      *
      * @return GDtipDE Campos específicos por tipo de Documento Electrónico.
      */
-    public function getGDtipDe(): GDtipDE
+    public function getGDtipDE(): GDtipDE
     {
         return $this->gDtipDe;
     }

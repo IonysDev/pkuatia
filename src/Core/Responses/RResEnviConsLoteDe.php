@@ -37,7 +37,7 @@ class RResEnviConsLoteDe implements RespuestaSifen
      *
      * @return self
      */
-    public function setdFecProc(DateTime $dFecProc): self
+    public function setDFecProc(DateTime $dFecProc): self
     {
         $this->dFecProc = $dFecProc;
 
@@ -94,7 +94,7 @@ class RResEnviConsLoteDe implements RespuestaSifen
      *
      * @return DateTime
      */
-    public function getdFecProc(): DateTime
+    public function getDFecProc(): DateTime
     {
         return $this->dFecProc;
     }
@@ -143,7 +143,7 @@ class RResEnviConsLoteDe implements RespuestaSifen
         if (isset($object->rProtDe)) {
             $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
             if (isset($prot->dFecProc)) {
-                $res->setdFecProc($prot->getDFecProc());
+                $res->setDFecProc($prot->getDFecProc());
             }
             $proc = $prot->getGResProc()[0] ?? null;
             if ($proc !== null) {
@@ -154,7 +154,7 @@ class RResEnviConsLoteDe implements RespuestaSifen
             return $res;
         }
         if (isset($object->dFecProc)) {
-            $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
+            $res->setDFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
         } // con o sin zona (PK-29)
         else {
             throw RespuestaException::porCampoFaltante("[RResEnviConsLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');

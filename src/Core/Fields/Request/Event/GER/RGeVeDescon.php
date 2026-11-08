@@ -177,7 +177,7 @@ class RGeVeDescon
      *
      * @return self
      */
-    public function setMOtEve(string $mOtEve): self
+    public function setMotEve(string $mOtEve): self
     {
         $this->mOtEve = $mOtEve;
 
@@ -284,7 +284,7 @@ class RGeVeDescon
      *
      * @return String
      */
-    public function getMOtEve(): string
+    public function getMotEve(): string
     {
         return $this->mOtEve;
     }
@@ -316,7 +316,7 @@ class RGeVeDescon
             $res->appendChild(XmlHelper::elemento($doc, 'dNumID', $this->getDNumID()));
         }
 
-        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
+        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMotEve()));
         return $res;
     }
 
@@ -339,7 +339,7 @@ class RGeVeDescon
     //     $res->setDDVRec(intval($xml->getElementsByTagName('dDVRec')->item(0)->nodeValue));
     //     $res->setDTipIDRec(intval($xml->getElementsByTagName('dTipIDRec')->item(0)->nodeValue));
     //     $res->setDNumID($xml->getElementsByTagName('dNumID')->item(0)->nodeValue);
-    //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+    //     $res->setMotEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
     //     return $res;
     //   } else {
     //     throw new \Exception("Invalid XML Element: $xml->tagName");
@@ -369,7 +369,7 @@ class RGeVeDescon
             $res->setDTipIDRec(intval((string) $node->dTipIDRec));
             $res->setDNumID((string) $node->dNumID);
         }
-        $res->setMOtEve($node->mOtEve);
+        $res->setMotEve($node->mOtEve);
 
         return $res;
     }

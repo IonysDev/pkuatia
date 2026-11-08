@@ -263,7 +263,7 @@ class Sifen
         try {
             self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_RUC . "?wsdl");
             $object = self::RespuestaOGenerica(self::$client->rEnviConsRUC(new REnviConsRUC(self::GetDId(), $ruc)));
-            return RResEnviConsRUC::fromStdClassObject($object);
+            return RResEnviConsRUC::FromSifenResponseObject($object);
         } catch (\Throwable $e) {
             throw self::excepcionDeOperacion($e, 'ConsultarRUC', "[Sifen] Error al consultar el RUC en el SIFEN");
         }
@@ -643,7 +643,7 @@ class Sifen
 
         // Firma los eventos y realiza el envío al SIFEN
         try {
-            $xmlDocument = SignHelper::SingEvents($raiz, self::$config);
+            $xmlDocument = SignHelper::SignEvents($raiz, self::$config);
             $signedXML = $xmlDocument->saveXML($xmlDocument->getElementsByTagName("gGroupGesEve")->item(0));
             self::exigirXsd($signedXML, true, 'RegistrarEvento', 'el sobre de eventos');
 
@@ -674,7 +674,7 @@ class Sifen
         self::ValidarMotivoEvento($motivo, 'cancelación');
         $rGeVeCan = new RGeVeCan();
         $rGeVeCan->setId($cdc);
-        $rGeVeCan->setMOtEve($motivo);
+        $rGeVeCan->setMotEve($motivo);
 
         $gGroupTiEvt = new GGroupTiEvt();
         $gGroupTiEvt->setRGeVeCan($rGeVeCan);
@@ -752,7 +752,7 @@ class Sifen
             $rGeVeInu->setDSerieNum($serie);
         }
         self::ValidarMotivoEvento($motivo, 'inutilización');
-        $rGeVeInu->setMOtEve($motivo);
+        $rGeVeInu->setMotEve($motivo);
 
         $gGroupTiEvt = new GGroupTiEvt();
         $gGroupTiEvt->setRGeVeInu($rGeVeInu);
@@ -866,7 +866,7 @@ class Sifen
 
         $rGeVeDisconf = new RGeVeDisconf();
         $rGeVeDisconf->setId($cdc);
-        $rGeVeDisconf->setMOtEve($motivo);
+        $rGeVeDisconf->setMotEve($motivo);
 
         $gGroupTiEvt = new GGroupTiEvt();
         $gGroupTiEvt->setRGeVeDisconf($rGeVeDisconf);
@@ -924,7 +924,7 @@ class Sifen
             $rGeVeDescon->setDTipIDRec($tipoDocumentoIdentidad instanceof TipIDRec ? $tipoDocumentoIdentidad->value : $tipoDocumentoIdentidad);
             $rGeVeDescon->setDNumID($nroDocumentoIdentidad);
         }
-        $rGeVeDescon->setMOtEve($motivo);
+        $rGeVeDescon->setMotEve($motivo);
 
         $gGroupTiEvt = new GGroupTiEvt();
         $gGroupTiEvt->setRGeVeDescon($rGeVeDescon);

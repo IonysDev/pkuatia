@@ -70,7 +70,7 @@ class GCamItem extends BaseSifenField
         if (is_null($this->calcSubtEx())) {
             return null;
         } else {
-            return NumberStringFormatter::FormatBCMAthNumber($this->calcSubtEx(), ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($this->calcSubtEx(), ',', '.');
         }
     }
 
@@ -92,7 +92,7 @@ class GCamItem extends BaseSifenField
         if (is_null($this->calcSubt05())) {
             return null;
         } else {
-            return NumberStringFormatter::FormatBCMAthNumber($this->calcSubt05(), ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($this->calcSubt05(), ',', '.');
         }
     }
 
@@ -125,7 +125,7 @@ class GCamItem extends BaseSifenField
         if (is_null($this->calcSubt10())) {
             return null;
         } else {
-            return NumberStringFormatter::FormatBCMAthNumber($this->calcSubt10(), ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($this->calcSubt10(), ',', '.');
         }
     }
 
@@ -262,7 +262,7 @@ class GCamItem extends BaseSifenField
      */
     public function setCUniMed(int $cUniMed): self
     {
-        $desc = UnidadMedidaMapping::GetDesc(strval($cUniMed));
+        $desc = UnidadMedidaMapping::getDesc(strval($cUniMed));
         if ($desc === null) {
             throw new ValidacionException("[GCamItem] El código de unidad de medida $cUniMed (E709) no existe en Unidades_Medida_v141.xsd del SIFEN.");
         }
@@ -463,7 +463,7 @@ class GCamItem extends BaseSifenField
      *
      * @return self
      */
-    public function setGCamIVa(GCamIVA $gCamIVA): self
+    public function setGCamIVA(GCamIVA $gCamIVA): self
     {
         $this->gCamIVA = $gCamIVA;
         return $this;
@@ -620,7 +620,7 @@ class GCamItem extends BaseSifenField
     public function getFormattedDCantProSer(int $precision = 8): string
     {
         $rounded = bcadd($this->dCantProSer, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**
@@ -688,7 +688,7 @@ class GCamItem extends BaseSifenField
     public function getFormattedDCanQuiMer(int $precision = 8): string
     {
         $rounded = bcadd($this->dCanQuiMer, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**
@@ -704,7 +704,7 @@ class GCamItem extends BaseSifenField
     public function getFormattedDPorQuiMer(int $precision = 8): string
     {
         $rounded = bcadd($this->dPorQuiMer, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**
@@ -732,7 +732,7 @@ class GCamItem extends BaseSifenField
      *
      * @return GCamIVA
      */
-    public function getGCamIVa(): GCamIVA
+    public function getGCamIVA(): GCamIVA
     {
         return $this->gCamIVA;
     }
@@ -825,7 +825,7 @@ class GCamItem extends BaseSifenField
             $res->setGValorItem(GValorItem::FromSimpleXMLElement($node->gValorItem));
         }
         if (isset($node->gCamIVA)) {
-            $res->setGCamIVa(GCamIVA::FromSimpleXMLElement($node->gCamIVA));
+            $res->setGCamIVA(GCamIVA::FromSimpleXMLElement($node->gCamIVA));
         }
         if (isset($node->gRasMerc)) {
             $res->setGRasMerc(GRasMerc::FromSimpleXMLElement($node->gRasMerc));
@@ -974,7 +974,7 @@ class GCamItem extends BaseSifenField
             $res->setGValorItem(GValorItem::FromSifenResponseObject($object->gValorItem));
         }
         if (isset($object->gCamIVA)) {
-            $res->setGCamIVa(GCamIVA::FromSifenResponseObject($object->gCamIVA));
+            $res->setGCamIVA(GCamIVA::FromSifenResponseObject($object->gCamIVA));
         }
         if (isset($object->gRasMerc)) {
             $res->setGRasMerc(GRasMerc::FromSifenResponseObject($object->gRasMerc));
@@ -1078,7 +1078,7 @@ class GCamItem extends BaseSifenField
             $res->setGValorItem(GValorItem::FromDOMElement($node->getElementsByTagName('gValorItem')->item(0)));
         }
         if ($node->getElementsByTagName('gCamIVA')->length > 0) {
-            $res->setGCamIVa(GCamIVA::FromDOMElement($node->getElementsByTagName('gCamIVA')->item(0)));
+            $res->setGCamIVA(GCamIVA::FromDOMElement($node->getElementsByTagName('gCamIVA')->item(0)));
         }
         if ($node->getElementsByTagName('gRasMerc')->length > 0) {
             $res->setGRasMerc(GRasMerc::FromDOMElement($node->getElementsByTagName('gRasMerc')->item(0)));

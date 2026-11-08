@@ -41,11 +41,13 @@ class RRetEnviEventoDe implements RespuestaSifen
      */
     public function setGResProcEVe(array $gResProcEVe): self
     {
-        return $this->seGResProcEVe($gResProcEVe);
+        $this->gResProcEVe = $gResProcEVe;
+
+        return $this;
     }
 
     /**
-     * @deprecated Usar setGResProcEVe() (typo histórico en el nombre del método).
+     * @deprecated Usar setGResProcEVe() (typo histórico en el nombre del método). Delega en él desde 0.3.1.
      *
      * @param array $gResProcEVe
      *
@@ -53,9 +55,7 @@ class RRetEnviEventoDe implements RespuestaSifen
      */
     public function seGResProcEVe(array $gResProcEVe): self
     {
-        $this->gResProcEVe = $gResProcEVe;
-
-        return $this;
+        return $this->setGResProcEVe($gResProcEVe);
     }
 
     /**
@@ -75,17 +75,17 @@ class RRetEnviEventoDe implements RespuestaSifen
      */
     public function getGResProcEVe(): array
     {
-        return $this->geGResProcEVe();
+        return $this->gResProcEVe;
     }
 
     /**
-     * @deprecated Usar getGResProcEVe() (typo histórico en el nombre del método).
+     * @deprecated Usar getGResProcEVe() (typo histórico en el nombre del método). Delega en él desde 0.3.1.
      *
      * @return array
      */
     public function geGResProcEVe(): array
     {
-        return $this->gResProcEVe;
+        return $this->getGResProcEVe();
     }
 
     public static function FromSifenResponseObject($object)
@@ -102,7 +102,7 @@ class RRetEnviEventoDe implements RespuestaSifen
             if (isset($prot->dFecProc)) {
                 $res->setDFecProc($prot->getDFecProc());
             }
-            $res->seGResProcEVe([(new GResProcEVe())->setDEstRes($prot->getDEstRes())->setGResProc($prot->getGResProc())]);
+            $res->setGResProcEVe([(new GResProcEVe())->setDEstRes($prot->getDEstRes())->setGResProc($prot->getGResProc())]);
             return $res;
         }
         // Con zona en la respuesta directa, sin zona dentro de xContEv: FechaHelper acepta los dos (PK-29).
@@ -119,7 +119,7 @@ class RRetEnviEventoDe implements RespuestaSifen
                 array_push($gResProcEVe, $aux);
             }
         }
-        $res->seGResProcEVe($gResProcEVe);
+        $res->setGResProcEVe($gResProcEVe);
         return $res;
     }
 

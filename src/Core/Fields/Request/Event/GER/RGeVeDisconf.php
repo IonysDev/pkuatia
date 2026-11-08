@@ -44,7 +44,7 @@ class RGeVeDisconf
      *
      * @return self
      */
-    public function setMOtEve(string $mOtEve): self
+    public function setMotEve(string $mOtEve): self
     {
         $this->mOtEve = $mOtEve;
 
@@ -72,7 +72,7 @@ class RGeVeDisconf
      *
      * @return String
      */
-    public function getMOtEve(): string
+    public function getMotEve(): string
     {
         return $this->mOtEve;
     }
@@ -92,7 +92,7 @@ class RGeVeDisconf
         $res = $doc->createElement('rGeVeDisconf');
 
         $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
-        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
+        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMotEve()));
 
         return $res;
     }
@@ -108,7 +108,7 @@ class RGeVeDisconf
     //   if (strcmp($xml->tagName, 'rGeVeDisconf') == 0 && $xml->childElementCount == 2) {
     //     $res = new RGeVeDisconf();
     //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-    //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+    //     $res->setMotEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
     //     return $res;
     //   } else {
     //     throw new \Exception("Invalid XML Element: $xml->tagName");
@@ -124,7 +124,7 @@ class RGeVeDisconf
 
         $res = new RGeVeDisconf();
         $res->setId($node->Id);
-        $res->setMOtEve($node->mOtEve);
+        $res->setMotEve($node->mOtEve);
 
         return $res;
     }

@@ -120,7 +120,7 @@ class GOpeCom extends BaseSifenField
     public function setCMoneOpe(string $cMoneOpe): self
     {
         $this->cMoneOpe = $cMoneOpe;
-        $this->dDesMoneOpe = MonedaMapping::GetDescription($this->cMoneOpe);
+        $this->dDesMoneOpe = MonedaMapping::getDescription($this->cMoneOpe);
         if (is_null($this->dDesMoneOpe)) {
             unset($this->cMoneOpe);
             throw new ValidacionException("[GOpeCom] El valor del campo cMoneOpe no es válido: " . $cMoneOpe);
@@ -333,7 +333,7 @@ class GOpeCom extends BaseSifenField
     {
         if (isset($this->dTiCam)) {
             $rounded = bcadd($this->dTiCam, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return '0';
         }

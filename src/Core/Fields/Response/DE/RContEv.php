@@ -66,7 +66,7 @@ class RContEv
     /**
      * Obtiene el valor de rResEnviEventoDe
      *
-     * @return GResProcEVe
+     * @return RRetEnviEventoDe
      */
     public function getRResEnviEventoDe(): RRetEnviEventoDe
     {

@@ -39,7 +39,7 @@ class GCuotas
     public function setCMoneCuo(string $cMoneCuo): self
     {
         $this->cMoneCuo = $cMoneCuo;
-        $this->dDMoneCuo = MonedaMapping::GetDescription($cMoneCuo);
+        $this->dDMoneCuo = MonedaMapping::getDescription($cMoneCuo);
         if ($this->dDMoneCuo == null) {
             throw new ValidacionException("Moneda (cMoneCuo) no válida: " . $cMoneCuo, 1);
         }

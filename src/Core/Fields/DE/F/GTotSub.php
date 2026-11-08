@@ -557,7 +557,7 @@ class GTotSub
     {
         if (isset($this->dSubExe)) {
             $rounded = bcadd($this->dSubExe, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return null;
         }
@@ -587,7 +587,7 @@ class GTotSub
     {
         if (isset($this->dSubExo)) {
             $rounded = bcadd($this->dSubExo, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return null;
         }
@@ -617,7 +617,7 @@ class GTotSub
     {
         if (isset($this->dSub5)) {
             $rounded = bcadd($this->dSub5, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return null;
         }
@@ -647,7 +647,7 @@ class GTotSub
     {
         if (isset($this->dSub10)) {
             $rounded = bcadd($this->dSub10, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return null;
         }
@@ -772,7 +772,7 @@ class GTotSub
     public function getFormattedDTotGralOpe(int $precision = 8): string
     {
         $rounded = bcadd($this->dTotGralOpe, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**
@@ -798,7 +798,7 @@ class GTotSub
     {
         if (isset($this->dIVA5)) {
             $rounded = bcadd($this->dIVA5, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return null;
         }
@@ -827,7 +827,7 @@ class GTotSub
     {
         if (isset($this->dIVA10)) {
             $rounded = bcadd($this->dIVA10, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return null;
         }
@@ -898,7 +898,7 @@ class GTotSub
     {
         if (isset($this->dTotIVA)) {
             $rounded = bcadd($this->dTotIVA, '0', $precision);
-            return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+            return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
         } else {
             return null;
         }
@@ -957,7 +957,7 @@ class GTotSub
     public function getFormattedDTotalGs(int $precision = 8): string
     {
         $rounded = bcadd($this->dTotalGs, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     ///////////////////////////////////////////////////////////////////////

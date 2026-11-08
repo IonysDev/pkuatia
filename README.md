@@ -254,7 +254,7 @@ $respuesta = Sifen::ConsultarDE($cdc);
 
 if ($respuesta->getDCodRes() === 422) { // 0422: existe y está aprobado; 0420: no existe o no está aprobado
     $contenido = $respuesta->getRContDe();
-    $de = $contenido->getRDe()->getDE(); // el DE completo, como objetos
+    $de = $contenido->getRDE()->getDE(); // el DE completo, como objetos
     echo $de->getGDatGralOpe()->getGEmis()->getDNomEmi() . ', protocolo ' . $contenido->getDProtAut() . "\n";
 
     // Cancelación, conformidad y demás eventos registrados sobre el DE, con la respuesta del SIFEN a cada uno

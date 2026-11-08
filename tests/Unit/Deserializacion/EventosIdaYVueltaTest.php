@@ -46,24 +46,24 @@ final class EventosIdaYVueltaTest extends TestCase
         return [
           'cancelación' => [fn () => E::cancelacion()],
           'inutilización' => [fn () => (new GGroupTiEvt())->setRGeVeInu((new RGeVeInu())->setDNumTim(12345678)->setDEst('001')
-            ->setDPunExp('001')->setDNumIn('0000010')->setDNumFin('0000020')->setITiDE(1)->setMOtEve('Inutilizacion de prueba')->setDSerieNum('AB'))],
+            ->setDPunExp('001')->setDNumIn('0000010')->setDNumFin('0000020')->setITiDE(1)->setMotEve('Inutilizacion de prueba')->setDSerieNum('AB'))],
           'notificación de recepción' => [fn () => (new GGroupTiEvt())->setRGeVeNotRec((new RGeVeNotRec())->setId(self::CDC)
             ->setDFecEmi(self::fecha('2026-01-15T10:00:00'))->setDFecRecep(self::fecha('2026-01-16T08:00:00'))->setITipRec(1)
             ->setDNomRec('Cliente Receptor SA')->setDRucRec('80012345')->setDDVRec(0)->setDTotalGs(100000))],
           'conformidad total' => [fn () => E::conformidad(1)],
           'conformidad parcial' => [fn () => E::conformidad(2, self::fecha('2026-01-17T10:00:00'))],
-          'disconformidad' => [fn () => (new GGroupTiEvt())->setRGeVeDisconf((new RGeVeDisconf())->setId(self::CDC)->setMOtEve('Mercaderia con fallas'))],
+          'disconformidad' => [fn () => (new GGroupTiEvt())->setRGeVeDisconf((new RGeVeDisconf())->setId(self::CDC)->setMotEve('Mercaderia con fallas'))],
           'desconocimiento' => [fn () => E::desconocimientoNoContribuyente()],
           'transporte, local de entrega' => [fn () => E::transporteCambioLocalEntrega()],
           'transporte, chofer' => [fn () => E::transporteCambioChofer()],
           'transporte, vehículo' => [fn () => E::transporteCambioVehiculo()],
           'nominación' => [fn () => E::nominacion()],
-          'retención aceptada' => [fn () => (new GGroupTiEvt())->setrGeVeRetAce((new RGeVeRetAce())->setId(self::CDC)->setDNumTimRet(12345678)
+          'retención aceptada' => [fn () => (new GGroupTiEvt())->setRGeVeRetAce((new RGeVeRetAce())->setId(self::CDC)->setDNumTimRet(12345678)
             ->setDEstRet('001')->setDPunExpRet('002')->setDNumDocRet('0000123')->setDCodConRet('a1b2c3d4')->setDFeEmiRet(self::fecha('2026-01-20T00:00:00')))],
-          'retención anulada' => [fn () => (new GGroupTiEvt())->setrGeVeRetAnu((new RGeVeRetAnu())->setId(self::CDC)->setDNumTimRet(12345678)
+          'retención anulada' => [fn () => (new GGroupTiEvt())->setRGeVeRetAnu((new RGeVeRetAnu())->setId(self::CDC)->setDNumTimRet(12345678)
             ->setDEstRet('001')->setDPunExpRet('002')->setDNumDocRet('0000123')->setDCodConRet('a1b2c3d4')->setDFeEmiRet(self::fecha('2026-01-20T00:00:00'))
             ->setDFecAnRet(self::fecha('2026-01-21T09:15:00')))],
-          'crédito fiscal' => [fn () => (new GGroupTiEvt())->setrGeVeCCFF((new RGeVeCCFF())->setId(self::CDC)->setDNumTraCCFF('123456')
+          'crédito fiscal' => [fn () => (new GGroupTiEvt())->setRGeVeCCFF((new RGeVeCCFF())->setId(self::CDC)->setDNumTraCCFF('123456')
             ->setDFeAceTraCCFF(self::fecha('2026-01-22T10:00:00')))],
           'devolución de crédito fiscal, cuestionado' => [fn () => (new GGroupTiEvt())->setGeDevCCFFCue(self::devolucion(new RGeDevCCFFCue()))],
           'devolución de crédito fiscal, devuelto' => [fn () => (new GGroupTiEvt())->setGeDevCCFFDev(self::devolucion(new RGeDevCCFFDev()))],
@@ -131,7 +131,7 @@ final class EventosIdaYVueltaTest extends TestCase
         foreach (['rGeVeRetAce' => '', 'rGeVeRetAnu' => '<dFecAnRet>2026-01-21T09:15:00</dFecAnRet>'] as $nodo => $extra) {
             $xml = "<gGroupTiEvt><$nodo>$base$extra<dMonRet>100000.5</dMonRet></$nodo></gGroupTiEvt>";
             $gti = GGroupTiEvt::FromSimpleXMLElement(simplexml_load_string($xml));
-            $evento = $nodo === 'rGeVeRetAce' ? $gti->getrGeVeRetAce() : $gti->getrGeVeRetAnu();
+            $evento = $nodo === 'rGeVeRetAce' ? $gti->getRGeVeRetAce() : $gti->getRGeVeRetAnu();
             $this->assertSame('80000000', $evento->getDRuc(), $nodo);
             $this->assertSame('100000.5', $evento->getDMonRet(), $nodo);
             $this->assertSame($xml, RoundTrip::serializar($gti), "$nodo: orden de Evento_v150.xsd");
@@ -147,7 +147,7 @@ final class EventosIdaYVueltaTest extends TestCase
             $res = Sifen::ConsultarDE('01800000005001001000011322026100915495718099');
             $cancelacion = $res->getRContDe()->getRContEv()->getXEvento()->getREve()->getGGroupTiEvt()->getRGeVeCan();
             $this->assertSame('01800000005001001000011322026100915495718099', $cancelacion->getId());
-            $this->assertSame('Anulacion de prueba - captura de respuestas reales Fase A', $cancelacion->getMOtEve());
+            $this->assertSame('Anulacion de prueba - captura de respuestas reales Fase A', $cancelacion->getMotEve());
         } finally {
             $cleanup();
         }

@@ -91,7 +91,7 @@ class GPaConEIni extends BaseSifenField
     public function setCMoneTiPag(string $cMoneTiPag): self
     {
         $this->cMoneTiPag = $cMoneTiPag;
-        $this->dDMoneTiPag = MonedaMapping::GetDescription($cMoneTiPag);
+        $this->dDMoneTiPag = MonedaMapping::getDescription($cMoneTiPag);
         return $this;
     }
 

@@ -101,7 +101,7 @@ final class RespuestasRealesTest extends TestCase
         $this->assertSame(422, $res->getDCodRes());
         $cont = $res->getRContDe();
         $this->assertSame('50219661', $cont->getDProtAut());
-        $this->assertSame(self::CDC, $cont->getRDe()->getDE()->getId());
+        $this->assertSame(self::CDC, $cont->getRDE()->getDE()->getId());
         $this->assertSame([], $cont->getRContEvs());
         $this->assertNull($cont->getRContEv());
         $this->assertStringStartsWith('<rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd"', $res->getRDEXml());

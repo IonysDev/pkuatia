@@ -36,11 +36,11 @@ final class CatalogosYEnumsTest extends TestCase
 
     public function testLasUnidadesDeLaNt023LlevanLaAbreviaturaComoLiteral(): void
     {
-        $this->assertSame('UNI', UnidadMedidaMapping::GetDesc(77));
-        $this->assertSame('kg', UnidadMedidaMapping::GetDesc(83));
-        $this->assertSame('4A', UnidadMedidaMapping::GetDesc(111));
-        $this->assertSame('Ci', UnidadMedidaMapping::GetDesc(112));
-        $this->assertSame('BW', UnidadMedidaMapping::GetDesc(140));
+        $this->assertSame('UNI', UnidadMedidaMapping::getDesc(77));
+        $this->assertSame('kg', UnidadMedidaMapping::getDesc(83));
+        $this->assertSame('4A', UnidadMedidaMapping::getDesc(111));
+        $this->assertSame('Ci', UnidadMedidaMapping::getDesc(112));
+        $this->assertSame('BW', UnidadMedidaMapping::getDesc(140));
     }
 
     public function testElXsdDeUnidadesEmpaquetadoEsElDeProduccion(): void
@@ -62,7 +62,7 @@ final class CatalogosYEnumsTest extends TestCase
 
     public function testLasMonedasConNombreLargoSeRecortanA20Caracteres(): void
     {
-        $this->assertLessThanOrEqual(20, mb_strlen(MonedaMapping::GetDescription('ANG')));
+        $this->assertLessThanOrEqual(20, mb_strlen(MonedaMapping::getDescription('ANG')));
         $xml = DocumentoFactory::firmar(DocumentoFactory::facturaUsd(41, 'ANG')->facturaToRDE());
         XsdAssertions::assertRdeValido($xml, 'FE en ANG (CodeName de 29 caracteres en el XSD)');
     }

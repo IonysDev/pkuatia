@@ -84,7 +84,7 @@ final class VerificarFirmaTest extends TestCase
         foreach ($sobre->getRGesEve() as $rGesEve) {
             $rGesEve->getREve()->setDFecFirma(self::ahora()); // el certificado de prueba vale desde hoy
         }
-        $doc = SignHelper::SingEvents($sobre, $this->entorno['config']);
+        $doc = SignHelper::SignEvents($sobre, $this->entorno['config']);
         $xml = $doc->saveXML($doc->getElementsByTagName('gGroupGesEve')->item(0));
         $r = Sifen::VerificarFirma($xml);
         $this->assertTrue($r->esValida(), (string) $r);

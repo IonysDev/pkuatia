@@ -113,7 +113,7 @@ class RGeVeInu
      *
      * @return self
      */
-    public function setMOtEve(string $mOtEve): self
+    public function setMotEve(string $mOtEve): self
     {
         $this->mOtEve = $mOtEve;
         return $this;
@@ -189,7 +189,7 @@ class RGeVeInu
      *
      * @return String
      */
-    public function getMOtEve(): string
+    public function getMotEve(): string
     {
         return $this->mOtEve;
     }
@@ -236,7 +236,7 @@ class RGeVeInu
     //     $res->setDNumIn($xml->getElementsByTagName('dNumIn')->item(0)->nodeValue);
     //     $res->setDNumFin($xml->getElementsByTagName('dNumFin')->item(0)->nodeValue);
     //     $res->setITiDE(intval($xml->getElementsByTagName('iTiDE')->item(0)->nodeValue));
-    //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+    //     $res->setMotEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
 
     //     return $res;
     //   } else {
@@ -291,7 +291,7 @@ class RGeVeInu
         $res->setDNumIn($node->dNumIn);
         $res->setDNumFin($node->dNumFin);
         $res->setITiDE(intval($node->iTiDE));
-        $res->setMOtEve($node->mOtEve);
+        $res->setMotEve($node->mOtEve);
         if (isset($node->dSerieNum)) {
             $res->setDSerieNum($node->dSerieNum);
         }

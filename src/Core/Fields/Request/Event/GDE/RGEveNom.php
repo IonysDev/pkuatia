@@ -98,7 +98,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setMOtEve(string $mOtEve): self
+    public function setMotEve(string $mOtEve): self
     {
         $this->mOtEve = $mOtEve;
         return $this;
@@ -483,7 +483,7 @@ class RGEveNom
      *
      * @return string
      */
-    public function getMOtEve(): ?string
+    public function getMotEve(): ?string
     {
         if (isset($this->mOtEve)) {
             return $this->mOtEve;
@@ -824,7 +824,7 @@ class RGEveNom
         $res = $doc->createElement('rGEveNom');
 
         $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
-        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
+        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMotEve()));
         $res->appendChild(XmlHelper::elemento($doc, 'iNatRec', $this->getINatRec()));
         $res->appendChild(XmlHelper::elemento($doc, 'iTiOpe', $this->getITiOpe()));
         $res->appendChild(XmlHelper::elemento($doc, 'cPaisRec', $this->getCPaisRec()));
@@ -903,7 +903,7 @@ class RGEveNom
 
         $res = new self();
         $res->setId(strval($node->Id));
-        $res->setMOtEve(strval($node->mOtEve));
+        $res->setMotEve(strval($node->mOtEve));
 
         if (isset($node->iNatRec)) {
             $res->setINatRec(intval($node->iNatRec));

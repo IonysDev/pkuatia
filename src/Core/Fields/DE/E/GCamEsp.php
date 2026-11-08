@@ -37,7 +37,7 @@ class GCamEsp extends BaseSifenField
      *
      * @return self
      */
-    public function setgGrupEner(GGrupEner $gGrupEner): self
+    public function setGGrupEner(GGrupEner $gGrupEner): self
     {
         $this->gGrupEner = $gGrupEner;
         $this->gGrupEnerAdicionales = []; // set reemplaza todas las ocurrencias, como hasta 0.2.0 (Q-B9)
@@ -46,7 +46,7 @@ class GCamEsp extends BaseSifenField
 
     /**
      * Agrega una ocurrencia de gGrupEner (un medidor): el XSD admite hasta 9 (DE_v150.xsd:802, NT-023). Si no
-     * hay ninguna, equivale a setgGrupEner(). Nuevo en 0.2.1 (Q-B9).
+     * hay ninguna, equivale a setGGrupEner(). Nuevo en 0.2.1 (Q-B9).
      *
      * @param GGrupEner $gGrupEner
      *
@@ -115,13 +115,13 @@ class GCamEsp extends BaseSifenField
      *
      * @return GGrupEner
      */
-    public function getgGrupEner(): GGrupEner
+    public function getGGrupEner(): GGrupEner
     {
         return $this->gGrupEner;
     }
 
     /**
-     * Todas las ocurrencias de gGrupEner, en orden (la primera es la de getgGrupEner()). Nuevo en 0.2.1 (Q-B9).
+     * Todas las ocurrencias de gGrupEner, en orden (la primera es la de getGGrupEner()). Nuevo en 0.2.1 (Q-B9).
      *
      * @return list<GGrupEner>
      */

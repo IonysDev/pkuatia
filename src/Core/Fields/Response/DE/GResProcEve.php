@@ -129,7 +129,7 @@ class GResProcEve
             throw new RespuestaException("Invalid XML Element: $node->getName()");
         }
 
-        $res = new GResProcEVe();
+        $res = new GResProcEve();
         $res->setDEstRes($node->dEstRes);
         if (isset($node->dProtAut)) {
             $res->setDProtAut($node->dProtAut);

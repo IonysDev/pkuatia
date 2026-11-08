@@ -76,7 +76,7 @@ final class EscapeXmlTest extends TestCase
     {
         $cancel = new RGeVeCan();
         $cancel->setId(str_repeat('1', 44));
-        $cancel->setMOtEve('Error en datos & precios <mayorista>');
+        $cancel->setMotEve('Error en datos & precios <mayorista>');
         $gti = new GGroupTiEvt();
         $gti->setRGeVeCan($cancel);
         $rEve = new REve();
@@ -89,7 +89,7 @@ final class EscapeXmlTest extends TestCase
         $raiz = new GGroupGesEve();
         $raiz->setRGesEve([$rGesEve]);
 
-        $doc = SignHelper::SingEvents($raiz, null);
+        $doc = SignHelper::SignEvents($raiz, null);
         $xml = $doc->saveXML($doc->documentElement);
 
         $this->assertStringContainsString('<mOtEve>Error en datos &amp; precios &lt;mayorista&gt;</mOtEve>', $xml);

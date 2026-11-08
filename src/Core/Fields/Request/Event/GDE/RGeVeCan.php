@@ -43,7 +43,7 @@ class RGeVeCan
      *
      * @return self
      */
-    public function setMOtEve(string $mOtEve): self
+    public function setMotEve(string $mOtEve): self
     {
         $this->mOtEve = $mOtEve;
         return $this;
@@ -68,7 +68,7 @@ class RGeVeCan
      *
      * @return String
      */
-    public function getMOtEve(): string
+    public function getMotEve(): string
     {
         return $this->mOtEve;
     }
@@ -102,7 +102,7 @@ class RGeVeCan
     //   {
     //     $res = new RGeVeCan();
     //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-    //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+    //     $res->setMotEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
     //     return $res;
     //   }
     //   else {
@@ -130,7 +130,7 @@ class RGeVeCan
         }
 
         if (isset($node->mOtEve)) {
-            $res->setMOtEve($node->mOtEve);
+            $res->setMotEve($node->mOtEve);
         }
 
         return $res;

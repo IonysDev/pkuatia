@@ -98,7 +98,7 @@ class RContDe
      *
      * @return RDE
      */
-    public function getRDe(): RDE | null
+    public function getRDE(): RDE | null
     {
         return isset($this->rDe) ? $this->rDe : null;
     }

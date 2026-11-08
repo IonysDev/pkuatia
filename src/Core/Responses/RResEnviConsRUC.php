@@ -115,15 +115,27 @@ class RResEnviConsRUC implements RespuestaSifen
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Crea una nueva instancia de RResEnviConsRUC a partir de un objeto stdClass.
-     * Pensado para castear la respuesta de una llamada SOAP.
+     * @deprecated 0.3.1 Nombre fuera del patrón del resto de las respuestas; usar FromSifenResponseObject(). Delega en él.
      *
      * @param stdClass $object
      *
      * @return RResEnviConsRUC
      */
-
     public static function fromStdClassObject($object)
+    {
+        return self::FromSifenResponseObject($object);
+    }
+
+    /**
+     * Crea una nueva instancia de RResEnviConsRUC a partir de un objeto stdClass.
+     * Pensado para castear la respuesta de una llamada SOAP. Hasta 0.3.0 se llamaba fromStdClassObject(), que sigue
+     * existiendo como alias obsoleto.
+     *
+     * @param stdClass $object
+     *
+     * @return RResEnviConsRUC
+     */
+    public static function FromSifenResponseObject($object)
     {
         if (is_null($object)) {
             throw new RespuestaException("Error Processing Request: null", 1);
@@ -144,9 +156,9 @@ class RResEnviConsRUC implements RespuestaSifen
         if ($object->dCodRes == "0502") {
             if (isset($object->xContRUC)) {
                 //  RRSch04 - rContRUC se denomina xContRUC en las respuestas del SIFEN
-                $res->setRContRUC(RContRUC::fromStdClassObject($object->xContRUC));
+                $res->setRContRUC(RContRUC::FromSifenResponseObject($object->xContRUC));
             } elseif (isset($object->rContRUC)) {
-                $res->setRContRUC(RContRUC::fromStdClassObject($object->rContRUC));
+                $res->setRContRUC(RContRUC::FromSifenResponseObject($object->rContRUC));
             }
         }
         return $res;

@@ -75,8 +75,8 @@ final class ConsultarDETest extends TestCase
         $result = Sifen::ConsultarDE('01800695631001001000000612021112410777777771');
 
         $this->assertNotNull($result->getRContDe());
-        $this->assertNotNull($result->getRContDe()->getRDe());
-        $this->assertSame(150, $result->getRContDe()->getRDe()->getDVerFor());
+        $this->assertNotNull($result->getRContDe()->getRDE());
+        $this->assertSame(150, $result->getRContDe()->getRDE()->getDVerFor());
     }
 
     /**
@@ -147,8 +147,8 @@ final class ConsultarDETest extends TestCase
 
         $result = Sifen::ConsultarDE('01800695631001001000000612021112410777777771');
 
-        $this->assertNotNull($result->getRContDe()->getRDe());
-        $anulacion = $result->getRContDe()->getRContEv()->getXEvento()->getREve()->getGGroupTiEvt()->getrGeVeRetAnu();
+        $this->assertNotNull($result->getRContDe()->getRDE());
+        $anulacion = $result->getRContDe()->getRContEv()->getXEvento()->getREve()->getGGroupTiEvt()->getRGeVeRetAnu();
         $this->assertSame('2026-01-20T00:00:00', $anulacion->getDFeEmiRet()->format('Y-m-d\TH:i:s'));
         $this->assertSame('2026-01-21T09:15:00', $anulacion->getDFecAnRet()->format('Y-m-d\TH:i:s'));
     }
@@ -171,8 +171,8 @@ final class ConsultarDETest extends TestCase
 
         $result = Sifen::ConsultarDE('01800695631001001000000612021112410777777771');
 
-        $this->assertNotNull($result->getRContDe()->getRDe());
-        $retencion = $result->getRContDe()->getRContEv()->getXEvento()->getREve()->getGGroupTiEvt()->getrGeVeRetAce();
+        $this->assertNotNull($result->getRContDe()->getRDE());
+        $retencion = $result->getRContDe()->getRContEv()->getXEvento()->getREve()->getGGroupTiEvt()->getRGeVeRetAce();
         $this->assertSame(12345678, $retencion->getDNumTimRet());
         $this->assertSame('2026-01-20T00:00:00', $retencion->getDFeEmiRet()->format('Y-m-d\TH:i:s'));
     }

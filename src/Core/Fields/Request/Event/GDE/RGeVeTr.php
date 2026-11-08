@@ -591,7 +591,7 @@ class RGeVeTr
      *
      * @return String
      */
-    public function getdDTipIDTrans(): string
+    public function getDDTipIDTrans(): string
     {
         switch ($this->iTipIDTrans) {
             case 1:
@@ -871,7 +871,7 @@ class RGeVeTr
         }
         if (isset($this->iTipIDTrans)) {
             $res->appendChild(XmlHelper::elemento($doc, 'iTipIDTrans', $this->getITipIDTrans()));
-            $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getdDTipIDTrans()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDTrans', $this->getDDTipIDTrans()));
         }
         if (isset($this->dNumIDTrans)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dNumIDTrans', $this->getDNumIDTrans()));

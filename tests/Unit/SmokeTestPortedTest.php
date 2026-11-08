@@ -101,7 +101,7 @@ final class SmokeTestPortedTest extends TestCase
     {
         $nom = new RGEveNom();
         $nom->setId(str_repeat('0', 44));
-        $nom->setMOtEve('Nominación de factura innominada');
+        $nom->setMotEve('Nominación de factura innominada');
         $nom->setINatRec(RGEveNom::NATURALEZA_NO_CONTRIBUYENTE);
         $nom->setITiOpe(RGEveNom::TIPO_OPERACION_B2C);
         $nom->setCPaisRec('PRY');
@@ -218,7 +218,7 @@ final class SmokeTestPortedTest extends TestCase
         $des->setDNomRec('Juan Pérez');
         $des->setDTipIDRec(1);
         $des->setDNumID('1234567');
-        $des->setMOtEve('No corresponde la operación facturada');
+        $des->setMotEve('No corresponde la operación facturada');
         $docD = new DOMDocument('1.0', 'UTF-8');
         $nD = $des->toDOMElement($docD);
         $docD->appendChild($nD);

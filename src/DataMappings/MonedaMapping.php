@@ -25,7 +25,7 @@ class MonedaMapping
      *
      * @return array
      */
-    public static function GetArray()
+    public static function getArray()
     {
         if (self::$catalogo === null) {
             $xml = new DOMDocument();
@@ -42,7 +42,7 @@ class MonedaMapping
      * Devuelve la descripción de la moneda a partir del código ISO 4217, recortada a los 20 caracteres
      * que admite el XSD (tdDMoneTiPag). 15 monedas del catálogo tienen un CodeName más largo (ANG, BMD,
      * FKP, KYD, MXV, SBD, TMT, TTD, UYI, XCD, XBA, XBB, XBC, XTS, XXX) y producían rechazo de esquema
-     * (PK-23). El nombre completo se obtiene con GetCodeName().
+     * (PK-23). El nombre completo se obtiene con getCodeName().
      *
      * Advertencia (deuda D-A3, sin solución conocida): el recorte evita el rechazo de esquema, pero el SIFEN rechaza
      * la descripción recortada con 1206 "Descripción de la moneda de la operación no corresponde al código"
@@ -53,9 +53,9 @@ class MonedaMapping
      *
      * @return String|null null si el código no existe en Monedas_v150.xsd.
      */
-    public static function GetDescription($code): ?string
+    public static function getDescription($code): ?string
     {
-        $nombre = self::GetCodeName($code);
+        $nombre = self::getCodeName($code);
         if ($nombre === null) {
             return null;
         }
@@ -69,10 +69,10 @@ class MonedaMapping
      *
      * @return String|null
      */
-    public static function GetCodeName($code): ?string
+    public static function getCodeName($code): ?string
     {
         $buscado = strtoupper((string) $code);
-        foreach (self::GetArray() as $value) {
+        foreach (self::getArray() as $value) {
             if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $buscado) {
                 return (string) $value['annotation']['documentation']['CodeName'];
             }

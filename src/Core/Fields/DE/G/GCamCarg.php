@@ -40,7 +40,7 @@ class GCamCarg
     public function setCUniMedTotVol(int $cUniMedTotVol): self
     {
         $this->cUniMedTotVol = $cUniMedTotVol;
-        $this->setDDesUniMedTotVol(UnidadMedidaMapping::GetDesc(strval($cUniMedTotVol)));
+        $this->setDDesUniMedTotVol(UnidadMedidaMapping::getDesc(strval($cUniMedTotVol)));
         return $this;
     }
 
@@ -84,7 +84,7 @@ class GCamCarg
     public function setCUniMedTotPes(int $cUniMedTotPes): self
     {
         $this->cUniMedTotPes = $cUniMedTotPes;
-        $this->setDDesUniMedTotPes(UnidadMedidaMapping::GetDesc(strval($cUniMedTotPes)));
+        $this->setDDesUniMedTotPes(UnidadMedidaMapping::getDesc(strval($cUniMedTotPes)));
         return $this;
     }
 
@@ -206,7 +206,7 @@ class GCamCarg
      *
      * @return String|null
      */
-    public function getdDesUniMedTotPes(): ?string
+    public function getDDesUniMedTotPes(): ?string
     {
         return $this->dDesUniMedTotPes;
     }

@@ -50,16 +50,29 @@ class GGrupSeg extends BaseSifenField
     }
 
     /**
-     * Establece el valor de gGrupoPolSeg (Grupos de pólizas de seguros (GGrupPolSeg[]))
+     * Establece el valor de gGrupPolSeg (E810, grupos de pólizas de seguros, GGrupPolSeg[]). Hasta 0.3.0 se llamaba
+     * setGGrupoPolSeg(), que sigue existiendo como alias obsoleto.
      *
-     * @param array $gGrupoPolSeg
+     * @param array $gGrupPolSeg
+     *
+     * @return self
+     */
+    public function setGGrupPolSeg(array $gGrupPolSeg): self
+    {
+        $this->gGrupPolSeg = $gGrupPolSeg;
+        return $this;
+    }
+
+    /**
+     * @deprecated 0.3.1 Nombre con errata; usar setGGrupPolSeg(). Delega en él.
+     *
+     * @param array $gGrupPolSeg
      *
      * @return self
      */
     public function setGGrupoPolSeg(array $gGrupPolSeg): self
     {
-        $this->gGrupPolSeg = $gGrupPolSeg;
-        return $this;
+        return $this->setGGrupPolSeg($gGrupPolSeg);
     }
 
     public function addGrupPolSeg(GGrupPolSeg $gGrupPolSeg): self

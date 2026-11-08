@@ -213,14 +213,25 @@ class RContRUC
         return $res;
     }
 
-    ///create a objet from a objectClass
     /**
-     * FromSifenResponseObject
+     * @deprecated 0.3.1 Nombre fuera del patrón del resto de los campos; usar FromSifenResponseObject(). Delega en él.
      *
      * @param  mixed $object
      * @return RContRUC
      */
     public static function fromStdClassObject($object): RContRUC
+    {
+        return self::FromSifenResponseObject($object);
+    }
+
+    /**
+     * Instancia un RContRUC a partir del objeto stdClass de la respuesta SOAP (xContRUC). Hasta 0.3.0 se llamaba
+     * fromStdClassObject(), que sigue existiendo como alias obsoleto.
+     *
+     * @param  mixed $object
+     * @return RContRUC
+     */
+    public static function FromSifenResponseObject($object): RContRUC
     {
         $res = new RContRUC();
         if (isset($object->dRUCCons)) {

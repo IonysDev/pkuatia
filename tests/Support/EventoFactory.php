@@ -19,7 +19,7 @@ use IonysDev\Pkuatia\Helpers\SignHelper;
 
 /**
  * Sobres de eventos (gGroupGesEve > rGesEve > rEve[@Id] > gGroupTiEvt > evento) con datos ficticios,
- * listos para firmar con SignHelper::SingEvents y validar contra siRecepEvento_v150.xsd.
+ * listos para firmar con SignHelper::SignEvents y validar contra siRecepEvento_v150.xsd.
  */
 final class EventoFactory
 {
@@ -60,7 +60,7 @@ final class EventoFactory
     {
         $ev = new RGeVeCan();
         $ev->setId($cdc);
-        $ev->setMOtEve($motivo);
+        $ev->setMotEve($motivo);
         $gti = new GGroupTiEvt();
         $gti->setRGeVeCan($ev);
         return $gti;
@@ -90,7 +90,7 @@ final class EventoFactory
         $ev->setDNomRec('Juan Perez');
         $ev->setDTipIDRec($tipoDocumento);
         $ev->setDNumID('1234567');
-        $ev->setMOtEve('No reconozco esta operación comercial');
+        $ev->setMotEve('No reconozco esta operación comercial');
         $gti = new GGroupTiEvt();
         $gti->setRGeVeDescon($ev);
         return $gti;
@@ -147,7 +147,7 @@ final class EventoFactory
     {
         $ev = new RGEveNom();
         $ev->setId($cdc);
-        $ev->setMOtEve('Nominación de factura innominada');
+        $ev->setMotEve('Nominación de factura innominada');
         $ev->setINatRec(RecNat::NoContribuyente);
         $ev->setITiOpe($tipoOperacion);
         $ev->setCPaisRec('PRY');
@@ -162,7 +162,7 @@ final class EventoFactory
     /** Firma el sobre con el entorno de prueba inicializado y devuelve el XML del gGroupGesEve. */
     public static function firmar(GGroupGesEve $raiz): string
     {
-        $doc = SignHelper::SingEvents($raiz, null);
+        $doc = SignHelper::SignEvents($raiz, null);
         return $doc->saveXML($doc->documentElement);
     }
 }

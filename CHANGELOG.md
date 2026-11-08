@@ -19,6 +19,10 @@ comportamiento para quien emite documentos.
 - `GPagCred::getDMonEntDecimal(): ?String` devuelve la entrega inicial (E645) tal como se estableció, como cadena
   decimal BCMath; `GGrupAdi::getDSalAntDecimal(): ?String` hace lo mismo con el saldo anterior (E826), que
   `getDSalAnt(): ?float` convierte a float (Fase D, D1).
+- Alias con el nombre correcto para los cuatro typos con letras distintas (D5): `SignHelper::SignEvents()` (antes
+  `SingEvents()`), `GGrupSeg::setGGrupPolSeg()` (antes `setGGrupoPolSeg()`), `GGroupTiEvt::getRGeVeCCFF()` (antes
+  `getGeVeCCFF()`), `RContRUC::FromSifenResponseObject()` y `RResEnviConsRUC::FromSifenResponseObject()` (antes
+  `fromStdClassObject()`). El nombre correcto tiene el cuerpo; el viejo delega y queda obsoleto.
 
 ### Corregido
 
@@ -27,7 +31,7 @@ comportamiento para quien emite documentos.
   DOM, SimpleXML y SOAP aplicaban `intval()`. El parámetro acepta ahora `int|String` (ampliación compatible), el
   XML lleva la cadena decimal guardada y los tres lectores la conservan. Los montos enteros se serializan igual que
   antes. Lo destapó PHPStan en nivel 3 (`assign.propertyType`, `return.type`) al preparar la Fase D (D1).
-- `REnviDe::setXDe()` y `REnviEventoDe::setDEvReg()` asignaban un `String` a una propiedad `SoapVar` y terminaban en
+- `REnviDe::setXDE()` (hasta 0.3.0 declarado `setXDe`, D5) y `REnviEventoDe::setDEvReg()` asignaban un `String` a una propiedad `SoapVar` y terminaban en
   `TypeError` en toda llamada. Aceptan ahora el XML como texto (lo envuelven en un `SoapVar` `XSD_ANYXML`, como hace
   el facade) o un `SoapVar` ya armado (D1).
 - `TxContenEv::toDOMElement()` y `::fromDOMElement()` llamaban a métodos de `RContEv` que no existen y terminaban en
@@ -38,6 +42,8 @@ comportamiento para quien emite documentos.
 
 - `GPagCred::getDMonEnt(): ?int` trunca E645 a entero: usar `getDMonEntDecimal()` (D1).
 - `TxContenEv::toDOMElement()`: nunca funcionó y `TxContenEv` no es un elemento del XSD (D1).
+- `SignHelper::SingEvents()`, `GGrupSeg::setGGrupoPolSeg()`, `GGroupTiEvt::getGeVeCCFF()`,
+  `RContRUC::fromStdClassObject()` y `RResEnviConsRUC::fromStdClassObject()`: typos; usar el nombre correcto (D5).
 
 ### Herramientas y CI
 
@@ -73,6 +79,20 @@ comportamiento para quien emite documentos.
   espacios mitad y mitad. Un único commit de solo espacio en blanco (`git diff -w` vacío), listado en
   `.git-blame-ignore-revs` para que `git blame` lo salte (GitHub lo aplica solo; en local:
   `git config blame.ignoreRevsFile .git-blame-ignore-revs`). `.php-cs-fixer.dist.php` y `.editorconfig` fijan la regla.
+- **Nombres de método con la grafía corregida** (D5, decisión Q-D2). PHP no distingue mayúsculas en los nombres de
+  método, así que estas correcciones no admiten alias ni aviso de obsolescencia: la grafía vieja sigue resolviendo al
+  mismo método para siempre, y solo PHPStan (nivel 0) o el IDE avisan a quien la use. Declaraciones corregidas:
+  `DE::getGDtipDE()`, `DE::getGOpeDE()`; `GCamEsp::getGGrupEner()`/`setGGrupEner()`; `GCamFE::getGCompPub()`/
+  `setGCompPub()`; `GCamItem::getGCamIVA()`/`setGCamIVA()`; `GGrupAdi::getDCodConDncp()`/`setDCodConDncp()`;
+  `GCamCarg::getDDesUniMedTotPes()`; `GGroupTiEvt::getRGeVeRetAce()`/`setRGeVeRetAce()`/`getRGeVeRetAnu()`/
+  `setRGeVeRetAnu()`/`setRGeVeCCFF()`; `getMotEve()`/`setMotEve()` en `RGEveNom`, `RGeVeCan`, `RGeVeInu`,
+  `RGeVeDescon` y `RGeVeDisconf`; `RGeVeTr::getDDTipIDTrans()`; `RContDe::getRDE()`; `REnviDe::setXDE()`;
+  `RResEnviConsLoteDe::getDFecProc()`/`setDFecProc()`; `RResEnviLoteDe::getDProtConsLote()`/`setDProtConsLote()`;
+  `MonedaMapping::getArray()`/`getCodeName()`/`getDescription()`; `UnidadMedidaMapping::getArray()`/`getDesc()`;
+  `NumberStringFormatter::FormatBCMathNumber()`. Las referencias a las clases `RGeVeRetAce`, `RGeVeRetAnu`,
+  `RGeVeCCFF` y `RGeDevCCFFCue` dentro de `GGroupTiEvt` llevan la inicial en mayúscula (eran `rGeVeRetAce`, etc.;
+  para PHP es la misma clase). `RRetEnviEventoDe::setGResProcEVe()`/`getGResProcEVe()` tienen ahora el cuerpo y los
+  typos históricos `seGResProcEVe()`/`geGResProcEVe()` delegan en ellos (antes era al revés).
 
 ## [0.3.0] — 2026-10-15
 

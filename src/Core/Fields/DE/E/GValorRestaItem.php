@@ -168,7 +168,7 @@ class GValorRestaItem extends BaseSifenField
     public function getFormattedDDescItem(int $precision = 8): string
     {
         $rounded = bcadd($this->getDDescItem(), '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**
@@ -201,7 +201,7 @@ class GValorRestaItem extends BaseSifenField
     public function getFormattedDDescGloItem(int $precision = 8): string
     {
         $rounded = bcadd($this->getDDescGloItem(), '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     public function getSumaDescuentosUnitarios(int $precision = 8): string
@@ -212,7 +212,7 @@ class GValorRestaItem extends BaseSifenField
     public function getFormattedSumaDescuentosUnitarios(int $precision = 8): string
     {
         $rounded = bcadd($this->getSumaDescuentosUnitarios(), '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
 
@@ -233,7 +233,7 @@ class GValorRestaItem extends BaseSifenField
     public function getFormattedDAntPreUniIt(int $precision = 8): string
     {
         $rounded = bcadd($this->getDAntPreUniIt(), '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
 
@@ -253,7 +253,7 @@ class GValorRestaItem extends BaseSifenField
     public function getFormattedDAntGloPreUniIt(int $precision = 8): string
     {
         $rounded = bcadd($this->getDAntGloPreUniIt(), '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**
@@ -270,7 +270,7 @@ class GValorRestaItem extends BaseSifenField
     public function getFormattedDTotOpeItem(int $precision = 8): string
     {
         $rounded = bcadd($this->dTotOpeItem, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**
@@ -287,7 +287,7 @@ class GValorRestaItem extends BaseSifenField
     public function getFormattedDTotOpeGs(int $precision = 8): string
     {
         $rounded = bcadd($this->dTotOpeGs, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     ///////////////////////////////////////////////////////////////////////

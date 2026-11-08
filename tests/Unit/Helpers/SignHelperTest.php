@@ -50,7 +50,7 @@ final class SignHelperTest extends TestCase
     public function testSingEventsTwoEventsReferenceCorrectIds(): void
     {
         $config = new Config();
-        $doc = SignHelper::SingEvents(MinimalRdeFactory::createCancellationEventsEnvelope(), $config);
+        $doc = SignHelper::SignEvents(MinimalRdeFactory::createCancellationEventsEnvelope(), $config);
 
         $signatures = $doc->getElementsByTagName('Signature');
         $this->assertEquals(2, $signatures->length);

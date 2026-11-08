@@ -82,7 +82,7 @@ class RResEnviLoteDe implements RespuestaSifen
      *
      * @return self
      */
-    public function setdProtConsLote(string $dProtConsLote): self
+    public function setDProtConsLote(string $dProtConsLote): self
     {
         $this->dProtConsLote = $dProtConsLote;
 
@@ -144,7 +144,7 @@ class RResEnviLoteDe implements RespuestaSifen
      *
      * @return int
      */
-    public function getdProtConsLote(): int
+    public function getDProtConsLote(): int
     {
         return $this->dProtConsLote;
     }
@@ -193,7 +193,7 @@ class RResEnviLoteDe implements RespuestaSifen
         if (isset($object->rProtDe)) {
             $prot = RProtDe::FromSifenResponseObject($object->rProtDe);
             if (isset($prot->dFecProc)) {
-                $res->setdFecProc($prot->getDFecProc());
+                $res->setDFecProc($prot->getDFecProc());
             }
             $proc = $prot->getGResProc()[0] ?? null;
             if ($proc !== null) {
@@ -203,7 +203,7 @@ class RResEnviLoteDe implements RespuestaSifen
             return $res;
         }
         if (isset($object->dFecProc)) {
-            $res->setdFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
+            $res->setDFecProc(FechaHelper::FromSifen($object->dFecProc, 'dFecProc'));
         } // con o sin zona (PK-29)
         else {
             throw RespuestaException::porCampoFaltante("[RResEnviLoteDe] Error al instanciar respuesta, falta parametro: dFecProc", 'dFecProc');
@@ -223,7 +223,7 @@ class RResEnviLoteDe implements RespuestaSifen
 
         if (isset($object->dProtConsLote)) {
             if (ctype_digit($object->dProtConsLote)) {
-                $res->setdProtConsLote($object->dProtConsLote);
+                $res->setDProtConsLote($object->dProtConsLote);
             } else {
                 throw new RespuestaException("[RResEnviLoteDe] Error al instanciar respuesta, parametro dProtConsLote no es un numero. Objeto recibido: " . var_export($object, true), 1);
             }

@@ -116,7 +116,7 @@ class GValorItem extends BaseSifenField
     public function getFormattedDPUniProSer(int $precision = 8): string
     {
         $rounded = bcadd($this->dPUniProSer, '0', $precision);
-        return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
+        return NumberStringFormatter::FormatBCMathNumber($rounded, ',', '.');
     }
 
     /**

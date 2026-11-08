@@ -53,7 +53,7 @@ final class XmlSinRedTest extends TestCase
         $xContenDE = '<?xml version="1.0" encoding="UTF-8"?>' . $this->doctype('rContDe') . '<rContDe>' . preg_replace('/^<\?xml[^>]*\?>\s*/', '', $conEntidad) . '</rContDe>';
         try {
             $leido = RContDe::FromXContenDE($xContenDE);
-            $this->assertStringNotContainsString('CONTENIDO-QUE-NO-DEBE-LEERSE', $leido->getRDe()?->toXMLString() ?? '');
+            $this->assertStringNotContainsString('CONTENIDO-QUE-NO-DEBE-LEERSE', $leido->getRDE()?->toXMLString() ?? '');
         } catch (ValidacionException $e) {
             $this->assertStringNotContainsString('CONTENIDO-QUE-NO-DEBE-LEERSE', $e->getMessage());
             $this->assertStringContainsString('bien formado', $e->getMessage());

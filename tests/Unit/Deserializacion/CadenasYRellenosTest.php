@@ -44,7 +44,7 @@ final class CadenasYRellenosTest extends TestCase
     /** tiCodSe deriva de xs:integer: con el WSDL, SoapClient podría entregarlo como entero sin el cero inicial. */
     public function testCodigoDeSeguridadDesdeObjetoSoap(): void
     {
-        $gOpeDE = F::rde(F::facturaContado(5), '012345678')->getDE()->getGOpeDe();
+        $gOpeDE = F::rde(F::facturaContado(5), '012345678')->getDE()->getGOpeDE();
         $objeto = RoundTrip::objetoSoap(RoundTrip::serializar($gOpeDE));
         $this->assertSame('012345678', GOpeDE::FromSifenResponseObject($objeto)->getDCodSeg());
         $objeto->dCodSeg = 12345678;

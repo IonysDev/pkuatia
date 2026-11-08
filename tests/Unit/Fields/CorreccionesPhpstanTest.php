@@ -97,19 +97,19 @@ final class CorreccionesPhpstanTest extends TestCase
     }
 
     /**
-     * `REnviDe::setXDe(String)` y `REnviEventoDe::setDEvReg(String)` asignaban un string a una propiedad `SoapVar`:
+     * `REnviDe::setXDE(String)` y `REnviEventoDe::setDEvReg(String)` asignaban un string a una propiedad `SoapVar`:
      * TypeError en toda llamada (PHPStan L3: `assign.propertyType` en REnviDe.php:52 y REnviEventoDe.php:50). Ahora
      * aceptan el XML como texto, envuelto en un SoapVar XSD_ANYXML como hace el facade, o un SoapVar ya armado.
      */
     public function testLasSolicitudesAceptanElXmlComoTexto(): void
     {
         $r = new REnviDe(1, new SoapVar('<ns1:xDE/>', XSD_ANYXML));
-        $r->setXDe('<ns1:xDE><rDE/></ns1:xDE>');
+        $r->setXDE('<ns1:xDE><rDE/></ns1:xDE>');
         $this->assertInstanceOf(SoapVar::class, $r->xDE);
         $this->assertSame(XSD_ANYXML, $r->xDE->enc_type);
         $this->assertSame('<ns1:xDE><rDE/></ns1:xDE>', $r->xDE->enc_value);
         $var = new SoapVar('<ns1:xDE><rDE/></ns1:xDE>', XSD_ANYXML);
-        $this->assertSame($var, $r->setXDe($var)->getXDE());
+        $this->assertSame($var, $r->setXDE($var)->getXDE());
 
         $e = new REnviEventoDe(1, new SoapVar('<ns1:dEvReg/>', XSD_ANYXML));
         $e->setDEvReg('<ns1:dEvReg><gGroupGesEve/></ns1:dEvReg>');

@@ -58,9 +58,9 @@ class CDCHelper
         //Fecha de Emisión
         $dFeEmiDE = date_format($dE->getGDatGralOpe()->getDFeEmiDE(), "Ymd");
         //tipo de emision
-        $iTipEmi = strval($dE->getGOpeDe()->getITipEmi());
+        $iTipEmi = strval($dE->getGOpeDE()->getITipEmi());
         //codigo de seguridad
-        $dCodSeg = strval(str_pad(($dE->getGOpeDe()->getDCodSeg() % 1000000000), 9, "0", STR_PAD_LEFT));
+        $dCodSeg = strval(str_pad(($dE->getGOpeDE()->getDCodSeg() % 1000000000), 9, "0", STR_PAD_LEFT));
         //digito verificador
         $cDC = $iTide . $dRucEm . $dDvRucEm . $dEst . $dPunExp . $dNumDoc . $iTipCont . $dFeEmiDE . $iTipEmi . $dCodSeg;
         $dDVid =  strval(RucUtils::calcDV($cDC));

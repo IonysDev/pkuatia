@@ -108,7 +108,7 @@ final class OcurrenciasMultiplesTest extends TestCase
 
     public function testIdaYVueltaPorObjetoSoap(): void
     {
-        $gCamEsp = DocumentoFactory::rde(self::facturaCompleta())->getDE()->getGDtipDe()->getGCamEsp();
+        $gCamEsp = DocumentoFactory::rde(self::facturaCompleta())->getDE()->getGDtipDE()->getGCamEsp();
         RoundTrip::assertIdaYVueltaIdentica($gCamEsp, RoundTrip::VIA_SOAP, GCamEsp::class);
         RoundTrip::assertIdaYVueltaIdentica($gCamEsp->getGGrupAdi(), RoundTrip::VIA_SOAP, GGrupAdi::class);
     }
@@ -119,9 +119,9 @@ final class OcurrenciasMultiplesTest extends TestCase
         $xml = RoundTrip::serializar(DocumentoFactory::rde(self::facturaCompleta()));
         /** @var RDE $leido */
         $leido = RoundTrip::leer($xml, RDE::class, RoundTrip::VIA_SIMPLEXML);
-        $gCamEsp = $leido->getDE()->getGDtipDe()->getGCamEsp();
+        $gCamEsp = $leido->getDE()->getGDtipDE()->getGCamEsp();
         $this->assertCount(3, $gCamEsp->getGGrupEners());
-        $this->assertSame('MED-001', $gCamEsp->getgGrupEner()->getDNroMed());
+        $this->assertSame('MED-001', $gCamEsp->getGGrupEner()->getDNroMed());
         $this->assertSame('MED-003', $gCamEsp->getGGrupEners()[2]->getDNroMed());
         $this->assertCount(3, $gCamEsp->getGGrupAdi()->getDVencPags());
         $this->assertSame('2026-02-15', $gCamEsp->getGGrupAdi()->getDVencPag()->format('Y-m-d'));

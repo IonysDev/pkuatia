@@ -40,9 +40,9 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
      */
     public static function gCamEspCompleto(): GCamEsp
     {
-        $esp = fn (string $sector): GCamEsp => F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp();
+        $esp = fn (string $sector): GCamEsp => F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDE()->getGCamEsp();
         return (new GCamEsp())
-          ->setgGrupEner($esp('energía')->getgGrupEner())
+          ->setGGrupEner($esp('energía')->getGGrupEner())
           ->setGGrupSeg($esp('seguros')->getGGrupSeg())
           ->setGGrupSup($esp('supermercados')->getGGrupSup())
           ->setGGrupAdi($esp('datos adicionales')->getGGrupAdi());
@@ -58,7 +58,7 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
     public static function gruposPorVia(): array
     {
         $res = [];
-        $grupos = ['energía' => 'getgGrupEner', 'seguros' => 'getGGrupSeg', 'supermercados' => 'getGGrupSup', 'datos adicionales' => 'getGGrupAdi'];
+        $grupos = ['energía' => 'getGGrupEner', 'seguros' => 'getGGrupSeg', 'supermercados' => 'getGGrupSup', 'datos adicionales' => 'getGGrupAdi'];
         foreach ($grupos as $sector => $getter) {
             foreach (self::vias() as $nombre => [$via]) {
                 $res[substr($getter, 3) . " por $nombre"] = [$sector, $getter, $via];
@@ -70,7 +70,7 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
     #[DataProvider('gruposPorVia')]
     public function testCadaGrupoSectorialHaceIdaYVuelta(string $sector, string $getter, string $via): void
     {
-        $grupo = F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp()->$getter();
+        $grupo = F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDE()->getGCamEsp()->$getter();
         RoundTrip::assertIdaYVueltaIdentica($grupo, $via);
     }
 
@@ -111,9 +111,9 @@ final class CamposEspecificosIdaYVueltaTest extends TestCase
     {
         $res = [];
         $casos = [
-          'gCamAE' => [fn () => F::rde(F::autofactura())->getDE()->getGDtipDe()->getGCamAE(), GCamAE::class],
-          'gCamAE sin distrito' => [fn () => F::rde(F::autofacturaSinDistrito())->getDE()->getGDtipDe()->getGCamAE(), GCamAE::class],
-          'gCamNRE' => [fn () => F::rde(F::notaDeRemision())->getDE()->getGDtipDe()->getGCamNRE(), GCamNRE::class],
+          'gCamAE' => [fn () => F::rde(F::autofactura())->getDE()->getGDtipDE()->getGCamAE(), GCamAE::class],
+          'gCamAE sin distrito' => [fn () => F::rde(F::autofacturaSinDistrito())->getDE()->getGDtipDE()->getGCamAE(), GCamAE::class],
+          'gCamNRE' => [fn () => F::rde(F::notaDeRemision())->getDE()->getGDtipDE()->getGCamNRE(), GCamNRE::class],
         ];
         foreach ($casos as $nombre => [$crear, $clase]) {
             foreach (self::vias() as $nombreVia => [$via]) {

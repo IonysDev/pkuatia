@@ -169,7 +169,26 @@ class SignHelper
         return $xmlDocument;
     }
 
+    /**
+     * Firma cada evento (rGesEve) del sobre con su propia firma.
+     *
+     * @deprecated 0.3.1 Nombre con errata; usar SignEvents(). Delega en él.
+     */
     public static function SingEvents(GGroupGesEve $raiz, $config)
+    {
+        return self::SignEvents($raiz, $config);
+    }
+
+    /**
+     * Firma cada evento (rGesEve) del sobre gGroupGesEve con una firma propia (una Signature por rEve, con un firmador
+     * nuevo por evento). Hasta 0.3.0 se llamaba SingEvents(), que sigue existiendo como alias obsoleto.
+     *
+     * @param GGroupGesEve $raiz Sobre de eventos armado.
+     * @param mixed $config Sin uso (se conserva por compatibilidad).
+     *
+     * @return DOMDocument Documento XML con los eventos firmados.
+     */
+    public static function SignEvents(GGroupGesEve $raiz, $config)
     {
         if (self::$clave === null || self::$x509Cert === null) {
             throw new FirmaException("[SignHelper] No se ha inicializado el firmador de XML.");

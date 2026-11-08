@@ -79,7 +79,7 @@ final class MinimalRdeFactory
         foreach ([1, 2] as $eventId) {
             $cancel = new RGeVeCan();
             $cancel->setId(str_repeat((string) $eventId, 44));
-            $cancel->setMOtEve('Cancelación de prueba unitaria');
+            $cancel->setMotEve('Cancelación de prueba unitaria');
 
             $gti = new GGroupTiEvt();
             $gti->setRGeVeCan($cancel);

@@ -92,7 +92,7 @@ final class ReglasDeDescripciones extends ConjuntoDeReglas
 
         foreach ($v->items() as $i => $item) {
             $ruta = 'DE.gDtipDE.gCamItem[' . ($i + 1) . ']';
-            self::par($r, $item, 'cUniMed', 'dDesUniMed', static fn ($c) => UnidadMedidaMapping::GetDesc((string) $c), '1802', $ruta);
+            self::par($r, $item, 'cUniMed', 'dDesUniMed', static fn ($c) => UnidadMedidaMapping::getDesc((string) $c), '1802', $ruta);
             self::par($r, $item, 'cPaisOrig', 'dDesPaisOrig', $pais, '1804', $ruta);
             self::par($r, $item, 'cRelMerc', 'dDesRelMerc', $enum(CamItemRelMerc::class), '1806', $ruta);
             self::par($r, self::v($item, 'gCamIVA'), 'iAfecIVA', 'dDesAfecIVA', $enum(CamIVAAfecIVA::class), '1903', $ruta . '.gCamIVA');
@@ -161,12 +161,12 @@ final class ReglasDeDescripciones extends ConjuntoDeReglas
      */
     private static function moneda(ResultadoValidacion $r, ?object $g, string $codigoProp, string $descProp, string $codigo, string $ruta): void
     {
-        self::par($r, $g, $codigoProp, $descProp, [MonedaMapping::class, 'GetDescription'], $codigo, $ruta);
+        self::par($r, $g, $codigoProp, $descProp, [MonedaMapping::class, 'getDescription'], $codigo, $ruta);
         $c = self::texto($g, $codigoProp);
         if ($c === null) {
             return;
         }
-        $nombre = MonedaMapping::GetCodeName($c);
+        $nombre = MonedaMapping::getCodeName($c);
         if ($nombre === null || mb_strlen($nombre) <= MonedaMapping::MAX_LONGITUD_DESCRIPCION) {
             return;
         }

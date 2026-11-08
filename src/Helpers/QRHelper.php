@@ -51,8 +51,8 @@ class QRHelper
         }
 
         $cItems = '0';
-        if ($de->getGDtipDe() != null) {
-            $cItems = $de->getGDtipDe()->getGCamItem() != null ? count($de->getGDtipDe()->getGCamItem()) : 0;
+        if ($de->getGDtipDE() != null) {
+            $cItems = $de->getGDtipDE()->getGCamItem() != null ? count($de->getGDtipDE()->getGCamItem()) : 0;
         }
 
         $DigestValue = bin2hex($signature->getSignedInfo()->getReference()->getDigestValue());

@@ -82,7 +82,7 @@ final class MontosSupermercadosTest extends TestCase
     #[DataProvider('vias')]
     public function testIdaYVueltaConCentavos(string $via): void
     {
-        $gGrupSup = DocumentoFactory::rde(self::facturaUsdSupermercado())->getDE()->getGDtipDe()->getGCamEsp()->getGGrupSup();
+        $gGrupSup = DocumentoFactory::rde(self::facturaUsdSupermercado())->getDE()->getGDtipDE()->getGCamEsp()->getGGrupSup();
         RoundTrip::assertIdaYVueltaIdentica($gGrupSup, $via);
     }
 

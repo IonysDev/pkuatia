@@ -22,7 +22,7 @@ class UnidadMedidaMapping
      *
      * @return array La lista de unidades de medida.
      */
-    public static function GetArray(): array
+    public static function getArray(): array
     {
         if (self::$catalogo === null) {
             $xml = new DOMDocument();
@@ -42,10 +42,10 @@ class UnidadMedidaMapping
      * @param  String $code El código de la unidad de medida
      * @return String|null El literal de la unidad de medida, o null si el código no existe en el XSD.
      */
-    public static function GetDesc(string $code): ?string
+    public static function getDesc(string $code): ?string
     {
         $buscado = strtoupper($code);
-        foreach (self::GetArray() as $value) {
+        foreach (self::getArray() as $value) {
             if (isset($value["@attributes"]['value']) && $value["@attributes"]['value'] == $buscado) {
                 $doc = (string) $value['annotation']['documentation'];
                 $pos = strrpos($doc, ' - ');

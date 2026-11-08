@@ -103,7 +103,7 @@ class GCamFE extends BaseSifenField
      *
      * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
      */
-    public function setgCompPub(GCompPub $gCompPub): self
+    public function setGCompPub(GCompPub $gCompPub): self
     {
         $this->gCompPub = $gCompPub;
         return $this;
@@ -148,7 +148,7 @@ class GCamFE extends BaseSifenField
      *
      * @return GCompPub|null Campos que describen las informaciones de compras públicas.
      */
-    public function getgCompPub(): ?GCompPub
+    public function getGCompPub(): ?GCompPub
     {
         if (isset($this->gCompPub)) {
             return $this->gCompPub;
@@ -204,7 +204,7 @@ class GCamFE extends BaseSifenField
         }
         //Children
         if (isset($object->gCompPub)) {
-            $res->setgCompPub(GCompPub::FromSifenResponseObject($object->gCompPub));
+            $res->setGCompPub(GCompPub::FromSifenResponseObject($object->gCompPub));
         }
         return $res;
     }

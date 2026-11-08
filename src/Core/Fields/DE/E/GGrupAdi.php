@@ -127,7 +127,7 @@ class GGrupAdi
      *
      * @return self
      */
-    public function setdCodConDncp(?string $dCodConDncp): self
+    public function setDCodConDncp(?string $dCodConDncp): self
     {
         $this->dCodConDncp = $dCodConDncp;
 
@@ -250,7 +250,7 @@ class GGrupAdi
      *
      * @return ?String
      */
-    public function getdCodConDncp(): ?string
+    public function getDCodConDncp(): ?string
     {
         return $this->dCodConDncp;
     }
@@ -366,7 +366,7 @@ class GGrupAdi
             'dVencPag' => $res->addDVencPag(self::fecha($valor, $campo)),
             'dContrato' => $res->setDContrato($valor),
             'dSalAnt' => $res->setDSalAnt($valor),
-            'dCodConDncp' => $res->setdCodConDncp($valor),
+            'dCodConDncp' => $res->setDCodConDncp($valor),
             default => null,
         };
     }

@@ -161,7 +161,7 @@ class RResEnviConsDe implements RespuestaSifen
     /**
      * Obtiene la cadena XML original del DE tal como la devolvió el SIFEN.
      *
-     * Es el único origen fiable del XML firmado: reconstruirlo desde getRContDe()->getRDe()
+     * Es el único origen fiable del XML firmado: reconstruirlo desde getRContDe()->getRDE()
      * produciría un documento sin Signature ni gCamFuFD.
      *
      * @return String|null Null si el SIFEN no devolvió el contenido como cadena.
@@ -267,8 +267,8 @@ class RResEnviConsDe implements RespuestaSifen
     public function showData()
     {
         if ($this->getRContDe()) {
-            if (($this->getRContDe()->getRDe())) {
-                echo json_encode($this->getRContDe()->getRDe(), JSON_PRETTY_PRINT);
+            if (($this->getRContDe()->getRDE())) {
+                echo json_encode($this->getRContDe()->getRDE(), JSON_PRETTY_PRINT);
             }
 
             if (($this->getRContDe()->getRContEv())) {

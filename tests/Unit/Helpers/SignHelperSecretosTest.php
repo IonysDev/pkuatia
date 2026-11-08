@@ -69,7 +69,7 @@ final class SignHelperSecretosTest extends TestCase
             $this->assertStringContainsString('No se ha inicializado', $e->getMessage());
         }
         $this->expectException(FirmaException::class);
-        SignHelper::SingEvents(MinimalRdeFactory::createCancellationEventsEnvelope(), new Config());
+        SignHelper::SignEvents(MinimalRdeFactory::createCancellationEventsEnvelope(), new Config());
     }
 
     public function testInitDespuesDeShutdownVuelveAFirmar(): void

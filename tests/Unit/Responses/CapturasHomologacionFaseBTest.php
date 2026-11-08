@@ -72,7 +72,7 @@ final class CapturasHomologacionFaseBTest extends TestCase
         R::instalar(R::CONSULTA_AF_0422);
 
         $respuesta = Sifen::ConsultarDE('04800000005001001000011822026101114905441108');
-        $constancias = array_values(array_filter($respuesta->getRContDe()->getRDe()->getDE()->getGCamDEAsoc(), fn ($a) => $a->getITipDocAso() == 3));
+        $constancias = array_values(array_filter($respuesta->getRContDe()->getRDE()->getDE()->getGCamDEAsoc(), fn ($a) => $a->getITipDocAso() == 3));
 
         $this->assertSame(422, $respuesta->getDCodRes());
         $this->assertCount(1, $constancias);
@@ -87,7 +87,7 @@ final class CapturasHomologacionFaseBTest extends TestCase
         R::instalar(R::CONSULTA_FE_VEHICULO_0422);
 
         $respuesta = Sifen::ConsultarDE('01800000005001001000012122026101117948210816');
-        $vehiculo = $respuesta->getRContDe()->getRDe()->getDE()->getGDtipDE()->getGCamItem()[0]->getGVehNuevo();
+        $vehiculo = $respuesta->getRContDe()->getRDE()->getDE()->getGDtipDE()->getGCamItem()[0]->getGVehNuevo();
 
         $this->assertSame(2, $vehiculo->getITipOpVN());
         $this->assertSame('Venta al Consumidor final', $vehiculo->getDDesTipOpVN());
@@ -138,7 +138,7 @@ final class CapturasHomologacionFaseBTest extends TestCase
 
         $this->assertSame(RResEnviConsLoteDe::COD_RES_ACEPTADO, $lote->getDCodResLot());
         $this->assertSame('Procesamiento de lote {' . self::LOTE . '} concluido', $lote->getDMsgResLot());
-        $this->assertSame('2026-10-11T11:49:59-03:00', $lote->getdFecProc()->format(DATE_ATOM));
+        $this->assertSame('2026-10-11T11:49:59-03:00', $lote->getDFecProc()->format(DATE_ATOM));
         $this->assertCount(2, $lote->getGResProcLote());
         foreach ($lote->getGResProcLote() as $documento) {
             $this->assertSame('Aprobado', $documento->getDEstRes());

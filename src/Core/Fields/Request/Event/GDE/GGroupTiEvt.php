@@ -161,13 +161,13 @@ class GGroupTiEvt
 
 
     /**
-     * Establece el valor de rGeVeRetAce
+     * Establece el valor de RGeVeRetAce
      *
-     * @param rGeVeRetAce $rGeVeRetAce
+     * @param RGeVeRetAce $rGeVeRetAce
      *
      * @return self
      */
-    public function setrGeVeRetAce(rGeVeRetAce $rGeVeRetAce): self
+    public function setRGeVeRetAce(RGeVeRetAce $rGeVeRetAce): self
     {
         $this->rGeVeRetAce = $rGeVeRetAce;
         return $this;
@@ -175,13 +175,13 @@ class GGroupTiEvt
 
 
     /**
-     * Establece el valor de rGeVeRetAnu
+     * Establece el valor de RGeVeRetAnu
      *
-     * @param rGeVeRetAnu $rGeVeRetAnu
+     * @param RGeVeRetAnu $rGeVeRetAnu
      *
      * @return self
      */
-    public function setrGeVeRetAnu(rGeVeRetAnu $rGeVeRetAnu): self
+    public function setRGeVeRetAnu(RGeVeRetAnu $rGeVeRetAnu): self
     {
         $this->rGeVeRetAnu = $rGeVeRetAnu;
         return $this;
@@ -189,13 +189,13 @@ class GGroupTiEvt
 
 
     /**
-     * Establece el valor de rGeVeCCFF
+     * Establece el valor de RGeVeCCFF
      *
-     * @param rGeVeCCFF $rGeVeCCFF
+     * @param RGeVeCCFF $rGeVeCCFF
      *
      * @return self
      */
-    public function setrGeVeCCFF(rGeVeCCFF $rGeVeCCFF): self
+    public function setRGeVeCCFF(RGeVeCCFF $rGeVeCCFF): self
     {
         $this->rGeVeCCFF = $rGeVeCCFF;
         return $this;
@@ -203,13 +203,13 @@ class GGroupTiEvt
 
 
     /**
-     * Establece el valor de rGeDevCCFFCue
+     * Establece el valor de RGeDevCCFFCue
      *
-     * @param rGeDevCCFFCue $rGeDevCCFFCue
+     * @param RGeDevCCFFCue $rGeDevCCFFCue
      *
      * @return self
      */
-    public function setGeDevCCFFCue(rGeDevCCFFCue $rGeDevCCFFCue): self
+    public function setGeDevCCFFCue(RGeDevCCFFCue $rGeDevCCFFCue): self
     {
         $this->rGeDevCCFFCue = $rGeDevCCFFCue;
         return $this;
@@ -219,7 +219,7 @@ class GGroupTiEvt
     /**
      * Establece el valor de rGeDevCCFFDev
      *
-     * @param rGeDevCCFFCue $rGeDevCCFFDev
+     * @param RGeDevCCFFCue $rGeDevCCFFDev
      *
      * @return self
      */
@@ -346,33 +346,44 @@ class GGroupTiEvt
     }
 
     /**
-     * Obtiene el valor de rGeVeRetAce
+     * Obtiene el valor de RGeVeRetAce
      *
-     * @return rGeVeRetAce
+     * @return RGeVeRetAce
      */
-    public function getrGeVeRetAce(): rGeVeRetAce
+    public function getRGeVeRetAce(): RGeVeRetAce
     {
         return $this->rGeVeRetAce;
     }
 
     /**
-     * Obtiene el valor de rGeVeRetAnu
+     * Obtiene el valor de RGeVeRetAnu
      *
-     * @return rGeVeRetAnu
+     * @return RGeVeRetAnu
      */
-    public function getrGeVeRetAnu(): rGeVeRetAnu
+    public function getRGeVeRetAnu(): RGeVeRetAnu
     {
         return $this->rGeVeRetAnu;
     }
 
     /**
-     * Obtiene el valor de rGeVeCCFF
+     * Obtiene el valor de rGeVeCCFF. Hasta 0.3.0 se llamaba getGeVeCCFF() (sin la R), que sigue existiendo como alias
+     * obsoleto.
      *
-     * @return rGeVeCCFF
+     * @return RGeVeCCFF
      */
-    public function getGeVeCCFF(): rGeVeCCFF
+    public function getRGeVeCCFF(): RGeVeCCFF
     {
         return $this->rGeVeCCFF;
+    }
+
+    /**
+     * @deprecated 0.3.1 Nombre con errata; usar getRGeVeCCFF(). Delega en él.
+     *
+     * @return RGeVeCCFF
+     */
+    public function getGeVeCCFF(): RGeVeCCFF
+    {
+        return $this->getRGeVeCCFF();
     }
 
     /**
@@ -389,7 +400,7 @@ class GGroupTiEvt
     }
 
     /**
-     * Obtiene el valor de rGeDevCCFFCue (devolución de créditos fiscales, cuestionado). Nuevo en 0.2.1 (PK-42).
+     * Obtiene el valor de RGeDevCCFFCue (devolución de créditos fiscales, cuestionado). Nuevo en 0.2.1 (PK-42).
      *
      * @return RGeDevCCFFCue|null
      */
@@ -557,19 +568,19 @@ class GGroupTiEvt
 
     //     //===============================================================================//
 
-    //     $aux = new rGeVeRetAce();
+    //     $aux = new RGeVeRetAce();
     //     $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRetAce')->item(0)->nodeValue);
     //     $res->serGeVeRetAce($aux);
 
-    //     $aux = new rGeVeRetAnu();
+    //     $aux = new RGeVeRetAnu();
     //     $aux->fromDOMElement($xml->getElementsByTagName('rGeVeRetAnu')->item(0)->nodeValue);
     //     $res->serGeVeRetAnu($aux);
 
-    //     $aux = new rGeVeCCFF();
+    //     $aux = new RGeVeCCFF();
     //     $aux->fromDOMElement($xml->getElementsByTagName('rGeVeCCFF')->item(0)->nodeValue);
     //     $res->serGeVeCCFF($aux);
 
-    //     $aux = new rGeDevCCFFCue();
+    //     $aux = new RGeDevCCFFCue();
     //     $aux->fromDOMElement($xml->getElementsByTagName('rGeDevCCFFCue')->item(0)->nodeValue);
     //     $res->setGeDevCCFFCue($aux);
 
@@ -631,19 +642,19 @@ class GGroupTiEvt
         }
 
         if (isset($node->rGeVeRetAce)) {
-            $res->setrGeVeRetAce(rGeVeRetAce::FromSimpleXMLElement($node->rGeVeRetAce));
+            $res->setRGeVeRetAce(RGeVeRetAce::FromSimpleXMLElement($node->rGeVeRetAce));
         }
 
         if (isset($node->rGeVeRetAnu)) {
-            $res->setrGeVeRetAnu(rGeVeRetAnu::FromSimpleXMLElement($node->rGeVeRetAnu));
+            $res->setRGeVeRetAnu(RGeVeRetAnu::FromSimpleXMLElement($node->rGeVeRetAnu));
         }
 
         if (isset($node->rGeVeCCFF)) {
-            $res->setrGeVeCCFF(rGeVeCCFF::FromSimpleXMLElement($node->rGeVeCCFF));
+            $res->setRGeVeCCFF(RGeVeCCFF::FromSimpleXMLElement($node->rGeVeCCFF));
         }
 
         if (isset($node->rGeDevCCFFCue)) {
-            $res->setGeDevCCFFCue(rGeDevCCFFCue::FromSimpleXMLElement($node->rGeDevCCFFCue));
+            $res->setGeDevCCFFCue(RGeDevCCFFCue::FromSimpleXMLElement($node->rGeDevCCFFCue));
         }
 
         if (isset($node->rGeDevCCFFDev)) {
