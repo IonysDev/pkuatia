@@ -67,7 +67,7 @@ class GCamIVA extends BaseSifenField
     public function setIAfecIVA(int|CamIVAAfecIVA $iAfecIVA): self
     {
         $this->iAfecIVA = $iAfecIVA instanceof CamIVAAfecIVA ? $iAfecIVA->value : $iAfecIVA;
-        $this->dDesAfecIVA = CamIVAAfecIVA::getDescripcion($this->iAfecIVA);
+        $this->dDesAfecIVA = CamIVAAfecIVA::getDescriptionFromValue($this->iAfecIVA);
         return $this;
     }
 

@@ -73,7 +73,7 @@ class REnviDe
     /**
      * Obtiene el valor XML xDe de la solicitud.
      *
-     * @return String
+     * @return SoapVar
      */
     public function getXDE(): SoapVar
     {

@@ -121,7 +121,7 @@ class RContEv
     /**
      * FromSimpleXMLElement
      *
-     * @param  mixed $xml
+     * @param SimpleXMLElement $node
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self

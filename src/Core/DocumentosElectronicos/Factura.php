@@ -155,7 +155,7 @@ class Factura extends DocumentoElectronicoComercial
      * @param String $monto Monto del pago para uso como decimal tipo BCMath.
      * @param PagTarCDDenTarj $denomTarjeta Denominación de la tarjeta.
      * @param PagTarCDForProPa $formaProc Forma de procesamiento del pago.
-     * @param String|null $codAutorizacion Código de autorización de la transacción (opcional).
+     * @param int|null $codAutorizacion Código de autorización de la transacción (opcional).
      * @param String|null $nombreTitular Nombre del titular de la tarjeta (opcional).
      * @param String|null $ult4NroTarjeta Últimos 4 números de la tarjeta (opcional).
      */

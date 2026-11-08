@@ -81,7 +81,7 @@ class RGesEve
     /**
      * FromSimpleXMLElement
      *
-     * @param  mixed $node
+     * @param SimpleXMLElement $node
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self

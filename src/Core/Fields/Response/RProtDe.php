@@ -107,7 +107,7 @@ class RProtDe
     /**
      * Establece el valor de gResProc
      *
-     * @param TgResProc $gResProc
+     * @param array|GResProc $gResProc
      *
      * @return self
      */
@@ -178,7 +178,7 @@ class RProtDe
     /**
      * Obtiene el valor de gResProc
      *
-     * @return GResProc
+     * @return GResProc[]
      */
     public function getGResProc(): array
     {
@@ -234,7 +234,7 @@ class RProtDe
     /**
      * Converts XML String representation to object
      *
-     * @param String $xml
+     * @param string $xmlString
      * @return RProtDe
      */
     public static function FromXMLString(string $xmlString): RProtDe

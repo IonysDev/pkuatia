@@ -200,7 +200,7 @@ class DocumentoElectronico
      * ESTA INFORMACIÓN SE INCLUYE EN EL DOCUMENTO ELECTRÓNICO.
      * Valor OPCIONAL.
      *
-     * @param String $dInfEmi comentarios del emisor
+     * @param string $infoEmi comentarios del emisor
      *
      * @return self
      */
@@ -216,7 +216,7 @@ class DocumentoElectronico
      * Valor OPCIONAL salvo para notas de remisión s/ art. 3 inc. 7 de la resolución 41/2014 de la SET donde dice:
      * La indicación expresa de «Mercaderías con cadena de Frío»; «Carga Peligrosa», u otro dato de relevancia similar, cuando se transporten productos que cumplan algunas de estas características.
      *
-     * @param String $dInfFisc comentarios para fisco
+     * @param string $infoFisc comentarios para fisco
      *
      * @return self
      */

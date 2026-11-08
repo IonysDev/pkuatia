@@ -35,7 +35,7 @@ class CountryMapping
     /**
      * getCountryDesc
      *
-     * @param  mixed $country
+     * @param  mixed $code
      * @return String
      */
     public static function getCountryDesc($code): ?string

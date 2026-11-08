@@ -161,7 +161,7 @@ class RDE extends BaseSifenField
     /**
      * Instancia un objeto RDE a partir de un SimpleXMLElement
      *
-     * @param  mixed $node Nodo XML que representa el objeto RDE
+     * @param SimpleXMLElement $node Nodo XML que representa el objeto RDE
      *
      * @return self Objeto RDE instanciado
      */

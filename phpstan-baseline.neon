@@ -1,6 +1,15 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '''
+				#^Fetching deprecated class constant ComprobanteRetencion of enum IonysDev\\Pkuatia\\Core\\Constants\\TipoDocImpresoAso\:
+				No existe en el XSD de producción \(tiTIpoDoc admite 1\-4, DE_Types_v150\.xsd\)\: el SIFEN lo rechaza\. Se conserva solo por compatibilidad; GCamDEAsoc\:\:toDOMElement lo bloquea\.$#
+			'''
+			identifier: classConstant.deprecated
+			count: 1
+			path: src/Core/Constants/TipoDocImpresoAso.php
+
+		-
 			message: '#^Property IonysDev\\Pkuatia\\Core\\DocumentosElectronicos\\NotaDeRemision\:\:\$gCamNRE in isset\(\) is not nullable nor uninitialized\.$#'
 			identifier: isset.initializedProperty
 			count: 1
@@ -85,10 +94,64 @@ parameters:
 			path: src/Core/Fields/DE/E/GGrupSeg.php
 
 		-
+			message: '''
+				#^Access to deprecated property \$dDonac of class IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSup\:
+				0\.2\.1 Parte entera del monto \(E814 admite 4 decimales\)\: usar getDDonacDecimal\(\)\.$#
+			'''
+			identifier: property.deprecated
+			count: 4
+			path: src/Core/Fields/DE/E/GGrupSup.php
+
+		-
+			message: '''
+				#^Access to deprecated property \$dEfectivo of class IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSup\:
+				0\.2\.1 Parte entera del monto \(E812 admite 4 decimales\)\: usar getDEfectivoDecimal\(\)\.$#
+			'''
+			identifier: property.deprecated
+			count: 4
+			path: src/Core/Fields/DE/E/GGrupSup.php
+
+		-
+			message: '''
+				#^Access to deprecated property \$dVuelto of class IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GGrupSup\:
+				0\.2\.1 Parte entera del monto \(E813 admite 4 decimales\)\: usar getDVueltoDecimal\(\)\.$#
+			'''
+			identifier: property.deprecated
+			count: 4
+			path: src/Core/Fields/DE/E/GGrupSup.php
+
+		-
 			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GPagCred\:\:\$gCuotas in isset\(\) is not nullable nor uninitialized\.$#'
 			identifier: isset.initializedProperty
 			count: 1
 			path: src/Core/Fields/DE/E/GPagCred.php
+
+		-
+			message: '''
+				#^Access to deprecated property \$dCapTracc of class IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GVehNuevo\:
+				0\.2\.1 Parte entera de la capacidad de tracción \(E782 admite 4 decimales\)\: usar getDCapTraccDecimal\(\)\.$#
+			'''
+			identifier: property.deprecated
+			count: 4
+			path: src/Core/Fields/DE/E/GVehNuevo.php
+
+		-
+			message: '''
+				#^Access to deprecated property \$dPBruto of class IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GVehNuevo\:
+				0\.2\.1 Parte entera del peso bruto \(E778 admite 4 decimales\)\: usar getDPBrutoDecimal\(\)\.$#
+			'''
+			identifier: property.deprecated
+			count: 4
+			path: src/Core/Fields/DE/E/GVehNuevo.php
+
+		-
+			message: '''
+				#^Access to deprecated property \$dPNet of class IonysDev\\Pkuatia\\Core\\Fields\\DE\\E\\GVehNuevo\:
+				0\.2\.1 Parte entera del peso neto \(E777 admite 4 decimales\)\: usar getDPNetDecimal\(\)\.$#
+			'''
+			identifier: property.deprecated
+			count: 4
+			path: src/Core/Fields/DE/E/GVehNuevo.php
 
 		-
 			message: '#^Property IonysDev\\Pkuatia\\Core\\Fields\\DE\\F\\GTotSub\:\:\$dRedon on left side of \?\? is not nullable nor uninitialized\.$#'
@@ -107,3 +170,33 @@ parameters:
 			identifier: nullCoalesce.initializedProperty
 			count: 3
 			path: src/Core/Fields/DE/F/GTotSub.php
+
+		-
+			message: '''
+				#^Fetching deprecated class constant ComprobanteRetencion of enum IonysDev\\Pkuatia\\Core\\Constants\\TipoDocImpresoAso\:
+				No existe en el XSD de producción \(tiTIpoDoc admite 1\-4, DE_Types_v150\.xsd\)\: el SIFEN lo rechaza\. Se conserva solo por compatibilidad; GCamDEAsoc\:\:toDOMElement lo bloquea\.$#
+			'''
+			identifier: classConstant.deprecated
+			count: 1
+			path: src/Core/Fields/DE/H/GCamDEAsoc.php
+
+		-
+			message: '''
+				#^Access to deprecated static property \$xmlKey of class IonysDev\\Pkuatia\\Helpers\\SignHelper\:
+				0\.3\.0 Solo por compatibilidad\: Init\(\) la puebla con la clave y la passphrase, pero la firma usa una
+				            copia privada, así que modificarla no cambia nada y leerla expone secretos\. Shutdown\(\) la deja vacía\.
+				            Se retira en la 1\.0 \(Fase C, decisión Q\-C4\)\.$#
+			'''
+			identifier: staticProperty.deprecated
+			count: 2
+			path: src/Helpers/SignHelper.php
+
+		-
+			message: '''
+				#^Access to deprecated static property \$xmlSigner of class IonysDev\\Pkuatia\\Helpers\\SignHelper\:
+				0\.3\.0 Solo por compatibilidad\: Init\(\) la puebla, pero cada firma usa un firmador fresco \(createSigner\)\.
+				            Se retira en la 1\.0 \(Fase C, decisión Q\-C4\)\.$#
+			'''
+			identifier: staticProperty.deprecated
+			count: 2
+			path: src/Helpers/SignHelper.php

@@ -7,11 +7,11 @@ class NumberStringFormatter
     /**
      * Formatea un número decimal expresado como String (BCMath) a una cadena con separador de miles y decimales.
      *
-     * @param int $min
-     * @param int $max
-     * @param int $digits
+     * @param string $number Número decimal (BCMath) a formatear.
+     * @param string $decsep Separador decimal.
+     * @param string $thsep Separador de miles.
      *
-     * @return int
+     * @return string
      */
     public static function FormatBCMathNumber(string $number, string $decsep, string $thsep): string
     {

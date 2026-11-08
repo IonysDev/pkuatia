@@ -59,7 +59,7 @@ class GTransp extends BaseSifenField
     public function setITipTrans(int|GTranspTipTrans $iTipTrans): self
     {
         $this->iTipTrans = $iTipTrans instanceof GTranspTipTrans ? $iTipTrans->value : $iTipTrans;
-        $this->dDesTipTrans = GTranspTipTrans::getDescripcionFromInt($this->iTipTrans);
+        $this->dDesTipTrans = GTranspTipTrans::getDescriptionFromValue($this->iTipTrans);
         return $this;
     }
 
@@ -88,7 +88,7 @@ class GTransp extends BaseSifenField
     public function setIModTrans(int|GTranspModTrans $iModTrans): self
     {
         $this->iModTrans = $iModTrans instanceof GTranspModTrans ? $iModTrans->value : $iModTrans;
-        $this->dDesModTrans = GTranspModTrans::getDescripcionFromInt($this->iModTrans);
+        $this->dDesModTrans = GTranspModTrans::getDescriptionFromValue($this->iModTrans);
         return $this;
     }
 

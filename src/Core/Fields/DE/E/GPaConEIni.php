@@ -44,7 +44,7 @@ class GPaConEIni extends BaseSifenField
     public function setITiPago(int|PaConEIniTiPago $iTiPago): self
     {
         $this->iTiPago = $iTiPago instanceof PaConEIniTiPago ? $iTiPago->value : $iTiPago;
-        $this->dDesTiPag = PaConEIniTiPago::getDescripcion($this->iTiPago);
+        $this->dDesTiPag = PaConEIniTiPago::getDescriptionFromValue($this->iTiPago);
         return $this;
     }
 

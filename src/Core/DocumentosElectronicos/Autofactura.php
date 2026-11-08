@@ -80,7 +80,7 @@ class Autofactura extends DocumentoElectronicoComercial
      * @param string $dDirVen Dirección del vendedor.
      * @param int $dNumCasVen Número de casa del vendedor.
      * @param int $cDepVen Código de departamento del vendedor.
-     * @param int|null $cDisVen Código de distrito del vendedor.
+     * @param int $cDisVen Código de distrito del vendedor.
      * @param int $cCiuVen Código de ciudad del vendedor.
      *
      * @return self Encadenamiento fluido.
@@ -179,9 +179,7 @@ class Autofactura extends DocumentoElectronicoComercial
      * @param string $dDirProv E316 — Dirección o referencia del lugar de la operación.
      * @param int $cDepProv E317 — Código de departamento (debe existir en {@see DepartamentoMapping}).
      * @param int $cCiuProv E321 — Código de ciudad del lugar de la transacción.
-     * @param string $dDesCiuProv E322 — Descripción de la ciudad.
      * @param int|null $cDisProv E319 — Código de distrito del lugar (opcional).
-     * @param string|null $dDesDisProv E320 — Descripción del distrito (opcional).
      *
      * @return self Encadenamiento fluido.
      *

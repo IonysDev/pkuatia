@@ -71,7 +71,7 @@ class GOpeCom extends BaseSifenField
             return $this;
         } else {
             $this->iTipTra = $iTipTra instanceof OpeComTipTrans ? $iTipTra->value : $iTipTra;
-            $this->dDesTipTra = OpeComTipTrans::getDescripcion($this->iTipTra);
+            $this->dDesTipTra = OpeComTipTrans::getDescriptionFromValue($this->iTipTra);
         }
         return $this;
     }
@@ -100,7 +100,7 @@ class GOpeCom extends BaseSifenField
     public function setITImp(int|OpeComTipImp $iTImp): self
     {
         $this->iTImp = $iTImp instanceof OpeComTipImp ? $iTImp->value : $iTImp;
-        $this->dDesTImp = OpeComTipImp::getDescripcion($this->iTImp);
+        $this->dDesTImp = OpeComTipImp::getDescriptionFromValue($this->iTImp);
         return $this;
     }
 
@@ -185,7 +185,7 @@ class GOpeCom extends BaseSifenField
     public function setICondAnt(int|OpeComCondAnt $iCondAnt): self
     {
         $this->iCondAnt = $iCondAnt instanceof OpeComCondAnt ? $iCondAnt->value : $iCondAnt;
-        $this->dDesCondAnt = OpeComCondAnt::getDescripcion($this->iCondAnt);
+        $this->dDesCondAnt = OpeComCondAnt::getDescriptionFromValue($this->iCondAnt);
         return $this;
     }
 
@@ -312,7 +312,7 @@ class GOpeCom extends BaseSifenField
     /**
      * Devuelve la condición del tipo de cambio
      *
-     * @return int
+     * @return string
      */
     public function getDCondTiCam(): string
     {

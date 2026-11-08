@@ -45,10 +45,10 @@ class GCamNRE extends BaseSifenField
         $valor = is_int($iMotEmiNR) ? $iMotEmiNR : $iMotEmiNR->value;
         $this->iMotEmiNR = $valor;
         // E502: para 99 (Otro) la descripción es texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd); no se pisa si ya fue informada con setDDesMotEmiNR().
-        if ($valor === MotEmiNR::Otro->value && isset($this->dDesMotEmiNR) && $this->dDesMotEmiNR !== MotEmiNR::Otro->getDescripcion()) {
+        if ($valor === MotEmiNR::Otro->value && isset($this->dDesMotEmiNR) && $this->dDesMotEmiNR !== MotEmiNR::Otro->getDescription()) {
             return $this;
         }
-        $this->dDesMotEmiNR = is_int($iMotEmiNR) ? MotEmiNR::getDescripcionFromInt($iMotEmiNR) : $iMotEmiNR->getDescripcion();
+        $this->dDesMotEmiNR = is_int($iMotEmiNR) ? MotEmiNR::getDescriptionFromValue($iMotEmiNR) : $iMotEmiNR->getDescription();
         return $this;
     }
 
@@ -77,11 +77,11 @@ class GCamNRE extends BaseSifenField
     public function setIRespEmiNR(int|RespEmiNR $iRespEmiNR): self
     {
         if (is_int($iRespEmiNR)) {
-            $this->dDesRespEmiNR = RespEmiNR::getDescripcionFromInt($iRespEmiNR);
+            $this->dDesRespEmiNR = RespEmiNR::getDescriptionFromValue($iRespEmiNR);
             $this->iRespEmiNR = $iRespEmiNR;
         } else {
             $this->iRespEmiNR = $iRespEmiNR->value;
-            $this->dDesRespEmiNR = $iRespEmiNR->getDescripcion();
+            $this->dDesRespEmiNR = $iRespEmiNR->getDescription();
         }
 
         return $this;

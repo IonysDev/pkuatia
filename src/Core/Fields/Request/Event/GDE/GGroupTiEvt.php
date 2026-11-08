@@ -58,7 +58,7 @@ class GGroupTiEvt
     /**
      * Establece el valor de rGeVeCan
      *
-     * @param TrGeVeCan $rGeVeCan
+     * @param RGeVeCan $rGeVeCan
      *
      * @return self
      */
@@ -219,7 +219,7 @@ class GGroupTiEvt
     /**
      * Establece el valor de rGeDevCCFFDev
      *
-     * @param RGeDevCCFFCue $rGeDevCCFFDev
+     * @param RGeDevCCFFDev $rGeDevCCFFDev
      *
      * @return self
      */
@@ -278,7 +278,7 @@ class GGroupTiEvt
     /**
      * Obtiene el valor de rGeVeCan
      *
-     * @return TrGeVeCan
+     * @return RGeVeCan
      */
     public function getRGeVeCan(): RGeVeCan
     {
@@ -526,7 +526,7 @@ class GGroupTiEvt
         return $res;
     }
 
-    /**
+    /*
      * fromDOMElement
      *
      * @param  mixed $xml

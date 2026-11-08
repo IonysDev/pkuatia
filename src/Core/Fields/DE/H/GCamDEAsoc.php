@@ -57,7 +57,7 @@ class GCamDEAsoc extends BaseSifenField
     public function setITipDocAso(int|TipDocAso $iTipDocAso): self
     {
         $this->iTipDocAso = $iTipDocAso instanceof TipDocAso ? $iTipDocAso->value : $iTipDocAso;
-        $this->dDesTipDocAso = TipDocAso::getDescripcion($this->iTipDocAso);
+        $this->dDesTipDocAso = TipDocAso::getDescriptionFromValue($this->iTipDocAso);
         return $this;
     }
 
@@ -160,7 +160,7 @@ class GCamDEAsoc extends BaseSifenField
     public function setITipoDocAso(int|TipoDocImpresoAso $iTipoDocAso): self
     {
         $this->iTipoDocAso = $iTipoDocAso instanceof TipoDocImpresoAso ? $iTipoDocAso->value : $iTipoDocAso;
-        $this->dDTipoDocAso = TipoDocImpresoAso::getDescripcion($this->iTipoDocAso);
+        $this->dDTipoDocAso = TipoDocImpresoAso::getDescriptionFromValue($this->iTipoDocAso);
         return $this;
     }
 

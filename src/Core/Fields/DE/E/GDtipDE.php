@@ -223,7 +223,7 @@ class GDtipDE extends BaseSifenField
     /**
      * Instancia la clase a partir de un SimpleXMLElement
      *
-     * @param SimpleXMLElement $xml
+     * @param \SimpleXMLElement $xml
      *
      * @return GDtipDE
      */

@@ -53,7 +53,7 @@ class GPagCred extends BaseSifenField
     public function setICondCred(int|PagCredCondCred $iCondCred): self
     {
         $this->iCondCred = $iCondCred instanceof PagCredCondCred ? $iCondCred->value : $iCondCred;
-        $this->dDCondCred = PagCredCondCred::getDescripcion($this->iCondCred);
+        $this->dDCondCred = PagCredCondCred::getDescriptionFromValue($this->iCondCred);
         return $this;
     }
 
@@ -204,7 +204,7 @@ class GPagCred extends BaseSifenField
     /**
      * Obtiene el valor de gCuotas
      *
-     * @return GCuotas
+     * @return GCuotas[]
      */
     public function getGCuotas(): array
     {

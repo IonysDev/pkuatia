@@ -22,7 +22,6 @@ enum CamFEIndPres: int
     /**
      * Devuelve la descripción del indicador de presencia.
      *
-     * @param int $value Valor del indicador de presencia.
      * @return string
      */
 

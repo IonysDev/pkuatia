@@ -76,9 +76,9 @@ trait ItemValorado
      * @param int|null $precisionMoneda Precisión de la moneda, expresada en número de decimales. Si no se especifica se asume que la precisión es 0 (PYG).
      * @param String|null $precioUnit Precio unitario del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica es obligatorio informar la cantidad y el total bruto.
      * @param String|null $totalBruto Total bruto del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica es obligatorio informar la cantidad y el precio unitario.
-     * @param CamIVAAfecIVA|null $afectacionIVA Afectación de IVA del ítem. Si no se especifica se asume que el ítem no es afectado por el IVA.
+     * @param CamIVAAfecIVA|int|null $afectIVA Afectación de IVA del ítem (código o caso). Si no se especifica se asume que el ítem no es afectado por el IVA.
      * @param String|null $proporcionGravadaIVA Proporción gravada de IVA del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el ítem no es afectado por el IVA.
-     * @param CamIVATasaIVA|null $tasaIVA Tasa de IVA del ítem. Si no se especifica se asume que el ítem no es afectado por el IVA.
+     * @param CamIVATasaIVA|int|null $tasaDeIVA Tasa de IVA del ítem (código o caso). Si no se especifica se asume que el ítem no es afectado por el IVA.
      * @param bool|null $esTipoCambioPorItem Indica si el tipo de cambio es por ítem. Si no se especifica se asume que el tipo de cambio es por documento.
      * @param String|null $tipoDeCambioItem Tipo de cambio del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el tipo de cambio es por documento.
      * @param String|null $descuentoUnitarioParticular Descuento unitario particular del ítem, expresado en cadena de texto decimal BCMath. Si no se especifica se asume que el ítem no tiene descuento particular.
@@ -100,7 +100,7 @@ trait ItemValorado
      * @param String|null $dncpCodigoGTINPaquete Código GTIN del paquete registrado en DNCP (opcional cuando receptor es B2G).
      * @param GVehNuevo|null $detalleVehiculoNuevo Detalle del vehículo nuevo. Se informa solo en caso de venta de vehiculo automor nuevo.
      *
-     * @return self
+     * @return GCamItem El ítem agregado (no el documento: la cadena fluida sigue con el documento, no con este retorno).
      */
     public function addItem(
         string $codigo,
@@ -331,7 +331,7 @@ trait ItemValorado
      * @param String $comision Comisión (IVA 10% incluido) de la operación comercial, expresado en cadena de texto decimal BCMath (opcional, por defecto NULL).
      * @param String|null $redondeo Redondeo explícito de la operación (F013), expresado en cadena de texto decimal BCMath de hasta 4 decimales (opcional, por defecto NULL). Si se informa, se usa tal cual como F013, no se calculan F036/F037 y F014 = F008 - F013 + comisión con la precisión indicada. Excluyente con $redondeoSedeco.
      *
-     * @return void
+     * @return GTotSub
      *
      * @throws \InvalidArgumentException Si se informan $redondeo y $redondeoSedeco a la vez.
      */

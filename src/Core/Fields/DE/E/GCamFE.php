@@ -36,7 +36,7 @@ class GCamFE extends BaseSifenField
     public function __construct()
     {
         $this->iIndPres = CamFEIndPres::Presencial->value;
-        $this->dDesIndPres = CamFEIndPres::getDescripcion(CamFEIndPres::Presencial->value);
+        $this->dDesIndPres = CamFEIndPres::getDescriptionFromValue(CamFEIndPres::Presencial->value);
     }
 
     ///////////////////////////////////////////////////////////////////////

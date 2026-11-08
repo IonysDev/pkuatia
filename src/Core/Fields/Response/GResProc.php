@@ -27,7 +27,7 @@ class GResProc
     /**
      * Establece el valor de dCodRes
      *
-     * @param int $dCodRes
+     * @param string $dCodRes
      *
      * @return self
      */
@@ -60,7 +60,7 @@ class GResProc
     /**
      * Obtiene el valor de dCodRes
      *
-     * @return int
+     * @return string
      */
     public function getDCodRes(): string
     {

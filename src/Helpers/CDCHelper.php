@@ -60,7 +60,7 @@ class CDCHelper
         //tipo de emision
         $iTipEmi = strval($dE->getGOpeDE()->getITipEmi());
         //codigo de seguridad
-        $dCodSeg = strval(str_pad(($dE->getGOpeDE()->getDCodSeg() % 1000000000), 9, "0", STR_PAD_LEFT));
+        $dCodSeg = strval(str_pad((((int) $dE->getGOpeDE()->getDCodSeg()) % 1000000000), 9, "0", STR_PAD_LEFT)); // dCodSeg es string desde 0.2.0 (PK-26); (int) explícito, misma coerción que antes (D9)
         //digito verificador
         $cDC = $iTide . $dRucEm . $dDvRucEm . $dEst . $dPunExp . $dNumDoc . $iTipCont . $dFeEmiDE . $iTipEmi . $dCodSeg;
         $dDVid =  strval(RucUtils::calcDV($cDC));

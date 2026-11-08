@@ -335,7 +335,7 @@ class GRasMerc extends BaseSifenField
     /**
      * FromSimpleXMLElement
      *
-     * @param  mixed $node
+     * @param SimpleXMLElement $node
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self

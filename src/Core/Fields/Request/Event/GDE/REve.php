@@ -71,7 +71,7 @@ class REve
     /**
      * Establece el valor de gGroupTiEvt
      *
-     * @param TgGroupTiEvt $gGroupTiEvt
+     * @param GGroupTiEvt $gGroupTiEvt
      *
      * @return self
      */
@@ -118,7 +118,7 @@ class REve
     /**
      * Obtiene el valor de gGroupTiEvt
      *
-     * @return TgGroupTiEvt
+     * @return GGroupTiEvt
      */
     public function getGGroupTiEvt(): GGroupTiEvt
     {
@@ -174,7 +174,7 @@ class REve
     /**
      * FromSimpleXMLElement
      *
-     * @param  mixed $node
+     * @param SimpleXMLElement $node
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self

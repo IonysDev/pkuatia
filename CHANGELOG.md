@@ -72,6 +72,15 @@ comportamiento para quien emite documentos.
   (PSR-12) y la regla `line_ending` desactivada para no tocar los finales de línea de cada archivo. Scripts
   `composer cs-check` y `composer cs-fix`. `.editorconfig` con el mismo criterio (sin `end_of_line`). Los pasos de
   formato de esta versión se aplicaron con esa configuración en commits aislados, cada uno con su comando (D2–D4).
+- **PHPStan de nivel 1 a nivel 2 con `phpstan/phpstan-deprecation-rules`** (D9): 45 docblocks corregidos (nombres de
+  parámetro equivocados, tipos incompatibles con el nativo, clases inexistentes como `TrGeVeCan` o `SimpleXMLElement`
+  sin barra), el docblock de un método comentado que PHPStan atribuía al siguiente, un `(int)` explícito en
+  `CDCHelper` y 20 llamadas internas a métodos obsoletos de los enums reemplazadas por los vigentes
+  (`getDescriptionFromValue()`, `getDescription()`), con la misma salida. La baseline se regeneró y cada entrada está
+  clasificada en la bitácora de la fase: "sin runtime" (18 `isset`/`??` sobre propiedad no anulable, heredadas) o
+  "deprecado a propósito" (código propio que sigue poblando o leyendo miembros obsoletos por compatibilidad:
+  `SignHelper::$xmlKey`/`$xmlSigner`, las partes enteras obsoletas de `GGrupSup` y `GVehNuevo`,
+  `TipoDocImpresoAso::ComprobanteRetencion`). Ninguna entrada esconde un error de runtime.
 
 ### Cambiado
 

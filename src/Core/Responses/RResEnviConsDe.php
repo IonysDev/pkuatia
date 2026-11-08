@@ -57,7 +57,7 @@ class RResEnviConsDe implements RespuestaSifen
     /**
      * Establece el valor de dCodRes
      *
-     * @param String $dCodRes
+     * @param int $dCodRes
      *
      * @return self
      */

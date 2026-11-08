@@ -36,7 +36,7 @@ class GCamNCDE extends BaseSifenField
     public function setIMotEmi(int|MotEmi $iMotEmi): self
     {
         $mEmi = $iMotEmi instanceof MotEmi ? $iMotEmi->value : $iMotEmi;
-        $this->dDesMotEmi = MotEmi::getDescripcion($mEmi);
+        $this->dDesMotEmi = MotEmi::getDescriptionFromValue($mEmi);
         $this->iMotEmi = $mEmi;
         return $this;
     }

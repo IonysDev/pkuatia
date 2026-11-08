@@ -64,7 +64,7 @@ class TxContenEv
     /**
      * fromDOMElement
      *
-     * @param  mixed $xml
+     * @param DOMElement $xml
      * @return TxContenEv
      *
      * @deprecated 0.2.1 Nunca funcionó: espera un elemento contentEv, que no existe en el XSD, y llama a

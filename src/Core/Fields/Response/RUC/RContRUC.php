@@ -198,7 +198,7 @@ class RContRUC
     /**
      * toDOMElement
      *
-     * @return void
+     * @return DOMElement
      */
     public function toDOMElement(): DOMElement
     {

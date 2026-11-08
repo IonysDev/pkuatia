@@ -43,7 +43,7 @@ class GPagTarCD extends BaseSifenField
     public function setIDenTarj(int|PagTarCDDenTarj $iDenTarj): self
     {
         $this->iDenTarj = $iDenTarj instanceof PagTarCDDenTarj ? $iDenTarj->value : $iDenTarj;
-        $this->dDesDenTarj = PagTarCDDenTarj::getDescripcion($this->iDenTarj);
+        $this->dDesDenTarj = PagTarCDDenTarj::getDescriptionFromValue($this->iDenTarj);
         return $this;
     }
 

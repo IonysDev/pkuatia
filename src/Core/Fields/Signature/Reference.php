@@ -127,7 +127,7 @@ class Reference
     /**
      * Instancia un objeto Reference a partir de SimpleXMLElement
      *
-     * @param SimpleXMLElement $Reference
+     * @param \SimpleXMLElement $Reference
      *
      * @return self
      */
