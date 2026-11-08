@@ -123,14 +123,13 @@ final class IdaYVueltaGruposTest extends TestCase
                 }
                 return;
             }
-            if (!is_object($valor) || $vistos->contains($valor) || !str_starts_with(get_class($valor), 'IonysDev\\Pkuatia\\Core\\Fields\\DE\\')) {
+            if (!is_object($valor) || $vistos->offsetExists($valor) || !str_starts_with(get_class($valor), 'IonysDev\\Pkuatia\\Core\\Fields\\DE\\')) {
                 return;
             }
-            $vistos->attach($valor);
+            $vistos->offsetSet($valor);
             $clave = get_class($valor) === 'IonysDev\\Pkuatia\\Core\\Fields\\DE\\I\\Signature' ? spl_object_hash($valor) : RoundTrip::serializar($valor);
             $res[get_class($valor)][$clave] = $valor;
             foreach ((new \ReflectionObject($valor))->getProperties() as $propiedad) {
-                $propiedad->setAccessible(true);
                 if ($propiedad->isInitialized($valor)) {
                     $recorrer($propiedad->getValue($valor));
                 }

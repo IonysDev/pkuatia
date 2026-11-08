@@ -34,7 +34,6 @@ final class CacheCatalogosTest extends TestCase
     public function testGetArrayCacheaYDevuelvePorValor(string $clase): void
     {
         $prop = (new ReflectionClass($clase))->getProperty('catalogo');
-        $prop->setAccessible(true);
         $prop->setValue(null, null);
         $this->assertNull($prop->getValue());
 

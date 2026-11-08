@@ -4,6 +4,11 @@
 # "deprecado a propósito" (código propio que se conserva obsoleto por compatibilidad).
 parameters:
     level: 3
+    # Analiza como PHP 8.1 (el mínimo que declara composer.json) con independencia del PHP que ejecuta PHPStan, para
+    # que el resultado sea el mismo en toda la matriz del CI (8.1–8.5). Sin esto, bajo PHP 8.4+ PHPStan agrega
+    # avisos propios de esa versión (p. ej. unset de propiedades que "podrían tener hooks" en una subclase) que no
+    # describen un problema del código y harían fallar solo esos jobs (Fase D, Q-D4).
+    phpVersion: 80100
     paths:
         - src
 

@@ -102,6 +102,12 @@ comportamiento para quien emite documentos.
   `ValueValidationsTest`); los scripts de `test/` quedan como herramientas manuales. `phpunit.xml.dist` declara la
   fuente de cobertura (`src/` sin `Resources/`) y muestra el detalle de las deprecaciones de PHP que disparen los
   tests (para 8.4/8.5).
+- **Verificado en local con PHP 8.4.27 y 8.5.12** (decisión Q-D4): la suite completa pasa en 8.4 sin ninguna
+  deprecación; en 8.5 hubo que adaptar el `CapturaSoapClient` de los tests a la firma nueva de
+  `SoapClient::__doRequest()` (parámetro `?string $uriParserClass = null`; la clase hija lo agrega como opcional y
+  sigue valiendo en 8.1–8.4). `phpstan.neon.dist` fija `phpVersion: 80100` (el mínimo de `composer.json`) para que el
+  análisis sea el mismo en toda la matriz: bajo PHP 8.4+ PHPStan agregaba 23 avisos propios de esa versión (`unset`
+  de propiedades que "podrían tener hooks" en una subclase) que no describen un problema del código.
 - **Empaquetado y comunidad** (D12): `.gitattributes` con `export-ignore` para `tests/`, `test/`, `tools/`, `docs/`,
   `.github/`, `.vscode/` y la configuración de desarrollo, así que el paquete que publican GitHub y Packagist lleva
   solo `src/` (con los XSD y los catálogos), README, CHANGELOG, LICENSE y `composer.json`; `support` en

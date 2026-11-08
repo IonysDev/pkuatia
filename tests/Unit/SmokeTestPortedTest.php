@@ -139,7 +139,6 @@ final class SmokeTestPortedTest extends TestCase
         $deNT->gTotSub = $tot;
 
         $validador = new ReflectionMethod(Sifen::class, 'ValidarUmbralInnominadoNT024');
-        $validador->setAccessible(true);
 
         try {
             $validador->invoke(null, $deNT);
@@ -159,11 +158,9 @@ final class SmokeTestPortedTest extends TestCase
         $cfg->dIdFilePath = sys_get_temp_dir() . '/pkuatia_did_phpunit_' . uniqid('', true) . '.json';
 
         $propConfig = new ReflectionProperty(Sifen::class, 'config');
-        $propConfig->setAccessible(true);
         $propConfig->setValue(null, $cfg);
 
         $getDId = new ReflectionMethod(Sifen::class, 'GetDId');
-        $getDId->setAccessible(true);
 
         $a = $getDId->invoke(null);
         $b = $getDId->invoke(null);

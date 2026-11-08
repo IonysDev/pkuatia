@@ -66,7 +66,11 @@ final class CapturaSoapClient extends SoapClient
         \IonysDev\Pkuatia\Sifen::SetSoapClientFactory(static fn (): SoapClient => new self($respuestaCruda));
     }
 
-    public function __doRequest($request, $location, $action, $version, $oneWay = false): ?string
+    /**
+     * Firma de PHP 8.5 (que suma `?string $uriParserClass = null`), compatible con 8.1–8.4: una clase hija puede
+     * agregar un parámetro opcional al final. Sin él, PHP 8.5 aborta con "Declaration ... must be compatible" (Fase D, Q-D4).
+     */
+    public function __doRequest(string $request, string $location, string $action, int $version, bool $oneWay = false, ?string $uriParserClass = null): ?string
     {
         return $this->respuestaCruda;
     }
