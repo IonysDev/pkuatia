@@ -99,14 +99,17 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Establece el valor de dMonEnt
+   * Establece el valor de dMonEnt (E645, tMontoBase4: hasta 15 enteros y 4 decimales).
    *
-   * @param int $dMonEnt
+   * @param int|String $dMonEnt Monto de la entrega inicial, como entero o como cadena decimal BCMath ("1500.50").
+   *                            Hasta 0.3.0 el parámetro era `int` y una cadena con decimales se truncaba al entrar
+   *                            (Fase D, D1).
    *
    * @return self
    */
-  public function setDMonEnt(int $dMonEnt): self
+  public function setDMonEnt(int|String $dMonEnt): self
   {
+    $dMonEnt = (string) $dMonEnt;
     if(!ValueValidations::isValidStringDecimal($dMonEnt, 15, 0, 4))
     {
       throw new ValidacionException("Monto de la entrega inicial (dMonEnt) no válido: " . $dMonEnt, 1);
@@ -174,7 +177,10 @@ class GPagCred extends BaseSifenField
   }
 
   /**
-   * Obtiene el valor de dMonEnt
+   * Obtiene el valor de dMonEnt como entero.
+   *
+   * @deprecated 0.3.1 E645 es decimal (tMontoBase4, hasta 4 decimales): este getter lo trunca a entero. Usar
+   *             getDMonEntDecimal().
    *
    * @return int
    */
@@ -183,6 +189,17 @@ class GPagCred extends BaseSifenField
     if(!isset($this->dMonEnt))
       return null;
     return $this->dMonEnt;
+  }
+
+  /**
+   * Devuelve el monto de la entrega inicial (E645) tal como fue establecido, como cadena decimal BCMath, o null si
+   * no se informó. Nuevo en 0.3.1 (Fase D, D1).
+   *
+   * @return ?String
+   */
+  public function getDMonEntDecimal(): ?String
+  {
+    return isset($this->dMonEnt) ? $this->dMonEnt : null;
   } 
 
   /**
@@ -221,7 +238,7 @@ class GPagCred extends BaseSifenField
       $res->setDCuotas(intval($node->dCuotas));
     if(isset($node->dMonEnt))
     {
-      $res->setDMonEnt(intval($node->dMonEnt));
+      $res->setDMonEnt(strval($node->dMonEnt));
     }
     if(isset($node->gCuotas) && count($node->gCuotas) > 0)
     {
@@ -247,8 +264,9 @@ class GPagCred extends BaseSifenField
     } else if ($this->iCondCred == 2) {
       $res->appendChild(XmlHelper::elemento($doc, 'dCuotas', $this->getDCuotas()));
     }
+    // E645 se escribe tal como se guardó (cadena decimal): hasta 0.3.0 pasaba por getDMonEnt(): ?int y perdía los decimales.
     if(isset($this->dMonEnt) && $this->dMonEnt > 0)
-      $res->appendChild(XmlHelper::elemento($doc, 'dMonEnt', $this->getDMonEnt()));
+      $res->appendChild(XmlHelper::elemento($doc, 'dMonEnt', $this->dMonEnt));
     if(isset($this->gCuotas) && count($this->gCuotas) > 0)
     {
       foreach ($this->gCuotas as $g) {
@@ -286,7 +304,7 @@ class GPagCred extends BaseSifenField
 
     if(isset($object->dMonEnt))
     {
-      $res->setDMonEnt(intval($object->dMonEnt));
+      $res->setDMonEnt(strval($object->dMonEnt));
     }
     //children
     if(isset($object->gCuotas))
@@ -318,7 +336,7 @@ class GPagCred extends BaseSifenField
     if($node->getElementsByTagName('dCuotas')->length > 0)
       $res->setDCuotas(intval($node->getElementsByTagName('dCuotas')->item(0)->nodeValue));
     if($node->getElementsByTagName('dMonEnt')->length > 0)
-      $res->setDMonEnt(intval($node->getElementsByTagName('dMonEnt')->item(0)->nodeValue));
+      $res->setDMonEnt(strval($node->getElementsByTagName('dMonEnt')->item(0)->nodeValue));
     if($node->getElementsByTagName('gCuotas')->length > 0) {
       $res->gCuotas = [];
       foreach ($node->getElementsByTagName('gCuotas') as $g) {

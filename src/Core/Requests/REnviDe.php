@@ -43,13 +43,16 @@ class REnviDe {
     /**
      * Establece el valor en XML del xDe de la solicitud.
      * 
-     * @param String $xDe
+     * @param String|SoapVar $xDE XML del elemento xDE ya armado (p. ej. `<ns1:xDE>…rDE…</ns1:xDE>`, como lo pasa el
+     *                            facade), que se envuelve en un SoapVar XSD_ANYXML; o un SoapVar listo. Hasta 0.3.0
+     *                            el parámetro era `String` y se asignaba a la propiedad SoapVar: TypeError en toda
+     *                            llamada (Fase D, D1).
      * 
      * @return self
      */
-    public function setXDe(String $xDE): self
+    public function setXDe(String|SoapVar $xDE): self
     {
-        $this->xDE = $xDE;
+        $this->xDE = $xDE instanceof SoapVar ? $xDE : new SoapVar($xDE, XSD_ANYXML);
         return $this;
     }
 

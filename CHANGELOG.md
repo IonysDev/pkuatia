@@ -14,6 +14,31 @@ aislados que no alteran un byte de los documentos serializados; PHPStan sube de 
 cada entrada está justificada; el CI suma PHP 8.4 y 8.5, cobertura y validación del paquete. No hay cambios de
 comportamiento para quien emite documentos.
 
+### Agregado
+
+- `GPagCred::getDMonEntDecimal(): ?String` devuelve la entrega inicial (E645) tal como se estableció, como cadena
+  decimal BCMath; `GGrupAdi::getDSalAntDecimal(): ?String` hace lo mismo con el saldo anterior (E826), que
+  `getDSalAnt(): ?float` convierte a float (Fase D, D1).
+
+### Corregido
+
+- **La entrega inicial (E645, `dMonEnt`) perdía los decimales en las cuatro vías.** `GPagCred::setDMonEnt(int)`
+  convertía `"1500.50"` a 1500 al entrar, `toDOMElement()` escribía el entero de `getDMonEnt(): ?int` y los lectores
+  DOM, SimpleXML y SOAP aplicaban `intval()`. El parámetro acepta ahora `int|String` (ampliación compatible), el
+  XML lleva la cadena decimal guardada y los tres lectores la conservan. Los montos enteros se serializan igual que
+  antes. Lo destapó PHPStan en nivel 3 (`assign.propertyType`, `return.type`) al preparar la Fase D (D1).
+- `REnviDe::setXDe()` y `REnviEventoDe::setDEvReg()` asignaban un `String` a una propiedad `SoapVar` y terminaban en
+  `TypeError` en toda llamada. Aceptan ahora el XML como texto (lo envuelven en un `SoapVar` `XSD_ANYXML`, como hace
+  el facade) o un `SoapVar` ya armado (D1).
+- `TxContenEv::toDOMElement()` y `::fromDOMElement()` llamaban a métodos de `RContEv` que no existen y terminaban en
+  `Error: Call to undefined method`. Lanzan `PkuatiaException` con el reemplazo (`RContDe::FromXContenDE()`), y
+  `toDOMElement()` queda marcado obsoleto como ya lo estaba `fromDOMElement()` (D1).
+
+### Obsoleto
+
+- `GPagCred::getDMonEnt(): ?int` trunca E645 a entero: usar `getDMonEntDecimal()` (D1).
+- `TxContenEv::toDOMElement()`: nunca funcionó y `TxContenEv` no es un elemento del XSD (D1).
+
 ### Cambiado
 
 - **Catálogos del SIFEN regenerados** desde ekuat-ia `dad0ee3` (18/10/2026, `tools/generar-catalogos.php`):

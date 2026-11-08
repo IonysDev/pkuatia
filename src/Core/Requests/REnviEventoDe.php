@@ -41,13 +41,16 @@ class REnviEventoDe {
     /**
      * Establece el valor en XML del dEvReg de la solicitud.
      * 
-     * @param String $dEvReg
+     * @param String|SoapVar $dEvReg XML del elemento dEvReg ya armado (p. ej. `<ns1:dEvReg>…gGroupGesEve…</ns1:dEvReg>`,
+     *                               como lo pasa el facade), que se envuelve en un SoapVar XSD_ANYXML; o un SoapVar
+     *                               listo. Hasta 0.3.0 el parámetro era `String` y se asignaba a la propiedad SoapVar:
+     *                               TypeError en toda llamada (Fase D, D1).
      * 
      * @return self
      */
-    public function setDEvReg(String $dEvReg): self
+    public function setDEvReg(String|SoapVar $dEvReg): self
     {
-        $this->dEvReg = $dEvReg;
+        $this->dEvReg = $dEvReg instanceof SoapVar ? $dEvReg : new SoapVar($dEvReg, XSD_ANYXML);
         return $this;
     }
 

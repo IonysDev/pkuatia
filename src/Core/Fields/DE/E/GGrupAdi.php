@@ -222,13 +222,25 @@ class GGrupAdi
   }
 
   /**
-   * Obtiene el valor de dSalAnt
+   * Obtiene el valor de dSalAnt convertido a float (puede perder precisión: E826 se guarda como cadena decimal
+   * BCMath; para leerla sin conversión usar getDSalAntDecimal()).
    *
    * @return ?float
    */
   public function getDSalAnt(): ?float
   {
     return $this->dSalAnt;
+  }
+
+  /**
+   * Devuelve el saldo anterior (E826) tal como fue establecido, como cadena decimal BCMath, o null si no se informó.
+   * Nuevo en 0.3.1 (Fase D, D1).
+   *
+   * @return ?String
+   */
+  public function getDSalAntDecimal(): ?String
+  {
+    return $this->dSalAnt ?? null;
   }
 
 
