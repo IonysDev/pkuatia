@@ -13,6 +13,12 @@
         "paraguay"
     ],
     "homepage": "https://github.com/IonysDev/pkuatia",
+    "support": {
+        "issues": "https://github.com/IonysDev/pkuatia/issues",
+        "source": "https://github.com/IonysDev/pkuatia",
+        "docs": "https://github.com/IonysDev/pkuatia#readme",
+        "security": "https://github.com/IonysDev/pkuatia/security/advisories/new"
+    },
     "license": "MIT",
     "autoload": {
         "psr-4": {

@@ -102,6 +102,12 @@ comportamiento para quien emite documentos.
   `ValueValidationsTest`); los scripts de `test/` quedan como herramientas manuales. `phpunit.xml.dist` declara la
   fuente de cobertura (`src/` sin `Resources/`) y muestra el detalle de las deprecaciones de PHP que disparen los
   tests (para 8.4/8.5).
+- **Empaquetado y comunidad** (D12): `.gitattributes` con `export-ignore` para `tests/`, `test/`, `tools/`, `docs/`,
+  `.github/`, `.vscode/` y la configuración de desarrollo, así que el paquete que publican GitHub y Packagist lleva
+  solo `src/` (con los XSD y los catálogos), README, CHANGELOG, LICENSE y `composer.json`; `support` en
+  `composer.json` (issues, fuente, documentación, avisos de seguridad); `.vscode/launch.json` deja de estar
+  versionado (ya lo ignoraba `.gitignore`); `.github/dependabot.yml` (Composer y acciones del CI, semanal);
+  `SECURITY.md` con las versiones con soporte, la vía privada de reporte y lo que nunca va en un issue.
 
 ### Cambiado
 
