@@ -280,6 +280,9 @@ use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 
 $rde = RDE::FromSimpleXMLElement(simplexml_load_string($xmlFirmado));
 $xml = $rde->toXMLString(); // el mismo rDE, con Signature y gCamFuFD; la firma sigue verificando
+// Los objetos de la firma ($rde->getSignature(), SignedInfo, Reference, KeyInfo…) sirven para inspeccionarla; su
+// toDOMElement() produce una firma estructuralmente equivalente pero que NO verifica, porque no conserva los espacios
+// del SignedInfo original, que forman parte de lo firmado. La reemisión que verifica es la de arriba (0.3.1).
 ```
 
 ## 🛡️ Validar, verificar y leer errores

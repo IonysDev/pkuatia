@@ -156,8 +156,10 @@ class Reference
     {
         $res = new self();
         $res->setURI((string) $node->getAttribute('URI'));
-        if ($node->getElementsByTagName("Transforms")->length > 0) {
-            foreach ($node->getElementsByTagName("Transforms") as $t) {
+        // Hasta 0.3.0 recorría los contenedores Transforms (uno) en vez de los Transform (dos): se perdían los
+        // algoritmos de las transformaciones (Fase D, D8).
+        if ($node->getElementsByTagName("Transform")->length > 0) {
+            foreach ($node->getElementsByTagName("Transform") as $t) {
                 $res->Transforms[] = Transform::FromDOMElement($t);
             }
         }
@@ -171,32 +173,26 @@ class Reference
     ///////////////////////////////////////////////////////////////////////
 
     /**
-     * Convierte el objeto a un DOMElement
+     * Convierte el objeto a un DOMElement (Transforms, DigestMethod y DigestValue, en ese orden).
+     *
+     * @param \DOMDocument|null $doc Documento en el que se crean los nodos. Null (comportamiento hasta 0.3.0) crea un
+     *                               documento propio, cuyo nodo no puede colgarse de otro documento (Fase D, D8).
      *
      * @return \DOMElement
      */
-    public function toDOMElement(): \DOMElement
+    public function toDOMElement(?\DOMDocument $doc = null): \DOMElement
     {
-        $doc = new \DOMDocument();
+        $doc ??= new \DOMDocument();
         $res = $doc->createElement('Reference');
         $res->setAttribute('URI', $this->getURI());
         if (count($this->getTransforms()) > 0) {
             $transforms = $doc->createElement('Transforms');
             foreach ($this->getTransforms() as $t) {
-                $importNode = $doc->importNode($t->toDOMElement(), true);
-                $transforms->appendChild($importNode);
+                $transforms->appendChild($t->toDOMElement($doc));
             }
-            /*$trf = new Transform();
-            $trf->setAlgorithm('http://www.w3.org/2001/10/xml-exc-c14n#');
-            $importNode = $doc->importNode($trf->toDOMElement(), true);
-            $transforms->appendChild($importNode);*/
-
             $res->appendChild($transforms);
         }
-
-        $importNode = $doc->importNode($this->getDigestMethod()->toDOMElement(), true);
-        $res->appendChild($importNode);
-
+        $res->appendChild($this->getDigestMethod()->toDOMElement($doc));
         $res->appendChild(XmlHelper::elemento($doc, 'DigestValue', $this->getDigestValue()));
         return $res;
     }

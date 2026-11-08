@@ -46,6 +46,17 @@ comportamiento para quien emite documentos.
 - `TxContenEv::toDOMElement()` y `::fromDOMElement()` llamaban a métodos de `RContEv` que no existen y terminaban en
   `Error: Call to undefined method`. Lanzan `PkuatiaException` con el reemplazo (`RContDe::FromXContenDE()`), y
   `toDOMElement()` queda marcado obsoleto como ya lo estaba `fromDOMElement()` (D1).
+- **Los serializadores tipados de la firma funcionan** (D8, PK-32 parte pendiente, decisión Q-D3). `KeyInfo`,
+  `X509Data`, `Reference` y `DigestMethod` creaban sus nodos en un `DOMDocument` propio y `toHeaderOnlyDOMElement()`
+  ignoraba el documento recibido, así que `Signature::toDOMElement($doc)` terminaba siempre en `DOMException`
+  "Wrong Document Error"; `KeyInfo` agregaba un `xmlns:ds` que nadie usaba. Sus `toDOMElement()` aceptan ahora un
+  `?DOMDocument $doc = null` al final (sin él se comportan como antes) y `Signature::toDOMElement()` produce una firma
+  válida contra el XSD de xmldsig con los mismos elementos, atributos y valores que la original. **Límite
+  documentado:** el modelo tipado no conserva los nodos de texto del original y los espacios del `SignedInfo` forman
+  parte de lo firmado, así que una firma reemitida desde los objetos es estructuralmente equivalente pero no verifica;
+  la reemisión que verifica sigue siendo la copia del XML original que hace un rDE leído (0.2.1).
+- `Reference::FromDOMElement()` recorría los contenedores `Transforms` en vez de los `Transform`: la firma leída por
+  DOM perdía los dos algoritmos de transformación (D8).
 
 ### Obsoleto
 

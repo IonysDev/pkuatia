@@ -69,13 +69,16 @@ class DigestMethod
     }
 
     /**
-     * Convierte el objeto a un DOMElement
+     * Convierte el objeto a un DOMElement.
+     *
+     * @param \DOMDocument|null $doc Documento en el que se crea el nodo. Null (comportamiento hasta 0.3.0) crea un
+     *                               documento propio, cuyo nodo no puede colgarse de otro documento (Fase D, D8).
      *
      * @return DOMElement
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(?\DOMDocument $doc = null): DOMElement
     {
-        $dom = new \DOMDocument();
+        $dom = $doc ?? new \DOMDocument();
         $DigestMethod = $dom->createElement('DigestMethod');
         $DigestMethod->setAttribute('Algorithm', $this->getAlgorithm());
         return $DigestMethod;

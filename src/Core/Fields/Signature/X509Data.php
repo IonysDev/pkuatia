@@ -78,13 +78,16 @@ class X509Data
     }
 
     /**
-     * Convierte el objeto a un DOMElement
+     * Convierte el objeto a un DOMElement.
+     *
+     * @param \DOMDocument|null $doc Documento en el que se crean los nodos. Null (comportamiento hasta 0.3.0) crea un
+     *                               documento propio, cuyo nodo no puede colgarse de otro documento (Fase D, D8).
      *
      * @return \DOMElement
      */
-    public function toDOMElement(): \DOMElement
+    public function toDOMElement(?\DOMDocument $doc = null): \DOMElement
     {
-        $dom = new \DOMDocument();
+        $dom = $doc ?? new \DOMDocument();
         $X509Data = $dom->createElement('X509Data');
         $X509Certificate = XmlHelper::elemento($dom, 'X509Certificate', $this->getX509Certificate());
         $X509Data->appendChild($X509Certificate);

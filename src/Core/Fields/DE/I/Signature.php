@@ -163,14 +163,23 @@ class Signature extends BaseSifenField
      */
     public function toHeaderOnlyDOMElement(DOMDocument $doc): \DOMElement
     {
-        $doc = new \DOMDocument();
+        // Hasta 0.3.0 ignoraba $doc y creaba un documento propio: el nodo no podía colgarse del rDE (Fase D, D8).
         $res = $doc->createElement('Signature');
         $res->setAttribute('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
         return $res;
     }
 
     /**
-     * Convierte este objeto Signature a un DOMElement que puede ser insertado en el DOMDocument especificado.
+     * Convierte este objeto Signature a un DOMElement que puede ser insertado en el DOMDocument especificado
+     * (SignedInfo, SignatureValue y KeyInfo, en el orden del estándar, con xmlns de xmldsig en Signature).
+     *
+     * Límite (Fase D, D8, PK-32): el modelo tipado no conserva los nodos de texto del original. Los espacios y saltos de
+     * línea del SignedInfo forman parte de lo que se firma, así que una firma reemitida desde estos objetos es
+     * estructuralmente equivalente a la original pero NO verifica. Sirve para inspeccionar o construir la estructura de
+     * una firma; para reemitir una firma que siga verificando, leer el rDE con RDE::FromDOMElement/FromSimpleXMLElement,
+     * que conserva el XML original de la firma y lo copia byte a byte (ver RDE::$signatureXml). Hasta 0.3.0 este
+     * método terminaba en DOMException "Wrong Document Error" porque KeyInfo y Reference creaban sus nodos en otro
+     * documento.
      *
      * @param DOMDocument $doc DOMDocument que crea el DOMElement
      *
@@ -181,7 +190,7 @@ class Signature extends BaseSifenField
         $res = $this->toHeaderOnlyDOMElement($doc);
         $res->appendChild($this->SignedInfo->toDOMElement($doc));
         $res->appendChild(XmlHelper::elemento($doc, 'SignatureValue', $this->SignatureValue));
-        $res->appendChild($this->KeyInfo->toDOMElement());
+        $res->appendChild($this->KeyInfo->toDOMElement($doc));
         return $res;
     }
 
