@@ -81,8 +81,6 @@ class PyGeoCodesMapping
         return null;
     }
 
-    /** @var array<int, array<string, mixed>>|null filas de PyGeoCodes.xml, cargadas una sola vez (Fase C, C10) */
-    private static ?array $filas = null;
 
     /**
      * Indica si el departamento, el distrito (si se informa) y la ciudad pertenecen a una misma fila de PyGeoCodes.xml
@@ -93,8 +91,8 @@ class PyGeoCodesMapping
         if ($departamento === null || $ciudad === null) {
             return true;
         }
-        self::$filas ??= array_values(self::getArray()['geo'] ?? []);
-        foreach (self::$filas as $fila) {
+        // getArray() ya cachea el catálogo (D7): no hace falta una segunda copia.
+        foreach (self::getArray()['geo'] ?? [] as $fila) {
             if ((int) ($fila['CODIGO_DEPTO'] ?? 0) !== $departamento || (int) ($fila['CODIGO_CIUD'] ?? 0) !== $ciudad) {
                 continue;
             }

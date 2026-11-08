@@ -15,7 +15,10 @@ use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeCan;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeInu;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGEveNom;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GDE\RGeVeTr;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GEA\RGeDevCCFFCue;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GEA\RGeDevCCFFDev;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GEA\RGeVeCCFF;
+use IonysDev\Pkuatia\Core\Fields\Request\Event\GEA\RGeVeRem;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDescon;
 use IonysDev\Pkuatia\Core\Fields\Request\Event\GER\RGeVeDisconf;
 use IonysDev\Pkuatia\Core\Fields\Response\DE\RContDe;
@@ -113,6 +116,10 @@ final class NombresCorregidosTest extends TestCase
             'RRetEnviEventoDe::seGResProcEVe' => [RRetEnviEventoDe::class, 'seGResProcEVe', 'setGResProcEVe'],
             'RRetEnviEventoDe::geGResProcEVe' => [RRetEnviEventoDe::class, 'geGResProcEVe', 'getGResProcEVe'],
             'GCamEsp::getGGrupoSeg' => [GCamEsp::class, 'getGGrupoSeg', 'getGGrupSeg'],
+            // QA de la Fase D: los typos hermanos de getGeVeCCFF (sin la R)
+            'GGroupTiEvt::setGeDevCCFFCue' => [GGroupTiEvt::class, 'setGeDevCCFFCue', 'setRGeDevCCFFCue'],
+            'GGroupTiEvt::setGeDevCCFFDev' => [GGroupTiEvt::class, 'setGeDevCCFFDev', 'setRGeDevCCFFDev'],
+            'GGroupTiEvt::getGeVeRem' => [GGroupTiEvt::class, 'getGeVeRem', 'getRGeVeRem'],
         ];
     }
 
@@ -139,6 +146,15 @@ final class NombresCorregidosTest extends TestCase
         $gti = (new GGroupTiEvt())->setRGeVeCCFF($ccff);
         $this->assertSame($ccff, $gti->getGeVeCCFF());
         $this->assertSame($ccff, $gti->getRGeVeCCFF());
+
+        $cue = new RGeDevCCFFCue();
+        $dev = new RGeDevCCFFDev();
+        $rem = new RGeVeRem();
+        $gti = (new GGroupTiEvt())->setGeDevCCFFCue($cue)->setGeDevCCFFDev($dev)->setRGeVeRem($rem);
+        $this->assertSame($cue, $gti->getRGeDevCCFFCue());
+        $this->assertSame($dev, $gti->getRGeDevCCFFDev());
+        $this->assertSame($rem, $gti->getGeVeRem());
+        $this->assertSame($rem, $gti->getRGeVeRem());
 
         $objeto = new stdClass();
         $objeto->dRUCCons = '80000000';

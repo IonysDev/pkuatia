@@ -61,7 +61,7 @@ jobs:
           COBERTURA_MINIMA: '75'
 
       - name: PHPStan
-        run: vendor/bin/phpstan analyse
+        run: vendor/bin/phpstan analyse --memory-limit=1G
 
       - name: Composer audit
         if: matrix.php == '8.3'

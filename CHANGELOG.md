@@ -11,8 +11,13 @@ Fase D del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02
 herramientas. **Compatible hacia atrás**: no se elimina ni cambia ninguna firma pública; los nombres con errores de
 tipeo reciben un alias correcto y el original queda obsoleto; el estilo se unifica con php-cs-fixer en commits
 aislados que no alteran un byte de los documentos serializados; PHPStan sube de nivel con una baseline en la que
-cada entrada está justificada; el CI suma PHP 8.4 y 8.5, cobertura y validación del paquete. No hay cambios de
-comportamiento para quien emite documentos.
+cada entrada está justificada; el CI suma PHP 8.4 y 8.5, cobertura y validación del paquete. Los documentos que
+hasta 0.3.0 se serializaban bien salen idénticos byte a byte. **Cambios de comportamiento deliberados**, todos
+correcciones de datos que antes se perdían o de errores de PHP: la entrega inicial (E645) y la cantidad y el
+porcentaje de quiebra o merma (E717, E718) conservan los decimales en vez de truncarse (cambia el XML de quien los
+informaba con decimales); el departamento del local de salida de la NR (`cDepSal`) lleva el código del departamento
+y no el del distrito; y varios caminos que terminaban en `TypeError` o `Error` lanzan ahora una excepción de la
+librería (detalle en "Corregido").
 
 ### Agregado
 
@@ -22,7 +27,9 @@ comportamiento para quien emite documentos.
 - Alias con el nombre correcto para los cuatro typos con letras distintas (D5): `SignHelper::SignEvents()` (antes
   `SingEvents()`), `GGrupSeg::setGGrupPolSeg()` (antes `setGGrupoPolSeg()`), `GGroupTiEvt::getRGeVeCCFF()` (antes
   `getGeVeCCFF()`), `RContRUC::FromSifenResponseObject()` y `RResEnviConsRUC::FromSifenResponseObject()` (antes
-  `fromStdClassObject()`). El nombre correcto tiene el cuerpo; el viejo delega y queda obsoleto.
+  `fromStdClassObject()`). El nombre correcto tiene el cuerpo; el viejo delega y queda obsoleto. En la QA final se
+  sumaron los typos hermanos de `getGeVeCCFF()`: `GGroupTiEvt::setRGeDevCCFFCue()`, `setRGeDevCCFFDev()` y
+  `getRGeVeRem()` (antes `setGeDevCCFFCue()`, `setGeDevCCFFDev()`, `getGeVeRem()`).
 - Trait `Core\Constants\EnumDescripcion` con `getDescriptionFromValue()`, `getValueDescriptionMap()` y
   `toIdNameList()`: los 36 enums de códigos del MT lo usan en vez de repetir los tres métodos (D6). Ninguna firma
   cambia; `getDescripcion()`, `getDescripcionFromInt()` y `toKeyValueArray()` siguen en cada enum. Los seis enums de
@@ -61,6 +68,10 @@ comportamiento para quien emite documentos.
   propiedad `GTotSub $gTotSub` y terminaba en `TypeError`; lanza ahora `ValidacionException` con el motivo (D10).
 - `GCamItem::setDCanQuiMer()` y `setDPorQuiMer()` (E717 y E718, decimales) recibían `int` y truncaban la cantidad y el
   porcentaje de quiebra o merma; aceptan `int|string` y conservan los decimales, como `setDMonEnt()` en D1 (D10).
+- `GResProcLote::setDProtAut()`, `GResProcEVe::setDProtAut()` y `GResProcEVe::setId()` guardan el valor en una
+  propiedad `int`: con un valor no numérico (p. ej. un `<dProtAut/>` vacío) terminaban en `TypeError`; lanzan ahora
+  `RespuestaException` en vez de convertirlo en 0, para que `getProtocolo()` nunca informe un protocolo inventado
+  (QA de la Fase D).
 
 ### Obsoleto
 
@@ -68,6 +79,8 @@ comportamiento para quien emite documentos.
 - `TxContenEv::toDOMElement()`: nunca funcionó y `TxContenEv` no es un elemento del XSD (D1).
 - `SignHelper::SingEvents()`, `GGrupSeg::setGGrupoPolSeg()`, `GGroupTiEvt::getGeVeCCFF()`,
   `RContRUC::fromStdClassObject()` y `RResEnviConsRUC::fromStdClassObject()`: typos; usar el nombre correcto (D5).
+- `GGroupTiEvt::setGeDevCCFFCue()`, `setGeDevCCFFDev()` y `getGeVeRem()`: typos; usar `setRGeDevCCFFCue()`,
+  `setRGeDevCCFFDev()` y `getRGeVeRem()` (QA de la Fase D).
 
 ### Herramientas y CI
 
@@ -105,7 +118,8 @@ comportamiento para quien emite documentos.
 - **Verificado en local con PHP 8.4.27 y 8.5.12** (decisión Q-D4): la suite completa pasa en 8.4 sin ninguna
   deprecación; en 8.5 hubo que adaptar el `CapturaSoapClient` de los tests a la firma nueva de
   `SoapClient::__doRequest()` (parámetro `?string $uriParserClass = null`; la clase hija lo agrega como opcional y
-  sigue valiendo en 8.1–8.4). `phpstan.neon.dist` fija `phpVersion: 80100` (el mínimo de `composer.json`) para que el
+  sigue valiendo en 8.1–8.4). PHPStan corre con `--memory-limit=1G` en el CI y en `composer phpstan` (con 128 MB,
+  el límite de un PHP sin `php.ini`, el nivel 3 aborta). `phpstan.neon.dist` fija `phpVersion: 80100` (el mínimo de `composer.json`) para que el
   análisis sea el mismo en toda la matriz: bajo PHP 8.4+ PHPStan agregaba 23 avisos propios de esa versión (`unset`
   de propiedades que "podrían tener hooks" en una subclase) que no describen un problema del código.
 - **Empaquetado y comunidad** (D12): `.gitattributes` con `export-ignore` para `tests/`, `test/`, `tools/`, `docs/`,

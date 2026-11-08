@@ -30,7 +30,12 @@ class GResProcEVe
      */
     public function setId(string $id): self
     {
-        $this->id = (int) $id; // la propiedad histórica es int (GRSch032) (D10)
+        // La propiedad histórica es int (GRSch032). Un valor no numérico no se convierte en 0 en silencio: hasta 0.3.0
+        // terminaba en TypeError (QA de la Fase D).
+        if (!is_numeric($id)) {
+            throw new RespuestaException("[GResProcEVe] id no numérico: '$id'");
+        }
+        $this->id = (int) $id;
 
         return $this;
     }
@@ -60,7 +65,12 @@ class GResProcEVe
      */
     public function setDProtAut(string $dProtAut): self
     {
-        $this->dProtAut = (int) $dProtAut; // la propiedad histórica es int (GRSch034, 10 dígitos) (D10)
+        // La propiedad histórica es int (GRSch034, 10 dígitos); getProtocolo() devuelve el texto. Un valor no numérico
+        // no se convierte en 0 en silencio: hasta 0.3.0 terminaba en TypeError (QA de la Fase D).
+        if (!is_numeric($dProtAut)) {
+            throw new RespuestaException("[GResProcEVe] dProtAut no numérico: '$dProtAut'");
+        }
+        $this->dProtAut = (int) $dProtAut;
 
         return $this;
     }

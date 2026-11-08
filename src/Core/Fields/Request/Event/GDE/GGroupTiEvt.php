@@ -203,7 +203,21 @@ class GGroupTiEvt
 
 
     /**
-     * Establece el valor de RGeDevCCFFCue
+     * Establece el valor de rGeDevCCFFCue (devolución de créditos fiscales, cuestionado). Hasta 0.3.0 se llamaba
+     * setGeDevCCFFCue() (sin la R), que sigue existiendo como alias obsoleto.
+     *
+     * @param RGeDevCCFFCue $rGeDevCCFFCue
+     *
+     * @return self
+     */
+    public function setRGeDevCCFFCue(RGeDevCCFFCue $rGeDevCCFFCue): self
+    {
+        $this->rGeDevCCFFCue = $rGeDevCCFFCue;
+        return $this;
+    }
+
+    /**
+     * @deprecated 0.3.1 Nombre con errata; usar setRGeDevCCFFCue(). Delega en él.
      *
      * @param RGeDevCCFFCue $rGeDevCCFFCue
      *
@@ -211,13 +225,25 @@ class GGroupTiEvt
      */
     public function setGeDevCCFFCue(RGeDevCCFFCue $rGeDevCCFFCue): self
     {
-        $this->rGeDevCCFFCue = $rGeDevCCFFCue;
+        return $this->setRGeDevCCFFCue($rGeDevCCFFCue);
+    }
+
+    /**
+     * Establece el valor de rGeDevCCFFDev (devolución de créditos fiscales, devuelto). Hasta 0.3.0 se llamaba
+     * setGeDevCCFFDev() (sin la R), que sigue existiendo como alias obsoleto.
+     *
+     * @param RGeDevCCFFDev $rGeDevCCFFDev
+     *
+     * @return self
+     */
+    public function setRGeDevCCFFDev(RGeDevCCFFDev $rGeDevCCFFDev): self
+    {
+        $this->rGeDevCCFFDev = $rGeDevCCFFDev;
         return $this;
     }
 
-
     /**
-     * Establece el valor de rGeDevCCFFDev
+     * @deprecated 0.3.1 Nombre con errata; usar setRGeDevCCFFDev(). Delega en él.
      *
      * @param RGeDevCCFFDev $rGeDevCCFFDev
      *
@@ -225,8 +251,7 @@ class GGroupTiEvt
      */
     public function setGeDevCCFFDev(RGeDevCCFFDev $rGeDevCCFFDev): self
     {
-        $this->rGeDevCCFFDev = $rGeDevCCFFDev;
-        return $this;
+        return $this->setRGeDevCCFFDev($rGeDevCCFFDev);
     }
 
 
@@ -430,13 +455,24 @@ class GGroupTiEvt
     }
 
     /**
-     * Obtiene el valor de rGeVeRem
+     * Obtiene el valor de rGeVeRem. Hasta 0.3.0 se llamaba getGeVeRem() (sin la R), que sigue existiendo como alias
+     * obsoleto.
+     *
+     * @return RGeVeRem
+     */
+    public function getRGeVeRem(): RGeVeRem
+    {
+        return $this->rGeVeRem;
+    }
+
+    /**
+     * @deprecated 0.3.1 Nombre con errata; usar getRGeVeRem(). Delega en él.
      *
      * @return RGeVeRem
      */
     public function getGeVeRem(): RGeVeRem
     {
-        return $this->rGeVeRem;
+        return $this->getRGeVeRem();
     }
 
     /**
@@ -654,11 +690,11 @@ class GGroupTiEvt
         }
 
         if (isset($node->rGeDevCCFFCue)) {
-            $res->setGeDevCCFFCue(RGeDevCCFFCue::FromSimpleXMLElement($node->rGeDevCCFFCue));
+            $res->setRGeDevCCFFCue(RGeDevCCFFCue::FromSimpleXMLElement($node->rGeDevCCFFCue));
         }
 
         if (isset($node->rGeDevCCFFDev)) {
-            $res->setGeDevCCFFDev(RGeDevCCFFDev::FromSimpleXMLElement($node->rGeDevCCFFDev));
+            $res->setRGeDevCCFFDev(RGeDevCCFFDev::FromSimpleXMLElement($node->rGeDevCCFFDev));
         }
 
         if (isset($node->rGeVeAnt)) {

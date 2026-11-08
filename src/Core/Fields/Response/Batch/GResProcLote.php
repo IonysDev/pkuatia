@@ -66,7 +66,12 @@ class GResProcLote
      */
     public function setDProtAut(string $dProtAut): self
     {
-        $this->dProtAut = (int) $dProtAut; // la propiedad histórica es int (CRSch052, 10 dígitos); getProtocolo() devuelve el texto (D10)
+        // La propiedad histórica es int (CRSch052, 10 dígitos); getProtocolo() devuelve el texto. Un valor no numérico
+        // (p. ej. vacío) no se convierte en 0 en silencio: hasta 0.3.0 terminaba en TypeError (QA de la Fase D).
+        if (!is_numeric($dProtAut)) {
+            throw new RespuestaException("[GResProcLote] dProtAut no numérico: '$dProtAut'");
+        }
+        $this->dProtAut = (int) $dProtAut;
 
         return $this;
     }

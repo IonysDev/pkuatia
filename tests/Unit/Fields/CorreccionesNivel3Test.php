@@ -63,6 +63,17 @@ final class CorreccionesNivel3Test extends TestCase
         $ruc = (new RResEnviConsRUC())->setDCodRes(502);
         $this->assertSame('502', $ruc->getDCodRes());
 
+        // QA de la Fase D: el cast no convierte en 0 un valor no numérico (hasta 0.3.0 era TypeError; ahora excepción
+        // de la librería, y getProtocolo() nunca informa un protocolo "0" inventado).
+        foreach ([fn () => (new GResProcLote())->setDProtAut(''), fn () => (new GResProcEVe())->setDProtAut('abc'), fn () => (new GResProcEVe())->setId('')] as $i => $llamada) {
+            try {
+                $llamada();
+                $this->fail("caso $i: debía lanzar");
+            } catch (\IonysDev\Pkuatia\Core\Exceptions\RespuestaException $e) {
+                $this->assertStringContainsString('no numérico', $e->getMessage());
+            }
+        }
+
         $adi = (new GGrupAdi())->setDSalAnt('1500.50');
         $this->assertSame(1500.5, $adi->getDSalAnt());
         $this->assertNull((new GGrupAdi())->setDSalAnt(null)->getDSalAnt());
