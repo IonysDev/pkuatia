@@ -170,6 +170,7 @@ comportamiento para quien emite documentos.
   `RGeVeCCFF` y `RGeDevCCFFCue` dentro de `GGroupTiEvt` llevan la inicial en mayúscula (eran `rGeVeRetAce`, etc.;
   para PHP es la misma clase). `RRetEnviEventoDe::setGResProcEVe()`/`getGResProcEVe()` tienen ahora el cuerpo y los
   typos históricos `seGResProcEVe()`/`geGResProcEVe()` delegan en ellos (antes era al revés).
+- `Constants::PKUATIA_VERSION` actualizado a `0.3.1`.
 - `CountryMapping`, `DepartamentoMapping` y `PyGeoCodesMapping` cachean su catálogo en una estática en vez de releer y
   reparsear el XML en cada llamada a `getArray()`, como ya hacían `MonedaMapping` y `UnidadMedidaMapping` (D7, deuda
   D-B4). Mismo resultado; el arreglo se devuelve por valor.

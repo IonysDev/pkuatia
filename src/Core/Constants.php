@@ -8,7 +8,7 @@ namespace IonysDev\Pkuatia\Core;
 class Constants
 {
     // Versiones
-    public const PKUATIA_VERSION = "0.3.0";
+    public const PKUATIA_VERSION = "0.3.1";
     public const SIFEN_VERSION = "150";
     /** Zona horaria del SIFEN: las fechas internas que la librería genera por su cuenta (dFecFirma de los eventos, "hoy") se calculan en ella. Las fechas que recibe del consumidor se respetan tal cual. */
     public const SIFEN_TIMEZONE = "America/Asuncion";

@@ -491,7 +491,7 @@ pkuatia/
 ├── src/                      # Código de la librería (PSR-4)
 ├── tests/Unit/               # Suite PHPUnit (offline, sin certificado)
 ├── test/                     # Smoke test y scripts de consulta de ejemplo
-├── .github/workflows/        # CI (PHP 8.1–8.3)
+├── .github/workflows/        # CI (PHP 8.1–8.4, 8.5 experimental)
 ├── docs/PUBLICAR.md          # Guía Packagist (mantenedores)
 ├── phpunit.xml.dist
 ├── phpstan.neon.dist
