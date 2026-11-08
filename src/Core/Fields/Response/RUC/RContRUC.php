@@ -225,7 +225,7 @@ class RContRUC
     }
 
     /**
-     * Instancia un RContRUC a partir del objeto stdClass de la respuesta SOAP (xContRUC). Hasta 0.3.0 se llamaba
+     * Instancia un RContRUC a partir del objeto de la respuesta SOAP (xContRUC). Hasta 0.3.0 se llamaba
      * fromStdClassObject(), que sigue existiendo como alias obsoleto.
      *
      * @param  mixed $object
