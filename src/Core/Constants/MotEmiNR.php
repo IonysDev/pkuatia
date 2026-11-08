@@ -9,6 +9,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum MotEmiNR: int
 {
+    use EnumDescripcion;
+
     case TrasladoPorVentas = 1;
     case TrasladoPorConsignacion = 2;
     case Exportacion = 3;
@@ -44,31 +46,6 @@ enum MotEmiNR: int
             self::Decomiso => 'Decomiso',
             self::Otro => 'Otro'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

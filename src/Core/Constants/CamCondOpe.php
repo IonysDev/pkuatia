@@ -9,6 +9,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum CamCondOpe: int
 {
+    use EnumDescripcion;
+
     case Contado = 1;
     case Credito = 2;
 
@@ -18,31 +20,6 @@ enum CamCondOpe: int
             self::Contado => 'Contado',
             self::Credito => 'Crédito'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

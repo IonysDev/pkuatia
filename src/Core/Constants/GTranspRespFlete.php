@@ -7,6 +7,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum GTranspRespFlete: int
 {
+    use EnumDescripcion;
+
     case EmisorFactura = 1;
     case ReceptorFactura = 2;
     case Tercero = 3;
@@ -22,31 +24,6 @@ enum GTranspRespFlete: int
             self::AgenteIntermediario => 'Agente intermediario del transporte',
             self::TransportePropio => 'Transporte propio'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

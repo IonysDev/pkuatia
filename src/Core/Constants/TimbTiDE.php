@@ -8,6 +8,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum TimbTiDE: int
 {
+    use EnumDescripcion;
+
     case Factura = 1;
     case FacturaExportacion = 2;
     case FacturaImportacion = 3;
@@ -35,31 +37,6 @@ enum TimbTiDE: int
             self::BoletaDeVenta => 'Boleta de venta electrónica',
             self::BoletaResimple => 'Boleta resimple electrónica'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

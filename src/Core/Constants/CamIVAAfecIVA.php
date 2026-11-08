@@ -11,6 +11,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum CamIVAAfecIVA: int
 {
+    use EnumDescripcion;
+
     case Gravado = 1;
     case Exonerado = 2;
     case Exento = 3;
@@ -24,31 +26,6 @@ enum CamIVAAfecIVA: int
             self::Exento => 'Exento',
             self::GravadoParcial => 'Gravado parcial (Grav- Exento)'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

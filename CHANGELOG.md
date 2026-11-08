@@ -23,6 +23,10 @@ comportamiento para quien emite documentos.
   `SingEvents()`), `GGrupSeg::setGGrupPolSeg()` (antes `setGGrupoPolSeg()`), `GGroupTiEvt::getRGeVeCCFF()` (antes
   `getGeVeCCFF()`), `RContRUC::FromSifenResponseObject()` y `RResEnviConsRUC::FromSifenResponseObject()` (antes
   `fromStdClassObject()`). El nombre correcto tiene el cuerpo; el viejo delega y queda obsoleto.
+- Trait `Core\Constants\EnumDescripcion` con `getDescriptionFromValue()`, `getValueDescriptionMap()` y
+  `toIdNameList()`: los 36 enums de códigos del MT lo usan en vez de repetir los tres métodos (D6). Ninguna firma
+  cambia; `getDescripcion()`, `getDescripcionFromInt()` y `toKeyValueArray()` siguen en cada enum. Los seis enums de
+  la Fase C (`CodigoResultadoWS`, `EstadoResultado`, etc.) no modelan código → descripción del MT y no lo usan.
 
 ### Corregido
 

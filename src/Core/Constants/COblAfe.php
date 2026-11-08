@@ -8,6 +8,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum COblAfe: int
 {
+    use EnumDescripcion;
+
     case ImpuestoALaRentaIracisRegimenEspeciales =  113;
     case TributoUnicoMaquila =  143;
     case ImpuestoAlValorAgregadoGravadasYExoneradasExportadores = 211;
@@ -39,31 +41,6 @@ enum COblAfe: int
             self::ImpuestoALaRentaPersonalServiciosPersonales => 'IMPUESTO A LA RENTA PERSONAL - SERVICIOS PERSONALES',
             self::ImpuestoALaRentaPersonalRentaYGananciasDeCapital => 'IMPUESTO A LA RENTA PERSONAL - RENTAS Y GANANCIAS DE CAPITAL'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

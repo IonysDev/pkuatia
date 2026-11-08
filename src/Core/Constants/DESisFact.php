@@ -9,6 +9,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
 
 enum DESisFact: int
 {
+    use EnumDescripcion;
+
     case Contribuyente = 1;
 
     public function getDescription(): string
@@ -16,31 +18,6 @@ enum DESisFact: int
         return match ($this) {
             self::Contribuyente => 'Contribuyente'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

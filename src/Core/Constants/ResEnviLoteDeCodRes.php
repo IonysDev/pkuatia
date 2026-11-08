@@ -8,6 +8,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum ResEnviLoteDeCodRes: int
 {
+    use EnumDescripcion;
+
     case EntradaSuperiorA100000KB = 270;
     case LoteRecibidoConExito = 300;
     case LoteNoEncolado = 301;
@@ -19,31 +21,6 @@ enum ResEnviLoteDeCodRes: int
             self::LoteRecibidoConExito => 'Lote recibido con éxito',
             self::LoteNoEncolado => 'Lote no encolado'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

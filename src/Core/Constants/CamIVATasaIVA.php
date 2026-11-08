@@ -9,6 +9,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
 
 enum CamIVATasaIVA: int
 {
+    use EnumDescripcion;
+
     case ExentoExonerado = 0;
     case IVA5 = 5;
     case IVA10 = 10;
@@ -20,30 +22,5 @@ enum CamIVATasaIVA: int
             self::IVA5 => 'IVA5',
             self::IVA10 => 'IVA10'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 }

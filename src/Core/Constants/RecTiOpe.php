@@ -8,6 +8,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum RecTiOpe: int
 {
+    use EnumDescripcion;
+
     case B2B = 1;
     case B2C = 2;
     case B2G = 3;
@@ -21,31 +23,6 @@ enum RecTiOpe: int
             self::B2G => 'B2G',
             self::B2F => 'B2F'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

@@ -7,6 +7,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum GTranspModTrans: int
 {
+    use EnumDescripcion;
+
     case Terrestre = 1;
     case Fluvial = 2;
     case Aereo = 3;
@@ -20,31 +22,6 @@ enum GTranspModTrans: int
             self::Aereo => 'Aéreo',
             self::Multimodal => 'Multimodal'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

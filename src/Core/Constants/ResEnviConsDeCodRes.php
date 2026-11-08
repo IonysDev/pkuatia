@@ -8,6 +8,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum ResEnviConsDeCodRes: int
 {
+    use EnumDescripcion;
+
     case CDCInexistente = 420;
     case RUCSinPermiso = 421;
     case CDCEncontrado = 422;
@@ -19,31 +21,6 @@ enum ResEnviConsDeCodRes: int
             self::RUCSinPermiso => 'RUC Sin Permiso',
             self::CDCEncontrado => 'CDC Encontrado'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

@@ -8,6 +8,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum PaConEIniTiPago: int
 {
+    use EnumDescripcion;
+
     case Efectivo = 1;
     case Cheque = 2;
     case TarjetaCredito = 3;
@@ -57,31 +59,6 @@ enum PaConEIniTiPago: int
             self::PagoElectronico => 'Pago Electrónico',
             self::Otros => 'Otro'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

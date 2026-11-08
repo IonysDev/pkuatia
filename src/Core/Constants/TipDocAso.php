@@ -7,6 +7,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum TipDocAso: int
 {
+    use EnumDescripcion;
+
     case Electronico = 1;
     case Impreso = 2;
     case ConstanciaElectronica = 3;
@@ -18,31 +20,6 @@ enum TipDocAso: int
             self::Impreso => 'Impreso',
             self::ConstanciaElectronica => 'Constancia Electrónica'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

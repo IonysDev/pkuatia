@@ -9,6 +9,8 @@ namespace IonysDev\Pkuatia\Core\Constants;
  */
 enum CamFEIndPres: int
 {
+    use EnumDescripcion;
+
     case Presencial = 1;
     case Electronica = 2;
     case Telemarketing = 3;
@@ -22,7 +24,6 @@ enum CamFEIndPres: int
      *
      * @param int $value Valor del indicador de presencia.
      * @return string
-     * @throws Exception
      */
 
     public function getDescription(): string
@@ -36,31 +37,6 @@ enum CamFEIndPres: int
             self::CiclicaOSuscripcion => 'Operación cíclica',
             self::Otro => 'Otro'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**
