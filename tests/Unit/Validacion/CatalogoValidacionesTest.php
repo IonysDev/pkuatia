@@ -68,17 +68,22 @@ final class CatalogoValidacionesTest extends TestCase
 
   public function testLosCodigosRepetidosSeConservanTodos(): void
   {
+    // Hasta ekuat-ia 1c89709 la tabla 11.6.7 repetía 4313-4323 para GET015-GET021 y GET022-GET030 (devolución de la
+    // Fase C); dad0ee3 (18/10/2026) renumeró GET022-GET030 a 4325-4335. El catálogo sigue conservando repetidos si los hay.
     $todos = CatalogoValidaciones::describirTodos('4313');
-    $this->assertCount(2, $todos, 'GET015 y GET022 comparten el 4313 en la tabla 11.6.7 (devolución a ekuat-ia)');
-    $this->assertSame(['GET015', 'GET022'], array_map(fn (InfoValidacion $i) => $i->id, $todos));
-    $this->assertSame('GET015', CatalogoValidaciones::describir('4313')->id, 'describir() devuelve la primera');
+    $this->assertCount(1, $todos, '4313 quedó solo para GET015 tras la corrección de ekuat-ia');
+    $this->assertSame('GET015', CatalogoValidaciones::describir('4313')->id);
+    $this->assertSame('GET022', CatalogoValidaciones::describir('4325')->id, 'GET022 pasó de 4313 a 4325');
+    $this->assertSame('GET030', CatalogoValidaciones::describir('4335')->id, 'GET030 pasó de 4323 a 4335');
+    $this->assertSame('GET021', CatalogoValidaciones::describir('4324')->id, 'GET021 ocupa el 4324, que la tabla vieja no usaba');
   }
 
   public function testBuscaPorCampoDelMt(): void
   {
     $d208 = CatalogoValidaciones::porCampo('D208');
-    $this->assertSame(['D208', 'D208a', 'D208b', 'D208c', 'D208d'], array_map(fn (InfoValidacion $i) => $i->id, $d208));
-    $this->assertSame(['1310', '1311', '1319', '1321', '1322'], array_map(fn (InfoValidacion $i) => $i->codigo, $d208));
+    // D208e-D208g (1331, 1333, 1335) entraron con ekuat-ia dad0ee3 (18/10/2026).
+    $this->assertSame(['D208', 'D208a', 'D208b', 'D208c', 'D208d', 'D208e', 'D208f', 'D208g'], array_map(fn (InfoValidacion $i) => $i->id, $d208));
+    $this->assertSame(['1310', '1311', '1319', '1321', '1322', '1331', '1333', '1335'], array_map(fn (InfoValidacion $i) => $i->codigo, $d208));
     $this->assertSame([], CatalogoValidaciones::porCampo('Z999'));
   }
 
@@ -89,12 +94,17 @@ final class CatalogoValidacionesTest extends TestCase
     $this->assertFalse($c009->vigente, 'eliminada en v150, se conserva para describir un código inesperado');
 
     $de = CatalogoValidaciones::todas('de');
-    $this->assertCount(300, $de, '282 vigentes + 18 eliminadas');
-    $this->assertCount(282, array_filter($de, fn (InfoValidacion $i) => $i->vigente));
+    $this->assertCount(313, $de, '295 vigentes + 18 eliminadas (ekuat-ia dad0ee3; hasta 1c89709: 282 + 18)');
+    $this->assertCount(295, array_filter($de, fn (InfoValidacion $i) => $i->vigente));
     $this->assertGreaterThanOrEqual(88, count(array_filter(CatalogoValidaciones::todas('evento'), fn (InfoValidacion $i) => $i->vigente)));
     $this->assertGreaterThanOrEqual(40, count(array_filter(CatalogoValidaciones::todas('ws'), fn (InfoValidacion $i) => $i->vigente)));
+    // ekuat-ia dad0ee3 deja vacía la columna E de los códigos de WS que no están en el MT v150 (0364 de la guía de la
+    // DNIT; 0520-0523 de la NT-011): se tolera solo para esos cinco (devolución a ekuat-ia: completar la columna).
+    $sinEstadoEnEkuatIa = ['0364', '0520', '0521', '0522', '0523'];
     foreach (CatalogoValidaciones::todas() as $info) {
       $this->assertMatchesRegularExpression('/^\d{4}$/', $info->codigo, $info->fuente);
+      if ($info->origen === 'ws' && in_array($info->codigo, $sinEstadoEnEkuatIa, true) && $info->estado === '')
+        continue;
       $this->assertContains($info->estado, ['A', 'AO', 'R'], $info->fuente);
       $this->assertNotSame('', $info->mensaje, $info->fuente);
     }

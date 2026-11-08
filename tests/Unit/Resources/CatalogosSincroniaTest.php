@@ -36,8 +36,9 @@ final class CatalogosSincroniaTest extends TestCase
   public function testElGeneradorCuentaLoEsperado(): void
   {
     $g = \GeneradorCatalogos::generarTodo(self::DOCS);
-    $this->assertCount(300, $g['validaciones-de']['entradas']);
-    $this->assertCount(282, array_filter($g['validaciones-de']['entradas'], fn (array $e) => $e['vigente']));
+    // ekuat-ia dad0ee3 (18/10/2026): 313 validaciones del DE (295 vigentes); hasta 1c89709 eran 300 (282 vigentes).
+    $this->assertCount(313, $g['validaciones-de']['entradas']);
+    $this->assertCount(295, array_filter($g['validaciones-de']['entradas'], fn (array $e) => $e['vigente']));
     $this->assertGreaterThanOrEqual(95, count($g['validaciones-evento']['entradas']));
     $this->assertGreaterThanOrEqual(40, count(array_filter($g['respuestas-ws']['entradas'], fn (array $e) => $e['vigente'])));
     $this->assertArrayHasKey('tgDTim', $g['elementos-de']['tipos']);

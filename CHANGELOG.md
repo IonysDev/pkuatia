@@ -5,6 +5,27 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [0.3.1] — No publicado
+
+Fase D del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): calidad del código y
+herramientas. **Compatible hacia atrás**: no se elimina ni cambia ninguna firma pública; los nombres con errores de
+tipeo reciben un alias correcto y el original queda obsoleto; el estilo se unifica con php-cs-fixer en commits
+aislados que no alteran un byte de los documentos serializados; PHPStan sube de nivel con una baseline en la que
+cada entrada está justificada; el CI suma PHP 8.4 y 8.5, cobertura y validación del paquete. No hay cambios de
+comportamiento para quien emite documentos.
+
+### Cambiado
+
+- **Catálogos del SIFEN regenerados** desde ekuat-ia `dad0ee3` (18/10/2026, `tools/generar-catalogos.php`):
+  `validaciones-de` pasa de 300 a 313 entradas (295 vigentes): se suman D030–D032 (1220, 1221, 1222, obligaciones
+  afectadas de la NT-018), D208e–D208g y D210b (1331, 1333, 1335, 1334), EA004a (1860), E737 (1921, NT-013),
+  F033–F035 (2383, 2384, 2387) y F012 (2388), y 22 observaciones incorporan lo homologado el 11 y el 13/10/2026;
+  `validaciones-evento` corrige los códigos duplicados de la tabla 11.6.7 (GET022–GET030 pasan de 4313–4323 a
+  4325–4335, 4336 GET002 nuevo, 4004 GEC002c marcado como eliminado); `respuestas-ws` suma los códigos observados
+  0100, 0143, 0364 y 0520–0523 (BO04–BO07); `elementos-de` ahora conoce el campo del MT de `gOblAfe` (D030–D032),
+  `dBasExe` (E737), `gRasMerc` (E751–E761) y `gVehNuevo` (E771–E786). `CatalogoValidaciones::describir()` describe
+  los códigos nuevos; el resto de la librería no cambia.
+
 ## [0.3.0] — 2026-10-15
 
 Fase C del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): validación de documentos y
