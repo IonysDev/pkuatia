@@ -83,7 +83,7 @@ class RResEnviConsRUC implements RespuestaSifen
      */
     public function getDCodRes(): string
     {
-        return $this->dCodRes;
+        return (string) $this->dCodRes; // la propiedad histórica es int; getCodigo() devuelve los cuatro dígitos con cero inicial (D10)
     }
 
     /**

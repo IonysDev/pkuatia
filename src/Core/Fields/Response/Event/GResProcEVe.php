@@ -30,7 +30,7 @@ class GResProcEVe
      */
     public function setId(string $id): self
     {
-        $this->id = $id;
+        $this->id = (int) $id; // la propiedad histórica es int (GRSch032) (D10)
 
         return $this;
     }
@@ -60,7 +60,7 @@ class GResProcEVe
      */
     public function setDProtAut(string $dProtAut): self
     {
-        $this->dProtAut = $dProtAut;
+        $this->dProtAut = (int) $dProtAut; // la propiedad histórica es int (GRSch034, 10 dígitos) (D10)
 
         return $this;
     }

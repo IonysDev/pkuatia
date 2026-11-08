@@ -66,7 +66,7 @@ class GResProcLote
      */
     public function setDProtAut(string $dProtAut): self
     {
-        $this->dProtAut = $dProtAut;
+        $this->dProtAut = (int) $dProtAut; // la propiedad histórica es int (CRSch052, 10 dígitos); getProtocolo() devuelve el texto (D10)
 
         return $this;
     }
@@ -117,7 +117,7 @@ class GResProcLote
      */
     public function getDProtAut(): string
     {
-        return $this->dProtAut;
+        return (string) $this->dProtAut;
     }
 
     /**

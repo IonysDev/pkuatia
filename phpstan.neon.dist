@@ -1,9 +1,9 @@
-# Nivel 2 desde 0.3.1 (Fase D, D9; nivel 3 en D10). phpstan-deprecation-rules marca el uso de código @deprecated.
+# Nivel 3 desde 0.3.1 (Fase D, D9 y D10). phpstan-deprecation-rules marca el uso de código @deprecated.
 # Cada entrada de phpstan-baseline.neon está justificada en docs/evaluacion-2026-10-02/PLAN-FASE-D.md (bitácora D9/D10):
 # "sin runtime" (isset/?? sobre propiedad no anulable), "API" (corregirla exige cambiar una firma pública) o
 # "deprecado a propósito" (código propio que se conserva obsoleto por compatibilidad).
 parameters:
-    level: 2
+    level: 3
     paths:
         - src
 

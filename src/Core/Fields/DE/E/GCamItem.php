@@ -398,12 +398,13 @@ class GCamItem extends BaseSifenField
     /**
      * Establece el valor de dCanQuiMer
      *
-     * @param int $dCanQuiMer
+     * @param int|string $dCanQuiMer Cantidad de quiebra o merma (E717), entero o cadena decimal BCMath de hasta 4 decimales. Hasta 0.3.0 el parámetro era `int` y truncaba los decimales (Fase D, D10).
      *
      * @return self
      */
-    public function setDCanQuiMer(int $dCanQuiMer): self
+    public function setDCanQuiMer(int|string $dCanQuiMer): self
     {
+        $dCanQuiMer = (string) $dCanQuiMer;
         if (!ValueValidations::isValidStringDecimal($dCanQuiMer, 10, 0, 4)) {
             throw new ValidacionException("Valor inválido de dCanQuiMer: $dCanQuiMer");
         }
@@ -415,12 +416,13 @@ class GCamItem extends BaseSifenField
     /**
      * Establece el valor de dPorQuiMer
      *
-     * @param int $dPorQuiMer
+     * @param int|string $dPorQuiMer Porcentaje de quiebra o merma (E718), entero o cadena decimal BCMath de hasta 8 decimales. Hasta 0.3.0 el parámetro era `int` y truncaba los decimales (Fase D, D10).
      *
      * @return self
      */
-    public function setDPorQuiMer(int $dPorQuiMer): self
+    public function setDPorQuiMer(int|string $dPorQuiMer): self
     {
+        $dPorQuiMer = (string) $dPorQuiMer;
         if (!ValueValidations::isValidStringDecimal($dPorQuiMer, 3, 0, 8)) {
             throw new ValidacionException("Valor inválido de dPorQuiMer: $dPorQuiMer");
         }
@@ -813,10 +815,10 @@ class GCamItem extends BaseSifenField
             $res->setDDesRelMerc(strval($node->dDesRelMerc));
         }
         if (isset($node->dCanQuiMer)) {
-            $res->setDCanQuiMer(floatval($node->dCanQuiMer));
+            $res->setDCanQuiMer(strval($node->dCanQuiMer)); // texto decimal tal cual (hasta 0.3.0 floatval → int: truncaba) (D10)
         }
         if (isset($node->dPorQuiMer)) {
-            $res->setDPorQuiMer(floatval($node->dPorQuiMer));
+            $res->setDPorQuiMer(strval($node->dPorQuiMer));
         }
         if (isset($node->dCDCAnticipo)) {
             $res->setDCDCAnticipo(strval($node->dCDCAnticipo));

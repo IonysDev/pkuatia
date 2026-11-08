@@ -316,7 +316,7 @@ class GOpeCom extends BaseSifenField
      */
     public function getDCondTiCam(): string
     {
-        return $this->dCondTiCam;
+        return (string) $this->dCondTiCam; // la propiedad es int (D017); el getter histórico devuelve string (D10)
     }
 
     /**

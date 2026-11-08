@@ -284,7 +284,7 @@ class RDE extends BaseSifenField
      * en rDE, lo que cambia los bytes y contagia el prefijo a una firma nueva. Los nodos de texto (los espacios de
      * SignedInfo, que forman parte de lo firmado) se copian tal cual.
      */
-    private static function copiarFirma(DOMDocument $doc, string $xml): DOMElement
+    private static function copiarFirma(DOMDocument $doc, string $xml): \DOMNode
     {
         $origen = new DOMDocument();
         $origen->loadXML($xml, LIBXML_NONET); // la firma puede venir de un XML del SIFEN: sin acceso a la red (0.3.0)

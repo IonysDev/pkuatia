@@ -57,6 +57,10 @@ comportamiento para quien emite documentos.
   la reemisión que verifica sigue siendo la copia del XML original que hace un rDE leído (0.2.1).
 - `Reference::FromDOMElement()` recorría los contenedores `Transforms` en vez de los `Transform`: la firma leída por
   DOM perdía los dos algoritmos de transformación (D8).
+- `calcTotSub()` sobre un documento cuyo timbrado declara una nota de remisión (C002 = 7) asignaba `null` a la
+  propiedad `GTotSub $gTotSub` y terminaba en `TypeError`; lanza ahora `ValidacionException` con el motivo (D10).
+- `GCamItem::setDCanQuiMer()` y `setDPorQuiMer()` (E717 y E718, decimales) recibían `int` y truncaban la cantidad y el
+  porcentaje de quiebra o merma; aceptan `int|string` y conservan los decimales, como `setDMonEnt()` en D1 (D10).
 
 ### Obsoleto
 
@@ -81,6 +85,14 @@ comportamiento para quien emite documentos.
   "deprecado a propósito" (código propio que sigue poblando o leyendo miembros obsoletos por compatibilidad:
   `SignHelper::$xmlKey`/`$xmlSigner`, las partes enteras obsoletas de `GGrupSup` y `GVehNuevo`,
   `TipoDocImpresoAso::ComprobanteRetencion`). Ninguna entrada esconde un error de runtime.
+- **PHPStan a nivel 3** (D10): de los 18 avisos nuevos del nivel, 16 eran conversiones implícitas que PHP ya hacía y
+  pasan a casts explícitos con el mismo resultado (`GOpeCom::getDCondTiCam()`, `GGrupAdi::getDSalAnt()`,
+  `GResProcLote`/`GResProcEVe` con sus propiedades históricas `int`, `RResEnviConsRUC::getDCodRes()`, los getters
+  obsoletos que truncan `getDMonTiPag()` y `getDMonEnt()`, `RDE::copiarFirma()` privado) y dos quedan en la baseline
+  como "API": `REnviConsLoteDe::getDProtConsLote(): int` y `RResEnviLoteDe::getDProtConsLote(): int` devuelven un
+  número de lote de hasta 20 dígitos que el tipo `int` no puede prometer; el reemplazo es `getDProtConsLoteString()`
+  y corregir el tipo rompería la firma. Baseline final: 30 entradas (18 "sin runtime", 10 "deprecado a propósito",
+  2 "API"), todas justificadas en la bitácora de la fase.
 
 ### Cambiado
 

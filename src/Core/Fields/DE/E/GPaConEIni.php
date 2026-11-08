@@ -193,7 +193,7 @@ class GPaConEIni extends BaseSifenField
      */
     public function getDMonTiPag(): int
     {
-        return $this->dMonTiPag;
+        return (int) $this->dMonTiPag; // trunca a propósito: método obsoleto, ver getDMonTiPagDecimal() (D10)
     }
 
     /**

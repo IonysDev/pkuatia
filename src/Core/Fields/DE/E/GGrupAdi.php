@@ -230,7 +230,7 @@ class GGrupAdi
      */
     public function getDSalAnt(): ?float
     {
-        return $this->dSalAnt;
+        return $this->dSalAnt === null ? null : (float) $this->dSalAnt; // conversión explícita; sin pérdida: getDSalAntDecimal() (D10)
     }
 
     /**

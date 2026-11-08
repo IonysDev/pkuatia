@@ -342,7 +342,9 @@ trait ItemValorado
         }
         $sumaSubtBruto = '0';
         if (!isset($this->gTimb) || $this->gTimb->getITiDE() == TimbTiDE::NotaDeRemision->value) {
-            $this->gTotSub = null;
+            // Hasta 0.3.0 asignaba null a GTotSub $gTotSub y terminaba en TypeError (Fase D, D10). Los totales F001
+            // exigen el tipo de documento (C002) y una NR no lleva gTotSub.
+            throw new ValidacionException('[ItemValorado] calcTotSub() requiere el timbrado del documento (setTimbrado()) y no aplica a una nota de remisión.');
         } else {
             $this->gTotSub = new GTotSub();
 

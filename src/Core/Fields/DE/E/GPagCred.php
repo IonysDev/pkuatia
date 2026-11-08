@@ -187,7 +187,7 @@ class GPagCred extends BaseSifenField
         if (!isset($this->dMonEnt)) {
             return null;
         }
-        return $this->dMonEnt;
+        return (int) $this->dMonEnt; // trunca a propósito: método obsoleto, ver getDMonEntDecimal() (D10)
     }
 
     /**

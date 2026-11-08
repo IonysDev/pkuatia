@@ -181,6 +181,18 @@ parameters:
 			path: src/Core/Fields/DE/H/GCamDEAsoc.php
 
 		-
+			message: '#^Method IonysDev\\Pkuatia\\Core\\Requests\\REnviConsLoteDe\:\:getDProtConsLote\(\) should return int but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Core/Requests/REnviConsLoteDe.php
+
+		-
+			message: '#^Method IonysDev\\Pkuatia\\Core\\Responses\\RResEnviLoteDe\:\:getDProtConsLote\(\) should return int but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Core/Responses/RResEnviLoteDe.php
+
+		-
 			message: '''
 				#^Access to deprecated static property \$xmlKey of class IonysDev\\Pkuatia\\Helpers\\SignHelper\:
 				0\.3\.0 Solo por compatibilidad\: Init\(\) la puebla con la clave y la passphrase, pero la firma usa una
