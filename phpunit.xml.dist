@@ -5,10 +5,21 @@
          colors="true"
          beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
          cacheDirectory=".phpunit.cache">
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
     </testsuites>
+    <!-- Cobertura (Fase D, D11): XDEBUG_MODE=coverage vendor/bin/phpunit con la opción coverage-clover build/clover.xml,
+         y php tools/cobertura-minima.php build/clover.xml <umbral>; el CI lo corre en el job de PHP 8.3. -->
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory>src/Resources</directory>
+        </exclude>
+    </source>
 </phpunit>

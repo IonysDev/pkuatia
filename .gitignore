@@ -20,6 +20,8 @@
 /memory
 .phpunit.cache
 .php-cs-fixer.cache
+# Informes de cobertura (Fase D, D11)
+/build
 /.claude
 # Capturas reales (anonimizadas) del SIFEN para los tests; solo XML, un certificado ahí seguiría ignorado.
 !/tests/Resources/**/*.xml

@@ -709,10 +709,15 @@ Verificaciones offline (no requieren certificado ni conexión al SIFEN):
 
 ```bash
 composer install
-php test/SmokeTest.php      # smoke test rápido
 composer test               # PHPUnit (tests/Unit/)
-composer phpstan            # análisis estático nivel 1
+composer phpstan            # análisis estático (nivel 3 + reglas de obsolescencia, con baseline justificada)
+composer cs-check           # estilo (php-cs-fixer, sin cambios semánticos); composer cs-fix lo corrige
+php test/SmokeTest.php      # smoke test rápido, manual (desde 0.3.1 ya no corre en el CI: PHPUnit cubre lo mismo)
+XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover build/clover.xml && php tools/cobertura-minima.php build/clover.xml 75
 ```
+
+El CI (GitHub Actions) corre lint, estilo, PHPUnit, PHPStan y `composer validate`/`audit` en PHP 8.1, 8.2, 8.3 y 8.4,
+más 8.5 como experimental; la cobertura se mide en el job de 8.3 contra un umbral mínimo.
 
 Los tests de `tests/Unit/Conformidad/` construyen documentos y eventos con los builders, los firman con un
 certificado autofirmado y los validan contra los **XSD de producción del SIFEN** incluidos en

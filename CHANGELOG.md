@@ -93,6 +93,15 @@ comportamiento para quien emite documentos.
   número de lote de hasta 20 dígitos que el tipo `int` no puede prometer; el reemplazo es `getDProtConsLoteString()`
   y corregir el tipo rompería la firma. Baseline final: 30 entradas (18 "sin runtime", 10 "deprecado a propósito",
   2 "API"), todas justificadas en la bitácora de la fase.
+- **CI** (D11): matriz PHP 8.1, 8.2, 8.3 y **8.4**, más **8.5 como experimental** (corre, no bloquea); `composer
+  validate --strict`; lint también de `tests/`; `php-cs-fixer check`; PHPUnit con **cobertura de líneas** en el job
+  de 8.3 (`tools/cobertura-minima.php`, umbral 75 %, fijado 5 puntos por debajo de lo medido:
+  79,88 %); `composer audit`. El paso del smoke test (`php test/SmokeTest.php`) se retira del CI: PHPUnit
+  cubre lo mismo desde la Fase 3 (`SmokeTestPortedTest`) y los dos scripts legados que faltaban se portaron
+  (`GCamCargDescripcionesTest`, `GCamGenOpcionalesTest`, más los valores de `test/Utils/ValueValidationsTest.php` en
+  `ValueValidationsTest`); los scripts de `test/` quedan como herramientas manuales. `phpunit.xml.dist` declara la
+  fuente de cobertura (`src/` sin `Resources/`) y muestra el detalle de las deprecaciones de PHP que disparen los
+  tests (para 8.4/8.5).
 
 ### Cambiado
 

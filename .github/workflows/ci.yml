@@ -8,11 +8,18 @@ on:
 
 jobs:
   test:
+    name: PHP ${{ matrix.php }}${{ matrix.experimental && ' (experimental)' || '' }}
     runs-on: ubuntu-latest
+    # PHP 8.5 es experimental (Fase D, 0.3.1): corre pero no bloquea el PR hasta que la suite lo apruebe de forma estable.
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.1', '8.2', '8.3']
+        php: ['8.1', '8.2', '8.3', '8.4']
+        experimental: [false]
+        include:
+          - php: '8.5'
+            experimental: true
 
     steps:
       - name: Checkout
@@ -22,20 +29,40 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: soap, dom, zip, bcmath, openssl
-          coverage: none
+          extensions: soap, dom, zip, bcmath, openssl, mbstring
+          # Cobertura solo en el job de 8.3 (el de referencia); en los demás, sin instrumentación.
+          coverage: ${{ matrix.php == '8.3' && 'xdebug' || 'none' }}
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-lock
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
       - name: Lint PHP sources
-        run: find src test tools -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: find src test tests tools -name '*.php' -print0 | xargs -0 -n1 php -l
 
-      - name: Smoke test
-        run: php test/SmokeTest.php
+      - name: Code style (php-cs-fixer)
+        if: matrix.php == '8.3'
+        run: vendor/bin/php-cs-fixer check --diff
 
       - name: PHPUnit
+        if: matrix.php != '8.3'
         run: vendor/bin/phpunit
+
+      - name: PHPUnit with coverage
+        if: matrix.php == '8.3'
+        run: |
+          vendor/bin/phpunit --coverage-clover build/clover.xml
+          php tools/cobertura-minima.php build/clover.xml ${{ env.COBERTURA_MINIMA }}
+        env:
+          XDEBUG_MODE: coverage
+          # Umbral de cobertura de líneas (D11): 5 puntos por debajo de lo medido al fijarlo; subirlo cuando crezca.
+          COBERTURA_MINIMA: '75'
 
       - name: PHPStan
         run: vendor/bin/phpstan analyse
+
+      - name: Composer audit
+        if: matrix.php == '8.3'
+        run: composer audit

@@ -67,4 +67,29 @@ final class ValueValidationsTest extends TestCase
         $this->expectException(\Exception::class);
         ValueValidations::isValidStringDecimal('1', 3, 5, 2);
     }
+
+    /**
+     * Port de test/Utils/ValueValidationsTest.php (script legado que imprimía sin aserciones; Fase D, D11): los siete
+     * valores de muestra con isValidStringDecimal($valor, 10, 1, 8) y el resultado que el script anotaba para cada uno.
+     *
+     * @return array<string, array{0: string, 1: bool}>
+     */
+    public static function valoresDelScriptLegado(): array
+    {
+        return [
+            '13245.222 válido' => ['13245.222', true],
+            '0x25551 hexadecimal' => ['0x25551', false],
+            '12225 sin decimales (mínimo 1)' => ['12225', false],
+            '122256 sin decimales' => ['122256', false],
+            '1234567890123456.5555 parte entera larga' => ['1234567890123456.5555', false],
+            '123456789.12345678 ocho decimales' => ['123456789.12345678', true],
+            '123456789,123456789 coma decimal' => ['123456789,123456789', false],
+        ];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('valoresDelScriptLegado')]
+    public function testLosValoresDelScriptLegado(string $valor, bool $esperado): void
+    {
+        $this->assertSame($esperado, ValueValidations::isValidStringDecimal($valor, 10, 1, 8), $valor);
+    }
 }
