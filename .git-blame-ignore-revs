@@ -1,0 +1,6 @@
+# Commits que solo cambian espacio en blanco; git blame los salta con
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+# (GitHub lo aplica automáticamente).
+
+# Fase D (0.3.1), D4: reindentación a cuatro espacios (PSR-12) con php-cs-fixer
+4c3fd94bed30c8fdfe436ab81c116bc45531c741
