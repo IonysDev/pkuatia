@@ -108,6 +108,13 @@ comportamiento para quien emite documentos.
   `composer.json` (issues, fuente, documentación, avisos de seguridad); `.vscode/launch.json` deja de estar
   versionado (ya lo ignoraba `.gitignore`); `.github/dependabot.yml` (Composer y acciones del CI, semanal);
   `SECURITY.md` con las versiones con soporte, la vía privada de reporte y lo que nunca va en un issue.
+- **Documentación del proyecto** (D13): el CHANGELOG incorpora retroactivamente las versiones 0.1.1 a 0.1.4
+  (escritas a partir de los commits y los tags) y el bloque final "No publicado — rama dev" pasa a ser la 0.1.0
+  (12/06/2026); `CONTRIBUTING.md` reescrito con el estilo (php-cs-fixer, cuatro espacios, finales de línea en
+  Windows, `.git-blame-ignore-revs`), la política de la baseline de PHPStan, la cobertura, la matriz del CI, el smoke
+  manual, los tres tests que se omiten sin `docs/sifen-ai` y cómo clonar ekuat-ia para correrlos, el flujo de las
+  capturas reales y el enlace a `SECURITY.md`. Las notas para las GitHub Releases v0.1.0–v0.1.4 quedaron preparadas
+  para publicarlas con `gh release edit`.
 
 ### Cambiado
 
@@ -995,7 +1002,53 @@ exactamente la misma salida.
   implícitamente anulable, forma que PHP 8.4 depreca).
 - `Constants::PKUATIA_VERSION` actualizado a `0.1.5`.
 
-## [No publicado] — rama `dev`
+## [0.1.4] — 2026-08-26
+
+Corrección puntual de los campos de anticipo del ítem (E719, EA004, EA006, EA007). **Compatible hacia atrás**
+(ampliación de tipo). Secciones 0.1.1 a 0.1.4 escritas retroactivamente en 0.3.1 (Fase D) a partir de los commits
+y los tags; `Constants::PKUATIA_VERSION` siguió informando `0.1.0` desde 0.1.1 hasta 0.1.4 y se sincronizó en 0.1.5.
+
+### Corregido
+
+- `GCamItem::setDCDCAnticipo()` acepta `String`: el CDC tiene 44 dígitos, muy por encima de `PHP_INT_MAX`, así que
+  con el parámetro `int` toda llamada terminaba en `TypeError` y E719 (`dCDCAnticipo`) no se podía informar. La
+  propiedad y el getter ya eran `String`.
+- `GValorRestaItem::getFormattedDDescGloItem()`, `getFormattedDAntPreUniIt()` y `getFormattedDAntGloPreUniIt()` leen
+  la propiedad por su getter seguro: lanzaban `Error` cuando EA004/EA006/EA007 no estaban informados (su ocurrencia es
+  0-1).
+
+## [0.1.3] — 2026-07-27
+
+### Agregado
+
+- `RResEnviConsDe::getRDEXml()`: extrae solo el nodo firmado `<rDE>` de `xContenDE`, que puede traer `dProtAut` y
+  `xContEv` como hermanos y por eso no es parseable como un único documento XML; devuelve `null` si la respuesta no
+  trae `xContenDE`. Tests de extracción y de ausencia.
+
+## [0.1.2] — 2026-07-27
+
+### Agregado
+
+- `RResEnviConsDe` conserva `xContenDE` crudo (campo con getter y setter) cuando el SIFEN responde el DE como texto:
+  evita perder `Signature` y `gCamFuFD` al reserializar desde el objeto parseado. Tests `ConsultarDETest`
+  (preservación byte a byte del XML firmado, objeto parseado disponible en paralelo, respuesta sin `xContenDE`).
+
+## [0.1.1] — 2026-06-16
+
+### Agregado
+
+- `DocumentoElectronico::setReceptor()`: parámetro opcional al final `?String $descTipoIdentificacion = null` para
+  D209 (`dDTipIDRec`) cuando el tipo de documento del receptor es 9 (Otro).
+
+### Corregido
+
+- `GDatRec`: con `iTipIDRec` (D208) = 9 (Otro), D209 es texto libre obligatorio de 9 a 41 caracteres (`mb_strlen`);
+  `toDOMElement()` lo valida y lanza `InvalidArgumentException` si falta o no cumple; `getDDTipIDRec()` respeta el
+  valor libre en vez de derivarlo del código y `setITipIDRec()` ya no autocompleta "Otro". Tests `GDatRecTipIDRecTest`.
+
+## [0.1.0] — 2026-06-12
+
+(Publicada el 12/06/2026 como `v0.1.0`; hasta 0.3.1 este bloque figuraba como "No publicado — rama `dev`".)
 
 Ronda de correcciones de conformidad SIFEN v150 y ampliación de la API. **Para el uso
 habitual de la librería no se requiere ningún cambio en los sistemas consumidores**: todas
