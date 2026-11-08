@@ -39,6 +39,14 @@ comportamiento para quien emite documentos.
 - `GPagCred::getDMonEnt(): ?int` trunca E645 a entero: usar `getDMonEntDecimal()` (D1).
 - `TxContenEv::toDOMElement()`: nunca funcionó y `TxContenEv` no es un elemento del XSD (D1).
 
+### Herramientas y CI
+
+- **php-cs-fixer** (`friendsofphp/php-cs-fixer` ^3.95 en `require-dev`) con `.php-cs-fixer.dist.php`: lista blanca de
+  reglas sin cambio semántico (sin reglas riesgosas, sin tocar docblocks ni cadenas), indentación de cuatro espacios
+  (PSR-12) y la regla `line_ending` desactivada para no tocar los finales de línea de cada archivo. Scripts
+  `composer cs-check` y `composer cs-fix`. `.editorconfig` con el mismo criterio (sin `end_of_line`). Los pasos de
+  formato de esta versión se aplicaron con esa configuración en commits aislados, cada uno con su comando (D2–D4).
+
 ### Cambiado
 
 - **Catálogos del SIFEN regenerados** desde ekuat-ia `dad0ee3` (18/10/2026, `tools/generar-catalogos.php`):
