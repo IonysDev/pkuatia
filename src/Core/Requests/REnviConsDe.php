@@ -11,7 +11,7 @@ class REnviConsDe {
 
                          // ID - DESCRIPCION- LONGITUD - OCURRENCIA
     public int $dId;     // DSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud - 1-15 - 1-1
-    public String $dCDC; // DSch03 - CDC del documento electrónico que se desea consultar - 44 - 1-1
+    public string $dCDC; // DSch03 - CDC del documento electrónico que se desea consultar - 44 - 1-1
 
     /**
      * Constructor de la clase
@@ -45,7 +45,7 @@ class REnviConsDe {
      *
      * @return self
      */
-    public function setDCDC(String $dCDC): self
+    public function setDCDC(string $dCDC): self
     {
         $this->dCDC = $dCDC;
         return $this;
@@ -70,7 +70,7 @@ class REnviConsDe {
      *
      * @return String
      */
-    public function getDCDC(): String
+    public function getDCDC(): string
     {
         return $this->dCDC;
     }

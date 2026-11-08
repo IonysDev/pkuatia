@@ -20,13 +20,13 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GValorRestaItem extends BaseSifenField
 {
-  public String $dDescItem;       // EA002 - 1-15p(0-8) - 0-1 - Descuento particular sobre el precio unitario por ítem (incluidos impuestos)
-  public String $dPorcDesIt;      // EA003 - 1-3p(0-8)  - 0-1 - Porcentaje de descuento particular por ítem
-  public String $dDescGloItem;    // EA004 - 1-15p(0-8) - 0-1 - Descuento global sobre el precio unitario por ítem (incluidos impuestos)
-  public String $dAntPreUniIt;    // EA006 - 1-15p(0-8) - 0-1 - Anticipo particular sobre el precio unitario por ítem (incluidos impuestos)
-  public String $dAntGloPreUniIt; // EA007 - 1-15p(0-8) - 0-1 - Anticipo global sobre el  precio unitario por ítem  (incluidos impuestos)
-  public String $dTotOpeItem;     // EA008 - 1-15p(0-8) - 1-1 - Valor total de la operación por ítem 
-  public String $dTotOpeGs;       // EA009 - 1-15p(0-8) - 0-1 - Valor total de la operación por ítem en guaraníes
+  public string $dDescItem;       // EA002 - 1-15p(0-8) - 0-1 - Descuento particular sobre el precio unitario por ítem (incluidos impuestos)
+  public string $dPorcDesIt;      // EA003 - 1-3p(0-8)  - 0-1 - Porcentaje de descuento particular por ítem
+  public string $dDescGloItem;    // EA004 - 1-15p(0-8) - 0-1 - Descuento global sobre el precio unitario por ítem (incluidos impuestos)
+  public string $dAntPreUniIt;    // EA006 - 1-15p(0-8) - 0-1 - Anticipo particular sobre el precio unitario por ítem (incluidos impuestos)
+  public string $dAntGloPreUniIt; // EA007 - 1-15p(0-8) - 0-1 - Anticipo global sobre el  precio unitario por ítem  (incluidos impuestos)
+  public string $dTotOpeItem;     // EA008 - 1-15p(0-8) - 1-1 - Valor total de la operación por ítem 
+  public string $dTotOpeGs;       // EA009 - 1-15p(0-8) - 0-1 - Valor total de la operación por ítem en guaraníes
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -39,7 +39,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDDescItem(String $dDescItem): self
+  public function setDDescItem(string $dDescItem): self
   {
     if(!ValueValidations::isValidStringDecimal($dDescItem, 15, 0, 8))
     {
@@ -56,7 +56,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDPorcDesIt(String $dPorcDesIt): self
+  public function setDPorcDesIt(string $dPorcDesIt): self
   {
     if(!ValueValidations::isValidStringDecimal($dPorcDesIt, 3, 0, 8))
     {
@@ -74,7 +74,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDDescGloItem(String $dDescGloItem): self
+  public function setDDescGloItem(string $dDescGloItem): self
   {
     if(!ValueValidations::isValidStringDecimal($dDescGloItem, 15, 0, 8))
     {
@@ -92,7 +92,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDAntPreUniIt(String $dAntPreUniIt): self
+  public function setDAntPreUniIt(string $dAntPreUniIt): self
   {
     if(!ValueValidations::isValidStringDecimal($dAntPreUniIt, 15, 0, 8))
     {
@@ -110,7 +110,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDAntGloPreUniIt(String $dAntGloPreUniIt): self
+  public function setDAntGloPreUniIt(string $dAntGloPreUniIt): self
   {
     if(!ValueValidations::isValidStringDecimal($dAntGloPreUniIt, 15, 0, 8))
     {
@@ -128,7 +128,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDTotOpeItem(String $dTotOpeItem): self
+  public function setDTotOpeItem(string $dTotOpeItem): self
   {
     if(!ValueValidations::isValidStringDecimal($dTotOpeItem, 15, 0, 8))
     {
@@ -145,7 +145,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDTotOpeGs(String $dTotOpeGs): self
+  public function setDTotOpeGs(string $dTotOpeGs): self
   {
     if(!ValueValidations::isValidStringDecimal($dTotOpeGs, 15, 0, 8))
     {
@@ -164,7 +164,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDescItem(): String
+  public function getDDescItem(): string
   {
     if(!isset($this->dDescItem))
     {
@@ -173,7 +173,7 @@ class GValorRestaItem extends BaseSifenField
     return $this->dDescItem;
   }
 
-  public function getFormattedDDescItem(int $precision = 8): String
+  public function getFormattedDDescItem(int $precision = 8): string
   {
     $rounded = bcadd($this->getDDescItem(), '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -185,7 +185,7 @@ class GValorRestaItem extends BaseSifenField
    * @return String
    */
 
-  public function getDPorcDesIt(): String
+  public function getDPorcDesIt(): string
   {
     if(!isset($this->dPorcDesIt))
     {
@@ -199,7 +199,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDescGloItem(): String
+  public function getDDescGloItem(): string
   {
     if(!isset($this->dDescGloItem))
     {
@@ -208,18 +208,18 @@ class GValorRestaItem extends BaseSifenField
     return $this->dDescGloItem;
   }
 
-  public function getFormattedDDescGloItem(int $precision = 8): String
+  public function getFormattedDDescGloItem(int $precision = 8): string
   {
     $rounded = bcadd($this->getDDescGloItem(), '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
   }
 
-  public function getSumaDescuentosUnitarios(int $precision = 8): String
+  public function getSumaDescuentosUnitarios(int $precision = 8): string
   {
     return bcadd($this->getDDescItem(), $this->getDDescGloItem(), $precision);
   }
 
-  public function getFormattedSumaDescuentosUnitarios(int $precision = 8): String
+  public function getFormattedSumaDescuentosUnitarios(int $precision = 8): string
   {
     $rounded = bcadd($this->getSumaDescuentosUnitarios(), '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -232,7 +232,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDAntPreUniIt(): String
+  public function getDAntPreUniIt(): string
   {
     if(!isset($this->dAntPreUniIt))
     {
@@ -241,7 +241,7 @@ class GValorRestaItem extends BaseSifenField
     return $this->dAntPreUniIt;
   }
 
-  public function getFormattedDAntPreUniIt(int $precision = 8): String
+  public function getFormattedDAntPreUniIt(int $precision = 8): string
   {
     $rounded = bcadd($this->getDAntPreUniIt(), '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -253,7 +253,7 @@ class GValorRestaItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDAntGloPreUniIt(): String
+  public function getDAntGloPreUniIt(): string
   {
     if(!isset($this->dAntGloPreUniIt))
     {
@@ -262,7 +262,7 @@ class GValorRestaItem extends BaseSifenField
     return $this->dAntGloPreUniIt;
   }
 
-  public function getFormattedDAntGloPreUniIt(int $precision = 8): String
+  public function getFormattedDAntGloPreUniIt(int $precision = 8): string
   {
     $rounded = bcadd($this->getDAntGloPreUniIt(), '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -274,12 +274,12 @@ class GValorRestaItem extends BaseSifenField
    * @return String
    */
 
-  public function getDTotOpeItem(): String
+  public function getDTotOpeItem(): string
   {
     return $this->dTotOpeItem;
   }
 
-  public function getFormattedDTotOpeItem(int $precision = 8): String
+  public function getFormattedDTotOpeItem(int $precision = 8): string
   {
     $rounded = bcadd($this->dTotOpeItem, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -291,12 +291,12 @@ class GValorRestaItem extends BaseSifenField
    * @return String
    */
 
-  public function getDTotOpeGs(): String
+  public function getDTotOpeGs(): string
   {
     return $this->dTotOpeGs;
   }
 
-  public function getFormattedDTotOpeGs(int $precision = 8): String
+  public function getFormattedDTotOpeGs(int $precision = 8): string
   {
     $rounded = bcadd($this->dTotOpeGs, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');

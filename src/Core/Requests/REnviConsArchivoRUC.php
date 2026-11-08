@@ -11,7 +11,7 @@ class REnviConsArchivoRUC {
 
                                 // ID - DESCRIPCION - LONGITUD - OCURRENCIA
     public int $dId;            // ESch04 - Identificador de control de envío generado por el sistema que utilice PKuatia - 1-15 - 1-1
-    public String $dRucFactElec;// ESch05 - RUC del facturador electrónico que consulta, sin dígito verificador - 5-8 - 1-1
+    public string $dRucFactElec;// ESch05 - RUC del facturador electrónico que consulta, sin dígito verificador - 5-8 - 1-1
 
     /**
      * Constructor de la clase
@@ -19,7 +19,7 @@ class REnviConsArchivoRUC {
      * @param int $dId Identificador de control de envío.
      * @param String $dRucFactElec RUC del facturador electrónico, sin dígito verificador.
      */
-    public function __construct(int $dId, String $dRucFactElec) {
+    public function __construct(int $dId, string $dRucFactElec) {
         $this->dId = $dId;
         $this->dRucFactElec = $dRucFactElec;
     }
@@ -48,7 +48,7 @@ class REnviConsArchivoRUC {
      *
      * @return self
      */
-    public function setDRucFactElec(String $dRucFactElec): self
+    public function setDRucFactElec(string $dRucFactElec): self
     {
         $this->dRucFactElec = $dRucFactElec;
         return $this;
@@ -73,7 +73,7 @@ class REnviConsArchivoRUC {
      *
      * @return String
      */
-    public function getDRucFactElec(): String
+    public function getDRucFactElec(): string
     {
         return $this->dRucFactElec;
     }

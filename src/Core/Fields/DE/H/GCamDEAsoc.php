@@ -27,22 +27,22 @@ class GCamDEAsoc extends BaseSifenField
   public const TIPO_DE_DOCUMENTO_ASOCIADO_CONSTANCIA_ELECTRONICA = 3;
 
   public int      $iTipDocAso;    // H002 - 1     - 1-1 - Tipo de documento asociado
-  public String   $dDesTipDocAso; // H003 - 7-11  - 1-1 - Descripción del tipo de documento asociado
-  public String   $dCdCDERef;     // H004 - 44    - 0-1 - CDC del DTE referenciado
+  public string   $dDesTipDocAso; // H003 - 7-11  - 1-1 - Descripción del tipo de documento asociado
+  public string   $dCdCDERef;     // H004 - 44    - 0-1 - CDC del DTE referenciado
   public int      $dNTimDI;       // H005 - 8     - 0-1 - Nro. timbrado documento impreso de referencia
-  public String   $dEstDocAso;    // H006 - 3     - 0-1 - Establecimiento
-  public String   $dPExpDocAso;   // H007 - 3     - 0-1 - Punto de expedición
-  public String   $dNumDocAso;    // H008 - 7     - 0-1 - Número del documento
+  public string   $dEstDocAso;    // H006 - 3     - 0-1 - Establecimiento
+  public string   $dPExpDocAso;   // H007 - 3     - 0-1 - Punto de expedición
+  public string   $dNumDocAso;    // H008 - 7     - 0-1 - Número del documento
   public int      $iTipoDocAso;   // H009 - 1     - 0-1 - Tipo de documento  impreso
-  public ?String  $dDTipoDocAso = null;  // H010 - 7-16  - 0-1 - Descripción del tipo de documento impreso
+  public ?string  $dDTipoDocAso = null;  // H010 - 7-16  - 0-1 - Descripción del tipo de documento impreso
   public DateTime $dFecEmiDI;     // H011 - 10    - 0-1 - Fecha de emisión del documento impreso de referencia AAAA-MM-DD
-  public String   $dNumComRet;    // H012 - 15    - 0-1 - Número de comprobante de retención
-  public String   $dNumResCF;     // H013 - 15    - 0-1 - Número de resolución de crédito fiscal
+  public string   $dNumComRet;    // H012 - 15    - 0-1 - Número de comprobante de retención
+  public string   $dNumResCF;     // H013 - 15    - 0-1 - Número de resolución de crédito fiscal
   public int      $iTipCons;      // H014 - 1     - 0-1 - Tipo de constancia
-  public ?String  $dDesTipCons = null;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
+  public ?string  $dDesTipCons = null;   // H015 - 30-34 - 0-1 - Descripción del tipo de constancia
   public int      $dNumCons;      // H016 - 11    - 0-1 - Número de constancia 
-  public String   $dNumControl;   // H017 - 8     - 0-1 - Número de control de la constancia 
-  public String   $dRucFus;       // H018 - 3-8   - 0-1 - Obligatorio cuando el CDC del DTE  referenciado corresponda a un  RUC fusionado
+  public string   $dNumControl;   // H017 - 8     - 0-1 - Número de control de la constancia 
+  public string   $dRucFus;       // H018 - 3-8   - 0-1 - Obligatorio cuando el CDC del DTE  referenciado corresponda a un  RUC fusionado
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -69,7 +69,7 @@ class GCamDEAsoc extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesTipDocAso(String $dDesTipDocAso): self
+  public function setDDesTipDocAso(string $dDesTipDocAso): self
   {
     $this->dDesTipDocAso = $dDesTipDocAso;
     return $this;
@@ -83,7 +83,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setDCdCDERef(String $dCdCDERef): self
+  public function setDCdCDERef(string $dCdCDERef): self
   {
     $this->dCdCDERef = $dCdCDERef;
 
@@ -113,7 +113,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setDEstDocAso(String $dEstDocAso): self
+  public function setDEstDocAso(string $dEstDocAso): self
   {
     $this->dEstDocAso = $dEstDocAso;
 
@@ -128,7 +128,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setDPExpDocAso(String $dPExpDocAso): self
+  public function setDPExpDocAso(string $dPExpDocAso): self
   {
     $this->dPExpDocAso = $dPExpDocAso;
 
@@ -143,7 +143,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumDocAso(String $dNumDocAso): self
+  public function setDNumDocAso(string $dNumDocAso): self
   {
     $this->dNumDocAso = $dNumDocAso;
 
@@ -172,7 +172,7 @@ class GCamDEAsoc extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDTipoDocAso(?String $dDTipoDocAso): self
+  public function setDDTipoDocAso(?string $dDTipoDocAso): self
   {
     $this->dDTipoDocAso = (is_null($dDTipoDocAso) || strlen($dDTipoDocAso) === 0)
       ? null
@@ -203,7 +203,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumComRet(String $dNumComRet): self
+  public function setDNumComRet(string $dNumComRet): self
   {
     $this->dNumComRet = $dNumComRet;
 
@@ -218,7 +218,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumResCF(String $dNumResCF): self
+  public function setDNumResCF(string $dNumResCF): self
   {
     $this->dNumResCF = $dNumResCF;
 
@@ -256,7 +256,7 @@ class GCamDEAsoc extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesTipCons(?String $dDesTipCons): self
+  public function setDDesTipCons(?string $dDesTipCons): self
   {
     $this->dDesTipCons = (is_null($dDesTipCons) || strlen($dDesTipCons) === 0)
       ? null
@@ -296,7 +296,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @throws \InvalidArgumentException si no cumple el patrón del XSD (desde 0.2.1; PK-35, Q-B11).
    */
-  public function setDNumControl(String $dNumControl): self
+  public function setDNumControl(string $dNumControl): self
   {
     if (preg_match('/^[0-9A-Za-z\-]{8}$/D', $dNumControl) !== 1)
       throw new ValidacionException("[GCamDEAsoc] El número de control de la constancia (dNumControl, H017) debe tener 8 caracteres entre letras, números y guion; se recibió '$dNumControl'.");
@@ -312,7 +312,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return self
    */
-  public function setDRucFus(String $dRucFus): self
+  public function setDRucFus(string $dRucFus): self
   {
     $this->dRucFus = $dRucFus;
 
@@ -338,7 +338,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipDocAso(): String
+  public function getDDesTipDocAso(): string
   {
     return $this->dDesTipDocAso;
   }
@@ -348,7 +348,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDCdCDERef(): String
+  public function getDCdCDERef(): string
   {
     return $this->dCdCDERef;
   }
@@ -368,7 +368,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDEstDocAso(): String
+  public function getDEstDocAso(): string
   {
     return $this->dEstDocAso;
   }
@@ -378,7 +378,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDPExpDocAso(): String
+  public function getDPExpDocAso(): string
   {
     return $this->dPExpDocAso;
   }
@@ -388,7 +388,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumDocAso(): String
+  public function getDNumDocAso(): string
   {
     return $this->dNumDocAso;
   }
@@ -408,7 +408,7 @@ class GCamDEAsoc extends BaseSifenField
    * 
    * @return String
    */
-  public function getDDTipoDocAso(): ?String
+  public function getDDTipoDocAso(): ?string
   {
     return $this->dDTipoDocAso;
   }
@@ -428,7 +428,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumComRet(): String
+  public function getDNumComRet(): string
   {
     return $this->dNumComRet;
   }
@@ -438,7 +438,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumResCF(): String
+  public function getDNumResCF(): string
   {
     return $this->dNumResCF;
   }
@@ -458,7 +458,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipCons(): ?String
+  public function getDDesTipCons(): ?string
   {
     return $this->dDesTipCons;
   }
@@ -478,7 +478,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumControl(): String
+  public function getDNumControl(): string
   {
     return $this->dNumControl;
   }
@@ -488,7 +488,7 @@ class GCamDEAsoc extends BaseSifenField
    *
    * @return String
    */
-  public function getDRucFus(): String
+  public function getDRucFus(): string
   {
     return $this->dRucFus;
   }

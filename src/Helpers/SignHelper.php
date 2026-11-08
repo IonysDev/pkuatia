@@ -45,7 +45,7 @@ class SignHelper
    * 
    * @return void
    */
-  public static function Init(String $keyFilePath, String $passphrase, String $certificateFormat, ?String $certFilePath = null)
+  public static function Init(string $keyFilePath, string $passphrase, string $certificateFormat, ?string $certFilePath = null)
   {
     if (!file_exists($keyFilePath))
       throw CertificadoException::porMotivo(MotivoCertificado::NoEncontrado, "[SignHelper] No se encontró el archivo de llave privada en la ruta especificada.");

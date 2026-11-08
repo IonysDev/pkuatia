@@ -23,20 +23,20 @@ class GCamTrans extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
    public int    $iNatTrans;   // E981 - 1     - 1-1 - Naturaleza del transportista
-   public String $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista 
-   public String $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista 
+   public string $dNomTrans;   // E982 - 4-60  - 1-1 - Nombre o razón social del transportista 
+   public string $dRucTrans;   // E983 - 3-8   - 0-1 - RUC del transportista 
    public int    $dDVTrans;    // E984 - 1     - 0-1 - Dígito verificador del RUC del transportista (obligatorio si E981 = 1)
    public int    $iTipIDTrans; // E985 - 1     - 0-1 - Tipo de documento de identidad del transportista
-   public String $dNumIDTrans; // E987 - 1-20  - 0-1 - Número de documento de identidad del transportista
-   public String $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista 
-   public String $dNumIDChof;  // E990 - 1-20  - 1-1 - Número de documento de identidad del chofer (DE_v150.xsd:971)
-   public String $dNomChof;    // E991 - 4-60  - 1-1 - Nombre y apellido del chofer
-   public String $dDomFisc;    // E992 - 1-150 - 1-1 - Domicilio fiscal del transportista (DE_v150.xsd:973; el MT v150 lo listaba como opcional)
-   public String $dDirChof;    // E993 - 1-255 - 1-1 - Dirección del chofer (DE_v150.xsd:986; el MT v150 lo listaba como opcional)
-   public String $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente 
-   public String $dRucAg;      // E995 - 3-8   - 0-1 - RUC del agente
-   public String $dDVAg;       // E996 - 1     - 0-1 - Dígito verificador del  RUC del agente
-   public String $dDirAge;     // E997 - 1-255 - 0-1 - Dirección del agente
+   public string $dNumIDTrans; // E987 - 1-20  - 0-1 - Número de documento de identidad del transportista
+   public string $cNacTrans;   // E988 - 3     - 0-1 - Nacionalidad del transportista 
+   public string $dNumIDChof;  // E990 - 1-20  - 1-1 - Número de documento de identidad del chofer (DE_v150.xsd:971)
+   public string $dNomChof;    // E991 - 4-60  - 1-1 - Nombre y apellido del chofer
+   public string $dDomFisc;    // E992 - 1-150 - 1-1 - Domicilio fiscal del transportista (DE_v150.xsd:973; el MT v150 lo listaba como opcional)
+   public string $dDirChof;    // E993 - 1-255 - 1-1 - Dirección del chofer (DE_v150.xsd:986; el MT v150 lo listaba como opcional)
+   public string $dNombAg;     // E994 - 4-60  - 0-1 - Nombre o razón social del agente 
+   public string $dRucAg;      // E995 - 3-8   - 0-1 - RUC del agente
+   public string $dDVAg;       // E996 - 1     - 0-1 - Dígito verificador del  RUC del agente
+   public string $dDirAge;     // E997 - 1-255 - 0-1 - Dirección del agente
 
    ///////////////////////////////////////////////////////////////////////
    ////SETTERS
@@ -64,7 +64,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDNomTrans(String $dNomTrans): self
+   public function setDNomTrans(string $dNomTrans): self
    {
       $this->dNomTrans = $dNomTrans;
 
@@ -79,7 +79,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDRucTrans(String $dRucTrans): self
+   public function setDRucTrans(string $dRucTrans): self
    {
       $this->dRucTrans = $dRucTrans;
 
@@ -124,7 +124,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDNumIDTrans(String $dNumIDTrans): self
+   public function setDNumIDTrans(string $dNumIDTrans): self
    {
       $this->dNumIDTrans = $dNumIDTrans;
 
@@ -139,7 +139,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setCNacTrans(String $cNacTrans): self
+   public function setCNacTrans(string $cNacTrans): self
    {
       $this->cNacTrans = $cNacTrans;
 
@@ -154,7 +154,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDNumIDChof(String $dNumIDChof): self
+   public function setDNumIDChof(string $dNumIDChof): self
    {
       $this->dNumIDChof = $dNumIDChof;
 
@@ -169,7 +169,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDNomChof(String $dNomChof): self
+   public function setDNomChof(string $dNomChof): self
    {
       $this->dNomChof = $dNomChof;
 
@@ -184,7 +184,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDDomFisc(String $dDomFisc): self
+   public function setDDomFisc(string $dDomFisc): self
    {
       $this->dDomFisc = $dDomFisc;
 
@@ -199,7 +199,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDDirChof(String $dDirChof): self
+   public function setDDirChof(string $dDirChof): self
    {
       $this->dDirChof = $dDirChof;
 
@@ -214,7 +214,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDNombAg(String $dNombAg): self
+   public function setDNombAg(string $dNombAg): self
    {
       $this->dNombAg = $dNombAg;
 
@@ -229,7 +229,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDRucAg(String $dRucAg): self
+   public function setDRucAg(string $dRucAg): self
    {
       $this->dRucAg = $dRucAg;
 
@@ -244,7 +244,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDDVAg(String $dDVAg): self
+   public function setDDVAg(string $dDVAg): self
    {
       $this->dDVAg = $dDVAg;
 
@@ -258,7 +258,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return self
     */
-   public function setDDirAge(String $dDirAge): self
+   public function setDDirAge(string $dDirAge): self
    {
       $this->dDirAge = $dDirAge;
 
@@ -284,7 +284,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDNomTrans(): String
+   public function getDNomTrans(): string
    {
       return $this->dNomTrans;
    }
@@ -294,7 +294,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDRucTrans(): String
+   public function getDRucTrans(): string
    {
       return $this->dRucTrans;
    }
@@ -324,7 +324,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDDTipIDTrans(): String
+   public function getDDTipIDTrans(): string
    {
       switch ($this->iTipIDTrans) {
          case 1:
@@ -352,7 +352,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDNumIDTrans(): String
+   public function getDNumIDTrans(): string
    {
       return $this->dNumIDTrans;
    }
@@ -362,7 +362,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getCNacTrans(): String
+   public function getCNacTrans(): string
    {
       return $this->cNacTrans;
    }
@@ -372,7 +372,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDDesNacTrans(): String
+   public function getDDesNacTrans(): string
    {
       return CountryMapping::getCountryDesc($this->cNacTrans);
    }
@@ -382,7 +382,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDNumIDChof(): String
+   public function getDNumIDChof(): string
    {
       return $this->dNumIDChof;
    }
@@ -392,7 +392,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDNomChof(): String
+   public function getDNomChof(): string
    {
       return $this->dNomChof;
    }
@@ -402,7 +402,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDDomFisc(): String
+   public function getDDomFisc(): string
    {
       return $this->dDomFisc;
    }
@@ -412,7 +412,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDDirChof(): String
+   public function getDDirChof(): string
    {
       return $this->dDirChof;
    }
@@ -422,7 +422,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDNombAg(): String
+   public function getDNombAg(): string
    {
       return $this->dNombAg;
    }
@@ -432,7 +432,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDRucAg(): String
+   public function getDRucAg(): string
    {
       return $this->dRucAg;
    }
@@ -442,7 +442,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDDVAg(): String
+   public function getDDVAg(): string
    {
       return $this->dDVAg;
    }
@@ -452,7 +452,7 @@ class GCamTrans extends BaseSifenField
     *
     * @return String
     */
-   public function getDDirAge(): String
+   public function getDDirAge(): string
    {
       return $this->dDirAge;
    }

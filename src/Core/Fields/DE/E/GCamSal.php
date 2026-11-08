@@ -17,14 +17,14 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GCamSal extends BaseSifenField
 {
-  public String $dDirLocSal; //E921 Dirección del local de salida
+  public string $dDirLocSal; //E921 Dirección del local de salida
   public ?int $dNumCasSal; //E922 Número de casa de salida
-  public String $dComp1Sal; //E923 Complemento de dirección 1 salida
-  public String $dComp2Sal; //E924 Complemento de dirección 2 salida
+  public string $dComp1Sal; //E923 Complemento de dirección 1 salida
+  public string $dComp2Sal; //E924 Complemento de dirección 2 salida
   public ?int $cDepSal; ///E925 Código del departamento del local de salida
   public ?int $cDisSal; //E927 Código del distrito del local de salida
   public ?int $cCiuSal; //E929 Código de la ciudad del local de salida
-  public String $dTelSal; /// E931 Teléfono de contacto del local de salida
+  public string $dTelSal; /// E931 Teléfono de contacto del local de salida
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -36,7 +36,7 @@ class GCamSal extends BaseSifenField
    *
    * @return self
    */
-  public function setDDirLocSal(String $dDirLocSal): self
+  public function setDDirLocSal(string $dDirLocSal): self
   {
     $this->dDirLocSal = $dDirLocSal;
 
@@ -66,7 +66,7 @@ class GCamSal extends BaseSifenField
    *
    * @return self
    */
-  public function setDComp1Sal(String $dComp1Sal): self
+  public function setDComp1Sal(string $dComp1Sal): self
   {
     $this->dComp1Sal = $dComp1Sal;
 
@@ -81,7 +81,7 @@ class GCamSal extends BaseSifenField
    *
    * @return self
    */
-  public function setDComp2Sal(String $dComp2Sal): self
+  public function setDComp2Sal(string $dComp2Sal): self
   {
     $this->dComp2Sal = $dComp2Sal;
 
@@ -141,7 +141,7 @@ class GCamSal extends BaseSifenField
    *
    * @return self
    */
-  public function setDTelSal(String $dTelSal): self
+  public function setDTelSal(string $dTelSal): self
   {
     $this->dTelSal = $dTelSal;
 
@@ -157,7 +157,7 @@ class GCamSal extends BaseSifenField
    *
    * @return String
    */
-  public function getDDirLocSal(): String
+  public function getDDirLocSal(): string
   {
     return $this->dDirLocSal;
   }
@@ -177,7 +177,7 @@ class GCamSal extends BaseSifenField
    *
    * @return String
    */
-  public function getDComp1Sal(): String
+  public function getDComp1Sal(): string
   {
     return $this->dComp1Sal;
   }
@@ -187,7 +187,7 @@ class GCamSal extends BaseSifenField
    *
    * @return String
    */
-  public function getDComp2Sal(): String
+  public function getDComp2Sal(): string
   {
     return $this->dComp2Sal;
   }
@@ -208,7 +208,7 @@ class GCamSal extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesDepSal(): String
+  public function getDDesDepSal(): string
   {
     return DepartamentoMapping::getDepName(strval($this->cDepSal));
   }
@@ -228,7 +228,7 @@ class GCamSal extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesDisSal(): String
+  public function getDDesDisSal(): string
   {
     return PyGeoCodesMapping::getDistName(strval($this->cDisSal));
   }
@@ -249,7 +249,7 @@ class GCamSal extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesCiuSal(): String
+  public function getDDesCiuSal(): string
   {
     return PyGeoCodesMapping::getCiudName(strval($this->cCiuSal));
   }
@@ -259,7 +259,7 @@ class GCamSal extends BaseSifenField
    *
    * @return String
    */
-  public function getDTelSal(): String
+  public function getDTelSal(): string
   {
     return $this->dTelSal;
   }

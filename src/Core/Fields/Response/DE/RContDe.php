@@ -15,7 +15,7 @@ class RContDe
 {
                            // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public RDE $rDe;         // ContDE02 - Archivo XML del DE ContDE01 - X - 1-1
-  public String $dProtAut; // ContDE03 - Número De Transacción - X - 1-1
+  public string $dProtAut; // ContDE03 - Número De Transacción - X - 1-1
   public RContEv $rContEv; // ContDE04 - Contenedor de Evento - X - 0-n (primer evento; ver getRContEvs())
 
   /** @var list<RContEv> Todos los eventos de xContEv, en orden (ContDE04 es 0-n; hasta 0.2.0 solo se guardaba uno, PK-29). */
@@ -47,7 +47,7 @@ class RContDe
    *
    * @return self
    */
-  public function setDProtAut(String $dProtAut): self
+  public function setDProtAut(string $dProtAut): self
   {
     $this->dProtAut = $dProtAut;
 
@@ -105,7 +105,7 @@ class RContDe
    *
    * @return String
    */
-  public function getDProtAut(): String
+  public function getDProtAut(): string
   {
     return $this->dProtAut;
   }
@@ -193,7 +193,7 @@ class RContDe
    *
    * @return self
    */
-  public static function FromXContenDE(String $xContenDE): self
+  public static function FromXContenDE(string $xContenDE): self
   {
     if (!preg_match('/<rDE[\s>]/', $xContenDE, $m, PREG_OFFSET_CAPTURE))
       throw new ValidacionException('[RContDe] xContenDE no contiene el elemento rDE.');
@@ -220,7 +220,7 @@ class RContDe
     return $res;
   }
 
-  private static function cargar(String $xml): SimpleXMLElement
+  private static function cargar(string $xml): SimpleXMLElement
   {
     $previo = libxml_use_internal_errors(true);
     try {

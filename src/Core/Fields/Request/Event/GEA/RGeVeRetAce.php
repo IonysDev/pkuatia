@@ -15,18 +15,18 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeRetAce
 {
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;          // GER002 -  CDC del DE/DTE - 4 - 1-1
+  public string $Id;          // GER002 -  CDC del DE/DTE - 4 - 1-1
   public int $dNumTimRet;     // GER003 - Número de timbrado del documento de retención - 8 - 1-1
-  public String $dEstRet;     // GER004 - Establecimiento - 3 - 1-1
-  public String $dPunExpRet;  // GER005 - Punto de expedición - 3 - 1-1
-  public String $dNumDocRet;  // GER006 - Número del documento - 7 - 1-1
-  public String $dCodConRet;  // GER007 - Identificador de la retención - 40 - 1-1
+  public string $dEstRet;     // GER004 - Establecimiento - 3 - 1-1
+  public string $dPunExpRet;  // GER005 - Punto de expedición - 3 - 1-1
+  public string $dNumDocRet;  // GER006 - Número del documento - 7 - 1-1
+  public string $dCodConRet;  // GER007 - Identificador de la retención - 40 - 1-1
   public DateTime $dFeEmiRet; // GER008 - Fecha de emisión de  la retención - 19 - 1-1
 
   // dRuc y dMonRet son obligatorios en el XSD (Evento_v150.xsd:120 y :127) aunque el MT no los lista; hasta
   // 0.2.0 la clase no los modelaba y se perdían al consultar un DE con retenciones (PK-42). Nuevos en 0.2.1.
-  public String $dRuc;        // RUC (tRuc, Evento_v150.xsd:120); el XSD no documenta de quién es
-  public String $dMonRet;     // Monto de la retención (tMontoBase, Evento_v150.xsd:127)
+  public string $dRuc;        // RUC (tRuc, Evento_v150.xsd:120); el XSD no documenta de quién es
+  public string $dMonRet;     // Monto de la retención (tMontoBase, Evento_v150.xsd:127)
 
   /**
    * Establece dRuc (tRuc, Evento_v150.xsd:120). Nuevo en 0.2.1 (PK-42).
@@ -35,7 +35,7 @@ class RGeVeRetAce
    *
    * @return self
    */
-  public function setDRuc(String $dRuc): self
+  public function setDRuc(string $dRuc): self
   {
     $this->dRuc = $dRuc;
     return $this;
@@ -48,7 +48,7 @@ class RGeVeRetAce
    *
    * @return self
    */
-  public function setDMonRet(String $dMonRet): self
+  public function setDMonRet(string $dMonRet): self
   {
     $this->dMonRet = $dMonRet;
     return $this;
@@ -59,7 +59,7 @@ class RGeVeRetAce
    *
    * @return String|null
    */
-  public function getDRuc(): ?String
+  public function getDRuc(): ?string
   {
     return $this->dRuc ?? null;
   }
@@ -69,7 +69,7 @@ class RGeVeRetAce
    *
    * @return String|null
    */
-  public function getDMonRet(): ?String
+  public function getDMonRet(): ?string
   {
     return $this->dMonRet ?? null;
   }
@@ -85,7 +85,7 @@ class RGeVeRetAce
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
 
@@ -115,7 +115,7 @@ class RGeVeRetAce
    *
    * @return self
    */
-  public function setDEstRet(String $dEstRet): self
+  public function setDEstRet(string $dEstRet): self
   {
     $this->dEstRet = $dEstRet;
 
@@ -130,7 +130,7 @@ class RGeVeRetAce
    *
    * @return self
    */
-  public function setDPunExpRet(String $dPunExpRet): self
+  public function setDPunExpRet(string $dPunExpRet): self
   {
     $this->dPunExpRet = $dPunExpRet;
 
@@ -145,7 +145,7 @@ class RGeVeRetAce
    *
    * @return self
    */
-  public function setDNumDocRet(String $dNumDocRet): self
+  public function setDNumDocRet(string $dNumDocRet): self
   {
     $this->dNumDocRet = $dNumDocRet;
 
@@ -160,7 +160,7 @@ class RGeVeRetAce
    *
    * @return self
    */
-  public function setDCodConRet(String $dCodConRet): self
+  public function setDCodConRet(string $dCodConRet): self
   {
     $this->dCodConRet = $dCodConRet;
 
@@ -193,7 +193,7 @@ class RGeVeRetAce
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -213,7 +213,7 @@ class RGeVeRetAce
    *
    * @return String
    */
-  public function getDEstRet(): String
+  public function getDEstRet(): string
   {
     return $this->dEstRet;
   }
@@ -223,7 +223,7 @@ class RGeVeRetAce
    *
    * @return String
    */
-  public function getDPunExpRet(): String
+  public function getDPunExpRet(): string
   {
     return $this->dPunExpRet;
   }
@@ -233,7 +233,7 @@ class RGeVeRetAce
    *
    * @return String
    */
-  public function getDNumDocRet(): String
+  public function getDNumDocRet(): string
   {
     return $this->dNumDocRet;
   }
@@ -243,7 +243,7 @@ class RGeVeRetAce
    *
    * @return String
    */
-  public function getDCodConRet(): String
+  public function getDCodConRet(): string
   {
     return $this->dCodConRet;
   }

@@ -18,13 +18,13 @@ class GCamCarg
 {
                                    // Id - Longitud - Ocurrencia - Descripción
   public int     $cUniMedTotVol;           // G051 - 1-5  - 0-1 - Unidad de medida del total de volumen de la mercadería
-  public ?String $dDesUniMedTotVol = null; // G052 - 1-10 - 0-1 - Descripción de la unidad de medida del total de volumen de la mercadería
+  public ?string $dDesUniMedTotVol = null; // G052 - 1-10 - 0-1 - Descripción de la unidad de medida del total de volumen de la mercadería
   public int     $dTotVolMerc;             // G053 - 1-20 - 0-1 - Total volumen de la mercadería
   public int     $cUniMedTotPes;           // G054 - 1-5  - 0-1 - Unidad de medida del peso total de la mercadería
-  public ?String $dDesUniMedTotPes = null; // G055 - 1-10 - 0-1 - Descripción de la unidad de medida del peso total de la mercadería
+  public ?string $dDesUniMedTotPes = null; // G055 - 1-10 - 0-1 - Descripción de la unidad de medida del peso total de la mercadería
   public int     $dTotPesMerc;             // G056 - 1-20 - 0-1 - Total peso de la mercadería;
   public int     $iCarCarga;               // G057 - 1-1  - 0-1 - Características de la  Carga
-  public ?String $dDesCarCarga     = null; // G058 - 1-50 - 0-1 - Descripción de las características de la carga
+  public ?string $dDesCarCarga     = null; // G058 - 1-50 - 0-1 - Descripción de las características de la carga
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTER
@@ -51,7 +51,7 @@ class GCamCarg
    * 
    * @return self
    */
-  public function setDDesUniMedTotVol(?String $dDesUniMedTotVol): self
+  public function setDDesUniMedTotVol(?string $dDesUniMedTotVol): self
   {
     $this->dDesUniMedTotVol = (is_null($dDesUniMedTotVol) || strlen($dDesUniMedTotVol) === 0)
       ? null
@@ -95,7 +95,7 @@ class GCamCarg
    *
    * @return self
    */
-  public function setDDesUniMedTotPes(?String $dDesUniMedTotPes): self
+  public function setDDesUniMedTotPes(?string $dDesUniMedTotPes): self
   {
     $this->dDesUniMedTotPes = (is_null($dDesUniMedTotPes) || strlen($dDesUniMedTotPes) === 0)
       ? null
@@ -146,7 +146,7 @@ class GCamCarg
    * 
    * @return self
    */
-  public function setDDesCarCarga(?String $dDesCarCarga): self
+  public function setDDesCarCarga(?string $dDesCarCarga): self
   {
     $this->dDesCarCarga = (is_null($dDesCarCarga) || strlen($dDesCarCarga) === 0)
       ? null
@@ -174,7 +174,7 @@ class GCamCarg
    *
    * @return String|null
    */
-  public function getDDesUniMedTotVol(): ?String
+  public function getDDesUniMedTotVol(): ?string
   {
     return $this->dDesUniMedTotVol;
   }
@@ -206,7 +206,7 @@ class GCamCarg
    *
    * @return String|null
    */
-  public function getdDesUniMedTotPes(): ?String
+  public function getdDesUniMedTotPes(): ?string
   {
     return $this->dDesUniMedTotPes;
   }
@@ -236,7 +236,7 @@ class GCamCarg
    *
    * @return String|null
    */
-  public function getDDesCarCarga(): ?String
+  public function getDDesCarCarga(): ?string
   {
     return $this->dDesCarCarga;
   }

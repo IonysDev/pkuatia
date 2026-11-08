@@ -35,7 +35,7 @@ class RDE extends BaseSifenField
   // PK-32 (0.2.1): un rDE leído de un XML firmado (FromSimpleXMLElement/FromDOMElement) guarda su Signature tal
   // como vino y toDOMElement() la reemite junto con gCamFuFD, para que la ida y vuelta sea exacta y la firma siga
   // verificando (SignedInfo se firma con sus espacios). Un rDE armado a mano se serializa como hasta 0.2.0.
-  private ?String $signatureXml = null;
+  private ?string $signatureXml = null;
   private bool $leidoDeXml = false;
 
   /**
@@ -273,14 +273,14 @@ class RDE extends BaseSifenField
    * en rDE, lo que cambia los bytes y contagia el prefijo a una firma nueva. Los nodos de texto (los espacios de
    * SignedInfo, que forman parte de lo firmado) se copian tal cual.
    */
-  private static function copiarFirma(DOMDocument $doc, String $xml): DOMElement
+  private static function copiarFirma(DOMDocument $doc, string $xml): DOMElement
   {
     $origen = new DOMDocument();
     $origen->loadXML($xml, LIBXML_NONET); // la firma puede venir de un XML del SIFEN: sin acceso a la red (0.3.0)
     return self::copiarNodo($doc, $origen->documentElement, null);
   }
 
-  private static function copiarNodo(DOMDocument $doc, \DOMNode $nodo, ?String $nsPadre): \DOMNode
+  private static function copiarNodo(DOMDocument $doc, \DOMNode $nodo, ?string $nsPadre): \DOMNode
   {
     if(!$nodo instanceof DOMElement)
       return $doc->importNode($nodo, true);
@@ -312,7 +312,7 @@ class RDE extends BaseSifenField
    *
    * @return String Objeto RDE serializado a XML
    */
-  public function toXMLString(): String
+  public function toXMLString(): string
   {
     $xmlString = $this->toDOMDocument()->saveXML();
     if(!$xmlString)

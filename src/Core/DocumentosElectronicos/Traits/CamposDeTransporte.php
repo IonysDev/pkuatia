@@ -74,7 +74,7 @@ trait CamposDeTransporte
      * 
      * @return self
      */
-    public function setTransporteIncoterm(String|Incoterm $incoterm): self
+    public function setTransporteIncoterm(string|Incoterm $incoterm): self
     {
         $this->ensureGTransp();
         $this->gTransp->setCCondNeg($incoterm);
@@ -91,7 +91,7 @@ trait CamposDeTransporte
      * 
      * @return self
      */
-    public function setTransporteNumeroManifiesto(String $numeroManifiesto): self
+    public function setTransporteNumeroManifiesto(string $numeroManifiesto): self
     {
         $this->ensureGTransp();
         $this->gTransp->setDNuManif($numeroManifiesto);
@@ -107,7 +107,7 @@ trait CamposDeTransporte
      * 
      * @return self
      */
-    public function setTransporteNumeroDespachoImportacion(String $numeroDespacho): self
+    public function setTransporteNumeroDespachoImportacion(string $numeroDespacho): self
     {
         $this->ensureGTransp();
         $this->gTransp->setDNuDespImp($numeroDespacho);
@@ -151,7 +151,7 @@ trait CamposDeTransporte
      * 
      * @return self
      */
-    public function setTransportePaisDestino(String $codigoPais): self
+    public function setTransportePaisDestino(string $codigoPais): self
     {
         $this->ensureGTransp();
         $this->gTransp->setCPaisDest($codigoPais);
@@ -180,14 +180,14 @@ trait CamposDeTransporte
      * @return self
      */
     public function setTransporteLocalSalida(
-        String $direccion,
+        string $direccion,
         int $numeroCasa,
         int $codigoDepartamento,
         int $codigoCiudad,
-        ?String $calleSecundaria = null,
-        ?String $complementoDir = null,
+        ?string $calleSecundaria = null,
+        ?string $complementoDir = null,
         ?int $codigoDistrito = null,
-        ?String $telefono = null
+        ?string $telefono = null
     ): self {
         $this->ensureGTransp();
         
@@ -239,14 +239,14 @@ trait CamposDeTransporte
      * @return self
      */
     public function addTransporteLocalEntrega(
-        String $direccion,
+        string $direccion,
         int $numeroCasa,
         int $codigoDepartamento,
         int $codigoCiudad,
-        ?String $calleSecundaria = null,
-        ?String $complementoDir = null,
+        ?string $calleSecundaria = null,
+        ?string $complementoDir = null,
         ?int $codigoDistrito = null,
-        ?String $telefono = null
+        ?string $telefono = null
     ): self {
         $this->ensureGTransp();
         
@@ -303,13 +303,13 @@ trait CamposDeTransporte
      * @throws Exception Si los parámetros obligatorios no son proporcionados correctamente
      */
     public function addTransporteVehiculo(
-        String $tipoVehiculo,
-        String $marca,
+        string $tipoVehiculo,
+        string $marca,
         int $tipoIdentificacion,
-        ?String $numeroIdentificacion = null,
-        ?String $numeroMatricula = null,
-        ?String $datosAdicionales = null,
-        ?String $numeroVuelo = null
+        ?string $numeroIdentificacion = null,
+        ?string $numeroMatricula = null,
+        ?string $datosAdicionales = null,
+        ?string $numeroVuelo = null
     ): self {
         $this->ensureGTransp();
         
@@ -373,16 +373,16 @@ trait CamposDeTransporte
      */
     public function setTransporteTransportista(
         bool $esContribuyente,
-        String $nombre,
-        String $numeroDocumentoChofer,
-        String $nombreChofer,
-        ?String $ruc = null,
+        string $nombre,
+        string $numeroDocumentoChofer,
+        string $nombreChofer,
+        ?string $ruc = null,
         ?int $digitoVerificadorRuc = null,
         ?int $tipoDocumentoIdentidad = null,
-        ?String $numeroDocumentoIdentidad = null,
-        ?String $nacionalidad = null,
-        ?String $domicilioFiscal = null,
-        ?String $direccionChofer = null
+        ?string $numeroDocumentoIdentidad = null,
+        ?string $nacionalidad = null,
+        ?string $domicilioFiscal = null,
+        ?string $direccionChofer = null
     ): self {
         $this->ensureGTransp();
         
@@ -437,10 +437,10 @@ trait CamposDeTransporte
      * @throws Exception Si se proporciona RUC pero no el dígito verificador
      */
     public function setTransporteAgente(
-        String $nombre,
-        ?String $ruc = null,
+        string $nombre,
+        ?string $ruc = null,
         ?int $digitoVerificadorRuc = null,
-        ?String $direccion = null
+        ?string $direccion = null
     ): self {
         $this->ensureGTransp();
         

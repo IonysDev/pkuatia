@@ -12,9 +12,9 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
  */
 class RespuestaConsultaLoteDE
 {
-  public String $dFecProd; //fecha de la consulta
-  public String $dCodResLot; //codigo de respuesta del lote
-  public String $dMsgResLot; //descripcion del codigo de respuesta del lote
+  public string $dFecProd; //fecha de la consulta
+  public string $dCodResLot; //codigo de respuesta del lote
+  public string $dMsgResLot; //descripcion del codigo de respuesta del lote
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -26,7 +26,7 @@ class RespuestaConsultaLoteDE
    *
    * @return self
    */
-  public function setDFecProd(String $dFecProd): self
+  public function setDFecProd(string $dFecProd): self
   {
     $this->dFecProd = $dFecProd;
 
@@ -41,7 +41,7 @@ class RespuestaConsultaLoteDE
    *
    * @return self
    */
-  public function setDCodResLot(String $dCodResLot): self
+  public function setDCodResLot(string $dCodResLot): self
   {
     $this->dCodResLot = $dCodResLot;
 
@@ -56,7 +56,7 @@ class RespuestaConsultaLoteDE
    *
    * @return self
    */
-  public function setDMsgResLot(String $dMsgResLot): self
+  public function setDMsgResLot(string $dMsgResLot): self
   {
     $this->dMsgResLot = $dMsgResLot;
 
@@ -74,7 +74,7 @@ class RespuestaConsultaLoteDE
    *
    * @return String
    */
-  public function getDFecProd(): String
+  public function getDFecProd(): string
   {
     return $this->dFecProd;
   }
@@ -84,7 +84,7 @@ class RespuestaConsultaLoteDE
    *
    * @return String
    */
-  public function getDCodResLot(): String
+  public function getDCodResLot(): string
   {
     return $this->dCodResLot;
   }
@@ -94,7 +94,7 @@ class RespuestaConsultaLoteDE
    *
    * @return String
    */
-  public function getDMsgResLot(): String
+  public function getDMsgResLot(): string
   {
     return $this->dMsgResLot;
   }

@@ -17,15 +17,15 @@ class RGeVeNotRec
 {
 
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String   $Id;        // GEN002 - Identificador del DE/DTE - 44 -1-1
+  public string   $Id;        // GEN002 - Identificador del DE/DTE - 44 -1-1
   public DateTime $dFecEmi;   // GEN003 - Fecha de emisión del DE - 19 - 1-1
   public DateTime $dFecRecep; // GEN004 - Fecha Recepción DE - 19 - 1-1
   public int      $iTipRec;   // GEN005 - Tipo de Receptor - 1 - 1-1
-  public String   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
-  public String   $dRucRec;   // GEN007 - RUC del Receptor - 3-8 - 0-1
+  public string   $dNomRec;   // GEN006 - Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
+  public string   $dRucRec;   // GEN007 - RUC del Receptor - 3-8 - 0-1
   public int      $dDVRec;    // GEN008 - Dígito verificador del RUC del contribuyente receptor - 1- 0-1
   public int      $dTipIDRec; // GEN009 - Tipo de documento de identidad del receptor - 1- 0-1
-  public String   $dNumID;    // GEN010 - Número de documento de identidad  - 1-20 - 0-1
+  public string   $dNumID;    // GEN010 - Número de documento de identidad  - 1-20 - 0-1
   public int      $dTotalGs;  // GEN011 - Total general de la operación en Guaraníes - 1-15p(0-8) - 1-1
 
 
@@ -40,7 +40,7 @@ class RGeVeNotRec
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
     return $this;
@@ -95,7 +95,7 @@ class RGeVeNotRec
    *
    * @return self
    */
-  public function setDNomRec(String $dNomRec): self
+  public function setDNomRec(string $dNomRec): self
   {
     $this->dNomRec = $dNomRec;
 
@@ -109,7 +109,7 @@ class RGeVeNotRec
    *
    * @return self
    */
-  public function setDRucRec(String $dRucRec): self
+  public function setDRucRec(string $dRucRec): self
   {
     $this->dRucRec = $dRucRec;
 
@@ -155,7 +155,7 @@ class RGeVeNotRec
    *
    * @return self
    */
-  public function setDNumID(String $dNumID): self
+  public function setDNumID(string $dNumID): self
   {
     $this->dNumID = $dNumID;
 
@@ -186,7 +186,7 @@ class RGeVeNotRec
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -226,7 +226,7 @@ class RGeVeNotRec
    *
    * @return String
    */
-  public function getDNomRec(): String
+  public function getDNomRec(): string
   {
     return $this->dNomRec;
   }
@@ -236,7 +236,7 @@ class RGeVeNotRec
    *
    * @return String
    */
-  public function getDRucRec(): String
+  public function getDRucRec(): string
   {
     return $this->dRucRec;
   }
@@ -266,7 +266,7 @@ class RGeVeNotRec
    *
    * @return String
    */
-  public function getDNumID(): String
+  public function getDNumID(): string
   {
     return $this->dNumID;
   }

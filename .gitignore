@@ -19,6 +19,7 @@
 /composer.lock
 /memory
 .phpunit.cache
+.php-cs-fixer.cache
 /.claude
 # Capturas reales (anonimizadas) del SIFEN para los tests; solo XML, un certificado ahí seguiría ignorado.
 !/tests/Resources/**/*.xml

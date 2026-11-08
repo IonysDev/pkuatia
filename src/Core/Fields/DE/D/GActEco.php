@@ -19,8 +19,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GActEco extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
-    public String $cActEco;    // D131 - 1-8   - 1-1 - Código de la actividad económica del emisor 
-    public String $dDesActEco; // D132 - 1-300 - 1-1 - Descripción de la actividad económica del emisor
+    public string $cActEco;    // D131 - 1-8   - 1-1 - Código de la actividad económica del emisor 
+    public string $dDesActEco; // D132 - 1-300 - 1-1 - Descripción de la actividad económica del emisor
 
     ///////////////////////////////////////////////////////////////////////
     // Constructor
@@ -34,7 +34,7 @@ class GActEco extends BaseSifenField
      *
      * @return self
      */
-    public function __construct(String $cActEco = '', String $dDesActEco = '')
+    public function __construct(string $cActEco = '', string $dDesActEco = '')
     {
         $this->cActEco = $cActEco;
         $this->dDesActEco = $dDesActEco;
@@ -51,7 +51,7 @@ class GActEco extends BaseSifenField
      * 
      * @return self
      */
-    public function setCActEco(String $cActEco): self
+    public function setCActEco(string $cActEco): self
     {
         $this->cActEco = $cActEco;
         return $this;
@@ -64,7 +64,7 @@ class GActEco extends BaseSifenField
      *
      * @return self
      */
-    public function setDDesActEco(String $dDesActEco): self
+    public function setDDesActEco(string $dDesActEco): self
     {
         $this->dDesActEco = $dDesActEco;
         return $this;
@@ -79,7 +79,7 @@ class GActEco extends BaseSifenField
      * 
      * @return String
      */
-    public function getCActEco(): String
+    public function getCActEco(): string
     {
         return $this->cActEco;
     }
@@ -89,7 +89,7 @@ class GActEco extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesActEco(): String
+    public function getDDesActEco(): string
     {
         return $this->dDesActEco;
     }

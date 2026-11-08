@@ -50,7 +50,7 @@ class REnviDe {
      * 
      * @return self
      */
-    public function setXDe(String|SoapVar $xDE): self
+    public function setXDe(string|SoapVar $xDE): self
     {
         $this->xDE = $xDE instanceof SoapVar ? $xDE : new SoapVar($xDE, XSD_ANYXML);
         return $this;

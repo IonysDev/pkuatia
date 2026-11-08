@@ -156,7 +156,7 @@ class RResEnviLoteDe implements RespuestaSifen
      *
      * @return String|null
      */
-    public function getDProtConsLoteString(): ?String
+    public function getDProtConsLoteString(): ?string
     {
         return $this->dProtConsLote ?? null;
     }

@@ -8,14 +8,14 @@ use SimpleXMLElement;
 
 class CanonicalizationMethod 
 {
-    public String $Algorithm;
+    public string $Algorithm;
 
     /**
      * Devuelve la URI del algoritmo de la canonicalización
      *
      * @return String 
      */
-    public function getAlgorithm(): ?String
+    public function getAlgorithm(): ?string
     {
         if(!isset($this->Algorithm))
             return null;
@@ -29,7 +29,7 @@ class CanonicalizationMethod
      *
      * @return self
      */
-    public function setAlgorithm(String $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
 

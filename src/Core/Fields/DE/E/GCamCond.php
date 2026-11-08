@@ -21,7 +21,7 @@ class GCamCond extends BaseSifenField
 {
                                  // Id - Longitud - Ocurrencia - Descripción
   public int        $iCondOpe;   // E601 - 1 - 1-1   - Condición de la operación: 1-Contado | 2-Crédito
-  public String     $dDCondOpe;  // E602 - 7 - 1-1   - Descripción de la condición de operación
+  public string     $dDCondOpe;  // E602 - 7 - 1-1   - Descripción de la condición de operación
   public array      $gPaConEIni; // E605 -   - 0-999 - Descripción de la condición de operación (GPaConEIni)
   public GPagCred   $gPagCred;   // E640 -   - 0-1   - Campos que describen las informaciones de pagos a crédito
 
@@ -59,7 +59,7 @@ class GCamCond extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDCondOpe(String $dDCondOpe): self
+  public function setDDCondOpe(string $dDCondOpe): self
   {
     $this->dDCondOpe = $dDCondOpe;
     return $this;
@@ -112,7 +112,7 @@ class GCamCond extends BaseSifenField
    *
    * @return String
    */
-  public function getDDCondOpe(): String
+  public function getDDCondOpe(): string
   {
     return $this->dDCondOpe;
   }

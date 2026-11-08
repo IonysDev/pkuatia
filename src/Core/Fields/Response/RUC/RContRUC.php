@@ -14,11 +14,11 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
 class RContRUC
 {
                                 // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $dRUCCons;      // ContRUC02 - RUC Consultado - 5-8 - 1-1
-  public String $dRazCons;      // ContRUC03 - Razón social del RUC Consultado - 1-250 - 1-1
-  public String $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado - 3 - 1-1
-  public String $dDesEstCons;   // ContRUC05 - Descripción Código del Estado del RUC Consultado - 6-25 - 1-1
-  public String $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico - 1 - 1-1
+  public string $dRUCCons;      // ContRUC02 - RUC Consultado - 5-8 - 1-1
+  public string $dRazCons;      // ContRUC03 - Razón social del RUC Consultado - 1-250 - 1-1
+  public string $dCodEstCons;   // ContRUC04 - Código del Estado del RUC Consultado - 3 - 1-1
+  public string $dDesEstCons;   // ContRUC05 - Descripción Código del Estado del RUC Consultado - 6-25 - 1-1
+  public string $dRUCFactElec;  // ContRUC06 - consultado es facturador electrónico - 1 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -31,7 +31,7 @@ class RContRUC
    *
    * @return self
    */
-  public function setDRUCCons(String $dRUCCons): self
+  public function setDRUCCons(string $dRUCCons): self
   {
     $this->dRUCCons = $dRUCCons;
 
@@ -46,7 +46,7 @@ class RContRUC
    *
    * @return self
    */
-  public function setDRazCons(String $dRazCons): self
+  public function setDRazCons(string $dRazCons): self
   {
     $this->dRazCons = $dRazCons;
 
@@ -61,7 +61,7 @@ class RContRUC
    *
    * @return self
    */
-  public function setDCodEstCons(String $dCodEstCons): self
+  public function setDCodEstCons(string $dCodEstCons): self
   {
     $this->dCodEstCons = $dCodEstCons;
 
@@ -75,7 +75,7 @@ class RContRUC
    *
    * @return self
    */
-  public function setDDesEstCons(String $dDesEstCons): self
+  public function setDDesEstCons(string $dDesEstCons): self
   {
     $this->dDesEstCons = $dDesEstCons;
 
@@ -90,7 +90,7 @@ class RContRUC
    *
    * @return self
    */
-  public function setDRUCFactElec(String $dRUCFactElec): self
+  public function setDRUCFactElec(string $dRUCFactElec): self
   {
     $this->dRUCFactElec = $dRUCFactElec;
 
@@ -106,7 +106,7 @@ class RContRUC
    *
    * @return String
    */
-  public function getDRUCCons(): String
+  public function getDRUCCons(): string
   {
     return $this->dRUCCons;
   }
@@ -116,7 +116,7 @@ class RContRUC
    *
    * @return String
    */
-  public function getDRazCons(): String
+  public function getDRazCons(): string
   {
     return $this->dRazCons;
   }
@@ -126,7 +126,7 @@ class RContRUC
    *
    * @return String
    */
-  public function getDCodEstCons(): String
+  public function getDCodEstCons(): string
   {
     return $this->dCodEstCons;
   }
@@ -136,7 +136,7 @@ class RContRUC
    *
    * @return String
    */
-  public function getDDesEstCons(): ?String
+  public function getDDesEstCons(): ?string
   {
     switch ($this->dCodEstCons ?? null) {
       case 'ACT':
@@ -170,13 +170,13 @@ class RContRUC
    *
    * @return String
    */
-  public function getDRUCFactElec(): String
+  public function getDRUCFactElec(): string
   { 
     return $this->dRUCFactElec;
   }
 
   //get the description of dRUCFactElec
-  public function getDRUCFactElecDesc(): ?String
+  public function getDRUCFactElecDesc(): ?string
   {
     switch ($this->dRUCFactElec ?? null) {
       case 'S':

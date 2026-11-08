@@ -48,7 +48,7 @@ class REnviEventoDe {
      * 
      * @return self
      */
-    public function setDEvReg(String|SoapVar $dEvReg): self
+    public function setDEvReg(string|SoapVar $dEvReg): self
     {
         $this->dEvReg = $dEvReg instanceof SoapVar ? $dEvReg : new SoapVar($dEvReg, XSD_ANYXML);
         return $this;

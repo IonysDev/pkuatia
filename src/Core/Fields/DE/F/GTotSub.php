@@ -21,31 +21,31 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GTotSub
 {
                                  // ID - Longitud - Ocurrencia - Descripción
-  public String $dSubExe;        // F002 - 1-15p(0-8) - 0-1 - Subtotal de la operación exenta
-  public String $dSubExo;        // F003 - 1-15p(0-8) - 0-1 - Subtotal de la operación exonerada
-  public String $dSub5;          // F004 - 1-15p(0-8) - 0-1 - Subtotal de la operación con IVA incluido a la tasa 5%
-  public String $dSub10;         // F005 - 1-15p(0-8) - 0-1 - Subtotal de la  operación con IVA  incluido a la tasa 10%
-  public String $dTotOpe;        // F008 - 1-15p(0-8) - 1-1 - Total Bruto de la operación 
-  public String $dTotDesc;       // F009 - 1-15p(0-8) - 1-1 - Total descuento particular por ítem
-  public String $dTotDescGlotem; // F033 - 1-15p(0-8) - 1-1 - Total descuento global  por ítem
-  public String $dTotAntItem;    // F034 - 1-15p(0-8) - 1-1 - Total Anticipo por ítem
-  public String $dTotAnt;        // F035 - 1-15p(0-8) - 1-1 - Total Anticipo global por ítem
-  public String $dPorcDescTotal; // F010 - 1-3p(0-8)  - 1-1 - Porcentaje de descuento global sobre total de la operación
-  public String $dDescTotal;     // F011 - 1-15p(0-8) - 1-1 - Total Descuentos de la operación 
-  public String $dAnticipo;      // F012 - 1-15p(0-8) - 1-1 - Total Anticipos de la operación 
-  public String $dRedon;         // F013 - 1-3p(0-4)  - 1-1 - Redondeo de la operación 
-  public String $dComi;          // F025 - 1-15p(0-8) - 0-1 - Comisión de la operación
-  public String $dTotGralOpe;    // F014 - 1-15p(0-8) - 1-1 - Total Neto de la operación
-  public String $dIVA5;          // F015 - 1-15p(0-8) - 0-1 - Liquidación del IVA a la tasa del 5%
-  public String $dIVA10;         // F016 - 1-15p(0-8) - 0-1 - Liquidación del IVA a la tasa del 10%
-  public String $dLiqTotIVA5;    // F036 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 5%
-  public String $dLiqTotIVA10;   // F037 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 10%
-  public String $dIVAComi;       // F026 - 1-15p(0-8) - 0-1 - Liquidación total del IVA de la comisión
-  public String $dTotIVA;        // F017 - 1-15p(0-8) - 0-1 - Liquidación total del IVA 
-  public String $dBaseGrav5;     // F018 - 1-15p(0-8) - 0-1 - Total base gravada al 5%
-  public String $dBaseGrav10;    // F019 - 1-15p(0-8) - 0-1 - Total base gravada al 10%
-  public String $dTBasGraIVA;    // F020 - 1-15p(0-8) - 0-1 - Total de la base gravada de IVA F018+F019 
-  public String $dTotalGs;       // F023 - 1-15p(0-8) - 0-1 - Total general de la operación en Guaraníes
+  public string $dSubExe;        // F002 - 1-15p(0-8) - 0-1 - Subtotal de la operación exenta
+  public string $dSubExo;        // F003 - 1-15p(0-8) - 0-1 - Subtotal de la operación exonerada
+  public string $dSub5;          // F004 - 1-15p(0-8) - 0-1 - Subtotal de la operación con IVA incluido a la tasa 5%
+  public string $dSub10;         // F005 - 1-15p(0-8) - 0-1 - Subtotal de la  operación con IVA  incluido a la tasa 10%
+  public string $dTotOpe;        // F008 - 1-15p(0-8) - 1-1 - Total Bruto de la operación 
+  public string $dTotDesc;       // F009 - 1-15p(0-8) - 1-1 - Total descuento particular por ítem
+  public string $dTotDescGlotem; // F033 - 1-15p(0-8) - 1-1 - Total descuento global  por ítem
+  public string $dTotAntItem;    // F034 - 1-15p(0-8) - 1-1 - Total Anticipo por ítem
+  public string $dTotAnt;        // F035 - 1-15p(0-8) - 1-1 - Total Anticipo global por ítem
+  public string $dPorcDescTotal; // F010 - 1-3p(0-8)  - 1-1 - Porcentaje de descuento global sobre total de la operación
+  public string $dDescTotal;     // F011 - 1-15p(0-8) - 1-1 - Total Descuentos de la operación 
+  public string $dAnticipo;      // F012 - 1-15p(0-8) - 1-1 - Total Anticipos de la operación 
+  public string $dRedon;         // F013 - 1-3p(0-4)  - 1-1 - Redondeo de la operación 
+  public string $dComi;          // F025 - 1-15p(0-8) - 0-1 - Comisión de la operación
+  public string $dTotGralOpe;    // F014 - 1-15p(0-8) - 1-1 - Total Neto de la operación
+  public string $dIVA5;          // F015 - 1-15p(0-8) - 0-1 - Liquidación del IVA a la tasa del 5%
+  public string $dIVA10;         // F016 - 1-15p(0-8) - 0-1 - Liquidación del IVA a la tasa del 10%
+  public string $dLiqTotIVA5;    // F036 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 5%
+  public string $dLiqTotIVA10;   // F037 - 1-15p(0-8) - 0-1 - Liquidación total del IVA por redondeo a la tasa del 10%
+  public string $dIVAComi;       // F026 - 1-15p(0-8) - 0-1 - Liquidación total del IVA de la comisión
+  public string $dTotIVA;        // F017 - 1-15p(0-8) - 0-1 - Liquidación total del IVA 
+  public string $dBaseGrav5;     // F018 - 1-15p(0-8) - 0-1 - Total base gravada al 5%
+  public string $dBaseGrav10;    // F019 - 1-15p(0-8) - 0-1 - Total base gravada al 10%
+  public string $dTBasGraIVA;    // F020 - 1-15p(0-8) - 0-1 - Total de la base gravada de IVA F018+F019 
+  public string $dTotalGs;       // F023 - 1-15p(0-8) - 0-1 - Total general de la operación en Guaraníes
   // Representación de números como cadenas para trabajar con BCMath para evitar errores de redondeo o truncamiento
 
   /**
@@ -87,7 +87,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDSubExe(String $dSubExe): self
+  public function setDSubExe(string $dSubExe): self
   {
     $newVal = trim($dSubExe);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -104,7 +104,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDSubExo(String $dSubExo): self
+  public function setDSubExo(string $dSubExo): self
   {
     $newVal = trim($dSubExo);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -121,7 +121,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDSub5(String $dSub5): self
+  public function setDSub5(string $dSub5): self
   {
     $newVal = trim($dSub5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -138,7 +138,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDSub10(String $dSub10): self
+  public function setDSub10(string $dSub10): self
   {
     $newVal = trim($dSub10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -155,7 +155,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotOpe(String $dTotOpe): self
+  public function setDTotOpe(string $dTotOpe): self
   {
     $newVal = trim($dTotOpe);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -172,7 +172,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotDesc(String $dTotDesc): self
+  public function setDTotDesc(string $dTotDesc): self
   {
     $newVal = trim($dTotDesc);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -189,7 +189,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotDescGlotem(String $dTotDescGlotem): self
+  public function setDTotDescGlotem(string $dTotDescGlotem): self
   {
     $newVal = trim($dTotDescGlotem);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -206,7 +206,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotAntItem(String $dTotAntItem): self
+  public function setDTotAntItem(string $dTotAntItem): self
   {
     $newVal = trim($dTotAntItem);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -223,7 +223,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotAnt(String $dTotAnt): self
+  public function setDTotAnt(string $dTotAnt): self
   {
     $newVal = trim($dTotAnt);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -240,7 +240,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDPorcDescTotal(String $dPorcDescTotal): self
+  public function setDPorcDescTotal(string $dPorcDescTotal): self
   {
     $newVal = trim($dPorcDescTotal);
     if(!ValueValidations::isValidStringDecimal($newVal, 3, 0, 8))
@@ -257,7 +257,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDDescTotal(String $dDescTotal): self
+  public function setDDescTotal(string $dDescTotal): self
   {
     $newVal = trim($dDescTotal);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -274,7 +274,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDAnticipo(String $dAnticipo): self
+  public function setDAnticipo(string $dAnticipo): self
   {
     $newVal = trim($dAnticipo);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -291,7 +291,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDRedon(String $dRedon): self
+  public function setDRedon(string $dRedon): self
   {
     $newVal = trim($dRedon);
     if(!ValueValidations::isValidStringDecimal($newVal, 4, 0, 4))
@@ -308,7 +308,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDComi(String $dComi): self
+  public function setDComi(string $dComi): self
   {
     $newVal = trim($dComi);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -325,7 +325,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotGralOpe(String $dTotGralOpe): self
+  public function setDTotGralOpe(string $dTotGralOpe): self
   {
     $newVal = trim($dTotGralOpe);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -342,7 +342,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDIVA5(String $dIVA5): self
+  public function setDIVA5(string $dIVA5): self
   {
     $newVal = trim($dIVA5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -359,7 +359,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDIVA10(String $dIVA10): self
+  public function setDIVA10(string $dIVA10): self
   {
     $newVal = trim($dIVA10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -376,7 +376,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDLiqTotIVA5(String $dLiqTotIVA5): self
+  public function setDLiqTotIVA5(string $dLiqTotIVA5): self
   {
     $newVal = trim($dLiqTotIVA5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -393,7 +393,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDLiqTotIVA10(String $dLiqTotIVA10): self
+  public function setDLiqTotIVA10(string $dLiqTotIVA10): self
   {
     $newVal = trim($dLiqTotIVA10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -410,7 +410,7 @@ class GTotSub
    *  
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDIVAComi(String $dIVAComi): self
+  public function setDIVAComi(string $dIVAComi): self
   {
     $newVal = trim($dIVAComi);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -427,7 +427,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotIVA(String $dTotIVA): self
+  public function setDTotIVA(string $dTotIVA): self
   {
     $newVal = trim($dTotIVA);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -444,7 +444,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDBaseGrav5(String $dBaseGrav5): self
+  public function setDBaseGrav5(string $dBaseGrav5): self
   {
     $newVal = trim($dBaseGrav5);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -460,7 +460,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase.
    */
-  public function setDBaseGrav10(String $dBaseGrav10): self
+  public function setDBaseGrav10(string $dBaseGrav10): self
   {
     $newVal = trim($dBaseGrav10);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -477,7 +477,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTBasGraIVA(String $dTBasGraIVA): self
+  public function setDTBasGraIVA(string $dTBasGraIVA): self
   {
     $newVal = trim($dTBasGraIVA);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -494,7 +494,7 @@ class GTotSub
    *
    * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
    */
-  public function setDTotalGs(String $dTotalGs): self
+  public function setDTotalGs(string $dTotalGs): self
   {
     $newVal = trim($dTotalGs);
     if(!ValueValidations::isValidStringDecimal($newVal, 15, 0, 8))
@@ -513,7 +513,7 @@ class GTotSub
    *
    * @return String  El valor del subtotal de la operación exenta expresado en cadena numérica de caracteres.
    */
-  public function getDSubExe(): ?String
+  public function getDSubExe(): ?string
   {
     if(isset($this->dSubExe))
       return $this->dSubExe;
@@ -528,7 +528,7 @@ class GTotSub
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
    * 
    */
-  public function getFormattedDSubExe(int $precision = 8): ?String
+  public function getFormattedDSubExe(int $precision = 8): ?string
   {
     if(isset($this->dSubExe)) {
       $rounded = bcadd($this->dSubExe, '0', $precision);
@@ -543,7 +543,7 @@ class GTotSub
    *
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica de caracteres.
    */
-  public function getDSubExo(): ?String
+  public function getDSubExo(): ?string
   {
     if(isset($this->dSubExo))
       return $this->dSubExo;
@@ -557,7 +557,7 @@ class GTotSub
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación exonerada expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSubExo(int $precision = 8): ?String
+  public function getFormattedDSubExo(int $precision = 8): ?string
   {
     if(isset($this->dSubExo)) {
       $rounded = bcadd($this->dSubExo, '0', $precision);
@@ -572,7 +572,7 @@ class GTotSub
    *
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica de caracteres.
    */
-  public function getDSub5(): ?String
+  public function getDSub5(): ?string
   {
     if(isset($this->dSub5))
       return $this->dSub5;
@@ -586,7 +586,7 @@ class GTotSub
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 5% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSub5(int $precision = 8): ?String
+  public function getFormattedDSub5(int $precision = 8): ?string
   {
     if(isset($this->dSub5)) {
       $rounded = bcadd($this->dSub5, '0', $precision);
@@ -602,7 +602,7 @@ class GTotSub
    *
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica de caracteres.
    */
-  public function getDSub10(): ?String
+  public function getDSub10(): ?string
   {
    if(isset($this->dSub10))
       return $this->dSub10;
@@ -615,7 +615,7 @@ class GTotSub
    * 
    * @return String El valor del subtotal de la operación con IVA incluido a la tasa 10% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDSub10(int $precision = 8): ?String
+  public function getFormattedDSub10(int $precision = 8): ?string
   {
     if(isset($this->dSub10)) {
       $rounded = bcadd($this->dSub10, '0', $precision);
@@ -630,7 +630,7 @@ class GTotSub
    *
    * @return String El valor del total bruto de la operación expresado en cadena numérica de caracteres.
    */
-  public function getDTotOpe(): String
+  public function getDTotOpe(): string
   {
     return $this->dTotOpe;
   }
@@ -642,7 +642,7 @@ class GTotSub
    *
    * @return String El valor del total descuento particular por ítem expresado en cadena numérica de caracteres.
    */
-  public function getDTotDesc(): String
+  public function getDTotDesc(): string
   {
     return $this->dTotDesc;
   }
@@ -652,7 +652,7 @@ class GTotSub
    *
    * @return String El valor del total descuento global por ítem expresado en cadena numérica de caracteres.
    */
-  public function getDTotDescGlotem(): String
+  public function getDTotDescGlotem(): string
   {
     return $this->dTotDescGlotem;
   }
@@ -662,7 +662,7 @@ class GTotSub
    *
    * @return String El valor del total anticipo por ítem expresado en cadena numérica de caracteres.
    */
-  public function getDTotAntItem(): String
+  public function getDTotAntItem(): string
   {
     return $this->dTotAntItem;
   }
@@ -672,7 +672,7 @@ class GTotSub
    *
    * @return String El valor del total anticipo global por ítem expresado en cadena numérica de caracteres.
    */
-  public function getDTotAnt(): String
+  public function getDTotAnt(): string
   {
     return $this->dTotAnt;
   }
@@ -682,7 +682,7 @@ class GTotSub
    *
    * @return String El valor del porcentaje de descuento global sobre total de la operación expresado en cadena numérica de caracteres.
    */
-  public function getDPorcDescTotal(): String
+  public function getDPorcDescTotal(): string
   {
     return $this->dPorcDescTotal;
   }
@@ -692,7 +692,7 @@ class GTotSub
    *
    * @return String El valor del total descuentos de la operación expresado en cadena numérica de caracteres.
    */
-  public function getDDescTotal(): String
+  public function getDDescTotal(): string
   {
     return $this->dDescTotal;
   }
@@ -702,7 +702,7 @@ class GTotSub
    *
    * @return String
    */
-  public function getDAnticipo(): String
+  public function getDAnticipo(): string
   {
     return $this->dAnticipo;
   }
@@ -712,7 +712,7 @@ class GTotSub
    *
    * @return String El valor del redondeo de la operación expresado en cadena numérica de caracteres.
    */
-  public function getDRedon(): String
+  public function getDRedon(): string
   {
     return $this->dRedon;
   }
@@ -722,7 +722,7 @@ class GTotSub
    *
    * @return String El valor de la comisión de la operación expresado en cadena numérica de caracteres.
    */
-  public function getDComi(): ?String
+  public function getDComi(): ?string
   {
    if(isset($this->dComi))
       return $this->dComi;
@@ -735,12 +735,12 @@ class GTotSub
    *
    * @return String El valor del total neto de la operación expresado en cadena numérica de caracteres.
    */
-  public function getDTotGralOpe(): String
+  public function getDTotGralOpe(): string
   {
     return $this->dTotGralOpe;
   }
 
-  public function getFormattedDTotGralOpe(int $precision = 8): String
+  public function getFormattedDTotGralOpe(int $precision = 8): string
   {
     $rounded = bcadd($this->dTotGralOpe, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -751,7 +751,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica de caracteres.
    */
-  public function getDIVA5(): ?String
+  public function getDIVA5(): ?string
   {
     if(isset($this->dIVA5))
       return $this->dIVA5;
@@ -764,7 +764,7 @@ class GTotSub
    * 
    * @return String El valor de la liquidación del IVA a la tasa del 5% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDIVA5(int $precision = 8): ?String
+  public function getFormattedDIVA5(int $precision = 8): ?string
   {
     if(isset($this->dIVA5)) {
       $rounded = bcadd($this->dIVA5, '0', $precision);
@@ -779,7 +779,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica de caracteres.
    */
-  public function getDIVA10(): ?String  
+  public function getDIVA10(): ?string  
   {
     if(isset($this->dIVA10))
       return $this->dIVA10;
@@ -792,7 +792,7 @@ class GTotSub
    * 
    * @return String El valor de la liquidación del IVA a la tasa del 10% expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDIVA10(int $precision = 8): ?String  
+  public function getFormattedDIVA10(int $precision = 8): ?string  
   {
     if(isset($this->dIVA10)) {
       $rounded = bcadd($this->dIVA10, '0', $precision);
@@ -807,7 +807,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA por redondeo a la tasa del 5% expresado en cadena numérica de caracteres.
    */
-  public function getDLiqTotIVA5(): ?String
+  public function getDLiqTotIVA5(): ?string
   {
     if(isset($this->dLiqTotIVA5))
       return $this->dLiqTotIVA5;
@@ -820,7 +820,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA por redondeo a la tasa del 10% expresado en cadena numérica de caracteres.
    */
-  public function getDLiqTotIVA10(): ?String
+  public function getDLiqTotIVA10(): ?string
   {
     if(isset($this->dLiqTotIVA10))
       return $this->dLiqTotIVA10;
@@ -833,7 +833,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA de la comisión expresado en cadena numérica de caracteres.
    */
-  public function getDIVAComi(): ?String
+  public function getDIVAComi(): ?string
   {
     if(isset($this->dIVAComi))
       return $this->dIVAComi;
@@ -846,7 +846,7 @@ class GTotSub
    *
    * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
    */
-  public function getDTotIVA(): ?String
+  public function getDTotIVA(): ?string
   {
     if(isset($this->dTotIVA))
       return $this->dTotIVA;
@@ -859,7 +859,7 @@ class GTotSub
    * 
    * @return String El valor de la liquidación total del IVA expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDTotIVA(int $precision = 8): ?String
+  public function getFormattedDTotIVA(int $precision = 8): ?string
   {
     if(isset($this->dTotIVA)) {
       $rounded = bcadd($this->dTotIVA, '0', $precision);
@@ -874,7 +874,7 @@ class GTotSub
    *
    * @return String El valor de la base gravada de IVA al 5% expresado en cadena numérica de caracteres.
    */
-  public function getDBaseGrav5(): ?String
+  public function getDBaseGrav5(): ?string
   {
     if(isset($this->dBaseGrav5))
       return $this->dBaseGrav5;
@@ -887,7 +887,7 @@ class GTotSub
    *
    * @return String El valor de la base gravada de IVA al 10% expresado en cadena numérica de caracteres.
    */
-  public function getDBaseGrav10(): String
+  public function getDBaseGrav10(): string
   {
     return $this->dBaseGrav10;
   }
@@ -897,7 +897,7 @@ class GTotSub
    *
    * @return String
    */
-  public function getDTBasGraIVA(): String
+  public function getDTBasGraIVA(): string
   {
     return $this->dTBasGraIVA;
   }
@@ -907,7 +907,7 @@ class GTotSub
    *
    * @return String El valor del total general de la operación en Guaraníes expresado en cadena numérica de caracteres.
    */
-  public function getDTotalGs(): String
+  public function getDTotalGs(): string
   {
     return $this->dTotalGs;
   }
@@ -918,7 +918,7 @@ class GTotSub
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String El valor del total general de la operación en Guaraníes expresado en cadena numérica formateada de caracteres.
    */
-  public function getFormattedDTotalGs(int $precision = 8): String
+  public function getFormattedDTotalGs(int $precision = 8): string
   {
     $rounded = bcadd($this->dTotalGs, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -1208,7 +1208,7 @@ class GTotSub
    * 
    * @return String dTotOpe calculado
    */
-  public function calcDTotOpe(): String
+  public function calcDTotOpe(): string
   {
     $this->dTotOpe = bcadd($this->dSubExe ?? '0', $this->dSubExo ?? '0', 8);
     $this->dTotOpe = bcadd($this->dTotOpe ?? '0', $this->dSub5 ?? '0', 8);
@@ -1221,7 +1221,7 @@ class GTotSub
    * 
    * @return String dTotGralOpe calculado
    */
-  public function calcDTotGralOpe(): String
+  public function calcDTotGralOpe(): string
   {
     $this->dTotGralOpe = bcadd($this->dTotOpe ?? '0', $this->dComi ?? '0', 8);
     $this->dTotGralOpe = bcsub($this->dTotGralOpe ?? '0', $this->dRedon ?? '0', 8);
@@ -1233,7 +1233,7 @@ class GTotSub
    * 
    * @return String dTBasGraIVA calculado
    */
-  public function calcDTBasGraIVA(): String
+  public function calcDTBasGraIVA(): string
   {
     $this->dTBasGraIVA = bcadd($this->dBaseGrav5 ?? '0', $this->dBaseGrav10 ?? '0', 8);
     return $this->dTBasGraIVA;

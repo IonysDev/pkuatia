@@ -10,14 +10,14 @@ use SimpleXMLElement;
  */
 class DigestMethod 
 {
-    public String $Algorithm;
+    public string $Algorithm;
 
     /**
      * Devuelve la URI del algoritmo utilizado para calcular el digest
      *
      * @return String
      */
-    public function getAlgorithm(): String
+    public function getAlgorithm(): string
     {
         return $this->Algorithm;
     }
@@ -29,7 +29,7 @@ class DigestMethod
      *
      * @return self
      */
-    public function setAlgorithm(String $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
 

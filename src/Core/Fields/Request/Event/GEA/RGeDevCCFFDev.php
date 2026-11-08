@@ -15,10 +15,10 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeDevCCFFDev
 {
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;          // GEDD002 - CDC del DE/DTE - 40 - 1-1
-  public String $dNumDevSol;  // GEDD003 - Número DIR - 10 - 1-1
-  public String $dNumDevInf;  // GEDD004 - Número de informe - 10 - 1-1
-  public String $dNumDevRes;  // GEDD005 - Número de resolución de la devolución - 10 - 1-1
+  public string $Id;          // GEDD002 - CDC del DE/DTE - 40 - 1-1
+  public string $dNumDevSol;  // GEDD003 - Número DIR - 10 - 1-1
+  public string $dNumDevInf;  // GEDD004 - Número de informe - 10 - 1-1
+  public string $dNumDevRes;  // GEDD005 - Número de resolución de la devolución - 10 - 1-1
   public DateTime $dFeEmiSol; // GEDD006 - Fecha de emisión de DIR - 19 - 1-1
   public DateTime $dFeEmiInf; // GEDD007 - Fecha de emisión del informe - 19 - 1-1
   public DateTime $dFeEmiRes; // GEDD008 - Fecha de emisión de la resolución - 19 - 1-1
@@ -34,7 +34,7 @@ class RGeDevCCFFDev
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
 
@@ -49,7 +49,7 @@ class RGeDevCCFFDev
    *
    * @return self
    */
-  public function setDNumDevSol(String $dNumDevSol): self
+  public function setDNumDevSol(string $dNumDevSol): self
   {
     $this->dNumDevSol = $dNumDevSol;
 
@@ -64,7 +64,7 @@ class RGeDevCCFFDev
    *
    * @return self
    */
-  public function setDNumDevInf(String $dNumDevInf): self
+  public function setDNumDevInf(string $dNumDevInf): self
   {
     $this->dNumDevInf = $dNumDevInf;
 
@@ -79,7 +79,7 @@ class RGeDevCCFFDev
    *
    * @return self
    */
-  public function setDNumDevRes(String $dNumDevRes): self
+  public function setDNumDevRes(string $dNumDevRes): self
   {
     $this->dNumDevRes = $dNumDevRes;
 
@@ -142,7 +142,7 @@ class RGeDevCCFFDev
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -152,7 +152,7 @@ class RGeDevCCFFDev
    *
    * @return String
    */
-  public function getDNumDevSol(): String
+  public function getDNumDevSol(): string
   {
     return $this->dNumDevSol;
   }
@@ -162,7 +162,7 @@ class RGeDevCCFFDev
    *
    * @return String
    */
-  public function getDNumDevInf(): String
+  public function getDNumDevInf(): string
   {
     return $this->dNumDevInf;
   }
@@ -172,7 +172,7 @@ class RGeDevCCFFDev
    *
    * @return String
    */
-  public function getDNumDevRes(): String
+  public function getDNumDevRes(): string
   {
     return $this->dNumDevRes;
   }

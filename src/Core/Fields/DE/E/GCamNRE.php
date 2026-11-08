@@ -23,9 +23,9 @@ class GCamNRE extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
   public int $iMotEmiNR;        // E501 - 1-2   - 1-1 - Motivo de emisión
-  public String $dDesMotEmiNR;  // E502 - 5-60  - 1-1 - Descripción del motivo de emisión
+  public string $dDesMotEmiNR;  // E502 - 5-60  - 1-1 - Descripción del motivo de emisión
   public int $iRespEmiNR;       // E503 - 1-1   - 1-1 - Responsable de la emisión de la Nota Remisión Electrónica
-  public String $dDesRespEmiNR; // E504 - 20-36 - 1-1 - Descripción del responsable de la emisión de la Nota Remisión Electrónica
+  public string $dDesRespEmiNR; // E504 - 20-36 - 1-1 - Descripción del responsable de la emisión de la Nota Remisión Electrónica
   public int $dKmR;             // E505 - 1-5   - 1-1 - Kilómetros estimados de recorrido (minOccurs=1 en tgCamNRE, DE_v150.xsd; NT-010)
   public DateTime $dFecEm;      // E506 - 10    - 0-1 - Fecha futura de emisión de la factura
   
@@ -60,7 +60,7 @@ class GCamNRE extends BaseSifenField
    * 
    * @return self 
    */
-  public function setDDesMotEmiNR(String $dDesMotEmiNR): self
+  public function setDDesMotEmiNR(string $dDesMotEmiNR): self
   {
     $this->dDesMotEmiNR = $dDesMotEmiNR;
     return $this;
@@ -94,7 +94,7 @@ class GCamNRE extends BaseSifenField
    * 
    * @return self 
    */
-  public function setDDesRespEmiNR(String $dDesRespEmiNR): self
+  public function setDDesRespEmiNR(string $dDesRespEmiNR): self
   {
     $this->dDesRespEmiNR = $dDesRespEmiNR;
     return $this;
@@ -150,7 +150,7 @@ class GCamNRE extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesMotEmiNR(): String
+  public function getDDesMotEmiNR(): string
   {
     return $this->dDesMotEmiNR;
   }
@@ -170,7 +170,7 @@ class GCamNRE extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesRespEmiNR(): String
+  public function getDDesRespEmiNR(): string
   {
     return $this->dDesRespEmiNR;
   } 

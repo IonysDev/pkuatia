@@ -15,16 +15,16 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeDescon
 {
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;          // GED002 CDC del DE/DTE - 44- 1-1
+  public string $Id;          // GED002 CDC del DE/DTE - 44- 1-1
   public DateTime $dFecEmi;   // GED003 Fecha de emisión del DE - 19 - 1-1
   public DateTime $dFecRecep; // GED004 Fecha Recepción DE - 19 - 1-1
   public int $iTipRec;        // GED005 Tipo de Receptor - 1 - 1-1
-  public String $dNomRec;     // GED006 Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
-  public String $dRucRec;     // GED007 Ruc del Receptor - 3-8 - 0-1
+  public string $dNomRec;     // GED006 Nombre o Razón Social del Receptor del DE/DTE - 4-60 - 1-1
+  public string $dRucRec;     // GED007 Ruc del Receptor - 3-8 - 0-1
   public int $dDVRec;         // GED008 Dígito verificador del RUC del contribuyente receptor - 1- 0-1
   public int $dTipIDRec;      // GED009 Tipo de documento de identidad del receptor 1 - 0-1
-  public String $dNumID;      // GED010 Número de documento de identidad - 1-20 -0-1
-  public String $mOtEve;      // GED011 Motivo del Evento - 5-500 - 1-1
+  public string $dNumID;      // GED010 Número de documento de identidad - 1-20 -0-1
+  public string $mOtEve;      // GED011 Motivo del Evento - 5-500 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -37,7 +37,7 @@ class RGeVeDescon
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
 
@@ -97,7 +97,7 @@ class RGeVeDescon
    *
    * @return self
    */
-  public function setDNomRec(String $dNomRec): self
+  public function setDNomRec(string $dNomRec): self
   {
     $this->dNomRec = $dNomRec;
 
@@ -112,7 +112,7 @@ class RGeVeDescon
    *
    * @return self
    */
-  public function setDRucRec(String $dRucRec): self
+  public function setDRucRec(string $dRucRec): self
   {
     $this->dRucRec = $dRucRec;
 
@@ -161,7 +161,7 @@ class RGeVeDescon
    *
    * @return self
    */
-  public function setDNumID(String $dNumID): self
+  public function setDNumID(string $dNumID): self
   {
     $this->dNumID = $dNumID;
 
@@ -176,7 +176,7 @@ class RGeVeDescon
    *
    * @return self
    */
-  public function setMOtEve(String $mOtEve): self
+  public function setMOtEve(string $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
 
@@ -193,7 +193,7 @@ class RGeVeDescon
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -233,7 +233,7 @@ class RGeVeDescon
    *
    * @return String
    */
-  public function getDNomRec(): String
+  public function getDNomRec(): string
   {
     return $this->dNomRec;
   }
@@ -243,7 +243,7 @@ class RGeVeDescon
    *
    * @return String
    */
-  public function getDRucRec(): String
+  public function getDRucRec(): string
   {
     return $this->dRucRec;
   }
@@ -273,7 +273,7 @@ class RGeVeDescon
    *
    * @return String
    */
-  public function getDNumID(): String
+  public function getDNumID(): string
   {
     return $this->dNumID;
   }
@@ -283,7 +283,7 @@ class RGeVeDescon
    *
    * @return String
    */
-  public function getMOtEve(): String
+  public function getMOtEve(): string
   {
     return $this->mOtEve;
   }

@@ -166,7 +166,7 @@ class DocumentoElectronico
    * 
    * @return String el número completo del documento electrónico formateado 000-000-0000000
    */
-  public function getNumeroDocumentoCompleto(): String
+  public function getNumeroDocumentoCompleto(): string
   {
     return $this->gTimb->getDEst() . '-' . $this->gTimb->getDPunExp() . '-' . $this->gTimb->getDNumDoc();
   }
@@ -198,7 +198,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setInformacionDeInteresEmisor(String $infoEmi): self
+  public function setInformacionDeInteresEmisor(string $infoEmi): self
   {
     $this->gOpeDE->setDInfoEmi($infoEmi);
     return $this;
@@ -214,7 +214,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setInfoDeInteresFiscal(String $infoFisc): self
+  public function setInfoDeInteresFiscal(string $infoFisc): self
   {
     $this->gOpeDE->setDInfoFisc($infoFisc);
     return $this;
@@ -233,7 +233,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setTimbrado(int $numTimb, DateTime $fechaInicio, int $numEst, int $numExp, int $numDoc, ?String $serie = null): self
+  public function setTimbrado(int $numTimb, DateTime $fechaInicio, int $numEst, int $numExp, int $numDoc, ?string $serie = null): self
   {
     $this->setNumeroDeTimbrado($numTimb);
     $this->setFechaInicioTimbrado($fechaInicio);
@@ -283,7 +283,7 @@ class DocumentoElectronico
    * 
    * @throws Exception si la serie no es válida 
    */
-  public function setSerieNumeroTimbrado(String $serie): self
+  public function setSerieNumeroTimbrado(string $serie): self
   {
     if (!TimbradoUtils::ValidarSerie($serie))
       throw new ValidacionException("[DocumentoElectronico::setSerieNumeroTimbrado] Valor de serie inválido. Valor recibido: $serie");
@@ -394,22 +394,22 @@ class DocumentoElectronico
    * @return self Instancia de la clase DocumentoElectronico con los datos del emisor establecidos para poder encadenar métodos.
    */
   public function setEmisor(
-    String $rucEmisor,
+    string $rucEmisor,
     int $dv,
     int|EmisRecTipCont $tipoContribuyente,
     int|TipoDeRegimen|null $tipoRegimen,
-    String $nombreEmisor,
-    ?String $nombreFantasia,
-    String $callePrincipal,
-    String $casaNro,
-    ?String $calleSecundaria,
-    ?String $complementoDir,
+    string $nombreEmisor,
+    ?string $nombreFantasia,
+    string $callePrincipal,
+    string $casaNro,
+    ?string $calleSecundaria,
+    ?string $complementoDir,
     int $codDep,
     ?int $codDistrito,
     int $codCiud,
-    String $telefono,
-    String $email,
-    ?String $nombreSucursal
+    string $telefono,
+    string $email,
+    ?string $nombreSucursal
   ): self {
     $this->setEmisorRUC($rucEmisor, $dv);
     $this->setEmisorTipoContribuyente($tipoContribuyente);
@@ -451,7 +451,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorRUC(String $rucEmisor, int $dv): self
+  public function setEmisorRUC(string $rucEmisor, int $dv): self
   {
     if (!RucUtils::ValidarRUCconDV($rucEmisor . '-' . $dv))
       throw new ValidacionException("[DocumentoElectronico::setEmisorRUC] El RUC del emisor no es válido. Valor recibido: $rucEmisor-$dv");
@@ -496,7 +496,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorNombre(String $nombreEmisor): self
+  public function setEmisorNombre(string $nombreEmisor): self
   {
     $this->gEmis->setDNomEmi($nombreEmisor);
     return $this;
@@ -511,7 +511,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorNombreFantasia(String $nombreFantasia): self
+  public function setEmisorNombreFantasia(string $nombreFantasia): self
   {
     $this->gEmis->setDNomFanEmi($nombreFantasia);
     return $this;
@@ -526,7 +526,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorDireccionLocal(String $callePrincipal): self
+  public function setEmisorDireccionLocal(string $callePrincipal): self
   {
     $this->gEmis->setDDirEmi($callePrincipal);
     return $this;
@@ -541,7 +541,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorNumCasa(String $casaNro): self
+  public function setEmisorNumCasa(string $casaNro): self
   {
     $this->gEmis->setDNumCas($casaNro);
     return $this;
@@ -555,7 +555,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorCalleSecundaria(String $calleSecundaria): self
+  public function setEmisorCalleSecundaria(string $calleSecundaria): self
   {
     $this->gEmis->setDCompDir1($calleSecundaria);
     return $this;
@@ -569,7 +569,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorComplementoDireccion(String $complementoDir): self
+  public function setEmisorComplementoDireccion(string $complementoDir): self
   {
     $this->gEmis->setDCompDir2($complementoDir);
     return $this;
@@ -634,7 +634,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorTelefono(String $telefono): self
+  public function setEmisorTelefono(string $telefono): self
   {
     $this->gEmis->setDTelEmi($telefono);
     return $this;
@@ -649,7 +649,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorEmail(String $email): self
+  public function setEmisorEmail(string $email): self
   {
     $this->gEmis->setDEmailE($email);
     return $this;
@@ -659,7 +659,7 @@ class DocumentoElectronico
    * Establece la denominación interna que le da el emisor al local donde se emite el documento electrónico.
    * Valor opcional.
    */
-  public function setEmisorDenominacionSucursal(String $denominacion): self
+  public function setEmisorDenominacionSucursal(string $denominacion): self
   {
     $this->gEmis->setDDenSuc($denominacion);
     return $this;
@@ -678,7 +678,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setEmisorResponsableDelDE(TipIDRespDE $tipoID, String $nroID, String $nombre, String $cargo): self
+  public function setEmisorResponsableDelDE(TipIDRespDE $tipoID, string $nroID, string $nombre, string $cargo): self
   {
     $gRespDE = new GRespDE();
     $gRespDE->setITipIDRespDE($tipoID);
@@ -724,26 +724,26 @@ class DocumentoElectronico
    * @return self
    */
   public function setReceptor(
-    String $nombre,
+    string $nombre,
     bool $esContribuyente,
     int|RecTiOpe $tipoOperacion,
-    String $codPais,
+    string $codPais,
     int|EmisRecTipCont|null $tipoContribuyente,
-    ?String $ruc,
+    ?string $ruc,
     ?int $dv,
     int|TipIDRec|null $tipoIdentificacion,
-    ?String $nroIdentificacion,
-    ?String $nombreFantasia,
-    ?String $callePrincipal,
+    ?string $nroIdentificacion,
+    ?string $nombreFantasia,
+    ?string $callePrincipal,
     ?int $numeroCasa,
     ?int $codigoDepartamento,
     ?int $codigoDistrito,
     ?int $codigoCiudad,
-    ?String $telefono,
-    ?String $celular,
-    ?String $email,
-    ?String $codigoDeCliente,
-    ?String $descTipoIdentificacion = null
+    ?string $telefono,
+    ?string $celular,
+    ?string $email,
+    ?string $codigoDeCliente,
+    ?string $descTipoIdentificacion = null
   ): self {
     // Validación de tipo de operación y país
     $tipoOpInt = $tipoOperacion instanceof RecTiOpe ? $tipoOperacion->value : $tipoOperacion;
@@ -852,12 +852,12 @@ class DocumentoElectronico
    * @return self
    */
   public function setDatosComplementariosSectorEnergia(
-    String $nroMedidor,
+    string $nroMedidor,
     int $codActividad,
-    String $codCategoria,
-    String $lecturaAnterior,
-    String $lecturaActual,
-    String $consumoKwh
+    string $codCategoria,
+    string $lecturaAnterior,
+    string $lecturaActual,
+    string $consumoKwh
   ): self {
     $this->gGrupEner = self::crearGGrupEner($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
     $this->gGrupEnerAdicionales = []; // set reemplaza todos los medidores, como hasta 0.2.0 (Q-B9)
@@ -879,12 +879,12 @@ class DocumentoElectronico
    * @throws \InvalidArgumentException Si ya hay 9 medidores.
    */
   public function addDatosComplementariosSectorEnergia(
-    String $nroMedidor,
+    string $nroMedidor,
     int $codActividad,
-    String $codCategoria,
-    String $lecturaAnterior,
-    String $lecturaActual,
-    String $consumoKwh
+    string $codCategoria,
+    string $lecturaAnterior,
+    string $lecturaActual,
+    string $consumoKwh
   ): self {
     if (!isset($this->gGrupEner))
       return $this->setDatosComplementariosSectorEnergia($nroMedidor, $codActividad, $codCategoria, $lecturaAnterior, $lecturaActual, $consumoKwh);
@@ -894,7 +894,7 @@ class DocumentoElectronico
     return $this;
   }
 
-  private static function crearGGrupEner(String $nroMedidor, int $codActividad, String $codCategoria, String $lecturaAnterior, String $lecturaActual, String $consumoKwh): GGrupEner
+  private static function crearGGrupEner(string $nroMedidor, int $codActividad, string $codCategoria, string $lecturaAnterior, string $lecturaActual, string $consumoKwh): GGrupEner
   {
     $gGrupEner = new GGrupEner();
     $gGrupEner->setDNroMed($nroMedidor);
@@ -916,11 +916,11 @@ class DocumentoElectronico
    * @param String $descripcionDonacion descripción de la donación
    */
   public function setDatosComplementariosSectorSupermercados(
-    ?String $nombreCajero,
-    ?String $montoPagoEfectivo,
-    ?String $montoVuelto,
-    ?String $montoDonacion,
-    ?String $descripcionDonacion
+    ?string $nombreCajero,
+    ?string $montoPagoEfectivo,
+    ?string $montoVuelto,
+    ?string $montoDonacion,
+    ?string $descripcionDonacion
   ): self {
     $this->gGrupSup = new GGrupSup();
     if (isset($nombreCajero))
@@ -947,12 +947,12 @@ class DocumentoElectronico
    * @param String $saldoAnteriorAdeudado saldo anterior adeudado.
    */
   public function setDatosAdicionalesDeUsoComercial(
-    ?String $cicloDeFacturacion,
+    ?string $cicloDeFacturacion,
     ?DateTime $fechaInicioCiclo,
     ?DateTime $fechaFinCiclo,
     ?DateTime $fechaVencimiento,
-    ?String $numeroContrato,
-    ?String $saldoAnteriorAdeudado
+    ?string $numeroContrato,
+    ?string $saldoAnteriorAdeudado
   ): self {
     $this->gGrupAdi = new GGrupAdi();
     if (isset($cicloDeFacturacion))
@@ -994,7 +994,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setNroDeOrdenDeCompra(String $nroOrdenCompra): self
+  public function setNroDeOrdenDeCompra(string $nroOrdenCompra): self
   {
     if(!isset($this->gCamGen))
       $this->gCamGen = new GCamGen();
@@ -1009,7 +1009,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setNroDeOrdenDeVenta(String $nroOrdenVenta): self
+  public function setNroDeOrdenDeVenta(string $nroOrdenVenta): self
   {
     if(!isset($this->gCamGen))
       $this->gCamGen = new GCamGen();
@@ -1024,7 +1024,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function setNroDeAsientoContable(String $nroAsiento): self
+  public function setNroDeAsientoContable(string $nroAsiento): self
   {
     if(!isset($this->gCamGen))
       $this->gCamGen = new GCamGen();
@@ -1047,21 +1047,21 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function addEmisorActividadEconomica(int $codigo, String $descripcion): self
+  public function addEmisorActividadEconomica(int $codigo, string $descripcion): self
   {
     $this->gEmis->addActEco($codigo, $descripcion);
     return $this;
   }
 
   public function addDatosComplementariosSectorSegurosPoliza(
-    String $codigoEmpresaSeguros,
-    String $codigoPoliza,
-    String $unidadTiempoVigencia,
-    String $cantTiempoVigencia,
-    String $numeroPoliza,
+    string $codigoEmpresaSeguros,
+    string $codigoPoliza,
+    string $unidadTiempoVigencia,
+    string $cantTiempoVigencia,
+    string $numeroPoliza,
     ?DateTime $fechaInicioVigencia,
     ?DateTime $fechaFinVigencia,
-    ?String $codigoInternoItem
+    ?string $codigoInternoItem
   ): self {
     if (!isset($this->gGrupSeg)) {
       $this->gGrupSeg = new GGrupSeg();
@@ -1092,7 +1092,7 @@ class DocumentoElectronico
    * 
    * @return self
    */
-  public function addDocumentoElectronicoAsociado(String $cdc): self
+  public function addDocumentoElectronicoAsociado(string $cdc): self
   {
     $gCamDEAsoc = new GCamDEAsoc();
     $gCamDEAsoc->setITipDocAso(TipDocAso::Electronico);
@@ -1122,8 +1122,8 @@ class DocumentoElectronico
     int $numDocumento,
     int|TipoDocImpresoAso $tipoDocumentoImpreso,
     DateTime $fechaEmisionDocImpreso,
-    ?String $numComprobanteRetencion = null,
-    ?String $numResolucionCreditoFiscal = null
+    ?string $numComprobanteRetencion = null,
+    ?string $numResolucionCreditoFiscal = null
   ): self 
   {
     $gCamDIAsoc = new GCamDEAsoc();
@@ -1157,7 +1157,7 @@ class DocumentoElectronico
    */
   public function addConstanciaDeNoSerContribuyente(
     int $numero,
-    String $numControl
+    string $numControl
   ) {
     $gCamDEAsoc = new GCamDEAsoc();
     $gCamDEAsoc->setITipDocAso(TipDocAso::ConstanciaElectronica);

@@ -19,7 +19,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GCompPub extends BaseSifenField
 {
-  public String   $dModCont;   // E021 -  2 - 1-1 - Modalidad, Código emitido por la DNCP
+  public string   $dModCont;   // E021 -  2 - 1-1 - Modalidad, Código emitido por la DNCP
   public int      $dEntCont;   // E022 -  5 - 1-1 - Entidad, Código emitido por la DNCP
   public int      $dAnoCont;   // E023 -  2 - 1-1 - Año, Código emitido por la DNCP
   public int      $dSecCont;   // E024 -  7 - 1-1 - Secuencia, emitido por la DNCP
@@ -36,7 +36,7 @@ class GCompPub extends BaseSifenField
    *
    * @return self
    */
-  public function setDModCont(String $dModCont): self
+  public function setDModCont(string $dModCont): self
   {
     $this->dModCont = $dModCont;
 
@@ -111,7 +111,7 @@ class GCompPub extends BaseSifenField
   /**
    * Obtiene el valor de dModCont
    */
-  public function getDModCont(): String
+  public function getDModCont(): string
   {
     return $this->dModCont;
   }

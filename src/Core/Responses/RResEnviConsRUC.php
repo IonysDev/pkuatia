@@ -20,7 +20,7 @@ class RResEnviConsRUC implements RespuestaSifen
   
                              // ID - DESCRIPCION- LONGITUD - OCURRENCIA
   public int    $dCodRes;    // RRSch02 - Código del resultado de la consulta RUC  - 4 - 1-1
-  public String $dMsgRes;    // RRSch03 - Mensaje del resultado  de  la consulta RUC - 1-255 - 1-1
+  public string $dMsgRes;    // RRSch03 - Mensaje del resultado  de  la consulta RUC - 1-255 - 1-1
   public RContRUC $rContRuc; // RRSch04 - Contenedor del RUC consultado - X - 1-1
 
   ///////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ class RResEnviConsRUC implements RespuestaSifen
    *
    * @return self
    */
-  public function setDMsgRes(String $dMsgRes): self
+  public function setDMsgRes(string $dMsgRes): self
   {
     $this->dMsgRes = $dMsgRes;
 
@@ -81,7 +81,7 @@ class RResEnviConsRUC implements RespuestaSifen
    *
    * @return String
    */
-  public function getDCodRes(): String
+  public function getDCodRes(): string
   {
     return $this->dCodRes;
   }
@@ -91,7 +91,7 @@ class RResEnviConsRUC implements RespuestaSifen
    *
    * @return String
    */
-  public function getDMsgRes(): String
+  public function getDMsgRes(): string
   {
     return $this->dMsgRes;
   }

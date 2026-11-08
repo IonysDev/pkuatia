@@ -15,7 +15,7 @@ use IonysDev\Pkuatia\Validacion\InfoValidacion;
 class GResProcEVe
 {
                           // Id - Longitud - Ocurrencia - Descripción
-  public String $dEstRes; // GRSch030 - 8-30 - 1-1   - Estado del resultado
+  public string $dEstRes; // GRSch030 - 8-30 - 1-1   - Estado del resultado
   public int $dProtAut;   // GRSch031 - 10   - 0-1   - Número de transacción
   public int $id;         // GRSch032 - 10   - 1-1   - Identificador del evento
   public array $gResProc; // GRSch033 - G    - 1-100 - Grupo Resultado de Procesamiento 

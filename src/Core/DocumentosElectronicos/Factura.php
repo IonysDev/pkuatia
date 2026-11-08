@@ -104,7 +104,7 @@ class Factura extends DocumentoElectronicoComercial
    * @param int $nroDNCPSecuencia Número de secuencia del registro de la DNCP.
    * @param DateTime $fechaEmisionCodigoContratacion Fecha de emisión del código de contratación por la DNCP.
    */
-  public function setDatosComprasPublicas(String $codigoDNCPModalidad, String $codigoDNCPEntidad, int $anho, int $nroDNCPSecuencia, DateTime $fechaEmisionCodigoContratacion) : self
+  public function setDatosComprasPublicas(string $codigoDNCPModalidad, string $codigoDNCPEntidad, int $anho, int $nroDNCPSecuencia, DateTime $fechaEmisionCodigoContratacion) : self
   {
     $this->gCompPub = new GCompPub();
     $this->gCompPub->setDModCont($codigoDNCPModalidad);
@@ -131,9 +131,9 @@ class Factura extends DocumentoElectronicoComercial
    */
   public function addPago(
     int|PaConEIniTiPago $tipoDePago,
-    String $monto,
-    String $moneda = 'PYG',
-    String $tasaDeCambio = null) : self
+    string $monto,
+    string $moneda = 'PYG',
+    string $tasaDeCambio = null) : self
   {
     if(strcmp($moneda, 'PYG') !== 0 && !isset($tasaDeCambio)) {
       throw new ValidacionException('[Factura] La tasa de cambio es obligatoria para pagos en moneda extranjera.');
@@ -162,12 +162,12 @@ class Factura extends DocumentoElectronicoComercial
    */
   public function addPagoPYGPorTarjeta(
     bool $esTarjetaCredito, 
-    String $monto, 
-    String|int|PagTarCDDenTarj $denomTarjeta, 
+    string $monto, 
+    string|int|PagTarCDDenTarj $denomTarjeta, 
     int|PagTarCDForProPa $formaProc, 
     ?int $codAutorizacion = null, 
-    ?String $nombreTitular = null,
-    ?String $ult4NroTarjeta = null) : self
+    ?string $nombreTitular = null,
+    ?string $ult4NroTarjeta = null) : self
   {
     $gPagTarCD = new GPagTarCD();
 
@@ -210,11 +210,11 @@ class Factura extends DocumentoElectronicoComercial
    * @return self
    */
   public function addPagoPorCheque(
-    String $monto, 
-    String $numeroCheque, 
-    String $bancoEmisor,
-    String $moneda = 'PYG',
-    String $tasaDeCambio = null) : self
+    string $monto, 
+    string $numeroCheque, 
+    string $bancoEmisor,
+    string $moneda = 'PYG',
+    string $tasaDeCambio = null) : self
   {
     $gPagCheq = new GPagCheq();
     $gPagCheq->setDNumCheq($numeroCheque);
@@ -246,9 +246,9 @@ class Factura extends DocumentoElectronicoComercial
    * @return self
    */
   public function addPagoPYGPorCheque(
-    String $monto, 
-    String $numeroCheque, 
-    String $bancoEmisor) : self
+    string $monto, 
+    string $numeroCheque, 
+    string $bancoEmisor) : self
   {
     $gPagCheq = new GPagCheq();
     $gPagCheq->setDNumCheq($numeroCheque);
@@ -275,10 +275,10 @@ class Factura extends DocumentoElectronicoComercial
    * @return self
    */
   public function addPagoUSDPorCheque(
-    String $monto,
-    String $tipoCambio,
-    String $numeroCheque, 
-    String $bancoEmisor) : self
+    string $monto,
+    string $tipoCambio,
+    string $numeroCheque, 
+    string $bancoEmisor) : self
   {
     $gPagCheq = new GPagCheq();
     $gPagCheq->setDNumCheq($numeroCheque);
@@ -303,7 +303,7 @@ class Factura extends DocumentoElectronicoComercial
    * 
    * @return self
    */
-  public function setOperacionCreditoAPlazo(String $descripcionPlazo, ?String $montoEntregaInicial) : self
+  public function setOperacionCreditoAPlazo(string $descripcionPlazo, ?string $montoEntregaInicial) : self
   {
     $gPagCred = new GPagCred();
     $gPagCred->setICondCred(PagCredCondCred::Plazo);
@@ -325,7 +325,7 @@ class Factura extends DocumentoElectronicoComercial
    * 
    * @return self
    */
-  public function setOperacionCreditoEnCuotas(array $montoCuotas, array $vencimientos, ?String $montoEntregaInicial = null, ?String $monedaCuotas = null) : self
+  public function setOperacionCreditoEnCuotas(array $montoCuotas, array $vencimientos, ?string $montoEntregaInicial = null, ?string $monedaCuotas = null) : self
   {
     if(count($montoCuotas) != count($vencimientos)) {
       throw new ValidacionException('[Factura] La cantidad de montos de cuotas y vencimientos no coinciden.');

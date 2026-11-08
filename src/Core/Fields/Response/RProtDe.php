@@ -18,11 +18,11 @@ use IonysDev\Pkuatia\Validacion\InfoValidacion;
 class RProtDe
 {
   // id - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $id;         // PP02 - CDC del DE Procesado - 44 - 1-1
+  public string $id;         // PP02 - CDC del DE Procesado - 44 - 1-1
   public DateTime $dFecProc; // PP03 - Fecha y hora del procesamiento - 19 - 1-1
-  public String $dDigVal;    // PP04 - DigestValue del DE procesado - 28 - 1-1
-  public String $dEstRes;    // PP050 - Estado del resultado - 8-30 - 1-1
-  public String $dProtAut;   // PP051 - Número de Transacción - 10 - 1-1
+  public string $dDigVal;    // PP04 - DigestValue del DE procesado - 28 - 1-1
+  public string $dEstRes;    // PP050 - Estado del resultado - 8-30 - 1-1
+  public string $dProtAut;   // PP051 - Número de Transacción - 10 - 1-1
   public array  $gResProc;   // PP05 - Grupo Resultado de Procesamiento - x - 1-100
 
   ///////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ class RProtDe
    *
    * @return self
    */
-  public function setId(String $id): self
+  public function setId(string $id): self
   {
     $this->id = $id;
 
@@ -66,7 +66,7 @@ class RProtDe
    *
    * @return self
    */
-  public function setDDigVal(String $dDigVal): self
+  public function setDDigVal(string $dDigVal): self
   {
     $this->dDigVal = $dDigVal;
 
@@ -81,7 +81,7 @@ class RProtDe
    *
    * @return self
    */
-  public function setDEstRes(String $dEstRes): self
+  public function setDEstRes(string $dEstRes): self
   {
     $this->dEstRes = $dEstRes;
 
@@ -96,7 +96,7 @@ class RProtDe
    *
    * @return self
    */
-  public function setDProtAut(String $dProtAut): self
+  public function setDProtAut(string $dProtAut): self
   {
     $this->dProtAut = $dProtAut;
 
@@ -130,7 +130,7 @@ class RProtDe
    *
    * @return String|null
    */
-  public function getId(): ?String
+  public function getId(): ?string
   {
     return $this->id ?? null;
   }
@@ -150,7 +150,7 @@ class RProtDe
    *
    * @return String|null
    */
-  public function getDDigVal(): ?String
+  public function getDDigVal(): ?string
   {
     return $this->dDigVal ?? null;
   }
@@ -160,7 +160,7 @@ class RProtDe
    *
    * @return String
    */
-  public function getDEstRes(): String
+  public function getDEstRes(): string
   {
     return $this->dEstRes;
   }
@@ -170,7 +170,7 @@ class RProtDe
    *
    * @return String|null
    */
-  public function getDProtAut(): ?String
+  public function getDProtAut(): ?string
   {
     return $this->dProtAut ?? null;
   }
@@ -237,7 +237,7 @@ class RProtDe
    * @param String $xml
    * @return RProtDe
    */
-  public static function FromXMLString(String $xmlString): RProtDe
+  public static function FromXMLString(string $xmlString): RProtDe
   {
     $xml = simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NONET); // contenido del SIFEN: sin acceso a la red (0.3.0)
     $res = self::fromSimpleXMLElement($xml);

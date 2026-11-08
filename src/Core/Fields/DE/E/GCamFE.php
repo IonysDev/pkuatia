@@ -23,7 +23,7 @@ class GCamFE extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
   public int      $iIndPres;    // E011 - 1     - 1-1 - Indicador de presencia
-  public String   $dDesIndPres; // E012 - 10-30 - 1-1 - Descripción del indicador de presencia
+  public string   $dDesIndPres; // E012 - 10-30 - 1-1 - Descripción del indicador de presencia
   public DateTime $dFecEmNR;    // E013 - 10    - 0-1 - Fecha en el formato: AAAA-MM-DD Fecha estimada para el traslado de la mercadería y emisión de la nota de remisión electrónica cuando corresponda. RG 41/14
   public GCompPub $gCompPub;    // E020 -       - 0-1 - Campos que describen las informaciones de compras públicas
 
@@ -69,7 +69,7 @@ class GCamFE extends BaseSifenField
    *
    * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
-  public function setDDesIndPres(String $dDesIndPres): self
+  public function setDDesIndPres(string $dDesIndPres): self
   {
     if(is_null($dDesIndPres) || strlen($dDesIndPres) == 0)
     {
@@ -130,7 +130,7 @@ class GCamFE extends BaseSifenField
    *
    * @return String Descripción del indicador de presencia.
    */
-  public function getDDesIndPres(): String
+  public function getDDesIndPres(): string
   {
     return $this->dDesIndPres;
   }

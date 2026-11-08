@@ -25,12 +25,12 @@ class GTimb extends BaseSifenField
     
                               // Id - Longirud - Ocurrencia - Descripción
     public int    $iTiDE;     // C002 - 1-2   - 1-1 - Tipo de documento electrónico
-    public String $dDesTiDE;  // C003 - 15-40 - 1-1 - Descripción del tipo de documento electrónico
+    public string $dDesTiDE;  // C003 - 15-40 - 1-1 - Descripción del tipo de documento electrónico
     public int    $dNumTim;   // C004 - 8     - 1-1 - Número del timbrado
-    public String $dEst;      // C005 - 3     - 1-1 - Establecimiento
-    public String $dPunExp;   // C006 - 3     - 1-1 - Punto de expedición
-    public String $dNumDoc;   // C007 - 7     - 1-1 - Número del documento
-    public String $dSerieNum; // C010 - 2     - 0-1 - Serie del número de timbrado
+    public string $dEst;      // C005 - 3     - 1-1 - Establecimiento
+    public string $dPunExp;   // C006 - 3     - 1-1 - Punto de expedición
+    public string $dNumDoc;   // C007 - 7     - 1-1 - Número del documento
+    public string $dSerieNum; // C010 - 2     - 0-1 - Serie del número de timbrado
     public DateTime $dFeIniT; // C008 - 10    - 1-1 - Fecha inicio de vigencia del timbrado AAAA-MM-DD
 
     ///////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ class GTimb extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDDesTiDE(String $dDesTiDE): self
+    public function setDDesTiDE(string $dDesTiDE): self
     {
         $this->dDesTiDE = $dDesTiDE;
         return $this;
@@ -89,7 +89,7 @@ class GTimb extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDEst(String $dEst): self
+    public function setDEst(string $dEst): self
     {
         if(strlen($dEst) != 3) 
             throw new ValidacionException('[GTimb] El valor de dEst no es válido: ' . $dEst);
@@ -105,7 +105,7 @@ class GTimb extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDPunExp(String $dPunExp): self
+    public function setDPunExp(string $dPunExp): self
     {
         if(strlen($dPunExp) != 3) 
             throw new ValidacionException('[GTimb] El valor de dPunExp no es válido: ' . $dPunExp);
@@ -121,7 +121,7 @@ class GTimb extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDNumDoc(String $dNumDoc): self
+    public function setDNumDoc(string $dNumDoc): self
     {
         if(strlen($dNumDoc) != 7) 
             throw new ValidacionException('[GTimb] El valor de dNumDoc no es válido: ' . $dNumDoc);
@@ -136,7 +136,7 @@ class GTimb extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDSerieNum(String $dSerieNum): self
+    public function setDSerieNum(string $dSerieNum): self
     {
         $this->dSerieNum = $dSerieNum;
         return $this;
@@ -174,7 +174,7 @@ class GTimb extends BaseSifenField
      * 
      * @return String Descripción del tipo de documento electrónico.
      */
-    public function getDDesTiDE(): String
+    public function getDDesTiDE(): string
     {
         return $this->dDesTiDE;
     }
@@ -194,7 +194,7 @@ class GTimb extends BaseSifenField
      * 
      * @return String Número de establecimiento.
      */
-    public function getDEst(): String
+    public function getDEst(): string
     {
         return $this->dEst;
     }
@@ -204,7 +204,7 @@ class GTimb extends BaseSifenField
      * 
      * @return String Número de punto de expedición.
      */
-    public function getDPunExp(): String
+    public function getDPunExp(): string
     {
         return $this->dPunExp;
     }
@@ -214,7 +214,7 @@ class GTimb extends BaseSifenField
      * 
      * @return String Número del documento.
      */
-    public function getDNumDoc(): String
+    public function getDNumDoc(): string
     {
         return $this->dNumDoc;
     }
@@ -224,7 +224,7 @@ class GTimb extends BaseSifenField
      * 
      * @return String Serie del número de timbrado.
      */
-    public function getDSerieNum(): String
+    public function getDSerieNum(): string
     {
         return $this->dSerieNum;
     }

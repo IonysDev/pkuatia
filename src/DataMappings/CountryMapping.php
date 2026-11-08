@@ -31,7 +31,7 @@ class CountryMapping
    * @param  mixed $country
    * @return String
    */
-  public static function getCountryDesc($code): ?String
+  public static function getCountryDesc($code): ?string
   {
     $country = strtoupper($code);
     $array = self::getArray();

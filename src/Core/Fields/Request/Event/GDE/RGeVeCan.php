@@ -15,8 +15,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeCan
 {
                           // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;     // GEC002 - Identificador del DTE - 44 - 1-1
-  public String $mOtEve; // GEC003 - Motivo del Evento  - 5-500 - 1-1
+  public string $Id;     // GEC002 - Identificador del DTE - 44 - 1-1
+  public string $mOtEve; // GEC003 - Motivo del Evento  - 5-500 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -29,7 +29,7 @@ class RGeVeCan
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
     return $this;
@@ -43,7 +43,7 @@ class RGeVeCan
    *
    * @return self
    */
-  public function setMOtEve(String $mOtEve): self
+  public function setMOtEve(string $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
     return $this;
@@ -58,7 +58,7 @@ class RGeVeCan
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -68,7 +68,7 @@ class RGeVeCan
    *
    * @return String
    */
-  public function getMOtEve(): String
+  public function getMOtEve(): string
   {
     return $this->mOtEve;
   }

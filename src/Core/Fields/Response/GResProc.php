@@ -18,8 +18,8 @@ class GResProc
   public const COD_RES_ACEPTADO = 260;
 
                           // ID - DESC - LONG - OCURRENCIA
-  public String $dCodRes; // PP052 - Código del resultado de procesamiento - 4 - 1-1
-  public String $dMsgRes; // PP053 - Mensaje del resultado de procesamiento - 1-255 - 1-1
+  public string $dCodRes; // PP052 - Código del resultado de procesamiento - 4 - 1-1
+  public string $dMsgRes; // PP053 - Mensaje del resultado de procesamiento - 1-255 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -32,7 +32,7 @@ class GResProc
    *
    * @return self
    */
-  public function setDCodRes(String $dCodRes): self
+  public function setDCodRes(string $dCodRes): self
   {
     $this->dCodRes = $dCodRes;
 
@@ -47,7 +47,7 @@ class GResProc
    *
    * @return self
    */
-  public function setDMsgRes(String $dMsgRes): self
+  public function setDMsgRes(string $dMsgRes): self
   {
     $this->dMsgRes = $dMsgRes;
 
@@ -63,7 +63,7 @@ class GResProc
    *
    * @return int
    */
-  public function getDCodRes(): String
+  public function getDCodRes(): string
   {
     return $this->dCodRes;
   }
@@ -73,7 +73,7 @@ class GResProc
    *
    * @return String
    */
-  public function getDMsgRes(): String
+  public function getDMsgRes(): string
   {
     return $this->dMsgRes;
   }

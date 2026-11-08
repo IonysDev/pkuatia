@@ -11,7 +11,7 @@ class REnviConsRUC {
 
                              // id - DESCRIPCION- LONGITUD - OCURRENCIA
     public int $dId;         // RSch02 - Identificador de la solicitud generado el sistema que utilice PKuatia para identificar la solicitud - 1-15 - 1-1
-    public String $dRUCCons; // RSch03 - RUC que se desea consultar sin dígito verificador - 5-8 - 1-1
+    public string $dRUCCons; // RSch03 - RUC que se desea consultar sin dígito verificador - 5-8 - 1-1
 
     /**
      * Constructor de la clase
@@ -45,7 +45,7 @@ class REnviConsRUC {
      *
      * @return self
      */
-    public function setDRUCCons(String $dRUCCons): self
+    public function setDRUCCons(string $dRUCCons): self
     {
         $this->dRUCCons = $dRUCCons;
         return $this;
@@ -70,7 +70,7 @@ class REnviConsRUC {
      *
      * @return String
      */
-    public function getDRUCCons(): String
+    public function getDRUCCons(): string
     {
         return $this->dRUCCons;
     }

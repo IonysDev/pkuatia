@@ -53,28 +53,28 @@ class GDatRec extends BaseSifenField
                                 // Id - Longitud - Ocurrencia - Descripción
     public int    $iNatRec;     // D201 - 1     - 1-1 - Naturaleza del receptor: 1 = contribuyente | 2 = no contribuyente
     public int    $iTiOpe;      // D202 - 1     - 1-1 - Tipo de operación: 1 = B2B | 2 = B2C | 3 = B2G | 4 = B2F
-    public String $cPaisRec;    // D203 - 3     - 1-1 - Código de país del receptor
-    public String $dDesPaisRe;  // D204 - 4-50  - 1-1 - Descripción del país del receptor
+    public string $cPaisRec;    // D203 - 3     - 1-1 - Código de país del receptor
+    public string $dDesPaisRe;  // D204 - 4-50  - 1-1 - Descripción del país del receptor
     public int    $iTiContRec;  // D205 - 1     - 0-1 - Tipo de contribuyente receptor: 1 = Persona Física | 2 = Persona Jurídica
-    public String $dRucRec;     // D206 - 3-8   - 0-1 - RUC del receptor
+    public string $dRucRec;     // D206 - 3-8   - 0-1 - RUC del receptor
     public int    $dDVRec;      // D207 - 1     - 0-1 - Dígito verificador del RUC del receptor
     public int    $iTipIDRec;   // D208 - 1     - 0-1 - Tipo de documento de identidad del receptor: 1 = Cédula Paraguaya | 2 = Pasaporte | 3 = Cédula Extrangera | 4 = País de Residencia | 5 = Innominado | 6 = Tarjeta Diplomática | 9 = Otro
-    public String $dDTipIDRec;  // D209 - 9-41  - 0-1 - Descripción del tipo de documento de identidad del receptor
-    public String $dNumIDRec;   // D210 - 1-20  - 0-1 - Número de documento de identidad
-    public String $dNomRec;     // D211 - 4-255 - 1-1 - Nombre o razón social del receptor del DE
-    public String $dNomFanRec;  // D212 - 4-255 - 0-1 - Nombre de fantasía
-    public String $dDirRec;     // D213 - 1-255 - 0-1 - Dirección del receptor
+    public string $dDTipIDRec;  // D209 - 9-41  - 0-1 - Descripción del tipo de documento de identidad del receptor
+    public string $dNumIDRec;   // D210 - 1-20  - 0-1 - Número de documento de identidad
+    public string $dNomRec;     // D211 - 4-255 - 1-1 - Nombre o razón social del receptor del DE
+    public string $dNomFanRec;  // D212 - 4-255 - 0-1 - Nombre de fantasía
+    public string $dDirRec;     // D213 - 1-255 - 0-1 - Dirección del receptor
     public int    $dNumCasRec;  // D218 - 1-6   - 0-1 - Número de casa del receptor
     public int    $cDepRec;     // D219 - 1-2   - 0-1 - Código del departamento del receptor
-    public String $dDesDepRec;  // D220 - 6-16  - 0-1 - Descripción del departamento del receptor
+    public string $dDesDepRec;  // D220 - 6-16  - 0-1 - Descripción del departamento del receptor
     public int    $cDisRec;     // D221 - 1-4   - 0-1 - Código del distrito del receptor
-    public String $dDesDisRec;  // D222 - 1-30  - 0-1 - Descripción del distrito del receptor
+    public string $dDesDisRec;  // D222 - 1-30  - 0-1 - Descripción del distrito del receptor
     public int    $cCiuRec;     // D223 - 1-5   - 0-1 - Código del ciudad del receptor
-    public String $dDesCiuRec;  // D224 - 1-30  - 0-1 - Descripción del ciudad del receptor
-    public String $dTelRec;     // D214 - 6-15  - 0-1 - Número de teléfono del receptor
-    public String $dCelRec;     // D215 - 10-20 - 0-1 - Número de celular del receptor
-    public String $dEmailRec;   // D216 - 3-80  - 0-1 - Correo electrónico de receptor
-    public String $dCodCliente; // D217 - 3-15  - 0-1 - Código del cliente
+    public string $dDesCiuRec;  // D224 - 1-30  - 0-1 - Descripción del ciudad del receptor
+    public string $dTelRec;     // D214 - 6-15  - 0-1 - Número de teléfono del receptor
+    public string $dCelRec;     // D215 - 10-20 - 0-1 - Número de celular del receptor
+    public string $dEmailRec;   // D216 - 3-80  - 0-1 - Correo electrónico de receptor
+    public string $dCodCliente; // D217 - 3-15  - 0-1 - Código del cliente
 
     /**
      * Constructor de la clase  
@@ -132,7 +132,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setCPaisRec(String $cPaisRec): void
+    public function setCPaisRec(string $cPaisRec): void
     {
         $desc = CountryMapping::getCountryDesc($cPaisRec);
         if ($desc === null)
@@ -144,7 +144,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDDesPaisRe(String $dDesPaisRe): void
+    public function setDDesPaisRe(string $dDesPaisRe): void
     {
         $this->dDesPaisRe = $dDesPaisRe;
     }
@@ -160,7 +160,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDRucRec(String $dRucRec): void
+    public function setDRucRec(string $dRucRec): void
     {
         $this->dRucRec = $dRucRec;
     }
@@ -196,7 +196,7 @@ class GDatRec extends BaseSifenField
      *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDDTipIDRec(String $dDTipIDRec): self
+    public function setDDTipIDRec(string $dDTipIDRec): self
     {
         $this->dDTipIDRec = $dDTipIDRec;
         return $this;
@@ -205,7 +205,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDNumIDRec(String $dNumIDRec): void
+    public function setDNumIDRec(string $dNumIDRec): void
     {
         $this->dNumIDRec = $dNumIDRec;
     }
@@ -213,7 +213,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDNomRec(String $dNomRec): void
+    public function setDNomRec(string $dNomRec): void
     {
         $this->dNomRec = $dNomRec;
     }
@@ -221,7 +221,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDNomFanRec(String $dNomFanRec): void
+    public function setDNomFanRec(string $dNomFanRec): void
     {
         $this->dNomFanRec = $dNomFanRec;
     }
@@ -229,7 +229,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDDirRec(String $dDirRec): void
+    public function setDDirRec(string $dDirRec): void
     {
         $this->dDirRec = $dDirRec;
     }
@@ -237,7 +237,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDTelRec(String $dTelRec): void
+    public function setDTelRec(string $dTelRec): void
     {
         $this->dTelRec = $dTelRec;
     }
@@ -245,7 +245,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDCelRec(String $dCelRec): void
+    public function setDCelRec(string $dCelRec): void
     {
         $this->dCelRec = $dCelRec;
     }
@@ -253,7 +253,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDEmailRec(String $dEmailRec): void
+    public function setDEmailRec(string $dEmailRec): void
     {
         $this->dEmailRec = $dEmailRec;
     }
@@ -261,7 +261,7 @@ class GDatRec extends BaseSifenField
     /**
      * No se puede encadenar: devuelve void y se mantiene así por compatibilidad (decisión Q-B2, 0.2.1).
      */
-    public function setDCodCliente(String $dCodCliente): void
+    public function setDCodCliente(string $dCodCliente): void
     {
         $this->dCodCliente = $dCodCliente;
     }
@@ -286,7 +286,7 @@ class GDatRec extends BaseSifenField
         $this->dDesDepRec = $desc;
     }
 
-    public function setDDesDepRec(String $dDesDepRec): self
+    public function setDDesDepRec(string $dDesDepRec): self
     {
         $this->dDesDepRec = $dDesDepRec;
         return $this;
@@ -302,7 +302,7 @@ class GDatRec extends BaseSifenField
         return $this;
     }
 
-    public function setDDesDisRec(String $dDesDisRec): self
+    public function setDDesDisRec(string $dDesDisRec): self
     {
         $this->dDesDisRec = $dDesDisRec;
         return $this;
@@ -318,7 +318,7 @@ class GDatRec extends BaseSifenField
         return $this;
     }
 
-    public function setDDesCiuRec(String $dDesCiuRec): self
+    public function setDDesCiuRec(string $dDesCiuRec): self
     {
         $this->dDesCiuRec = $dDesCiuRec;
         return $this;
@@ -354,7 +354,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getCPaisRec(): ?String
+    public function getCPaisRec(): ?string
     {
         if(isset($this->cPaisRec))
             return $this->cPaisRec;
@@ -367,7 +367,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesPaisRe(): ?String
+    public function getDDesPaisRe(): ?string
     {
         if(isset($this->dDesPaisRe))
             return $this->dDesPaisRe;
@@ -392,7 +392,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDRucRec(): ?String
+    public function getDRucRec(): ?string
     {
         if(isset($this->dRucRec))
             return $this->dRucRec;
@@ -426,7 +426,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDTipIDRec(): ?String
+    public function getDDTipIDRec(): ?string
     {
         // Si hay una descripción establecida (texto libre para "Otro" o asignada automáticamente
         // para los demás tipos en setITipIDRec) se devuelve tal cual.
@@ -443,7 +443,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDNumIDRec(): ?String
+    public function getDNumIDRec(): ?string
     {
         if(isset($this->dNumIDRec))
             return $this->dNumIDRec;
@@ -456,7 +456,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDNomRec(): String
+    public function getDNomRec(): string
     {
         return $this->dNomRec;
     }
@@ -466,7 +466,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDNomFanRec(): ?String
+    public function getDNomFanRec(): ?string
     {
         if(isset($this->dNomFanRec))
             return $this->dNomFanRec;
@@ -479,7 +479,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDirRec(): ?String
+    public function getDDirRec(): ?string
     {
         if(isset($this->dDirRec))
             return $this->dDirRec;
@@ -492,7 +492,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDTelRec(): String
+    public function getDTelRec(): string
     {
         return $this->dTelRec;
     }
@@ -502,7 +502,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDCelRec(): String
+    public function getDCelRec(): string
     {
         return $this->dCelRec;
     }
@@ -512,7 +512,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDEmailRec(): String
+    public function getDEmailRec(): string
     {
         return $this->dEmailRec;
     }
@@ -522,7 +522,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDCodCliente(): String
+    public function getDCodCliente(): string
     {
         return $this->dCodCliente;
     }
@@ -552,7 +552,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesDepRec(): String
+    public function getDDesDepRec(): string
     {
         return $this->dDesDepRec;
     }
@@ -572,7 +572,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesDisRec(): String
+    public function getDDesDisRec(): string
     {
         return PyGeoCodesMapping::getDistName(strval($this->cDisRec));
     }
@@ -593,7 +593,7 @@ class GDatRec extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesCiuRec(): String
+    public function getDDesCiuRec(): string
     {
         return PyGeoCodesMapping::getCiudName(strval($this->cCiuRec));
     }

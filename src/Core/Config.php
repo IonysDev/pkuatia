@@ -21,20 +21,20 @@ class Config
     public const CERT_FORMAT_PEM = "pem";
     public const CERT_FORMAT_PKCS12 = "pkcs12";
 
-    public String $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
+    public string $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
 
     // Parámetros de Firma Digital
-    public String $certificateFormat;    // Valores de entrada: "pem", "p12" o "pfx". Se normaliza internamente a "pem" o "pkcs12".
-    public ?String $certificateFilePath = null; // Ruta del certificado PEM. Opcional si cert y clave están en privateKeyFilePath.
-    public String $privateKeyFilePath;         // Ruta de la clave privada, o del archivo PEM/P12/PFX combinado.
-    public String $privateKeyPassphrase; // Contraseña de la clave privada.
+    public string $certificateFormat;    // Valores de entrada: "pem", "p12" o "pfx". Se normaliza internamente a "pem" o "pkcs12".
+    public ?string $certificateFilePath = null; // Ruta del certificado PEM. Opcional si cert y clave están en privateKeyFilePath.
+    public string $privateKeyFilePath;         // Ruta de la clave privada, o del archivo PEM/P12/PFX combinado.
+    public string $privateKeyPassphrase; // Contraseña de la clave privada.
 
     // Parámetros de autenticación ante el SIFEN
-    public String $idCsc = '0001'; // Identificador de la CSC entregado por el SIFEN.
-    public String $csc   = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
+    public string $idCsc = '0001'; // Identificador de la CSC entregado por el SIFEN.
+    public string $csc   = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
 
     // Lugar donde se almacena el archivo JSON que contiene el registro del último valor del dId utilizado.
-    public String $dIdFilePath = "PKuatiaDId.dat.json";
+    public string $dIdFilePath = "PKuatiaDId.dat.json";
 
     // Habilita la caché en disco de los WSDL del SIFEN (WSDL_CACHE_DISK de la extensión SOAP).
     // Recomendado en producción: el SIFEN limita la tasa de solicitudes y descargar el WSDL en cada
@@ -46,7 +46,7 @@ class Config
     public ?int $soapConnectionTimeout = null;
 
     // Cabecera User-Agent de las solicitudes SOAP. Null: la de PHP. Nuevo en 0.2.1 (PK-31).
-    public ?String $soapUserAgent = null;
+    public ?string $soapUserAgent = null;
 
     // Guarda la última solicitud y respuesta SOAP (opción trace de SoapClient) para Sifen::GetLastRequest() y
     // GetLastResponse(). Con false no se guardan y esos métodos devuelven null. Nuevo en 0.3.0 (Fase C, C12).
@@ -165,12 +165,12 @@ class Config
         return $res;
     }
 
-    public static function ParseJsonFile(String $jsonConfigFilePath) {
+    public static function ParseJsonFile(string $jsonConfigFilePath) {
         $config = json_decode(file_get_contents($jsonConfigFilePath));
         return self::ParseObject($config);
     }
 
-    public static function ParseJson(String $jsonConfig) {
+    public static function ParseJson(string $jsonConfig) {
         $obj = json_decode($jsonConfig);
         return self::ParseObject($obj);
     }
@@ -184,7 +184,7 @@ class Config
      *
      * @return self
      */
-    public function setEnv(String $env): self
+    public function setEnv(string $env): self
     {
         $this->env = $env;
 
@@ -198,7 +198,7 @@ class Config
      *
      * @return self
      */
-    public function setCertificateFormat(String $certificateFormat): self
+    public function setCertificateFormat(string $certificateFormat): self
     {
         $this->certificateFormat = self::normalizeCertificateFormat($certificateFormat);
 
@@ -212,7 +212,7 @@ class Config
      *
      * @return self
      */
-    public function setCertificateFilePath(String $certificateFilePath): self
+    public function setCertificateFilePath(string $certificateFilePath): self
     {
         $this->certificateFilePath = $certificateFilePath;
 
@@ -226,7 +226,7 @@ class Config
      *
      * @return self
      */
-    public function setPrivateKeyFilePath(String $privateKeyFilePath): self
+    public function setPrivateKeyFilePath(string $privateKeyFilePath): self
     {
         $this->privateKeyFilePath = $privateKeyFilePath;
 
@@ -240,7 +240,7 @@ class Config
      *
      * @return self
      */
-    public function setPrivateKeyPassphrase(String $privateKeyPassphrase): self
+    public function setPrivateKeyPassphrase(string $privateKeyPassphrase): self
     {
         $this->privateKeyPassphrase = $privateKeyPassphrase;
 
@@ -254,7 +254,7 @@ class Config
      *
      * @return self
      */
-    public function setIdCsc(String $idCsc): self
+    public function setIdCsc(string $idCsc): self
     {
         $this->idCsc = $idCsc;
 
@@ -268,7 +268,7 @@ class Config
      *
      * @return self
      */
-    public function setCsc(String $csc): self
+    public function setCsc(string $csc): self
     {
         $this->csc = $csc;
 
@@ -282,7 +282,7 @@ class Config
      *
      * @return self
      */
-    public function setDIdFilePath(String $dIdFilePath): self
+    public function setDIdFilePath(string $dIdFilePath): self
     {
         $this->dIdFilePath = $dIdFilePath;
 
@@ -327,7 +327,7 @@ class Config
      *
      * @return self
      */
-    public function setSoapUserAgent(?String $soapUserAgent): self
+    public function setSoapUserAgent(?string $soapUserAgent): self
     {
         $this->soapUserAgent = $soapUserAgent;
 
@@ -400,7 +400,7 @@ class Config
      * 
      * @return String
      */
-    public function getIdCsc(): String
+    public function getIdCsc(): string
     {
         return $this->idCsc;
     }
@@ -410,7 +410,7 @@ class Config
      * 
      * @return String
      */
-    public function getEnv(): String
+    public function getEnv(): string
     {
         return $this->env;
     }
@@ -420,7 +420,7 @@ class Config
      * 
      * @return String
      */
-    public function getCsc(): String
+    public function getCsc(): string
     {
         return $this->csc;
     }

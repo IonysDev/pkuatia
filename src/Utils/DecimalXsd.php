@@ -33,7 +33,7 @@ final class DecimalXsd
    *
    * @throws \InvalidArgumentException Si el valor no es numérico o excede los dígitos o decimales permitidos.
    */
-  public static function normalizar(int|String $valor, String $campo, int $totalDigitos, int $decimales = 4, String $prefijo = '', String $tipo = 'DE_Types_v150.xsd'): String
+  public static function normalizar(int|string $valor, string $campo, int $totalDigitos, int $decimales = 4, string $prefijo = '', string $tipo = 'DE_Types_v150.xsd'): string
   {
     $original = trim((string) $valor);
     $texto = $original;
@@ -61,7 +61,7 @@ final class DecimalXsd
    * Valor decimal exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor
    * (compatibilidad con quien escribe la propiedad entera sin pasar por el setter).
    */
-  public static function exacto(?String $decimal, int $entero): String
+  public static function exacto(?string $decimal, int $entero): string
   {
     return ($decimal !== null && intval($decimal) === $entero) ? $decimal : (string) $entero;
   }

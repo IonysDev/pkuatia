@@ -28,10 +28,10 @@ class GRespDE extends BaseSifenField
 
                                   // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipIDRespDE;  // D141 - 1     - 1-1 - Tipo de documento de identidad del responsable de la generación del DE
-    public String $dDTipIDRespDE; // D142 - 9-41  - 1-1 - Descripción del tipo de documento de identidad del responsable de la generación del DE
-    public String $dNumIDRespDE;  // D143 - 1-20  - 1-1 - Número de documento de identidad del responsable de la generación del DE
-    public String $dNomRespDE;    // D144 - 4-255 - 1-1 - Nombre o razón social del responsable de la generación del DE
-    public String $dCarRespDE;    // D145 - 4-100 - 1-1 - Cargo del responsable de la generación del DE 
+    public string $dDTipIDRespDE; // D142 - 9-41  - 1-1 - Descripción del tipo de documento de identidad del responsable de la generación del DE
+    public string $dNumIDRespDE;  // D143 - 1-20  - 1-1 - Número de documento de identidad del responsable de la generación del DE
+    public string $dNomRespDE;    // D144 - 4-255 - 1-1 - Nombre o razón social del responsable de la generación del DE
+    public string $dCarRespDE;    // D145 - 4-100 - 1-1 - Cargo del responsable de la generación del DE 
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -63,7 +63,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDDTipIDRespDE(String $dDTipIDRespDE): self
+    public function setDDTipIDRespDE(string $dDTipIDRespDE): self
     {
         $this->dDTipIDRespDE = $dDTipIDRespDE;
         return $this;
@@ -76,7 +76,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDNumIDRespDE(String $dNumIDRespDE): self
+    public function setDNumIDRespDE(string $dNumIDRespDE): self
     {
         $this->dNumIDRespDE = $dNumIDRespDE;
         return $this;
@@ -89,7 +89,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDNomRespDE(String $dNomRespDE): self
+    public function setDNomRespDE(string $dNomRespDE): self
     {
         $this->dNomRespDE = $dNomRespDE;
         return $this;
@@ -102,7 +102,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDCarRespDE(String $dCarRespDE): self
+    public function setDCarRespDE(string $dCarRespDE): self
     {
         $this->dCarRespDE = $dCarRespDE;
         return $this;
@@ -127,7 +127,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return String Descripción del tipo de documento de identidad del responsable de la generación del DE.
      */
-    public function getDDTipIDRespDE(): String
+    public function getDDTipIDRespDE(): string
     {
         return $this->dDTipIDRespDE;
     }
@@ -137,7 +137,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return String Número de documento de identidad del responsable de la generación del DE.
      */
-    public function getDNumIDRespDE(): String
+    public function getDNumIDRespDE(): string
     {
         return $this->dNumIDRespDE;
     }
@@ -147,7 +147,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return String Nombre o razón social del responsable de la generación del DE.
      */
-    public function getDNomRespDE(): String
+    public function getDNomRespDE(): string
     {
         return $this->dNomRespDE;
     }
@@ -157,7 +157,7 @@ class GRespDE extends BaseSifenField
      * 
      * @return String Cargo del responsable de la generación del DE.
      */ 
-    public function getDCarRespDE(): String
+    public function getDCarRespDE(): string
     {
         return $this->dCarRespDE;
     }

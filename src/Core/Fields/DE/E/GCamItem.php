@@ -22,25 +22,25 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GCamItem extends BaseSifenField
 {
-  public String     $dCodInt;      // E701 - 1-50       - 1-1 - Código interno
+  public string     $dCodInt;      // E701 - 1-50       - 1-1 - Código interno
   public int        $dParAranc;    // E702 - 4          - 0-1 - Partida arancelaria
   public int        $dNCM;         // E703 - 6-8        - 0-1 - Nomenclatura común del Mercosur (NCM)
-  public String     $dDncpG;       // E704 - 8          - 0-1 - Código DNCP – Nivel General
-  public String     $dDncpE;       // E705 - 3-4        - 0-1 - Código DNCP – Nivel Especifico
+  public string     $dDncpG;       // E704 - 8          - 0-1 - Código DNCP – Nivel General
+  public string     $dDncpE;       // E705 - 3-4        - 0-1 - Código DNCP – Nivel Especifico
   public int        $dGtin;        // E706 - 8,12,13,14 - 0-1 - Código GTIN por producto
   public int        $dGtinPq;      // E707 - 8,12,13,14 - 0-1 - Código GTIN por paquete
-  public String     $dDesProSer;   // E708 - 1-2000      - 1-1 - Descripción del producto  y/o servicio
+  public string     $dDesProSer;   // E708 - 1-2000      - 1-1 - Descripción del producto  y/o servicio
   public int        $cUniMed;      // E709 - 1-5        - 1-1 - Unidad de medida
-  public String     $dDesUniMed;   // E710 - 1-10       - 1-1 - Descripción de la unidad de medida
-  public String     $dCantProSer;  // E711 - 1-10p(0-8) - 1-1 - Cantidad del producto y/o servicio (es un decimal BCMAth)
-  public String     $cPaisOrig;    // E712 - 3          - 0-1 - Código del país de origen del producto
-  public ?String    $dDesPaisOrig = null; // E713 - 4-30       - 0-1 - Descripción del país de origen del producto
-  public String     $dInfItem;     // E714 - 1-500      - 0-1 - Información de interés  del emisor con respecto al item;
+  public string     $dDesUniMed;   // E710 - 1-10       - 1-1 - Descripción de la unidad de medida
+  public string     $dCantProSer;  // E711 - 1-10p(0-8) - 1-1 - Cantidad del producto y/o servicio (es un decimal BCMAth)
+  public string     $cPaisOrig;    // E712 - 3          - 0-1 - Código del país de origen del producto
+  public ?string    $dDesPaisOrig = null; // E713 - 4-30       - 0-1 - Descripción del país de origen del producto
+  public string     $dInfItem;     // E714 - 1-500      - 0-1 - Información de interés  del emisor con respecto al item;
   public int        $cRelMerc;     // E715 - 1          - 0-1 - Código de datos de relevancia de las  mercaderías
-  public ?String    $dDesRelMerc  = null; // E716 - 19-21      - 0-1 - Descripción del código de datos de relevancia de las mercaderías
-  public String     $dCanQuiMer;   // E717 - 1-10p(0-4) - 0-1 - Cantidad de quiebra o  merma (decimal BCMath)
-  public String     $dPorQuiMer;   // E718 - 1-3p(0-8)  - 0-1 - Porcentaje de quiebra o merma (decimal BCMath)
-  public String     $dCDCAnticipo; // E719 - 44         - 0-1 - CDC del anticipo
+  public ?string    $dDesRelMerc  = null; // E716 - 19-21      - 0-1 - Descripción del código de datos de relevancia de las mercaderías
+  public string     $dCanQuiMer;   // E717 - 1-10p(0-4) - 0-1 - Cantidad de quiebra o  merma (decimal BCMath)
+  public string     $dPorQuiMer;   // E718 - 1-3p(0-8)  - 0-1 - Porcentaje de quiebra o merma (decimal BCMath)
+  public string     $dCDCAnticipo; // E719 - 44         - 0-1 - CDC del anticipo
   public GValorItem $gValorItem;   // E720 -            - 0-1 - Campos que describen los precios, descuentos y valor total por ítem 
   public GCamIVA    $gCamIVA;      // E730 -            - 0-1 - Campos que describen el IVA de la operación
   public GRasMerc   $gRasMerc;     // E750 -            - 0-1 - Grupo de rastreo de la mercadería
@@ -102,7 +102,7 @@ class GCamItem extends BaseSifenField
    * de 14 cifras significativas perdía decimales. Se quitan los ceros decimales finales para que el formato
    * de getFormattedSubt05/10 no cambie: 5000.00000000 se sigue mostrando como 5.000.
    */
-  private static function sumaExacta(String $a, String $b): String
+  private static function sumaExacta(string $a, string $b): string
   {
     $suma = bcadd($a, $b, 8);
     return str_contains($suma, '.') ? rtrim(rtrim($suma, '0'), '.') : $suma;
@@ -126,7 +126,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDCodInt(String $dCodInt): self
+  public function setDCodInt(string $dCodInt): self
   {
     $this->dCodInt = $dCodInt;
 
@@ -171,7 +171,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDDncpG(String $dDncpG): self
+  public function setDDncpG(string $dDncpG): self
   {
     $this->dDncpG = $dDncpG;
 
@@ -186,7 +186,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDDncpE(String $dDncpE): self
+  public function setDDncpE(string $dDncpE): self
   {
     $this->dDncpE = $dDncpE;
 
@@ -231,7 +231,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDDesProSer(String $dDesProSer): self
+  public function setDDesProSer(string $dDesProSer): self
   {
     $this->dDesProSer = $dDesProSer;
 
@@ -263,7 +263,7 @@ class GCamItem extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesUniMed(String $dDesUniMed): self
+  public function setDDesUniMed(string $dDesUniMed): self
   {
     if(is_null($dDesUniMed) || strlen($dDesUniMed) == 0)
     {
@@ -284,7 +284,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDCantProSer(String $dCantProSer): self
+  public function setDCantProSer(string $dCantProSer): self
   {
     if(!ValueValidations::isValidStringDecimal($dCantProSer, 10, 0, 8))
     {
@@ -302,7 +302,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setCPaisOrig(String $cPaisOrig): self
+  public function setCPaisOrig(string $cPaisOrig): self
   {
     $desc = CountryMapping::getCountryDesc($cPaisOrig);
     if ($desc === null)
@@ -319,7 +319,7 @@ class GCamItem extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesPaisOrig(?String $dDesPaisOrig): self
+  public function setDDesPaisOrig(?string $dDesPaisOrig): self
   {
     $this->dDesPaisOrig = (is_null($dDesPaisOrig) || strlen($dDesPaisOrig) === 0)
       ? null
@@ -335,7 +335,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDInfItem(String $dInfItem): self
+  public function setDInfItem(string $dInfItem): self
   {
     $this->dInfItem = $dInfItem;
 
@@ -374,7 +374,7 @@ class GCamItem extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesRelMerc(?String $dDesRelMerc): self
+  public function setDDesRelMerc(?string $dDesRelMerc): self
   {
     $this->dDesRelMerc = (is_null($dDesRelMerc) || strlen($dDesRelMerc) === 0)
       ? null
@@ -426,7 +426,7 @@ class GCamItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDCDCAnticipo(String|int $dCDCAnticipo): self
+  public function setDCDCAnticipo(string|int $dCDCAnticipo): self
   {
     $this->dCDCAnticipo = strval($dCDCAnticipo);
 
@@ -494,7 +494,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDCodInt(): String
+  public function getDCodInt(): string
   {
     return $this->dCodInt;
   }
@@ -530,7 +530,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDncpG(): String
+  public function getDDncpG(): string
   {
     return $this->dDncpG;
   }
@@ -540,7 +540,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDncpE(): String
+  public function getDDncpE(): string
   {
     return $this->dDncpE;
   }
@@ -570,7 +570,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesProSer(): String
+  public function getDDesProSer(): string
   {
     return $this->dDesProSer;
   }
@@ -590,7 +590,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesUniMed(): String
+  public function getDDesUniMed(): string
   {
     return $this->dDesUniMed;
   }
@@ -600,12 +600,12 @@ class GCamItem extends BaseSifenField
    *
    * @return int
    */
-  public function getDCantProSer(): String
+  public function getDCantProSer(): string
   {
     return $this->dCantProSer;
   }
 
-  public function getFormattedDCantProSer(int $precision = 8): String
+  public function getFormattedDCantProSer(int $precision = 8): string
   {
     $rounded = bcadd($this->dCantProSer, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -617,7 +617,7 @@ class GCamItem extends BaseSifenField
    * @return String
    */
 
-  public function getCPaisOrig(): String
+  public function getCPaisOrig(): string
   {
     return $this->cPaisOrig;
   }
@@ -627,7 +627,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesPaisOrig(): ?String
+  public function getDDesPaisOrig(): ?string
   {
     return $this->dDesPaisOrig;
   }
@@ -638,7 +638,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDInfItem(): String
+  public function getDInfItem(): string
   {
     return $this->dInfItem;
   }
@@ -658,7 +658,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesRelMerc(): ?String
+  public function getDDesRelMerc(): ?string
   {
     return $this->dDesRelMerc;
   }
@@ -668,12 +668,12 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDCanQuiMer(): String
+  public function getDCanQuiMer(): string
   {
     return $this->dCanQuiMer;
   }
 
-  public function getFormattedDCanQuiMer(int $precision = 8): String
+  public function getFormattedDCanQuiMer(int $precision = 8): string
   {
     $rounded = bcadd($this->dCanQuiMer, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -684,12 +684,12 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDPorQuiMer(): String
+  public function getDPorQuiMer(): string
   {
     return $this->dPorQuiMer;
   }
 
-  public function getFormattedDPorQuiMer(int $precision = 8): String
+  public function getFormattedDPorQuiMer(int $precision = 8): string
   {
     $rounded = bcadd($this->dPorQuiMer, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -700,7 +700,7 @@ class GCamItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDCDCAnticipo(): String
+  public function getDCDCAnticipo(): string
   {
     return $this->dCDCAnticipo;
   }

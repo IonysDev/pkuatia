@@ -16,9 +16,9 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GCamGen
 {
-  public ?String  $dOrdCompra = null; // G002 - 1-15 - 0-1 - Número de orden de compra
-  public ?String  $dOrdVta    = null; // G003 - 1-15 - 0-1 - Número de orden de venta
-  public ?String  $dAsiento   = null; // G004 - 1-10 - 0-1 - Número de asiento contable
+  public ?string  $dOrdCompra = null; // G002 - 1-15 - 0-1 - Número de orden de compra
+  public ?string  $dOrdVta    = null; // G003 - 1-15 - 0-1 - Número de orden de venta
+  public ?string  $dAsiento   = null; // G004 - 1-10 - 0-1 - Número de asiento contable
   public GCamCarg $gCamCarg;          // G050 -      - 0-1 - Campos generales de la carga
 
   ///////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ class GCamGen
    *
    * @return self
    */
-  public function setDOrdCompra(?String $dOrdCompra): self
+  public function setDOrdCompra(?string $dOrdCompra): self
   {
     $this->dOrdCompra = (is_null($dOrdCompra) || strlen($dOrdCompra) === 0)
       ? null
@@ -48,7 +48,7 @@ class GCamGen
    *
    * @return self
    */
-  public function setDOrdVta(?String $dOrdVta): self
+  public function setDOrdVta(?string $dOrdVta): self
   {
     $this->dOrdVta = (is_null($dOrdVta) || strlen($dOrdVta) === 0)
       ? null
@@ -64,7 +64,7 @@ class GCamGen
    *
    * @return self
    */
-  public function setDAsiento(?String $dAsiento): self
+  public function setDAsiento(?string $dAsiento): self
   {
     $this->dAsiento = (is_null($dAsiento) || strlen($dAsiento) === 0)
       ? null
@@ -87,7 +87,7 @@ class GCamGen
    *
    * @return String|null
    */
-  public function getDOrdCompra(): ?String
+  public function getDOrdCompra(): ?string
   {
     return $this->dOrdCompra;
   }
@@ -97,7 +97,7 @@ class GCamGen
    *
    * @return String|null
    */
-  public function getDOrdVta(): ?String
+  public function getDOrdVta(): ?string
   {
     return $this->dOrdVta;
   }
@@ -107,7 +107,7 @@ class GCamGen
    *
    * @return String|null
    */
-  public function getDAsiento(): ?String
+  public function getDAsiento(): ?string
   {
     return $this->dAsiento;
   }

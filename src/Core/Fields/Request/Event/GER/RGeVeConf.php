@@ -16,7 +16,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeConf
 {
   // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String   $Id;        // GCO002 CDC del DTE 44- 1-1
+  public string   $Id;        // GCO002 CDC del DTE 44- 1-1
   public int      $iTipConf;  // GCO003 Tipo de Conformidad - 1 - 1-1
   public DateTime $dFecRecep; // GCO004 Fecha Estimada de Recepción - 19 -0-1
 
@@ -32,7 +32,7 @@ class RGeVeConf
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
     return $this;
@@ -74,7 +74,7 @@ class RGeVeConf
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -139,7 +139,7 @@ class RGeVeConf
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): Self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
   {
     if ($node->getName() != 'rGeVeConf')
       throw new ValidacionException("Invalid XML Element: $node->getName()");

@@ -27,25 +27,25 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GEmis extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
-    public String  $dRucEm;     // D101 - 3-8   - 1-1 - RUC del contribuyente emisor
+    public string  $dRucEm;     // D101 - 3-8   - 1-1 - RUC del contribuyente emisor
     public int     $dDVEmi;     // D102 - 1     - 1-1 - Dígito verificador del RUC del contribuyente emisor
     public int     $iTipCont;   // D103 - 1     - 1-1 - Tipo de contribuyente: 1 = Persona Física | 2 = Persona Jurídica
     public int     $cTipReg;    // D104 - 1-2   - 0-1 - Tipo de régimen: 1 = Régimen de Turismo | 2 = Importador | 3 = Exportador | 4 = Maquila | 5 = Ley N° 60/90 | 6 = Régimen del Pequeño Productor | 7 = Régimen del Mediano Productor | 8 = Régimen Contable
-    public String  $dNomEmi;    // D105 - 4-255 - 1-1 - Nombre o razón social del emisor del DE
-    public String  $dNomFanEmi; // D106 - 4-255 - 0-1 - Nombre de fantasía
-    public String  $dDirEmi;    // D107 - 1-255 - 1-1 - Dirección del local donde se emite el DE
+    public string  $dNomEmi;    // D105 - 4-255 - 1-1 - Nombre o razón social del emisor del DE
+    public string  $dNomFanEmi; // D106 - 4-255 - 0-1 - Nombre de fantasía
+    public string  $dDirEmi;    // D107 - 1-255 - 1-1 - Dirección del local donde se emite el DE
     public int     $dNumCas;    // D108 - 1-6   - 1-1 - Número de casa
-    public String  $dCompDir1;  // D109 - 1-255 - 0-1 - Complemento de dirección 1
-    public String  $dCompDir2;  // D110 - 1-255 - 0-1 - Complemento de dirección 2
+    public string  $dCompDir1;  // D109 - 1-255 - 0-1 - Complemento de dirección 1
+    public string  $dCompDir2;  // D110 - 1-255 - 0-1 - Complemento de dirección 2
     public int     $cDepEmi;    // D111 - 1-2   - 1-1 - Código del departamento de emisión
-    public String  $dDesDepEmi; // D112 - 6-16  - 1-1 - Descripción del departamento de emisión
+    public string  $dDesDepEmi; // D112 - 6-16  - 1-1 - Descripción del departamento de emisión
     public int     $cDisEmi;    // D113 - 1-4   - 0-1 - Código de la distrito de emisión
-    public String  $dDesDisEmi; // D114 - 1-30  - 0-1 - Descripción de la distrito de emisión
+    public string  $dDesDisEmi; // D114 - 1-30  - 0-1 - Descripción de la distrito de emisión
     public int     $cCiuEmi;    // D115 - 1-5   - 1-1 - Código de la ciudad de emisión
-    public String  $dDesCiuEmi; // D116 - 1-30  - 1-1 - Descripción de la ciudad de emisión
-    public String  $dTelEmi;    // D117 - 6-15  - 1-1 - Teléfono local de emisión de DE 
-    public String  $dEmailE;    // D118 - 3-80  - 1-1 - Correo electrónico del emisor
-    public String  $dDenSuc;    // D119 - 1-30  - 0-1 - Denominación comercial de la sucursal
+    public string  $dDesCiuEmi; // D116 - 1-30  - 1-1 - Descripción de la ciudad de emisión
+    public string  $dTelEmi;    // D117 - 6-15  - 1-1 - Teléfono local de emisión de DE 
+    public string  $dEmailE;    // D118 - 3-80  - 1-1 - Correo electrónico del emisor
+    public string  $dDenSuc;    // D119 - 1-30  - 0-1 - Denominación comercial de la sucursal
     public array   $gActEco;    // D130 -       - 1-9 - Grupo de campos que describen la actividad económica del emisor del tipo GActEco (D130)
     public GRespDE $gRespDE;    // D140 -       - 0-1 - Grupo de campos que identifican al responsable de la generación del DE
     
@@ -61,7 +61,7 @@ class GEmis extends BaseSifenField
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
-    public function setDRucEm(String $dRucEm): self
+    public function setDRucEm(string $dRucEm): self
     {
         $this->dRucEm = $dRucEm;
         return $this;
@@ -85,19 +85,19 @@ class GEmis extends BaseSifenField
         return $this;
     }
 
-    public function setDNomEmi(String $dNomEmi): self
+    public function setDNomEmi(string $dNomEmi): self
     {
         $this->dNomEmi = $dNomEmi;
         return $this;
     }
 
-    public function setDNomFanEmi(String $dNomFanEmi): self
+    public function setDNomFanEmi(string $dNomFanEmi): self
     {
         $this->dNomFanEmi = $dNomFanEmi;
         return $this;
     }
 
-    public function setDDirEmi(String $dDirEmi): self
+    public function setDDirEmi(string $dDirEmi): self
     {
         $this->dDirEmi = $dDirEmi;
         return $this;
@@ -109,13 +109,13 @@ class GEmis extends BaseSifenField
         return $this;
     }
 
-    public function setDCompDir1(String $dCompDir1): self
+    public function setDCompDir1(string $dCompDir1): self
     {
         $this->dCompDir1 = $dCompDir1;
         return $this;
     }
 
-    public function setDCompDir2(String $dCompDir2): self
+    public function setDCompDir2(string $dCompDir2): self
     {
         $this->dCompDir2 = $dCompDir2;
         return $this;
@@ -147,7 +147,7 @@ class GEmis extends BaseSifenField
      * 
      * @return self
      */
-    public function setDDesDepEmi(String $dDesDepEmi): self
+    public function setDDesDepEmi(string $dDesDepEmi): self
     {
         $this->dDesDepEmi = $dDesDepEmi;
         return $this;
@@ -179,7 +179,7 @@ class GEmis extends BaseSifenField
      * 
      * @return self
      */
-    public function setDDesDisEmi(String $dDesDisEmi): self
+    public function setDDesDisEmi(string $dDesDisEmi): self
     {
         $this->dDesDisEmi = $dDesDisEmi;
         return $this;
@@ -195,25 +195,25 @@ class GEmis extends BaseSifenField
         return $this;
     }
 
-    public function setDDesCiuEmi(String $dDesCiuEmi): self
+    public function setDDesCiuEmi(string $dDesCiuEmi): self
     {
         $this->dDesCiuEmi = $dDesCiuEmi;
         return $this;
     }
 
-    public function setDTelEmi(String $dTelEmi): self
+    public function setDTelEmi(string $dTelEmi): self
     {
         $this->dTelEmi = $dTelEmi;
         return $this;
     }
 
-    public function setDEmailE(String $dEmailE): self
+    public function setDEmailE(string $dEmailE): self
     {
         $this->dEmailE = $dEmailE;
         return $this;
     }
 
-    public function setDDenSuc(String $dDenSuc): self
+    public function setDDenSuc(string $dDenSuc): self
     {
         $this->dDenSuc = $dDenSuc;
         return $this;
@@ -235,7 +235,7 @@ class GEmis extends BaseSifenField
     // Getters
     ///////////////////////////////////////////////////////////////////////
 
-    public function getDRucEm(): String
+    public function getDRucEm(): string
     {
         return $this->dRucEm;
     }
@@ -255,17 +255,17 @@ class GEmis extends BaseSifenField
         return $this->cTipReg;
     }
 
-    public function getDNomEmi(): String
+    public function getDNomEmi(): string
     {
         return $this->dNomEmi;
     }
 
-    public function getDNomFanEmi(): String 
+    public function getDNomFanEmi(): string 
     {
         return $this->dNomFanEmi;
     }
 
-    public function getDDirEmi(): String
+    public function getDDirEmi(): string
     {
         return $this->dDirEmi;
     }
@@ -275,12 +275,12 @@ class GEmis extends BaseSifenField
         return $this->dNumCas;
     }
 
-    public function getDCompDir1(): String
+    public function getDCompDir1(): string
     {
         return $this->dCompDir1;
     }
 
-    public function getDCompDir2(): String
+    public function getDCompDir2(): string
     {
         return $this->dCompDir2;
     }
@@ -295,7 +295,7 @@ class GEmis extends BaseSifenField
      * 
      * @return String
      */
-    public function getDDesDepEmi(): String
+    public function getDDesDepEmi(): string
     {
         return $this->dDesDepEmi;
     }
@@ -310,7 +310,7 @@ class GEmis extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesDisEmi(): String
+    public function getDDesDisEmi(): string
     {
         return $this->dDesDisEmi;
     }
@@ -325,23 +325,23 @@ class GEmis extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesCiuEmi(): String
+    public function getDDesCiuEmi(): string
     {
         // return PyGeoCodesMapping::getCiudName(strval($this->cCiuEmi));
         return $this->dDesCiuEmi;
     }
 
-    public function getDTelEmi(): String
+    public function getDTelEmi(): string
     {
         return $this->dTelEmi;
     }
 
-    public function getDEmailE(): String
+    public function getDEmailE(): string
     {
         return $this->dEmailE;
     }
 
-    public function getDDenSuc(): String
+    public function getDDenSuc(): string
     {
         return $this->dDenSuc;
     }
@@ -600,7 +600,7 @@ class GEmis extends BaseSifenField
      * 
      * @return self
      */
-    public function addActEco(int $cod, String $desc): self
+    public function addActEco(int $cod, string $desc): self
     {
         $this->gActEco[] = new GActEco($cod, $desc);
         return $this;

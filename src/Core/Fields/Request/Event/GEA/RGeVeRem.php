@@ -13,7 +13,7 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 class RGeVeRem
 {
                      // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id; // GERE002 - CDC del DTE asociado - 44 - 1-1
+  public string $Id; // GERE002 - CDC del DTE asociado - 44 - 1-1
 
    ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -27,7 +27,7 @@ class RGeVeRem
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
 
@@ -43,7 +43,7 @@ class RGeVeRem
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }

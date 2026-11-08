@@ -20,8 +20,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GCamFuFD extends BaseSifenField
 {
   // Id - Longitud - Ocurrencia - Descripción
-  public String $dCarQR;   // J002 - 100-600 - 1-1 - Caracteres correspondientes al código QR
-  public String $dInfAdic; // J003 - 1-5000  - 0-1 - Información adicional de interés para el emisor
+  public string $dCarQR;   // J002 - 100-600 - 1-1 - Caracteres correspondientes al código QR
+  public string $dInfAdic; // J003 - 1-5000  - 0-1 - Información adicional de interés para el emisor
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -34,7 +34,7 @@ class GCamFuFD extends BaseSifenField
    *
    * @return self
    */
-  public function setDCarQR(String $dCarQR): self
+  public function setDCarQR(string $dCarQR): self
   {
     $this->dCarQR = $dCarQR;
     return $this;
@@ -48,7 +48,7 @@ class GCamFuFD extends BaseSifenField
    *
    * @return self
    */
-  public function setDInfAdic(String $dInfAdic): self
+  public function setDInfAdic(string $dInfAdic): self
   {
     $this->dInfAdic = substr($dInfAdic, 0, 5000);
     return $this;
@@ -63,7 +63,7 @@ class GCamFuFD extends BaseSifenField
    *
    * @return String
    */
-  public function getDCarQR(): String
+  public function getDCarQR(): string
   {
     return $this->dCarQR;
   }
@@ -73,7 +73,7 @@ class GCamFuFD extends BaseSifenField
    *
    * @return String
    */
-  public function getDInfAdic(): String
+  public function getDInfAdic(): string
   {
     if(isset($this->dInfAdic))
       return $this->dInfAdic;

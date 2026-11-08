@@ -15,20 +15,20 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GGrupSup
 {
-  public String $dNomCaj; ///E811 Nombre del cajero
+  public string $dNomCaj; ///E811 Nombre del cajero
   /** @deprecated 0.2.1 Parte entera del monto (E812 admite 4 decimales): usar getDEfectivoDecimal(). */
   public int $dEfectivo; /// E812 Efectivo
   /** @deprecated 0.2.1 Parte entera del monto (E813 admite 4 decimales): usar getDVueltoDecimal(). */
   public int $dVuelto; //E813 Vuelto
   /** @deprecated 0.2.1 Parte entera del monto (E814 admite 4 decimales): usar getDDonacDecimal(). */
   public int $dDonac; ///E814 Monto de la donación
-  public String $dDesDonac; ///E815 Descripción de la donación
+  public string $dDesDonac; ///E815 Descripción de la donación
 
   // Montos exactos (dEfectivo tMontoBase4; dVuelto y dDonac tMontoBase6; hasta 4 decimales, DE_Types_v150.xsd).
   // Hasta 0.2.0 solo existían las propiedades int y los centavos se truncaban (Q-B10).
-  private ?String $dEfectivoDecimal = null;
-  private ?String $dVueltoDecimal = null;
-  private ?String $dDonacDecimal = null;
+  private ?string $dEfectivoDecimal = null;
+  private ?string $dVueltoDecimal = null;
+  private ?string $dDonacDecimal = null;
 
   ///////////////////////////////////////////////////////////////////////
   ////Setters
@@ -41,7 +41,7 @@ class GGrupSup
    *
    * @return self
    */
-  public function setDNomCaj(String $dNomCaj): self
+  public function setDNomCaj(string $dNomCaj): self
   {
     $this->dNomCaj = $dNomCaj;
 
@@ -59,7 +59,7 @@ class GGrupSup
    *
    * @return self
    */
-  public function setDEfectivo(int|String $dEfectivo): self
+  public function setDEfectivo(int|string $dEfectivo): self
   {
     $this->dEfectivoDecimal = self::monto($dEfectivo, 'dEfectivo', 19);
     $this->dEfectivo = intval($this->dEfectivoDecimal);
@@ -78,7 +78,7 @@ class GGrupSup
    *
    * @return self
    */
-  public function setDVuelto(int|String $dVuelto): self
+  public function setDVuelto(int|string $dVuelto): self
   {
     $this->dVueltoDecimal = self::monto($dVuelto, 'dVuelto', 10);
     $this->dVuelto = intval($this->dVueltoDecimal);
@@ -97,7 +97,7 @@ class GGrupSup
    *
    * @return self
    */
-  public function setDDonac(int|String $dDonac): self
+  public function setDDonac(int|string $dDonac): self
   {
     $this->dDonacDecimal = self::monto($dDonac, 'dDonac', 10);
     $this->dDonac = intval($this->dDonacDecimal);
@@ -113,7 +113,7 @@ class GGrupSup
    *
    * @return self
    */
-  public function setDDesDonac(String $dDesDonac): self
+  public function setDDesDonac(string $dDesDonac): self
   {
     $this->dDesDonac = $dDesDonac;
 
@@ -129,7 +129,7 @@ class GGrupSup
    *
    * @return String
    */
-  public function getDNomCaj(): String
+  public function getDNomCaj(): string
   {
     return $this->dNomCaj;
   }
@@ -175,7 +175,7 @@ class GGrupSup
    *
    * @return String|null
    */
-  public function getDEfectivoDecimal(): ?String
+  public function getDEfectivoDecimal(): ?string
   {
     return isset($this->dEfectivo) ? self::exacto($this->dEfectivoDecimal, $this->dEfectivo) : null;
   }
@@ -185,7 +185,7 @@ class GGrupSup
    *
    * @return String|null
    */
-  public function getDVueltoDecimal(): ?String
+  public function getDVueltoDecimal(): ?string
   {
     return isset($this->dVuelto) ? self::exacto($this->dVueltoDecimal, $this->dVuelto) : null;
   }
@@ -195,7 +195,7 @@ class GGrupSup
    *
    * @return String|null
    */
-  public function getDDonacDecimal(): ?String
+  public function getDDonacDecimal(): ?string
   {
     return isset($this->dDonac) ? self::exacto($this->dDonacDecimal, $this->dDonac) : null;
   }
@@ -205,7 +205,7 @@ class GGrupSup
    *
    * @return String
    */
-  public function getDDesDonac(): String
+  public function getDDesDonac(): string
   {
     return $this->dDesDonac;
   }
@@ -322,13 +322,13 @@ class GGrupSup
    * ("1e3") como decimal. Desde 0.3.0 (Fase C, C1) delega en Utils\DecimalXsd, con el mismo criterio y los
    * mismos mensajes.
    */
-  private static function monto(int|String $valor, String $campo, int $totalDigitos): String
+  private static function monto(int|string $valor, string $campo, int $totalDigitos): string
   {
     return DecimalXsd::normalizar($valor, $campo, $totalDigitos, 4, '[GGrupSup]');
   }
 
   /** Monto exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */
-  private static function exacto(?String $decimal, int $entero): String
+  private static function exacto(?string $decimal, int $entero): string
   {
     return DecimalXsd::exacto($decimal, $entero);
   }

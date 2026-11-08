@@ -22,8 +22,8 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
   public DateTime $dFecProc;      // FSch02 - Fecha y hora del procesamiento - 19 - 1-1
   public DateTime $dFecArchivo;   // FSch03 - Fecha del archivo - 10 - 0-1
   public int      $dCodRes;       // FSch04 - Código del resultado de la consulta - 1-4 - 1-1
-  public String   $dMsgRes;       // FSch05 - Mensaje del resultado de la consulta - 1-255 - 1-1
-  public String   $rConsDte;      // FSch06 - Archivo de RUC comprimido (ZIP) codificado en Base64 - 0-1
+  public string   $dMsgRes;       // FSch05 - Mensaje del resultado de la consulta - 1-255 - 1-1
+  public string   $rConsDte;      // FSch06 - Archivo de RUC comprimido (ZIP) codificado en Base64 - 0-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -75,7 +75,7 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
    *
    * @return self
    */
-  public function setDMsgRes(String $dMsgRes): self
+  public function setDMsgRes(string $dMsgRes): self
   {
     $this->dMsgRes = $dMsgRes;
     return $this;
@@ -88,7 +88,7 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
    *
    * @return self
    */
-  public function setRConsDte(String $rConsDte): self
+  public function setRConsDte(string $rConsDte): self
   {
     $this->rConsDte = $rConsDte;
     return $this;
@@ -133,7 +133,7 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
    *
    * @return String|null
    */
-  public function getDMsgRes(): ?String
+  public function getDMsgRes(): ?string
   {
     return isset($this->dMsgRes) ? $this->dMsgRes : null;
   }
@@ -143,7 +143,7 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
    *
    * @return String|null
    */
-  public function getRConsDte(): ?String
+  public function getRConsDte(): ?string
   {
     return isset($this->rConsDte) ? $this->rConsDte : null;
   }
@@ -153,7 +153,7 @@ class RResEnviConsArchivoRUC implements RespuestaSifen
    *
    * @return String|null Contenido binario del ZIP o null si el SIFEN no devolvió el archivo.
    */
-  public function getArchivoZip(): ?String
+  public function getArchivoZip(): ?string
   {
     if (!isset($this->rConsDte))
       return null;

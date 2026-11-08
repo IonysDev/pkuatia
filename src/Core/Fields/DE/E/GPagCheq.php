@@ -17,8 +17,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GPagCheq extends BaseSifenField
 {
                            // Id - Longitud - Ocurrencia - Descripción
-  public String $dNumCheq; // E631 - 8 -    1-1 - Número de cheque  
-  public String $dBcoEmi;  // E632 - 4-20 - 1-1 - Banco emisor
+  public string $dNumCheq; // E631 - 8 -    1-1 - Número de cheque  
+  public string $dBcoEmi;  // E632 - 4-20 - 1-1 - Banco emisor
 
   ///////////////////////////////////////////////////////////////////////
   ///Settets
@@ -32,7 +32,7 @@ class GPagCheq extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumCheq(String $dNumCheq): self
+  public function setDNumCheq(string $dNumCheq): self
   {
     if(strlen($dNumCheq) > 8)
       $this->dNumCheq = substr($dNumCheq, 0, 8);
@@ -51,7 +51,7 @@ class GPagCheq extends BaseSifenField
    *
    * @return self
    */
-  public function setDBcoEmi(String $dBcoEmi): self
+  public function setDBcoEmi(string $dBcoEmi): self
   {
     if(strlen($dBcoEmi) < 4)
       $this->dBcoEmi = str_pad($dBcoEmi, 4, " ", STR_PAD_RIGHT);
@@ -72,7 +72,7 @@ class GPagCheq extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumCheq(): String
+  public function getDNumCheq(): string
   {
     return $this->dNumCheq;
   }
@@ -82,7 +82,7 @@ class GPagCheq extends BaseSifenField
    *
    * @return String
    */
-  public function getDBcoEmi(): String
+  public function getDBcoEmi(): string
   {
     return $this->dBcoEmi;
   }

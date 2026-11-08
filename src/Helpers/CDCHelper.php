@@ -18,7 +18,7 @@ class CDCHelper
    *
    * @throws \InvalidArgumentException si el resultado no cumple tCDC del XSD (desde 0.2.1; antes devolvía "ERROR: ...").
    */
-  public static function Generate(DE $dE): String
+  public static function Generate(DE $dE): string
   {
     $cDC = "";
     ///Tipo de documento electrónico

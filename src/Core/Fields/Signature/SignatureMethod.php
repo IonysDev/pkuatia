@@ -12,7 +12,7 @@ use SimpleXMLElement;
 class SignatureMethod 
 {
 
-    public String $Algorithm;    
+    public string $Algorithm;    
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -25,7 +25,7 @@ class SignatureMethod
      *
      * @return self
      */
-    public function setAlgorithm(String $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
         return $this;
@@ -40,7 +40,7 @@ class SignatureMethod
      *
      * @return String
      */
-    public function getAlgorithm(): String
+    public function getAlgorithm(): string
     {
         return $this->Algorithm;
     }

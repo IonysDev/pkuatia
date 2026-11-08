@@ -13,7 +13,7 @@ class NumberStringFormatter {
      * 
      * @return int
      */
-    public static function FormatBCMAthNumber(String $number, String $decsep, String $thsep) : String
+    public static function FormatBCMAthNumber(string $number, string $decsep, string $thsep) : string
     {
         $parts = explode(".", $number);
         $parts[0] = strrev(implode($thsep, str_split(strrev($parts[0]), 3)));

@@ -31,7 +31,7 @@ abstract class BaseSifenField
     /**
      * Serializa el objeto en una cadena XML.
      */
-    public function toXMLString(): String
+    public function toXMLString(): string
     {
       $doc = new DOMDocument('1.0', 'UTF-8');
       $domElement = $this->toDOMElement($doc);

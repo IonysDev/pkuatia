@@ -7,10 +7,10 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 
 class Reference 
 {
-    public String $URI;
+    public string $URI;
     public array $Transforms;
     public DigestMethod $DigestMethod;
-    public String $DigestValue;
+    public string $DigestValue;
     
     /**
      * Constructor de la clase Reference
@@ -31,7 +31,7 @@ class Reference
      *
      * @return self
      */
-    public function setURI(String $URI): self
+    public function setURI(string $URI): self
     {
         $this->URI = $URI;
         return $this;
@@ -70,7 +70,7 @@ class Reference
      *
      * @return self
      */
-    public function setDigestValue(String $DigestValue): self
+    public function setDigestValue(string $DigestValue): self
     {
         $this->DigestValue = $DigestValue;
         return $this;
@@ -85,7 +85,7 @@ class Reference
      *
      * @return String
      */
-    public function getURI(): String
+    public function getURI(): string
     {
         return $this->URI;
     }
@@ -115,7 +115,7 @@ class Reference
      *
      * @return String
      */
-    public function getDigestValue(): String
+    public function getDigestValue(): string
     {
         return $this->DigestValue;
     }

@@ -22,11 +22,11 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GPaConEIni extends BaseSifenField
 {
   public int $iTiPago;         // E606 - 1-2        - 1-1 - Tipo de pago
-  public String $dDesTiPag;    // E607 - 4-30       - 1-1 - Descripción del tipo de pago
-  public String $dMonTiPag;    // E608 - 1-15p(0-4) - 1-1 - Monto por tipo de pago (decimal BCMath)
-  public String $cMoneTiPag;   // E609 - 3          - 1-1 - Moneda por tipo de pago
-  public String $dDMoneTiPag;  // E610 - 3-20       - 1-1 - Descripción de la moneda por tipo de pago
-  public String $dTiCamTiPag;  // E611 - 1-5p(0-4)  - 0-1 - Tasa de cambio por tipo de pago (decimal BCMath)
+  public string $dDesTiPag;    // E607 - 4-30       - 1-1 - Descripción del tipo de pago
+  public string $dMonTiPag;    // E608 - 1-15p(0-4) - 1-1 - Monto por tipo de pago (decimal BCMath)
+  public string $cMoneTiPag;   // E609 - 3          - 1-1 - Moneda por tipo de pago
+  public string $dDMoneTiPag;  // E610 - 3-20       - 1-1 - Descripción de la moneda por tipo de pago
+  public string $dTiCamTiPag;  // E611 - 1-5p(0-4)  - 0-1 - Tasa de cambio por tipo de pago (decimal BCMath)
   public GPagTarCD $gPagTarCD; // E620 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con tarjeta de crédito o débito
   public GPagCheq $gPagCheq;   // E630 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con cheque
   
@@ -55,7 +55,7 @@ class GPaConEIni extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesTiPag(String $dDesTiPag): self
+  public function setDDesTiPag(string $dDesTiPag): self
   {
     if(!is_null($dDesTiPag) && strlen($dDesTiPag) != 0)
     {
@@ -71,7 +71,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return self
    */
-  public function setDMonTiPag(String $dMonTiPag): self
+  public function setDMonTiPag(string $dMonTiPag): self
   {
     if(ValueValidations::isValidStringDecimal($dMonTiPag, 15, 0, 4))
     {
@@ -92,7 +92,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return self
    */
-  public function setCMoneTiPag(String $cMoneTiPag): self
+  public function setCMoneTiPag(string $cMoneTiPag): self
   {
     $this->cMoneTiPag = $cMoneTiPag;
     $this->dDMoneTiPag = MonedaMapping::GetDescription($cMoneTiPag);
@@ -108,7 +108,7 @@ class GPaConEIni extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDMoneTiPag(String $dDMoneTiPag): self
+  public function setDDMoneTiPag(string $dDMoneTiPag): self
   {
     if(!is_null($dDMoneTiPag) && strlen($dDMoneTiPag) != 0)
     {
@@ -125,7 +125,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return self
    */
-  public function setDTiCamTiPag(String $dTiCamTiPag): self
+  public function setDTiCamTiPag(string $dTiCamTiPag): self
   {
     if(ValueValidations::isValidStringDecimal($dTiCamTiPag, 5, 0, 4))
     {
@@ -185,7 +185,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTiPag(): String
+  public function getDDesTiPag(): string
   {
     return $this->dDesTiPag;
   }
@@ -209,7 +209,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return String
    */
-  public function getDMonTiPagDecimal(): String
+  public function getDMonTiPagDecimal(): string
   {
     return $this->dMonTiPag;
   }
@@ -219,7 +219,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return String
    */
-  public function getCMoneTiPag(): String
+  public function getCMoneTiPag(): string
   {
     return $this->cMoneTiPag;
   }
@@ -229,7 +229,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return String
    */
-  public function getDDMoneTiPag(): String
+  public function getDDMoneTiPag(): string
   {
     return $this->dDMoneTiPag;
   }
@@ -240,7 +240,7 @@ class GPaConEIni extends BaseSifenField
    *
    * @return String
    */
-  public function getDTiCamTiPag(): String
+  public function getDTiCamTiPag(): string
   {
     return $this->dTiCamTiPag;
   }

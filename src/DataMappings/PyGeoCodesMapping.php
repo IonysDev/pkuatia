@@ -27,7 +27,7 @@ class PyGeoCodesMapping
    * @param  mixed $code
    * @return String
    */
-  public static function getDistName($code): ?String
+  public static function getDistName($code): ?string
   {
     $array = self::getArray();
     ///iterate the array
@@ -46,7 +46,7 @@ class PyGeoCodesMapping
    * @param  mixed $code
    * @return String
    */
-  public static function getCiudName($code): ?String
+  public static function getCiudName($code): ?string
   {
     $array = self::getArray();
     ///iterate the array
@@ -65,7 +65,7 @@ class PyGeoCodesMapping
    * @param  mixed $code
    * @return String
    */
-  public static function getBarrName($code): ?String
+  public static function getBarrName($code): ?string
   {
     $array = self::getArray();
     ///iterate the array

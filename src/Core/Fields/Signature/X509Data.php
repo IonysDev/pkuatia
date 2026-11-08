@@ -11,14 +11,14 @@ use stdClass;
 class X509Data 
 {
 
-    public String $X509Certificate;
+    public string $X509Certificate;
 
     /**
      * Devuelve el certificado X509
      *
      * @return String
      */
-    public function getX509Certificate(): String
+    public function getX509Certificate(): string
     {
         return $this->X509Certificate;
     }
@@ -30,7 +30,7 @@ class X509Data
      *
      * @return self
      */
-    public function setX509Certificate(String $X509Certificate): self
+    public function setX509Certificate(string $X509Certificate): self
     {
         $this->X509Certificate = $X509Certificate;
         return $this;

@@ -30,7 +30,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class DE extends BaseSifenField
 {
                                    // Id - Longitud - Ocurrencia - Descripción
-  public String   $id;             // A002 - 44 - 1-1 - Identificador del DE ubicado en el atributo de <DE>
+  public string   $id;             // A002 - 44 - 1-1 - Identificador del DE ubicado en el atributo de <DE>
   public int      $dDVId;          // A003 - 1  - 1-1 - Dígito verificador del dentificador del DE 
   public DateTime $dFecFirma;      // A004 - 19 - 1-1 - Fecha de la firma
   public int      $dSisFact;       // A005 - 1  - 1-1 - Sistema de facturación
@@ -64,7 +64,7 @@ class DE extends BaseSifenField
    *
    * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
    */
-  public function setId(String $id): self
+  public function setId(string $id): self
   {
     if(strlen($id) != 44)
       throw new ValidacionException('[DE] Id debe tener 44 caracteres.');
@@ -221,7 +221,7 @@ class DE extends BaseSifenField
    *
    * @return String Id (A002) del documento electrónico (DE).
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->id;
   }

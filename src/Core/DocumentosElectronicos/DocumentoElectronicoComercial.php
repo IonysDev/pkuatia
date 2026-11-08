@@ -75,7 +75,7 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
    * 
    * @return self
    */
-  public function setMoneda(String $moneda): self
+  public function setMoneda(string $moneda): self
   {
     $this->gOpeCom->setCMoneOpe($moneda);
     return $this;
@@ -101,7 +101,7 @@ class DocumentoElectronicoComercial extends DocumentoElectronico
    * 
    * @return self
    */
-  public function setTipoDeCambio(String $tasaDeCambio): self
+  public function setTipoDeCambio(string $tasaDeCambio): self
   {
     $this->gOpeCom->setDTiCam($tasaDeCambio);
     return $this;

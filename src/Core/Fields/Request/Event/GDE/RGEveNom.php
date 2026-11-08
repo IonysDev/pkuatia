@@ -334,7 +334,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setDDesDepRec(String $dDesDepRec): self
+    public function setDDesDepRec(string $dDesDepRec): self
     {
         $this->dDesDepRec = $dDesDepRec;
         return $this;
@@ -365,7 +365,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setDDesDisRec(String $dDesDisRec): self
+    public function setDDesDisRec(string $dDesDisRec): self
     {
         $this->dDesDisRec = $dDesDisRec;
         return $this;
@@ -396,7 +396,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setDDesCiuRec(String $dDesCiuRec): self
+    public function setDDesCiuRec(string $dDesCiuRec): self
     {
         $this->dDesCiuRec = $dDesCiuRec;
         return $this;
@@ -409,7 +409,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setDTelRec(String $dTelRec): self
+    public function setDTelRec(string $dTelRec): self
     {
         $this->dTelRec = $dTelRec;
         return $this;
@@ -422,7 +422,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setDCelRec(String $dCelRec): self
+    public function setDCelRec(string $dCelRec): self
     {
         $this->dCelRec = $dCelRec;
         return $this;
@@ -435,7 +435,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setDEmailRec(String $dEmailRec): self
+    public function setDEmailRec(string $dEmailRec): self
     {
         $this->dEmailRec = $dEmailRec;
         return $this;
@@ -448,7 +448,7 @@ class RGEveNom
      *
      * @return self
      */
-    public function setDCodCliente(String $dCodCliente): self
+    public function setDCodCliente(string $dCodCliente): self
     {
         $this->dCodCliente = $dCodCliente;
         return $this;
@@ -513,7 +513,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getCPaisRec(): ?String
+    public function getCPaisRec(): ?string
     {
         if(isset($this->cPaisRec))
             return $this->cPaisRec;
@@ -526,7 +526,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDDesPaisRe(): ?String
+    public function getDDesPaisRe(): ?string
     {
         if(isset($this->dDesPaisRe))
             return $this->dDesPaisRe;
@@ -550,7 +550,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDRucRec(): ?String
+    public function getDRucRec(): ?string
     {
         if(isset($this->dRucRec))
             return $this->dRucRec;
@@ -584,7 +584,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDDTipIDRec(): ?String
+    public function getDDTipIDRec(): ?string
     {
         if(isset($this->dDTipIDRec))
             return $this->dDTipIDRec; // lo establecido por setITipIDRec() o el texto libre de setDDTipIDRec()
@@ -622,7 +622,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDNumIDRec(): ?String
+    public function getDNumIDRec(): ?string
     {
         if(isset($this->dNumIDRec))
             return $this->dNumIDRec;
@@ -635,7 +635,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDNomRec(): String
+    public function getDNomRec(): string
     {
         return $this->dNomRec;
     }
@@ -645,7 +645,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDNomFanRec(): ?String
+    public function getDNomFanRec(): ?string
     {
         if(isset($this->dNomFanRec))
             return $this->dNomFanRec;
@@ -658,7 +658,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDDirRec(): ?String
+    public function getDDirRec(): ?string
     {
         if(isset($this->dDirRec))
             return $this->dDirRec;
@@ -671,7 +671,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDTelRec(): String
+    public function getDTelRec(): string
     {
         return $this->dTelRec;
     }
@@ -681,7 +681,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDCelRec(): String
+    public function getDCelRec(): string
     {
         return $this->dCelRec;
     }
@@ -691,7 +691,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDEmailRec(): String
+    public function getDEmailRec(): string
     {
         return $this->dEmailRec;
     }
@@ -701,7 +701,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDCodCliente(): String
+    public function getDCodCliente(): string
     {
         return $this->dCodCliente;
     }
@@ -731,7 +731,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDDesDepRec(): String
+    public function getDDesDepRec(): string
     {
         return $this->dDesDepRec;
     }
@@ -751,7 +751,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDDesDisRec(): ?String
+    public function getDDesDisRec(): ?string
     {
         if(isset($this->dDesDisRec))
             return $this->dDesDisRec;
@@ -776,7 +776,7 @@ class RGEveNom
      *
      * @return String
      */
-    public function getDDesCiuRec(): ?String
+    public function getDDesCiuRec(): ?string
     {
         if(isset($this->dDesCiuRec))
             return $this->dDesCiuRec;

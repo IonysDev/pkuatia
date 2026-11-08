@@ -17,7 +17,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class Signature extends BaseSifenField
 {
   public SignedInfo $SignedInfo;
-  public String     $SignatureValue;
+  public string     $SignatureValue;
   public KeyInfo    $KeyInfo;
   
   ///////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ class Signature extends BaseSifenField
    *
    * @return self
    */
-  public function setSignatureValue(String $SignatureValue): self
+  public function setSignatureValue(string $SignatureValue): self
   {
       $this->SignatureValue = $SignatureValue;
       return $this;
@@ -85,7 +85,7 @@ class Signature extends BaseSifenField
    *
    * @return String
    */
-  public function getSignatureValue(): ?String
+  public function getSignatureValue(): ?string
   {
       if(!isset($this->SignatureValue))
         return null;

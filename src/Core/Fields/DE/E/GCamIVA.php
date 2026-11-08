@@ -27,12 +27,12 @@ class GCamIVA extends BaseSifenField
   public const AFECTACION_IVA_GRAVADO_PARCIAL = 4;
 
   public int    $iAfecIVA;    // E731 - 1          - 1-1 - Forma de afectación tributaria del IVA: 1 - Gravado | 2 - Exonerado (Art. 100 - Ley 6380/2019) | 3 - Exento | 4 - Gravado parcial (Grav- Exento)
-  public String $dDesAfecIVA; // E732 - 6-15       - 1-1 - Descripción de la forma de afectación tributaria del IVA
-  public String $dPropIVA;    // E733 - 1-3p(0-8)  - 1-1 - Proporción gravada de IVA
+  public string $dDesAfecIVA; // E732 - 6-15       - 1-1 - Descripción de la forma de afectación tributaria del IVA
+  public string $dPropIVA;    // E733 - 1-3p(0-8)  - 1-1 - Proporción gravada de IVA
   public int    $dTasaIVA;    // E734 - 1-2        - 1-1 - Tasa del IVA (% en número entero)
-  public String $dBasGravIVA; // E735 - 1-15p(0-8) - 1-1 - Base gravada del IVA por ítem 
-  public String $dLiqIVAItem; // E736 - 1-15p(0-8) - 1-1 - Liquidación del IVA por ítem
-  public String $dBasExe;     // E737 - 1-15p(0-8) - 1-1 - Base Exenta por ítem 
+  public string $dBasGravIVA; // E735 - 1-15p(0-8) - 1-1 - Base gravada del IVA por ítem 
+  public string $dLiqIVAItem; // E736 - 1-15p(0-8) - 1-1 - Liquidación del IVA por ítem
+  public string $dBasExe;     // E737 - 1-15p(0-8) - 1-1 - Base Exenta por ítem 
 
   ///////////////////////////////////////////////////////////////////////
   // Constructor
@@ -79,7 +79,7 @@ class GCamIVA extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesAfecIVA(String $dDesAfecIVA): self
+  public function setDDesAfecIVA(string $dDesAfecIVA): self
   {
     $this->dDesAfecIVA = $dDesAfecIVA;
     return $this;
@@ -93,7 +93,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return self
    */
-  public function setDPropIVA(String $dPropIVA): self
+  public function setDPropIVA(string $dPropIVA): self
   {
     $this->dPropIVA = $dPropIVA;
 
@@ -122,7 +122,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return self
    */
-  public function setDBasGravIVA(String $dBasGravIVA): self
+  public function setDBasGravIVA(string $dBasGravIVA): self
   {
     if(!ValueValidations::isValidStringDecimal($dBasGravIVA, 15, 0, 8))
       throw new ValidacionException("Invalid dBasGravIVA: $dBasGravIVA");
@@ -138,7 +138,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return self
    */
-  public function setDLiqIVAItem(String $dLiqIVAItem): self
+  public function setDLiqIVAItem(string $dLiqIVAItem): self
   {
     if(!ValueValidations::isValidStringDecimal($dLiqIVAItem, 15, 0, 8))
       throw new ValidacionException("Invalid dBasGravIVA: $dLiqIVAItem");
@@ -166,7 +166,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesAfecIVA(): String
+  public function getDDesAfecIVA(): string
   {
     return $this->dDesAfecIVA;
   }
@@ -176,7 +176,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return String
    */
-  public function getDPropIVA(): String
+  public function getDPropIVA(): string
   {
     return $this->dPropIVA;
   }
@@ -196,7 +196,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return String
    */
-  public function getDBasGravIVA(): String
+  public function getDBasGravIVA(): string
   {
     return $this->dBasGravIVA;
   }
@@ -206,7 +206,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return String
    */
-  public function getDLiqIVAItem(): String
+  public function getDLiqIVAItem(): string
   {
     return $this->dLiqIVAItem;
   }
@@ -300,7 +300,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return String
    */
-  public function getDBasExe(): String | null
+  public function getDBasExe(): string | null
   {
     if(isset($this->dBasExe))
     return $this->dBasExe;
@@ -315,7 +315,7 @@ class GCamIVA extends BaseSifenField
    *
    * @return self
    */
-  public function setDBasExe(String $dBasExe): self
+  public function setDBasExe(string $dBasExe): self
   {
     $this->dBasExe = $dBasExe;
 

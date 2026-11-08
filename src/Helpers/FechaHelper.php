@@ -28,7 +28,7 @@ final class FechaHelper
    *
    * @return DateTime
    */
-  public static function FromSifen(mixed $valor, String $campo): DateTime
+  public static function FromSifen(mixed $valor, string $campo): DateTime
   {
     $texto = trim((string) $valor);
     $zonaSifen = new DateTimeZone(Constants::SIFEN_TIMEZONE);

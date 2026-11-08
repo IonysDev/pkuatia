@@ -16,13 +16,13 @@ class RGeVeInu
 {
                             //RAIZ - DESCRIPCION- LONGITUD - OCURRENCIA
   public int    $dNumTim;   // GEI002 - Número del Timbrado - 8 - 1-1
-  public String $dEst;      // GEI003 - Establecimiento - 3 - 1-1
-  public String $dPunExp;   // GEI004 - Punto de expedición 3 -1-1
-  public String $dNumIn;    // GEI005 - Número Inicio del rango del documento - 7 - 1-1
-  public String $dNumFin;   // GEI006 - Número Final del rango del documento - 7 - 1-1
+  public string $dEst;      // GEI003 - Establecimiento - 3 - 1-1
+  public string $dPunExp;   // GEI004 - Punto de expedición 3 -1-1
+  public string $dNumIn;    // GEI005 - Número Inicio del rango del documento - 7 - 1-1
+  public string $dNumFin;   // GEI006 - Número Final del rango del documento - 7 - 1-1
   public int    $iTiDE;     // GEI007 - Tipo de Documento Electrónico  -1-2 - 1-1
-  public String $mOtEve;    // GEI008 - Motivo del Evento 5-500 - 1-1
-  public String $dSerieNum; // GEI009 - Serie del número del documento: OCURRENCIA - 2 - 0-1
+  public string $mOtEve;    // GEI008 - Motivo del Evento 5-500 - 1-1
+  public string $dSerieNum; // GEI009 - Serie del número del documento: OCURRENCIA - 2 - 0-1
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -48,7 +48,7 @@ class RGeVeInu
    *
    * @return self
    */
-  public function setDEst(String $dEst): self
+  public function setDEst(string $dEst): self
   {
     $this->dEst = $dEst;
     return $this;
@@ -61,7 +61,7 @@ class RGeVeInu
    *
    * @return self
    */
-  public function setDPunExp(String $dPunExp): self
+  public function setDPunExp(string $dPunExp): self
   {
     $this->dPunExp = $dPunExp;
     return $this;
@@ -74,7 +74,7 @@ class RGeVeInu
    *
    * @return self
    */
-  public function setDNumIn(String $dNumIn): self
+  public function setDNumIn(string $dNumIn): self
   {
     $this->dNumIn = $dNumIn;
     return $this;
@@ -87,7 +87,7 @@ class RGeVeInu
    *
    * @return self
    */
-  public function setDNumFin(String $dNumFin): self
+  public function setDNumFin(string $dNumFin): self
   {
     $this->dNumFin = $dNumFin;
     return $this;
@@ -113,7 +113,7 @@ class RGeVeInu
    *
    * @return self
    */
-  public function setMOtEve(String $mOtEve): self
+  public function setMOtEve(string $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
     return $this;
@@ -139,7 +139,7 @@ class RGeVeInu
    *
    * @return String
    */
-  public function getDEst(): String
+  public function getDEst(): string
   {
     return $this->dEst;
   }
@@ -149,7 +149,7 @@ class RGeVeInu
    *
    * @return String
    */
-  public function getDPunExp(): String
+  public function getDPunExp(): string
   {
     return $this->dPunExp;
   }
@@ -159,7 +159,7 @@ class RGeVeInu
    *
    * @return String
    */
-  public function getDNumIn(): String
+  public function getDNumIn(): string
   {
     return $this->dNumIn;
   }
@@ -169,7 +169,7 @@ class RGeVeInu
    *
    * @return String
    */
-  public function getDNumFin(): String
+  public function getDNumFin(): string
   {
     return $this->dNumFin;
   }
@@ -189,7 +189,7 @@ class RGeVeInu
    *
    * @return String
    */
-  public function getMOtEve(): String
+  public function getMOtEve(): string
   {
     return $this->mOtEve;
   }
@@ -253,7 +253,7 @@ class RGeVeInu
    *
    * @return String
    */
-  public function getDSerieNum(): String
+  public function getDSerieNum(): string
   {
     return $this->dSerieNum;
   }
@@ -265,7 +265,7 @@ class RGeVeInu
    *
    * @return self
    */
-  public function setDSerieNum(String $dSerieNum): self
+  public function setDSerieNum(string $dSerieNum): self
   {
     $this->dSerieNum = $dSerieNum;
 

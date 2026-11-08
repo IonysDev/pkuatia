@@ -6,7 +6,7 @@ namespace IonysDev\Pkuatia\Core\Constants;
 /**
  * Enumeración relacionada a la tabla 10 del MT (v150) que lista los INCOTERMS soportados por el Sifen.
  */
-enum Incoterm: String {
+enum Incoterm: string {
     /**
      * Costo y flete
      */
@@ -97,7 +97,7 @@ enum Incoterm: String {
     /**
      * @deprecated Use getDescriptionFromValue() instead.
      */
-    public static function getDescripcion(String $value): ?string
+    public static function getDescripcion(string $value): ?string
     {
         return self::getDescriptionFromValue($value);
     }

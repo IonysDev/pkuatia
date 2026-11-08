@@ -20,7 +20,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GGrupSeg extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
-  public String $dCodEmpSeg;   // E801  - 20 - 0-1   - Código de la empresa de seguros en la Superintendencia de Seguros
+  public string $dCodEmpSeg;   // E801  - 20 - 0-1   - Código de la empresa de seguros en la Superintendencia de Seguros
   public array  $gGrupPolSeg;  // EA790 -    - 1-999 - Grupos de pólizas de seguros (GGrupPolSeg[])
 
   ///////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ class GGrupSeg extends BaseSifenField
    *
    * @return self
    */
-  public function setDCodEmpSeg(String $dCodEmpSeg): self
+  public function setDCodEmpSeg(string $dCodEmpSeg): self
   {
     $this->dCodEmpSeg = $dCodEmpSeg;
     return $this;
@@ -77,7 +77,7 @@ class GGrupSeg extends BaseSifenField
    *
    * @return String
    */
-  public function getDCodEmpSeg(): String
+  public function getDCodEmpSeg(): string
   {
     return $this->dCodEmpSeg;
   }

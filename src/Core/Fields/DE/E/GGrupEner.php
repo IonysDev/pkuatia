@@ -19,12 +19,12 @@ use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;
  */
 class GGrupEner
 {
-  public String $dNroMed; // E792 - 1-50   - 0-1 - Número de medidor
+  public string $dNroMed; // E792 - 1-50   - 0-1 - Número de medidor
   public int    $dActiv;  // E793 - 2      - 0-1 - Código de actividad
-  public String $dCateg;  // E794 - 3      - 0-1 - Código de categoría
-  public String $dLecAnt; // E795 - 1-11p2 - 0-1 - Lectura anterior (decimal BCMath)
-  public String $dLecAct; // E796 - 1-11p2 - 0-1 - Lectura actual (decimal BCMath)
-  public String $dConKwh; // E797 - 1-11p2 - 0-1 - Consumo en Kwh (decimal BCMath) - Corresponde a  la diferencia  entre E796-E795
+  public string $dCateg;  // E794 - 3      - 0-1 - Código de categoría
+  public string $dLecAnt; // E795 - 1-11p2 - 0-1 - Lectura anterior (decimal BCMath)
+  public string $dLecAct; // E796 - 1-11p2 - 0-1 - Lectura actual (decimal BCMath)
+  public string $dConKwh; // E797 - 1-11p2 - 0-1 - Consumo en Kwh (decimal BCMath) - Corresponde a  la diferencia  entre E796-E795
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -37,7 +37,7 @@ class GGrupEner
    *
    * @return self
    */
-  public function setDNroMed(String $dNroMed): self
+  public function setDNroMed(string $dNroMed): self
   {
     $this->dNroMed = $dNroMed;
     return $this;
@@ -65,7 +65,7 @@ class GGrupEner
    *
    * @return self
    */
-  public function setDCateg(String $dCateg): self
+  public function setDCateg(string $dCateg): self
   {
     $this->dCateg = $dCateg;
     return $this;
@@ -79,7 +79,7 @@ class GGrupEner
    *
    * @return self
    */
-  public function setDLecAnt(String $dLecAnt): self
+  public function setDLecAnt(string $dLecAnt): self
   {
     if(!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0, 2))
       throw new ValidacionException('[GGrupEner] dLecAnt debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAnt, 1);
@@ -95,7 +95,7 @@ class GGrupEner
    *
    * @return self
    */
-  public function setDLecAct(String $dLecAct): self
+  public function setDLecAct(string $dLecAct): self
   {
     if(!ValueValidations::isValidStringDecimal($dLecAct, 11, 0, 2))
       throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAct, 1);
@@ -110,7 +110,7 @@ class GGrupEner
    *
    * @return self
    */
-  public function setDConKwh(String $dConKwh): self
+  public function setDConKwh(string $dConKwh): self
   {
     if(!ValueValidations::isValidStringDecimal($dConKwh, 11, 0, 2))
       throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dConKwh, 1);
@@ -128,7 +128,7 @@ class GGrupEner
    *
    * @return String
    */
-  public function getDNroMed(): String
+  public function getDNroMed(): string
   {
     return $this->dNroMed;
   }
@@ -148,7 +148,7 @@ class GGrupEner
    *
    * @return String
    */
-  public function getDCateg(): String
+  public function getDCateg(): string
   {
     return $this->dCateg;
   }
@@ -158,7 +158,7 @@ class GGrupEner
    *
    * @return String
    */
-  public function getDLecAnt(): String
+  public function getDLecAnt(): string
   {
     return $this->dLecAnt;
   }
@@ -168,7 +168,7 @@ class GGrupEner
    *
    * @return String
    */
-  public function getDLecAct(): String
+  public function getDLecAct(): string
   {
     return $this->dLecAct;
   }
@@ -178,7 +178,7 @@ class GGrupEner
    *
    * @return String
    */
-  public function getDConKwh(): String
+  public function getDConKwh(): string
   {
     // Hasta v0.1.5 devolvía dLecAct - dLecAct (siempre 0) e ignoraba el valor establecido (PK-19).
     return $this->dConKwh;
@@ -327,7 +327,7 @@ class GGrupEner
    * 
    * @return String
    */
-  public function toXMLString(): String
+  public function toXMLString(): string
   {
     $domElement = $this->toDOMElement(new DOMDocument());
     $xmlString = $domElement->ownerDocument->saveXML($domElement);
@@ -345,7 +345,7 @@ class GGrupEner
    *
    * @return String
    */
-  public function calcularDConKwh(): String
+  public function calcularDConKwh(): string
   {
     return bcsub($this->getDLecAct(), $this->getDLecAnt(), 2);
   }

@@ -19,14 +19,14 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GRasMerc extends BaseSifenField
 {
-  public String   $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote (texto; hasta v0.1.5 era int y rechazaba lotes alfanuméricos)
+  public string   $dNumLote;      // E751 - 1-80  - 0-1 - Número de lote (texto; hasta v0.1.5 era int y rechazaba lotes alfanuméricos)
   public DateTime $dVencMerc;     // E752 - 10    - 0-1 - Fecha de vencimiento  de la mercadería
-  public String   $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
-  public String   $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
-  public String   $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
-  public String   $dNumReg;       // E759 - 1-20  - 0-1 - Número de registro del  producto otorgado por  el SENAVE
-  public String   $dNumRegEntCom; // E760 - 1-20  - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
-  public String   $dNomPro;       // E761 - 1-30  - 0-1 - Nombre del Producto
+  public string   $dNSerie;       // E753 - 1-10  - 0-1 - Número de serie
+  public string   $dNumPedi;      // E754 - 1-20  - 0-1 - Número de pedido
+  public string   $dNumSegui;     // E755 - 1-20  - 0-1 - Número de  seguimiento del envío
+  public string   $dNumReg;       // E759 - 1-20  - 0-1 - Número de registro del  producto otorgado por  el SENAVE
+  public string   $dNumRegEntCom; // E760 - 1-20  - 0-1 - Número de registro de  entidad comercial otorgado por el SENAVE
+  public string   $dNomPro;       // E761 - 1-30  - 0-1 - Nombre del Producto
   
 
   ///////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumLote(int|String $dNumLote): self
+  public function setDNumLote(int|string $dNumLote): self
   {
     $this->dNumLote = (string) $dNumLote;
 
@@ -70,7 +70,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNSerie(String $dNSerie): self
+  public function setDNSerie(string $dNSerie): self
   {
     $this->dNSerie = $dNSerie;
 
@@ -85,7 +85,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumPedi(String $dNumPedi): self
+  public function setDNumPedi(string $dNumPedi): self
   {
     $this->dNumPedi = $dNumPedi;
 
@@ -100,7 +100,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumSegui(String $dNumSegui): self
+  public function setDNumSegui(string $dNumSegui): self
   {
     $this->dNumSegui = $dNumSegui;
 
@@ -114,7 +114,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumReg(String $dNumReg): self
+  public function setDNumReg(string $dNumReg): self
   {
     $this->dNumReg = $dNumReg;
 
@@ -129,7 +129,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumRegEntCom(String $dNumRegEntCom): self
+  public function setDNumRegEntCom(string $dNumRegEntCom): self
   {
     $this->dNumRegEntCom = $dNumRegEntCom;
 
@@ -143,7 +143,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return self
    */
-  public function setDNomPro(String $dNomPro): self
+  public function setDNomPro(string $dNomPro): self
   {
     $this->dNomPro = $dNomPro;
 
@@ -173,7 +173,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return String|null
    */
-  public function getDNumLoteString(): ?String
+  public function getDNumLoteString(): ?string
   {
     return $this->dNumLote ?? null;
   }
@@ -193,7 +193,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNSerie(): String
+  public function getDNSerie(): string
   {
     return $this->dNSerie;
   }
@@ -203,7 +203,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumPedi(): String
+  public function getDNumPedi(): string
   {
     return $this->dNumPedi;
   }
@@ -213,7 +213,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumSegui(): String
+  public function getDNumSegui(): string
   {
     return $this->dNumSegui;
   }
@@ -223,7 +223,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumReg(): String
+  public function getDNumReg(): string
   {
     return $this->dNumReg;
   }
@@ -233,7 +233,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumRegEntCom(): String
+  public function getDNumRegEntCom(): string
   {
     return $this->dNumRegEntCom;
   }
@@ -243,7 +243,7 @@ class GRasMerc extends BaseSifenField
    *
    * @return String
    */
-  public function getDNomPro(): String
+  public function getDNomPro(): string
   {
     return $this->dNomPro;
   }

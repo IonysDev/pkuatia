@@ -20,13 +20,13 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GPagTarCD extends BaseSifenField
 {
   public int $iDenTarj;       // E621 - 1-2  - 1-1 - Denominación de la tarjeta
-  public String $dDesDenTarj; // E622 - 4-20 - 1-1 - Descripción de la Denominación de la tarjeta
-  public ?String $dRSProTar = null;   // E623 - 4-60 - 0-1 - Razón social de la procesadora de tarjeta
-  public ?String $dRUCProTar = null;  // E624 - 3-8  - 0-1 - RUC de la procesadora de tarjeta
+  public string $dDesDenTarj; // E622 - 4-20 - 1-1 - Descripción de la Denominación de la tarjeta
+  public ?string $dRSProTar = null;   // E623 - 4-60 - 0-1 - Razón social de la procesadora de tarjeta
+  public ?string $dRUCProTar = null;  // E624 - 3-8  - 0-1 - RUC de la procesadora de tarjeta
   public int $dDVProTar;      // E625 - 1    - 0-1 - Dígito verificador del  RUC de la procesadora  de tarjeta
   public int $iForProPa;      // E626 - 1    - 1-1 - Forma de procesamiento de pago: 1 - POS | 2 - Online | 9 - Otro
   public int $dCodAuOpe;      // E627 - 6-10 - 0-1 - Código de autorización de la operación
-  public ?String $dNomTit = null;     // E628 - 4-30 - 0-1 - Nombre del titular de la tarjeta
+  public ?string $dNomTit = null;     // E628 - 4-30 - 0-1 - Nombre del titular de la tarjeta
   public int $dNumTarj;       // E629 - 4    - 0-1 - Ultimos 4 dígitos del número de la tarjeta;
 
   ///////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ class GPagTarCD extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesDenTarj(String $dDesDenTarj): self
+  public function setDDesDenTarj(string $dDesDenTarj): self
   {
     $this->dDesDenTarj = $dDesDenTarj;
     if(is_null($dDesDenTarj) || strlen($dDesDenTarj) == 0)
@@ -76,7 +76,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setDRSProTar(?String $dRSProTar): self
+  public function setDRSProTar(?string $dRSProTar): self
   {
     $this->dRSProTar = (is_null($dRSProTar) || strlen($dRSProTar) === 0)
       ? null
@@ -92,7 +92,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setDRUCProTar(?String $dRUCProTar): self
+  public function setDRUCProTar(?string $dRUCProTar): self
   {
     $this->dRUCProTar = (is_null($dRUCProTar) || strlen($dRUCProTar) === 0)
       ? null
@@ -153,7 +153,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return self
    */
-  public function setDNomTit(?String $dNomTit): self
+  public function setDNomTit(?string $dNomTit): self
   {
     $this->dNomTit = (is_null($dNomTit) || strlen($dNomTit) === 0)
       ? null
@@ -195,7 +195,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesDenTarj(): String
+  public function getDDesDenTarj(): string
   {
     return $this->dDesDenTarj;
   }
@@ -205,7 +205,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return String
    */
-  public function getDRSProTar(): ?String
+  public function getDRSProTar(): ?string
   {
     return $this->dRSProTar;
   }
@@ -215,7 +215,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return String
    */
-  public function getDRUCProTar(): ?String
+  public function getDRUCProTar(): ?string
   {
     return $this->dRUCProTar;
   }
@@ -255,7 +255,7 @@ class GPagTarCD extends BaseSifenField
    *
    * @return String
    */
-  public function getDNomTit(): ?String
+  public function getDNomTit(): ?string
   {
     return $this->dNomTit;
   }

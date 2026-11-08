@@ -42,7 +42,7 @@ class UnidadMedidaMapping
    * @param  String $code El código de la unidad de medida
    * @return String|null El literal de la unidad de medida, o null si el código no existe en el XSD.
    */
-  public static function GetDesc(String $code): ?String
+  public static function GetDesc(string $code): ?string
   {
     $buscado = strtoupper($code);
     foreach (self::GetArray() as $value) {

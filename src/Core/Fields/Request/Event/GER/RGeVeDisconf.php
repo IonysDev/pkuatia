@@ -14,8 +14,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeDisconf
 {
                          // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;     // GDI002 CDC del DTE - 44 - 1-1
-  public String $mOtEve; // GDI004 Motivo del Evento - 5-500 - 1-1
+  public string $Id;     // GDI002 CDC del DTE - 44 - 1-1
+  public string $mOtEve; // GDI004 Motivo del Evento - 5-500 - 1-1
 
   ///////////////////////////////////////////////////////////////////////
   //SETTERS
@@ -29,7 +29,7 @@ class RGeVeDisconf
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
 
@@ -44,7 +44,7 @@ class RGeVeDisconf
    *
    * @return self
    */
-  public function setMOtEve(String $mOtEve): self
+  public function setMOtEve(string $mOtEve): self
   {
     $this->mOtEve = $mOtEve;
 
@@ -62,7 +62,7 @@ class RGeVeDisconf
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -72,7 +72,7 @@ class RGeVeDisconf
    *
    * @return String
    */
-  public function getMOtEve(): String
+  public function getMOtEve(): string
   {
     return $this->mOtEve;
   }
@@ -116,7 +116,7 @@ class RGeVeDisconf
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
     if($node->getName() != 'rGeVeDisconf')
       throw new ValidacionException("Invalid XML Element: $node->getName()");

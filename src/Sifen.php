@@ -181,7 +181,7 @@ class Sifen
    *
    * @return String|null
    */
-  public static function GetLastRequest(): ?String
+  public static function GetLastRequest(): ?string
   {
     return self::$client?->__getLastRequest();
   }
@@ -194,7 +194,7 @@ class Sifen
    *
    * @return String|null
    */
-  public static function GetLastResponse(): ?String
+  public static function GetLastResponse(): ?string
   {
     return self::$client?->__getLastResponse();
   }
@@ -254,7 +254,7 @@ class Sifen
    * 
    * @return RResEnviConsRUC
    */
-  public static function ConsultarRUC(String $ruc): RResEnviConsRUC
+  public static function ConsultarRUC(string $ruc): RResEnviConsRUC
   {
     // Fase C (Q-C3): toda falla llega tipada. El SoapFault llega como TransporteException, que sigue siendo un
     // \SoapFault (catch (\SoapFault) funciona como hasta 0.2.1); los errores de parseo, como RespuestaException con
@@ -278,7 +278,7 @@ class Sifen
    *
    * @return RResEnviConsArchivoRUC Respuesta del SIFEN con el archivo de contribuyentes.
    */
-  public static function ConsultarArchivoRUC(String $rucFacturador): RResEnviConsArchivoRUC
+  public static function ConsultarArchivoRUC(string $rucFacturador): RResEnviConsArchivoRUC
   {
     try {
       self::$client = self::createSoapClient(self::GetSifenUrlBase() . Constants::SIFEN_PATH_CONSULTA_ARCHIVO_RUC . "?wsdl");
@@ -296,7 +296,7 @@ class Sifen
    * 
    * @return RResEnviConsDe
    */
-  public static function ConsultarDE(String $cdc): RResEnviConsDe
+  public static function ConsultarDE(string $cdc): RResEnviConsDe
   {
     // Fase C (Q-C3): como en ConsultarRUC, toda falla llega tipada.
     try {
@@ -318,7 +318,7 @@ class Sifen
    *
    * @return ResultadoFirma esValida(), getFirmas() (una InfoFirma por Signature, con el certificado) y getErrores().
    */
-  public static function VerificarFirma(String $xml): ResultadoFirma
+  public static function VerificarFirma(string $xml): ResultadoFirma
   {
     return VerificadorFirma::verificar($xml);
   }
@@ -332,7 +332,7 @@ class Sifen
    *
    * @param String $xml XML del rDE firmado (p. ej. el que devuelve FirmarDE()).
    */
-  public static function ValidarXSD(String $xml): ResultadoValidacion
+  public static function ValidarXSD(string $xml): ResultadoValidacion
   {
     return ValidadorXsd::validarRde($xml);
   }
@@ -341,7 +341,7 @@ class Sifen
    * Valida un sobre de eventos firmado (gGroupGesEve, lo que RegistrarEvento() envía) contra siRecepEvento_v150.xsd,
    * sin red y sin Init(). Misma forma de resultado que ValidarXSD(). Nuevo en 0.3.0 (Fase C, C7).
    */
-  public static function ValidarEventoXSD(String $xml): ResultadoValidacion
+  public static function ValidarEventoXSD(string $xml): ResultadoValidacion
   {
     return ValidadorXsd::validarEvento($xml);
   }
@@ -373,7 +373,7 @@ class Sifen
    *
    * @return String XML del DE firmado.
    */
-  public static function FirmarDE(RDE $rde, DateTime $fechaFirma, String $infoAdicionalEmisor = ''): String
+  public static function FirmarDE(RDE $rde, DateTime $fechaFirma, string $infoAdicionalEmisor = ''): string
   {
     // Valida la regla de la NT-024 antes de firmar, para evitar un rechazo seguro del SIFEN (validación 1321).
     self::ValidarUmbralInnominadoNT024($rde->getDE());
@@ -428,7 +428,7 @@ class Sifen
    * 
    * @return RRetEnviDe Respuesta del SIFEN a la solicitud de Envío.
    */
-  public static function EnviarDE(String $rdeXML): RRetEnviDe
+  public static function EnviarDE(string $rdeXML): RRetEnviDe
   {
     self::exigirXsd($rdeXML, false, 'EnviarDE', 'el DE');
     // Realiza el envío del documento electrónico al SIFEN
@@ -647,7 +647,7 @@ class Sifen
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function CancelarDE(String $cdc, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
+  public static function CancelarDE(string $cdc, string $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     self::ValidarCdcEvento($cdc);
     self::ValidarMotivoEvento($motivo, 'cancelación');
@@ -676,7 +676,7 @@ class Sifen
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, String $motivo, ?DateTime $fechaFirma = null, ?String $serie = null): RRetEnviEventoDe
+  public static function InutilizarNumeros(int $timbrado, int $nroEstablecimiento, int $nroPuntoEmision, int $nroDocumentoInicial, int $nroDocumentoFinal, TimbTiDE|int $tipoDE, string $motivo, ?DateTime $fechaFirma = null, ?string $serie = null): RRetEnviEventoDe
   {
 
     $tipoDEId = $tipoDE instanceof TimbTiDE ? $tipoDE->value : $tipoDE;
@@ -743,15 +743,15 @@ class Sifen
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
   public static function NotificarRecepcionDE(
-    String $cdc,
+    string $cdc,
     DateTime $fechaEmision,
     DateTime $fechaRecepcion,
-    String $nombreReceptor,
+    string $nombreReceptor,
     int $totalGs,
-    ?String $rucReceptor = null,
+    ?string $rucReceptor = null,
     ?int $dvReceptor = null,
     int|TipIDRec|null $tipoDocumentoIdentidad = null,
-    ?String $nroDocumentoIdentidad = null,
+    ?string $nroDocumentoIdentidad = null,
     ?DateTime $fechaFirma = null
   ): RRetEnviEventoDe
   {
@@ -792,7 +792,7 @@ class Sifen
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function ConformarDE(String $cdc, int $tipoConformidad = 1, ?DateTime $fechaRecepcion = null, ?DateTime $fechaFirma = null): RRetEnviEventoDe
+  public static function ConformarDE(string $cdc, int $tipoConformidad = 1, ?DateTime $fechaRecepcion = null, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     if ($tipoConformidad != 1 && $tipoConformidad != 2)
       throw new ValidacionException("[Sifen] El tipo de conformidad debe ser 1 (total) o 2 (parcial).");
@@ -821,7 +821,7 @@ class Sifen
    *
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
-  public static function DisconformarDE(String $cdc, String $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
+  public static function DisconformarDE(string $cdc, string $motivo, ?DateTime $fechaFirma = null): RRetEnviEventoDe
   {
     self::ValidarCdcEvento($cdc);
     self::ValidarMotivoEvento($motivo, 'disconformidad');
@@ -853,15 +853,15 @@ class Sifen
    * @return RRetEnviEventoDe Respuesta del SIFEN al registro del evento.
    */
   public static function DesconocerDE(
-    String $cdc,
+    string $cdc,
     DateTime $fechaEmision,
     DateTime $fechaRecepcion,
-    String $nombreReceptor,
-    String $motivo,
-    ?String $rucReceptor = null,
+    string $nombreReceptor,
+    string $motivo,
+    ?string $rucReceptor = null,
     ?int $dvReceptor = null,
     int|TipIDRec|null $tipoDocumentoIdentidad = null,
-    ?String $nroDocumentoIdentidad = null,
+    ?string $nroDocumentoIdentidad = null,
     ?DateTime $fechaFirma = null
   ): RRetEnviEventoDe
   {
@@ -933,7 +933,7 @@ class Sifen
    *
    * @throws CampoInvalidoException Si el CDC no cumple el formato (elemento Id, valor recibido y regla tId).
    */
-  private static function ValidarCdcEvento(String $cdc): void
+  private static function ValidarCdcEvento(string $cdc): void
   {
     if (!preg_match('/^[0-9]{9}[0-9A-D][0-9]{34}$/', $cdc))
       throw CampoInvalidoException::deCampo("[Sifen] El CDC debe tener 44 caracteres (dígitos; la posición 10 admite A-D) según tId (Evento_Types_v150.xsd:71-80); se recibió '" . $cdc . "' (" . strlen($cdc) . " caracteres).",
@@ -945,7 +945,7 @@ class Sifen
    *
    * @throws CampoInvalidoException Si el motivo no tiene entre 5 y 500 caracteres (elemento mOtEve).
    */
-  private static function ValidarMotivoEvento(String $motivo, String $evento): void
+  private static function ValidarMotivoEvento(string $motivo, string $evento): void
   {
     $largo = mb_strlen($motivo);
     if ($largo < 5 || $largo > 500)
@@ -995,7 +995,7 @@ class Sifen
    * Decodifica un elemento como lo hace SoapClient: cada hijo es una propiedad (si se repite, un arreglo) y las hojas
    * son texto.
    */
-  private static function NodoComoObjeto(\DOMElement $nodo): \stdClass|String
+  private static function NodoComoObjeto(\DOMElement $nodo): \stdClass|string
   {
     $res = new \stdClass();
     $conHijos = false;
@@ -1041,7 +1041,7 @@ class Sifen
    *
    * @return String
    */
-  private static function GetSifenUrlBase(): String
+  private static function GetSifenUrlBase(): string
   {
     if (strtolower(self::$config->env) == "prod") {
       return Constants::SIFEN_URL_BASE_PROD;

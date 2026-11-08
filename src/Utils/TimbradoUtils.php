@@ -19,7 +19,7 @@ class TimbradoUtils {
      * 
      * @return String Serie siguiente.
      */
-    public static function CalcSerieSgte(?String $serieActual = null): String
+    public static function CalcSerieSgte(?string $serieActual = null): string
     {
         if(is_null($serieActual) || strlen($serieActual) == 0)
             return 'AA';
@@ -48,7 +48,7 @@ class TimbradoUtils {
      * 
      * @return array con las claves 'serie' y 'numero' que contienen la serie y número siguientes
      */
-    public static function CalcNumSgte(?String $serieActual, ?int $numeroActual): array
+    public static function CalcNumSgte(?string $serieActual, ?int $numeroActual): array
     {
         if(!self::ValidarSerie($serieActual))
             throw new ValidacionException('[TimbradoUtils] La serie actual no es válida.');
@@ -74,7 +74,7 @@ class TimbradoUtils {
      * 
      * @return bool true si la serie es válida, false en caso contrario
      */
-    public static function ValidarSerie(?String $serie): bool
+    public static function ValidarSerie(?string $serie): bool
     {
         if(is_null($serie))
             return true;

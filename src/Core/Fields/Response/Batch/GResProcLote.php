@@ -20,8 +20,8 @@ use IonysDev\Pkuatia\Validacion\InfoValidacion;
 class GResProcLote
 {
   // Id - Longirud - Ocurrencia - Descripción
-  public String    $id;       // CRSch050 - 44   - 1-1   - CDC del DE
-  public String    $dEstRes;  // CRSch051 - 8-30 - 1-1   - Estado del resultado (Aprobado, Aprobado con Obs. o Rechazado)
+  public string    $id;       // CRSch050 - 44   - 1-1   - CDC del DE
+  public string    $dEstRes;  // CRSch051 - 8-30 - 1-1   - Estado del resultado (Aprobado, Aprobado con Obs. o Rechazado)
   public int       $dProtAut; // CRSch052 - 10   - 0-1   - Número de transacción (se genera solo si el estado es Aprobado)
   public array     $gResProc; // CRSch053 - G    - 1-100 - Grupo Mensaje de Resultado
 
@@ -36,7 +36,7 @@ class GResProcLote
    *
    * @return self
    */
-  public function setId(String $id): self
+  public function setId(string $id): self
   {
     $this->id = $id;
 
@@ -51,7 +51,7 @@ class GResProcLote
    *
    * @return self
    */
-  public function setDEstRes(String $dEstRes): self
+  public function setDEstRes(string $dEstRes): self
   {
     $this->dEstRes = $dEstRes;
 
@@ -66,7 +66,7 @@ class GResProcLote
    *
    * @return self
    */
-  public function setDProtAut(String $dProtAut): self
+  public function setDProtAut(string $dProtAut): self
   {
     $this->dProtAut = $dProtAut;
 
@@ -97,7 +97,7 @@ class GResProcLote
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->id;
   }
@@ -107,7 +107,7 @@ class GResProcLote
    *
    * @return String
    */
-  public function getDEstRes(): String
+  public function getDEstRes(): string
   {
     return $this->dEstRes;
   }
@@ -117,7 +117,7 @@ class GResProcLote
    *
    * @return String
    */
-  public function getDProtAut(): String
+  public function getDProtAut(): string
   {
     return $this->dProtAut;
   }

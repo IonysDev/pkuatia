@@ -19,14 +19,14 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GCamEnt extends BaseSifenField
 {
                              // Id - Longitud - Ocurrencia - Descripción
-  public String $dDirLocEnt; // E941 - 1-255 - 1-1 - Dirección del local de la entrega 
+  public string $dDirLocEnt; // E941 - 1-255 - 1-1 - Dirección del local de la entrega 
   public ?int $dNumCasEnt;   // E942 - 1-6   - 1-1 - Número de casa de Entrega
-  public String $dComp1Ent;  // E943 - 1-255 - 0-1 - Complemento de dirección 1 Entrega
-  public String $dComp2Ent;  // E944 - 1-255 - 0-1 - Complemento de dirección 2 Entrega
+  public string $dComp1Ent;  // E943 - 1-255 - 0-1 - Complemento de dirección 1 Entrega
+  public string $dComp2Ent;  // E944 - 1-255 - 0-1 - Complemento de dirección 2 Entrega
   public ?int $cDepEnt;      // E945 - 1-2   - 1-1 - Código del departamento del local de Entrega
   public ?int $cDisEnt;      // E947 - 1-4   - 0-1 - Código del distrito del local de Entrega
   public ?int $cCiuEnt;      // E949 - 1-5   - 1-1 - Código de la ciudad del local de Entrega
-  public String $dTelEnt;    // E951 - 6-15  - 0-1 - Teléfono de contacto del local de Entrega
+  public string $dTelEnt;    // E951 - 6-15  - 0-1 - Teléfono de contacto del local de Entrega
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -39,7 +39,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return self
    */
-  public function setDDirLocEnt(String $dDirLocEnt): self
+  public function setDDirLocEnt(string $dDirLocEnt): self
   {
     $this->dDirLocEnt = $dDirLocEnt;
 
@@ -69,7 +69,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return self
    */
-  public function setDComp1Ent(String $dComp1Ent): self
+  public function setDComp1Ent(string $dComp1Ent): self
   {
     $this->dComp1Ent = $dComp1Ent;
 
@@ -84,7 +84,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return self
    */
-  public function setDComp2Ent(String $dComp2Ent): self
+  public function setDComp2Ent(string $dComp2Ent): self
   {
     $this->dComp2Ent = $dComp2Ent;
 
@@ -144,7 +144,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return self
    */
-  public function setDTelEnt(String $dTelEnt): self
+  public function setDTelEnt(string $dTelEnt): self
   {
     $this->dTelEnt = $dTelEnt;
 
@@ -160,7 +160,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return String
    */
-  public function getDDirLocEnt(): String
+  public function getDDirLocEnt(): string
   {
     return $this->dDirLocEnt;
   }
@@ -180,7 +180,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return String
    */
-  public function getDComp1Ent(): String
+  public function getDComp1Ent(): string
   {
     return $this->dComp1Ent;
   }
@@ -190,7 +190,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return String
    */
-  public function getDComp2Ent(): String
+  public function getDComp2Ent(): string
   {
     return $this->dComp2Ent;
   }
@@ -210,7 +210,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesDepEnt(): String
+  public function getDDesDepEnt(): string
   {
     return DepartamentoMapping::getDepName(strval($this->cDepEnt));
   }
@@ -231,7 +231,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesDisEnt(): String
+  public function getDDesDisEnt(): string
   {
     return PyGeoCodesMapping::getDistName(strval($this->cDisEnt));
   }
@@ -251,7 +251,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesCiuEnt(): String
+  public function getDDesCiuEnt(): string
   {
     return PyGeoCodesMapping::getCiudName(strval($this->cCiuEnt));
   }
@@ -261,7 +261,7 @@ class GCamEnt extends BaseSifenField
    *
    * @return String
    */
-  public function getDTelEnt(): String
+  public function getDTelEnt(): string
   {
     return $this->dTelEnt;
   }

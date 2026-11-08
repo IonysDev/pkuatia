@@ -21,13 +21,13 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GGrupPolSeg extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
-  public String   $dPoliza;    // EA791 - 1-20  - 1-1 - Código de la póliza
-  public String   $dUnidVig;   // EA792 - 3-15  - 1-1 - Descripción de la unidad de tiempo de vigencia
-  public String   $dVigencia;  // EA793 - 1-5p1 - 1-1 - Vigencia de la póliza (decimal BCMath)
-  public String   $dNumPoliza; // EA794 - 1-25  - 1-1 - Número de la póliza
+  public string   $dPoliza;    // EA791 - 1-20  - 1-1 - Código de la póliza
+  public string   $dUnidVig;   // EA792 - 3-15  - 1-1 - Descripción de la unidad de tiempo de vigencia
+  public string   $dVigencia;  // EA793 - 1-5p1 - 1-1 - Vigencia de la póliza (decimal BCMath)
+  public string   $dNumPoliza; // EA794 - 1-25  - 1-1 - Número de la póliza
   public DateTime $dFecIniVig; // EA795 - 19    - 0-1 - Fecha de inicio de vigencia en formato AAAA-MM-DDThh:mm:ss
   public DateTime $dFecFinVig; // EA796 - 19    - 0-1 - Fecha de fin de vigencia en formato AAAA-MM-DDThh:mm:ss
-  public String   $dCodInt;    // EA797 - 1-50  - 0-1 - Código interno de referencia a un ítem
+  public string   $dCodInt;    // EA797 - 1-50  - 0-1 - Código interno de referencia a un ítem
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -40,7 +40,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return self
    */
-  public function setDPoliza(String $dPoliza): self
+  public function setDPoliza(string $dPoliza): self
   {
     $this->dPoliza = $dPoliza;
 
@@ -55,7 +55,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return self
    */
-  public function setDUnidVig(String $dUnidVig): self
+  public function setDUnidVig(string $dUnidVig): self
   {
     $this->dUnidVig = $dUnidVig;
 
@@ -70,7 +70,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return self
    */
-  public function setDVigencia(String $dVigencia): self
+  public function setDVigencia(string $dVigencia): self
   {
     $this->dVigencia = $dVigencia;
 
@@ -85,7 +85,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return self
    */
-  public function setDNumPoliza(String $dNumPoliza): self
+  public function setDNumPoliza(string $dNumPoliza): self
   {
     $this->dNumPoliza = $dNumPoliza;
 
@@ -130,7 +130,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return self
    */
-  public function setDCodInt(String $dCodInt): self
+  public function setDCodInt(string $dCodInt): self
   {
     $this->dCodInt = $dCodInt;
 
@@ -147,7 +147,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return String
    */
-  public function getDPoliza(): String
+  public function getDPoliza(): string
   {
     return $this->dPoliza;
   }
@@ -157,7 +157,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return String
    */
-  public function getDUnidVig(): String
+  public function getDUnidVig(): string
   {
     return $this->dUnidVig;
   }
@@ -167,7 +167,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return String
    */
-  public function getDVigencia(): String
+  public function getDVigencia(): string
   {
     return $this->dVigencia;
   }
@@ -177,7 +177,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return String
    */
-  public function getDNumPoliza(): String
+  public function getDNumPoliza(): string
   {
     return $this->dNumPoliza;
   }
@@ -207,7 +207,7 @@ class GGrupPolSeg extends BaseSifenField
    *
    * @return String
    */
-  public function getDCodInt(): String
+  public function getDCodInt(): string
   {
     return $this->dCodInt;
   }

@@ -155,7 +155,7 @@ class NotaDeRemision extends DocumentoElectronico
      * 
      * @throws Exception Si la descripción no cumple con la longitud requerida (5-60 caracteres)
      */
-    public function setDescripcionMotivoEmision(String $descripcion): self
+    public function setDescripcionMotivoEmision(string $descripcion): self
     {
         // Validar longitud de la descripción
         if (strlen($descripcion) < 5 || strlen($descripcion) > 60) {

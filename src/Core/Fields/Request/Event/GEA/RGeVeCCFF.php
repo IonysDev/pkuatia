@@ -15,8 +15,8 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeCCFF
 {
                                   // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;              // GECF002 - CDC del DE/DTE - 40 -1
-  public String $dNumTraCCFF;     // GECF003 - Número de  transferencia de  créditos fiscales - 10 - 1-1
+  public string $Id;              // GECF002 - CDC del DE/DTE - 40 -1
+  public string $dNumTraCCFF;     // GECF003 - Número de  transferencia de  créditos fiscales - 10 - 1-1
   public DateTime $dFeAceTraCCFF; // GECF004 - Fecha de aceptación del crédito fiscal - 19 - 1-S1
 
   ///////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ class RGeVeCCFF
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
 
@@ -45,7 +45,7 @@ class RGeVeCCFF
    *
    * @return self
    */
-  public function setDNumTraCCFF(String $dNumTraCCFF): self
+  public function setDNumTraCCFF(string $dNumTraCCFF): self
   {
     $this->dNumTraCCFF = $dNumTraCCFF;
 
@@ -76,7 +76,7 @@ class RGeVeCCFF
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -86,7 +86,7 @@ class RGeVeCCFF
    *
    * @return String
    */
-  public function getDNumTraCCFF(): String
+  public function getDNumTraCCFF(): string
   {
     return $this->dNumTraCCFF;
   }

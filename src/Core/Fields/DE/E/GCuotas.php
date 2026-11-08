@@ -20,9 +20,9 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GCuotas
 {
                               // Id - Longitud - Ocurrencia - Descripción
-  public String   $cMoneCuo;  // E653 - 3          - 1-1 - Moneda de las cuotas
-  public String   $dDMoneCuo; // E654 - 3-20       - 1-1 - Descripción de la moneda de las cuotas
-  public String   $dMonCuota; // E651 - 1-15p(0-4) - 1-1 - Monto de cada cuota (decimal BCMath)
+  public string   $cMoneCuo;  // E653 - 3          - 1-1 - Moneda de las cuotas
+  public string   $dDMoneCuo; // E654 - 3-20       - 1-1 - Descripción de la moneda de las cuotas
+  public string   $dMonCuota; // E651 - 1-15p(0-4) - 1-1 - Monto de cada cuota (decimal BCMath)
   public DateTime $dVencCuo;  // E652 - 10         - 0-1 - Fecha de vencimiento de cada cuota AAAA-MM-DD
 
   ///////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ class GCuotas
    *
    * @return self
    */
-  public function setCMoneCuo(String $cMoneCuo): self
+  public function setCMoneCuo(string $cMoneCuo): self
   {
     $this->cMoneCuo = $cMoneCuo;
     $this->dDMoneCuo = MonedaMapping::GetDescription($cMoneCuo);
@@ -54,7 +54,7 @@ class GCuotas
    * 
    * @return self
    */
-  public function setDDMoneCuo(String $dDMoneCuo): self
+  public function setDDMoneCuo(string $dDMoneCuo): self
   {
     $this->dDMoneCuo = $dDMoneCuo;
     return $this;
@@ -67,7 +67,7 @@ class GCuotas
    *
    * @return self
    */
-  public function setDMonCuota(String $dMonCuota): self
+  public function setDMonCuota(string $dMonCuota): self
   {
     if(!ValueValidations::isValidStringDecimal($dMonCuota, 15, 0, 4))
       throw new ValidacionException("[GCuotas] Monto de la cuota (dMonCuota) no válido: " . $dMonCuota, 1);
@@ -97,7 +97,7 @@ class GCuotas
    *
    * @return String
    */
-  public function getCMoneCuo(): String
+  public function getCMoneCuo(): string
   {
     return $this->cMoneCuo;
   }
@@ -107,7 +107,7 @@ class GCuotas
    *
    * @return String
    */
-  public function getDDMoneCuo(): String
+  public function getDDMoneCuo(): string
   {
     return $this->dDMoneCuo;
   }
@@ -117,7 +117,7 @@ class GCuotas
    *
    * @return String
    */
-  public function getDMonCuota(): String
+  public function getDMonCuota(): string
   {
     return $this->dMonCuota;
   }

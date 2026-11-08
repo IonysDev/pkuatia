@@ -17,7 +17,7 @@ class RucUtils {
 	 * 
 	 * @return int DV
 	 */
-	public static function CalcDV(String $value){
+	public static function CalcDV(string $value){
 		$ruc_al = "";
 		for($i = 0; $i < strlen($value); $i++){
 			$c = $value[$i];
@@ -54,7 +54,7 @@ class RucUtils {
 	 * 
 	 * @return bool true si es válido, false si no lo es.
 	 */
-	public static function ValidarRUCconDV(String $value){
+	public static function ValidarRUCconDV(string $value){
 		$test = preg_match('/^(\d{1,8}-\d)$/', $value);
 		if($test == 0){
 			return false;

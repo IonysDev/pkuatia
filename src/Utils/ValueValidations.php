@@ -27,7 +27,7 @@ class ValueValidations
      *
      * @throws \Exception Si los límites son incoherentes (mínimo mayor al máximo o negativos).
      */
-    public static function isValidStringDecimal(String $value, int $intPartLenght, int $decPartMinPrecision, int $decPartMaxPrecision = 99): bool
+    public static function isValidStringDecimal(string $value, int $intPartLenght, int $decPartMinPrecision, int $decPartMaxPrecision = 99): bool
     {
         if($decPartMinPrecision > $decPartMaxPrecision)
             throw new ValidacionException("The minimum precision cannot be greater than the maximum precision.");

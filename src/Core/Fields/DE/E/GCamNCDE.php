@@ -22,7 +22,7 @@ class GCamNCDE extends BaseSifenField
 
                               // Id - Longitud - Ocurrencia - Descripción
   public int    $iMotEmi;     // E401 - 1-2  - 1-1 - Motivo de emisión
-  public String $dDesMotEmi;  // E402 - 6-30 - 1-1 - Descripción del motivo de emisión
+  public string $dDesMotEmi;  // E402 - 6-30 - 1-1 - Descripción del motivo de emisión
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -51,7 +51,7 @@ class GCamNCDE extends BaseSifenField
    * 
    * @return self Retorna una instancia del objeto para encadenar métodos.
    */
-  public function setDDesMotEmi(String $dDesMotEmi): self
+  public function setDDesMotEmi(string $dDesMotEmi): self
   {
     $this->dDesMotEmi = $dDesMotEmi;
     return $this;
@@ -76,7 +76,7 @@ class GCamNCDE extends BaseSifenField
    *
    * @return String El valor de dDesMotEmi (E402)
    */
-  public function getDDesMotEmi(): String
+  public function getDDesMotEmi(): string
   {
     return $this->dDesMotEmi;
   }

@@ -17,9 +17,9 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class GVehNuevo extends BaseSifenField
 {
   public ?int $iTipOpVN; // E771 iTipOpVN Tipo de operación de venta de vehículos
-  public ?String $dDesTipOpVN; // E772 Descripción del tipo de operación de venta de vehículos
-  public ?String $dChasis; /// E773 Chasis del vehículo;
-  public ?String $dColor; // E774 Color del vehículo
+  public ?string $dDesTipOpVN; // E772 Descripción del tipo de operación de venta de vehículos
+  public ?string $dChasis; /// E773 Chasis del vehículo;
+  public ?string $dColor; // E774 Color del vehículo
   public ?int $dPotencia; ///E775 Potencia del motor (CV)
   public ?int $dCapMot; ///E776 Capacidad del motor
   /** @deprecated 0.2.1 Parte entera del peso neto (E777 admite 4 decimales): usar getDPNetDecimal(). */
@@ -27,20 +27,20 @@ class GVehNuevo extends BaseSifenField
   /** @deprecated 0.2.1 Parte entera del peso bruto (E778 admite 4 decimales): usar getDPBrutoDecimal(). */
   public ?int $dPBruto; ///E778 Peso Bruto
   public ?int $iTipCom; ///E779 Tipo de combustible
-  public ?String $dDesTipCom; ///E780 Descripción del tipo de combustible
-  public String $dNroMotor; ///E781 Numero de Motor
+  public ?string $dDesTipCom; ///E780 Descripción del tipo de combustible
+  public string $dNroMotor; ///E781 Numero de Motor
   /** @deprecated 0.2.1 Parte entera de la capacidad de tracción (E782 admite 4 decimales): usar getDCapTraccDecimal(). */
   public ?int $dCapTracc; ///E782 Capacidad máxima de  tracción 
   public ?int $dAnoFab; ///E783 Año de fabricación
-  public String $cTipVeh; ///E784 Tipo de vehículo
+  public string $cTipVeh; ///E784 Tipo de vehículo
   public ?int $dCapac; ///E785 Capacidad máxima de pasajeros 
-  public String $dCilin; ///E786  Cilindradas del motor
+  public string $dCilin; ///E786  Cilindradas del motor
 
   // Q-B12 (0.2.1): valor exacto de las medidas tMontoBase6, con sus decimales. Las propiedades enteras de arriba guardan
   // la parte entera, como hasta 0.2.0.
-  private ?String $dPNetDecimal = null;
-  private ?String $dPBrutoDecimal = null;
-  private ?String $dCapTraccDecimal = null;
+  private ?string $dPNetDecimal = null;
+  private ?string $dPBrutoDecimal = null;
+  private ?string $dCapTraccDecimal = null;
 
   ///////////////////////////////////////////////////////////////////////
   ///Setters
@@ -67,7 +67,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDDesTipOpVN(String $dDesTipOpVN): self
+  public function setDDesTipOpVN(string $dDesTipOpVN): self
   {
     $this->dDesTipOpVN = $dDesTipOpVN;
 
@@ -82,7 +82,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDChasis(String $dChasis): self
+  public function setDChasis(string $dChasis): self
   {
     $this->dChasis = $dChasis;
 
@@ -99,7 +99,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDColor(String $dColor): self
+  public function setDColor(string $dColor): self
   {
     $this->dColor = $dColor;
 
@@ -147,7 +147,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDPNet(int|String $dPNet): self
+  public function setDPNet(int|string $dPNet): self
   {
     $this->dPNetDecimal = self::monto($dPNet, 'dPNet');
     $this->dPNet = intval($this->dPNetDecimal);
@@ -166,7 +166,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDPBruto(int|String $dPBruto): self
+  public function setDPBruto(int|string $dPBruto): self
   {
     $this->dPBrutoDecimal = self::monto($dPBruto, 'dPBruto');
     $this->dPBruto = intval($this->dPBrutoDecimal);
@@ -196,7 +196,7 @@ class GVehNuevo extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDesTipCom(String $dDesTipCom): self
+  public function setDDesTipCom(string $dDesTipCom): self
   {
     $this->dDesTipCom = $dDesTipCom;
 
@@ -211,7 +211,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDNroMotor(String $dNroMotor): self
+  public function setDNroMotor(string $dNroMotor): self
   {
     $this->dNroMotor = $dNroMotor;
 
@@ -229,7 +229,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDCapTracc(int|String $dCapTracc): self
+  public function setDCapTracc(int|string $dCapTracc): self
   {
     $this->dCapTraccDecimal = self::monto($dCapTracc, 'dCapTracc');
     $this->dCapTracc = intval($this->dCapTraccDecimal);
@@ -260,7 +260,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setCTipVeh(String $cTipVeh): self
+  public function setCTipVeh(string $cTipVeh): self
   {
     $this->cTipVeh = $cTipVeh;
 
@@ -290,7 +290,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return self
    */
-  public function setDCilin(String $dCilin): self
+  public function setDCilin(string $dCilin): self
   {
     $this->dCilin = $dCilin;
 
@@ -317,7 +317,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipOpVN(): ?String
+  public function getDDesTipOpVN(): ?string
   {
     switch ($this->iTipOpVN ?? null) {
       case 1:
@@ -346,7 +346,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDChasis(): ?String
+  public function getDChasis(): ?string
   {
     return $this->dChasis ?? null;
   }
@@ -356,7 +356,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDColor(): ?String
+  public function getDColor(): ?string
   {
     return $this->dColor ?? null;
   }
@@ -398,7 +398,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String|null
    */
-  public function getDPNetDecimal(): ?String
+  public function getDPNetDecimal(): ?string
   {
     return isset($this->dPNet) ? self::exacto($this->dPNetDecimal, $this->dPNet) : null;
   }
@@ -420,7 +420,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String|null
    */
-  public function getDPBrutoDecimal(): ?String
+  public function getDPBrutoDecimal(): ?string
   {
     return isset($this->dPBruto) ? self::exacto($this->dPBrutoDecimal, $this->dPBruto) : null;
   }
@@ -440,7 +440,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDDesTipCom(): ?String
+  public function getDDesTipCom(): ?string
   {
     switch ($this->iTipCom ?? null) {
       case 1:
@@ -473,7 +473,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDNroMotor(): String
+  public function getDNroMotor(): string
   {
     return $this->dNroMotor;
   }
@@ -495,7 +495,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String|null
    */
-  public function getDCapTraccDecimal(): ?String
+  public function getDCapTraccDecimal(): ?string
   {
     return isset($this->dCapTracc) ? self::exacto($this->dCapTraccDecimal, $this->dCapTracc) : null;
   }
@@ -515,7 +515,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getCTipVeh(): String
+  public function getCTipVeh(): string
   {
     return $this->cTipVeh;
   }
@@ -535,7 +535,7 @@ class GVehNuevo extends BaseSifenField
    *
    * @return String
    */
-  public function getDCilin(): String
+  public function getDCilin(): string
   {
     return $this->dCilin;
   }
@@ -748,13 +748,13 @@ class GVehNuevo extends BaseSifenField
    * 0.2.0 entraban por la conversión de PHP a int ("+5" y "5." como "5", ".5" como "0.5", "1e3" como "1000").
    * Desde 0.3.0 (Fase C, C1) delega en Utils\DecimalXsd, con el mismo criterio y los mismos mensajes.
    */
-  private static function monto(int|String $valor, String $campo): String
+  private static function monto(int|string $valor, string $campo): string
   {
     return DecimalXsd::normalizar($valor, $campo, 10, 4, '[GVehNuevo]', 'tMontoBase6');
   }
 
   /** Valor exacto, salvo que la propiedad pública entera se haya asignado directamente con otro valor. */
-  private static function exacto(?String $decimal, int $entero): String
+  private static function exacto(?string $decimal, int $entero): string
   {
     return DecimalXsd::exacto($decimal, $entero);
   }

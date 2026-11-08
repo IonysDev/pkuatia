@@ -20,9 +20,9 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GValorItem extends BaseSifenField
 {
-  public String $dPUniProSer;              // E721  - 1-15p(0-8) - 1-1 - Precio unitario del producto y/o servicio (incluidos impuestos)
-  public String $dTiCamIt;                 // E725  - 1-5p(0-4)  - 0-1 - Tipo de cambio por ítem
-  public String $dTotBruOpeItem;           // E727  - 1-15p(0-8) - 1-1 - Total bruto de la operación por ítem
+  public string $dPUniProSer;              // E721  - 1-15p(0-8) - 1-1 - Precio unitario del producto y/o servicio (incluidos impuestos)
+  public string $dTiCamIt;                 // E725  - 1-5p(0-4)  - 0-1 - Tipo de cambio por ítem
+  public string $dTotBruOpeItem;           // E727  - 1-15p(0-8) - 1-1 - Total bruto de la operación por ítem
   public GValorRestaItem $gValorRestaItem; // EA001 -            - 1-1 - Campos que describen los descuentos, anticipos valor total por ítem 
 
   ///////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ class GValorItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDPUniProSer(String $dPUniProSer): self
+  public function setDPUniProSer(string $dPUniProSer): self
   {
     if(ValueValidations::isValidStringDecimal($dPUniProSer, 15, 0, 8) === false)
     {
@@ -54,7 +54,7 @@ class GValorItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDTiCamIt(String $dTiCamIt): self
+  public function setDTiCamIt(string $dTiCamIt): self
   {
     if(ValueValidations::isValidStringDecimal($dTiCamIt, 5, 0, 4) === false)
     {
@@ -72,7 +72,7 @@ class GValorItem extends BaseSifenField
    *
    * @return self
    */
-  public function setDTotBruOpeItem(String $dTotBruOpeItem): self
+  public function setDTotBruOpeItem(string $dTotBruOpeItem): self
   {
     if(ValueValidations::isValidStringDecimal($dTotBruOpeItem, 15, 0, 8) === false)
     {
@@ -106,7 +106,7 @@ class GValorItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDPUniProSer(): String
+  public function getDPUniProSer(): string
   {
     return $this->dPUniProSer;
   }
@@ -117,7 +117,7 @@ class GValorItem extends BaseSifenField
    * @param int $precision La precisión decimal a utilizar (por defecto 8)
    * @return String
    */
-  public function getFormattedDPUniProSer(int $precision = 8): String
+  public function getFormattedDPUniProSer(int $precision = 8): string
   {
     $rounded = bcadd($this->dPUniProSer, '0', $precision);
     return NumberStringFormatter::FormatBCMAthNumber($rounded, ',', '.');
@@ -128,7 +128,7 @@ class GValorItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDTiCamIt(): String
+  public function getDTiCamIt(): string
   {
     return $this->dTiCamIt;
   }
@@ -138,7 +138,7 @@ class GValorItem extends BaseSifenField
    *
    * @return String
    */
-  public function getDTotBruOpeItem(): String
+  public function getDTotBruOpeItem(): string
   {
     return $this->dTotBruOpeItem;
   }

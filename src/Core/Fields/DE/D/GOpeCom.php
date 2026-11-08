@@ -28,15 +28,15 @@ class GOpeCom extends BaseSifenField
 {
                                 // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipTra;     // D011 - 1-2       - 0-1 - Tipo de transacción
-    public String $dDesTipTra;  // D012 - 5-39      - 0-1 - Descripción del tipo de transacción
+    public string $dDesTipTra;  // D012 - 5-39      - 0-1 - Descripción del tipo de transacción
     public int    $iTImp;       // D013 - 1         - 1-1 - Tipo de impuesto afectado
-    public String $dDesTImp;    // D014 - 3-11      - 1-1 - Descripción del tipo de impuesto afectado
-    public String $cMoneOpe;    // D015 - 3         - 1-1 - Moneda de la operación
-    public String $dDesMoneOpe; // D016 - 3-20      - 1-1 - Descripción de la moneda de la operación
+    public string $dDesTImp;    // D014 - 3-11      - 1-1 - Descripción del tipo de impuesto afectado
+    public string $cMoneOpe;    // D015 - 3         - 1-1 - Moneda de la operación
+    public string $dDesMoneOpe; // D016 - 3-20      - 1-1 - Descripción de la moneda de la operación
     public int    $dCondTiCam;  // D017 - 1         - 0-1 - Condición del tipo de cambio
-    public String $dTiCam;      // D018 - 1-5p(0-4) - 0-1 - Tipo de cambio de la operación (decimal BCMath)
+    public string $dTiCam;      // D018 - 1-5p(0-4) - 0-1 - Tipo de cambio de la operación (decimal BCMath)
     public int    $iCondAnt;    // D019 - 1         - 0-1 - Condición del Anticipo
-    public String $dDesCondAnt; // D020 - 15-17     - 0-1 - Descripción de la condición del anticipo
+    public string $dDesCondAnt; // D020 - 15-17     - 0-1 - Descripción de la condición del anticipo
     public array  $gOblAfe = [];// D030 -           - 0-12 - Obligaciones afectadas (GOblAfe, NT-018)
 
     // Cantidad máxima de nodos gOblAfe según el XSD de producción DE_v150 (maxOccurs = 12).
@@ -86,7 +86,7 @@ class GOpeCom extends BaseSifenField
      * 
      * @return self
      */
-    public function setDDesTipTra(String $dDesTipTra): self
+    public function setDDesTipTra(string $dDesTipTra): self
     {
         $this->dDesTipTra = $dDesTipTra;
         return $this;
@@ -113,13 +113,13 @@ class GOpeCom extends BaseSifenField
      * 
      * @return self
      */
-    public function setDDesTImp(String $dDesTImp): self
+    public function setDDesTImp(string $dDesTImp): self
     {
         $this->dDesTImp = $dDesTImp;
         return $this;
     }
 
-    public function setCMoneOpe(String $cMoneOpe): self
+    public function setCMoneOpe(string $cMoneOpe): self
     {
         $this->cMoneOpe = $cMoneOpe;
         $this->dDesMoneOpe = MonedaMapping::GetDescription($this->cMoneOpe);
@@ -132,7 +132,7 @@ class GOpeCom extends BaseSifenField
     }
 
 
-    public function setDDesMoneOpe(String $dDesMoneOpe): self
+    public function setDDesMoneOpe(string $dDesMoneOpe): self
     {
         if(is_null($this->cMoneOpe) || strlen($dDesMoneOpe) == 0)
         {
@@ -173,7 +173,7 @@ class GOpeCom extends BaseSifenField
      * 
      * @return self
      */
-    public function setDTiCam(String $dTiCam): self
+    public function setDTiCam(string $dTiCam): self
     {
         if(ValueValidations::isValidStringDecimal($dTiCam, 5, 0, 4))
         {
@@ -209,7 +209,7 @@ class GOpeCom extends BaseSifenField
      *
      * @return self
      */
-    public function setDDesCondAnt(String $dDesCondAnt): self
+    public function setDDesCondAnt(string $dDesCondAnt): self
     {
         $this->dDesCondAnt = $dDesCondAnt;
         return $this;
@@ -279,7 +279,7 @@ class GOpeCom extends BaseSifenField
      * 
      * @return String
      */
-    public function getDDesTipTra(): String
+    public function getDDesTipTra(): string
     {
        return $this->dDesTipTra;
     }
@@ -299,7 +299,7 @@ class GOpeCom extends BaseSifenField
      * 
      * @return String
      */
-    public function getDDesTImp(): String
+    public function getDDesTImp(): string
     {
         return $this->dDesTImp;
     }
@@ -309,7 +309,7 @@ class GOpeCom extends BaseSifenField
      * 
      * @return String
      */
-    public function getCMoneOpe(): String
+    public function getCMoneOpe(): string
     {
         return $this->cMoneOpe;
     }
@@ -319,7 +319,7 @@ class GOpeCom extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesMoneOpe() : String
+    public function getDDesMoneOpe() : string
     {
         return $this->dDesMoneOpe;
     }
@@ -329,7 +329,7 @@ class GOpeCom extends BaseSifenField
      * 
      * @return int
      */
-    public function getDCondTiCam(): String
+    public function getDCondTiCam(): string
     {
         return $this->dCondTiCam;
     }
@@ -339,12 +339,12 @@ class GOpeCom extends BaseSifenField
      * 
      * @return String
      */
-    public function getDTiCam(): String
+    public function getDTiCam(): string
     {
         return $this->dTiCam;
     }
 
-    public function getFormattedDTiCam(int $precision = 0): ?String
+    public function getFormattedDTiCam(int $precision = 0): ?string
     {
         if(isset($this->dTiCam))
         {
@@ -372,7 +372,7 @@ class GOpeCom extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesCondAnt(): String
+    public function getDDesCondAnt(): string
     {
         return $this->dDesCondAnt;
     }

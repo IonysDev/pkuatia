@@ -14,13 +14,13 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class GGrupAdi
 {
-  public ?String $dCiclo;     //E821 Ciclo 
+  public ?string $dCiclo;     //E821 Ciclo 
   public ?DateTime $dFecIniC; //E822 Fecha de inicio de ciclo
   public ?DateTime $dFecFinC; //E823 Fecha de fin de ciclo
   public ?DateTime $dVencPag; //E824 Fecha de vencimiento de pago
-  public ?String $dContrato; //E825 Número de contrato
-  public ?String $dSalAnt;   //E826 Saldo anterior
-  public ?String $dCodConDncp; //E827 Código de contratación de la DNCP
+  public ?string $dContrato; //E825 Número de contrato
+  public ?string $dSalAnt;   //E826 Saldo anterior
+  public ?string $dCodConDncp; //E827 Código de contratación de la DNCP
 
   /** @var list<DateTime> Ocurrencias de dVencPag después de la primera: hasta 3 en total (tgGrupAdi, DE_v150.xsd:829; Q-B9). */
   private array $dVencPagAdicionales = [];
@@ -37,7 +37,7 @@ class GGrupAdi
    *
    * @return self
    */
-  public function setDCiclo(String $dCiclo): self
+  public function setDCiclo(string $dCiclo): self
   {
     $this->dCiclo = $dCiclo;
 
@@ -98,7 +98,7 @@ class GGrupAdi
    *
    * @return self
    */
-  public function setDContrato(String $dContrato): self
+  public function setDContrato(string $dContrato): self
   {
     $this->dContrato = $dContrato;
 
@@ -113,7 +113,7 @@ class GGrupAdi
    *
    * @return self
    */
-  public function setDSalAnt(?String $dSalAnt): self
+  public function setDSalAnt(?string $dSalAnt): self
   {
     $this->dSalAnt = $dSalAnt;
 
@@ -127,7 +127,7 @@ class GGrupAdi
    *
    * @return self
    */
-  public function setdCodConDncp(?String $dCodConDncp): self
+  public function setdCodConDncp(?string $dCodConDncp): self
   {
     $this->dCodConDncp = $dCodConDncp;
 
@@ -144,7 +144,7 @@ class GGrupAdi
    *
    * @return String
    */
-  public function getDCiclo(): ?String
+  public function getDCiclo(): ?string
   {
     return $this->dCiclo ?? null;
   }
@@ -216,7 +216,7 @@ class GGrupAdi
    *
    * @return String
    */
-  public function getDContrato(): ?String
+  public function getDContrato(): ?string
   {
     return $this->dContrato ?? null;
   }
@@ -238,7 +238,7 @@ class GGrupAdi
    *
    * @return ?String
    */
-  public function getDSalAntDecimal(): ?String
+  public function getDSalAntDecimal(): ?string
   {
     return $this->dSalAnt ?? null;
   }
@@ -249,7 +249,7 @@ class GGrupAdi
    *
    * @return ?String
    */
-  public function getdCodConDncp(): ?String
+  public function getdCodConDncp(): ?string
   {
     return $this->dCodConDncp;
   }

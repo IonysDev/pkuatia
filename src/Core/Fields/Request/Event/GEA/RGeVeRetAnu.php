@@ -16,19 +16,19 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 class RGeVeRetAnu
 { 
                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;          // GERA002 - CDC del DE/DTE - 44 - 1-1
+  public string $Id;          // GERA002 - CDC del DE/DTE - 44 - 1-1
   public int $dNumTimRet;     // GERA003 - Número de timbrado del documento de retención - 8 - 1-1
-  public String $dEstRet;     // GERA004 - Establecimiento del documento de retención - 3 - 1-1
-  public String $dPunExpRet;  // GERA005 - Punto de expedición  del documento de  retención - 3 - 1-1
-  public String $dNumDocRet;  // GERA006 - Número del documento de la retención - 7 - 1-1
-  public String $dCodConRet;  // GERA007 - Identificador de la retención - 40 - 1-1
+  public string $dEstRet;     // GERA004 - Establecimiento del documento de retención - 3 - 1-1
+  public string $dPunExpRet;  // GERA005 - Punto de expedición  del documento de  retención - 3 - 1-1
+  public string $dNumDocRet;  // GERA006 - Número del documento de la retención - 7 - 1-1
+  public string $dCodConRet;  // GERA007 - Identificador de la retención - 40 - 1-1
   public DateTime $dFeEmiRet; // GERA008 - Fecha de emisión de la retención - 19 - 1-1
   public DateTime $dFecAnRet; // GERA009 - Fecha de anulación  de la retención - 19 - 1-1
 
   // dRuc y dMonRet son obligatorios en el XSD (Evento_v150.xsd:139 y :147) aunque el MT no los lista; hasta
   // 0.2.0 la clase no los modelaba y se perdían al consultar un DE con retenciones (PK-42). Nuevos en 0.2.1.
-  public String $dRuc;        // RUC (tRuc, Evento_v150.xsd:139); el XSD no documenta de quién es
-  public String $dMonRet;     // Monto de la retención (tMontoBase, Evento_v150.xsd:147)
+  public string $dRuc;        // RUC (tRuc, Evento_v150.xsd:139); el XSD no documenta de quién es
+  public string $dMonRet;     // Monto de la retención (tMontoBase, Evento_v150.xsd:147)
 
   /**
    * Establece dRuc (tRuc, Evento_v150.xsd:139). Nuevo en 0.2.1 (PK-42).
@@ -37,7 +37,7 @@ class RGeVeRetAnu
    *
    * @return self
    */
-  public function setDRuc(String $dRuc): self
+  public function setDRuc(string $dRuc): self
   {
     $this->dRuc = $dRuc;
     return $this;
@@ -50,7 +50,7 @@ class RGeVeRetAnu
    *
    * @return self
    */
-  public function setDMonRet(String $dMonRet): self
+  public function setDMonRet(string $dMonRet): self
   {
     $this->dMonRet = $dMonRet;
     return $this;
@@ -61,7 +61,7 @@ class RGeVeRetAnu
    *
    * @return String|null
    */
-  public function getDRuc(): ?String
+  public function getDRuc(): ?string
   {
     return $this->dRuc ?? null;
   }
@@ -71,7 +71,7 @@ class RGeVeRetAnu
    *
    * @return String|null
    */
-  public function getDMonRet(): ?String
+  public function getDMonRet(): ?string
   {
     return $this->dMonRet ?? null;
   }
@@ -87,7 +87,7 @@ class RGeVeRetAnu
    *
    * @return self
    */
-  public function setId(String $Id): self
+  public function setId(string $Id): self
   {
     $this->Id = $Id;
 
@@ -117,7 +117,7 @@ class RGeVeRetAnu
    *
    * @return self
    */
-  public function setDEstRet(String $dEstRet): self
+  public function setDEstRet(string $dEstRet): self
   {
     $this->dEstRet = $dEstRet;
 
@@ -132,7 +132,7 @@ class RGeVeRetAnu
    *
    * @return self
    */
-  public function setDPunExpRet(String $dPunExpRet): self
+  public function setDPunExpRet(string $dPunExpRet): self
   {
     $this->dPunExpRet = $dPunExpRet;
 
@@ -147,7 +147,7 @@ class RGeVeRetAnu
    *
    * @return self
    */
-  public function setDNumDocRet(String $dNumDocRet): self
+  public function setDNumDocRet(string $dNumDocRet): self
   {
     $this->dNumDocRet = $dNumDocRet;
 
@@ -161,7 +161,7 @@ class RGeVeRetAnu
    *
    * @return self
    */
-  public function setDCodConRet(String $dCodConRet): self
+  public function setDCodConRet(string $dCodConRet): self
   {
     $this->dCodConRet = $dCodConRet;
 
@@ -208,7 +208,7 @@ class RGeVeRetAnu
    *
    * @return String
    */
-  public function getId(): String
+  public function getId(): string
   {
     return $this->Id;
   }
@@ -228,7 +228,7 @@ class RGeVeRetAnu
    *
    * @return String
    */
-  public function getDEstRet(): String
+  public function getDEstRet(): string
   {
     return $this->dEstRet;
   }
@@ -238,7 +238,7 @@ class RGeVeRetAnu
    *
    * @return String
    */
-  public function getDPunExpRet(): String
+  public function getDPunExpRet(): string
   {
     return $this->dPunExpRet;
   }
@@ -248,7 +248,7 @@ class RGeVeRetAnu
    *
    * @return String
    */
-  public function getDNumDocRet(): String
+  public function getDNumDocRet(): string
   {
     return $this->dNumDocRet;
   }
@@ -258,7 +258,7 @@ class RGeVeRetAnu
    *
    * @return String
    */
-  public function getDCodConRet(): String
+  public function getDCodConRet(): string
   {
     return $this->dCodConRet;
   }
@@ -337,7 +337,7 @@ class RGeVeRetAnu
   //   }
   // }
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
+  public static function FromSimpleXMLElement(SimpleXMLElement $node):self
   {
     if($node->getName() != 'rGeVeRetAnu')
       throw new ValidacionException("Invalid XML Element: $node->getName()");

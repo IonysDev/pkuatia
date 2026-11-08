@@ -25,10 +25,10 @@ class GPagCred extends BaseSifenField
   public const CONDICION_CREDITO_CUOTA = 2;
 
   public int    $iCondCred;  // E641 - 1          - 1-1   - Condición de la  operación a crédito
-  public String $dDCondCred; // E642 - 5-6        - 1-1   - Descripción de la Condición de la operación a crédito
-  public String $dPlazoCre;  // E643 - 2-15       - 0-1   - Plazo del crédito
+  public string $dDCondCred; // E642 - 5-6        - 1-1   - Descripción de la Condición de la operación a crédito
+  public string $dPlazoCre;  // E643 - 2-15       - 0-1   - Plazo del crédito
   public int    $dCuotas;    // E644 - 1-3        - 0-1   - Cantidad de cuotas
-  public String $dMonEnt;    // E645 - 1-15p(0-4) - 0-1   - Monto de la entrega inicial (decimal BCMath)
+  public string $dMonEnt;    // E645 - 1-15p(0-4) - 0-1   - Monto de la entrega inicial (decimal BCMath)
   public array  $gCuotas;    // E650 -            - 0-999 - Campos que describen las cuotas (GCuotas)
 
   /**
@@ -66,7 +66,7 @@ class GPagCred extends BaseSifenField
    * 
    * @return self
    */
-  public function setDDCondCred(String $dDCondCred): self
+  public function setDDCondCred(string $dDCondCred): self
   {
     $this->dDCondCred = $dDCondCred;
     return $this;
@@ -79,7 +79,7 @@ class GPagCred extends BaseSifenField
    *
    * @return self
    */
-  public function setDPlazoCre(String $dPlazoCre): self
+  public function setDPlazoCre(string $dPlazoCre): self
   {
     $this->dPlazoCre = $dPlazoCre;
     return $this;
@@ -107,7 +107,7 @@ class GPagCred extends BaseSifenField
    *
    * @return self
    */
-  public function setDMonEnt(int|String $dMonEnt): self
+  public function setDMonEnt(int|string $dMonEnt): self
   {
     $dMonEnt = (string) $dMonEnt;
     if(!ValueValidations::isValidStringDecimal($dMonEnt, 15, 0, 4))
@@ -150,7 +150,7 @@ class GPagCred extends BaseSifenField
    *
    * @return String
    */
-  public function getDDCondCred(): String
+  public function getDDCondCred(): string
   {
     return $this->dDCondCred;
   }
@@ -160,7 +160,7 @@ class GPagCred extends BaseSifenField
    *
    * @return String
    */
-  public function getDPlazoCre(): String
+  public function getDPlazoCre(): string
   {
     return $this->dPlazoCre;
   }
@@ -197,7 +197,7 @@ class GPagCred extends BaseSifenField
    *
    * @return ?String
    */
-  public function getDMonEntDecimal(): ?String
+  public function getDMonEntDecimal(): ?string
   {
     return isset($this->dMonEnt) ? $this->dMonEnt : null;
   } 

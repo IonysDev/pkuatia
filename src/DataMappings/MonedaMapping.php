@@ -53,7 +53,7 @@ class MonedaMapping
    *
    * @return String|null null si el código no existe en Monedas_v150.xsd.
    */
-  public static function GetDescription($code): ?String
+  public static function GetDescription($code): ?string
   {
     $nombre = self::GetCodeName($code);
     if ($nombre === null) {
@@ -69,7 +69,7 @@ class MonedaMapping
    *
    * @return String|null
    */
-  public static function GetCodeName($code): ?String
+  public static function GetCodeName($code): ?string
   {
     $buscado = strtoupper((string) $code);
     foreach (self::GetArray() as $value) {

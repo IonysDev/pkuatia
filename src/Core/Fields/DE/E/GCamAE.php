@@ -27,26 +27,26 @@ class GCamAE
 {
                                    // Id - Longitud - Ocurrencia - Descripción (manual SIFEN)
   public int    $iNatVen;     // E301 - 1     - 1-1 - Naturaleza del vendedor
-  public String $dDesNatVen;  // E302 - 10-16 - 1-1 - Descripción de la naturaleza del vendedor
+  public string $dDesNatVen;  // E302 - 10-16 - 1-1 - Descripción de la naturaleza del vendedor
   public int    $iTipIDVen;   // E304 - 1     - 1-1 - Tipo de documento de identidad del vendedor
-  public String $dDTipIDVen;  // E305 - 9-20  - 1-1 - Descripción del tipo de documento de identidad del vendedor
-  public String $dNumIDVen;   // E306 - 1-20  - 1-1 - Número de documento de identidad del vendedor
-  public String $dNomVen;     // E307 - 4-60  - 1-1 - Nombre y apellido del vendedor
-  public String $dDirVen;     // E308 - 1-255 - 1-1 - Dirección del vendedor (calle principal)
+  public string $dDTipIDVen;  // E305 - 9-20  - 1-1 - Descripción del tipo de documento de identidad del vendedor
+  public string $dNumIDVen;   // E306 - 1-20  - 1-1 - Número de documento de identidad del vendedor
+  public string $dNomVen;     // E307 - 4-60  - 1-1 - Nombre y apellido del vendedor
+  public string $dDirVen;     // E308 - 1-255 - 1-1 - Dirección del vendedor (calle principal)
   public int    $dNumCasVen;  // E309 - 1-6   - 1-1 - Número de casa del vendedor
   public int    $cDepVen;     // E310 - 1-2   - 1-1 - Código de departamento del vendedor
-  public String $dDesDepVen;  // E311 - 6-16  - 1-1 - Descripción del departamento del vendedor
+  public string $dDesDepVen;  // E311 - 6-16  - 1-1 - Descripción del departamento del vendedor
   public int    $cDisVen;    // E312 - 1-4   - 0-1 - Código de distrito del vendedor
-  public String $dDesDisVen;  // E313 - 1-30  - 0-1 - Descripción del distrito del vendedor
+  public string $dDesDisVen;  // E313 - 1-30  - 0-1 - Descripción del distrito del vendedor
   public int    $cCiuVen;     // E314 - 1-5   - 1-1 - Código de ciudad del vendedor
-  public String $dDesCiuVen;  // E315 - 1-30  - 1-1 - Descripción de la ciudad del vendedor
-  public String $dDirProv;    // E316 - 1-255 - 1-1 - Lugar donde se realiza la transacción (dirección en el lugar de la operación)
+  public string $dDesCiuVen;  // E315 - 1-30  - 1-1 - Descripción de la ciudad del vendedor
+  public string $dDirProv;    // E316 - 1-255 - 1-1 - Lugar donde se realiza la transacción (dirección en el lugar de la operación)
   public int    $cDepProv;    // E317 - 1-2   - 1-1 - Código de departamento del lugar de la transacción
-  public String $dDesDepProv; // E318 - 6-16  - 1-1 - Descripción del departamento del lugar de la transacción
+  public string $dDesDepProv; // E318 - 6-16  - 1-1 - Descripción del departamento del lugar de la transacción
   public int    $cDisProv;    // E319 - 1-4   - 0-1 - Código de distrito del lugar de la transacción
-  public String $dDesDisProv; // E320 - 1-30  - 0-1 - Descripción del distrito del lugar de la transacción
+  public string $dDesDisProv; // E320 - 1-30  - 0-1 - Descripción del distrito del lugar de la transacción
   public int    $cCiuProv;    // E321 - 1-5   - 1-1 - Código de ciudad del lugar de la transacción
-  public String $dDesCiuProv; // E322 - 1-30  - 1-1 - Descripción de la ciudad del lugar de la transacción
+  public string $dDesCiuProv; // E322 - 1-30  - 1-1 - Descripción de la ciudad del lugar de la transacción
 
   ///////////////////////////////////////////////////////////////////////
   // Setters
@@ -86,7 +86,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDesNatVen(String $dDesNatVen): self
+  public function setDDesNatVen(string $dDesNatVen): self
   {
     if($dDesNatVen != "No contribuyente" && $dDesNatVen != "Extranjero")
       throw new ValidacionException("[GCamAE] dDesNatVen debe ser 'No contribuyente' o 'Extranjero', valor dado: $dDesNatVen");
@@ -128,7 +128,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDTipIDVen(String $dDTipIDVen): self 
+  public function setDDTipIDVen(string $dDTipIDVen): self 
   {
     if($dDTipIDVen != "Cédula paraguaya" && $dDTipIDVen != "Pasaporte" && $dDTipIDVen != "Cédula extranjera" && $dDTipIDVen != "Carnet de residencia")
       throw new ValidacionException("[GCamAE] dDTipIDVen debe ser 'Cédula paraguaya', 'Pasaporte', 'Cédula extranjera' o 'Carnet de residencia', valor dado: $dDTipIDVen");
@@ -143,7 +143,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDNumIDVen(String $dNumIDVen): self
+  public function setDNumIDVen(string $dNumIDVen): self
   {
     if(strlen($dNumIDVen) < 1 || strlen($dNumIDVen) > 20)
       throw new ValidacionException("[GCamAE] dNumIDVen debe tener entre 1 y 20 caracteres, valor dado: $dNumIDVen");
@@ -159,7 +159,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDNomVen(String $dNomVen): self
+  public function setDNomVen(string $dNomVen): self
   {
     if(strlen($dNomVen) < 4 || strlen($dNomVen) > 60)
       throw new ValidacionException("[GCamAE] dNomVen debe tener entre 4 y 60 caracteres, valor dado: $dNomVen");
@@ -176,7 +176,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDirVen(String $dDirVen): self
+  public function setDDirVen(string $dDirVen): self
   {
     if(strlen($dDirVen) < 1 || strlen($dDirVen) > 255)
       throw new ValidacionException("[GCamAE] dDirVen debe tener entre 1 y 255 caracteres, valor dado: $dDirVen");
@@ -228,7 +228,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDesDepVen(String $dDesDepVen): self
+  public function setDDesDepVen(string $dDesDepVen): self
   {
     $this->dDesDepVen = $dDesDepVen;
     return $this;
@@ -282,7 +282,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDirProv(String $dDirProv): self
+  public function setDDirProv(string $dDirProv): self
   {
     $this->dDirProv = $dDirProv;
 
@@ -354,7 +354,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDesDisVen(String $dDesDisVen): self
+  public function setDDesDisVen(string $dDesDisVen): self
   {
     $this->dDesDisVen = $dDesDisVen;
     return $this;
@@ -365,7 +365,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDesCiuVen(String $dDesCiuVen): self
+  public function setDDesCiuVen(string $dDesCiuVen): self
   {
     $this->dDesCiuVen = $dDesCiuVen;
     return $this;
@@ -376,7 +376,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDesDepProv(String $dDesDepProv): self
+  public function setDDesDepProv(string $dDesDepProv): self
   {
     $this->dDesDepProv = $dDesDepProv;
     return $this;
@@ -387,7 +387,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDesDisProv(String $dDesDisProv): self
+  public function setDDesDisProv(string $dDesDisProv): self
   {
     $this->dDesDisProv = $dDesDisProv;
     return $this;
@@ -398,7 +398,7 @@ class GCamAE
    *
    * @return self Encadenamiento fluido.
    */
-  public function setDDesCiuProv(String $dDesCiuProv): self
+  public function setDDesCiuProv(string $dDesCiuProv): self
   {
     $this->dDesCiuProv = $dDesCiuProv;
     return $this;
@@ -421,7 +421,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDesNatVen(): String
+  public function getDDesNatVen(): string
   {
     return $this->dDesNatVen;
   }
@@ -441,7 +441,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDTipIDVen(): String
+  public function getDDTipIDVen(): string
   {
     return $this->dDTipIDVen;
   }
@@ -450,7 +450,7 @@ class GCamAE
   /**
    * dNumIDVen (E306): número de documento de identidad del vendedor.
    */
-  public function getDNumIDVen(): String
+  public function getDNumIDVen(): string
   {
     return $this->dNumIDVen;
   }
@@ -458,7 +458,7 @@ class GCamAE
   /**
    * dNomVen (E307): nombre y apellido del vendedor.
    */
-  public function getDNomVen(): String
+  public function getDNomVen(): string
   {
     return $this->dNomVen;
   }
@@ -468,7 +468,7 @@ class GCamAE
   /**
    * dDirVen (E308): dirección (calle) del vendedor.
    */
-  public function getDDirVen(): String
+  public function getDDirVen(): string
   {
     return $this->dDirVen;
   }
@@ -494,7 +494,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDesDepVen(): String
+  public function getDDesDepVen(): string
   {
     return DepartamentoMapping::getDepName(strval($this->cDepVen));
   }
@@ -515,7 +515,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDesDisVen(): String
+  public function getDDesDisVen(): string
   {
     return PyGeoCodesMapping::getDistName(strval($this->cDisVen));
   }
@@ -535,7 +535,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDesCiuVen(): String
+  public function getDDesCiuVen(): string
   {
     return PyGeoCodesMapping::getCiudName(strval($this->cCiuVen));
   }
@@ -546,7 +546,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDirProv(): String
+  public function getDDirProv(): string
   {
     return $this->dDirProv;
   }
@@ -566,7 +566,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDesDepProv(): String
+  public function getDDesDepProv(): string
   {
     return DepartamentoMapping::getDepName(strval($this->cDepProv));
   }
@@ -587,7 +587,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDesDisProv(): String
+  public function getDDesDisProv(): string
   {
     return PyGeoCodesMapping::getDistName(strval($this->cDisProv));
   }
@@ -607,7 +607,7 @@ class GCamAE
    *
    * @return String
    */
-  public function getDDesCiuProv(): String
+  public function getDDesCiuProv(): string
   {
     return PyGeoCodesMapping::getCiudName(strval($this->cCiuProv));
   }

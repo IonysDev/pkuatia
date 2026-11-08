@@ -16,7 +16,7 @@ class NumberFunctions
      * 
      * @return String Número decimal redondeado.
      */
-    static function bcround(String $number, int $precision = 0) : String
+    static function bcround(string $number, int $precision = 0) : string
     {
         if (strpos($number, '.') !== false) {
             if ($number[0] != '-')

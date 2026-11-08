@@ -21,7 +21,7 @@ class RResEnviConsDe implements RespuestaSifen
                              // Id - Longitud - Ocurrencia - Descripción
   public DateTime $dFecProc; // DRSch02  - 19    - 1-1 - fecha de proceso formato AAAA-MM-DD-hh:mm:ss
   public int      $dCodRes;  // DRSch03  - 4     - 1-1 - Código del resultado de procesamiento
-  public String   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
+  public string   $dMsgRes;  // DRSch04  - 1-255 - 1-1 - Mensaje del resultado de procesamiento
   public RContDe  $rContDe;  // ContDE01 - XML   - 0-1 - Objeto del DE consultado
 
   /**
@@ -33,7 +33,7 @@ class RResEnviConsDe implements RespuestaSifen
    *
    * Sólo está disponible cuando el SIFEN responde xContenDE como cadena de texto.
    */
-  private ?String $xContenDE = null;
+  private ?string $xContenDE = null;
 
   ///////////////////////////////////////////////////////////////////////
   ///SETTERS
@@ -76,7 +76,7 @@ class RResEnviConsDe implements RespuestaSifen
    *
    * @return self
    */
-  public function setDMsgRes(String $dMsgRes): self
+  public function setDMsgRes(string $dMsgRes): self
   {
     $this->dMsgRes = $dMsgRes;
 
@@ -106,7 +106,7 @@ class RResEnviConsDe implements RespuestaSifen
    *
    * @return self
    */
-  public function setXContenDE(?String $xContenDE): self
+  public function setXContenDE(?string $xContenDE): self
   {
     $this->xContenDE = $xContenDE;
 
@@ -143,7 +143,7 @@ class RResEnviConsDe implements RespuestaSifen
    *
    * @return String
    */
-  public function getDMsgRes(): String
+  public function getDMsgRes(): string
   {
     return $this->dMsgRes;
   }
@@ -166,7 +166,7 @@ class RResEnviConsDe implements RespuestaSifen
    *
    * @return String|null Null si el SIFEN no devolvió el contenido como cadena.
    */
-  public function getXContenDE(): ?String
+  public function getXContenDE(): ?string
   {
     return $this->xContenDE;
   }
@@ -184,7 +184,7 @@ class RResEnviConsDe implements RespuestaSifen
    *
    * @return String|null Null si no hay contenido o si no se encuentra el elemento rDE.
    */
-  public function getRDEXml(): ?String
+  public function getRDEXml(): ?string
   {
     if ($this->xContenDE === null) {
       return null;

@@ -25,10 +25,10 @@ class GOpeDE extends BaseSifenField
 {
                                // Id - Longitud - Ocurrencia - Descripción
     public int    $iTipEmi;    // B002 - 1      - 1-1 - Tipo de emisión: 1 - Normal, 2 - Contingencia
-    public String $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
-    public String $dCodSeg;    // B004 - 9      - 1-1 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
-    public String $dInfoEmi;   // B005 - 1-3000 - 0-1 - Información de interés del emisor respecto al DE
-    public String $dInfoFisc;  // B006 - 1-3000 - 0-1 - Información de interés del fisco respecto al DE
+    public string $dDesTipEmi; // B003 - 6-12   - 1-1 - Descripción del tipo de emisión
+    public string $dCodSeg;    // B004 - 9      - 1-1 - Código de seguridad: número que debe formatearse al exportar con 9 caracteres con 0s a la izquierda
+    public string $dInfoEmi;   // B005 - 1-3000 - 0-1 - Información de interés del emisor respecto al DE
+    public string $dInfoFisc;  // B006 - 1-3000 - 0-1 - Información de interés del fisco respecto al DE
 
     /**
      * Constructor
@@ -74,7 +74,7 @@ class GOpeDE extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDDesTipEmi(String $dDesTipEmi): self
+    public function setDDesTipEmi(string $dDesTipEmi): self
     {
         $this->dDesTipEmi = $dDesTipEmi;
         return $this;
@@ -87,7 +87,7 @@ class GOpeDE extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDCodSeg(String $dCodSeg): self
+    public function setDCodSeg(string $dCodSeg): self
     {
         $this->dCodSeg = $dCodSeg;
         return $this;
@@ -100,7 +100,7 @@ class GOpeDE extends BaseSifenField
      * 
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDInfoEmi(String $dInfoEmi): self
+    public function setDInfoEmi(string $dInfoEmi): self
     {
         if(strlen($dInfoEmi) > 3000)
             throw new ValidacionException('[GOpeDE] El valor de dInfoEmi no puede tener más de 3000 caracteres.');
@@ -115,7 +115,7 @@ class GOpeDE extends BaseSifenField
      *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDInfoFisc(String $dInfoFisc): self
+    public function setDInfoFisc(string $dInfoFisc): self
     {
         if(strlen($dInfoFisc) > 3000)
             throw new ValidacionException('[GOpeDE] El valor de dInfoFisc no puede tener más de 3000 caracteres.');
@@ -142,7 +142,7 @@ class GOpeDE extends BaseSifenField
      * 
      * @return String Descripción del tipo de emisión del documento.
      */
-    public function getDDesTipEmi(): String
+    public function getDDesTipEmi(): string
     {
         return $this->dDesTipEmi;
     }
@@ -152,7 +152,7 @@ class GOpeDE extends BaseSifenField
      * 
      * @return String Código de seguridad del documento.
      */
-    public function getDCodSeg(): String
+    public function getDCodSeg(): string
     {
         return $this->dCodSeg;
     }
@@ -162,7 +162,7 @@ class GOpeDE extends BaseSifenField
      * 
      * @return String Información de interés del emisor respecto al documento.
      */
-    public function getDInfoEmi(): String
+    public function getDInfoEmi(): string
     {
         if(isset($this->dInfoEmi))
             return $this->dInfoEmi;
@@ -175,7 +175,7 @@ class GOpeDE extends BaseSifenField
      * 
      * @return String Información de interés del fisco respecto al documento.
      */
-    public function getDInfoFisc(): String
+    public function getDInfoFisc(): string
     {
         if(isset($this->dInfoFisc))
             return $this->dInfoFisc;
