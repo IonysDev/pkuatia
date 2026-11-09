@@ -51,7 +51,8 @@ librería (detalle en "Corregido").
   `GCamSal::toDOMElement()` lo escribía con `getCDisSal()`, mientras `dDesDepSal` sí describía el departamento: con
   códigos distintos, el XML quedaba incoherente o con un departamento inexistente. Corregido por Gabriel Gauto directo
   en `main` después de la 0.3.0 (`1f479ba`) e integrado en la QA final de la Fase D con un merge (Q-D6). Un test con
-  códigos reales distintos lo cubre, porque los fixtures usan departamento, distrito y ciudad 1.
+  códigos reales distintos lo cubre, porque los fixtures usan departamento, distrito y ciudad 1, y otro revisa en todo
+  `src/` que cada elemento se escriba con el getter o la propiedad de su mismo nombre (459 pares, sin discordancias).
 - `REnviDe::setXDE()` (hasta 0.3.0 declarado `setXDe`, D5) y `REnviEventoDe::setDEvReg()` asignaban un `String` a una propiedad `SoapVar` y terminaban en
   `TypeError` en toda llamada. Aceptan ahora el XML como texto (lo envuelven en un `SoapVar` `XSD_ANYXML`, como hace
   el facade) o un `SoapVar` ya armado (D1).
