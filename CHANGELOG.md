@@ -47,6 +47,11 @@ librería (detalle en "Corregido").
   DOM, SimpleXML y SOAP aplicaban `intval()`. El parámetro acepta ahora `int|String` (ampliación compatible), el
   XML lleva la cadena decimal guardada y los tres lectores la conservan. Los montos enteros se serializan igual que
   antes. Lo destapó PHPStan en nivel 3 (`assign.propertyType`, `return.type`) al preparar la Fase D (D1).
+- **El departamento del local de salida de la NR (E924, `cDepSal`) llevaba el código del distrito.**
+  `GCamSal::toDOMElement()` lo escribía con `getCDisSal()`, mientras `dDesDepSal` sí describía el departamento: con
+  códigos distintos, el XML quedaba incoherente o con un departamento inexistente. Corregido por Gabriel Gauto directo
+  en `main` después de la 0.3.0 (`1f479ba`) e integrado en la QA final de la Fase D con un merge (Q-D6). Un test con
+  códigos reales distintos lo cubre, porque los fixtures usan departamento, distrito y ciudad 1.
 - `REnviDe::setXDE()` (hasta 0.3.0 declarado `setXDe`, D5) y `REnviEventoDe::setDEvReg()` asignaban un `String` a una propiedad `SoapVar` y terminaban en
   `TypeError` en toda llamada. Aceptan ahora el XML como texto (lo envuelven en un `SoapVar` `XSD_ANYXML`, como hace
   el facade) o un `SoapVar` ya armado (D1).
