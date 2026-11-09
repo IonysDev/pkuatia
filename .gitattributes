@@ -3,3 +3,23 @@
 
 # Capturas reales del SIFEN usadas como fixtures: se guardan byte a byte, sin conversión de fin de línea.
 tests/Resources/sifen/** -text
+
+# Fuera del paquete que publican GitHub (archive) y Packagist (Fase D, 0.3.1): tests, herramientas de desarrollo y
+# configuración del repositorio. Quedan dentro src/ completo (con Resources/ y DataMappings/Sources/), README,
+# CHANGELOG, LICENSE y composer.json.
+/tests export-ignore
+/test export-ignore
+/tools export-ignore
+/docs export-ignore
+/.github export-ignore
+/.vscode export-ignore
+/phpunit.xml.dist export-ignore
+/phpstan.neon.dist export-ignore
+/phpstan-baseline.neon export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/.editorconfig export-ignore
+/.git-blame-ignore-revs export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/CONTRIBUTING.md export-ignore
+/SECURITY.md export-ignore

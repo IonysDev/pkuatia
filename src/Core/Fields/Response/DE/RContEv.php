@@ -13,7 +13,7 @@ use IonysDev\Pkuatia\Core\Exceptions\RespuestaException;
  */
 class RContEv
 {
-                                               // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
     public RGesEve $xEvento;                   // ContEv02 - XML del Evento - X - 1-1
     public RRetEnviEventoDe $rResEnviEventoDe; // ContEv03 - Respuesta del WS Recepción Evento  X - ??
 
@@ -66,7 +66,7 @@ class RContEv
     /**
      * Obtiene el valor de rResEnviEventoDe
      *
-     * @return GResProcEVe
+     * @return RRetEnviEventoDe
      */
     public function getRResEnviEventoDe(): RRetEnviEventoDe
     {
@@ -76,7 +76,7 @@ class RContEv
 
     ///////////////////////////////////////////////////////////////////////
     // Conversiones XML
-    /////////////////////////////////////////////////////////////////////// 
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * toDOMElement
@@ -121,7 +121,7 @@ class RContEv
     /**
      * FromSimpleXMLElement
      *
-     * @param  mixed $xml
+     * @param SimpleXMLElement $node
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -132,13 +132,12 @@ class RContEv
 
         $res = new self();
 
-        if(isset($node->xEvento)) {
-           $res->setXEvento(RGesEve::FromSimpleXMLElement($node->xEvento->rGesEve));
-        } 
+        if (isset($node->xEvento)) {
+            $res->setXEvento(RGesEve::FromSimpleXMLElement($node->xEvento->rGesEve));
+        }
 
-        if(isset($node->rResEnviEventoDe))
-        {
-          $res->setRResEnviEventoDe(RRetEnviEventoDe::FromSimpleXMLElement($node->rResEnviEventoDe->rRetEnviEventoDe));
+        if (isset($node->rResEnviEventoDe)) {
+            $res->setRResEnviEventoDe(RRetEnviEventoDe::FromSimpleXMLElement($node->rResEnviEventoDe->rRetEnviEventoDe));
         }
 
 

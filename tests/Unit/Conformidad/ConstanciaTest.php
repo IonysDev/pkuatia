@@ -27,101 +27,101 @@ use PHPUnit\Framework\TestCase;
  */
 final class ConstanciaTest extends TestCase
 {
-  /** @var callable */
-  private $cleanup;
+    /** @var callable */
+    private $cleanup;
 
-  protected function setUp(): void
-  {
-    $this->cleanup = SifenTestEnvironment::init()['cleanup'];
-  }
-
-  protected function tearDown(): void
-  {
-    ($this->cleanup)();
-  }
-
-  public function testLaConstanciaDeNoSerContribuyenteLlevaNumeroYControlYValida(): void
-  {
-    $xml = F::firmar(F::rde(F::autofactura()));
-
-    XsdAssertions::assertRdeValido($xml, 'AF con constancia de no ser contribuyente');
-    $this->assertStringContainsString('<iTipCons>1</iTipCons><dDesTipCons>Constancia de no ser contribuyente</dDesTipCons>'
-      . '<dNumCons>12345678901</dNumCons><dNumControl>A1B2C3D4</dNumControl>', $xml);
-  }
-
-  /** @return array<string, array{0: int}> */
-  public static function tiposDeConstancia(): array
-  {
-    return ['no ser contribuyente' => [1], 'microproductores' => [2]];
-  }
-
-  #[DataProvider('tiposDeConstancia')]
-  public function testElNumeroSeCompletaConCerosHastaOnceDigitosYHaceIdaYVuelta(int $tipo): void
-  {
-    $constancia = self::constancia($tipo)->setDNumCons(12345)->setDNumControl('a1-b2c3D');
-
-    $this->assertStringContainsString('<dNumCons>00000012345</dNumCons><dNumControl>a1-b2c3D</dNumControl>', RoundTrip::serializar($constancia));
-    foreach ([RoundTrip::VIA_DOM, RoundTrip::VIA_SIMPLEXML, RoundTrip::VIA_SOAP] as $via) {
-      RoundTrip::assertIdaYVueltaIdentica($constancia, $via, GCamDEAsoc::class, $via);
+    protected function setUp(): void
+    {
+        $this->cleanup = SifenTestEnvironment::init()['cleanup'];
     }
-  }
 
-  public function testSinNumeroNiControlLaConstanciaDeNoContribuyenteSaleComoAntes(): void
-  {
-    $xml = RoundTrip::serializar(self::constancia(1));
+    protected function tearDown(): void
+    {
+        ($this->cleanup)();
+    }
 
-    $this->assertStringContainsString('<dDesTipCons>Constancia de no ser contribuyente</dDesTipCons></gCamDEAsoc>', $xml);
-    $this->assertStringNotContainsString('dNumCons', $xml);
-    $this->assertStringNotContainsString('dNumControl', $xml);
-  }
+    public function testLaConstanciaDeNoSerContribuyenteLlevaNumeroYControlYValida(): void
+    {
+        $xml = F::firmar(F::rde(F::autofactura()));
 
-  /** @return array<string, array{0: int}> */
-  public static function numerosInvalidos(): array
-  {
-    return ['cero' => [0], 'negativo' => [-5], 'doce dígitos' => [123456789012]];
-  }
+        XsdAssertions::assertRdeValido($xml, 'AF con constancia de no ser contribuyente');
+        $this->assertStringContainsString('<iTipCons>1</iTipCons><dDesTipCons>Constancia de no ser contribuyente</dDesTipCons>'
+          . '<dNumCons>12345678901</dNumCons><dNumControl>A1B2C3D4</dNumControl>', $xml);
+    }
 
-  #[DataProvider('numerosInvalidos')]
-  public function testUnNumeroInvalidoLanzaExcepcionAlCargarlo(int $numero): void
-  {
-    $this->expectException(\InvalidArgumentException::class);
-    $this->expectExceptionMessage('dNumCons');
+    /** @return array<string, array{0: int}> */
+    public static function tiposDeConstancia(): array
+    {
+        return ['no ser contribuyente' => [1], 'microproductores' => [2]];
+    }
 
-    (new GCamDEAsoc())->setDNumCons($numero);
-  }
+    #[DataProvider('tiposDeConstancia')]
+    public function testElNumeroSeCompletaConCerosHastaOnceDigitosYHaceIdaYVuelta(int $tipo): void
+    {
+        $constancia = self::constancia($tipo)->setDNumCons(12345)->setDNumControl('a1-b2c3D');
 
-  /** @return array<string, array{0: string}> */
-  public static function controlesInvalidos(): array
-  {
-    return [
-      'siete caracteres' => ['A1B2C3D'],
-      'nueve caracteres' => ['A1B2C3D45'],
-      'con espacio' => ['A1B2 C3D'],
-      'con guion bajo' => ['A1B2_C3D'],
-      'con tilde' => ['Á1B2C3D4'],
-      'con salto de línea final' => ["A1B2C3D4\n"],
-    ];
-  }
+        $this->assertStringContainsString('<dNumCons>00000012345</dNumCons><dNumControl>a1-b2c3D</dNumControl>', RoundTrip::serializar($constancia));
+        foreach ([RoundTrip::VIA_DOM, RoundTrip::VIA_SIMPLEXML, RoundTrip::VIA_SOAP] as $via) {
+            RoundTrip::assertIdaYVueltaIdentica($constancia, $via, GCamDEAsoc::class, $via);
+        }
+    }
 
-  #[DataProvider('controlesInvalidos')]
-  public function testUnControlInvalidoLanzaExcepcionAlCargarlo(string $control): void
-  {
-    $this->expectException(\InvalidArgumentException::class);
-    $this->expectExceptionMessage('dNumControl');
+    public function testSinNumeroNiControlLaConstanciaDeNoContribuyenteSaleComoAntes(): void
+    {
+        $xml = RoundTrip::serializar(self::constancia(1));
 
-    (new GCamDEAsoc())->setDNumControl($control);
-  }
+        $this->assertStringContainsString('<dDesTipCons>Constancia de no ser contribuyente</dDesTipCons></gCamDEAsoc>', $xml);
+        $this->assertStringNotContainsString('dNumCons', $xml);
+        $this->assertStringNotContainsString('dNumControl', $xml);
+    }
 
-  public function testElMetodoDeLaAutofacturaValidaAlCargar(): void
-  {
-    $this->expectException(\InvalidArgumentException::class);
+    /** @return array<string, array{0: int}> */
+    public static function numerosInvalidos(): array
+    {
+        return ['cero' => [0], 'negativo' => [-5], 'doce dígitos' => [123456789012]];
+    }
 
-    // Los valores que usaba la factory de pruebas hasta 0.2.0: el control tiene 10 caracteres.
-    (new Autofactura(1))->addConstanciaDeNoSerContribuyente(12345, '1234567890');
-  }
+    #[DataProvider('numerosInvalidos')]
+    public function testUnNumeroInvalidoLanzaExcepcionAlCargarlo(int $numero): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('dNumCons');
 
-  private static function constancia(int $tipo): GCamDEAsoc
-  {
-    return (new GCamDEAsoc())->setITipDocAso(TipDocAso::ConstanciaElectronica)->setITipCons($tipo);
-  }
+        (new GCamDEAsoc())->setDNumCons($numero);
+    }
+
+    /** @return array<string, array{0: string}> */
+    public static function controlesInvalidos(): array
+    {
+        return [
+          'siete caracteres' => ['A1B2C3D'],
+          'nueve caracteres' => ['A1B2C3D45'],
+          'con espacio' => ['A1B2 C3D'],
+          'con guion bajo' => ['A1B2_C3D'],
+          'con tilde' => ['Á1B2C3D4'],
+          'con salto de línea final' => ["A1B2C3D4\n"],
+        ];
+    }
+
+    #[DataProvider('controlesInvalidos')]
+    public function testUnControlInvalidoLanzaExcepcionAlCargarlo(string $control): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('dNumControl');
+
+        (new GCamDEAsoc())->setDNumControl($control);
+    }
+
+    public function testElMetodoDeLaAutofacturaValidaAlCargar(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        // Los valores que usaba la factory de pruebas hasta 0.2.0: el control tiene 10 caracteres.
+        (new Autofactura(1))->addConstanciaDeNoSerContribuyente(12345, '1234567890');
+    }
+
+    private static function constancia(int $tipo): GCamDEAsoc
+    {
+        return (new GCamDEAsoc())->setITipDocAso(TipDocAso::ConstanciaElectronica)->setITipCons($tipo);
+    }
 }

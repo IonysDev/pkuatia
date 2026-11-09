@@ -6,7 +6,9 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de pago al contado / entrega inicial: campos iTiPago (E606) y dDesTiPag (E607)
  * del grupo gPaConEIni (E605), según Manual Técnico SIFEN v150.
  */
-enum PaConEIniTiPago: int {
+enum PaConEIniTiPago: int
+{
+    use EnumDescripcion;
 
     case Efectivo = 1;
     case Cheque = 2;
@@ -33,7 +35,7 @@ enum PaConEIniTiPago: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Efectivo => 'Efectivo',
             self::Cheque => 'Cheque',
             self::TarjetaCredito => 'Tarjeta de crédito',
@@ -59,31 +61,6 @@ enum PaConEIniTiPago: int {
         };
     }
 
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
-    }
-
     /**
      * @deprecated Use getDescriptionFromValue() instead.
      */
@@ -92,5 +69,3 @@ enum PaConEIniTiPago: int {
         return self::getDescriptionFromValue($value);
     }
 }
-
-?>

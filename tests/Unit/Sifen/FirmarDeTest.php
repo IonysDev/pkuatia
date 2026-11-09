@@ -16,34 +16,34 @@ use PHPUnit\Framework\TestCase;
  */
 final class FirmarDeTest extends TestCase
 {
-  /** @var callable */
-  private $cleanup;
+    /** @var callable */
+    private $cleanup;
 
-  protected function setUp(): void
-  {
-    $this->cleanup = SifenTestEnvironment::init()['cleanup'];
-  }
+    protected function setUp(): void
+    {
+        $this->cleanup = SifenTestEnvironment::init()['cleanup'];
+    }
 
-  protected function tearDown(): void
-  {
-    ($this->cleanup)();
-  }
+    protected function tearDown(): void
+    {
+        ($this->cleanup)();
+    }
 
-  public function testLaInformacionAdicionalDelEmisorLlegaAlXmlFueraDeLaFirma(): void
-  {
-    $rde = DocumentoFactory::facturaContado(80)->facturaToRDE();
-    $xml = Sifen::FirmarDE($rde, new DateTime('2026-01-15T10:05:00', new DateTimeZone('America/Asuncion')), 'Pago con Tigo Money & Bancard');
+    public function testLaInformacionAdicionalDelEmisorLlegaAlXmlFueraDeLaFirma(): void
+    {
+        $rde = DocumentoFactory::facturaContado(80)->facturaToRDE();
+        $xml = Sifen::FirmarDE($rde, new DateTime('2026-01-15T10:05:00', new DateTimeZone('America/Asuncion')), 'Pago con Tigo Money & Bancard');
 
-    $this->assertStringContainsString('<gCamFuFD><dCarQR>', $xml);
-    $this->assertStringContainsString('<dInfAdic>Pago con Tigo Money &amp; Bancard</dInfAdic></gCamFuFD>', $xml);
-    XsdAssertions::assertRdeValido($xml, 'FE con dInfAdic');
-  }
+        $this->assertStringContainsString('<gCamFuFD><dCarQR>', $xml);
+        $this->assertStringContainsString('<dInfAdic>Pago con Tigo Money &amp; Bancard</dInfAdic></gCamFuFD>', $xml);
+        XsdAssertions::assertRdeValido($xml, 'FE con dInfAdic');
+    }
 
-  public function testSinInformacionAdicionalNoSeEmiteDInfAdic(): void
-  {
-    $rde = DocumentoFactory::facturaContado(81)->facturaToRDE();
-    $xml = Sifen::FirmarDE($rde, new DateTime('2026-01-15T10:05:00', new DateTimeZone('America/Asuncion')));
-    $this->assertStringNotContainsString('<dInfAdic', $xml);
-    XsdAssertions::assertRdeValido($xml, 'FE sin dInfAdic');
-  }
+    public function testSinInformacionAdicionalNoSeEmiteDInfAdic(): void
+    {
+        $rde = DocumentoFactory::facturaContado(81)->facturaToRDE();
+        $xml = Sifen::FirmarDE($rde, new DateTime('2026-01-15T10:05:00', new DateTimeZone('America/Asuncion')));
+        $this->assertStringNotContainsString('<dInfAdic', $xml);
+        XsdAssertions::assertRdeValido($xml, 'FE sin dInfAdic');
+    }
 }

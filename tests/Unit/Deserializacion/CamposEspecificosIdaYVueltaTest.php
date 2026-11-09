@@ -24,140 +24,140 @@ use PHPUnit\Framework\TestCase;
  */
 final class CamposEspecificosIdaYVueltaTest extends TestCase
 {
-  /** @return array<string, array{0: string}> */
-  public static function vias(): array
-  {
-    return [
-      'DOM' => [RoundTrip::VIA_DOM],
-      'SimpleXML' => [RoundTrip::VIA_SIMPLEXML],
-      'objeto SOAP' => [RoundTrip::VIA_SOAP],
-    ];
-  }
-
-  /**
-   * gCamEsp con los cuatro grupos, armado a mano para probar la clase sola. Desde la decisión Q-B8 los
-   * builders también emiten los cuatro juntos (ver GruposSectorialesTest).
-   */
-  public static function gCamEspCompleto(): GCamEsp
-  {
-    $esp = fn (string $sector): GCamEsp => F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp();
-    return (new GCamEsp())
-      ->setgGrupEner($esp('energía')->getgGrupEner())
-      ->setGGrupSeg($esp('seguros')->getGGrupSeg())
-      ->setGGrupSup($esp('supermercados')->getGGrupSup())
-      ->setGGrupAdi($esp('datos adicionales')->getGGrupAdi());
-  }
-
-  #[DataProvider('vias')]
-  public function testGCamEspConLosCuatroGruposSectoriales(string $via): void
-  {
-    RoundTrip::assertIdaYVueltaIdentica(self::gCamEspCompleto(), $via, GCamEsp::class);
-  }
-
-  /** @return array<string, array{0: string, 1: string, 2: string}> */
-  public static function gruposPorVia(): array
-  {
-    $res = [];
-    $grupos = ['energía' => 'getgGrupEner', 'seguros' => 'getGGrupSeg', 'supermercados' => 'getGGrupSup', 'datos adicionales' => 'getGGrupAdi'];
-    foreach ($grupos as $sector => $getter) {
-      foreach (self::vias() as $nombre => [$via]) {
-        $res[substr($getter, 3) . " por $nombre"] = [$sector, $getter, $via];
-      }
+    /** @return array<string, array{0: string}> */
+    public static function vias(): array
+    {
+        return [
+          'DOM' => [RoundTrip::VIA_DOM],
+          'SimpleXML' => [RoundTrip::VIA_SIMPLEXML],
+          'objeto SOAP' => [RoundTrip::VIA_SOAP],
+        ];
     }
-    return $res;
-  }
 
-  #[DataProvider('gruposPorVia')]
-  public function testCadaGrupoSectorialHaceIdaYVuelta(string $sector, string $getter, string $via): void
-  {
-    $grupo = F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDe()->getGCamEsp()->$getter();
-    RoundTrip::assertIdaYVueltaIdentica($grupo, $via);
-  }
-
-  /** @return array<string, array{0: callable(): RDE}> */
-  public static function documentosConCamposEspecificos(): array
-  {
-    return [
-      'FE sector energía' => [fn (): RDE => F::rde(F::facturaSectorial('energía'))],
-      'FE sector seguros' => [fn (): RDE => F::rde(F::facturaSectorial('seguros'))],
-      'FE sector supermercados' => [fn (): RDE => F::rde(F::facturaSectorial('supermercados'))],
-      'FE con datos adicionales de uso comercial' => [fn (): RDE => F::rde(F::facturaSectorial('datos adicionales'))],
-      'Autofactura, 2 ítems' => [fn (): RDE => F::rde(F::autofactura())],
-      'Autofactura, 1 ítem' => [fn (): RDE => F::rde(F::autofactura(31, 1))],
-      'Autofactura, lugar sin distrito' => [fn (): RDE => F::rde(F::autofacturaSinDistrito())],
-      'Nota de remisión' => [fn (): RDE => F::rde(F::notaDeRemision())],
-    ];
-  }
-
-  #[DataProvider('documentosConCamposEspecificos')]
-  public function testDocumentoCompletoPorDomEsIdentico(callable $crear): void
-  {
-    RoundTrip::assertIdaYVueltaIdentica($crear(), RoundTrip::VIA_DOM);
-  }
-
-  /** Por SimpleXML el documento se puede leer y cada grupo específico vuelve idéntico. */
-  #[DataProvider('documentosConCamposEspecificos')]
-  public function testDocumentoCompletoPorSimpleXmlConservaLosCamposEspecificos(callable $crear): void
-  {
-    $ida = RoundTrip::serializar($crear());
-    $vuelta = RoundTrip::serializar(RoundTrip::leer($ida, RDE::class, RoundTrip::VIA_SIMPLEXML));
-    foreach (['gCamFE', 'gCamAE', 'gCamNRE', 'gCamEsp', 'gCamItem', 'gTransp'] as $grupo) {
-      $this->assertSame(self::subarbol($ida, $grupo), self::subarbol($vuelta, $grupo), $grupo);
+    /**
+     * gCamEsp con los cuatro grupos, armado a mano para probar la clase sola. Desde la decisión Q-B8 los
+     * builders también emiten los cuatro juntos (ver GruposSectorialesTest).
+     */
+    public static function gCamEspCompleto(): GCamEsp
+    {
+        $esp = fn (string $sector): GCamEsp => F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDE()->getGCamEsp();
+        return (new GCamEsp())
+          ->setGGrupEner($esp('energía')->getGGrupEner())
+          ->setGGrupSeg($esp('seguros')->getGGrupSeg())
+          ->setGGrupSup($esp('supermercados')->getGGrupSup())
+          ->setGGrupAdi($esp('datos adicionales')->getGGrupAdi());
     }
-  }
 
-  /** @return array<string, array{0: callable(): object, 1: string, 2: class-string}> */
-  public static function camposPorVia(): array
-  {
-    $res = [];
-    $casos = [
-      'gCamAE' => [fn () => F::rde(F::autofactura())->getDE()->getGDtipDe()->getGCamAE(), GCamAE::class],
-      'gCamAE sin distrito' => [fn () => F::rde(F::autofacturaSinDistrito())->getDE()->getGDtipDe()->getGCamAE(), GCamAE::class],
-      'gCamNRE' => [fn () => F::rde(F::notaDeRemision())->getDE()->getGDtipDe()->getGCamNRE(), GCamNRE::class],
-    ];
-    foreach ($casos as $nombre => [$crear, $clase]) {
-      foreach (self::vias() as $nombreVia => [$via]) {
-        $res["$nombre por $nombreVia"] = [$crear, $via, $clase];
-      }
+    #[DataProvider('vias')]
+    public function testGCamEspConLosCuatroGruposSectoriales(string $via): void
+    {
+        RoundTrip::assertIdaYVueltaIdentica(self::gCamEspCompleto(), $via, GCamEsp::class);
     }
-    return $res;
-  }
 
-  #[DataProvider('camposPorVia')]
-  public function testCamposDeAutofacturaYRemisionPorLasTresVias(callable $crear, string $via, string $clase): void
-  {
-    RoundTrip::assertIdaYVueltaIdentica($crear(), $via, $clase);
-  }
-
-  public function testGCamNREExigeLosCamposObligatoriosAlLeer(): void
-  {
-    $this->expectException(\InvalidArgumentException::class);
-    $this->expectExceptionMessage('dKmR');
-    GCamNRE::FromSimpleXMLElement(simplexml_load_string(
-      '<gCamNRE><iMotEmiNR>1</iMotEmiNR><dDesMotEmiNR>Traslado por venta</dDesMotEmiNR><iRespEmiNR>1</iRespEmiNR><dDesRespEmiNR>Emisor de la factura</dDesRespEmiNR></gCamNRE>'
-    ));
-  }
-
-  /**
-   * RProtDe::FromSimpleXMLElement llamaba a GResProc::fromSimpleXMLElement, que no existía. Sobre la
-   * respuesta interna de un evento tal como la devuelve el SIFEN en xContEv (captura real del 09/10).
-   */
-  public function testGResProcSeLeeDesdeSimpleXml(): void
-  {
-    preg_match('#<gResProc>.*?</gResProc>#s', R::xContenDE(R::CONSULTA_DE_0422_CANCELADO), $m);
-    $gResProc = GResProc::FromSimpleXMLElement(simplexml_load_string($m[0]));
-    $this->assertSame('0600', $gResProc->getDCodRes());
-    $this->assertSame('Se encontro el evento', $gResProc->getDMsgRes());
-  }
-
-  private static function subarbol(string $xml, string $grupo): string
-  {
-    $doc = new DOMDocument();
-    $doc->loadXML($xml);
-    $res = '';
-    foreach ($doc->getElementsByTagName($grupo) as $nodo) {
-      $res .= $doc->saveXML($nodo);
+    /** @return array<string, array{0: string, 1: string, 2: string}> */
+    public static function gruposPorVia(): array
+    {
+        $res = [];
+        $grupos = ['energía' => 'getGGrupEner', 'seguros' => 'getGGrupSeg', 'supermercados' => 'getGGrupSup', 'datos adicionales' => 'getGGrupAdi'];
+        foreach ($grupos as $sector => $getter) {
+            foreach (self::vias() as $nombre => [$via]) {
+                $res[substr($getter, 3) . " por $nombre"] = [$sector, $getter, $via];
+            }
+        }
+        return $res;
     }
-    return $res;
-  }
+
+    #[DataProvider('gruposPorVia')]
+    public function testCadaGrupoSectorialHaceIdaYVuelta(string $sector, string $getter, string $via): void
+    {
+        $grupo = F::rde(F::facturaSectorial($sector))->getDE()->getGDtipDE()->getGCamEsp()->$getter();
+        RoundTrip::assertIdaYVueltaIdentica($grupo, $via);
+    }
+
+    /** @return array<string, array{0: callable(): RDE}> */
+    public static function documentosConCamposEspecificos(): array
+    {
+        return [
+          'FE sector energía' => [fn (): RDE => F::rde(F::facturaSectorial('energía'))],
+          'FE sector seguros' => [fn (): RDE => F::rde(F::facturaSectorial('seguros'))],
+          'FE sector supermercados' => [fn (): RDE => F::rde(F::facturaSectorial('supermercados'))],
+          'FE con datos adicionales de uso comercial' => [fn (): RDE => F::rde(F::facturaSectorial('datos adicionales'))],
+          'Autofactura, 2 ítems' => [fn (): RDE => F::rde(F::autofactura())],
+          'Autofactura, 1 ítem' => [fn (): RDE => F::rde(F::autofactura(31, 1))],
+          'Autofactura, lugar sin distrito' => [fn (): RDE => F::rde(F::autofacturaSinDistrito())],
+          'Nota de remisión' => [fn (): RDE => F::rde(F::notaDeRemision())],
+        ];
+    }
+
+    #[DataProvider('documentosConCamposEspecificos')]
+    public function testDocumentoCompletoPorDomEsIdentico(callable $crear): void
+    {
+        RoundTrip::assertIdaYVueltaIdentica($crear(), RoundTrip::VIA_DOM);
+    }
+
+    /** Por SimpleXML el documento se puede leer y cada grupo específico vuelve idéntico. */
+    #[DataProvider('documentosConCamposEspecificos')]
+    public function testDocumentoCompletoPorSimpleXmlConservaLosCamposEspecificos(callable $crear): void
+    {
+        $ida = RoundTrip::serializar($crear());
+        $vuelta = RoundTrip::serializar(RoundTrip::leer($ida, RDE::class, RoundTrip::VIA_SIMPLEXML));
+        foreach (['gCamFE', 'gCamAE', 'gCamNRE', 'gCamEsp', 'gCamItem', 'gTransp'] as $grupo) {
+            $this->assertSame(self::subarbol($ida, $grupo), self::subarbol($vuelta, $grupo), $grupo);
+        }
+    }
+
+    /** @return array<string, array{0: callable(): object, 1: string, 2: class-string}> */
+    public static function camposPorVia(): array
+    {
+        $res = [];
+        $casos = [
+          'gCamAE' => [fn () => F::rde(F::autofactura())->getDE()->getGDtipDE()->getGCamAE(), GCamAE::class],
+          'gCamAE sin distrito' => [fn () => F::rde(F::autofacturaSinDistrito())->getDE()->getGDtipDE()->getGCamAE(), GCamAE::class],
+          'gCamNRE' => [fn () => F::rde(F::notaDeRemision())->getDE()->getGDtipDE()->getGCamNRE(), GCamNRE::class],
+        ];
+        foreach ($casos as $nombre => [$crear, $clase]) {
+            foreach (self::vias() as $nombreVia => [$via]) {
+                $res["$nombre por $nombreVia"] = [$crear, $via, $clase];
+            }
+        }
+        return $res;
+    }
+
+    #[DataProvider('camposPorVia')]
+    public function testCamposDeAutofacturaYRemisionPorLasTresVias(callable $crear, string $via, string $clase): void
+    {
+        RoundTrip::assertIdaYVueltaIdentica($crear(), $via, $clase);
+    }
+
+    public function testGCamNREExigeLosCamposObligatoriosAlLeer(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('dKmR');
+        GCamNRE::FromSimpleXMLElement(simplexml_load_string(
+            '<gCamNRE><iMotEmiNR>1</iMotEmiNR><dDesMotEmiNR>Traslado por venta</dDesMotEmiNR><iRespEmiNR>1</iRespEmiNR><dDesRespEmiNR>Emisor de la factura</dDesRespEmiNR></gCamNRE>'
+        ));
+    }
+
+    /**
+     * RProtDe::FromSimpleXMLElement llamaba a GResProc::fromSimpleXMLElement, que no existía. Sobre la
+     * respuesta interna de un evento tal como la devuelve el SIFEN en xContEv (captura real del 09/10).
+     */
+    public function testGResProcSeLeeDesdeSimpleXml(): void
+    {
+        preg_match('#<gResProc>.*?</gResProc>#s', R::xContenDE(R::CONSULTA_DE_0422_CANCELADO), $m);
+        $gResProc = GResProc::FromSimpleXMLElement(simplexml_load_string($m[0]));
+        $this->assertSame('0600', $gResProc->getDCodRes());
+        $this->assertSame('Se encontro el evento', $gResProc->getDMsgRes());
+    }
+
+    private static function subarbol(string $xml, string $grupo): string
+    {
+        $doc = new DOMDocument();
+        $doc->loadXML($xml);
+        $res = '';
+        foreach ($doc->getElementsByTagName($grupo) as $nodo) {
+            $res .= $doc->saveXML($nodo);
+        }
+        return $res;
+    }
 }

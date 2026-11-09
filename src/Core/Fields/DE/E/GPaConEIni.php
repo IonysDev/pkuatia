@@ -21,377 +21,365 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class GPaConEIni extends BaseSifenField
 {
-  public int $iTiPago;         // E606 - 1-2        - 1-1 - Tipo de pago
-  public String $dDesTiPag;    // E607 - 4-30       - 1-1 - Descripción del tipo de pago
-  public String $dMonTiPag;    // E608 - 1-15p(0-4) - 1-1 - Monto por tipo de pago (decimal BCMath)
-  public String $cMoneTiPag;   // E609 - 3          - 1-1 - Moneda por tipo de pago
-  public String $dDMoneTiPag;  // E610 - 3-20       - 1-1 - Descripción de la moneda por tipo de pago
-  public String $dTiCamTiPag;  // E611 - 1-5p(0-4)  - 0-1 - Tasa de cambio por tipo de pago (decimal BCMath)
-  public GPagTarCD $gPagTarCD; // E620 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con tarjeta de crédito o débito
-  public GPagCheq $gPagCheq;   // E630 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con cheque
-  
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
-  
-  /**
-   * Establece el código de tipo de pago y la descrición en caso de que sea un tipo de pago soportado. Usar código de tipo de pago 99 para otros tipos de pago.
-   *
-   * @param int|PaConEIniTiPago $iTiPago Código de tipo de pago o instancia de PaConEIniTiPago
-   *
-   * @return self
-   */
-  public function setITiPago(int|PaConEIniTiPago $iTiPago): self
-  {
-    $this->iTiPago = $iTiPago instanceof PaConEIniTiPago ? $iTiPago->value : $iTiPago;
-    $this->dDesTiPag = PaConEIniTiPago::getDescripcion($this->iTiPago);
-    return $this;
-  }
+    public int $iTiPago;         // E606 - 1-2        - 1-1 - Tipo de pago
+    public string $dDesTiPag;    // E607 - 4-30       - 1-1 - Descripción del tipo de pago
+    public string $dMonTiPag;    // E608 - 1-15p(0-4) - 1-1 - Monto por tipo de pago (decimal BCMath)
+    public string $cMoneTiPag;   // E609 - 3          - 1-1 - Moneda por tipo de pago
+    public string $dDMoneTiPag;  // E610 - 3-20       - 1-1 - Descripción de la moneda por tipo de pago
+    public string $dTiCamTiPag;  // E611 - 1-5p(0-4)  - 0-1 - Tasa de cambio por tipo de pago (decimal BCMath)
+    public GPagTarCD $gPagTarCD; // E620 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con tarjeta de crédito o débito
+    public GPagCheq $gPagCheq;   // E630 -            - 0-1 - Campos que describen el pago o entrega inicial de la operación con cheque
 
-  /**
-   * Establece la descripción del tipo de pago
-   * 
-   * @param String $dDesTiPag
-   * 
-   * @return self
-   */
-  public function setDDesTiPag(String $dDesTiPag): self
-  {
-    if(!is_null($dDesTiPag) && strlen($dDesTiPag) != 0)
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Establece el código de tipo de pago y la descrición en caso de que sea un tipo de pago soportado. Usar código de tipo de pago 99 para otros tipos de pago.
+     *
+     * @param int|PaConEIniTiPago $iTiPago Código de tipo de pago o instancia de PaConEIniTiPago
+     *
+     * @return self
+     */
+    public function setITiPago(int|PaConEIniTiPago $iTiPago): self
     {
-      $this->dDesTiPag = substr($dDesTiPag, 0, 30);
+        $this->iTiPago = $iTiPago instanceof PaConEIniTiPago ? $iTiPago->value : $iTiPago;
+        $this->dDesTiPag = PaConEIniTiPago::getDescriptionFromValue($this->iTiPago);
+        return $this;
     }
-    return $this;
-  }
 
-  /**
-   * Establece el valor de dMonTiPag
-   *
-   * @param String $dMonTiPag Monto por tipo de pago en cadena de formato decimal.
-   *
-   * @return self
-   */
-  public function setDMonTiPag(String $dMonTiPag): self
-  {
-    if(ValueValidations::isValidStringDecimal($dMonTiPag, 15, 0, 4))
+    /**
+     * Establece la descripción del tipo de pago
+     *
+     * @param String $dDesTiPag
+     *
+     * @return self
+     */
+    public function setDDesTiPag(string $dDesTiPag): self
     {
-      $this->dMonTiPag = $dMonTiPag;
+        if (!is_null($dDesTiPag) && strlen($dDesTiPag) != 0) {
+            $this->dDesTiPag = substr($dDesTiPag, 0, 30);
+        }
+        return $this;
     }
-    else
+
+    /**
+     * Establece el valor de dMonTiPag
+     *
+     * @param String $dMonTiPag Monto por tipo de pago en cadena de formato decimal.
+     *
+     * @return self
+     */
+    public function setDMonTiPag(string $dMonTiPag): self
     {
-      throw new ValidacionException("El valor monto por tipo de pago a ser asignado no es válido");
+        if (ValueValidations::isValidStringDecimal($dMonTiPag, 15, 0, 4)) {
+            $this->dMonTiPag = $dMonTiPag;
+        } else {
+            throw new ValidacionException("El valor monto por tipo de pago a ser asignado no es válido");
+        }
+        return $this;
     }
-    return $this;
-  }
 
 
-  /**
-   * Establece el valor de cMoneTiPag
-   *
-   * @param String $cMoneTiPag
-   *
-   * @return self
-   */
-  public function setCMoneTiPag(String $cMoneTiPag): self
-  {
-    $this->cMoneTiPag = $cMoneTiPag;
-    $this->dDMoneTiPag = MonedaMapping::GetDescription($cMoneTiPag);
-    return $this;
-  }
-
-  /**
-   * Establece el valor dDMoneTiPag que es la descripción de la moneda por tipo de pago.
-   * Este valor debería establecerse automáticamente mediante setCMoneTiPag.
-   * Se recomienda no usar esta función.
-   * 
-   * @param String $dDMoneTiPag
-   * 
-   * @return self
-   */
-  public function setDDMoneTiPag(String $dDMoneTiPag): self
-  {
-    if(!is_null($dDMoneTiPag) && strlen($dDMoneTiPag) != 0)
+    /**
+     * Establece el valor de cMoneTiPag
+     *
+     * @param String $cMoneTiPag
+     *
+     * @return self
+     */
+    public function setCMoneTiPag(string $cMoneTiPag): self
     {
-      $this->dDMoneTiPag = substr($dDMoneTiPag, 0, 20);
+        $this->cMoneTiPag = $cMoneTiPag;
+        $this->dDMoneTiPag = MonedaMapping::getDescription($cMoneTiPag);
+        return $this;
     }
-    return $this;
-  }
 
-
-  /**
-   * Establece el valor de dTiCamTiPag
-   *
-   * @param String $dTiCamTiPag
-   *
-   * @return self
-   */
-  public function setDTiCamTiPag(String $dTiCamTiPag): self
-  {
-    if(ValueValidations::isValidStringDecimal($dTiCamTiPag, 5, 0, 4))
+    /**
+     * Establece el valor dDMoneTiPag que es la descripción de la moneda por tipo de pago.
+     * Este valor debería establecerse automáticamente mediante setCMoneTiPag.
+     * Se recomienda no usar esta función.
+     *
+     * @param String $dDMoneTiPag
+     *
+     * @return self
+     */
+    public function setDDMoneTiPag(string $dDMoneTiPag): self
     {
-      $this->dTiCamTiPag = $dTiCamTiPag;
+        if (!is_null($dDMoneTiPag) && strlen($dDMoneTiPag) != 0) {
+            $this->dDMoneTiPag = substr($dDMoneTiPag, 0, 20);
+        }
+        return $this;
     }
-    else
+
+
+    /**
+     * Establece el valor de dTiCamTiPag
+     *
+     * @param String $dTiCamTiPag
+     *
+     * @return self
+     */
+    public function setDTiCamTiPag(string $dTiCamTiPag): self
     {
-      throw new ValidacionException("El valor tasa de cambio por tipo de pago a ser asignado no es válido");
+        if (ValueValidations::isValidStringDecimal($dTiCamTiPag, 5, 0, 4)) {
+            $this->dTiCamTiPag = $dTiCamTiPag;
+        } else {
+            throw new ValidacionException("El valor tasa de cambio por tipo de pago a ser asignado no es válido");
+        }
+        return $this;
     }
-    return $this;
-  }
 
-  /**
-   * Establece el valor de gPagTarCD
-   *
-   * @param GPagTarCD $gPagTarCD
-   *
-   * @return self
-   */
-  public function setGPagTarCD(GPagTarCD $gPagTarCD): self
-  {
-    $this->gPagTarCD = $gPagTarCD;
-
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gPagCheq
-   *
-   * @param GPagCheq $gPagCheq
-   *
-   * @return self
-   */
-  public function setGPagCheq(GPagCheq $gPagCheq): self
-  {
-    $this->gPagCheq = $gPagCheq;
-
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de iTiPago
-   *
-   * @return int
-   */
-  public function getITiPago(): int
-  {
-    return $this->iTiPago;
-  }
-
-  /**
-   * E607 Descripción del tipo de pago
-   *
-   * @return String
-   */
-  public function getDDesTiPag(): String
-  {
-    return $this->dDesTiPag;
-  }
-
-
-  /**
-   * Obtiene el valor de dMonTiPag
-   *
-   * @return int
-   */
-  /**
-   * @deprecated El monto E608 es decimal (tMontoBase4, hasta 4 decimales): este getter lo trunca a entero. Usar getDMonTiPagDecimal().
-   */
-  public function getDMonTiPag(): int
-  {
-    return $this->dMonTiPag;
-  }
-
-  /**
-   * Devuelve el monto por tipo de pago (E608) tal como fue establecido, como cadena decimal BCMath.
-   *
-   * @return String
-   */
-  public function getDMonTiPagDecimal(): String
-  {
-    return $this->dMonTiPag;
-  }
-
-  /**
-   * Obtiene el valor de cMoneTiPag
-   *
-   * @return String
-   */
-  public function getCMoneTiPag(): String
-  {
-    return $this->cMoneTiPag;
-  }
-
-  /**
-   *  E610 Descripción de la moneda por tipo de pago
-   *
-   * @return String
-   */
-  public function getDDMoneTiPag(): String
-  {
-    return $this->dDMoneTiPag;
-  }
-
-
-  /**
-   * Obtiene el valor de dTiCamTiPag
-   *
-   * @return String
-   */
-  public function getDTiCamTiPag(): String
-  {
-    return $this->dTiCamTiPag;
-  }
-
-  /**
-   * Obtiene el valor de gPagTarCD
-   *
-   * @return GPagTarCD
-   */
-  public function getGPagTarCD(): GPagTarCD
-  {
-    return $this->gPagTarCD;
-  }
-
-  /**
-   * Obtiene el valor de gPagCheq
-   *
-   * @return GPagCheq
-   */
-  public function getGPagCheq(): GPagCheq
-  {
-    return $this->gPagCheq;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///XML Element
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Instancia un objeto GPaConEIni a partir de un SimpleXMLElement
-   * 
-   * @param SimpleXMLElement $node
-   * 
-   * @return self
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-    if(strcmp($node->getName(), 'gPaConEIni') != 0)
+    /**
+     * Establece el valor de gPagTarCD
+     *
+     * @param GPagTarCD $gPagTarCD
+     *
+     * @return self
+     */
+    public function setGPagTarCD(GPagTarCD $gPagTarCD): self
     {
-      throw new ValidacionException("El elemento '" . $node->getName() . "' no es gPaConEIni");
-    }
-    $res = new GPaConEIni();
-    $res->setITiPago(intval($node->iTiPago));
-    $res->setDDesTiPag(strval($node->dDesTiPag));
-    $res->setDMonTiPag(intval($node->dMonTiPag));
-    $res->setCMoneTiPag($node->cMoneTiPag);
-    $res->setDDMoneTiPag(strval($node->dDMoneTiPag));
-    if(isset($node->dTiCamTiPag))
-    {
-      $res->setDTiCamTiPag(strval($node->dTiCamTiPag));
-    }
-    if(isset($node->gPagTarCD))
-    {
-      $res->setGPagTarCD(GPagTarCD::FromSimpleXMLElement($node->gPagTarCD));
-    }
-    if(isset($node->gPagCheq))
-    {
-      $res->setGPagCheq(GPagCheq::FromSimpleXMLElement($node->gPagCheq));
-    }
-    return $res;
-  }
+        $this->gPagTarCD = $gPagTarCD;
 
-  /**
-   * Convierte este GPaConEIni a un DOMElement insertable en el DOMDocument indicado.
-   * 
-   * @param DOMDocument $doc Documento DOM en el que se insertará el DOMElement
-   *
-   * @return DOMElement Elemento DOM que representa este GPaConEIni
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gPaConEIni');
-    $res->appendChild(XmlHelper::elemento($doc, 'iTiPago', $this->getITiPago()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesTiPag', $this->getDDesTiPag()));
-    // E608 se emite como decimal (hasta v0.1.5 se usaba el getter int y se perdían los decimales, PK-09)
-    $res->appendChild(XmlHelper::elemento($doc, 'dMonTiPag', $this->dMonTiPag));
-    $res->appendChild(XmlHelper::elemento($doc, 'cMoneTiPag', $this->getCMoneTiPag()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDMoneTiPag', $this->getDDMoneTiPag()));
-    // E611 es opcional en el XSD; la obligatoriedad con moneda extranjera la exige el builder (Factura::addPago).
-    if (isset($this->dTiCamTiPag)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dTiCamTiPag', $this->getDTiCamTiPag()));
+        return $this;
     }
-    if(isset($this->gPagTarCD))
-      $res->appendChild($this->gPagTarCD->toDOMElement($doc));
-    if(isset($this->gPagCheq))
-      $res->appendChild($this->gPagCheq->toDOMElement($doc));
-    return $res;
-  }
-  
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $res = new GPaConEIni();
-    if(isset($object->iTiPago))
-    {
-      $res->setITiPago(intval($object->iTiPago));
-    }
-    if(isset($object->dMonTiPag))
-    {
-      $res->setDMonTiPag(intval($object->dMonTiPag));
-    }
-    if(isset($object->cMoneTiPag))
-    {
-      $res->setCMoneTiPag($object->cMoneTiPag);
-    }
-    if(isset($object->dTiCamTiPag))
-    {
-      $res->setDTiCamTiPag($object->dTiCamTiPag);
-    }
-    //Children
-    if(isset($object->gPagTarCD))
-    {
-      $res->setGPagTarCD(GPagTarCD::FromSifenResponseObject($object->gPagTarCD));
-    }
-    if(isset($object->gPagCheq))
-    {
-      $res->setGPagCheq(GPagCheq::FromSifenResponseObject($object->gPagCheq));
-    } 
 
-    return $res;
-  }
+    /**
+     * Establece el valor de gPagCheq
+     *
+     * @param GPagCheq $gPagCheq
+     *
+     * @return self
+     */
+    public function setGPagCheq(GPagCheq $gPagCheq): self
+    {
+        $this->gPagCheq = $gPagCheq;
 
-  /**
-   * Instancia un objeto GPaConEIni a partir de un DOMElement que representa el nodo XML del objeto GPaConEIni.
-   * 
-   * @param DOMElement $node Nodo XML que representa el objeto GPaConEIni
-   * 
-   * @return self Objeto GPaConEIni instanciado
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->nodeName, 'gPaConEIni') != 0)
-      throw new ValidacionException('[GPaConEIni] Nodo con nombre inválido: ' . $node->nodeName);
-    $res = new GPaConEIni();
-    $res->setITiPago(intval(trim($node->getElementsByTagName('iTiPago')->item(0)->nodeValue)));
-    $res->setDDesTiPag(trim($node->getElementsByTagName('dDesTiPag')->item(0)->nodeValue));
-    $res->setDMonTiPag(intval(trim($node->getElementsByTagName('dMonTiPag')->item(0)->nodeValue)));
-    $res->setCMoneTiPag(trim($node->getElementsByTagName('cMoneTiPag')->item(0)->nodeValue));
-    if($node->getElementsByTagName('dTiCamTiPag')->length > 0)
-      $res->setDTiCamTiPag(trim($node->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue));
-    if($node->getElementsByTagName('gPagTarCD')->length > 0)
-      $res->setGPagTarCD(GPagTarCD::FromDOMElement($node->getElementsByTagName('gPagTarCD')->item(0)));
-    if($node->getElementsByTagName('gPagCheq')->length > 0)
-      $res->setGPagCheq(GPagCheq::FromDOMElement($node->getElementsByTagName('gPagCheq')->item(0)));
-    return $res;
-  }
-  
-  
+        return $this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Getters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de iTiPago
+     *
+     * @return int
+     */
+    public function getITiPago(): int
+    {
+        return $this->iTiPago;
+    }
+
+    /**
+     * E607 Descripción del tipo de pago
+     *
+     * @return String
+     */
+    public function getDDesTiPag(): string
+    {
+        return $this->dDesTiPag;
+    }
+
+
+    /**
+     * Obtiene el valor de dMonTiPag
+     *
+     * @return int
+     */
+    /**
+     * @deprecated El monto E608 es decimal (tMontoBase4, hasta 4 decimales): este getter lo trunca a entero. Usar getDMonTiPagDecimal().
+     */
+    public function getDMonTiPag(): int
+    {
+        return (int) $this->dMonTiPag; // trunca a propósito: método obsoleto, ver getDMonTiPagDecimal() (D10)
+    }
+
+    /**
+     * Devuelve el monto por tipo de pago (E608) tal como fue establecido, como cadena decimal BCMath.
+     *
+     * @return String
+     */
+    public function getDMonTiPagDecimal(): string
+    {
+        return $this->dMonTiPag;
+    }
+
+    /**
+     * Obtiene el valor de cMoneTiPag
+     *
+     * @return String
+     */
+    public function getCMoneTiPag(): string
+    {
+        return $this->cMoneTiPag;
+    }
+
+    /**
+     *  E610 Descripción de la moneda por tipo de pago
+     *
+     * @return String
+     */
+    public function getDDMoneTiPag(): string
+    {
+        return $this->dDMoneTiPag;
+    }
+
+
+    /**
+     * Obtiene el valor de dTiCamTiPag
+     *
+     * @return String
+     */
+    public function getDTiCamTiPag(): string
+    {
+        return $this->dTiCamTiPag;
+    }
+
+    /**
+     * Obtiene el valor de gPagTarCD
+     *
+     * @return GPagTarCD
+     */
+    public function getGPagTarCD(): GPagTarCD
+    {
+        return $this->gPagTarCD;
+    }
+
+    /**
+     * Obtiene el valor de gPagCheq
+     *
+     * @return GPagCheq
+     */
+    public function getGPagCheq(): GPagCheq
+    {
+        return $this->gPagCheq;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Instancia un objeto GPaConEIni a partir de un SimpleXMLElement
+     *
+     * @param SimpleXMLElement $node
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if (strcmp($node->getName(), 'gPaConEIni') != 0) {
+            throw new ValidacionException("El elemento '" . $node->getName() . "' no es gPaConEIni");
+        }
+        $res = new GPaConEIni();
+        $res->setITiPago(intval($node->iTiPago));
+        $res->setDDesTiPag(strval($node->dDesTiPag));
+        $res->setDMonTiPag(intval($node->dMonTiPag));
+        $res->setCMoneTiPag($node->cMoneTiPag);
+        $res->setDDMoneTiPag(strval($node->dDMoneTiPag));
+        if (isset($node->dTiCamTiPag)) {
+            $res->setDTiCamTiPag(strval($node->dTiCamTiPag));
+        }
+        if (isset($node->gPagTarCD)) {
+            $res->setGPagTarCD(GPagTarCD::FromSimpleXMLElement($node->gPagTarCD));
+        }
+        if (isset($node->gPagCheq)) {
+            $res->setGPagCheq(GPagCheq::FromSimpleXMLElement($node->gPagCheq));
+        }
+        return $res;
+    }
+
+    /**
+     * Convierte este GPaConEIni a un DOMElement insertable en el DOMDocument indicado.
+     *
+     * @param DOMDocument $doc Documento DOM en el que se insertará el DOMElement
+     *
+     * @return DOMElement Elemento DOM que representa este GPaConEIni
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gPaConEIni');
+        $res->appendChild(XmlHelper::elemento($doc, 'iTiPago', $this->getITiPago()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesTiPag', $this->getDDesTiPag()));
+        // E608 se emite como decimal (hasta v0.1.5 se usaba el getter int y se perdían los decimales, PK-09)
+        $res->appendChild(XmlHelper::elemento($doc, 'dMonTiPag', $this->dMonTiPag));
+        $res->appendChild(XmlHelper::elemento($doc, 'cMoneTiPag', $this->getCMoneTiPag()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDMoneTiPag', $this->getDDMoneTiPag()));
+        // E611 es opcional en el XSD; la obligatoriedad con moneda extranjera la exige el builder (Factura::addPago).
+        if (isset($this->dTiCamTiPag)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dTiCamTiPag', $this->getDTiCamTiPag()));
+        }
+        if (isset($this->gPagTarCD)) {
+            $res->appendChild($this->gPagTarCD->toDOMElement($doc));
+        }
+        if (isset($this->gPagCheq)) {
+            $res->appendChild($this->gPagCheq->toDOMElement($doc));
+        }
+        return $res;
+    }
+
+    /**
+     * FromSifenResponseObject
+     *
+     * @param  mixed $object
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new GPaConEIni();
+        if (isset($object->iTiPago)) {
+            $res->setITiPago(intval($object->iTiPago));
+        }
+        if (isset($object->dMonTiPag)) {
+            $res->setDMonTiPag(intval($object->dMonTiPag));
+        }
+        if (isset($object->cMoneTiPag)) {
+            $res->setCMoneTiPag($object->cMoneTiPag);
+        }
+        if (isset($object->dTiCamTiPag)) {
+            $res->setDTiCamTiPag($object->dTiCamTiPag);
+        }
+        //Children
+        if (isset($object->gPagTarCD)) {
+            $res->setGPagTarCD(GPagTarCD::FromSifenResponseObject($object->gPagTarCD));
+        }
+        if (isset($object->gPagCheq)) {
+            $res->setGPagCheq(GPagCheq::FromSifenResponseObject($object->gPagCheq));
+        }
+
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GPaConEIni a partir de un DOMElement que representa el nodo XML del objeto GPaConEIni.
+     *
+     * @param DOMElement $node Nodo XML que representa el objeto GPaConEIni
+     *
+     * @return self Objeto GPaConEIni instanciado
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gPaConEIni') != 0) {
+            throw new ValidacionException('[GPaConEIni] Nodo con nombre inválido: ' . $node->nodeName);
+        }
+        $res = new GPaConEIni();
+        $res->setITiPago(intval(trim($node->getElementsByTagName('iTiPago')->item(0)->nodeValue)));
+        $res->setDDesTiPag(trim($node->getElementsByTagName('dDesTiPag')->item(0)->nodeValue));
+        $res->setDMonTiPag(intval(trim($node->getElementsByTagName('dMonTiPag')->item(0)->nodeValue)));
+        $res->setCMoneTiPag(trim($node->getElementsByTagName('cMoneTiPag')->item(0)->nodeValue));
+        if ($node->getElementsByTagName('dTiCamTiPag')->length > 0) {
+            $res->setDTiCamTiPag(trim($node->getElementsByTagName('dTiCamTiPag')->item(0)->nodeValue));
+        }
+        if ($node->getElementsByTagName('gPagTarCD')->length > 0) {
+            $res->setGPagTarCD(GPagTarCD::FromDOMElement($node->getElementsByTagName('gPagTarCD')->item(0)));
+        }
+        if ($node->getElementsByTagName('gPagCheq')->length > 0) {
+            $res->setGPagCheq(GPagCheq::FromDOMElement($node->getElementsByTagName('gPagCheq')->item(0)));
+        }
+        return $res;
+    }
+
+
 }

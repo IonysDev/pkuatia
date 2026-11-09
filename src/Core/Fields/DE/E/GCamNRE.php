@@ -17,296 +17,303 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  * Nodo Id:     E500
  * Nombre:      GCamNRE
  * Descripción: Campos que componen la Nota de Remisión Electrónica (E500-E599)
- * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico 
+ * Nodo Padre:  E001 - gDtipDE - Campos específicos por tipo de Documento Electrónico
  */
 class GCamNRE extends BaseSifenField
 {
-                                // Id - Longitud - Ocurrencia - Descripción
-  public int $iMotEmiNR;        // E501 - 1-2   - 1-1 - Motivo de emisión
-  public String $dDesMotEmiNR;  // E502 - 5-60  - 1-1 - Descripción del motivo de emisión
-  public int $iRespEmiNR;       // E503 - 1-1   - 1-1 - Responsable de la emisión de la Nota Remisión Electrónica
-  public String $dDesRespEmiNR; // E504 - 20-36 - 1-1 - Descripción del responsable de la emisión de la Nota Remisión Electrónica
-  public int $dKmR;             // E505 - 1-5   - 1-1 - Kilómetros estimados de recorrido (minOccurs=1 en tgCamNRE, DE_v150.xsd; NT-010)
-  public DateTime $dFecEm;      // E506 - 10    - 0-1 - Fecha futura de emisión de la factura
-  
-  ///////////////////////////////////////////////////////////////////////
-  ///Setters
-  ///////////////////////////////////////////////////////////////////////
+    // Id - Longitud - Ocurrencia - Descripción
+    public int $iMotEmiNR;        // E501 - 1-2   - 1-1 - Motivo de emisión
+    public string $dDesMotEmiNR;  // E502 - 5-60  - 1-1 - Descripción del motivo de emisión
+    public int $iRespEmiNR;       // E503 - 1-1   - 1-1 - Responsable de la emisión de la Nota Remisión Electrónica
+    public string $dDesRespEmiNR; // E504 - 20-36 - 1-1 - Descripción del responsable de la emisión de la Nota Remisión Electrónica
+    public int $dKmR;             // E505 - 1-5   - 1-1 - Kilómetros estimados de recorrido (minOccurs=1 en tgCamNRE, DE_v150.xsd; NT-010)
+    public DateTime $dFecEm;      // E506 - 10    - 0-1 - Fecha futura de emisión de la factura
 
-  /**
-   * Establece el valor de iMotEmiNR (Motivo de emisión) y a la vez establece el valor de dDesMotEmiNR (Descripción del motivo de emisión).
-   *
-   * @param int $iMotEmiNR - Motivo de emisión
-   *
-   * @return self
-   */
-  public function setIMotEmiNR(int|MotEmiNR $iMotEmiNR): self
-  {
-    $valor = is_int($iMotEmiNR) ? $iMotEmiNR : $iMotEmiNR->value;
-    $this->iMotEmiNR = $valor;
-    // E502: para 99 (Otro) la descripción es texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd); no se pisa si ya fue informada con setDDesMotEmiNR().
-    if ($valor === MotEmiNR::Otro->value && isset($this->dDesMotEmiNR) && $this->dDesMotEmiNR !== MotEmiNR::Otro->getDescripcion())
-      return $this;
-    $this->dDesMotEmiNR = is_int($iMotEmiNR) ? MotEmiNR::getDescripcionFromInt($iMotEmiNR) : $iMotEmiNR->getDescripcion();
-    return $this;
-  }
+    ///////////////////////////////////////////////////////////////////////
+    ///Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de dDesMotEmiNR (Descripción del motivo de emisión).
-   * Solo usarlo para iMotEmiNR = 99 - Otro (Describir motivo).
-   * No se recomienda usar este método, ya que se puede establecer el valor de iMotEmiNR, que a la vez establece el valor de dDesMotEmiNR.
-   * 
-   * @param String $dDesMotEmiNR - Descripción del motivo de emisión
-   * 
-   * @return self 
-   */
-  public function setDDesMotEmiNR(String $dDesMotEmiNR): self
-  {
-    $this->dDesMotEmiNR = $dDesMotEmiNR;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de iRespEmiNR (Responsable de la emisión de la Nota Remisión Electrónica)
-   *
-   * @param int $iRespEmiNR - Responsable de la emisión de la Nota Remisión Electrónica
-   *
-   * @return self
-   */
-  public function setIRespEmiNR(int|RespEmiNR $iRespEmiNR): self
-  {
-    if(is_int($iRespEmiNR)){
-      $this->dDesRespEmiNR = RespEmiNR::getDescripcionFromInt($iRespEmiNR);
-      $this->iRespEmiNR = $iRespEmiNR;
-    } else {
-      $this->iRespEmiNR = $iRespEmiNR->value;
-      $this->dDesRespEmiNR = $iRespEmiNR->getDescripcion();
-    }
-
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dDesRespEmiNR (Descripción del responsable de la emisión de la Nota Remisión Electrónica).
-   * No se recomienda usar este método, ya que se puede establecer el valor de iRespEmiNR, que a la vez establece el valor de dDesRespEmiNR.
-   * 
-   * @param String $dDesRespEmiNR - Descripción del responsable de la emisión de la Nota Remisión Electrónica
-   * 
-   * @return self 
-   */
-  public function setDDesRespEmiNR(String $dDesRespEmiNR): self
-  {
-    $this->dDesRespEmiNR = $dDesRespEmiNR;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dKmR (Kilómetros estimados de recorrido)
-   *
-   * @param int $dKmR - Kilómetros estimados de recorrido
-   *
-   * @return self
-   */
-  public function setDKmR(int $dKmR): self
-  {
-    $this->dKmR = $dKmR;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dFecEm (Fecha futura de emisión de la factura)
-   *
-   * @param DateTime $dFecEm - Fecha futura de emisión de la factura
-   *
-   * @return self
-   */
-  public function setDFecEm(DateTime $dFecEm): self
-  {
-    $this->dFecEm = $dFecEm;
-
-    return $this;
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////
-  ///Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de iMotEmiNR (Motivo de emisión)
-   *
-   * @return int
-   */
-  public function getIMotEmiNR(): int
-  {
-    return $this->iMotEmiNR;
-  }
-
-  /**
-   * Obtiene el valor de dDesMotEmiNR (Descripción del motivo de emisión)
-   *
-   * @return String
-   */
-  public function getDDesMotEmiNR(): String
-  {
-    return $this->dDesMotEmiNR;
-  }
-
-  /**
-   * Obtiene el valor de iRespEmiNR (Responsable de la emisión de la Nota Remisión Electrónica)
-   *
-   * @return int
-   */
-  public function getIRespEmiNR(): int
-  {
-    return $this->iRespEmiNR;
-  } 
-
-  /**
-   * Obtiene el valor de dDesRespEmiNR (Descripción del responsable de la emisión de la Nota Remisión Electrónica)
-   *
-   * @return String
-   */
-  public function getDDesRespEmiNR(): String
-  {
-    return $this->dDesRespEmiNR;
-  } 
-
-  /**
-   * Obtiene el valor de dKmR (Kilómetros estimados de recorrido)
-   *
-   * @return int
-   */
-  public function getDKmR(): int
-  {
-    return $this->dKmR;
-  } 
-
-  /**
-   * Obtiene el valor de dFecEm (Fecha futura de emisión de la factura)
-   *
-   * @return DateTime | null
-   */
-  public function getDFecEm(): DateTime | null
-  {
-    if(!isset($this->dFecEm))
-      return null;
-    return $this->dFecEm;
-  }   
-
-  ///////////////////////////////////////////////////////////////////////
-  ///XML Element
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Convierte este objeto GCamNRE a un DOMElement mediante el DOMDocument proporcionado.
-   * 
-   * @param DOMDocument $doc - Documento DOM donde se creará el elemento.
-   *
-   * @return DOMElement El elemento DOM que representa este objeto GCamNRE.
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    if ($this->getIMotEmiNR() === MotEmiNR::Otro->value && (mb_strlen($this->getDDesMotEmiNR()) < 5 || mb_strlen($this->getDDesMotEmiNR()) > 60))
-      throw new ValidacionException("[GCamNRE] Con iMotEmiNR = 99 (Otro), dDesMotEmiNR (E502) debe ser un texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd): informarlo con setDDesMotEmiNR(). Valor actual: '" . $this->getDDesMotEmiNR() . "'.");
-    $res = $doc->createElement('gCamNRE');
-    $res->appendChild(XmlHelper::elemento($doc, 'iMotEmiNR', $this->getIMotEmiNR()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesMotEmiNR', $this->getDDesMotEmiNR()));
-    $res->appendChild(XmlHelper::elemento($doc, 'iRespEmiNR', $this->getIRespEmiNR()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesRespEmiNR', $this->getDDesRespEmiNR()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dKmR', $this->getDKmR()));
-    if(isset($this->dFecEm))
-      $res->appendChild(XmlHelper::elemento($doc, 'dFecEm', $this->getDFecEm()->format('Y-m-d')));
-    return $res;
-  }
-
-  /**
-   * Instancia un objeto del tipo GCamNRE a partir de un DOMElement que representa el nodo XML del objeto GCamNRE.
-   * 
-   * @param DOMElement $node Nodo XML que representa el objeto GCamNRE
-   * 
-   * @return self Objeto GCamNRE instanciado
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->nodeName, 'gCamNRE') != 0)
-      throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->nodeName);
-    $valores = [];
-    foreach($node->childNodes as $hijo)
+    /**
+     * Establece el valor de iMotEmiNR (Motivo de emisión) y a la vez establece el valor de dDesMotEmiNR (Descripción del motivo de emisión).
+     *
+     * @param int $iMotEmiNR - Motivo de emisión
+     *
+     * @return self
+     */
+    public function setIMotEmiNR(int|MotEmiNR $iMotEmiNR): self
     {
-      if($hijo instanceof DOMElement)
-        $valores[$hijo->localName] = $hijo->nodeValue;
+        $valor = is_int($iMotEmiNR) ? $iMotEmiNR : $iMotEmiNR->value;
+        $this->iMotEmiNR = $valor;
+        // E502: para 99 (Otro) la descripción es texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd); no se pisa si ya fue informada con setDDesMotEmiNR().
+        if ($valor === MotEmiNR::Otro->value && isset($this->dDesMotEmiNR) && $this->dDesMotEmiNR !== MotEmiNR::Otro->getDescription()) {
+            return $this;
+        }
+        $this->dDesMotEmiNR = is_int($iMotEmiNR) ? MotEmiNR::getDescriptionFromValue($iMotEmiNR) : $iMotEmiNR->getDescription();
+        return $this;
     }
-    return self::desdeValores($valores);
-  }
 
-  /**
-   * Instancia un objeto GCamNRE a partir de un SimpleXMLElement. No existía hasta 0.2.0:
-   * GDtipDE::FromSimpleXMLElement lo invocaba y ninguna nota de remisión se podía deserializar (PK-25).
-   *
-   * @param SimpleXMLElement $node Nodo gCamNRE.
-   *
-   * @return self
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-    if(strcmp($node->getName(), 'gCamNRE') != 0)
-      throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->getName());
-    $valores = [];
-    foreach($node->children() as $hijo)
-      $valores[$hijo->getName()] = (string) $hijo;
-    return self::desdeValores($valores);
-  }
+    /**
+     * Establece el valor de dDesMotEmiNR (Descripción del motivo de emisión).
+     * Solo usarlo para iMotEmiNR = 99 - Otro (Describir motivo).
+     * No se recomienda usar este método, ya que se puede establecer el valor de iMotEmiNR, que a la vez establece el valor de dDesMotEmiNR.
+     *
+     * @param String $dDesMotEmiNR - Descripción del motivo de emisión
+     *
+     * @return self
+     */
+    public function setDDesMotEmiNR(string $dDesMotEmiNR): self
+    {
+        $this->dDesMotEmiNR = $dDesMotEmiNR;
+        return $this;
+    }
 
-  /**
-   * Instancia un objeto GCamNRE a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al
-   * SIFEN. No existía hasta 0.2.0: GDtipDE::FromSifenResponseObject lo invocaba y fallaba con Error (PK-25).
-   *
-   * @param \stdClass $object
-   *
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $valores = [];
-    foreach(get_object_vars($object) as $campo => $valor)
+    /**
+     * Establece el valor de iRespEmiNR (Responsable de la emisión de la Nota Remisión Electrónica)
+     *
+     * @param int $iRespEmiNR - Responsable de la emisión de la Nota Remisión Electrónica
+     *
+     * @return self
+     */
+    public function setIRespEmiNR(int|RespEmiNR $iRespEmiNR): self
     {
-      if(is_scalar($valor))
-        $valores[$campo] = (string) $valor;
-    }
-    return self::desdeValores($valores);
-  }
+        if (is_int($iRespEmiNR)) {
+            $this->dDesRespEmiNR = RespEmiNR::getDescriptionFromValue($iRespEmiNR);
+            $this->iRespEmiNR = $iRespEmiNR;
+        } else {
+            $this->iRespEmiNR = $iRespEmiNR->value;
+            $this->dDesRespEmiNR = $iRespEmiNR->getDescription();
+        }
 
-  /**
-   * Valores de los hijos de gCamNRE por nombre. Obligatorios según tgCamNRE (DE_v150.xsd): iMotEmiNR,
-   * dDesMotEmiNR, iRespEmiNR, dDesRespEmiNR y dKmR (minOccurs=1). cPreFle (0-1) no está modelado.
-   *
-   * @param array<string, string> $v
-   */
-  private static function desdeValores(array $v): self
-  {
-    foreach(['iMotEmiNR', 'dDesMotEmiNR', 'iRespEmiNR', 'dDesRespEmiNR', 'dKmR'] as $campo)
-    {
-      if(!isset($v[$campo]))
-        throw new ValidacionException("[GCamNRE] Elemento requerido $campo no encontrado.");
+        return $this;
     }
-    $res = new GCamNRE();
-    $res->setIMotEmiNR(intval($v['iMotEmiNR']));
-    $res->setDDesMotEmiNR($v['dDesMotEmiNR']);
-    $res->setIRespEmiNR(intval($v['iRespEmiNR']));
-    $res->setDDesRespEmiNR($v['dDesRespEmiNR']);
-    $res->setDKmR(intval($v['dKmR']));
-    if(isset($v['dFecEm']))
+
+    /**
+     * Establece el valor de dDesRespEmiNR (Descripción del responsable de la emisión de la Nota Remisión Electrónica).
+     * No se recomienda usar este método, ya que se puede establecer el valor de iRespEmiNR, que a la vez establece el valor de dDesRespEmiNR.
+     *
+     * @param String $dDesRespEmiNR - Descripción del responsable de la emisión de la Nota Remisión Electrónica
+     *
+     * @return self
+     */
+    public function setDDesRespEmiNR(string $dDesRespEmiNR): self
     {
-      // tFecAAAAMMDDguion; '!' deja la hora en cero (antes quedaba la hora actual).
-      $fecha = DateTime::createFromFormat('!Y-m-d', trim($v['dFecEm']));
-      if($fecha === false)
-        throw new ValidacionException("[GCamNRE] dFecEm debe tener el formato AAAA-MM-DD: '{$v['dFecEm']}'");
-      $res->setDFecEm($fecha);
+        $this->dDesRespEmiNR = $dDesRespEmiNR;
+        return $this;
     }
-    return $res;
-  }
+
+
+    /**
+     * Establece el valor de dKmR (Kilómetros estimados de recorrido)
+     *
+     * @param int $dKmR - Kilómetros estimados de recorrido
+     *
+     * @return self
+     */
+    public function setDKmR(int $dKmR): self
+    {
+        $this->dKmR = $dKmR;
+
+        return $this;
+    }
+
+
+    /**
+     * Establece el valor de dFecEm (Fecha futura de emisión de la factura)
+     *
+     * @param DateTime $dFecEm - Fecha futura de emisión de la factura
+     *
+     * @return self
+     */
+    public function setDFecEm(DateTime $dFecEm): self
+    {
+        $this->dFecEm = $dFecEm;
+
+        return $this;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////
+    ///Getters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de iMotEmiNR (Motivo de emisión)
+     *
+     * @return int
+     */
+    public function getIMotEmiNR(): int
+    {
+        return $this->iMotEmiNR;
+    }
+
+    /**
+     * Obtiene el valor de dDesMotEmiNR (Descripción del motivo de emisión)
+     *
+     * @return String
+     */
+    public function getDDesMotEmiNR(): string
+    {
+        return $this->dDesMotEmiNR;
+    }
+
+    /**
+     * Obtiene el valor de iRespEmiNR (Responsable de la emisión de la Nota Remisión Electrónica)
+     *
+     * @return int
+     */
+    public function getIRespEmiNR(): int
+    {
+        return $this->iRespEmiNR;
+    }
+
+    /**
+     * Obtiene el valor de dDesRespEmiNR (Descripción del responsable de la emisión de la Nota Remisión Electrónica)
+     *
+     * @return String
+     */
+    public function getDDesRespEmiNR(): string
+    {
+        return $this->dDesRespEmiNR;
+    }
+
+    /**
+     * Obtiene el valor de dKmR (Kilómetros estimados de recorrido)
+     *
+     * @return int
+     */
+    public function getDKmR(): int
+    {
+        return $this->dKmR;
+    }
+
+    /**
+     * Obtiene el valor de dFecEm (Fecha futura de emisión de la factura)
+     *
+     * @return DateTime | null
+     */
+    public function getDFecEm(): DateTime | null
+    {
+        if (!isset($this->dFecEm)) {
+            return null;
+        }
+        return $this->dFecEm;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte este objeto GCamNRE a un DOMElement mediante el DOMDocument proporcionado.
+     *
+     * @param DOMDocument $doc - Documento DOM donde se creará el elemento.
+     *
+     * @return DOMElement El elemento DOM que representa este objeto GCamNRE.
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        if ($this->getIMotEmiNR() === MotEmiNR::Otro->value && (mb_strlen($this->getDDesMotEmiNR()) < 5 || mb_strlen($this->getDDesMotEmiNR()) > 60)) {
+            throw new ValidacionException("[GCamNRE] Con iMotEmiNR = 99 (Otro), dDesMotEmiNR (E502) debe ser un texto libre de 5 a 60 caracteres (tdDMotivTras, DE_Types_v150.xsd): informarlo con setDDesMotEmiNR(). Valor actual: '" . $this->getDDesMotEmiNR() . "'.");
+        }
+        $res = $doc->createElement('gCamNRE');
+        $res->appendChild(XmlHelper::elemento($doc, 'iMotEmiNR', $this->getIMotEmiNR()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesMotEmiNR', $this->getDDesMotEmiNR()));
+        $res->appendChild(XmlHelper::elemento($doc, 'iRespEmiNR', $this->getIRespEmiNR()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesRespEmiNR', $this->getDDesRespEmiNR()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dKmR', $this->getDKmR()));
+        if (isset($this->dFecEm)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dFecEm', $this->getDFecEm()->format('Y-m-d')));
+        }
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto del tipo GCamNRE a partir de un DOMElement que representa el nodo XML del objeto GCamNRE.
+     *
+     * @param DOMElement $node Nodo XML que representa el objeto GCamNRE
+     *
+     * @return self Objeto GCamNRE instanciado
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gCamNRE') != 0) {
+            throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->nodeName);
+        }
+        $valores = [];
+        foreach ($node->childNodes as $hijo) {
+            if ($hijo instanceof DOMElement) {
+                $valores[$hijo->localName] = $hijo->nodeValue;
+            }
+        }
+        return self::desdeValores($valores);
+    }
+
+    /**
+     * Instancia un objeto GCamNRE a partir de un SimpleXMLElement. No existía hasta 0.2.0:
+     * GDtipDE::FromSimpleXMLElement lo invocaba y ninguna nota de remisión se podía deserializar (PK-25).
+     *
+     * @param SimpleXMLElement $node Nodo gCamNRE.
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if (strcmp($node->getName(), 'gCamNRE') != 0) {
+            throw new ValidacionException('[GCamNRE] Nodo con nombre inválido: ' . $node->getName());
+        }
+        $valores = [];
+        foreach ($node->children() as $hijo) {
+            $valores[$hijo->getName()] = (string) $hijo;
+        }
+        return self::desdeValores($valores);
+    }
+
+    /**
+     * Instancia un objeto GCamNRE a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al
+     * SIFEN. No existía hasta 0.2.0: GDtipDE::FromSifenResponseObject lo invocaba y fallaba con Error (PK-25).
+     *
+     * @param \stdClass $object
+     *
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $valores = [];
+        foreach (get_object_vars($object) as $campo => $valor) {
+            if (is_scalar($valor)) {
+                $valores[$campo] = (string) $valor;
+            }
+        }
+        return self::desdeValores($valores);
+    }
+
+    /**
+     * Valores de los hijos de gCamNRE por nombre. Obligatorios según tgCamNRE (DE_v150.xsd): iMotEmiNR,
+     * dDesMotEmiNR, iRespEmiNR, dDesRespEmiNR y dKmR (minOccurs=1). cPreFle (0-1) no está modelado.
+     *
+     * @param array<string, string> $v
+     */
+    private static function desdeValores(array $v): self
+    {
+        foreach (['iMotEmiNR', 'dDesMotEmiNR', 'iRespEmiNR', 'dDesRespEmiNR', 'dKmR'] as $campo) {
+            if (!isset($v[$campo])) {
+                throw new ValidacionException("[GCamNRE] Elemento requerido $campo no encontrado.");
+            }
+        }
+        $res = new GCamNRE();
+        $res->setIMotEmiNR(intval($v['iMotEmiNR']));
+        $res->setDDesMotEmiNR($v['dDesMotEmiNR']);
+        $res->setIRespEmiNR(intval($v['iRespEmiNR']));
+        $res->setDDesRespEmiNR($v['dDesRespEmiNR']);
+        $res->setDKmR(intval($v['dKmR']));
+        if (isset($v['dFecEm'])) {
+            // tFecAAAAMMDDguion; '!' deja la hora en cero (antes quedaba la hora actual).
+            $fecha = DateTime::createFromFormat('!Y-m-d', trim($v['dFecEm']));
+            if ($fecha === false) {
+                throw new ValidacionException("[GCamNRE] dFecEm debe tener el formato AAAA-MM-DD: '{$v['dFecEm']}'");
+            }
+            $res->setDFecEm($fecha);
+        }
+        return $res;
+    }
 }

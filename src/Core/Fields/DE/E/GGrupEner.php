@@ -12,342 +12,342 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 use IonysDev\Pkuatia\Core\Exceptions\PkuatiaException;
 
 /**
- * Nodo Id:     E791 
+ * Nodo Id:     E791
  * Nombre:      gGrupoEner
- * Descripción: Grupo del sector de energía eléctrica 
+ * Descripción: Grupo del sector de energía eléctrica
  * Nodo Padre:  E790
  */
 class GGrupEner
 {
-  public String $dNroMed; // E792 - 1-50   - 0-1 - Número de medidor
-  public int    $dActiv;  // E793 - 2      - 0-1 - Código de actividad
-  public String $dCateg;  // E794 - 3      - 0-1 - Código de categoría
-  public String $dLecAnt; // E795 - 1-11p2 - 0-1 - Lectura anterior (decimal BCMath)
-  public String $dLecAct; // E796 - 1-11p2 - 0-1 - Lectura actual (decimal BCMath)
-  public String $dConKwh; // E797 - 1-11p2 - 0-1 - Consumo en Kwh (decimal BCMath) - Corresponde a  la diferencia  entre E796-E795
+    public string $dNroMed; // E792 - 1-50   - 0-1 - Número de medidor
+    public int $dActiv;  // E793 - 2      - 0-1 - Código de actividad
+    public string $dCateg;  // E794 - 3      - 0-1 - Código de categoría
+    public string $dLecAnt; // E795 - 1-11p2 - 0-1 - Lectura anterior (decimal BCMath)
+    public string $dLecAct; // E796 - 1-11p2 - 0-1 - Lectura actual (decimal BCMath)
+    public string $dConKwh; // E797 - 1-11p2 - 0-1 - Consumo en Kwh (decimal BCMath) - Corresponde a  la diferencia  entre E796-E795
 
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de dNroMed (Número de medidor)
-   *
-   * @param String $dNroMed
-   *
-   * @return self
-   */
-  public function setDNroMed(String $dNroMed): self
-  {
-    $this->dNroMed = $dNroMed;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dActiv (Código de actividad)
-   *
-   * @param int $dActiv
-   *
-   * @return self
-   */
-  public function setDActiv(int $dActiv): self
-  {
-    $this->dActiv = $dActiv;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dCateg (Código de categoría)
-   *
-   * @param String $dCateg
-   *
-   * @return self
-   */
-  public function setDCateg(String $dCateg): self
-  {
-    $this->dCateg = $dCateg;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dLecAnt (Lectura anterior)
-   *
-   * @param String $dLecAnt
-   *
-   * @return self
-   */
-  public function setDLecAnt(String $dLecAnt): self
-  {
-    if(!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0, 2))
-      throw new ValidacionException('[GGrupEner] dLecAnt debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAnt, 1);
-    $this->dLecAnt = $dLecAnt;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dLecAct (Lectura actual)
-   *
-   * @param String $dLecAct
-   *
-   * @return self
-   */
-  public function setDLecAct(String $dLecAct): self
-  {
-    if(!ValueValidations::isValidStringDecimal($dLecAct, 11, 0, 2))
-      throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAct, 1);
-    $this->dLecAct = $dLecAct;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de dConKwh (Consumo en Kwh)
-   *
-   * @param String $dConKwh
-   *
-   * @return self
-   */
-  public function setDConKwh(String $dConKwh): self
-  {
-    if(!ValueValidations::isValidStringDecimal($dConKwh, 11, 0, 2))
-      throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dConKwh, 1);
-    $this->dConKwh = $dConKwh;
-    return $this;
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////
-  // Getter
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Devuelve el valor de dNroMed (Número de medidor)
-   *
-   * @return String
-   */
-  public function getDNroMed(): String
-  {
-    return $this->dNroMed;
-  }
-
-  /**
-   * Devuelve el valor de dActiv (Código de actividad)
-   *
-   * @return int
-   */
-  public function getDActiv(): int
-  {
-    return $this->dActiv;
-  }
-
-  /**
-   * Devuelve el valor de dCateg (Código de categoría)
-   *
-   * @return String
-   */
-  public function getDCateg(): String
-  {
-    return $this->dCateg;
-  }
-
-  /**
-   * Devuelve el valor de dLecAnt (Lectura anterior)
-   *
-   * @return String
-   */
-  public function getDLecAnt(): String
-  {
-    return $this->dLecAnt;
-  }
-
-  /**
-   * Devuelve el valor de dLecAct (Lectura actual)
-   *
-   * @return String
-   */
-  public function getDLecAct(): String
-  {
-    return $this->dLecAct;
-  }
-
-  /**
-   *  Devuelve el valor de dConKwh (Consumo en Kwh)
-   *
-   * @return String
-   */
-  public function getDConKwh(): String
-  {
-    // Hasta v0.1.5 devolvía dLecAct - dLecAct (siempre 0) e ignoraba el valor establecido (PK-19).
-    return $this->dConKwh;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Instanciadores
-  ///////////////////////////////////////////////////////////////////////
-  
-  /**
-   * Instancia un objeto GGrupEner a partir de un SimpleXMLElement
-   * 
-   * @param  SimpleXMLElement $node
-   * 
-   * @return self
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): self
-  {
-    if(strcmp($node->getName(), 'gGrupEner') != 0)
-      throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->getName(), 1);
-    $res = new GGrupEner();
-    // Hasta 0.2.0 se pasaba el SimpleXMLElement a setDActiv(int): TypeError con cualquier dActiv (PK-25).
-    if(isset($node->dNroMed))
+    /**
+     * Establece el valor de dNroMed (Número de medidor)
+     *
+     * @param String $dNroMed
+     *
+     * @return self
+     */
+    public function setDNroMed(string $dNroMed): self
     {
-      $res->setDNroMed((string) $node->dNroMed);
+        $this->dNroMed = $dNroMed;
+        return $this;
     }
-    if(isset($node->dActiv))
-    {
-      $res->setDActiv(intval((string) $node->dActiv));
-    }
-    if(isset($node->dCateg))
-    {
-      $res->setDCateg((string) $node->dCateg);
-    }
-    if(isset($node->dLecAnt))
-    {
-      $res->setDLecAnt((string) $node->dLecAnt);
-    }
-    if(isset($node->dLecAct))
-    {
-      $res->setDLecAct((string) $node->dLecAct);
-    }
-    if(isset($node->dConKwh))
-    {
-      $res->setDConKwh((string) $node->dConKwh);
-    }
-    return $res;
-  }
 
-  /**
-   * Instancia un objeto GGrupEner a partir de un DOMElement (E791, tgGrupEner, DE_v150.xsd; todos los
-   * campos son opcionales). No existía hasta 0.2.0 y GCamEsp::FromDOMElement fallaba con Error (PK-25).
-   *
-   * @param DOMElement $node Nodo gGrupEner.
-   *
-   * @return self
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->localName, 'gGrupEner') != 0)
-      throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->localName);
-    $res = new GGrupEner();
-    foreach($node->childNodes as $hijo)
-    {
-      if(!$hijo instanceof DOMElement)
-        continue;
-      match($hijo->localName) {
-        'dNroMed' => $res->setDNroMed($hijo->nodeValue),
-        'dActiv'  => $res->setDActiv(intval($hijo->nodeValue)),
-        'dCateg'  => $res->setDCateg($hijo->nodeValue),
-        'dLecAnt' => $res->setDLecAnt($hijo->nodeValue),
-        'dLecAct' => $res->setDLecAct($hijo->nodeValue),
-        'dConKwh' => $res->setDConKwh($hijo->nodeValue),
-        default   => null,
-      };
-    }
-    return $res;
-  }
 
-  /**
-   * Instancia un objeto GGrupEner a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
-   *
-   * @param stdClass $object
-   * 
-   * @return self
-   */
-  public static function FromSifenResponseObject($object):self
-  {
-    $res = new GGrupEner();
-    if(isset($object->dNroMed))
+    /**
+     * Establece el valor de dActiv (Código de actividad)
+     *
+     * @param int $dActiv
+     *
+     * @return self
+     */
+    public function setDActiv(int $dActiv): self
     {
-      $res->setDNroMed($object->dNroMed);
+        $this->dActiv = $dActiv;
+        return $this;
     }
-    if(isset($object->dActiv))
-    {
-      $res->setDActiv($object->dActiv);
-    }
-    if(isset($object->dCateg))
-    {
-      $res->setDCateg($object->dCateg);
-    }
-    if(isset($object->dLecAnt))
-    {
-      $res->setDLecAnt($object->dLecAnt);
-    }
-    if(isset($object->dLecAct))
-    {
-      $res->setDLecAct($object->dLecAct);
-    }
-    if(isset($object->dConKwh))
-    {
-      $res->setDConKwh($object->dConKwh);
-    }
-    return $res;
-  }
 
-  ///////////////////////////////////////////////////////////////////////
-  // Conversores
-  ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Convierte este GGrupEner en un DOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement("gGrupEner");
-    if(isset($this->dNroMed))
-      $res->appendChild(XmlHelper::elemento($doc, 'dNroMed', $this->getDNroMed()));
-    if(isset($this->dActiv))
-      $res->appendChild(XmlHelper::elemento($doc, 'dActiv', $this->getDActiv()));
-    if(isset($this->dCateg))
-      $res->appendChild(XmlHelper::elemento($doc, 'dCateg', $this->getDCateg()));
-    if(isset($this->dLecAnt))
-      $res->appendChild(XmlHelper::elemento($doc, 'dLecAnt', $this->getDLecAnt()));
-    if(isset($this->dLecAct))
-      $res->appendChild(XmlHelper::elemento($doc, 'dLecAct', $this->getDLecAct()));
-    if(isset($this->dConKwh))
-      $res->appendChild(XmlHelper::elemento($doc, 'dConKwh', $this->getDConKwh()));
-    return $res;
-  }
+    /**
+     * Establece el valor de dCateg (Código de categoría)
+     *
+     * @param String $dCateg
+     *
+     * @return self
+     */
+    public function setDCateg(string $dCateg): self
+    {
+        $this->dCateg = $dCateg;
+        return $this;
+    }
 
-  /**
-   * Convierte este GGrupEner en un String XML
-   * 
-   * @return String
-   */
-  public function toXMLString(): String
-  {
-    $domElement = $this->toDOMElement(new DOMDocument());
-    $xmlString = $domElement->ownerDocument->saveXML($domElement);
-    if(!$xmlString)
-      throw new PkuatiaException('[GGrupEner] Error al convertir el objeto a XML.');
-    return $xmlString;
-  }
 
-  ///////////////////////////////////////////////////////////////////////
-  // Cálculos
-  ///////////////////////////////////////////////////////////////////////
+    /**
+     * Establece el valor de dLecAnt (Lectura anterior)
+     *
+     * @param String $dLecAnt
+     *
+     * @return self
+     */
+    public function setDLecAnt(string $dLecAnt): self
+    {
+        if (!ValueValidations::isValidStringDecimal($dLecAnt, 11, 0, 2)) {
+            throw new ValidacionException('[GGrupEner] dLecAnt debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAnt, 1);
+        }
+        $this->dLecAnt = $dLecAnt;
+        return $this;
+    }
 
-  /**
-   * Calcula el consumo en Kwh (dConKwh)
-   *
-   * @return String
-   */
-  public function calcularDConKwh(): String
-  {
-    return bcsub($this->getDLecAct(), $this->getDLecAnt(), 2);
-  }
-  
+
+    /**
+     * Establece el valor de dLecAct (Lectura actual)
+     *
+     * @param String $dLecAct
+     *
+     * @return self
+     */
+    public function setDLecAct(string $dLecAct): self
+    {
+        if (!ValueValidations::isValidStringDecimal($dLecAct, 11, 0, 2)) {
+            throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dLecAct, 1);
+        }
+        $this->dLecAct = $dLecAct;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de dConKwh (Consumo en Kwh)
+     *
+     * @param String $dConKwh
+     *
+     * @return self
+     */
+    public function setDConKwh(string $dConKwh): self
+    {
+        if (!ValueValidations::isValidStringDecimal($dConKwh, 11, 0, 2)) {
+            throw new ValidacionException('[GGrupEner] dLecAct debe ser un número decimal con 2 decimales y máximo 11 dígitos enteros: ' . $dConKwh, 1);
+        }
+        $this->dConKwh = $dConKwh;
+        return $this;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////
+    // Getter
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Devuelve el valor de dNroMed (Número de medidor)
+     *
+     * @return String
+     */
+    public function getDNroMed(): string
+    {
+        return $this->dNroMed;
+    }
+
+    /**
+     * Devuelve el valor de dActiv (Código de actividad)
+     *
+     * @return int
+     */
+    public function getDActiv(): int
+    {
+        return $this->dActiv;
+    }
+
+    /**
+     * Devuelve el valor de dCateg (Código de categoría)
+     *
+     * @return String
+     */
+    public function getDCateg(): string
+    {
+        return $this->dCateg;
+    }
+
+    /**
+     * Devuelve el valor de dLecAnt (Lectura anterior)
+     *
+     * @return String
+     */
+    public function getDLecAnt(): string
+    {
+        return $this->dLecAnt;
+    }
+
+    /**
+     * Devuelve el valor de dLecAct (Lectura actual)
+     *
+     * @return String
+     */
+    public function getDLecAct(): string
+    {
+        return $this->dLecAct;
+    }
+
+    /**
+     *  Devuelve el valor de dConKwh (Consumo en Kwh)
+     *
+     * @return String
+     */
+    public function getDConKwh(): string
+    {
+        // Hasta v0.1.5 devolvía dLecAct - dLecAct (siempre 0) e ignoraba el valor establecido (PK-19).
+        return $this->dConKwh;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Instanciadores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Instancia un objeto GGrupEner a partir de un SimpleXMLElement
+     *
+     * @param  SimpleXMLElement $node
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if (strcmp($node->getName(), 'gGrupEner') != 0) {
+            throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->getName(), 1);
+        }
+        $res = new GGrupEner();
+        // Hasta 0.2.0 se pasaba el SimpleXMLElement a setDActiv(int): TypeError con cualquier dActiv (PK-25).
+        if (isset($node->dNroMed)) {
+            $res->setDNroMed((string) $node->dNroMed);
+        }
+        if (isset($node->dActiv)) {
+            $res->setDActiv(intval((string) $node->dActiv));
+        }
+        if (isset($node->dCateg)) {
+            $res->setDCateg((string) $node->dCateg);
+        }
+        if (isset($node->dLecAnt)) {
+            $res->setDLecAnt((string) $node->dLecAnt);
+        }
+        if (isset($node->dLecAct)) {
+            $res->setDLecAct((string) $node->dLecAct);
+        }
+        if (isset($node->dConKwh)) {
+            $res->setDConKwh((string) $node->dConKwh);
+        }
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GGrupEner a partir de un DOMElement (E791, tgGrupEner, DE_v150.xsd; todos los
+     * campos son opcionales). No existía hasta 0.2.0 y GCamEsp::FromDOMElement fallaba con Error (PK-25).
+     *
+     * @param DOMElement $node Nodo gGrupEner.
+     *
+     * @return self
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->localName, 'gGrupEner') != 0) {
+            throw new ValidacionException('[GGrupEner] El nombre del nodo no corresponde a gGrupEner: ' . $node->localName);
+        }
+        $res = new GGrupEner();
+        foreach ($node->childNodes as $hijo) {
+            if (!$hijo instanceof DOMElement) {
+                continue;
+            }
+            match ($hijo->localName) {
+                'dNroMed' => $res->setDNroMed($hijo->nodeValue),
+                'dActiv'  => $res->setDActiv(intval($hijo->nodeValue)),
+                'dCateg'  => $res->setDCateg($hijo->nodeValue),
+                'dLecAnt' => $res->setDLecAnt($hijo->nodeValue),
+                'dLecAct' => $res->setDLecAct($hijo->nodeValue),
+                'dConKwh' => $res->setDConKwh($hijo->nodeValue),
+                default   => null,
+            };
+        }
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto GGrupEner a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
+     *
+     * @param stdClass $object
+     *
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new GGrupEner();
+        if (isset($object->dNroMed)) {
+            $res->setDNroMed($object->dNroMed);
+        }
+        if (isset($object->dActiv)) {
+            $res->setDActiv($object->dActiv);
+        }
+        if (isset($object->dCateg)) {
+            $res->setDCateg($object->dCateg);
+        }
+        if (isset($object->dLecAnt)) {
+            $res->setDLecAnt($object->dLecAnt);
+        }
+        if (isset($object->dLecAct)) {
+            $res->setDLecAct($object->dLecAct);
+        }
+        if (isset($object->dConKwh)) {
+            $res->setDConKwh($object->dConKwh);
+        }
+        return $res;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte este GGrupEner en un DOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement("gGrupEner");
+        if (isset($this->dNroMed)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNroMed', $this->getDNroMed()));
+        }
+        if (isset($this->dActiv)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dActiv', $this->getDActiv()));
+        }
+        if (isset($this->dCateg)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dCateg', $this->getDCateg()));
+        }
+        if (isset($this->dLecAnt)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dLecAnt', $this->getDLecAnt()));
+        }
+        if (isset($this->dLecAct)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dLecAct', $this->getDLecAct()));
+        }
+        if (isset($this->dConKwh)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dConKwh', $this->getDConKwh()));
+        }
+        return $res;
+    }
+
+    /**
+     * Convierte este GGrupEner en un String XML
+     *
+     * @return String
+     */
+    public function toXMLString(): string
+    {
+        $domElement = $this->toDOMElement(new DOMDocument());
+        $xmlString = $domElement->ownerDocument->saveXML($domElement);
+        if (!$xmlString) {
+            throw new PkuatiaException('[GGrupEner] Error al convertir el objeto a XML.');
+        }
+        return $xmlString;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Cálculos
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Calcula el consumo en Kwh (dConKwh)
+     *
+     * @return String
+     */
+    public function calcularDConKwh(): string
+    {
+        return bcsub($this->getDLecAct(), $this->getDLecAnt(), 2);
+    }
+
 }

@@ -5,7 +5,9 @@ namespace IonysDev\Pkuatia\Core\Constants;
 /**
  * Enumeración del tipo de régimen tributario del emisor (Tabla 1, MT SIFEN v150), campo cTipReg (D104) en gEmis (D100).
  */
-enum TipoDeRegimen: int {
+enum TipoDeRegimen: int
+{
+    use EnumDescripcion;
 
     case Turismo = 1;
     case Importador = 2;
@@ -18,7 +20,7 @@ enum TipoDeRegimen: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Turismo => 'Régimen de Turismo',
             self::Importador => 'Importador',
             self::Exportador => 'Exportador',
@@ -28,31 +30,6 @@ enum TipoDeRegimen: int {
             self::MedianoProductor => 'Régimen del Mediano Productor',
             self::Contable => 'Régimen Contable'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

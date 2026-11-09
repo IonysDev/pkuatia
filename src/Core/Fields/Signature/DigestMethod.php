@@ -8,16 +8,16 @@ use SimpleXMLElement;
 /**
  * Clase que representa el campo DigestMethod de la firma
  */
-class DigestMethod 
+class DigestMethod
 {
-    public String $Algorithm;
+    public string $Algorithm;
 
     /**
      * Devuelve la URI del algoritmo utilizado para calcular el digest
      *
      * @return String
      */
-    public function getAlgorithm(): String
+    public function getAlgorithm(): string
     {
         return $this->Algorithm;
     }
@@ -29,7 +29,7 @@ class DigestMethod
      *
      * @return self
      */
-    public function setAlgorithm(String $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
 
@@ -42,9 +42,9 @@ class DigestMethod
 
     /**
      * Instancia un objeto DigestMethod a partir de un SimpleXMLElement
-     * 
+     *
      * @param SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -56,9 +56,9 @@ class DigestMethod
 
     /**
      * Instancia un objeto DigestMethod a partir de un DOMElement
-     * 
+     *
      * @param DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(DOMElement $node): self
@@ -69,18 +69,19 @@ class DigestMethod
     }
 
     /**
-     * Convierte el objeto a un DOMElement
-     * 
+     * Convierte el objeto a un DOMElement.
+     *
+     * @param \DOMDocument|null $doc Documento en el que se crea el nodo. Null (comportamiento hasta 0.3.0) crea un
+     *                               documento propio, cuyo nodo no puede colgarse de otro documento (Fase D, D8).
+     *
      * @return DOMElement
      */
-    public function toDOMElement(): DOMElement
+    public function toDOMElement(?\DOMDocument $doc = null): DOMElement
     {
-        $dom = new \DOMDocument();
+        $dom = $doc ?? new \DOMDocument();
         $DigestMethod = $dom->createElement('DigestMethod');
         $DigestMethod->setAttribute('Algorithm', $this->getAlgorithm());
         return $DigestMethod;
     }
 
 }
-
-?>

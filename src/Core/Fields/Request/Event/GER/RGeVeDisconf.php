@@ -13,118 +13,119 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class RGeVeDisconf
 {
-                         // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-  public String $Id;     // GDI002 CDC del DTE - 44 - 1-1
-  public String $mOtEve; // GDI004 Motivo del Evento - 5-500 - 1-1
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public string $Id;     // GDI002 CDC del DTE - 44 - 1-1
+    public string $mOtEve; // GDI004 Motivo del Evento - 5-500 - 1-1
 
-  ///////////////////////////////////////////////////////////////////////
-  //SETTERS
-  ///////////////////////////////////////////////////////////////////////
-
-
-  /**
-   * Establece el valor de Id
-   *
-   * @param String $Id
-   *
-   * @return self
-   */
-  public function setId(String $Id): self
-  {
-    $this->Id = $Id;
-
-    return $this;
-  }
+    ///////////////////////////////////////////////////////////////////////
+    //SETTERS
+    ///////////////////////////////////////////////////////////////////////
 
 
-  /**
-   * Establece el valor de mOtEve
-   *
-   * @param String $mOtEve
-   *
-   * @return self
-   */
-  public function setMOtEve(String $mOtEve): self
-  {
-    $this->mOtEve = $mOtEve;
+    /**
+     * Establece el valor de Id
+     *
+     * @param String $Id
+     *
+     * @return self
+     */
+    public function setId(string $Id): self
+    {
+        $this->Id = $Id;
 
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
-  ///////////////////////////////////////////////////////////////////////
+        return $this;
+    }
 
 
+    /**
+     * Establece el valor de mOtEve
+     *
+     * @param String $mOtEve
+     *
+     * @return self
+     */
+    public function setMotEve(string $mOtEve): self
+    {
+        $this->mOtEve = $mOtEve;
 
-  /**
-   * Obtiene el valor de Id
-   *
-   * @return String
-   */
-  public function getId(): String
-  {
-    return $this->Id;
-  }
+        return $this;
+    }
 
-  /**
-   * Obtiene el valor de mOtEve
-   *
-   * @return String
-   */
-  public function getMOtEve(): String
-  {
-    return $this->mOtEve;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///XML Element
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ///GETTERS
+    ///////////////////////////////////////////////////////////////////////
 
 
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('rGeVeDisconf');
 
-    $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
-    $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMOtEve()));
+    /**
+     * Obtiene el valor de Id
+     *
+     * @return String
+     */
+    public function getId(): string
+    {
+        return $this->Id;
+    }
 
-    return $res;
-  }
+    /**
+     * Obtiene el valor de mOtEve
+     *
+     * @return String
+     */
+    public function getMotEve(): string
+    {
+        return $this->mOtEve;
+    }
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return DOMElement
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): RGeVeDisconf
-  // {
-  //   if (strcmp($xml->tagName, 'rGeVeDisconf') == 0 && $xml->childElementCount == 2) {
-  //     $res = new RGeVeDisconf();
-  //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
-  //     $res->setMOtEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
+    ///////////////////////////////////////////////////////////////////////
+    ///XML Element
+    ///////////////////////////////////////////////////////////////////////
 
-  public static function FromSimpleXMLElement(SimpleXMLElement $node):Self
-  {
-    if($node->getName() != 'rGeVeDisconf')
-      throw new ValidacionException("Invalid XML Element: $node->getName()");
 
-    $res = new RGeVeDisconf();
-    $res->setId($node->Id);
-    $res->setMOtEve($node->mOtEve);
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('rGeVeDisconf');
 
-    return $res;
-  }
+        $res->appendChild(XmlHelper::elemento($doc, 'Id', $this->getId()));
+        $res->appendChild(XmlHelper::elemento($doc, 'mOtEve', $this->getMotEve()));
+
+        return $res;
+    }
+
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return DOMElement
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): RGeVeDisconf
+    // {
+    //   if (strcmp($xml->tagName, 'rGeVeDisconf') == 0 && $xml->childElementCount == 2) {
+    //     $res = new RGeVeDisconf();
+    //     $res->setId($xml->getElementsByTagName('Id')->item(0)->nodeValue);
+    //     $res->setMotEve($xml->getElementsByTagName('mOtEve')->item(0)->nodeValue);
+    //     return $res;
+    //   } else {
+    //     throw new \Exception("Invalid XML Element: $xml->tagName");
+    //     return null;
+    //   }
+    // }
+
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
+    {
+        if ($node->getName() != 'rGeVeDisconf') {
+            throw new ValidacionException("Invalid XML Element: $node->getName()");
+        }
+
+        $res = new RGeVeDisconf();
+        $res->setId($node->Id);
+        $res->setMotEve($node->mOtEve);
+
+        return $res;
+    }
 }

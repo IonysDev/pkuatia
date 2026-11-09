@@ -6,7 +6,9 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de documento electrónico: campos iTiDE (C002) y dDesTiDE (C003) del grupo gTimb (C001),
  * según Manual Técnico SIFEN v150.
  */
-enum TimbTiDE: int {
+enum TimbTiDE: int
+{
+    use EnumDescripcion;
 
     case Factura = 1;
     case FacturaExportacion = 2;
@@ -23,7 +25,7 @@ enum TimbTiDE: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Factura => 'Factura electrónica',
             self::FacturaExportacion => 'Factura electrónica de exportación',
             self::FacturaImportacion => 'Factura electrónica de importación',
@@ -37,31 +39,6 @@ enum TimbTiDE: int {
         };
     }
 
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
-    }
-
     /**
      * @deprecated Use getDescriptionFromValue() instead.
      */
@@ -70,5 +47,3 @@ enum TimbTiDE: int {
         return self::getDescriptionFromValue($tipoDE);
     }
 }
-
-?>

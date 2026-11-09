@@ -6,7 +6,9 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeraración que lista los tipos de operación del receptor del documento electrónico.
  * Corresponde a los valores posibles del campo iTiOpe (D202).
  */
-enum RecTiOpe: int {
+enum RecTiOpe: int
+{
+    use EnumDescripcion;
 
     case B2B = 1;
     case B2C = 2;
@@ -15,37 +17,12 @@ enum RecTiOpe: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::B2B => 'B2B',
             self::B2C => 'B2C',
             self::B2G => 'B2G',
             self::B2F => 'B2F'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**
@@ -72,5 +49,3 @@ enum RecTiOpe: int {
         return self::getValueDescriptionMap();
     }
 }
-
-?>

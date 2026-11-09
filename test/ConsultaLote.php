@@ -10,12 +10,12 @@ ini_set('display_errors', 1);
 
 // Leer los argumentos --cert, --key --pass --lot --prod (opcional) de la línea de comandos
 $shortopts = '';
-$longopts = array(
+$longopts = [
     'cert:',
     'key:',
     'pass:',
     'lot:'
-);
+];
 $options = getopt($shortopts, $longopts);
 if (!isset($options['cert']) || !isset($options['key']) || !isset($options['pass']) || !isset($options['lot'])) {
     echo "Uso: php ConsultaLote.php [--prod] --cert=<certFile> --key=<keyFile> --pass=<keyPassphrase> --lot=<lote>\n";

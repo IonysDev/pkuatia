@@ -6,7 +6,9 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de documento de identidad del receptor: campos iTipIDRec (D208) y dDTipIDRec (D209)
  * del grupo gDatRec (D200), según Manual Técnico SIFEN v150.
  */
-enum TipIDRec: int {
+enum TipIDRec: int
+{
+    use EnumDescripcion;
 
     case CedulaParaguaya = 1;
     case Pasaporte = 2;
@@ -18,7 +20,7 @@ enum TipIDRec: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CedulaParaguaya => 'Cédula paraguaya',
             self::Pasaporte => 'Pasaporte',
             self::CedulaExtranjera => 'Cédula extranjera',
@@ -27,31 +29,6 @@ enum TipIDRec: int {
             self::TajetaDiplomatica => 'Tarjeta Diplomática de exoneración fiscal',
             self::Otro => 'Otro'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

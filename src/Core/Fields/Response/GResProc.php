@@ -2,7 +2,6 @@
 
 namespace IonysDev\Pkuatia\Core\Fields\Response;
 
-use DOMElement;
 use SimpleXMLElement;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
@@ -11,154 +10,156 @@ use IonysDev\Pkuatia\Validacion\CatalogoValidaciones;
 use IonysDev\Pkuatia\Validacion\InfoValidacion;
 
 /**
- * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01 
+ * ID:PP05 Grupo Resultado de Procesamiento PADRE:PP01
  */
 class GResProc
 {
-  public const COD_RES_ACEPTADO = 260;
+    public const COD_RES_ACEPTADO = 260;
 
-                          // ID - DESC - LONG - OCURRENCIA
-  public String $dCodRes; // PP052 - Código del resultado de procesamiento - 4 - 1-1
-  public String $dMsgRes; // PP053 - Mensaje del resultado de procesamiento - 1-255 - 1-1
+    // ID - DESC - LONG - OCURRENCIA
+    public string $dCodRes; // PP052 - Código del resultado de procesamiento - 4 - 1-1
+    public string $dMsgRes; // PP053 - Mensaje del resultado de procesamiento - 1-255 - 1-1
 
-  ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ///SETTERS
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Establece el valor de dCodRes
-   *
-   * @param int $dCodRes
-   *
-   * @return self
-   */
-  public function setDCodRes(String $dCodRes): self
-  {
-    $this->dCodRes = $dCodRes;
+    /**
+     * Establece el valor de dCodRes
+     *
+     * @param string $dCodRes
+     *
+     * @return self
+     */
+    public function setDCodRes(string $dCodRes): self
+    {
+        $this->dCodRes = $dCodRes;
 
-    return $this;
-  }
+        return $this;
+    }
 
 
-  /**
-   * Establece el valor de dMsgRes
-   *
-   * @param String $dMsgRes
-   *
-   * @return self
-   */
-  public function setDMsgRes(String $dMsgRes): self
-  {
-    $this->dMsgRes = $dMsgRes;
+    /**
+     * Establece el valor de dMsgRes
+     *
+     * @param String $dMsgRes
+     *
+     * @return self
+     */
+    public function setDMsgRes(string $dMsgRes): self
+    {
+        $this->dMsgRes = $dMsgRes;
 
-    return $this;
-  }
+        return $this;
+    }
 
-  ///////////////////////////////////////////////////////////////////////
-  //GETTERS
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    //GETTERS
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Obtiene el valor de dCodRes
-   *
-   * @return int
-   */
-  public function getDCodRes(): String
-  {
-    return $this->dCodRes;
-  }
+    /**
+     * Obtiene el valor de dCodRes
+     *
+     * @return string
+     */
+    public function getDCodRes(): string
+    {
+        return $this->dCodRes;
+    }
 
-  /**
-   * Obtiene el valor de dMsgRes
-   *
-   * @return String
-   */
-  public function getDMsgRes(): String
-  {
-    return $this->dMsgRes;
-  }
+    /**
+     * Obtiene el valor de dMsgRes
+     *
+     * @return String
+     */
+    public function getDMsgRes(): string
+    {
+        return $this->dMsgRes;
+    }
 
-  ///////////////////////////////////////////////////////////////////////
-  // Instanciadores
-  ///////////////////////////////////////////////////////////////////////  
-  
-  /**
-   * Instancia un GResProc a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
-   * 
-   * @param stdClass $object
-   * 
-   * @return GResProc
-   */
-  public static function FromSifenResponseObject($object): GResProc
-  {
-    $res = new GResProc();
-    $res->setDCodRes($object->dCodRes);
-    $res->setDMsgRes($object->dMsgRes);
-    return $res;
-  }
+    ///////////////////////////////////////////////////////////////////////
+    // Instanciadores
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Instancia un GResProc a partir de un SimpleXMLElement (PP05: dCodRes y dMsgRes, ambos 1-1). No existía
-   * hasta 0.2.0: RProtDe::FromSimpleXMLElement lo invocaba y fallaba con Error (PK-25).
-   *
-   * @param SimpleXMLElement $node Nodo gResProc.
-   *
-   * @return GResProc
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node): GResProc
-  {
-    if (strcmp($node->getName(), 'gResProc') != 0)
-      throw new ValidacionException('[GResProc] El nombre del nodo no corresponde a gResProc: ' . $node->getName());
-    if (!isset($node->dCodRes) || !isset($node->dMsgRes))
-      throw new ValidacionException('[GResProc] gResProc debe contener dCodRes y dMsgRes.');
-    $res = new GResProc();
-    $res->setDCodRes((string) $node->dCodRes);
-    $res->setDMsgRes((string) $node->dMsgRes);
-    return $res;
-  }
+    /**
+     * Instancia un GResProc a partir de un objeto stdClass recibido como respuesta a una llamada SOAP al SIFEN.
+     *
+     * @param stdClass $object
+     *
+     * @return GResProc
+     */
+    public static function FromSifenResponseObject($object): GResProc
+    {
+        $res = new GResProc();
+        $res->setDCodRes($object->dCodRes);
+        $res->setDMsgRes($object->dMsgRes);
+        return $res;
+    }
 
-  // --- Fase C (C6): lectura del código -----------------------------------------------------------------------------
+    /**
+     * Instancia un GResProc a partir de un SimpleXMLElement (PP05: dCodRes y dMsgRes, ambos 1-1). No existía
+     * hasta 0.2.0: RProtDe::FromSimpleXMLElement lo invocaba y fallaba con Error (PK-25).
+     *
+     * @param SimpleXMLElement $node Nodo gResProc.
+     *
+     * @return GResProc
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): GResProc
+    {
+        if (strcmp($node->getName(), 'gResProc') != 0) {
+            throw new ValidacionException('[GResProc] El nombre del nodo no corresponde a gResProc: ' . $node->getName());
+        }
+        if (!isset($node->dCodRes) || !isset($node->dMsgRes)) {
+            throw new ValidacionException('[GResProc] gResProc debe contener dCodRes y dMsgRes.');
+        }
+        $res = new GResProc();
+        $res->setDCodRes((string) $node->dCodRes);
+        $res->setDMsgRes((string) $node->dMsgRes);
+        return $res;
+    }
 
-  /** Código como texto de cuatro dígitos con cero inicial ("0260"), tal como lo compara CodigoResultadoWS. */
-  public function getCodigo(): string
-  {
-    return str_pad(trim($this->dCodRes ?? ''), 4, '0', STR_PAD_LEFT);
-  }
+    // --- Fase C (C6): lectura del código -----------------------------------------------------------------------------
 
-  public function getMensaje(): string
-  {
-    return $this->dMsgRes ?? '';
-  }
+    /** Código como texto de cuatro dígitos con cero inicial ("0260"), tal como lo compara CodigoResultadoWS. */
+    public function getCodigo(): string
+    {
+        return str_pad(trim($this->dCodRes ?? ''), 4, '0', STR_PAD_LEFT);
+    }
 
-  /** El código como caso del enum, o null si no es un código de web service (p. ej. una validación del DE). */
-  public function getCodigoResultado(): ?CodigoResultadoWS
-  {
-    return CodigoResultadoWS::fromAny($this->getCodigo());
-  }
+    public function getMensaje(): string
+    {
+        return $this->dMsgRes ?? '';
+    }
 
-  /** Aprobación según el MT: 0260, 0300, 0362, 0422, 0502, 0520 o 0600. */
-  public function esAprobacion(): bool
-  {
-    return $this->getCodigoResultado()?->esAprobacion() ?? false;
-  }
+    /** El código como caso del enum, o null si no es un código de web service (p. ej. una validación del DE). */
+    public function getCodigoResultado(): ?CodigoResultadoWS
+    {
+        return CodigoResultadoWS::fromAny($this->getCodigo());
+    }
 
-  /** Código de validación del DE (1000-2650, MT §12.4). */
-  public function esValidacionDE(): bool
-  {
-    $n = (int) $this->getCodigo();
-    return $n >= 1000 && $n < 4000;
-  }
+    /** Aprobación según el MT: 0260, 0300, 0362, 0422, 0502, 0520 o 0600. */
+    public function esAprobacion(): bool
+    {
+        return $this->getCodigoResultado()?->esAprobacion() ?? false;
+    }
 
-  /** Código de validación de un evento (4000-4499, MT §11.6). */
-  public function esValidacionEvento(): bool
-  {
-    $n = (int) $this->getCodigo();
-    return $n >= 4000 && $n < 5000;
-  }
+    /** Código de validación del DE (1000-2650, MT §12.4). */
+    public function esValidacionDE(): bool
+    {
+        $n = (int) $this->getCodigo();
+        return $n >= 1000 && $n < 4000;
+    }
 
-  /** Descripción del código según el catálogo del MT (campo, regla, método de PKuatia), o null. */
-  public function getInfoValidacion(): ?InfoValidacion
-  {
-    return CatalogoValidaciones::describir($this->getCodigo());
-  }
+    /** Código de validación de un evento (4000-4499, MT §11.6). */
+    public function esValidacionEvento(): bool
+    {
+        $n = (int) $this->getCodigo();
+        return $n >= 4000 && $n < 5000;
+    }
+
+    /** Descripción del código según el catálogo del MT (campo, regla, método de PKuatia), o null. */
+    public function getInfoValidacion(): ?InfoValidacion
+    {
+        return CatalogoValidaciones::describir($this->getCodigo());
+    }
 }

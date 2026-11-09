@@ -1,0 +1,15 @@
+{
+    "_comentario": "Ejemplo con valores INVENTADOS del mapa que usa tools/anonimizar-capturas.php. El mapa real vive fuera del repositorio. emisor/receptor: RUC y DV reales del certificado y del receptor de pruebas, y el RUC ficticio (su DV se calcula). literales: textos reales → ficticios (razón social, dirección, teléfono, correo). numerosDeCasa: dNumCas/dNumCasRec/dNumCasSal/dNumCasEnt. sensibles: cadenas que no pueden quedar en la salida (además de los RUC y las claves de literales).",
+    "emisor": { "ruc": "80099999", "dv": "4", "rucFicticio": "80000000" },
+    "receptor": { "ruc": "80088888", "dv": "8", "rucFicticio": "80012345" },
+    "literales": {
+        "RAZON SOCIAL REAL S.A.": "EMPRESA DE PRUEBA S.A.",
+        "Razon Social Real S.A.": "Empresa de Prueba S.A.",
+        "Avda. Real 1234 c/ Calle Verdadera": "Avda. Ficticia 100 c/ Calle de Prueba",
+        "021 000000": "021 123456",
+        "emisor.real@example.com": "emisor@example.com",
+        "receptor.real@example.com": "receptor@example.com"
+    },
+    "numerosDeCasa": { "1234": "100", "5678": "200" },
+    "sensibles": ["RAZON SOCIAL REAL", "example.com/real"]
+}

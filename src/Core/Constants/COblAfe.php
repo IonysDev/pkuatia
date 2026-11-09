@@ -6,7 +6,10 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Enumeración del tipo de obligación afectada para los campos cOblAfe (D031) y dDesOblAfe (D032)
  * del grupo gOblAfe (D030), según Tabla 12 - Tipo de Obligaciones de la NT-018.
  */
-enum COblAfe: int {
+enum COblAfe: int
+{
+    use EnumDescripcion;
+
     case ImpuestoALaRentaIracisRegimenEspeciales =  113;
     case TributoUnicoMaquila =  143;
     case ImpuestoAlValorAgregadoGravadasYExoneradasExportadores = 211;
@@ -25,7 +28,7 @@ enum COblAfe: int {
      */
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ImpuestoALaRentaIracisRegimenEspeciales => 'IMPUESTO A LA RENTA IRACIS - REGÍMENES ESPECIALES',
             self::TributoUnicoMaquila => 'TRIBUTO UNICO MAQUILA',
             self::ImpuestoAlValorAgregadoGravadasYExoneradasExportadores => 'IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS - EXPORTADORES',
@@ -40,31 +43,6 @@ enum COblAfe: int {
         };
     }
 
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
-    }
-
     /**
      * @deprecated Use getDescriptionFromValue() instead.
      */
@@ -73,5 +51,3 @@ enum COblAfe: int {
         return self::getDescriptionFromValue($cOblAfe);
     }
 }
-
-?>

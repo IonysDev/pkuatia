@@ -7,7 +7,9 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * Valores del campo iTipIDVen (E304) y descripciones del campo dDTipIDVen (E305).
  * En gCamAE solo aplican los códigos 1–4 (el receptor en gDatRec admite valores adicionales).
  */
-enum CamAETipIDVen: int {
+enum CamAETipIDVen: int
+{
+    use EnumDescripcion;
 
     case CedulaParaguaya = 1;
     case Pasaporte = 2;
@@ -23,31 +25,4 @@ enum CamAETipIDVen: int {
             self::CarnetDeResidencia => 'Carnet de residencia',
         };
     }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
-    }
 }
-
-?>

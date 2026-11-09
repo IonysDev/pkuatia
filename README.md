@@ -109,6 +109,8 @@ $config->dIdFilePath = "PKuatiaDId.dat.json";
 // Opcionales (0.3.0)
 // $config->validarXsdAntesDeEnviar = true; // EnviarDE, EnviarLoteDE y RegistrarEvento validan contra el XSD antes de tocar la red
 // $config->soapTrace = false;              // no guardar la última solicitud/respuesta (GetLastRequest/GetLastResponse devuelven null)
+// $config->soapConnectionTimeout = 10;     // segundos para establecer la conexión (0.2.1)
+// $config->soapReadTimeout = 60;           // segundos para recibir la respuesta una vez conectado (0.3.1)
 
 // Inicializar Sifen
 Sifen::Init($config);
@@ -139,6 +141,8 @@ Ejemplo de `config.json`:
     "dIdFilePath": "PKuatiaDId.dat.json",
     "wsdlCacheEnabled": true,
     "soapTrace": true,
+    "soapConnectionTimeout": 10,
+    "soapReadTimeout": 60,
     "validarXsdAntesDeEnviar": false
 }
 ```
@@ -254,7 +258,7 @@ $respuesta = Sifen::ConsultarDE($cdc);
 
 if ($respuesta->getDCodRes() === 422) { // 0422: existe y está aprobado; 0420: no existe o no está aprobado
     $contenido = $respuesta->getRContDe();
-    $de = $contenido->getRDe()->getDE(); // el DE completo, como objetos
+    $de = $contenido->getRDE()->getDE(); // el DE completo, como objetos
     echo $de->getGDatGralOpe()->getGEmis()->getDNomEmi() . ', protocolo ' . $contenido->getDProtAut() . "\n";
 
     // Cancelación, conformidad y demás eventos registrados sobre el DE, con la respuesta del SIFEN a cada uno
@@ -276,6 +280,9 @@ use IonysDev\Pkuatia\Core\Fields\DE\AA\RDE;
 
 $rde = RDE::FromSimpleXMLElement(simplexml_load_string($xmlFirmado));
 $xml = $rde->toXMLString(); // el mismo rDE, con Signature y gCamFuFD; la firma sigue verificando
+// Los objetos de la firma ($rde->getSignature(), SignedInfo, Reference, KeyInfo…) sirven para inspeccionarla; su
+// toDOMElement() produce una firma estructuralmente equivalente pero que NO verifica, porque no conserva los espacios
+// del SignedInfo original, que forman parte de lo firmado. La reemisión que verifica es la de arriba (0.3.1).
 ```
 
 ## 🛡️ Validar, verificar y leer errores
@@ -484,7 +491,7 @@ pkuatia/
 ├── src/                      # Código de la librería (PSR-4)
 ├── tests/Unit/               # Suite PHPUnit (offline, sin certificado)
 ├── test/                     # Smoke test y scripts de consulta de ejemplo
-├── .github/workflows/        # CI (PHP 8.1–8.3)
+├── .github/workflows/        # CI (PHP 8.1–8.4, 8.5 experimental)
 ├── docs/PUBLICAR.md          # Guía Packagist (mantenedores)
 ├── phpunit.xml.dist
 ├── phpstan.neon.dist
@@ -702,10 +709,15 @@ Verificaciones offline (no requieren certificado ni conexión al SIFEN):
 
 ```bash
 composer install
-php test/SmokeTest.php      # smoke test rápido
 composer test               # PHPUnit (tests/Unit/)
-composer phpstan            # análisis estático nivel 1
+composer phpstan            # análisis estático (nivel 3 + reglas de obsolescencia, con baseline justificada)
+composer cs-check           # estilo (php-cs-fixer, sin cambios semánticos); composer cs-fix lo corrige
+php test/SmokeTest.php      # smoke test rápido, manual (desde 0.3.1 ya no corre en el CI: PHPUnit cubre lo mismo)
+XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover build/clover.xml && php tools/cobertura-minima.php build/clover.xml 75
 ```
+
+El CI (GitHub Actions) corre lint, estilo, PHPUnit, PHPStan y `composer validate`/`audit` en PHP 8.1, 8.2, 8.3 y 8.4,
+más 8.5 como experimental; la cobertura se mide en el job de 8.3 contra un umbral mínimo.
 
 Los tests de `tests/Unit/Conformidad/` construyen documentos y eventos con los builders, los firman con un
 certificado autofirmado y los validan contra los **XSD de producción del SIFEN** incluidos en

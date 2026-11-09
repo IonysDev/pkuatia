@@ -75,8 +75,8 @@ $g->setDOrdCompra(str_repeat('A', 30)); // max 15
 $g->setDOrdVta(str_repeat('B', 30));    // max 15
 $g->setDAsiento(str_repeat('C', 30));   // max 10
 assertEq(15, strlen($g->getDOrdCompra()), 'dOrdCompra truncado a 15');
-assertEq(15, strlen($g->getDOrdVta()),    'dOrdVta truncado a 15');
-assertEq(10, strlen($g->getDAsiento()),   'dAsiento truncado a 10');
+assertEq(15, strlen($g->getDOrdVta()), 'dOrdVta truncado a 15');
+assertEq(10, strlen($g->getDAsiento()), 'dAsiento truncado a 10');
 
 echo "Caso 7: setter con vacio limpia el valor\n";
 $g = new GCamGen();
@@ -88,7 +88,7 @@ echo "Caso 8: setter con null no rompe\n";
 $g = new GCamGen();
 $g->setDOrdVta(null);
 $g->setDAsiento(null);
-assertEq(null, $g->getDOrdVta(),  'dOrdVta sigue null');
+assertEq(null, $g->getDOrdVta(), 'dOrdVta sigue null');
 assertEq(null, $g->getDAsiento(), 'dAsiento sigue null');
 
 echo "\n";

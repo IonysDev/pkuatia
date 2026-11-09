@@ -2,41 +2,40 @@
 
 namespace IonysDev\Pkuatia\Core;
 
-
 /**
  * Clase que contiene los valores constantes utilizados en el paquete.
  */
 class Constants
-{  
+{
     // Versiones
-    const PKUATIA_VERSION = "0.3.0";
-    const SIFEN_VERSION = "150";
+    public const PKUATIA_VERSION = "0.3.1";
+    public const SIFEN_VERSION = "150";
     /** Zona horaria del SIFEN: las fechas internas que la librería genera por su cuenta (dFecFirma de los eventos, "hoy") se calculan en ella. Las fechas que recibe del consumidor se respetan tal cual. */
-    const SIFEN_TIMEZONE = "America/Asuncion";
+    public const SIFEN_TIMEZONE = "America/Asuncion";
 
     // Namespaces
-    const RSA_SHA256 = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
-    const SIFEN_NS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
-    const SIFEN_NS_URI = "http://ekuatia.set.gov.py/sifen/xsd";
-    const SIFEN_NS_URI_RECEP_DE = self::SIFEN_NS_URI . " siRecepDE_v150.xsd";
-    const SIFEN_NS_URI_RECEP_EVENTO = self::SIFEN_NS_URI . " siRecepEvento_v150.xsd";
+    public const RSA_SHA256 = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
+    public const SIFEN_NS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
+    public const SIFEN_NS_URI = "http://ekuatia.set.gov.py/sifen/xsd";
+    public const SIFEN_NS_URI_RECEP_DE = self::SIFEN_NS_URI . " siRecepDE_v150.xsd";
+    public const SIFEN_NS_URI_RECEP_EVENTO = self::SIFEN_NS_URI . " siRecepEvento_v150.xsd";
 
     // URLs Base
-    const SIFEN_URL_BASE_DEV = "https://sifen-test.set.gov.py";
-    const SIFEN_URL_BASE_PROD = "https://sifen.set.gov.py";
-    const SIFEN_URL_CONSULTA_QR_DEV = "https://ekuatia.set.gov.py/consultas-test/qr?";
-    const SIFEN_URL_CONSULTA_QR_PROD = "https://ekuatia.set.gov.py/consultas/qr?";
+    public const SIFEN_URL_BASE_DEV = "https://sifen-test.set.gov.py";
+    public const SIFEN_URL_BASE_PROD = "https://sifen.set.gov.py";
+    public const SIFEN_URL_CONSULTA_QR_DEV = "https://ekuatia.set.gov.py/consultas-test/qr?";
+    public const SIFEN_URL_CONSULTA_QR_PROD = "https://ekuatia.set.gov.py/consultas/qr?";
 
     // Paths de los WSDL. OJO: algunos manuales/documentos publican rutas distintas (recepcion.wsdl,
     // recepcion-lote.wsdl, etc.); las rutas vigentes fueron verificadas empíricamente contra
     // sifen-test.set.gov.py en junio/2026 y son las siguientes.
-    const SIFEN_PATH_RECIBE = "/de/ws/sync/recibe.wsdl";                             // siRecepDE
-    const SIFEN_PATH_RECIBE_LOTE = "/de/ws/async/recibe-lote.wsdl";                  // siRecepLoteDE
-    const SIFEN_PATH_EVENTO = "/de/ws/eventos/evento.wsdl";                          // siRecepEvento
-    const SIFEN_PATH_CONSULTA_LOTE = "/de/ws/consultas/consulta-lote.wsdl";          // siResultLoteDE
-    const SIFEN_PATH_CONSULTA_RUC = "/de/ws/consultas/consulta-ruc.wsdl";            // siConsRUC
-    const SIFEN_PATH_CONSULTA = "/de/ws/consultas/consulta.wsdl";                    // siConsDE
-    const SIFEN_PATH_CONSULTA_ARCHIVO_RUC = "/de/ws/consultas/consulta-archivo-ruc.wsdl"; // siConsArchivoRUC (NT-011, ruta pendiente de confirmación)
+    public const SIFEN_PATH_RECIBE = "/de/ws/sync/recibe.wsdl";                             // siRecepDE
+    public const SIFEN_PATH_RECIBE_LOTE = "/de/ws/async/recibe-lote.wsdl";                  // siRecepLoteDE
+    public const SIFEN_PATH_EVENTO = "/de/ws/eventos/evento.wsdl";                          // siRecepEvento
+    public const SIFEN_PATH_CONSULTA_LOTE = "/de/ws/consultas/consulta-lote.wsdl";          // siResultLoteDE
+    public const SIFEN_PATH_CONSULTA_RUC = "/de/ws/consultas/consulta-ruc.wsdl";            // siConsRUC
+    public const SIFEN_PATH_CONSULTA = "/de/ws/consultas/consulta.wsdl";                    // siConsDE
+    public const SIFEN_PATH_CONSULTA_ARCHIVO_RUC = "/de/ws/consultas/consulta-archivo-ruc.wsdl"; // siConsArchivoRUC (NT-011, ruta pendiente de confirmación)
 
     //Tipos de transacciones
     public const TIPO_TRANSACCION_VENTA_MERCADERIA = 1;
@@ -95,5 +94,5 @@ class Constants
     // permitido cuando el total general de la operación en guaraníes es >= a este monto.
     public const UMBRAL_INNOMINADO_PYG = '7000000';
 
-    
+
 }

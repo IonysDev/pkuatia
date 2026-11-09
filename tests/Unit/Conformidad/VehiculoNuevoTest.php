@@ -16,95 +16,95 @@ use PHPUnit\Framework\TestCase;
  */
 final class VehiculoNuevoTest extends TestCase
 {
-  public function testLasMedidasConDecimalesSeEmitenExactas(): void
-  {
-    $vehiculo = self::vehiculo()->setDPNet('1450.75')->setDPBruto('1600.5')->setDCapTracc('2500.1234');
+    public function testLasMedidasConDecimalesSeEmitenExactas(): void
+    {
+        $vehiculo = self::vehiculo()->setDPNet('1450.75')->setDPBruto('1600.5')->setDCapTracc('2500.1234');
 
-    $xml = RoundTrip::serializar($vehiculo);
+        $xml = RoundTrip::serializar($vehiculo);
 
-    $this->assertStringContainsString('<dPNet>1450.75</dPNet><dPBruto>1600.5</dPBruto>', $xml);
-    $this->assertStringContainsString('<dCapTracc>2500.1234</dCapTracc>', $xml);
-    $this->assertSame(['1450.75', '1600.5', '2500.1234'], [$vehiculo->getDPNetDecimal(), $vehiculo->getDPBrutoDecimal(), $vehiculo->getDCapTraccDecimal()]);
-    $this->assertSame([1450, 1600, 2500], [$vehiculo->getDPNet(), $vehiculo->getDPBruto(), $vehiculo->getDCapTracc()]);
-  }
+        $this->assertStringContainsString('<dPNet>1450.75</dPNet><dPBruto>1600.5</dPBruto>', $xml);
+        $this->assertStringContainsString('<dCapTracc>2500.1234</dCapTracc>', $xml);
+        $this->assertSame(['1450.75', '1600.5', '2500.1234'], [$vehiculo->getDPNetDecimal(), $vehiculo->getDPBrutoDecimal(), $vehiculo->getDCapTraccDecimal()]);
+        $this->assertSame([1450, 1600, 2500], [$vehiculo->getDPNet(), $vehiculo->getDPBruto(), $vehiculo->getDCapTracc()]);
+    }
 
-  public function testLosEnterosSeEmitenComoAntes(): void
-  {
-    $vehiculo = self::vehiculo()->setDPNet(1200)->setDPBruto(1500)->setDCapTracc(1500);
+    public function testLosEnterosSeEmitenComoAntes(): void
+    {
+        $vehiculo = self::vehiculo()->setDPNet(1200)->setDPBruto(1500)->setDCapTracc(1500);
 
-    $this->assertStringContainsString('<dPNet>1200</dPNet><dPBruto>1500</dPBruto>', RoundTrip::serializar($vehiculo));
-    $this->assertSame('1200', $vehiculo->getDPNetDecimal());
-    $this->assertSame(1200, $vehiculo->getDPNet());
-  }
+        $this->assertStringContainsString('<dPNet>1200</dPNet><dPBruto>1500</dPBruto>', RoundTrip::serializar($vehiculo));
+        $this->assertSame('1200', $vehiculo->getDPNetDecimal());
+        $this->assertSame(1200, $vehiculo->getDPNet());
+    }
 
-  public function testSinMedidasLosGettersDevuelvenNull(): void
-  {
-    $vehiculo = self::vehiculo();
+    public function testSinMedidasLosGettersDevuelvenNull(): void
+    {
+        $vehiculo = self::vehiculo();
 
-    $this->assertNull($vehiculo->getDPNetDecimal());
-    $this->assertNull($vehiculo->getDPBrutoDecimal());
-    $this->assertNull($vehiculo->getDCapTraccDecimal());
-    $this->assertStringNotContainsString('dPNet', RoundTrip::serializar($vehiculo));
-  }
+        $this->assertNull($vehiculo->getDPNetDecimal());
+        $this->assertNull($vehiculo->getDPBrutoDecimal());
+        $this->assertNull($vehiculo->getDCapTraccDecimal());
+        $this->assertStringNotContainsString('dPNet', RoundTrip::serializar($vehiculo));
+    }
 
-  /** @return array<string, array{0: string}> */
-  public static function vias(): array
-  {
-    return ['DOM' => [RoundTrip::VIA_DOM], 'SimpleXML' => [RoundTrip::VIA_SIMPLEXML], 'objeto SOAP' => [RoundTrip::VIA_SOAP]];
-  }
+    /** @return array<string, array{0: string}> */
+    public static function vias(): array
+    {
+        return ['DOM' => [RoundTrip::VIA_DOM], 'SimpleXML' => [RoundTrip::VIA_SIMPLEXML], 'objeto SOAP' => [RoundTrip::VIA_SOAP]];
+    }
 
-  #[DataProvider('vias')]
-  public function testLaLecturaConservaLosDecimales(string $via): void
-  {
-    $vehiculo = self::vehiculo()->setDPNet('1450.75')->setDPBruto('1600.5')->setDCapTracc('2500.1234');
+    #[DataProvider('vias')]
+    public function testLaLecturaConservaLosDecimales(string $via): void
+    {
+        $vehiculo = self::vehiculo()->setDPNet('1450.75')->setDPBruto('1600.5')->setDCapTracc('2500.1234');
 
-    RoundTrip::assertIdaYVueltaIdentica($vehiculo, $via, GVehNuevo::class);
-    $leido = RoundTrip::leer(RoundTrip::serializar($vehiculo), GVehNuevo::class, $via);
-    $this->assertSame('1450.75', $leido->getDPNetDecimal());
-  }
+        RoundTrip::assertIdaYVueltaIdentica($vehiculo, $via, GVehNuevo::class);
+        $leido = RoundTrip::leer(RoundTrip::serializar($vehiculo), GVehNuevo::class, $via);
+        $this->assertSame('1450.75', $leido->getDPNetDecimal());
+    }
 
-  /** @return array<string, array{0: string, 1: int|string}> */
-  public static function valoresInvalidos(): array
-  {
-    return [
-      'cinco decimales' => ['setDPNet', '12.34567'],
-      'once dígitos' => ['setDPBruto', '12345678901'],
-      'texto' => ['setDCapTracc', 'abc'],
-      'coma decimal' => ['setDPNet', '1450,75'],
-    ];
-  }
+    /** @return array<string, array{0: string, 1: int|string}> */
+    public static function valoresInvalidos(): array
+    {
+        return [
+          'cinco decimales' => ['setDPNet', '12.34567'],
+          'once dígitos' => ['setDPBruto', '12345678901'],
+          'texto' => ['setDCapTracc', 'abc'],
+          'coma decimal' => ['setDPNet', '1450,75'],
+        ];
+    }
 
-  #[DataProvider('valoresInvalidos')]
-  public function testUnValorInvalidoLanzaExcepcion(string $setter, int|string $valor): void
-  {
-    $this->expectException(\InvalidArgumentException::class);
-    $this->expectExceptionMessage(lcfirst(substr($setter, 3)));
+    #[DataProvider('valoresInvalidos')]
+    public function testUnValorInvalidoLanzaExcepcion(string $setter, int|string $valor): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(lcfirst(substr($setter, 3)));
 
-    self::vehiculo()->$setter($valor);
-  }
+        self::vehiculo()->$setter($valor);
+    }
 
-  /**
-   * QA de la Fase B: los textos numéricos que 0.2.0 aceptaba al convertir a int ("+5", "5.", ".5", "1e3") se aceptan y
-   * se normalizan, como en GGrupSup.
-   *
-   * @return array<string, array{0: string, 1: string}>
-   */
-  public static function textosNumericos(): array
-  {
-    return ['signo +' => ['+5', '5'], 'punto final' => ['5.', '5'], 'punto inicial' => ['.5', '0.5'], 'exponencial' => ['1e3', '1000']];
-  }
+    /**
+     * QA de la Fase B: los textos numéricos que 0.2.0 aceptaba al convertir a int ("+5", "5.", ".5", "1e3") se aceptan y
+     * se normalizan, como en GGrupSup.
+     *
+     * @return array<string, array{0: string, 1: string}>
+     */
+    public static function textosNumericos(): array
+    {
+        return ['signo +' => ['+5', '5'], 'punto final' => ['5.', '5'], 'punto inicial' => ['.5', '0.5'], 'exponencial' => ['1e3', '1000']];
+    }
 
-  #[DataProvider('textosNumericos')]
-  public function testTextosNumericosQueAceptabaLaVersionAnterior(string $valor, string $esperado): void
-  {
-    $vehiculo = self::vehiculo()->setDPNet($valor);
+    #[DataProvider('textosNumericos')]
+    public function testTextosNumericosQueAceptabaLaVersionAnterior(string $valor, string $esperado): void
+    {
+        $vehiculo = self::vehiculo()->setDPNet($valor);
 
-    $this->assertSame($esperado, $vehiculo->getDPNetDecimal());
-    $this->assertStringContainsString("<dPNet>$esperado</dPNet>", RoundTrip::serializar($vehiculo));
-  }
+        $this->assertSame($esperado, $vehiculo->getDPNetDecimal());
+        $this->assertStringContainsString("<dPNet>$esperado</dPNet>", RoundTrip::serializar($vehiculo));
+    }
 
-  private static function vehiculo(): GVehNuevo
-  {
-    return (new GVehNuevo())->setITipOpVN(2)->setDChasis('9BWZZZ377VT004251')->setITipCom(1);
-  }
+    private static function vehiculo(): GVehNuevo
+    {
+        return (new GVehNuevo())->setITipOpVN(2)->setDChasis('9BWZZZ377VT004251')->setITipCom(1);
+    }
 }

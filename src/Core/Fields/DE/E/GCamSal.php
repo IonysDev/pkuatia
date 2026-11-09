@@ -12,414 +12,426 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
  * ID:E920
- *Campos que identifican el local de salida de las mercaderías 
- *PADRE:E900 
+ *Campos que identifican el local de salida de las mercaderías
+ *PADRE:E900
  */
 class GCamSal extends BaseSifenField
 {
-  public String $dDirLocSal; //E921 Dirección del local de salida
-  public ?int $dNumCasSal; //E922 Número de casa de salida
-  public String $dComp1Sal; //E923 Complemento de dirección 1 salida
-  public String $dComp2Sal; //E924 Complemento de dirección 2 salida
-  public ?int $cDepSal; ///E925 Código del departamento del local de salida
-  public ?int $cDisSal; //E927 Código del distrito del local de salida
-  public ?int $cCiuSal; //E929 Código de la ciudad del local de salida
-  public String $dTelSal; /// E931 Teléfono de contacto del local de salida
+    public string $dDirLocSal; //E921 Dirección del local de salida
+    public ?int $dNumCasSal; //E922 Número de casa de salida
+    public string $dComp1Sal; //E923 Complemento de dirección 1 salida
+    public string $dComp2Sal; //E924 Complemento de dirección 2 salida
+    public ?int $cDepSal; ///E925 Código del departamento del local de salida
+    public ?int $cDisSal; //E927 Código del distrito del local de salida
+    public ?int $cCiuSal; //E929 Código de la ciudad del local de salida
+    public string $dTelSal; /// E931 Teléfono de contacto del local de salida
 
-  ///////////////////////////////////////////////////////////////////////
-  ///SETTERS
-  ///////////////////////////////////////////////////////////////////////
-  /**
-   * Establece el valor de dDirLocSal
-   *
-   * @param String $dDirLocSal
-   *
-   * @return self
-   */
-  public function setDDirLocSal(String $dDirLocSal): self
-  {
-    $this->dDirLocSal = $dDirLocSal;
+    ///////////////////////////////////////////////////////////////////////
+    ///SETTERS
+    ///////////////////////////////////////////////////////////////////////
+    /**
+     * Establece el valor de dDirLocSal
+     *
+     * @param String $dDirLocSal
+     *
+     * @return self
+     */
+    public function setDDirLocSal(string $dDirLocSal): self
+    {
+        $this->dDirLocSal = $dDirLocSal;
 
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dNumCasSal
-   *
-   * @param int $dNumCasSal
-   *
-   * @return self
-   */
-  public function setDNumCasSal(int $dNumCasSal): self
-  {
-    $this->dNumCasSal = $dNumCasSal;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dComp1Sal
-   *
-   * @param String $dComp1Sal
-   *
-   * @return self
-   */
-  public function setDComp1Sal(String $dComp1Sal): self
-  {
-    $this->dComp1Sal = $dComp1Sal;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dComp2Sal
-   *
-   * @param String $dComp2Sal
-   *
-   * @return self
-   */
-  public function setDComp2Sal(String $dComp2Sal): self
-  {
-    $this->dComp2Sal = $dComp2Sal;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cDepSal
-   *
-   * @param int $cDepSal
-   *
-   * @return self
-   */
-  public function setCDepSal(int $cDepSal): self
-  {
-    $this->cDepSal = $cDepSal;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cDisSal
-   *
-   * @param int $cDisSal
-   *
-   * @return self
-   */
-  public function setCDisSal(int $cDisSal): self
-  {
-    $this->cDisSal = $cDisSal;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de cCiuSal
-   *
-   * @param int $cCiuSal
-   *
-   * @return self
-   */
-  public function setCCiuSal(int $cCiuSal): self
-  {
-    $this->cCiuSal = $cCiuSal;
-
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dTelSal
-   *
-   * @param String $dTelSal
-   *
-   * @return self
-   */
-  public function setDTelSal(String $dTelSal): self
-  {
-    $this->dTelSal = $dTelSal;
-
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///GETTERS
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de dDirLocSal
-   *
-   * @return String
-   */
-  public function getDDirLocSal(): String
-  {
-    return $this->dDirLocSal;
-  }
-
-  /**
-   * Obtiene el valor de dNumCasSal
-   *
-   * @return int
-   */
-  public function getDNumCasSal(): ?int
-  {
-    return $this->dNumCasSal ?? null;
-  }
-
-  /**
-   * Obtiene el valor de dComp1Sal
-   *
-   * @return String
-   */
-  public function getDComp1Sal(): String
-  {
-    return $this->dComp1Sal;
-  }
-
-  /**
-   * Obtiene el valor de dComp2Sal
-   *
-   * @return String
-   */
-  public function getDComp2Sal(): String
-  {
-    return $this->dComp2Sal;
-  }
-
-  /**
-   * Obtiene el valor de cDepSal
-   *
-   * @return int
-   */
-  public function getCDepSal(): ?int
-  {
-    return $this->cDepSal ?? null;
-  }
-
-  /**
-   * E926 
-   *Descripción del departamento del local de salida
-   *
-   * @return String
-   */
-  public function getDDesDepSal(): String
-  {
-    return DepartamentoMapping::getDepName(strval($this->cDepSal));
-  }
-
-  /**
-   * Obtiene el valor de cDisSal
-   *
-   * @return int
-   */
-  public function getCDisSal(): ?int
-  {
-    return $this->cDisSal ?? null;
-  }
-
-  /**
-   * E928 Descripción de distrito del local de salida
-   *
-   * @return String
-   */
-  public function getDDesDisSal(): String
-  {
-    return PyGeoCodesMapping::getDistName(strval($this->cDisSal));
-  }
-
-  /**
-   * Obtiene el valor de cCiuSal
-   *
-   * @return int
-   */
-  public function getCCiuSal(): ?int
-  {
-    return $this->cCiuSal ?? null;
-  }
-
-
-  /**
-   * E930 Descripción de ciudad del local de salida
-   *
-   * @return String
-   */
-  public function getDDesCiuSal(): String
-  {
-    return PyGeoCodesMapping::getCiudName(strval($this->cCiuSal));
-  }
-
-  /**
-   * Obtiene el valor de dTelSal
-   *
-   * @return String
-   */
-  public function getDTelSal(): String
-  {
-    return $this->dTelSal;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  ///XML Element  
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * toDOMElement
-   *
-   * @return DOMElement
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('gCamSal');
-
-    $res->appendChild(XmlHelper::elemento($doc, 'dDirLocSal', $this->getDDirLocSal()));
-
-    if (isset($this->dNumCasSal)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasSal', $this->getDNumCasSal()));
-    } else {
-      $res->appendChild(XmlHelper::elemento($doc, 'dNumCasSal', 0));
+        return $this;
     }
 
-    if (isset($this->dComp1Sal))
-      $res->appendChild(XmlHelper::elemento($doc, 'dComp1Sal', $this->getDComp1Sal()));
-    
-    if (isset($this->dComp2Sal))
-      $res->appendChild(XmlHelper::elemento($doc, 'dComp2Sal', $this->getDComp2Sal()));
 
-    $res->appendChild(XmlHelper::elemento($doc, 'cDepSal', $this->getCDisSal()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesDepSal', $this->getDDesDepSal()));
+    /**
+     * Establece el valor de dNumCasSal
+     *
+     * @param int $dNumCasSal
+     *
+     * @return self
+     */
+    public function setDNumCasSal(int $dNumCasSal): self
+    {
+        $this->dNumCasSal = $dNumCasSal;
 
-    if (isset($this->cDisSal)) {
-      $res->appendChild(XmlHelper::elemento($doc, 'cDisSal', $this->getCDisSal()));
-      $res->appendChild(XmlHelper::elemento($doc, 'dDesDisSal', $this->getDDesDisSal()));
-    }      
-      
-    $res->appendChild(XmlHelper::elemento($doc, 'cCiuSal', $this->getCCiuSal()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuSal', $this->getDDesCiuSal()));
+        return $this;
+    }
 
-    if (isset($this->dTelSal))
-      $res->appendChild(XmlHelper::elemento($doc, 'dTelSal', $this->getDTelSal()));
 
-    return $res;
-  }
+    /**
+     * Establece el valor de dComp1Sal
+     *
+     * @param String $dComp1Sal
+     *
+     * @return self
+     */
+    public function setDComp1Sal(string $dComp1Sal): self
+    {
+        $this->dComp1Sal = $dComp1Sal;
 
-  // /**
-  //  * fromDOMElement
-  //  *
-  //  * @param  mixed $xml
-  //  * @return GCamSal
-  //  */
-  // public static function fromDOMElement(DOMElement $xml): GCamSal
-  // {
-  //   if (strcmp($xml->tagName, 'gCamSal') === 0 && $xml->childElementCount == 8) {
-  //     $res = new GCamSal();
-  //     $res->setDDirLocSal($xml->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
-  //     $res->setDNumCasSal(intval($xml->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
-  //     $res->setDComp1Sal($xml->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
-  //     $res->setDComp1Sal($xml->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
-  //     $res->setCDepSal(intval($xml->getElementsByTagName('cDepSal')->item(0)->nodeValue));
-  //     $res->setCDisSal(intval($xml->getElementsByTagName('cDisSal')->item(0)->nodeValue));
-  //     $res->setCCiuSal(intval($xml->getElementsByTagName('cDiuSal')->item(0)->nodeValue));
-  //     $res->setDTelSal($xml->getElementsByTagName('dTelSal')->item(0)->nodeValue);
-  //     return $res;
-  //   } else {
-  //     throw new \Exception("Invalid XML Element: $xml->tagName");
-  //     return null;
-  //   }
-  // }
+        return $this;
+    }
 
-  /**
-   * Instancia un objeto GCamSal a partir de un DOMElement que representa el nodo XML del objeto.
-   * 
-   * @param DOMElement $node Nodo XML que representa el objeto.
-   * 
-   * @return self Objeto instanciado.
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->nodeName, 'gCamSal') != 0)
-      throw new ValidacionException('[GCamSal] El nombre del nodo no corresponde a gCamSal: ' . $node->nodeName);
-    $res = new GCamSal();
-    
-    if($node->getElementsByTagName('dDirLocSal')->length > 0)
-      $res->setDDirLocSal($node->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dNumCasSal')->length > 0)
-      $res->setDNumCasSal(intval($node->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dComp1Sal')->length > 0)
-      $res->setDComp1Sal($node->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('dComp2Sal')->length > 0)
-      $res->setDComp2Sal($node->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
-    
-    if($node->getElementsByTagName('cDepSal')->length > 0)
-      $res->setCDepSal(intval($node->getElementsByTagName('cDepSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cDisSal')->length > 0)
-      $res->setCDisSal(intval($node->getElementsByTagName('cDisSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('cCiuSal')->length > 0)
-      $res->setCCiuSal(intval($node->getElementsByTagName('cCiuSal')->item(0)->nodeValue));
-    
-    if($node->getElementsByTagName('dTelSal')->length > 0)
-      $res->setDTelSal($node->getElementsByTagName('dTelSal')->item(0)->nodeValue);
-    
-    return $res;
-  }
 
-  /**
-   * FromSifenResponseObject
-   *
-   * @param  mixed $object
-   * @return self
-   */
-  public static function FromSifenResponseObject($object): self
-  {
-    $res = new GCamSal();
-    if(isset($object->dDirLocSal)){
-      $res->setDDirLocSal($object->dDirLocSal);
-    }
-    if(isset($object->dNumCasSal)){
-      $res->setDNumCasSal($object->dNumCasSal);
-    }
-    if(isset($object->dComp1Sal)){
-      $res->setDComp1Sal($object->dComp1Sal);
-    }
-    if(isset($object->dComp2Sal)){
-      $res->setDComp2Sal($object->dComp2Sal);
-    }
-    if(isset($object->cDepSal)){
-      $res->setCDepSal($object->cDepSal);
-    }
-    if(isset($object->cDisSal)){
-      $res->setCDisSal($object->cDisSal);
-    }
-    if(isset($object->cCiuSal)){
-      $res->setCCiuSal($object->cCiuSal);
-    }
-    if(isset($object->dTelSal)){
-      $res->setDTelSal($object->dTelSal);
-    }
-    
-    return $res;
-  }
+    /**
+     * Establece el valor de dComp2Sal
+     *
+     * @param String $dComp2Sal
+     *
+     * @return self
+     */
+    public function setDComp2Sal(string $dComp2Sal): self
+    {
+        $this->dComp2Sal = $dComp2Sal;
 
-  /**
-   * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
-   * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
-   *
-   * @param \SimpleXMLElement $node Nodo gCamSal.
-   *
-   * @return self
-   */
-  public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
-  {
-    return self::FromDOMElement(dom_import_simplexml($node));
-  }
+        return $this;
+    }
+
+
+    /**
+     * Establece el valor de cDepSal
+     *
+     * @param int $cDepSal
+     *
+     * @return self
+     */
+    public function setCDepSal(int $cDepSal): self
+    {
+        $this->cDepSal = $cDepSal;
+
+        return $this;
+    }
+
+
+    /**
+     * Establece el valor de cDisSal
+     *
+     * @param int $cDisSal
+     *
+     * @return self
+     */
+    public function setCDisSal(int $cDisSal): self
+    {
+        $this->cDisSal = $cDisSal;
+
+        return $this;
+    }
+
+
+    /**
+     * Establece el valor de cCiuSal
+     *
+     * @param int $cCiuSal
+     *
+     * @return self
+     */
+    public function setCCiuSal(int $cCiuSal): self
+    {
+        $this->cCiuSal = $cCiuSal;
+
+        return $this;
+    }
+
+
+    /**
+     * Establece el valor de dTelSal
+     *
+     * @param String $dTelSal
+     *
+     * @return self
+     */
+    public function setDTelSal(string $dTelSal): self
+    {
+        $this->dTelSal = $dTelSal;
+
+        return $this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///GETTERS
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de dDirLocSal
+     *
+     * @return String
+     */
+    public function getDDirLocSal(): string
+    {
+        return $this->dDirLocSal;
+    }
+
+    /**
+     * Obtiene el valor de dNumCasSal
+     *
+     * @return int
+     */
+    public function getDNumCasSal(): ?int
+    {
+        return $this->dNumCasSal ?? null;
+    }
+
+    /**
+     * Obtiene el valor de dComp1Sal
+     *
+     * @return String
+     */
+    public function getDComp1Sal(): string
+    {
+        return $this->dComp1Sal;
+    }
+
+    /**
+     * Obtiene el valor de dComp2Sal
+     *
+     * @return String
+     */
+    public function getDComp2Sal(): string
+    {
+        return $this->dComp2Sal;
+    }
+
+    /**
+     * Obtiene el valor de cDepSal
+     *
+     * @return int
+     */
+    public function getCDepSal(): ?int
+    {
+        return $this->cDepSal ?? null;
+    }
+
+    /**
+     * E926
+     *Descripción del departamento del local de salida
+     *
+     * @return String
+     */
+    public function getDDesDepSal(): string
+    {
+        return DepartamentoMapping::getDepName(strval($this->cDepSal));
+    }
+
+    /**
+     * Obtiene el valor de cDisSal
+     *
+     * @return int
+     */
+    public function getCDisSal(): ?int
+    {
+        return $this->cDisSal ?? null;
+    }
+
+    /**
+     * E928 Descripción de distrito del local de salida
+     *
+     * @return String
+     */
+    public function getDDesDisSal(): string
+    {
+        return PyGeoCodesMapping::getDistName(strval($this->cDisSal));
+    }
+
+    /**
+     * Obtiene el valor de cCiuSal
+     *
+     * @return int
+     */
+    public function getCCiuSal(): ?int
+    {
+        return $this->cCiuSal ?? null;
+    }
+
+
+    /**
+     * E930 Descripción de ciudad del local de salida
+     *
+     * @return String
+     */
+    public function getDDesCiuSal(): string
+    {
+        return PyGeoCodesMapping::getCiudName(strval($this->cCiuSal));
+    }
+
+    /**
+     * Obtiene el valor de dTelSal
+     *
+     * @return String
+     */
+    public function getDTelSal(): string
+    {
+        return $this->dTelSal;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///XML Element
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * toDOMElement
+     *
+     * @return DOMElement
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('gCamSal');
+
+        $res->appendChild(XmlHelper::elemento($doc, 'dDirLocSal', $this->getDDirLocSal()));
+
+        if (isset($this->dNumCasSal)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumCasSal', $this->getDNumCasSal()));
+        } else {
+            $res->appendChild(XmlHelper::elemento($doc, 'dNumCasSal', 0));
+        }
+
+        if (isset($this->dComp1Sal)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dComp1Sal', $this->getDComp1Sal()));
+        }
+
+        if (isset($this->dComp2Sal)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dComp2Sal', $this->getDComp2Sal()));
+        }
+
+        $res->appendChild(XmlHelper::elemento($doc, 'cDepSal', $this->getCDepSal()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesDepSal', $this->getDDesDepSal()));
+
+        if (isset($this->cDisSal)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'cDisSal', $this->getCDisSal()));
+            $res->appendChild(XmlHelper::elemento($doc, 'dDesDisSal', $this->getDDesDisSal()));
+        }
+
+        $res->appendChild(XmlHelper::elemento($doc, 'cCiuSal', $this->getCCiuSal()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dDesCiuSal', $this->getDDesCiuSal()));
+
+        if (isset($this->dTelSal)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dTelSal', $this->getDTelSal()));
+        }
+
+        return $res;
+    }
+
+    // /**
+    //  * fromDOMElement
+    //  *
+    //  * @param  mixed $xml
+    //  * @return GCamSal
+    //  */
+    // public static function fromDOMElement(DOMElement $xml): GCamSal
+    // {
+    //   if (strcmp($xml->tagName, 'gCamSal') === 0 && $xml->childElementCount == 8) {
+    //     $res = new GCamSal();
+    //     $res->setDDirLocSal($xml->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
+    //     $res->setDNumCasSal(intval($xml->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
+    //     $res->setDComp1Sal($xml->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
+    //     $res->setDComp1Sal($xml->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
+    //     $res->setCDepSal(intval($xml->getElementsByTagName('cDepSal')->item(0)->nodeValue));
+    //     $res->setCDisSal(intval($xml->getElementsByTagName('cDisSal')->item(0)->nodeValue));
+    //     $res->setCCiuSal(intval($xml->getElementsByTagName('cDiuSal')->item(0)->nodeValue));
+    //     $res->setDTelSal($xml->getElementsByTagName('dTelSal')->item(0)->nodeValue);
+    //     return $res;
+    //   } else {
+    //     throw new \Exception("Invalid XML Element: $xml->tagName");
+    //     return null;
+    //   }
+    // }
+
+    /**
+     * Instancia un objeto GCamSal a partir de un DOMElement que representa el nodo XML del objeto.
+     *
+     * @param DOMElement $node Nodo XML que representa el objeto.
+     *
+     * @return self Objeto instanciado.
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'gCamSal') != 0) {
+            throw new ValidacionException('[GCamSal] El nombre del nodo no corresponde a gCamSal: ' . $node->nodeName);
+        }
+        $res = new GCamSal();
+
+        if ($node->getElementsByTagName('dDirLocSal')->length > 0) {
+            $res->setDDirLocSal($node->getElementsByTagName('dDirLocSal')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dNumCasSal')->length > 0) {
+            $res->setDNumCasSal(intval($node->getElementsByTagName('dNumCasSal')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('dComp1Sal')->length > 0) {
+            $res->setDComp1Sal($node->getElementsByTagName('dComp1Sal')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('dComp2Sal')->length > 0) {
+            $res->setDComp2Sal($node->getElementsByTagName('dComp2Sal')->item(0)->nodeValue);
+        }
+
+        if ($node->getElementsByTagName('cDepSal')->length > 0) {
+            $res->setCDepSal(intval($node->getElementsByTagName('cDepSal')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('cDisSal')->length > 0) {
+            $res->setCDisSal(intval($node->getElementsByTagName('cDisSal')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('cCiuSal')->length > 0) {
+            $res->setCCiuSal(intval($node->getElementsByTagName('cCiuSal')->item(0)->nodeValue));
+        }
+
+        if ($node->getElementsByTagName('dTelSal')->length > 0) {
+            $res->setDTelSal($node->getElementsByTagName('dTelSal')->item(0)->nodeValue);
+        }
+
+        return $res;
+    }
+
+    /**
+     * FromSifenResponseObject
+     *
+     * @param  mixed $object
+     * @return self
+     */
+    public static function FromSifenResponseObject($object): self
+    {
+        $res = new GCamSal();
+        if (isset($object->dDirLocSal)) {
+            $res->setDDirLocSal($object->dDirLocSal);
+        }
+        if (isset($object->dNumCasSal)) {
+            $res->setDNumCasSal($object->dNumCasSal);
+        }
+        if (isset($object->dComp1Sal)) {
+            $res->setDComp1Sal($object->dComp1Sal);
+        }
+        if (isset($object->dComp2Sal)) {
+            $res->setDComp2Sal($object->dComp2Sal);
+        }
+        if (isset($object->cDepSal)) {
+            $res->setCDepSal($object->cDepSal);
+        }
+        if (isset($object->cDisSal)) {
+            $res->setCDisSal($object->cDisSal);
+        }
+        if (isset($object->cCiuSal)) {
+            $res->setCCiuSal($object->cCiuSal);
+        }
+        if (isset($object->dTelSal)) {
+            $res->setDTelSal($object->dTelSal);
+        }
+
+        return $res;
+    }
+
+    /**
+     * Instancia un objeto a partir de un SimpleXMLElement. No existía hasta 0.2.0 (PK-25); delega en
+     * FromDOMElement sobre el mismo nodo para que las dos vías lean exactamente igual.
+     *
+     * @param \SimpleXMLElement $node Nodo gCamSal.
+     *
+     * @return self
+     */
+    public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
+    {
+        return self::FromDOMElement(dom_import_simplexml($node));
+    }
 }

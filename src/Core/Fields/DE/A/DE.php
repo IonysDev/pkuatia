@@ -29,495 +29,514 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 class DE extends BaseSifenField
 {
-                                   // Id - Longitud - Ocurrencia - Descripción
-  public String   $id;             // A002 - 44 - 1-1 - Identificador del DE ubicado en el atributo de <DE>
-  public int      $dDVId;          // A003 - 1  - 1-1 - Dígito verificador del dentificador del DE 
-  public DateTime $dFecFirma;      // A004 - 19 - 1-1 - Fecha de la firma
-  public int      $dSisFact;       // A005 - 1  - 1-1 - Sistema de facturación
-  public GOpeDE      $gOpeDe;      // B001 - G - 1-1  - Campos inherentes a la operación de DE
-  public GTimb       $gTimb;       // C001 - G - 1-1  - Datos del timbrado 
-  public GDatGralOpe $gDatGralOpe; // D001 - G - 1-1  - Campos generales del DE
-  public GDtipDE     $gDtipDe;     // E001 - G - 1-1  - Campos específicos por tipo de Documento Electrónico 
-  public GTotSub     $gTotSub;     // F001 - G - 0-1  - Campos de subtotales y totales
-  public GCamGen     $gCamGen;     // G001 - G - 0-1  - Campos de uso general
-  public array       $gCamDEAsoc;  // H001 - G - 0-99 - Campos que identifican al DE asociado (GCamDEAsoc)
+    // Id - Longitud - Ocurrencia - Descripción
+    public string $id;             // A002 - 44 - 1-1 - Identificador del DE ubicado en el atributo de <DE>
+    public int $dDVId;          // A003 - 1  - 1-1 - Dígito verificador del dentificador del DE
+    public DateTime $dFecFirma;      // A004 - 19 - 1-1 - Fecha de la firma
+    public int $dSisFact;       // A005 - 1  - 1-1 - Sistema de facturación
+    public GOpeDE $gOpeDe;      // B001 - G - 1-1  - Campos inherentes a la operación de DE
+    public GTimb $gTimb;       // C001 - G - 1-1  - Datos del timbrado
+    public GDatGralOpe $gDatGralOpe; // D001 - G - 1-1  - Campos generales del DE
+    public GDtipDE $gDtipDe;     // E001 - G - 1-1  - Campos específicos por tipo de Documento Electrónico
+    public GTotSub $gTotSub;     // F001 - G - 0-1  - Campos de subtotales y totales
+    public GCamGen $gCamGen;     // G001 - G - 0-1  - Campos de uso general
+    public array $gCamDEAsoc;  // H001 - G - 0-99 - Campos que identifican al DE asociado (GCamDEAsoc)
 
-  /**
-   * Constructor de la clase DE.
-   */
-  public function __construct()
-  {
-    $this->dSisFact = DESisFact::Contribuyente->value;
-    $this->gCamDEAsoc = [];
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Setters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Establece el valor de Id (A002) del documento electrónico (DE).
-   * Este valor es equivalente al CDC y se debe generar con el algoritmo de cálculo de CDC cuando se crea un nuevo DE.
-   * Cuando se recibe un DE de Sifen, este valor se debe tomar del atributo Id del nodo DE.
-   *
-   * @param String $id Valor de Id (A002) del documento electrónico (DE)
-   *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setId(String $id): self
-  {
-    if(strlen($id) != 44)
-      throw new ValidacionException('[DE] Id debe tener 44 caracteres.');
-    else if(!preg_match('/^[0-9]{44}$/', $id))
-      throw new ValidacionException('[DE] Id debe contener solo números.');
-    $this->id = $id;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dDVId (A003) del documento electrónico (DE) que corresponde al dígito verificador del Id (A002).
-   * Este valor es el útlimo dígito del Id (A002) y se debe generar con el algoritmo de cálculo de CDC cuando se crea un nuevo DE.
-   *
-   * @param int $dDVId 
-   *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setDDVId(int $dDVId): self
-  {
-    $this->dDVId = $dDVId;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dFecFirma (A004) que representa la fecha de firma del documento electrónico (DE).
-   *
-   * @param DateTime $dFecFirma Fecha de firma del documento electrónico (DE).
-   *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setDFecFirma(DateTime $dFecFirma): self
-  {
-    $this->dFecFirma = $dFecFirma;
-    return $this;
-  }
-
-
-  /**
-   * Establece el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
-   * Según NT-010, el único valor admitido es 1 (Sistema de facturación del contribuyente).
-   *
-   * @param int|DESisFact $dSisFact Sistema de facturación del documento electrónico (DE). Único valor admitido: 1 (Contribuyente).
-   *
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setDSisFact(int|DESisFact $dSisFact): self
-  {
-    $valor = $dSisFact instanceof DESisFact ? $dSisFact->value : $dSisFact;
-    if(is_null(DESisFact::tryFrom($valor)))
-      throw new ValidacionException('[DE] Valor dSisFact inválido: ' . $valor . '. Debe ser 1 (Contribuyente)');
-    $this->dSisFact = $valor;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gOpeDe (B002) que representa los campos inherentes a la operación de DE.
-   * 
-   * @param GOpeDE $gOpeDe Campos inherentes a la operación de DE.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setGOpeDe(GOpeDE $gOpeDe): self
-  {
-    $this->gOpeDe = $gOpeDe;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gTimb (C001) que representa los datos del timbrado.
-   * 
-   * @param GTimb $gTimb Datos del timbrado.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setGTimb(GTimb $gTimb): self
-  {
-    $this->gTimb = $gTimb;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gDatGralOpe (D001) que representa los campos generales del DE.
-   * 
-   * @param GDatGralOpe $gDatGralOpe Campos generales del DE.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setGDatGralOpe(GDatGralOpe $gDatGralOpe): self
-  {
-    $this->gDatGralOpe = $gDatGralOpe;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gDtipDe (E001) que representa los campos específicos por tipo de Documento Electrónico.
-   * 
-   * @param GDtipDE $gDtipDe Campos específicos por tipo de Documento Electrónico.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos. 
-   */
-  public function setGDtipDe(GDtipDE $gDtipDe): self
-  {
-    $this->gDtipDe = $gDtipDe;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gTotSub (F001) que representa los campos de subtotales y totales.
-   * 
-   * @param GTotSub $gTotSub
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setGTotSub(GTotSub $gTotSub): self
-  {
-    $this->gTotSub = $gTotSub;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gCamGen (G001) que representa los campos de uso general.
-   * 
-   * @param GCamGen $gCamGen Campos de uso general.
-   * 
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setGCamGen(GCamGen $gCamGen): self
-  {
-    $this->gCamGen = $gCamGen;
-    return $this;
-  }
-
-  /**
-   * Establece el valor de gCamDEAsoc (H001) que representa los campos que identifican al DE asociado.
-   * 
-   * @param array $gCamDEAsoc Arreglo del tipo GCamDEAsoc que representa los campos que identifican al DE asociado.
-   *  
-   * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
-   */
-  public function setGCamDEAsoc(array $gCamDEAsoc): self
-  {
-    $this->gCamDEAsoc = $gCamDEAsoc;
-    return $this;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Getters
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Obtiene el valor de Id (A002) del documento electrónico (DE).
-   *
-   * @return String Id (A002) del documento electrónico (DE).
-   */
-  public function getId(): String
-  {
-    return $this->id;
-  }
-
-  /**
-   * Obtiene el valor de dDVId (A003) del documento electrónico (DE) que corresponde al dígito verificador del Id (A002).
-   *
-   * @return int Dígito verificador del Id (A002) del documento electrónico (DE).
-   */
-  public function getDDVId(): int
-  {
-    return $this->dDVId;
-  }
-
-  /**
-   * Obtiene el valor de dFecFirma (A004) que representa la fecha de firma del documento electrónico (DE).
-   *
-   * @return DateTime Fecha de firma del documento electrónico (DE).
-   */
-  public function getDFecFirma(): DateTime | null
-  {
-    if(isset($this->dFecFirma))
-      return $this->dFecFirma;
-    else
-      return null;
-  }
-
-  /**
-   * Obtiene el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
-   *
-   * @return int Sistema de facturación del documento electrónico (DE). Solo puede ser 1 (Contribuyente) o 2 (Sifen gratuito de la DNIT).
-   */
-  public function getDSisFact(): int
-  {
-    return $this->dSisFact;
-  }
-
-  /**
-   * Devuelve el valor de gOpeDe (B002) que representa los campos inherentes a la operación de DE.
-   * 
-   * @return GOpeDE Campos inherentes a la operación de DE.
-   */
-  public function getGOpeDe(): GOpeDE
-  {
-    return $this->gOpeDe;
-  }
-
-  /**
-   * Devuelve el valor de gTimb (C001) que representa los datos del timbrado.
-   * 
-   * @return GTimb Datos del timbrado.
-   */
-  public function getGTimb(): GTimb
-  {
-    return $this->gTimb;
-  }
-
-  /**
-   * Devuelve el valor de gDatGralOpe (D001) que representa los campos generales del DE.
-   * 
-   * @return GDatGralOpe Campos generales del DE.
-   */
-  public function getGDatGralOpe(): GDatGralOpe
-  {
-    return $this->gDatGralOpe;
-  }
-
-  /**
-   * Devuelve el valor de gDtipDe (E001) que representa los campos específicos por tipo de Documento Electrónico.
-   * 
-   * @return GDtipDE Campos específicos por tipo de Documento Electrónico.
-   */
-  public function getGDtipDe(): GDtipDE
-  {
-    return $this->gDtipDe;
-  }
-
-  /**
-   * Devuelve el valor de gTotSub (F001) que representa los campos de subtotales y totales.
-   * 
-   * @return GTotSub Campos de subtotales y totales.
-   */
-  public function getGTotSub(): GTotSub | null
-  {
-    if(isset($this->gTotSub))
-      return $this->gTotSub;
-    else
-      return null;
-  }
-
-  /**
-   * Devuelve el valor de gCamGen (G001) que representa los campos de uso general.
-   * 
-   * @return GCamGen Campos de uso general.
-   */
-  public function getGCamGen(): GCamGen
-  {
-    return $this->gCamGen;
-  }
-
-  /**
-   * Devuelve el valor de gCamDEAsoc (H001) que representa los campos que identifican al DE asociado.
-   * 
-   * @return array Arreglo del tipo GCamDEAsoc que representa los campos que identifican al DE asociado.
-   */
-  public function getGCamDEAsoc(): array
-  {
-    return $this->gCamDEAsoc;
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  // Instanciadores
-  ///////////////////////////////////////////////////////////////////////
-
-  /**
-   * Genera un objeto DE a partir de un nodo DOMElement.
-   * 
-   * @param DOMElement $node Nodo XML que representa un DE
-   * 
-   * @return DE Objeto DE con los datos extraídos del nodo XML
-   */
-  public static function FromDOMElement(DOMElement $node): self
-  {
-    if(strcmp($node->nodeName, 'DE') != 0)
-      throw new ValidacionException('[DE] Nodo con nombre inválido: ' . $node->nodeName);
-    $res = new DE();
-    
-    // Required attribute: Id
-    if(!$node->hasAttribute('Id'))
-      throw new ValidacionException('[DE] Atributo Id requerido no encontrado.');
-    $res->id = $node->getAttribute('Id');
-    
-    // Required elements
-    $dDVIdNode = $node->getElementsByTagName('dDVId')->item(0);
-    if(!$dDVIdNode)
-      throw new ValidacionException('[DE] Elemento requerido dDVId no encontrado.');
-    $res->dDVId = intval($dDVIdNode->nodeValue);
-    
-    $dFecFirmaNode = $node->getElementsByTagName('dFecFirma')->item(0);
-    if(!$dFecFirmaNode)
-      throw new ValidacionException('[DE] Elemento requerido dFecFirma no encontrado.');
-    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($dFecFirmaNode->nodeValue));
-    
-    $dSisFactNode = $node->getElementsByTagName('dSisFact')->item(0);
-    if(!$dSisFactNode)
-      throw new ValidacionException('[DE] Elemento requerido dSisFact no encontrado.');
-    $res->dSisFact = intval($dSisFactNode->nodeValue);
-    
-    $gOpeDENode = $node->getElementsByTagName('gOpeDE')->item(0);
-    if(!$gOpeDENode)
-      throw new ValidacionException('[DE] Elemento requerido gOpeDE no encontrado.');
-    $res->gOpeDe = GOpeDE::FromDOMElement($gOpeDENode);
-    
-    $gTimbNode = $node->getElementsByTagName('gTimb')->item(0);
-    if(!$gTimbNode)
-      throw new ValidacionException('[DE] Elemento requerido gTimb no encontrado.');
-    $res->gTimb = GTimb::FromDOMElement($gTimbNode);
-    
-    $gDatGralOpeNode = $node->getElementsByTagName('gDatGralOpe')->item(0);
-    if(!$gDatGralOpeNode)
-      throw new ValidacionException('[DE] Elemento requerido gDatGralOpe no encontrado.');
-    $res->gDatGralOpe = GDatGralOpe::FromDOMElement($gDatGralOpeNode);
-    
-    $gDtipDENode = $node->getElementsByTagName('gDtipDE')->item(0);
-    if(!$gDtipDENode)
-      throw new ValidacionException('[DE] Elemento requerido gDtipDE no encontrado.');
-    $res->gDtipDe = GDtipDE::FromDOMElement($gDtipDENode);
-    
-    // Optional elements
-    if($node->getElementsByTagName('gTotSub')->length > 0)
-      $res->gTotSub = GTotSub::FromDOMElement($node->getElementsByTagName('gTotSub')->item(0));
-    if($node->getElementsByTagName('gCamGen')->length > 0)
-      $res->gCamGen = GCamGen::FromDOMElement($node->getElementsByTagName('gCamGen')->item(0));
-    if($node->getElementsByTagName('gCamDEAsoc')->length > 0) {
-      foreach($node->getElementsByTagName('gCamDEAsoc') as $g)
-        $res->gCamDEAsoc[] = GCamDEAsoc::FromDOMElement($g);
-    }
-    return $res;
-  }
-
-  /**
-   * Genera un objeto DE a partir de un nodo SimpleXMLElement.
-   * 
-   * @param SimpleXMLElement $node Nodo XML que representa un DE
-   * 
-   * @return DE Objeto DE con los datos extraídos del nodo XML
-   */
-  public static function FromSimpleXMLElement(SimpleXMLElement $node)
-  {
-    if(strcmp($node->getName(), 'DE') != 0)
-      throw new ValidacionException('[DE] Invalid XML Node Name: ' . $node->getName());
-    $res = new DE();
-    $res->id = $node->attributes()['Id'];
-    $res->dDVId = intval($node->dDVId);
-    $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecFirma);
-    $res->dSisFact = intval($node->dSisFact);
-    $res->gOpeDe = GOpeDE::FromSimpleXMLElement($node->gOpeDE);
-    $res->gTimb = GTimb::FromSimpleXMLElement($node->gTimb);
-    $res->gDatGralOpe = GDatGralOpe::FromSimpleXMLElement($node->gDatGralOpe);
-    $res->gDtipDe = GDtipDE::FromSimpleXMLElement($node->gDtipDE);
-    // gTotSub es 0-1 (la NRE no lo lleva): hasta 0.2.0 se leía siempre y la NR no se podía deserializar (PK-25).
-    if(isset($node->gTotSub))
-      $res->gTotSub = GTotSub::FromSimpleXMLElement($node->gTotSub);
-    if(isset($node->gCamGen))
-      $res->gCamGen = GCamGen::FromSimpleXMLElement($node->gCamGen);
-    if(isset($node->gCamDEAsoc) && count($node->gCamDEAsoc) > 0)
+    /**
+     * Constructor de la clase DE.
+     */
+    public function __construct()
     {
-      foreach($node->gCamDEAsoc as $g)
-      {
-        $res->gCamDEAsoc[] = GCamDEAsoc::FromSimpleXMLElement($g);
-      }
+        $this->dSisFact = DESisFact::Contribuyente->value;
+        $this->gCamDEAsoc = [];
     }
-    return $res;
-  }
 
-  /**
-   * Genera un objeto DE a partir de un objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.
-   *
-   * @param stdClass $object Objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.
-   * 
-   * @return self Objeto DE con los datos extraídos del objeto stdClass.
-   */
-  public static function FromSifenResponseObject(stdClass $object): self
-  {
-    ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
-    $array = json_decode(json_encode($object), true);
-    $de = new DE();
-    if (isset($array['@attributes']['Id'])) {
-      $de->setID($array['@attributes']['Id']);
-    }
-    if (isset($object->dDVId)) {
-      $de->setDDVId(intval($object->dDVId));
-    }
-    if (isset($object->dFecFirma)) {
-      $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecFirma));
-    }
-    if (isset($object->dSisFact)) {
-      $de->setDSisFact($object->dSisFact);
-    }
-    if (isset($object->gOpeDE)) {
-      $de->setGOpeDe(GOpeDE::FromSifenResponseObject($object->gOpeDE));
-    }
-    if (isset($object->gTimb)) {
-      $de->setGTimb(GTimb::FromSifenResponseObject($object->gTimb));
-    }
-    if (isset($object->gDatGralOpe)) {
-      $de->setGDatGralOpe(GDatGralOpe::FromSifenResponseObject($object->gDatGralOpe));
-    }
-    if (isset($object->gDtipDE)) {
-      $de->setGDtipDe(GDtipDE::FromSifenResponseObject($object->gDtipDE));
-    }
-    if (isset($object->gTotSub)) {
-      $de->setGTotSub(GTotSub::FromSifenResponseObject($object->gTotSub));
-    }
-    if (isset($object->gCamGen)) {
-      $de->setGCamGen(GCamGen::FromSifenResponseObject($object->gCamGen));
-    }
-    if (isset($object->gCamDEAsoc) && count($object->gCamDEAsoc) > 0) {
-      foreach ($object->gCamDEAsoc as $g) {
-        $de->gCamDEAsoc[] = GCamDEAsoc::FromSifenResponseObject($g);
-      }
-    }
-    return $de;
-  }
-  
-  ///////////////////////////////////////////////////////////////////////
-  // Conversores
-  ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    // Setters
+    ///////////////////////////////////////////////////////////////////////
 
-  /**
-   * Convierte este DE a un DOMElement insertable en el DOMDocument indicado.
-   * 
-   * @param DOMDocument $doc DOMDocument que generará el DOMElement sin insertarlo
-   *
-   * @return DOMElement DOMElement generado que representa este DE
-   */
-  public function toDOMElement(DOMDocument $doc): DOMElement
-  {
-    $res = $doc->createElement('DE');
-    $res->setAttribute('Id', $this->getId());
-    $res->appendChild(XmlHelper::elemento($doc, 'dDVId', $this->getDDVId()));
-    $res->appendChild(XmlHelper::elemento($doc, 'dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
-    $res->appendChild(XmlHelper::elemento($doc, 'dSisFact', $this->getDSisFact()));
-    $res->appendChild($this->gOpeDe->toDOMElement($doc));
-    $res->appendChild($this->gTimb->toDOMElement($doc));
-    $res->appendChild($this->gDatGralOpe->toDOMElement($doc));
-    $res->appendChild($this->gDtipDe->toDOMElement($doc));
-    if(isset($this->gTotSub))
-      $res->appendChild($this->gTotSub->toDOMElement($doc));
-    if(isset($this->gCamGen))
-      $res->appendChild($this->gCamGen->toDOMElement($doc));
-    if(count($this->gCamDEAsoc) > 0)
+    /**
+     * Establece el valor de Id (A002) del documento electrónico (DE).
+     * Este valor es equivalente al CDC y se debe generar con el algoritmo de cálculo de CDC cuando se crea un nuevo DE.
+     * Cuando se recibe un DE de Sifen, este valor se debe tomar del atributo Id del nodo DE.
+     *
+     * @param String $id Valor de Id (A002) del documento electrónico (DE)
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setId(string $id): self
     {
-      foreach($this->gCamDEAsoc as $g)
-        $res->appendChild($g->toDOMElement($doc));
+        if (strlen($id) != 44) {
+            throw new ValidacionException('[DE] Id debe tener 44 caracteres.');
+        } elseif (!preg_match('/^[0-9]{44}$/', $id)) {
+            throw new ValidacionException('[DE] Id debe contener solo números.');
+        }
+        $this->id = $id;
+        return $this;
     }
-    return $res;
-  }
+
+
+    /**
+     * Establece el valor de dDVId (A003) del documento electrónico (DE) que corresponde al dígito verificador del Id (A002).
+     * Este valor es el útlimo dígito del Id (A002) y se debe generar con el algoritmo de cálculo de CDC cuando se crea un nuevo DE.
+     *
+     * @param int $dDVId
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setDDVId(int $dDVId): self
+    {
+        $this->dDVId = $dDVId;
+        return $this;
+    }
+
+
+    /**
+     * Establece el valor de dFecFirma (A004) que representa la fecha de firma del documento electrónico (DE).
+     *
+     * @param DateTime $dFecFirma Fecha de firma del documento electrónico (DE).
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setDFecFirma(DateTime $dFecFirma): self
+    {
+        $this->dFecFirma = $dFecFirma;
+        return $this;
+    }
+
+
+    /**
+     * Establece el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
+     * Según NT-010, el único valor admitido es 1 (Sistema de facturación del contribuyente).
+     *
+     * @param int|DESisFact $dSisFact Sistema de facturación del documento electrónico (DE). Único valor admitido: 1 (Contribuyente).
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setDSisFact(int|DESisFact $dSisFact): self
+    {
+        $valor = $dSisFact instanceof DESisFact ? $dSisFact->value : $dSisFact;
+        if (is_null(DESisFact::tryFrom($valor))) {
+            throw new ValidacionException('[DE] Valor dSisFact inválido: ' . $valor . '. Debe ser 1 (Contribuyente)');
+        }
+        $this->dSisFact = $valor;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de gOpeDe (B002) que representa los campos inherentes a la operación de DE.
+     *
+     * @param GOpeDE $gOpeDe Campos inherentes a la operación de DE.
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setGOpeDe(GOpeDE $gOpeDe): self
+    {
+        $this->gOpeDe = $gOpeDe;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de gTimb (C001) que representa los datos del timbrado.
+     *
+     * @param GTimb $gTimb Datos del timbrado.
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setGTimb(GTimb $gTimb): self
+    {
+        $this->gTimb = $gTimb;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de gDatGralOpe (D001) que representa los campos generales del DE.
+     *
+     * @param GDatGralOpe $gDatGralOpe Campos generales del DE.
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setGDatGralOpe(GDatGralOpe $gDatGralOpe): self
+    {
+        $this->gDatGralOpe = $gDatGralOpe;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de gDtipDe (E001) que representa los campos específicos por tipo de Documento Electrónico.
+     *
+     * @param GDtipDE $gDtipDe Campos específicos por tipo de Documento Electrónico.
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setGDtipDe(GDtipDE $gDtipDe): self
+    {
+        $this->gDtipDe = $gDtipDe;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de gTotSub (F001) que representa los campos de subtotales y totales.
+     *
+     * @param GTotSub $gTotSub
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setGTotSub(GTotSub $gTotSub): self
+    {
+        $this->gTotSub = $gTotSub;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de gCamGen (G001) que representa los campos de uso general.
+     *
+     * @param GCamGen $gCamGen Campos de uso general.
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setGCamGen(GCamGen $gCamGen): self
+    {
+        $this->gCamGen = $gCamGen;
+        return $this;
+    }
+
+    /**
+     * Establece el valor de gCamDEAsoc (H001) que representa los campos que identifican al DE asociado.
+     *
+     * @param array $gCamDEAsoc Arreglo del tipo GCamDEAsoc que representa los campos que identifican al DE asociado.
+     *
+     * @return self Retorna a sí mismo para permitir el encadenamiento de métodos.
+     */
+    public function setGCamDEAsoc(array $gCamDEAsoc): self
+    {
+        $this->gCamDEAsoc = $gCamDEAsoc;
+        return $this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Getters
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Obtiene el valor de Id (A002) del documento electrónico (DE).
+     *
+     * @return String Id (A002) del documento electrónico (DE).
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * Obtiene el valor de dDVId (A003) del documento electrónico (DE) que corresponde al dígito verificador del Id (A002).
+     *
+     * @return int Dígito verificador del Id (A002) del documento electrónico (DE).
+     */
+    public function getDDVId(): int
+    {
+        return $this->dDVId;
+    }
+
+    /**
+     * Obtiene el valor de dFecFirma (A004) que representa la fecha de firma del documento electrónico (DE).
+     *
+     * @return DateTime Fecha de firma del documento electrónico (DE).
+     */
+    public function getDFecFirma(): DateTime | null
+    {
+        if (isset($this->dFecFirma)) {
+            return $this->dFecFirma;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Obtiene el valor de dSisFact (A005) que representa el sistema de facturación del documento electrónico (DE).
+     *
+     * @return int Sistema de facturación del documento electrónico (DE). Solo puede ser 1 (Contribuyente) o 2 (Sifen gratuito de la DNIT).
+     */
+    public function getDSisFact(): int
+    {
+        return $this->dSisFact;
+    }
+
+    /**
+     * Devuelve el valor de gOpeDe (B002) que representa los campos inherentes a la operación de DE.
+     *
+     * @return GOpeDE Campos inherentes a la operación de DE.
+     */
+    public function getGOpeDE(): GOpeDE
+    {
+        return $this->gOpeDe;
+    }
+
+    /**
+     * Devuelve el valor de gTimb (C001) que representa los datos del timbrado.
+     *
+     * @return GTimb Datos del timbrado.
+     */
+    public function getGTimb(): GTimb
+    {
+        return $this->gTimb;
+    }
+
+    /**
+     * Devuelve el valor de gDatGralOpe (D001) que representa los campos generales del DE.
+     *
+     * @return GDatGralOpe Campos generales del DE.
+     */
+    public function getGDatGralOpe(): GDatGralOpe
+    {
+        return $this->gDatGralOpe;
+    }
+
+    /**
+     * Devuelve el valor de gDtipDe (E001) que representa los campos específicos por tipo de Documento Electrónico.
+     *
+     * @return GDtipDE Campos específicos por tipo de Documento Electrónico.
+     */
+    public function getGDtipDE(): GDtipDE
+    {
+        return $this->gDtipDe;
+    }
+
+    /**
+     * Devuelve el valor de gTotSub (F001) que representa los campos de subtotales y totales.
+     *
+     * @return GTotSub Campos de subtotales y totales.
+     */
+    public function getGTotSub(): GTotSub | null
+    {
+        if (isset($this->gTotSub)) {
+            return $this->gTotSub;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Devuelve el valor de gCamGen (G001) que representa los campos de uso general.
+     *
+     * @return GCamGen Campos de uso general.
+     */
+    public function getGCamGen(): GCamGen
+    {
+        return $this->gCamGen;
+    }
+
+    /**
+     * Devuelve el valor de gCamDEAsoc (H001) que representa los campos que identifican al DE asociado.
+     *
+     * @return array Arreglo del tipo GCamDEAsoc que representa los campos que identifican al DE asociado.
+     */
+    public function getGCamDEAsoc(): array
+    {
+        return $this->gCamDEAsoc;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Instanciadores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Genera un objeto DE a partir de un nodo DOMElement.
+     *
+     * @param DOMElement $node Nodo XML que representa un DE
+     *
+     * @return DE Objeto DE con los datos extraídos del nodo XML
+     */
+    public static function FromDOMElement(DOMElement $node): self
+    {
+        if (strcmp($node->nodeName, 'DE') != 0) {
+            throw new ValidacionException('[DE] Nodo con nombre inválido: ' . $node->nodeName);
+        }
+        $res = new DE();
+
+        // Required attribute: Id
+        if (!$node->hasAttribute('Id')) {
+            throw new ValidacionException('[DE] Atributo Id requerido no encontrado.');
+        }
+        $res->id = $node->getAttribute('Id');
+
+        // Required elements
+        $dDVIdNode = $node->getElementsByTagName('dDVId')->item(0);
+        if (!$dDVIdNode) {
+            throw new ValidacionException('[DE] Elemento requerido dDVId no encontrado.');
+        }
+        $res->dDVId = intval($dDVIdNode->nodeValue);
+
+        $dFecFirmaNode = $node->getElementsByTagName('dFecFirma')->item(0);
+        if (!$dFecFirmaNode) {
+            throw new ValidacionException('[DE] Elemento requerido dFecFirma no encontrado.');
+        }
+        $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', trim($dFecFirmaNode->nodeValue));
+
+        $dSisFactNode = $node->getElementsByTagName('dSisFact')->item(0);
+        if (!$dSisFactNode) {
+            throw new ValidacionException('[DE] Elemento requerido dSisFact no encontrado.');
+        }
+        $res->dSisFact = intval($dSisFactNode->nodeValue);
+
+        $gOpeDENode = $node->getElementsByTagName('gOpeDE')->item(0);
+        if (!$gOpeDENode) {
+            throw new ValidacionException('[DE] Elemento requerido gOpeDE no encontrado.');
+        }
+        $res->gOpeDe = GOpeDE::FromDOMElement($gOpeDENode);
+
+        $gTimbNode = $node->getElementsByTagName('gTimb')->item(0);
+        if (!$gTimbNode) {
+            throw new ValidacionException('[DE] Elemento requerido gTimb no encontrado.');
+        }
+        $res->gTimb = GTimb::FromDOMElement($gTimbNode);
+
+        $gDatGralOpeNode = $node->getElementsByTagName('gDatGralOpe')->item(0);
+        if (!$gDatGralOpeNode) {
+            throw new ValidacionException('[DE] Elemento requerido gDatGralOpe no encontrado.');
+        }
+        $res->gDatGralOpe = GDatGralOpe::FromDOMElement($gDatGralOpeNode);
+
+        $gDtipDENode = $node->getElementsByTagName('gDtipDE')->item(0);
+        if (!$gDtipDENode) {
+            throw new ValidacionException('[DE] Elemento requerido gDtipDE no encontrado.');
+        }
+        $res->gDtipDe = GDtipDE::FromDOMElement($gDtipDENode);
+
+        // Optional elements
+        if ($node->getElementsByTagName('gTotSub')->length > 0) {
+            $res->gTotSub = GTotSub::FromDOMElement($node->getElementsByTagName('gTotSub')->item(0));
+        }
+        if ($node->getElementsByTagName('gCamGen')->length > 0) {
+            $res->gCamGen = GCamGen::FromDOMElement($node->getElementsByTagName('gCamGen')->item(0));
+        }
+        if ($node->getElementsByTagName('gCamDEAsoc')->length > 0) {
+            foreach ($node->getElementsByTagName('gCamDEAsoc') as $g) {
+                $res->gCamDEAsoc[] = GCamDEAsoc::FromDOMElement($g);
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * Genera un objeto DE a partir de un nodo SimpleXMLElement.
+     *
+     * @param SimpleXMLElement $node Nodo XML que representa un DE
+     *
+     * @return DE Objeto DE con los datos extraídos del nodo XML
+     */
+    public static function FromSimpleXMLElement(SimpleXMLElement $node)
+    {
+        if (strcmp($node->getName(), 'DE') != 0) {
+            throw new ValidacionException('[DE] Invalid XML Node Name: ' . $node->getName());
+        }
+        $res = new DE();
+        $res->id = $node->attributes()['Id'];
+        $res->dDVId = intval($node->dDVId);
+        $res->dFecFirma = DateTime::createFromFormat('Y-m-d\TH:i:s', $node->dFecFirma);
+        $res->dSisFact = intval($node->dSisFact);
+        $res->gOpeDe = GOpeDE::FromSimpleXMLElement($node->gOpeDE);
+        $res->gTimb = GTimb::FromSimpleXMLElement($node->gTimb);
+        $res->gDatGralOpe = GDatGralOpe::FromSimpleXMLElement($node->gDatGralOpe);
+        $res->gDtipDe = GDtipDE::FromSimpleXMLElement($node->gDtipDE);
+        // gTotSub es 0-1 (la NRE no lo lleva): hasta 0.2.0 se leía siempre y la NR no se podía deserializar (PK-25).
+        if (isset($node->gTotSub)) {
+            $res->gTotSub = GTotSub::FromSimpleXMLElement($node->gTotSub);
+        }
+        if (isset($node->gCamGen)) {
+            $res->gCamGen = GCamGen::FromSimpleXMLElement($node->gCamGen);
+        }
+        if (isset($node->gCamDEAsoc) && count($node->gCamDEAsoc) > 0) {
+            foreach ($node->gCamDEAsoc as $g) {
+                $res->gCamDEAsoc[] = GCamDEAsoc::FromSimpleXMLElement($g);
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * Genera un objeto DE a partir de un objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.
+     *
+     * @param stdClass $object Objeto stdClass que contiene los datos de respuesta del SIFEN que representan un DE.
+     *
+     * @return self Objeto DE con los datos extraídos del objeto stdClass.
+     */
+    public static function FromSifenResponseObject(stdClass $object): self
+    {
+        ///se castea en array para la Id porque trae el @atribute y eso no se puede usar con las flechitas
+        $array = json_decode(json_encode($object), true);
+        $de = new DE();
+        if (isset($array['@attributes']['Id'])) {
+            $de->setID($array['@attributes']['Id']);
+        }
+        if (isset($object->dDVId)) {
+            $de->setDDVId(intval($object->dDVId));
+        }
+        if (isset($object->dFecFirma)) {
+            $de->setDFecFirma(DateTime::createFromFormat('Y-m-d\TH:i:s', $object->dFecFirma));
+        }
+        if (isset($object->dSisFact)) {
+            $de->setDSisFact($object->dSisFact);
+        }
+        if (isset($object->gOpeDE)) {
+            $de->setGOpeDe(GOpeDE::FromSifenResponseObject($object->gOpeDE));
+        }
+        if (isset($object->gTimb)) {
+            $de->setGTimb(GTimb::FromSifenResponseObject($object->gTimb));
+        }
+        if (isset($object->gDatGralOpe)) {
+            $de->setGDatGralOpe(GDatGralOpe::FromSifenResponseObject($object->gDatGralOpe));
+        }
+        if (isset($object->gDtipDE)) {
+            $de->setGDtipDe(GDtipDE::FromSifenResponseObject($object->gDtipDE));
+        }
+        if (isset($object->gTotSub)) {
+            $de->setGTotSub(GTotSub::FromSifenResponseObject($object->gTotSub));
+        }
+        if (isset($object->gCamGen)) {
+            $de->setGCamGen(GCamGen::FromSifenResponseObject($object->gCamGen));
+        }
+        if (isset($object->gCamDEAsoc) && count($object->gCamDEAsoc) > 0) {
+            foreach ($object->gCamDEAsoc as $g) {
+                $de->gCamDEAsoc[] = GCamDEAsoc::FromSifenResponseObject($g);
+            }
+        }
+        return $de;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Conversores
+    ///////////////////////////////////////////////////////////////////////
+
+    /**
+     * Convierte este DE a un DOMElement insertable en el DOMDocument indicado.
+     *
+     * @param DOMDocument $doc DOMDocument que generará el DOMElement sin insertarlo
+     *
+     * @return DOMElement DOMElement generado que representa este DE
+     */
+    public function toDOMElement(DOMDocument $doc): DOMElement
+    {
+        $res = $doc->createElement('DE');
+        $res->setAttribute('Id', $this->getId());
+        $res->appendChild(XmlHelper::elemento($doc, 'dDVId', $this->getDDVId()));
+        $res->appendChild(XmlHelper::elemento($doc, 'dFecFirma', $this->getDFecFirma()->format('Y-m-d\TH:i:s')));
+        $res->appendChild(XmlHelper::elemento($doc, 'dSisFact', $this->getDSisFact()));
+        $res->appendChild($this->gOpeDe->toDOMElement($doc));
+        $res->appendChild($this->gTimb->toDOMElement($doc));
+        $res->appendChild($this->gDatGralOpe->toDOMElement($doc));
+        $res->appendChild($this->gDtipDe->toDOMElement($doc));
+        if (isset($this->gTotSub)) {
+            $res->appendChild($this->gTotSub->toDOMElement($doc));
+        }
+        if (isset($this->gCamGen)) {
+            $res->appendChild($this->gCamGen->toDOMElement($doc));
+        }
+        if (count($this->gCamDEAsoc) > 0) {
+            foreach ($this->gCamDEAsoc as $g) {
+                $res->appendChild($g->toDOMElement($doc));
+            }
+        }
+        return $res;
+    }
 }

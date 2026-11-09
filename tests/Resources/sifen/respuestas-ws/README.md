@@ -5,7 +5,9 @@
 > Propósito: cerrar los `[PENDIENTE DE VERIFICACIÓN]` sobre el formato real de las respuestas
 > (ver `SESION-CONTEXT.md`, "Prueba a ejecutar al inicio de la Fase A de PKuatia"). **Al 09/10/2026 la tabla de
 > esa sección queda cerrada por completo** (ver "Pendientes que cierra"). La corrida del 11/10/2026 (Fase B) cubre
-> los demás tipos de documento, el lote y los eventos del receptor.
+> los demás tipos de documento, el lote y los eventos del receptor; la del 13/10/2026 (Fase C) homologa el
+> validador de reglas de PKuatia. **El 18/10/2026 lo observado en las cuatro corridas se volcó** a `05-api-sifen/`,
+> `08-errores-y-respuestas/`, `03-estructura-xml/` y `04-schemas-xsd/` (detalle en `SESION-CONTEXT.md`).
 
 ## Qué se conserva y qué se reemplaza en la anonimización
 
@@ -31,8 +33,10 @@ a escapar igual que lo hace el SIFEN.
 
 **Queda abierto** (no requiere más capturas de este flujo): si el desfase de reloj que produce el 4009 (ver
 observación 6 del 09/10) ocurre también en producción, cómo se ve `xContEv` con **más de un** `rContEv` (el 11/10 los
-cinco eventos fueron rechazados, así que no quedaron registrados), y qué literal acepta la validación 1206 para las
-monedas con `CodeName` de más de 20 caracteres (el 11/10 el truncado a 20 fue rechazado).
+cinco eventos fueron rechazados, así que no quedaron registrados), qué literal acepta la validación 1206 para las
+monedas con `CodeName` de más de 20 caracteres (el 11/10 el truncado a 20 fue rechazado), si el SIFEN acepta el texto
+literal `/d` en `dCilin` (el 13/10 solo se probó un valor numérico) y si la tolerancia de 0,01 vale también para 1910,
+1913 y 1921 (el 13/10 solo se probó 1911).
 
 ## 2026-10-11 — resumen
 
@@ -74,8 +78,8 @@ Los `meta-*.json` guardan la cronología exacta de cada corrida con milisegundos
 ## Observaciones documentales (09/10)
 
 1. **`rRetEnviDe` aprobado** (`03-rEnviDe-response.xml`): `rProtDe { Id, dFecProc, dDigVal, dEstRes, dProtAut, gResProc { dCodRes, dMsgRes } }`.
-   El elemento del CDC se llama **`Id` con mayúscula** (`<ns2:Id>`), no `id` como dice `05-api-sifen/recepcion-de.md`
-   (PP02); en el rechazo genérico (06/10) `Id`, `dDigVal` y `dProtAut` no aparecen. `dMsgRes` escapa los acentos
+   El elemento del CDC se llama **`Id` con mayúscula** (`<ns2:Id>`), no `id` como decía `05-api-sifen/recepcion-de.md`
+   (PP02; corregido el 18/10/2026); en el rechazo genérico (06/10) `Id`, `dDigVal` y `dProtAut` no aparecen. `dMsgRes` escapa los acentos
    como referencias numéricas (`Autorizaci&#243;n`). `dFecProc` lleva zona `-03:00`.
 2. **`rRetEnviEventoDe`**: `dFecProc` (con zona) y `gResProcEVe { dEstRes, dProtAut, id, gResProc { dCodRes, dMsgRes } }`.
    El identificador es **`id` en minúscula**, va **después** de `dEstRes` (y de `dProtAut` cuando hay aprobación) y

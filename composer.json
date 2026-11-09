@@ -13,6 +13,12 @@
         "paraguay"
     ],
     "homepage": "https://github.com/IonysDev/pkuatia",
+    "support": {
+        "issues": "https://github.com/IonysDev/pkuatia/issues",
+        "source": "https://github.com/IonysDev/pkuatia",
+        "docs": "https://github.com/IonysDev/pkuatia#readme",
+        "security": "https://github.com/IonysDev/pkuatia/security/advisories/new"
+    },
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -26,7 +32,9 @@
     },
     "scripts": {
         "test": "phpunit",
-        "phpstan": "phpstan analyse"
+        "phpstan": "phpstan analyse --memory-limit=1G",
+        "cs-check": "php-cs-fixer check --diff",
+        "cs-fix": "php-cs-fixer fix"
     },
     "authors": [
         {
@@ -51,6 +59,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5.63",
-        "phpstan/phpstan": "^2.2"
+        "phpstan/phpstan": "^2.2",
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "phpstan/phpstan-deprecation-rules": "^2"
     }
 }

@@ -5,7 +5,6 @@ namespace IonysDev\Pkuatia\Core\Fields\DE\E;
 use IonysDev\Pkuatia\Core\Fields\BaseSifenField;
 use DOMDocument;
 use DOMElement;
-use Exception;
 use IonysDev\Pkuatia\Helpers\XmlHelper;
 use stdClass;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
@@ -14,19 +13,19 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  * Nodo Id:     E960
  * Nombre:      gVehTras
  * Descripción: Campos que identifican al vehículo del traslado de mercaderías
- * Nodo Padre:  E900 - gTransp - Campos que describen el transporte de mercaderías 
+ * Nodo Padre:  E900 - gTransp - Campos que describen el transporte de mercaderías
  */
 
 class GVehTras extends BaseSifenField
 {
-                                // Id - Longitud - Ocurrencia - Descripción
-    public String $dTiVehTras;  // E961 - 4-10 - 1-1 - Tipo de vehículo
-    public String $dMarVeh;     // E962 - 1-10 - 1-1 - Marca
-    public int    $dTipIdenVeh; // E967 - 1    - 1-1 - Tipo de identificación del vehículo: 1 = Número de identificación del vehículo | 2 = Número de matrícula del vehículo
-    public String $dNroIDVeh;   // E963 - 1-20 - 0-1 - Número de identificación del vehículo
-    public String $dAdicVeh;    // E964 - 1-20 - 0-1 - Datos adicionales del vehículo
-    public String $dNroMatVeh;  // E965 - 1-7  - 0-1 - Número de matrícula del vehículo (obligatorio si E967 = 2; DE_v150.xsd:1174-1185)
-    public String $dNroVuelo;   // E966 - 6    - 0-1 - Número de vuelo
+    // Id - Longitud - Ocurrencia - Descripción
+    public string $dTiVehTras;  // E961 - 4-10 - 1-1 - Tipo de vehículo
+    public string $dMarVeh;     // E962 - 1-10 - 1-1 - Marca
+    public int $dTipIdenVeh; // E967 - 1    - 1-1 - Tipo de identificación del vehículo: 1 = Número de identificación del vehículo | 2 = Número de matrícula del vehículo
+    public string $dNroIDVeh;   // E963 - 1-20 - 0-1 - Número de identificación del vehículo
+    public string $dAdicVeh;    // E964 - 1-20 - 0-1 - Datos adicionales del vehículo
+    public string $dNroMatVeh;  // E965 - 1-7  - 0-1 - Número de matrícula del vehículo (obligatorio si E967 = 2; DE_v150.xsd:1174-1185)
+    public string $dNroVuelo;   // E966 - 6    - 0-1 - Número de vuelo
 
     ///////////////////////////////////////////////////////////////////////
     ///Setters
@@ -39,10 +38,11 @@ class GVehTras extends BaseSifenField
      *
      * @return self Este objeto para encadenamiento
      */
-    public function setDTiVehTras(String $dTiVehTras): self
+    public function setDTiVehTras(string $dTiVehTras): self
     {
-        if(strlen($dTiVehTras) < 4 || strlen($dTiVehTras) > 10)
+        if (strlen($dTiVehTras) < 4 || strlen($dTiVehTras) > 10) {
             throw new ValidacionException('[GVehTras] Tipo de vehículo (dTiVehTras) inválido: ' . $dTiVehTras . '. Debe tener entre 4 y 10 caracteres.');
+        }
         $this->dTiVehTras = $dTiVehTras;
         return $this;
     }
@@ -54,10 +54,11 @@ class GVehTras extends BaseSifenField
      *
      * @return self Este objeto para encadenamiento
      */
-    public function setDMarVeh(String $dMarVeh): self
+    public function setDMarVeh(string $dMarVeh): self
     {
-        if(strlen($dMarVeh) < 1 || strlen($dMarVeh) > 10)
+        if (strlen($dMarVeh) < 1 || strlen($dMarVeh) > 10) {
             throw new ValidacionException('[GVehTras] Marca del vehículo (dMarVeh) inválida: ' . $dMarVeh . '. Debe tener entre 1 y 10 caracteres.');
+        }
         $this->dMarVeh = $dMarVeh;
         return $this;
     }
@@ -71,8 +72,9 @@ class GVehTras extends BaseSifenField
      */
     public function setDTipIdenVeh(int $dTipIdenVeh): self
     {
-        if($dTipIdenVeh != 1 && $dTipIdenVeh != 2)
+        if ($dTipIdenVeh != 1 && $dTipIdenVeh != 2) {
             throw new ValidacionException('[GVehTras] Tipo de identificación del vehículo (dTipIdenVeh) inválido: ' . $dTipIdenVeh . '. Debe ser 1 o 2.');
+        }
         $this->dTipIdenVeh = $dTipIdenVeh;
         return $this;
     }
@@ -84,25 +86,27 @@ class GVehTras extends BaseSifenField
      *
      * @return self Este objeto para encadenamiento
      */
-    public function setDNroIDVeh(String $dNroIDVeh): self
+    public function setDNroIDVeh(string $dNroIDVeh): self
     {
-        if(strlen($dNroIDVeh) < 1 || strlen($dNroIDVeh) > 20)
+        if (strlen($dNroIDVeh) < 1 || strlen($dNroIDVeh) > 20) {
             throw new ValidacionException('[GVehTras] Número de identificación del vehículo (dNroIDVeh) inválido: ' . $dNroIDVeh . '. Debe tener entre 1 y 20 caracteres.');
+        }
         $this->dNroIDVeh = $dNroIDVeh;
         return $this;
     }
 
     /**
      * Establece el valor de dAdicVeh que corresponde a los datos adicionales del vehículo.
-     * 
+     *
      * @param String $dAdicVeh Datos adicionales del vehículo (1-20 caracteres)
-     * 
+     *
      * @return self Este objeto para encadenamiento
      */
-    public function setDAdicVeh(String $dAdicVeh): self
+    public function setDAdicVeh(string $dAdicVeh): self
     {
-        if(strlen($dAdicVeh) < 1 || strlen($dAdicVeh) > 20)
+        if (strlen($dAdicVeh) < 1 || strlen($dAdicVeh) > 20) {
             throw new ValidacionException('[GVehTras] Datos adicionales del vehículo (dAdicVeh) inválidos: ' . $dAdicVeh . '. Debe tener entre 1 y 20 caracteres.');
+        }
         $this->dAdicVeh = $dAdicVeh;
         return $this;
     }
@@ -114,10 +118,11 @@ class GVehTras extends BaseSifenField
      *
      * @return self Este objeto para encadenamiento
      */
-    public function setDNroMatVeh(String $dNroMatVeh): self
+    public function setDNroMatVeh(string $dNroMatVeh): self
     {
-        if(strlen($dNroMatVeh) != 6)
+        if (strlen($dNroMatVeh) != 6) {
             throw new ValidacionException('[GVehTras] Número de matrícula del vehículo (dNroMatVeh) inválido: ' . $dNroMatVeh . '. Debe tener 6 caracteres.');
+        }
         $this->dNroMatVeh = $dNroMatVeh;
         return $this;
     }
@@ -129,10 +134,11 @@ class GVehTras extends BaseSifenField
      *
      * @return self Este objeto para encadenamiento
      */
-    public function setDNroVuelo(String $dNroVuelo): self
+    public function setDNroVuelo(string $dNroVuelo): self
     {
-        if(strlen($dNroVuelo) != 6)
+        if (strlen($dNroVuelo) != 6) {
             throw new ValidacionException('[GVehTras] Número de vuelo (dNroVuelo) inválido: ' . $dNroVuelo . '. Debe tener 6 caracteres.');
+        }
         $this->dNroVuelo = $dNroVuelo;
         return $this;
     }
@@ -146,7 +152,7 @@ class GVehTras extends BaseSifenField
      *
      * @return String Tipo de vehículo.
      */
-    public function getDTiVehTras(): String
+    public function getDTiVehTras(): string
     {
         return $this->dTiVehTras;
     }
@@ -156,7 +162,7 @@ class GVehTras extends BaseSifenField
      *
      * @return String Marca del vehículo.
      */
-    public function getDMarVeh(): String
+    public function getDMarVeh(): string
     {
         return $this->dMarVeh;
     }
@@ -176,10 +182,11 @@ class GVehTras extends BaseSifenField
      *
      * @return String Número de identificación del vehículo o null si no ha sido establecido.
      */
-    public function getDNroIDVeh(): ?String
+    public function getDNroIDVeh(): ?string
     {
-        if(isset($this->dNroIDVeh))
+        if (isset($this->dNroIDVeh)) {
             return $this->dNroIDVeh;
+        }
         return null;
     }
 
@@ -188,10 +195,11 @@ class GVehTras extends BaseSifenField
      *
      * @return String Datos adicionales del vehículo o null si no ha sido establecido.
      */
-    public function getDAdicVeh(): ?String
+    public function getDAdicVeh(): ?string
     {
-        if(isset($this->dAdicVeh))
+        if (isset($this->dAdicVeh)) {
             return $this->dAdicVeh;
+        }
         return null;
     }
 
@@ -200,9 +208,11 @@ class GVehTras extends BaseSifenField
      *
      * @return String Número de matrícula del vehículo o null si no ha sido establecido.
      */
-    public function getDNroMatVeh(): ?String
-    {   if(isset($this->dNroMatVeh))
+    public function getDNroMatVeh(): ?string
+    {
+        if (isset($this->dNroMatVeh)) {
             return $this->dNroMatVeh;
+        }
         return null;
     }
 
@@ -211,10 +221,11 @@ class GVehTras extends BaseSifenField
      *
      * @return String Número de vuelo o null si no ha sido establecido.
      */
-    public function getDNroVuelo(): ?String
+    public function getDNroVuelo(): ?string
     {
-        if(isset($this->dNroVuelo))
+        if (isset($this->dNroVuelo)) {
             return $this->dNroVuelo;
+        }
         return null;
     }
 
@@ -224,27 +235,32 @@ class GVehTras extends BaseSifenField
 
     /**
      * Instancia un objeto GVehTras a partir de un DOMElement que representa al objeto.
-     * 
+     *
      * @param DOMElement $node Nodo XML que representa el objeto GVehTras
-     * 
+     *
      * @return GVehTras Objeto GVehTras instanciado
      */
     public static function FromDOMElement(DOMElement $node): self
     {
-        if(strcmp($node->nodeName, 'gVehTras') != 0)
+        if (strcmp($node->nodeName, 'gVehTras') != 0) {
             throw new ValidacionException('[GVehTras] Nodo con nombre inválido: ' . $node->nodeName);
+        }
         $res = new self();
         $res->setDTiVehTras(trim($node->getElementsByTagName('dTiVehTras')->item(0)->nodeValue));
         $res->setDMarVeh(trim($node->getElementsByTagName('dMarVeh')->item(0)->nodeValue));
         $res->setDTipIdenVeh(intval(trim($node->getElementsByTagName('dTipIdenVeh')->item(0)->nodeValue)));
-        if($node->getElementsByTagName('dNroIDVeh')->length > 0)
+        if ($node->getElementsByTagName('dNroIDVeh')->length > 0) {
             $res->setDNroIDVeh(trim($node->getElementsByTagName('dNroIDVeh')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dAdicVeh')->length > 0)
+        }
+        if ($node->getElementsByTagName('dAdicVeh')->length > 0) {
             $res->setDAdicVeh(trim($node->getElementsByTagName('dAdicVeh')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dNroMatVeh')->length > 0)
+        }
+        if ($node->getElementsByTagName('dNroMatVeh')->length > 0) {
             $res->setDNroMatVeh(trim($node->getElementsByTagName('dNroMatVeh')->item(0)->nodeValue));
-        if($node->getElementsByTagName('dNroVuelo')->length > 0)
+        }
+        if ($node->getElementsByTagName('dNroVuelo')->length > 0) {
             $res->setDNroVuelo(trim($node->getElementsByTagName('dNroVuelo')->item(0)->nodeValue));
+        }
         return $res;
     }
 
@@ -252,7 +268,7 @@ class GVehTras extends BaseSifenField
      * Instancia un objeto GVehTras a partir de un objeto stdClass obtenido de una respuesta del SIFEN a una solicitud SOAP.
      *
      * @param  mixed $object Objeto stdClass obtenido de una respuesta del SIFEN a una solicitud SOAP
-     * 
+     *
      * @return self Objeto GVehTras instanciado
      */
     public static function FromSifenResponseObject($object): self
@@ -290,7 +306,7 @@ class GVehTras extends BaseSifenField
 
     /**
      * Convierte el objeto GVehTras en un nodo DOMElement para su uso en el DOMDocument especificado.
-     * 
+     *
      * @param DOMDocument $doc DOMDocument donde se generará el nodo.
      *
      * @return DOMElement Nodo DOMElement que representa al objeto GVehTras.
@@ -299,37 +315,44 @@ class GVehTras extends BaseSifenField
     {
         $res = $doc->createElement('gVehTras');
         // E961 (1-1, DE_v150.xsd:1108-1121): antes se condicionaba a dNroIDVeh, lo que impedía identificar el vehículo por matrícula (E967 = 2).
-        if(isset($this->dTiVehTras))
+        if (isset($this->dTiVehTras)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dTiVehTras', $this->getDTiVehTras()));
-        else
+        } else {
             throw new ValidacionException('[GVehTras] El campo dTiVehTras (E961, tipo de vehículo) es obligatorio.');
-        
-        if(isset($this->dMarVeh))
-            $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
-        else
-            throw new ValidacionException('[GVehTras] El campo dMarVeh es obligatorio.');
+        }
 
-        if(isset($this->dTipIdenVeh))
+        if (isset($this->dMarVeh)) {
+            $res->appendChild(XmlHelper::elemento($doc, 'dMarVeh', $this->getDMarVeh()));
+        } else {
+            throw new ValidacionException('[GVehTras] El campo dMarVeh es obligatorio.');
+        }
+
+        if (isset($this->dTipIdenVeh)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dTipIdenVeh', $this->getDTipIdenVeh()));
-        else
+        } else {
             throw new ValidacionException('[GVehTras] El campo dTipIdenVeh es obligatorio.');
-        
-        if (isset($this->dNroIDVeh))
+        }
+
+        if (isset($this->dNroIDVeh)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dNroIDVeh', $this->getDNroIDVeh()));
-        else if($this->dTipIdenVeh == 1)
+        } elseif ($this->dTipIdenVeh == 1) {
             throw new ValidacionException('[GVehTras] El campo dNroIDVeh es obligatorio.');
-        
-        if(isset($this->dAdicVeh))
+        }
+
+        if (isset($this->dAdicVeh)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dAdicVeh', $this->getDAdicVeh()));
-        
-        if (isset($this->dNroMatVeh))
+        }
+
+        if (isset($this->dNroMatVeh)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dNroMatVeh', $this->getDNroMatVeh()));
-        else if($this->dTipIdenVeh == 2)
+        } elseif ($this->dTipIdenVeh == 2) {
             throw new ValidacionException('[GVehTras] El campo dNroMatVeh es obligatorio.');
-        
-        if(isset($this->dNroVuelo))
+        }
+
+        if (isset($this->dNroVuelo)) {
             $res->appendChild(XmlHelper::elemento($doc, 'dNroVuelo', $this->getDNroVuelo()));
-        
+        }
+
         return $res;
     }
 

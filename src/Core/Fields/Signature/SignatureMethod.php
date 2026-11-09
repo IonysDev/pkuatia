@@ -9,10 +9,9 @@ use SimpleXMLElement;
 /**
  * Clase que representa el campo SignatureMethod de la firma
  */
-class SignatureMethod 
+class SignatureMethod
 {
-
-    public String $Algorithm;    
+    public string $Algorithm;
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -25,7 +24,7 @@ class SignatureMethod
      *
      * @return self
      */
-    public function setAlgorithm(String $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
         return $this;
@@ -40,7 +39,7 @@ class SignatureMethod
      *
      * @return String
      */
-    public function getAlgorithm(): String
+    public function getAlgorithm(): string
     {
         return $this->Algorithm;
     }
@@ -51,9 +50,9 @@ class SignatureMethod
 
     /**
      * Instancia un objeto SignatureMethod a partir de un SimpleXMLElement
-     * 
+     *
      * @param \SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
@@ -65,9 +64,9 @@ class SignatureMethod
 
     /**
      * Instancia un objeto SignatureMethod a partir de un DOMElement
-     * 
+     *
      * @param DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(DOMElement $node): self
@@ -80,12 +79,12 @@ class SignatureMethod
     ///////////////////////////////////////////////////////////////////////
     // Conversores
     ///////////////////////////////////////////////////////////////////////
-    
+
     /**
      * Convierte este SignatureMethod a un DOMElement para ser usado en un DOMDocument
-     * 
+     *
      * @param DOMDocument $doc Documento DOMDocument donde se podrá usarse el DOMElement
-     * 
+     *
      * @return DOMElement DOMElement generado
      */
     public function toDOMElement(DOMDocument $doc): DOMElement
@@ -94,7 +93,5 @@ class SignatureMethod
         $SignatureMethod->setAttribute('Algorithm', $this->getAlgorithm());
         return $SignatureMethod;
     }
-    
-}
 
-?>
+}

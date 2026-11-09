@@ -12,51 +12,51 @@ use PHPUnit\Framework\TestCase;
 
 final class SignHelperTest extends TestCase
 {
-  private string $pemPath;
-  private string $passphrase;
-  private $certCleanup;
+    private string $pemPath;
+    private string $passphrase;
+    private $certCleanup;
 
-  protected function setUp(): void
-  {
-    $cert = TestCertFactory::createSelfSignedPem();
-    $this->pemPath = $cert['pemPath'];
-    $this->passphrase = $cert['passphrase'];
-    $this->certCleanup = $cert['cleanup'];
+    protected function setUp(): void
+    {
+        $cert = TestCertFactory::createSelfSignedPem();
+        $this->pemPath = $cert['pemPath'];
+        $this->passphrase = $cert['passphrase'];
+        $this->certCleanup = $cert['cleanup'];
 
-    SignHelper::Init($this->pemPath, $this->passphrase, Config::CERT_FORMAT_PEM);
-  }
-
-  protected function tearDown(): void
-  {
-    if ($this->certCleanup) {
-      ($this->certCleanup)();
+        SignHelper::Init($this->pemPath, $this->passphrase, Config::CERT_FORMAT_PEM);
     }
-  }
 
-  public function testSignRdeTwiceProducesOneReferenceEach(): void
-  {
-    $fecha = new DateTime('2026-01-15T10:00:00');
+    protected function tearDown(): void
+    {
+        if ($this->certCleanup) {
+            ($this->certCleanup)();
+        }
+    }
 
-    $doc1 = SignHelper::SignRDE(MinimalRdeFactory::createRde(1), $fecha);
-    SignatureAssertions::assertEachSignatureWellFormed($doc1, 'RDE #1');
+    public function testSignRdeTwiceProducesOneReferenceEach(): void
+    {
+        $fecha = new DateTime('2026-01-15T10:00:00');
 
-    $doc2 = SignHelper::SignRDE(MinimalRdeFactory::createRde(2), $fecha);
-    SignatureAssertions::assertEachSignatureWellFormed($doc2, 'RDE #2');
+        $doc1 = SignHelper::SignRDE(MinimalRdeFactory::createRde(1), $fecha);
+        SignatureAssertions::assertEachSignatureWellFormed($doc1, 'RDE #1');
 
-    $this->assertEquals(1, $doc1->getElementsByTagName('Signature')->length);
-    $this->assertEquals(1, $doc2->getElementsByTagName('Signature')->length);
-  }
+        $doc2 = SignHelper::SignRDE(MinimalRdeFactory::createRde(2), $fecha);
+        SignatureAssertions::assertEachSignatureWellFormed($doc2, 'RDE #2');
 
-  public function testSingEventsTwoEventsReferenceCorrectIds(): void
-  {
-    $config = new Config();
-    $doc = SignHelper::SingEvents(MinimalRdeFactory::createCancellationEventsEnvelope(), $config);
+        $this->assertEquals(1, $doc1->getElementsByTagName('Signature')->length);
+        $this->assertEquals(1, $doc2->getElementsByTagName('Signature')->length);
+    }
 
-    $signatures = $doc->getElementsByTagName('Signature');
-    $this->assertEquals(2, $signatures->length);
-    SignatureAssertions::assertEachSignatureWellFormed($doc, 'Eventos');
+    public function testSingEventsTwoEventsReferenceCorrectIds(): void
+    {
+        $config = new Config();
+        $doc = SignHelper::SignEvents(MinimalRdeFactory::createCancellationEventsEnvelope(), $config);
 
-    SignatureAssertions::assertReferenceUri($signatures->item(0), '#1');
-    SignatureAssertions::assertReferenceUri($signatures->item(1), '#2');
-  }
+        $signatures = $doc->getElementsByTagName('Signature');
+        $this->assertEquals(2, $signatures->length);
+        SignatureAssertions::assertEachSignatureWellFormed($doc, 'Eventos');
+
+        SignatureAssertions::assertReferenceUri($signatures->item(0), '#1');
+        SignatureAssertions::assertReferenceUri($signatures->item(1), '#2');
+    }
 }

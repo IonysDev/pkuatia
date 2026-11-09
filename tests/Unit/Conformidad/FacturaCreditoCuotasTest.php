@@ -14,27 +14,27 @@ use PHPUnit\Framework\TestCase;
  */
 final class FacturaCreditoCuotasTest extends TestCase
 {
-  /** @var callable */
-  private $cleanup;
+    /** @var callable */
+    private $cleanup;
 
-  protected function setUp(): void
-  {
-    $this->cleanup = SifenTestEnvironment::init()['cleanup'];
-  }
+    protected function setUp(): void
+    {
+        $this->cleanup = SifenTestEnvironment::init()['cleanup'];
+    }
 
-  protected function tearDown(): void
-  {
-    ($this->cleanup)();
-  }
+    protected function tearDown(): void
+    {
+        ($this->cleanup)();
+    }
 
-  public function testSinEntregaInicialInformaLaCantidadDeCuotasYValida(): void
-  {
-    $fe = DocumentoFactory::facturaCreditoCuotas(2, null);
-    $this->assertSame(2, $fe->gCamCond->gPagCred->getDCuotas());
+    public function testSinEntregaInicialInformaLaCantidadDeCuotasYValida(): void
+    {
+        $fe = DocumentoFactory::facturaCreditoCuotas(2, null);
+        $this->assertSame(2, $fe->gCamCond->gPagCred->getDCuotas());
 
-    $xml = DocumentoFactory::firmar($fe->facturaToRDE());
-    $this->assertStringContainsString('<dCuotas>2</dCuotas>', $xml);
-    $this->assertStringNotContainsString('<dMonEnt>', $xml, 'sin entrega inicial no se informa dMonEnt');
-    XsdAssertions::assertRdeValido($xml, 'FE crédito en cuotas sin entrega inicial');
-  }
+        $xml = DocumentoFactory::firmar($fe->facturaToRDE());
+        $this->assertStringContainsString('<dCuotas>2</dCuotas>', $xml);
+        $this->assertStringNotContainsString('<dMonEnt>', $xml, 'sin entrega inicial no se informa dMonEnt');
+        XsdAssertions::assertRdeValido($xml, 'FE crédito en cuotas sin entrega inicial');
+    }
 }

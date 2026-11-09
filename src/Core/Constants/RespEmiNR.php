@@ -2,7 +2,10 @@
 
 namespace IonysDev\Pkuatia\Core\Constants;
 
-enum RespEmiNR: int {
+enum RespEmiNR: int
+{
+    use EnumDescripcion;
+
     case EmisorFactura = 1;
     case PoseedorFacturaYBienes = 2;
     case EmpresaTransportista = 3;
@@ -11,38 +14,13 @@ enum RespEmiNR: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::EmisorFactura => 'Emisor de la factura',
             self::PoseedorFacturaYBienes => 'Poseedor de la factura y bienes',
             self::EmpresaTransportista => 'Empresa transportista',
             self::DespachanteAduanas => 'Despachante de Aduanas',
             self::AgenteTransporte => 'Agente de transporte o intermediario'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

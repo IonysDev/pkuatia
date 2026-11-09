@@ -7,7 +7,10 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * utilizado en notas de crédito y notas de débito electrónicas. *
  * Cada valor corresponde a la descripción `dDesMotEmi` (E402)
  */
-enum MotEmi: int {
+enum MotEmi: int
+{
+    use EnumDescripcion;
+
     case DevolucionYAjustePrecio = 1;
     case Devolucion = 2;
     case Descuento = 3;
@@ -19,7 +22,7 @@ enum MotEmi: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DevolucionYAjustePrecio => 'Devolución y Ajuste de precios',
             self::Devolucion => 'Devolución',
             self::Descuento => 'Descuento',
@@ -29,31 +32,6 @@ enum MotEmi: int {
             self::RecuperoDeGasto => 'Recupero de gasto',
             self::AjusteDePrecio => 'Ajuste de precio'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

@@ -7,7 +7,10 @@ namespace IonysDev\Pkuatia\Core\Constants;
  * utilizado en notas de crédito y notas de débito electrónicas. *
  * Cada valor corresponde a la descripción `dDesMotEmi` (E402).
  */
-enum MotEmiNR: int {
+enum MotEmiNR: int
+{
+    use EnumDescripcion;
+
     case TrasladoPorVentas = 1;
     case TrasladoPorConsignacion = 2;
     case Exportacion = 3;
@@ -26,7 +29,7 @@ enum MotEmiNR: int {
 
     public function getDescription(): string
     {
-        return match($this) {
+        return match ($this) {
             self::TrasladoPorVentas => 'Traslado por ventas',
             self::TrasladoPorConsignacion => 'Traslado por consignación',
             self::Exportacion => 'Exportación',
@@ -43,31 +46,6 @@ enum MotEmiNR: int {
             self::Decomiso => 'Decomiso',
             self::Otro => 'Otro'
         };
-    }
-
-    public static function getDescriptionFromValue(int|string $value): ?string
-    {
-        return self::tryFrom($value)?->getDescription();
-    }
-
-    public static function getValueDescriptionMap(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[$case->value] = $case->getDescription();
-        }
-
-        return $list;
-    }
-
-    public static function toIdNameList(): array
-    {
-        $list = [];
-        foreach (self::cases() as $case) {
-            $list[] = ['id' => $case->value, 'name' => $case->getDescription()];
-        }
-
-        return $list;
     }
 
     /**

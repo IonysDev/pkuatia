@@ -14,5 +14,5 @@ use InvalidArgumentException;
  */
 class ValidacionException extends InvalidArgumentException implements PkuatiaExceptionInterface
 {
-  use ContextoDeExcepcion;
+    use ContextoDeExcepcion;
 }

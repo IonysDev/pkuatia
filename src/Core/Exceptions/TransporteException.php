@@ -20,60 +20,61 @@ use Throwable;
  */
 class TransporteException extends SoapFault implements PkuatiaExceptionInterface
 {
-  use ContextoDeExcepcion;
+    use ContextoDeExcepcion;
 
-  private string $operacion = '';
-  private TipoFallaTransporte $tipo = TipoFallaTransporte::Desconocida;
+    private string $operacion = '';
+    private TipoFallaTransporte $tipo = TipoFallaTransporte::Desconocida;
 
-  /**
-   * @param string            $mensaje   Mensaje completo (con el prefijo "[Sifen] …" de la operación).
-   * @param string            $operacion Método del facade (EnviarDE, ConsultarRUC, …).
-   * @param TipoFallaTransporte|null $tipo Tipo de falla; null lo deduce del faultcode y del mensaje.
-   * @param Throwable|null    $causa     SoapFault (u otra excepción) original.
-   * @param string|array|null $faultcode faultcode del SoapFault original.
-   */
-  public function __construct(string $mensaje, string $operacion = '', ?TipoFallaTransporte $tipo = null, ?Throwable $causa = null, string|array|null $faultcode = null)
-  {
-    parent::__construct($faultcode, $mensaje);
-    // La causa no se puede fijar por SoapFault::__construct: se usa el constructor de \Exception, que sí la acepta.
-    \Exception::__construct($mensaje, 0, $causa);
-    $this->operacion = $operacion;
-    $this->tipo = $tipo ?? TipoFallaTransporte::deducir(is_string($faultcode) ? $faultcode : null, $mensaje);
-    $this->contexto = ['operacion' => $operacion, 'tipo' => $this->tipo->value, 'faultcode' => $faultcode];
-  }
-
-  /**
-   * Envuelve el SoapFault de una operación. Devuelve SifenNoDisponibleException cuando el patrón es el de saturación.
-   *
-   * @param string $prefijo Texto que precede al mensaje original, p. ej. "[Sifen] Error al enviar el documento electrónico al SIFEN".
-   */
-  public static function desde(SoapFault $causa, string $operacion, string $prefijo): self
-  {
-    $faultcode = isset($causa->faultcode) && is_string($causa->faultcode) ? $causa->faultcode : null;
-    $tipo = TipoFallaTransporte::deducir($faultcode, $causa->getMessage());
-    $clase = $tipo->esPosibleSaturacion() ? SifenNoDisponibleException::class : self::class;
-    $e = new $clase($prefijo . ': ' . $causa->getMessage(), $operacion, $tipo, $causa, $faultcode);
-    foreach (['faultactor', 'detail', 'faultname', 'headerfault'] as $propiedad) {
-      if (isset($causa->{$propiedad}))
-        $e->{$propiedad} = $causa->{$propiedad};
+    /**
+     * @param string            $mensaje   Mensaje completo (con el prefijo "[Sifen] …" de la operación).
+     * @param string            $operacion Método del facade (EnviarDE, ConsultarRUC, …).
+     * @param TipoFallaTransporte|null $tipo Tipo de falla; null lo deduce del faultcode y del mensaje.
+     * @param Throwable|null    $causa     SoapFault (u otra excepción) original.
+     * @param string|array|null $faultcode faultcode del SoapFault original.
+     */
+    public function __construct(string $mensaje, string $operacion = '', ?TipoFallaTransporte $tipo = null, ?Throwable $causa = null, string|array|null $faultcode = null)
+    {
+        parent::__construct($faultcode, $mensaje);
+        // La causa no se puede fijar por SoapFault::__construct: se usa el constructor de \Exception, que sí la acepta.
+        \Exception::__construct($mensaje, 0, $causa);
+        $this->operacion = $operacion;
+        $this->tipo = $tipo ?? TipoFallaTransporte::deducir(is_string($faultcode) ? $faultcode : null, $mensaje);
+        $this->contexto = ['operacion' => $operacion, 'tipo' => $this->tipo->value, 'faultcode' => $faultcode];
     }
-    return $e;
-  }
 
-  /** Método del facade en el que ocurrió la falla (EnviarDE, ConsultarRUC, …). */
-  public function getOperacion(): string
-  {
-    return $this->operacion;
-  }
+    /**
+     * Envuelve el SoapFault de una operación. Devuelve SifenNoDisponibleException cuando el patrón es el de saturación.
+     *
+     * @param string $prefijo Texto que precede al mensaje original, p. ej. "[Sifen] Error al enviar el documento electrónico al SIFEN".
+     */
+    public static function desde(SoapFault $causa, string $operacion, string $prefijo): self
+    {
+        $faultcode = isset($causa->faultcode) && is_string($causa->faultcode) ? $causa->faultcode : null;
+        $tipo = TipoFallaTransporte::deducir($faultcode, $causa->getMessage());
+        $clase = $tipo->esPosibleSaturacion() ? SifenNoDisponibleException::class : self::class;
+        $e = new $clase($prefijo . ': ' . $causa->getMessage(), $operacion, $tipo, $causa, $faultcode);
+        foreach (['faultactor', 'detail', 'faultname', 'headerfault'] as $propiedad) {
+            if (isset($causa->{$propiedad})) {
+                $e->{$propiedad} = $causa->{$propiedad};
+            }
+        }
+        return $e;
+    }
 
-  public function getTipo(): TipoFallaTransporte
-  {
-    return $this->tipo;
-  }
+    /** Método del facade en el que ocurrió la falla (EnviarDE, ConsultarRUC, …). */
+    public function getOperacion(): string
+    {
+        return $this->operacion;
+    }
 
-  /** Ver TipoFallaTransporte::esPosibleSaturacion(). */
-  public function esPosibleSaturacion(): bool
-  {
-    return $this->tipo->esPosibleSaturacion();
-  }
+    public function getTipo(): TipoFallaTransporte
+    {
+        return $this->tipo;
+    }
+
+    /** Ver TipoFallaTransporte::esPosibleSaturacion(). */
+    public function esPosibleSaturacion(): bool
+    {
+        return $this->tipo->esPosibleSaturacion();
+    }
 }

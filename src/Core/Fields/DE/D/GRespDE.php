@@ -15,7 +15,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  * Nodo Id:     D140
  * Nombre:      gRespDE
  * Descripción: Grupo de campos que identifican al responsable de la generación del DE.
- * Nodo Padre:  D100 - gEmis - Grupo de campos que identifican al emisor 
+ * Nodo Padre:  D100 - gEmis - Grupo de campos que identifican al emisor
  */
 class GRespDE extends BaseSifenField
 {
@@ -26,12 +26,12 @@ class GRespDE extends BaseSifenField
     public const TIPO_DOCUMENTO_IDENTIDAD_CARNET_RESIDENCIA   = 4;
     public const TIPO_DOCUMENTO_IDENTIDAD_OTRO                = 9;
 
-                                  // Id - Longitud - Ocurrencia - Descripción
-    public int    $iTipIDRespDE;  // D141 - 1     - 1-1 - Tipo de documento de identidad del responsable de la generación del DE
-    public String $dDTipIDRespDE; // D142 - 9-41  - 1-1 - Descripción del tipo de documento de identidad del responsable de la generación del DE
-    public String $dNumIDRespDE;  // D143 - 1-20  - 1-1 - Número de documento de identidad del responsable de la generación del DE
-    public String $dNomRespDE;    // D144 - 4-255 - 1-1 - Nombre o razón social del responsable de la generación del DE
-    public String $dCarRespDE;    // D145 - 4-100 - 1-1 - Cargo del responsable de la generación del DE 
+    // Id - Longitud - Ocurrencia - Descripción
+    public int $iTipIDRespDE;  // D141 - 1     - 1-1 - Tipo de documento de identidad del responsable de la generación del DE
+    public string $dDTipIDRespDE; // D142 - 9-41  - 1-1 - Descripción del tipo de documento de identidad del responsable de la generación del DE
+    public string $dNumIDRespDE;  // D143 - 1-20  - 1-1 - Número de documento de identidad del responsable de la generación del DE
+    public string $dNomRespDE;    // D144 - 4-255 - 1-1 - Nombre o razón social del responsable de la generación del DE
+    public string $dCarRespDE;    // D145 - 4-100 - 1-1 - Cargo del responsable de la generación del DE
 
     ///////////////////////////////////////////////////////////////////////
     // Setters
@@ -39,31 +39,32 @@ class GRespDE extends BaseSifenField
 
     /**
      * Establece el valor iTipIDRespDE (D141) que corresponde al tipo de documento de identidad del responsable de la generación del DE.
-     * 
+     *
      * @param int|TipIDRespDE $iTipIDRespDE Tipo de documento de identidad del responsable de la generación del DE.
-     * 
+     *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
     public function setITipIDRespDE(int|TipIDRespDE $iTipIDRespDE): self
     {
         $this->iTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE->value : $iTipIDRespDE;
         // D142: para 9 (Otro) la descripción es texto libre de 9 a 41 caracteres (tdDTipIDRespDE, DE_Types_v150.xsd); no se pisa si ya fue informada.
-        if ($this->iTipIDRespDE === TipIDRespDE::Otro->value && isset($this->dDTipIDRespDE) && $this->dDTipIDRespDE !== TipIDRespDE::Otro->getDescription())
+        if ($this->iTipIDRespDE === TipIDRespDE::Otro->value && isset($this->dDTipIDRespDE) && $this->dDTipIDRespDE !== TipIDRespDE::Otro->getDescription()) {
             return $this;
+        }
         $this->dDTipIDRespDE = $iTipIDRespDE instanceof TipIDRespDE ? $iTipIDRespDE->getDescription() : TipIDRespDE::getDescriptionFromValue($iTipIDRespDE);
         return $this;
     }
 
     /**
-     * Establece el valor dDTipIDRespDE (D142) que corresponde a la descripción del tipo de documento de identidad del responsable de la generación del DE.   
+     * Establece el valor dDTipIDRespDE (D142) que corresponde a la descripción del tipo de documento de identidad del responsable de la generación del DE.
      * Este valor es calculado automáticamente al establecer el valor de iTipIDRespDE (D141).
      * Se recomienda usar este método SOLO para <iTipIDRespDE> tipo de documento de identidad 9 (Otro).
-     * 
+     *
      * @param String $dDTipIDRespDE Descripción del tipo de documento de identidad del responsable de la generación del DE.
-     * 
+     *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDDTipIDRespDE(String $dDTipIDRespDE): self
+    public function setDDTipIDRespDE(string $dDTipIDRespDE): self
     {
         $this->dDTipIDRespDE = $dDTipIDRespDE;
         return $this;
@@ -71,12 +72,12 @@ class GRespDE extends BaseSifenField
 
     /**
      * Establece el valor dNumIDRespDE (D143) que corresponde al número de documento de identidad del responsable de la generación del DE
-     * 
+     *
      * @param String $dNumIDRespDE Número de documento de identidad del responsable de la generación del DE
-     * 
+     *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDNumIDRespDE(String $dNumIDRespDE): self
+    public function setDNumIDRespDE(string $dNumIDRespDE): self
     {
         $this->dNumIDRespDE = $dNumIDRespDE;
         return $this;
@@ -84,12 +85,12 @@ class GRespDE extends BaseSifenField
 
     /**
      * Establece el valor dNomRespDE (D144) que corresponde al nombre o razón social del responsable de la generación del DE
-     * 
+     *
      * @param String $dNomRespDE Nombre o razón social del responsable de la generación del DE
-     * 
+     *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDNomRespDE(String $dNomRespDE): self
+    public function setDNomRespDE(string $dNomRespDE): self
     {
         $this->dNomRespDE = $dNomRespDE;
         return $this;
@@ -97,12 +98,12 @@ class GRespDE extends BaseSifenField
 
     /**
      * Establece el valor de dCarRespDE (D145) que corresponde al cargo del responsable de la generación del DE
-     * 
+     *
      * @param String $dCarRespDE Cargo del responsable de la generación del DE
-     * 
+     *
      * @return self Retorna la instancia de esta clase para permitir el encadenamiento de métodos.
      */
-    public function setDCarRespDE(String $dCarRespDE): self
+    public function setDCarRespDE(string $dCarRespDE): self
     {
         $this->dCarRespDE = $dCarRespDE;
         return $this;
@@ -114,7 +115,7 @@ class GRespDE extends BaseSifenField
 
     /**
      * Devuelve el valor iTipIDRespDE (D141) que corresponde al tipo de documento de identidad del responsable de la generación del DE.
-     * 
+     *
      * @return int Tipo de documento de identidad del responsable de la generación del DE.
      */
     public function getITipIDRespDE(): int
@@ -124,40 +125,40 @@ class GRespDE extends BaseSifenField
 
     /**
      * Devuelve el valor de dDTipIDRespDE (D142) la descripción del documento de identidad del responsable de la generación del DE.
-     * 
+     *
      * @return String Descripción del tipo de documento de identidad del responsable de la generación del DE.
      */
-    public function getDDTipIDRespDE(): String
+    public function getDDTipIDRespDE(): string
     {
         return $this->dDTipIDRespDE;
     }
 
     /**
      * Devuelve el valor dNumIDRespDE (D143) que corresponde al número de documento de identidad del responsable de la generación del DE.
-     * 
+     *
      * @return String Número de documento de identidad del responsable de la generación del DE.
      */
-    public function getDNumIDRespDE(): String
+    public function getDNumIDRespDE(): string
     {
         return $this->dNumIDRespDE;
     }
 
     /**
      * Devuelve el valor dNomRespDE (D144) que corresponde al nombre o razón social del responsable de la generación del DE.
-     * 
+     *
      * @return String Nombre o razón social del responsable de la generación del DE.
      */
-    public function getDNomRespDE(): String
+    public function getDNomRespDE(): string
     {
         return $this->dNomRespDE;
     }
 
     /**
      * Devuelve el valor dCarRespDE (D145) que corresponde al cargo del responsable de la generación del DE.
-     * 
+     *
      * @return String Cargo del responsable de la generación del DE.
-     */ 
-    public function getDCarRespDE(): String
+     */
+    public function getDCarRespDE(): string
     {
         return $this->dCarRespDE;
     }
@@ -165,25 +166,24 @@ class GRespDE extends BaseSifenField
     ///////////////////////////////////////////////////////////////////////
     // Instanciadores
     ///////////////////////////////////////////////////////////////////////
-    
+
     /**
      * Instancia la clase a partir de un SimpleXMLElement.
-     * 
+     *
      * @param SimpleXMLElement $node Nodo XML que contiene los datos.
-     * 
+     *
      * @return self Objeto instanciado.
      */
     public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
-        if(strcmp($node->getName(),'gRespDE') != 0)
-        {
+        if (strcmp($node->getName(), 'gRespDE') != 0) {
             throw new ValidacionException('El nombre del nodo no corresponde a "gRespDE"');
         }
         $res = new self();
         $res->setITipIDRespDE(intval($node->iTipIDRespDE));
-        $res->setDNumIDRespDE((String) $node->dNumIDRespDE);
-        $res->setDNomRespDE((String) $node->dNomRespDE);
-        $res->setDCarRespDE((String) $node->dCarRespDE);
+        $res->setDNumIDRespDE((string) $node->dNumIDRespDE);
+        $res->setDNomRespDE((string) $node->dNomRespDE);
+        $res->setDCarRespDE((string) $node->dCarRespDE);
         return $res;
     }
 
@@ -191,34 +191,39 @@ class GRespDE extends BaseSifenField
      * Instancia un GRespDE a partir de un stdClass que contiene los datos de respuesa SOAP del SIFEN.
      *
      * @param stdClass $object Objeto respuesta del SIFEN.
-     * 
+     *
      * @return self Objeto instanciado.
      */
     public static function FromSifenResponseObject(stdClass $object): self
     {
         $res = new GRespDE();
-        if(isset($object->iTipIDRespDE))
+        if (isset($object->iTipIDRespDE)) {
             $res->setITipIDRespDE(intval($object->iTipIDRespDE));
-        if(isset($object->dNumIDRespDE))
+        }
+        if (isset($object->dNumIDRespDE)) {
             $res->setDNumIDRespDE($object->dNumIDRespDE);
-        if(isset($object->dNomRespDE))
+        }
+        if (isset($object->dNomRespDE)) {
             $res->setDNomRespDE($object->dNomRespDE);
-        if(isset($object->dCarRespDE))
+        }
+        if (isset($object->dCarRespDE)) {
             $res->setDCarRespDE($object->dCarRespDE);
+        }
         return $res;
     }
 
     /**
      * Instancia un GRespDE a partir de un DOMElement que lo representa.
-     * 
+     *
      * @param DOMElement $node Nodo DOM que contiene los datos.
-     * 
+     *
      * @return self Objeto instanciado.
      */
     public static function FromDOMElement(DOMElement $node): self
     {
-        if(strcmp($node->nodeName, 'gRespDE') != 0)
+        if (strcmp($node->nodeName, 'gRespDE') != 0) {
             throw new ValidacionException('[GRespDE] Nodo con nombre inválido: ' . $node->nodeName);
+        }
         $res = new GRespDE();
         $res->setITipIDRespDE(intval($node->getElementsByTagName('iTipIDRespDE')->item(0)->nodeValue));
         $res->setDDTipIDRespDE(strval($node->getElementsByTagName('dDTipIDRespDE')->item(0)->nodeValue));
@@ -234,15 +239,16 @@ class GRespDE extends BaseSifenField
 
     /**
      * Convierte este GRespDE en un DOMElement generado en el DOMDocument especificado.
-     * 
+     *
      * @param DOMDocument $doc DOMDocument que generará el DOMElement.
      *
      * @return DOMElement DOMElement creado pero no insertado.
      */
     public function toDOMElement(DOMDocument $doc): DOMElement
     {
-        if ($this->iTipIDRespDE === TipIDRespDE::Otro->value && (mb_strlen($this->getDDTipIDRespDE()) < 9 || mb_strlen($this->getDDTipIDRespDE()) > 41))
+        if ($this->iTipIDRespDE === TipIDRespDE::Otro->value && (mb_strlen($this->getDDTipIDRespDE()) < 9 || mb_strlen($this->getDDTipIDRespDE()) > 41)) {
             throw new ValidacionException("[GRespDE] Con iTipIDRespDE = 9 (Otro), dDTipIDRespDE (D142) debe ser un texto libre de 9 a 41 caracteres (tdDTipIDRespDE, DE_Types_v150.xsd): informarlo con setDDTipIDRespDE(). Valor actual: '" . $this->getDDTipIDRespDE() . "'.");
+        }
         $res = $doc->createElement('gRespDE');
         $res->appendChild(XmlHelper::elemento($doc, 'iTipIDRespDE', $this->iTipIDRespDE));
         $res->appendChild(XmlHelper::elemento($doc, 'dDTipIDRespDE', $this->getDDTipIDRespDE()));

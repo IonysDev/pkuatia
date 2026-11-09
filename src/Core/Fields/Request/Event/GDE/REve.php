@@ -10,15 +10,15 @@ use IonysDev\Pkuatia\Helpers\XmlHelper;
 use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
 
 /**
- * Nodo: GDE002 - REve - Grupos de Campos Generales del Evento 
+ * Nodo: GDE002 - REve - Grupos de Campos Generales del Evento
  * Padre: GDE001 - rGesEve - Raíz de Gestión de Eventos
  */
 class REve
 {
-                                      // ID - DESCRIPCION- LONGITUD - OCURRENCIA
-    public int          $Id;          // GDE003 - Identificador del evento - ATRIBUTO DEL CAMPO - 1-10 - 1-1
-    public DateTime     $dFecFirma;   // GDE004 - Fecha y Hora del firmado - 19 - 1-1
-    public int          $dVerFor;     // GDE005 - Versión del formato - 3 - 1-1
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    public int $Id;          // GDE003 - Identificador del evento - ATRIBUTO DEL CAMPO - 1-10 - 1-1
+    public DateTime $dFecFirma;   // GDE004 - Fecha y Hora del firmado - 19 - 1-1
+    public int $dVerFor;     // GDE005 - Versión del formato - 3 - 1-1
     public GGroupTiEvt $gGroupTiEvt;  // GDE007 - Grupo de campos del tipo de evento X - 1-1
 
     ///Setters
@@ -71,7 +71,7 @@ class REve
     /**
      * Establece el valor de gGroupTiEvt
      *
-     * @param TgGroupTiEvt $gGroupTiEvt
+     * @param GGroupTiEvt $gGroupTiEvt
      *
      * @return self
      */
@@ -83,7 +83,7 @@ class REve
     }
 
     //GETTERS
-    
+
 
     /**
      * Obtiene el valor de Id
@@ -118,13 +118,13 @@ class REve
     /**
      * Obtiene el valor de gGroupTiEvt
      *
-     * @return TgGroupTiEvt
+     * @return GGroupTiEvt
      */
     public function getGGroupTiEvt(): GGroupTiEvt
     {
         return $this->gGroupTiEvt;
     }
-    
+
 
     ///////////////////////////////////////////////////////////////////////
     // Conversiones XML
@@ -144,7 +144,7 @@ class REve
         $res->appendChild($this->gGroupTiEvt->toDOMElement($doc));
         return $res;
     }
-    
+
     // /**
     //  * fromDOMElement
     //  *
@@ -170,25 +170,25 @@ class REve
     //       }
     // }
 
-        
+
     /**
      * FromSimpleXMLElement
      *
-     * @param  mixed $node
+     * @param SimpleXMLElement $node
      * @return self
      */
-    public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
-        if(strcmp($node->getName(),'rEve') != 0) {
+        if (strcmp($node->getName(), 'rEve') != 0) {
             throw new ValidacionException("Invalid XML Element". $node->getName());
         }
 
         $res = new self();
         $res->setId(intval($node->attributes()['Id']));
-        $res->setDFecFirma(DateTime::createFromFormat("Y-m-d\TH:i:s",$node->dFecFirma));
+        $res->setDFecFirma(DateTime::createFromFormat("Y-m-d\TH:i:s", $node->dFecFirma));
         $res->setDVerFor(intval($node->dVerFor));
 
-        if(isset($node->gGroupTiEvt)) {
+        if (isset($node->gGroupTiEvt)) {
             $res->setGGroupTiEvt(GGroupTiEvt::FromSimpleXMLElement($node->gGroupTiEvt));
         }
 

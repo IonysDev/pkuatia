@@ -14,13 +14,13 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  * Nodo Id:     D130
  * Nombre:      gActEco
  * Descripción: Grupo de campos que describen la actividad económica del emisor.
- * Nodo Padre:  D100 - gEmis - Grupo de campos que identifican al emisor 
+ * Nodo Padre:  D100 - gEmis - Grupo de campos que identifican al emisor
  */
 class GActEco extends BaseSifenField
 {
-                               // Id - Longitud - Ocurrencia - Descripción
-    public String $cActEco;    // D131 - 1-8   - 1-1 - Código de la actividad económica del emisor 
-    public String $dDesActEco; // D132 - 1-300 - 1-1 - Descripción de la actividad económica del emisor
+    // Id - Longitud - Ocurrencia - Descripción
+    public string $cActEco;    // D131 - 1-8   - 1-1 - Código de la actividad económica del emisor
+    public string $dDesActEco; // D132 - 1-300 - 1-1 - Descripción de la actividad económica del emisor
 
     ///////////////////////////////////////////////////////////////////////
     // Constructor
@@ -34,24 +34,24 @@ class GActEco extends BaseSifenField
      *
      * @return self
      */
-    public function __construct(String $cActEco = '', String $dDesActEco = '')
+    public function __construct(string $cActEco = '', string $dDesActEco = '')
     {
         $this->cActEco = $cActEco;
         $this->dDesActEco = $dDesActEco;
     }
-  
+
     ///////////////////////////////////////////////////////////////////////
     // Setters
     ///////////////////////////////////////////////////////////////////////
 
     /**
      * Establece el valor de cActEco (D131) que representa el código de la actividad económica del emisor.
-     * 
+     *
      * @param String $cActEco
-     * 
+     *
      * @return self
      */
-    public function setCActEco(String $cActEco): self
+    public function setCActEco(string $cActEco): self
     {
         $this->cActEco = $cActEco;
         return $this;
@@ -64,7 +64,7 @@ class GActEco extends BaseSifenField
      *
      * @return self
      */
-    public function setDDesActEco(String $dDesActEco): self
+    public function setDDesActEco(string $dDesActEco): self
     {
         $this->dDesActEco = $dDesActEco;
         return $this;
@@ -76,10 +76,10 @@ class GActEco extends BaseSifenField
 
     /**
      * Devuelve el valor de cActEco (D131) que representa el código de la actividad económica del emisor.
-     * 
+     *
      * @return String
      */
-    public function getCActEco(): String
+    public function getCActEco(): string
     {
         return $this->cActEco;
     }
@@ -89,7 +89,7 @@ class GActEco extends BaseSifenField
      *
      * @return String
      */
-    public function getDDesActEco(): String
+    public function getDDesActEco(): string
     {
         return $this->dDesActEco;
     }
@@ -100,15 +100,16 @@ class GActEco extends BaseSifenField
 
     /**
      * Instancia un objeto GActEco a partir de un DOMElement con los datos del mismo.
-     * 
+     *
      * @param  DOMElement $node Nodo DOM que contiene los datos del objeto.
-     * 
+     *
      * @return self Objeto GActEco instanciado.
      */
     public static function FromDOMElement(DOMElement $node): self
     {
-        if(strcmp($node->nodeName, 'gActEco') != 0)
+        if (strcmp($node->nodeName, 'gActEco') != 0) {
             throw new ValidacionException('[GActEco] Nodo con nombre inválido: ' . $node->nodeName);
+        }
         $res = new self();
         $res->setCActEco(trim(strval($node->getElementsByTagName('cActEco')->item(0)->nodeValue)));
         $res->setDDesActEco(trim(strval($node->getElementsByTagName('dDesActEco')->item(0)->nodeValue)));
@@ -119,13 +120,14 @@ class GActEco extends BaseSifenField
      * Instancia un objeto GActEco a partir de un SimpleXMLElement
      *
      * @param  SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
-    public static function FromSimpleXMLElement(SimpleXMLElement $node) 
+    public static function FromSimpleXMLElement(SimpleXMLElement $node)
     {
-        if(strcmp($node->getName(), 'gActEco') != 0)
+        if (strcmp($node->getName(), 'gActEco') != 0) {
             throw new ValidacionException('[GActEco] Nodo con nombre inválido: ' . $node->getName());
+        }
         $res = new GActEco();
         $res->setCActEco(strval($node->cActEco));
         $res->setDDesActEco(strval($node->dDesActEco));
@@ -136,17 +138,19 @@ class GActEco extends BaseSifenField
      * Instancia un objeto GActEco a partir de un objeto stdClass que contiene los datos de respuesa SOAP del SIFEN.
      *
      * @param stdClass $object Objeto respuesta del SIFEN.
-     * 
+     *
      * @return self Objeto GActEco instanciado.
      */
-    public static function FromSifenResponseObject(stdClass $object):self
+    public static function FromSifenResponseObject(stdClass $object): self
     {
         $res = new GActEco();
-        if(isset($object->cActEco))
+        if (isset($object->cActEco)) {
             $res->setCActEco($object->cActEco);
-        if(isset($object->dDesActEco))
+        }
+        if (isset($object->dDesActEco)) {
             $res->setDDesActEco($object->dDesActEco);
-        return $res; 
+        }
+        return $res;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -155,7 +159,7 @@ class GActEco extends BaseSifenField
 
     /**
      * Convierte este GActEco en un DOMElement generado en el DOMDocument especificado.
-     * 
+     *
      * @param DOMDocument $doc DOMDocument que generará el DOMElement.
      *
      * @return DOMElement DOMElement creado pero no insertado.
@@ -166,5 +170,5 @@ class GActEco extends BaseSifenField
         $res->appendChild(XmlHelper::elemento($doc, 'cActEco', $this->getCActEco()));
         $res->appendChild(XmlHelper::elemento($doc, 'dDesActEco', $this->getDDesActEco()));
         return $res;
-    }    
+    }
 }

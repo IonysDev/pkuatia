@@ -5,6 +5,196 @@ Todos los cambios notables de PKuatia se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el proyecto se adhiere (en lo posible) a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [0.3.1] — No publicado
+
+Fase D del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): calidad del código y
+herramientas. **Compatible hacia atrás**: no se elimina ni cambia ninguna firma pública; los nombres con errores de
+tipeo reciben un alias correcto y el original queda obsoleto; el estilo se unifica con php-cs-fixer en commits
+aislados que no alteran un byte de los documentos serializados; PHPStan sube de nivel con una baseline en la que
+cada entrada está justificada; el CI suma PHP 8.4 y 8.5, cobertura y validación del paquete. Los documentos que
+hasta 0.3.0 se serializaban bien salen idénticos byte a byte. **Cambios de comportamiento deliberados**, todos
+correcciones de datos que antes se perdían o de errores de PHP: la entrega inicial (E645) y la cantidad y el
+porcentaje de quiebra o merma (E717, E718) conservan los decimales en vez de truncarse (cambia el XML de quien los
+informaba con decimales); el departamento del local de salida de la NR (`cDepSal`) lleva el código del departamento
+y no el del distrito; y varios caminos que terminaban en `TypeError` o `Error` lanzan ahora una excepción de la
+librería (detalle en "Corregido").
+
+### Agregado
+
+- `GPagCred::getDMonEntDecimal(): ?String` devuelve la entrega inicial (E645) tal como se estableció, como cadena
+  decimal BCMath; `GGrupAdi::getDSalAntDecimal(): ?String` hace lo mismo con el saldo anterior (E826), que
+  `getDSalAnt(): ?float` convierte a float (Fase D, D1).
+- Alias con el nombre correcto para los cuatro typos con letras distintas (D5): `SignHelper::SignEvents()` (antes
+  `SingEvents()`), `GGrupSeg::setGGrupPolSeg()` (antes `setGGrupoPolSeg()`), `GGroupTiEvt::getRGeVeCCFF()` (antes
+  `getGeVeCCFF()`), `RContRUC::FromSifenResponseObject()` y `RResEnviConsRUC::FromSifenResponseObject()` (antes
+  `fromStdClassObject()`). El nombre correcto tiene el cuerpo; el viejo delega y queda obsoleto. En la QA final se
+  sumaron los typos hermanos de `getGeVeCCFF()`: `GGroupTiEvt::setRGeDevCCFFCue()`, `setRGeDevCCFFDev()` y
+  `getRGeVeRem()` (antes `setGeDevCCFFCue()`, `setGeDevCCFFDev()`, `getGeVeRem()`).
+- Trait `Core\Constants\EnumDescripcion` con `getDescriptionFromValue()`, `getValueDescriptionMap()` y
+  `toIdNameList()`: los 36 enums de códigos del MT lo usan en vez de repetir los tres métodos (D6). Ninguna firma
+  cambia; `getDescripcion()`, `getDescripcionFromInt()` y `toKeyValueArray()` siguen en cada enum. Los seis enums de
+  la Fase C (`CodigoResultadoWS`, `EstadoResultado`, etc.) no modelan código → descripción del MT y no lo usan.
+- `Config::$soapReadTimeout` (+ `setSoapReadTimeout()`, clave `soapReadTimeout` del JSON): tiempo máximo, en
+  segundos, para recibir la respuesta del SIFEN una vez conectado; complementa a `soapConnectionTimeout` (0.2.1).
+  La extensión SOAP ignora `http.timeout` del contexto de flujo y toma el tiempo de lectura de
+  `default_socket_timeout`, así que el facade fija ese ini solo durante cada llamada (y la descarga del WSDL) y lo
+  restaura siempre. Sin configurar, nada cambia (D7, deuda D-B5).
+
+### Corregido
+
+- **La entrega inicial (E645, `dMonEnt`) perdía los decimales en las cuatro vías.** `GPagCred::setDMonEnt(int)`
+  convertía `"1500.50"` a 1500 al entrar, `toDOMElement()` escribía el entero de `getDMonEnt(): ?int` y los lectores
+  DOM, SimpleXML y SOAP aplicaban `intval()`. El parámetro acepta ahora `int|String` (ampliación compatible), el
+  XML lleva la cadena decimal guardada y los tres lectores la conservan. Los montos enteros se serializan igual que
+  antes. Lo destapó PHPStan en nivel 3 (`assign.propertyType`, `return.type`) al preparar la Fase D (D1).
+- **El departamento del local de salida de la NR (E924, `cDepSal`) llevaba el código del distrito.**
+  `GCamSal::toDOMElement()` lo escribía con `getCDisSal()`, mientras `dDesDepSal` sí describía el departamento: con
+  códigos distintos, el XML quedaba incoherente o con un departamento inexistente. Corregido por Gabriel Gauto directo
+  en `main` después de la 0.3.0 (`1f479ba`) e integrado en la QA final de la Fase D con un merge (Q-D6). Un test con
+  códigos reales distintos lo cubre, porque los fixtures usan departamento, distrito y ciudad 1, y otro revisa en todo
+  `src/` que cada elemento se escriba con el getter o la propiedad de su mismo nombre (459 pares, sin discordancias).
+- `REnviDe::setXDE()` (hasta 0.3.0 declarado `setXDe`, D5) y `REnviEventoDe::setDEvReg()` asignaban un `String` a una propiedad `SoapVar` y terminaban en
+  `TypeError` en toda llamada. Aceptan ahora el XML como texto (lo envuelven en un `SoapVar` `XSD_ANYXML`, como hace
+  el facade) o un `SoapVar` ya armado (D1).
+- `TxContenEv::toDOMElement()` y `::fromDOMElement()` llamaban a métodos de `RContEv` que no existen y terminaban en
+  `Error: Call to undefined method`. Lanzan `PkuatiaException` con el reemplazo (`RContDe::FromXContenDE()`), y
+  `toDOMElement()` queda marcado obsoleto como ya lo estaba `fromDOMElement()` (D1).
+- **Los serializadores tipados de la firma funcionan** (D8, PK-32 parte pendiente, decisión Q-D3). `KeyInfo`,
+  `X509Data`, `Reference` y `DigestMethod` creaban sus nodos en un `DOMDocument` propio y `toHeaderOnlyDOMElement()`
+  ignoraba el documento recibido, así que `Signature::toDOMElement($doc)` terminaba siempre en `DOMException`
+  "Wrong Document Error"; `KeyInfo` agregaba un `xmlns:ds` que nadie usaba. Sus `toDOMElement()` aceptan ahora un
+  `?DOMDocument $doc = null` al final (sin él se comportan como antes) y `Signature::toDOMElement()` produce una firma
+  válida contra el XSD de xmldsig con los mismos elementos, atributos y valores que la original. **Límite
+  documentado:** el modelo tipado no conserva los nodos de texto del original y los espacios del `SignedInfo` forman
+  parte de lo firmado, así que una firma reemitida desde los objetos es estructuralmente equivalente pero no verifica;
+  la reemisión que verifica sigue siendo la copia del XML original que hace un rDE leído (0.2.1).
+- `Reference::FromDOMElement()` recorría los contenedores `Transforms` en vez de los `Transform`: la firma leída por
+  DOM perdía los dos algoritmos de transformación (D8).
+- `calcTotSub()` sobre un documento cuyo timbrado declara una nota de remisión (C002 = 7) asignaba `null` a la
+  propiedad `GTotSub $gTotSub` y terminaba en `TypeError`; lanza ahora `ValidacionException` con el motivo (D10).
+- `GCamItem::setDCanQuiMer()` y `setDPorQuiMer()` (E717 y E718, decimales) recibían `int` y truncaban la cantidad y el
+  porcentaje de quiebra o merma; aceptan `int|string` y conservan los decimales, como `setDMonEnt()` en D1 (D10).
+- `GResProcLote::setDProtAut()`, `GResProcEVe::setDProtAut()` y `GResProcEVe::setId()` guardan el valor en una
+  propiedad `int`: con un valor no numérico (p. ej. un `<dProtAut/>` vacío) terminaban en `TypeError`; lanzan ahora
+  `RespuestaException` en vez de convertirlo en 0, para que `getProtocolo()` nunca informe un protocolo inventado
+  (QA de la Fase D).
+
+### Obsoleto
+
+- `GPagCred::getDMonEnt(): ?int` trunca E645 a entero: usar `getDMonEntDecimal()` (D1).
+- `TxContenEv::toDOMElement()`: nunca funcionó y `TxContenEv` no es un elemento del XSD (D1).
+- `SignHelper::SingEvents()`, `GGrupSeg::setGGrupoPolSeg()`, `GGroupTiEvt::getGeVeCCFF()`,
+  `RContRUC::fromStdClassObject()` y `RResEnviConsRUC::fromStdClassObject()`: typos; usar el nombre correcto (D5).
+- `GGroupTiEvt::setGeDevCCFFCue()`, `setGeDevCCFFDev()` y `getGeVeRem()`: typos; usar `setRGeDevCCFFCue()`,
+  `setRGeDevCCFFDev()` y `getRGeVeRem()` (QA de la Fase D).
+
+### Herramientas y CI
+
+- **php-cs-fixer** (`friendsofphp/php-cs-fixer` ^3.95 en `require-dev`) con `.php-cs-fixer.dist.php`: lista blanca de
+  reglas sin cambio semántico (sin reglas riesgosas, sin tocar docblocks ni cadenas), indentación de cuatro espacios
+  (PSR-12) y la regla `line_ending` desactivada para no tocar los finales de línea de cada archivo. Scripts
+  `composer cs-check` y `composer cs-fix`. `.editorconfig` con el mismo criterio (sin `end_of_line`). Los pasos de
+  formato de esta versión se aplicaron con esa configuración en commits aislados, cada uno con su comando (D2–D4).
+- **PHPStan de nivel 1 a nivel 2 con `phpstan/phpstan-deprecation-rules`** (D9): 45 docblocks corregidos (nombres de
+  parámetro equivocados, tipos incompatibles con el nativo, clases inexistentes como `TrGeVeCan` o `SimpleXMLElement`
+  sin barra), el docblock de un método comentado que PHPStan atribuía al siguiente, un `(int)` explícito en
+  `CDCHelper` y 20 llamadas internas a métodos obsoletos de los enums reemplazadas por los vigentes
+  (`getDescriptionFromValue()`, `getDescription()`), con la misma salida. La baseline se regeneró y cada entrada está
+  clasificada en la bitácora de la fase: "sin runtime" (18 `isset`/`??` sobre propiedad no anulable, heredadas) o
+  "deprecado a propósito" (código propio que sigue poblando o leyendo miembros obsoletos por compatibilidad:
+  `SignHelper::$xmlKey`/`$xmlSigner`, las partes enteras obsoletas de `GGrupSup` y `GVehNuevo`,
+  `TipoDocImpresoAso::ComprobanteRetencion`). Ninguna entrada esconde un error de runtime.
+- **PHPStan a nivel 3** (D10): de los 18 avisos nuevos del nivel, 16 eran conversiones implícitas que PHP ya hacía y
+  pasan a casts explícitos con el mismo resultado (`GOpeCom::getDCondTiCam()`, `GGrupAdi::getDSalAnt()`,
+  `GResProcLote`/`GResProcEVe` con sus propiedades históricas `int`, `RResEnviConsRUC::getDCodRes()`, los getters
+  obsoletos que truncan `getDMonTiPag()` y `getDMonEnt()`, `RDE::copiarFirma()` privado) y dos quedan en la baseline
+  como "API": `REnviConsLoteDe::getDProtConsLote(): int` y `RResEnviLoteDe::getDProtConsLote(): int` devuelven un
+  número de lote de hasta 20 dígitos que el tipo `int` no puede prometer; el reemplazo es `getDProtConsLoteString()`
+  y corregir el tipo rompería la firma. Baseline final: 30 entradas (18 "sin runtime", 10 "deprecado a propósito",
+  2 "API"), todas justificadas en la bitácora de la fase.
+- **CI** (D11): matriz PHP 8.1, 8.2, 8.3 y **8.4**, más **8.5 como experimental** (corre, no bloquea); `composer
+  validate --strict`; lint también de `tests/`; `php-cs-fixer check`; PHPUnit con **cobertura de líneas** en el job
+  de 8.3 (`tools/cobertura-minima.php`, umbral 75 %, fijado 5 puntos por debajo de lo medido:
+  79,88 %); `composer audit`. El paso del smoke test (`php test/SmokeTest.php`) se retira del CI: PHPUnit
+  cubre lo mismo desde la Fase 3 (`SmokeTestPortedTest`) y los dos scripts legados que faltaban se portaron
+  (`GCamCargDescripcionesTest`, `GCamGenOpcionalesTest`, más los valores de `test/Utils/ValueValidationsTest.php` en
+  `ValueValidationsTest`); los scripts de `test/` quedan como herramientas manuales. `phpunit.xml.dist` declara la
+  fuente de cobertura (`src/` sin `Resources/`) y muestra el detalle de las deprecaciones de PHP que disparen los
+  tests (para 8.4/8.5).
+- **Verificado en local con PHP 8.4.27 y 8.5.12** (decisión Q-D4): la suite completa pasa en 8.4 sin ninguna
+  deprecación; en 8.5 hubo que adaptar el `CapturaSoapClient` de los tests a la firma nueva de
+  `SoapClient::__doRequest()` (parámetro `?string $uriParserClass = null`; la clase hija lo agrega como opcional y
+  sigue valiendo en 8.1–8.4). PHPStan corre con `--memory-limit=1G` en el CI y en `composer phpstan` (con 128 MB,
+  el límite de un PHP sin `php.ini`, el nivel 3 aborta). `phpstan.neon.dist` fija `phpVersion: 80100` (el mínimo de `composer.json`) para que el
+  análisis sea el mismo en toda la matriz: bajo PHP 8.4+ PHPStan agregaba 23 avisos propios de esa versión (`unset`
+  de propiedades que "podrían tener hooks" en una subclase) que no describen un problema del código.
+- **Empaquetado y comunidad** (D12): `.gitattributes` con `export-ignore` para `tests/`, `test/`, `tools/`, `docs/`,
+  `.github/`, `.vscode/` y la configuración de desarrollo, así que el paquete que publican GitHub y Packagist lleva
+  solo `src/` (con los XSD y los catálogos), README, CHANGELOG, LICENSE y `composer.json`; `support` en
+  `composer.json` (issues, fuente, documentación, avisos de seguridad); `.vscode/launch.json` deja de estar
+  versionado (ya lo ignoraba `.gitignore`); `.github/dependabot.yml` (Composer y acciones del CI, semanal);
+  `SECURITY.md` con las versiones con soporte, la vía privada de reporte y lo que nunca va en un issue.
+- **Documentación del proyecto** (D13): el CHANGELOG incorpora retroactivamente las versiones 0.1.1 a 0.1.4
+  (escritas a partir de los commits y los tags) y el bloque final "No publicado — rama dev" pasa a ser la 0.1.0
+  (12/06/2026); `CONTRIBUTING.md` reescrito con el estilo (php-cs-fixer, cuatro espacios, finales de línea en
+  Windows, `.git-blame-ignore-revs`), la política de la baseline de PHPStan, la cobertura, la matriz del CI, el smoke
+  manual, los tres tests que se omiten sin `docs/sifen-ai` y cómo clonar ekuat-ia para correrlos, el flujo de las
+  capturas reales y el enlace a `SECURITY.md`. Las notas para las GitHub Releases v0.1.0–v0.1.4 quedaron preparadas
+  para publicarlas con `gh release edit`.
+- **Anonimizador de capturas versionado** (D13, deuda D-A8, decisión Q-D5): `tools/anonimizar-capturas.php` y la
+  clase `tools/AnonimizadorCapturas.php` traen la lógica que vivía en el harness privado del mantenedor (CDC con
+  dígito verificador recalculado, RUC y DV del emisor y del receptor, timbrado, razón social, números de casa,
+  literales también con referencias numéricas, certificado, firma, digests y hashes del QR a marcadores, `xContenDE`
+  escapado, ZIP del lote), con el mapa de valores reales → ficticios **fuera del repositorio** (`--mapa=`;
+  `anonimizar-capturas.mapa.ejemplo.json` muestra la forma con valores inventados) y un control final de cadenas
+  sensibles. Los grabadores siguen siendo privados (necesitan el certificado); CONTRIBUTING documenta el flujo
+  completo. Test `AnonimizadorCapturasTest` (una captura ya anonimizada queda idéntica).
+
+### Cambiado
+
+- **Catálogos del SIFEN regenerados** desde ekuat-ia `dad0ee3` (18/10/2026, `tools/generar-catalogos.php`):
+  `validaciones-de` pasa de 300 a 313 entradas (295 vigentes): se suman D030–D032 (1220, 1221, 1222, obligaciones
+  afectadas de la NT-018), D208e–D208g y D210b (1331, 1333, 1335, 1334), EA004a (1860), E737 (1921, NT-013),
+  F033–F035 (2383, 2384, 2387) y F012 (2388), y 22 observaciones incorporan lo homologado el 11 y el 13/10/2026;
+  `validaciones-evento` corrige los códigos duplicados de la tabla 11.6.7 (GET022–GET030 pasan de 4313–4323 a
+  4325–4335, 4336 GET002 nuevo, 4004 GEC002c marcado como eliminado); `respuestas-ws` suma los códigos observados
+  0100, 0143, 0364 y 0520–0523 (BO04–BO07); `elementos-de` ahora conoce el campo del MT de `gOblAfe` (D030–D032),
+  `dBasExe` (E737), `gRasMerc` (E751–E761) y `gVehNuevo` (E771–E786). `CatalogoValidaciones::describir()` describe
+  los códigos nuevos; el resto de la librería no cambia.
+- **Tipos en minúscula y anulables explícitos** (D2). `String` pasa a `string` en las 1338 declaraciones de
+  parámetros, retornos y propiedades de 105 archivos (`native_type_declaration_casing`; para PHP es el mismo tipo,
+  así que ninguna firma cambia), tres `: Self` pasan a `: self`, y los dos parámetros `String $tasaDeCambio = null`
+  de `Factura` pasan a `?string $tasaDeCambio = null` (`nullable_type_declaration_for_default_null_value`; la forma
+  implícita está deprecada en PHP 8.4 y el tipo ya era anulable). Los docblocks no cambian.
+- **Estilo PSR-12 sin indentación** (D3): un solo commit de php-cs-fixer con las reglas de `.php-cs-fixer.dist.php`
+  salvo las de indentación: sin `?>` de cierre (34 archivos), `elseif` en vez de `else if`, llaves en todas las
+  estructuras de control, `if (`/`foreach (` con espacio, `) : tipo` → `): tipo`, `array()` → `[]`, importaciones
+  sin uso eliminadas (18, ninguna referenciada), una línea en blanco tras `namespace`, sin espacios al final de línea
+  ni en líneas vacías, `public static` en ese orden. Sin cambio de comportamiento: la serialización de los
+  documentos de referencia y la API pública son idénticas; los docblocks y las cadenas no se tocan.
+- **Indentación de cuatro espacios en todo el código** (D4, decisión Q-D1): el repositorio mezclaba dos y cuatro
+  espacios mitad y mitad. Un único commit de solo espacio en blanco (`git diff -w` vacío), listado en
+  `.git-blame-ignore-revs` para que `git blame` lo salte (GitHub lo aplica solo; en local:
+  `git config blame.ignoreRevsFile .git-blame-ignore-revs`). `.php-cs-fixer.dist.php` y `.editorconfig` fijan la regla.
+- **Nombres de método con la grafía corregida** (D5, decisión Q-D2). PHP no distingue mayúsculas en los nombres de
+  método, así que estas correcciones no admiten alias ni aviso de obsolescencia: la grafía vieja sigue resolviendo al
+  mismo método para siempre, y solo PHPStan (nivel 0) o el IDE avisan a quien la use. Declaraciones corregidas:
+  `DE::getGDtipDE()`, `DE::getGOpeDE()`; `GCamEsp::getGGrupEner()`/`setGGrupEner()`; `GCamFE::getGCompPub()`/
+  `setGCompPub()`; `GCamItem::getGCamIVA()`/`setGCamIVA()`; `GGrupAdi::getDCodConDncp()`/`setDCodConDncp()`;
+  `GCamCarg::getDDesUniMedTotPes()`; `GGroupTiEvt::getRGeVeRetAce()`/`setRGeVeRetAce()`/`getRGeVeRetAnu()`/
+  `setRGeVeRetAnu()`/`setRGeVeCCFF()`; `getMotEve()`/`setMotEve()` en `RGEveNom`, `RGeVeCan`, `RGeVeInu`,
+  `RGeVeDescon` y `RGeVeDisconf`; `RGeVeTr::getDDTipIDTrans()`; `RContDe::getRDE()`; `REnviDe::setXDE()`;
+  `RResEnviConsLoteDe::getDFecProc()`/`setDFecProc()`; `RResEnviLoteDe::getDProtConsLote()`/`setDProtConsLote()`;
+  `MonedaMapping::getArray()`/`getCodeName()`/`getDescription()`; `UnidadMedidaMapping::getArray()`/`getDesc()`;
+  `NumberStringFormatter::FormatBCMathNumber()`. Las referencias a las clases `RGeVeRetAce`, `RGeVeRetAnu`,
+  `RGeVeCCFF` y `RGeDevCCFFCue` dentro de `GGroupTiEvt` llevan la inicial en mayúscula (eran `rGeVeRetAce`, etc.;
+  para PHP es la misma clase). `RRetEnviEventoDe::setGResProcEVe()`/`getGResProcEVe()` tienen ahora el cuerpo y los
+  typos históricos `seGResProcEVe()`/`geGResProcEVe()` delegan en ellos (antes era al revés).
+- `Constants::PKUATIA_VERSION` actualizado a `0.3.1`.
+- `CountryMapping`, `DepartamentoMapping` y `PyGeoCodesMapping` cachean su catálogo en una estática en vez de releer y
+  reparsear el XML en cada llamada a `getArray()`, como ya hacían `MonedaMapping` y `UnidadMedidaMapping` (D7, deuda
+  D-B4). Mismo resultado; el arreglo se devuelve por valor.
+
 ## [0.3.0] — 2026-10-15
 
 Fase C del roadmap de la evaluación del 02/10/2026 (`docs/evaluacion-2026-10-02/`): validación de documentos y
@@ -847,7 +1037,53 @@ exactamente la misma salida.
   implícitamente anulable, forma que PHP 8.4 depreca).
 - `Constants::PKUATIA_VERSION` actualizado a `0.1.5`.
 
-## [No publicado] — rama `dev`
+## [0.1.4] — 2026-08-26
+
+Corrección puntual de los campos de anticipo del ítem (E719, EA004, EA006, EA007). **Compatible hacia atrás**
+(ampliación de tipo). Secciones 0.1.1 a 0.1.4 escritas retroactivamente en 0.3.1 (Fase D) a partir de los commits
+y los tags; `Constants::PKUATIA_VERSION` siguió informando `0.1.0` desde 0.1.1 hasta 0.1.4 y se sincronizó en 0.1.5.
+
+### Corregido
+
+- `GCamItem::setDCDCAnticipo()` acepta `String`: el CDC tiene 44 dígitos, muy por encima de `PHP_INT_MAX`, así que
+  con el parámetro `int` toda llamada terminaba en `TypeError` y E719 (`dCDCAnticipo`) no se podía informar. La
+  propiedad y el getter ya eran `String`.
+- `GValorRestaItem::getFormattedDDescGloItem()`, `getFormattedDAntPreUniIt()` y `getFormattedDAntGloPreUniIt()` leen
+  la propiedad por su getter seguro: lanzaban `Error` cuando EA004/EA006/EA007 no estaban informados (su ocurrencia es
+  0-1).
+
+## [0.1.3] — 2026-07-27
+
+### Agregado
+
+- `RResEnviConsDe::getRDEXml()`: extrae solo el nodo firmado `<rDE>` de `xContenDE`, que puede traer `dProtAut` y
+  `xContEv` como hermanos y por eso no es parseable como un único documento XML; devuelve `null` si la respuesta no
+  trae `xContenDE`. Tests de extracción y de ausencia.
+
+## [0.1.2] — 2026-07-27
+
+### Agregado
+
+- `RResEnviConsDe` conserva `xContenDE` crudo (campo con getter y setter) cuando el SIFEN responde el DE como texto:
+  evita perder `Signature` y `gCamFuFD` al reserializar desde el objeto parseado. Tests `ConsultarDETest`
+  (preservación byte a byte del XML firmado, objeto parseado disponible en paralelo, respuesta sin `xContenDE`).
+
+## [0.1.1] — 2026-06-16
+
+### Agregado
+
+- `DocumentoElectronico::setReceptor()`: parámetro opcional al final `?String $descTipoIdentificacion = null` para
+  D209 (`dDTipIDRec`) cuando el tipo de documento del receptor es 9 (Otro).
+
+### Corregido
+
+- `GDatRec`: con `iTipIDRec` (D208) = 9 (Otro), D209 es texto libre obligatorio de 9 a 41 caracteres (`mb_strlen`);
+  `toDOMElement()` lo valida y lanza `InvalidArgumentException` si falta o no cumple; `getDDTipIDRec()` respeta el
+  valor libre en vez de derivarlo del código y `setITipIDRec()` ya no autocompleta "Otro". Tests `GDatRecTipIDRecTest`.
+
+## [0.1.0] — 2026-06-12
+
+(Publicada el 12/06/2026 como `v0.1.0`; hasta 0.3.1 este bloque figuraba como "No publicado — rama `dev`".)
 
 Ronda de correcciones de conformidad SIFEN v150 y ampliación de la API. **Para el uso
 habitual de la librería no se requiere ningún cambio en los sistemas consumidores**: todas

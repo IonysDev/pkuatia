@@ -11,7 +11,7 @@ use IonysDev\Pkuatia\Helpers\PemHelper;
  * Clase que contiene los parámetros de la instancia del SIFEN utilizada.
  */
 class Config
-{  
+{
     public const ENV_DEV = "dev";
     public const ENV_PROD = "prod";
 
@@ -21,20 +21,20 @@ class Config
     public const CERT_FORMAT_PEM = "pem";
     public const CERT_FORMAT_PKCS12 = "pkcs12";
 
-    public String $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
+    public string $env = self::ENV_DEV; // Solo se aceptan valores "dev" para entorno en desarrollo y "prod" para entorno en producción.
 
     // Parámetros de Firma Digital
-    public String $certificateFormat;    // Valores de entrada: "pem", "p12" o "pfx". Se normaliza internamente a "pem" o "pkcs12".
-    public ?String $certificateFilePath = null; // Ruta del certificado PEM. Opcional si cert y clave están en privateKeyFilePath.
-    public String $privateKeyFilePath;         // Ruta de la clave privada, o del archivo PEM/P12/PFX combinado.
-    public String $privateKeyPassphrase; // Contraseña de la clave privada.
+    public string $certificateFormat;    // Valores de entrada: "pem", "p12" o "pfx". Se normaliza internamente a "pem" o "pkcs12".
+    public ?string $certificateFilePath = null; // Ruta del certificado PEM. Opcional si cert y clave están en privateKeyFilePath.
+    public string $privateKeyFilePath;         // Ruta de la clave privada, o del archivo PEM/P12/PFX combinado.
+    public string $privateKeyPassphrase; // Contraseña de la clave privada.
 
     // Parámetros de autenticación ante el SIFEN
-    public String $idCsc = '0001'; // Identificador de la CSC entregado por el SIFEN.
-    public String $csc   = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
+    public string $idCsc = '0001'; // Identificador de la CSC entregado por el SIFEN.
+    public string $csc   = 'ABCD0000000000000000000000000000';   // Código de seguridad de 32 dígitos alfanúmericos entregado por el SIFEN.
 
     // Lugar donde se almacena el archivo JSON que contiene el registro del último valor del dId utilizado.
-    public String $dIdFilePath = "PKuatiaDId.dat.json";
+    public string $dIdFilePath = "PKuatiaDId.dat.json";
 
     // Habilita la caché en disco de los WSDL del SIFEN (WSDL_CACHE_DISK de la extensión SOAP).
     // Recomendado en producción: el SIFEN limita la tasa de solicitudes y descargar el WSDL en cada
@@ -45,8 +45,13 @@ class Config
     // SoapClient). Null: el valor por defecto de PHP (default_socket_timeout). Nuevo en 0.2.1 (PK-31).
     public ?int $soapConnectionTimeout = null;
 
+    // Tiempo máximo, en segundos, para recibir la respuesta del SIFEN una vez conectado (tiempo de lectura). La
+    // extensión SOAP lo toma de default_socket_timeout, así que se fija ese ini solo durante cada llamada y se
+    // restaura después. Null: no se toca (rige default_socket_timeout, 60 s por defecto). Nuevo en 0.3.1 (Fase D, D-B5).
+    public ?int $soapReadTimeout = null;
+
     // Cabecera User-Agent de las solicitudes SOAP. Null: la de PHP. Nuevo en 0.2.1 (PK-31).
-    public ?String $soapUserAgent = null;
+    public ?string $soapUserAgent = null;
 
     // Guarda la última solicitud y respuesta SOAP (opción trace de SoapClient) para Sifen::GetLastRequest() y
     // GetLastResponse(). Con false no se guardan y esos métodos devuelven null. Nuevo en 0.3.0 (Fase C, C12).
@@ -103,74 +108,80 @@ class Config
         );
     }
 
-    public static function ParseObject($config): Config {
+    public static function ParseObject($config): Config
+    {
         $res = new Config();
-        
-        if(is_null($config)) {
+
+        if (is_null($config)) {
             throw new ConfiguracionException("Objeto de configuración no puede ser nulo.");
         }
-        
-        if(isset($config->env)) {
+
+        if (isset($config->env)) {
             $res->env = $config->env;
-        }        
-        
-        if(isset($config->certificateFormat)) {
+        }
+
+        if (isset($config->certificateFormat)) {
             $res->setCertificateFormat($config->certificateFormat);
         }
 
-        if(isset($config->certificateFilePath)) {
+        if (isset($config->certificateFilePath)) {
             $res->certificateFilePath = $config->certificateFilePath;
         }
 
-        if(!isset($config->privateKeyFilePath)) {
+        if (!isset($config->privateKeyFilePath)) {
             throw new ConfiguracionException("Ruta del archivo de la clave privada debe ser especificada.");
         }
         $res->privateKeyFilePath = $config->privateKeyFilePath;
 
-        if(!isset($config->privateKeyPassphrase)) {
+        if (!isset($config->privateKeyPassphrase)) {
             throw new ConfiguracionException("Contraseña de la clave privada debe ser especificada.");
         }
         $res->privateKeyPassphrase = $config->privateKeyPassphrase;
 
-        if(isset($config->idCsc)) {
+        if (isset($config->idCsc)) {
             $res->idCsc = $config->idCsc;
         }
-        
-        if(isset($config->csc)) {
+
+        if (isset($config->csc)) {
             $res->csc = $config->csc;
         }
 
-        if(isset($config->dIdFilePath)) {
+        if (isset($config->dIdFilePath)) {
             $res->dIdFilePath = $config->dIdFilePath;
         }
 
-        if(isset($config->wsdlCacheEnabled)) {
+        if (isset($config->wsdlCacheEnabled)) {
             $res->wsdlCacheEnabled = filter_var($config->wsdlCacheEnabled, FILTER_VALIDATE_BOOLEAN); // "false" y "0" son falso (QA de la Fase C)
         }
 
-        if(isset($config->soapConnectionTimeout)) {
+        if (isset($config->soapConnectionTimeout)) {
             $res->soapConnectionTimeout = intval($config->soapConnectionTimeout);
         }
+        if (isset($config->soapReadTimeout)) {
+            $res->soapReadTimeout = intval($config->soapReadTimeout);
+        }
 
-        if(isset($config->soapUserAgent)) {
+        if (isset($config->soapUserAgent)) {
             $res->soapUserAgent = strval($config->soapUserAgent);
         }
-        if(isset($config->soapTrace)) {
+        if (isset($config->soapTrace)) {
             $res->soapTrace = filter_var($config->soapTrace, FILTER_VALIDATE_BOOLEAN);
         }
-        if(isset($config->validarXsdAntesDeEnviar)) {
+        if (isset($config->validarXsdAntesDeEnviar)) {
             $res->validarXsdAntesDeEnviar = filter_var($config->validarXsdAntesDeEnviar, FILTER_VALIDATE_BOOLEAN);
         }
 
         return $res;
     }
 
-    public static function ParseJsonFile(String $jsonConfigFilePath) {
+    public static function ParseJsonFile(string $jsonConfigFilePath)
+    {
         $config = json_decode(file_get_contents($jsonConfigFilePath));
         return self::ParseObject($config);
     }
 
-    public static function ParseJson(String $jsonConfig) {
+    public static function ParseJson(string $jsonConfig)
+    {
         $obj = json_decode($jsonConfig);
         return self::ParseObject($obj);
     }
@@ -184,7 +195,7 @@ class Config
      *
      * @return self
      */
-    public function setEnv(String $env): self
+    public function setEnv(string $env): self
     {
         $this->env = $env;
 
@@ -198,7 +209,7 @@ class Config
      *
      * @return self
      */
-    public function setCertificateFormat(String $certificateFormat): self
+    public function setCertificateFormat(string $certificateFormat): self
     {
         $this->certificateFormat = self::normalizeCertificateFormat($certificateFormat);
 
@@ -212,7 +223,7 @@ class Config
      *
      * @return self
      */
-    public function setCertificateFilePath(String $certificateFilePath): self
+    public function setCertificateFilePath(string $certificateFilePath): self
     {
         $this->certificateFilePath = $certificateFilePath;
 
@@ -226,7 +237,7 @@ class Config
      *
      * @return self
      */
-    public function setPrivateKeyFilePath(String $privateKeyFilePath): self
+    public function setPrivateKeyFilePath(string $privateKeyFilePath): self
     {
         $this->privateKeyFilePath = $privateKeyFilePath;
 
@@ -240,7 +251,7 @@ class Config
      *
      * @return self
      */
-    public function setPrivateKeyPassphrase(String $privateKeyPassphrase): self
+    public function setPrivateKeyPassphrase(string $privateKeyPassphrase): self
     {
         $this->privateKeyPassphrase = $privateKeyPassphrase;
 
@@ -254,7 +265,7 @@ class Config
      *
      * @return self
      */
-    public function setIdCsc(String $idCsc): self
+    public function setIdCsc(string $idCsc): self
     {
         $this->idCsc = $idCsc;
 
@@ -268,7 +279,7 @@ class Config
      *
      * @return self
      */
-    public function setCsc(String $csc): self
+    public function setCsc(string $csc): self
     {
         $this->csc = $csc;
 
@@ -282,7 +293,7 @@ class Config
      *
      * @return self
      */
-    public function setDIdFilePath(String $dIdFilePath): self
+    public function setDIdFilePath(string $dIdFilePath): self
     {
         $this->dIdFilePath = $dIdFilePath;
 
@@ -320,6 +331,22 @@ class Config
     }
 
     /**
+     * Establece el tiempo máximo, en segundos, para recibir la respuesta del SIFEN una vez conectado (tiempo de
+     * lectura). Null deja el valor por defecto de PHP (default_socket_timeout). Se aplica en cada llamada SOAP a partir
+     * del siguiente Sifen::Init(). Nuevo en 0.3.1 (Fase D, D-B5).
+     *
+     * @param int|null $soapReadTimeout
+     *
+     * @return self
+     */
+    public function setSoapReadTimeout(?int $soapReadTimeout): self
+    {
+        $this->soapReadTimeout = $soapReadTimeout;
+
+        return $this;
+    }
+
+    /**
      * Establece la cabecera User-Agent de las solicitudes SOAP. Null deja la de PHP. Se aplica en el siguiente
      * Sifen::Init(). Nuevo en 0.2.1.
      *
@@ -327,7 +354,7 @@ class Config
      *
      * @return self
      */
-    public function setSoapUserAgent(?String $soapUserAgent): self
+    public function setSoapUserAgent(?string $soapUserAgent): self
     {
         $this->soapUserAgent = $soapUserAgent;
 
@@ -397,33 +424,33 @@ class Config
 
     /**
      * Devuelve el valor de IdCDC
-     * 
+     *
      * @return String
      */
-    public function getIdCsc(): String
+    public function getIdCsc(): string
     {
         return $this->idCsc;
     }
 
     /**
      * Devuelve el valor de env (entorno)
-     * 
+     *
      * @return String
      */
-    public function getEnv(): String
+    public function getEnv(): string
     {
         return $this->env;
     }
 
     /**
      * Devuelve el valor del CSC (clave secreta de comunicación)
-     * 
+     *
      * @return String
      */
-    public function getCsc(): String
+    public function getCsc(): string
     {
         return $this->csc;
     }
-    
+
 
 }

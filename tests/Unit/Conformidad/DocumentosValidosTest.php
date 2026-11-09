@@ -13,67 +13,67 @@ use PHPUnit\Framework\TestCase;
  */
 final class DocumentosValidosTest extends TestCase
 {
-  /** @var callable */
-  private $cleanup;
+    /** @var callable */
+    private $cleanup;
 
-  protected function setUp(): void
-  {
-    $this->cleanup = SifenTestEnvironment::init()['cleanup'];
-  }
+    protected function setUp(): void
+    {
+        $this->cleanup = SifenTestEnvironment::init()['cleanup'];
+    }
 
-  protected function tearDown(): void
-  {
-    ($this->cleanup)();
-  }
+    protected function tearDown(): void
+    {
+        ($this->cleanup)();
+    }
 
-  public function testFacturaContadoFirmadaValida(): void
-  {
-    $xml = DocumentoFactory::firmar(DocumentoFactory::facturaContado(1)->facturaToRDE());
-    XsdAssertions::assertRdeValido($xml, 'FE contado');
-    $this->assertStringContainsString('<dTotGralOpe>100000</dTotGralOpe>', $xml);
-  }
+    public function testFacturaContadoFirmadaValida(): void
+    {
+        $xml = DocumentoFactory::firmar(DocumentoFactory::facturaContado(1)->facturaToRDE());
+        XsdAssertions::assertRdeValido($xml, 'FE contado');
+        $this->assertStringContainsString('<dTotGralOpe>100000</dTotGralOpe>', $xml);
+    }
 
-  public function testFacturaUsdConTipoDeCambioGlobalValida(): void
-  {
-    $xml = DocumentoFactory::firmar(DocumentoFactory::facturaUsd(3)->facturaToRDE());
-    XsdAssertions::assertRdeValido($xml, 'FE USD');
-    $this->assertStringContainsString('<cMoneOpe>USD</cMoneOpe>', $xml);
-    $this->assertStringContainsString('<dTiCam>7300</dTiCam>', $xml);
-  }
+    public function testFacturaUsdConTipoDeCambioGlobalValida(): void
+    {
+        $xml = DocumentoFactory::firmar(DocumentoFactory::facturaUsd(3)->facturaToRDE());
+        XsdAssertions::assertRdeValido($xml, 'FE USD');
+        $this->assertStringContainsString('<cMoneOpe>USD</cMoneOpe>', $xml);
+        $this->assertStringContainsString('<dTiCam>7300</dTiCam>', $xml);
+    }
 
-  public function testNotaDeCreditoValida(): void
-  {
-    $xml = DocumentoFactory::firmar(DocumentoFactory::notaDeCredito(10)->notaDeCreditoToRDE());
-    XsdAssertions::assertRdeValido($xml, 'NC');
-    $this->assertStringContainsString('<iTiDE>5</iTiDE>', $xml);
-    $this->assertStringContainsString('<dCdCDERef>' . DocumentoFactory::CDC_ASOCIADO . '</dCdCDERef>', $xml);
-  }
+    public function testNotaDeCreditoValida(): void
+    {
+        $xml = DocumentoFactory::firmar(DocumentoFactory::notaDeCredito(10)->notaDeCreditoToRDE());
+        XsdAssertions::assertRdeValido($xml, 'NC');
+        $this->assertStringContainsString('<iTiDE>5</iTiDE>', $xml);
+        $this->assertStringContainsString('<dCdCDERef>' . DocumentoFactory::CDC_ASOCIADO . '</dCdCDERef>', $xml);
+    }
 
-  public function testNotaDeDebitoValida(): void
-  {
-    $xml = DocumentoFactory::firmar(DocumentoFactory::notaDeDebito(11)->notaDeDebitoToRDE());
-    XsdAssertions::assertRdeValido($xml, 'ND');
-    $this->assertStringContainsString('<iTiDE>6</iTiDE>', $xml);
-  }
+    public function testNotaDeDebitoValida(): void
+    {
+        $xml = DocumentoFactory::firmar(DocumentoFactory::notaDeDebito(11)->notaDeDebitoToRDE());
+        XsdAssertions::assertRdeValido($xml, 'ND');
+        $this->assertStringContainsString('<iTiDE>6</iTiDE>', $xml);
+    }
 
-  public function testFacturaCreditoEnCuotasConEntregaInicialValida(): void
-  {
-    $xml = DocumentoFactory::firmar(DocumentoFactory::facturaCreditoCuotas(2, '0')->facturaToRDE());
-    XsdAssertions::assertRdeValido($xml, 'FE crédito en cuotas con entrega inicial');
-    $this->assertStringContainsString('<dCuotas>2</dCuotas>', $xml);
-  }
+    public function testFacturaCreditoEnCuotasConEntregaInicialValida(): void
+    {
+        $xml = DocumentoFactory::firmar(DocumentoFactory::facturaCreditoCuotas(2, '0')->facturaToRDE());
+        XsdAssertions::assertRdeValido($xml, 'FE crédito en cuotas con entrega inicial');
+        $this->assertStringContainsString('<dCuotas>2</dCuotas>', $xml);
+    }
 
-  /**
-   * Fase B/B12: FE con los grupos opcionales que no cubren los demás documentos (gRespDE, gOblAfe, gCompPub,
-   * gVehNuevo, gPagTarCD, gPagCheq, gCamGen y gCamCarg). Hasta 0.2.0 era inválida por gVehNuevo: emitía en iTipOpVN
-   * la descripción en lugar del código (tiTipOpVN, DE_Types_v150.xsd:1470-1487) y escribía el código 2 con c
-   * minúscula (tdDesTipOpVN exige "Venta al Consumidor final", DE_Types_v150.xsd:1489-1508; ekuat-ia
-   * 04-schemas-xsd/xsd-produccion-vs-manual.md §6).
-   */
-  public function testFacturaConTodosLosOpcionalesValida(): void
-  {
-    $xml = DocumentoFactory::firmar(DocumentoFactory::facturaConTodosLosOpcionales()->facturaToRDE());
-    XsdAssertions::assertRdeValido($xml, 'FE con todos los opcionales');
-    $this->assertStringContainsString('<iTipOpVN>2</iTipOpVN><dDesTipOpVN>Venta al Consumidor final</dDesTipOpVN>', $xml);
-  }
+    /**
+     * Fase B/B12: FE con los grupos opcionales que no cubren los demás documentos (gRespDE, gOblAfe, gCompPub,
+     * gVehNuevo, gPagTarCD, gPagCheq, gCamGen y gCamCarg). Hasta 0.2.0 era inválida por gVehNuevo: emitía en iTipOpVN
+     * la descripción en lugar del código (tiTipOpVN, DE_Types_v150.xsd:1470-1487) y escribía el código 2 con c
+     * minúscula (tdDesTipOpVN exige "Venta al Consumidor final", DE_Types_v150.xsd:1489-1508; ekuat-ia
+     * 04-schemas-xsd/xsd-produccion-vs-manual.md §6).
+     */
+    public function testFacturaConTodosLosOpcionalesValida(): void
+    {
+        $xml = DocumentoFactory::firmar(DocumentoFactory::facturaConTodosLosOpcionales()->facturaToRDE());
+        XsdAssertions::assertRdeValido($xml, 'FE con todos los opcionales');
+        $this->assertStringContainsString('<iTipOpVN>2</iTipOpVN><dDesTipOpVN>Venta al Consumidor final</dDesTipOpVN>', $xml);
+    }
 }

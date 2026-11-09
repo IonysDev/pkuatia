@@ -17,27 +17,27 @@ use PHPUnit\Framework\TestCase;
  */
 final class NotaSinAsociadoTest extends TestCase
 {
-  public function testLaNotaDeCreditoSinAsociadoSeSerializaYElValidadorAvisa2400(): void
-  {
-    $nc = new NotaDeCredito(MotEmi::Devolucion);
-    F::configurarBase($nc, 40);
-    F::receptorContribuyente($nc);
-    $nc->addItem('PROD001', 'Devolucion producto gravado 10%', 77, '1', 0, '55000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
-    $nc->calcTotSub(0);
-    $this->assertSame([], $nc->gCamDEAsoc);
-    $this->assertCount(1, $nc->validarReglas(F::fechaEmision()->modify('+2 hours'))->porCodigo('2400'));
-    $rde = F::rde($nc);
-    $this->assertSame([], $rde->getDE()->getGCamDEAsoc());
-    $this->assertStringNotContainsString('<gCamDEAsoc>', $rde->toXMLString());
-  }
+    public function testLaNotaDeCreditoSinAsociadoSeSerializaYElValidadorAvisa2400(): void
+    {
+        $nc = new NotaDeCredito(MotEmi::Devolucion);
+        F::configurarBase($nc, 40);
+        F::receptorContribuyente($nc);
+        $nc->addItem('PROD001', 'Devolucion producto gravado 10%', 77, '1', 0, '55000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
+        $nc->calcTotSub(0);
+        $this->assertSame([], $nc->gCamDEAsoc);
+        $this->assertCount(1, $nc->validarReglas(F::fechaEmision()->modify('+2 hours'))->porCodigo('2400'));
+        $rde = F::rde($nc);
+        $this->assertSame([], $rde->getDE()->getGCamDEAsoc());
+        $this->assertStringNotContainsString('<gCamDEAsoc>', $rde->toXMLString());
+    }
 
-  public function testLaNotaDeDebitoSinAsociadoTambien(): void
-  {
-    $nd = new NotaDeDebito(MotEmi::Devolucion);
-    F::configurarBase($nd, 41);
-    F::receptorContribuyente($nd);
-    $nd->addItem('PROD001', 'Ajuste gravado 10%', 77, '1', 0, '5000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
-    $nd->calcTotSub(0);
-    $this->assertStringNotContainsString('<gCamDEAsoc>', F::rde($nd)->toXMLString());
-  }
+    public function testLaNotaDeDebitoSinAsociadoTambien(): void
+    {
+        $nd = new NotaDeDebito(MotEmi::Devolucion);
+        F::configurarBase($nd, 41);
+        F::receptorContribuyente($nd);
+        $nd->addItem('PROD001', 'Ajuste gravado 10%', 77, '1', 0, '5000', null, CamIVAAfecIVA::Gravado, '100', CamIVATasaIVA::IVA10);
+        $nd->calcTotSub(0);
+        $this->assertStringNotContainsString('<gCamDEAsoc>', F::rde($nd)->toXMLString());
+    }
 }

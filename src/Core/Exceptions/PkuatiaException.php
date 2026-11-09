@@ -14,5 +14,5 @@ use Exception;
  */
 class PkuatiaException extends Exception implements PkuatiaExceptionInterface
 {
-  use ContextoDeExcepcion;
+    use ContextoDeExcepcion;
 }

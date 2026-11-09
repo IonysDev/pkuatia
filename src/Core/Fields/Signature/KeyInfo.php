@@ -5,9 +5,8 @@ namespace IonysDev\Pkuatia\Core\Fields\Signature;
 /**
  * Clase que representa el campo KeyData de la firma
  */
-class KeyInfo 
+class KeyInfo
 {
-
     public X509Data $X509Data;
 
     /**
@@ -35,9 +34,9 @@ class KeyInfo
 
     /**
      * Instancia un objeto KeyData a partir de un SimpleXMLElement
-     * 
+     *
      * @param \SimpleXMLElement $node
-     * 
+     *
      * @return self
      */
     public static function FromSimpleXMLElement(\SimpleXMLElement $node): self
@@ -46,12 +45,12 @@ class KeyInfo
         $res->setX509Data(X509Data::FromSimpleXMLElement($node->X509Data));
         return $res;
     }
-    
+
     /**
      * Instancia un objeto KeyData a partir de un DOMElement
-     * 
+     *
      * @param \DOMElement $node
-     * 
+     *
      * @return self
      */
     public static function FromDOMElement(\DOMElement $node): self
@@ -62,21 +61,20 @@ class KeyInfo
     }
 
     /**
-     * Convierte el objeto a un DOMElement
-     * 
+     * Convierte el objeto a un DOMElement (KeyInfo con su X509Data).
+     *
+     * @param \DOMDocument|null $doc Documento en el que se crean los nodos. Null (comportamiento hasta 0.3.0) crea un
+     *                               documento propio, cuyo nodo no puede colgarse de otro documento. Hasta 0.3.0 se
+     *                               agregaba además un atributo xmlns:ds que ningún hijo usaba (Fase D, D8).
+     *
      * @return \DOMElement
      */
-    public function toDOMElement(): \DOMElement
+    public function toDOMElement(?\DOMDocument $doc = null): \DOMElement
     {
-        $dom = new \DOMDocument();
-        $KeyInfo = $dom->createElement('KeyInfo');
-        $KeyInfo->setAttribute('xmlns:ds', 'http://www.w3.org/2000/09/xmldsig#');
-
-        $importNode = $dom->importNode($this->getX509Data()->toDOMElement(), true);
-        $KeyInfo->appendChild($importNode);
+        $doc ??= new \DOMDocument();
+        $KeyInfo = $doc->createElement('KeyInfo');
+        $KeyInfo->appendChild($this->getX509Data()->toDOMElement($doc));
 
         return $KeyInfo;
     }
 }
-
-?>

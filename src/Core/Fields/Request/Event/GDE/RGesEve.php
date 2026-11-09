@@ -13,7 +13,7 @@ use IonysDev\Pkuatia\Core\Exceptions\ValidacionException;
  */
 class RGesEve
 {
-                        // ID - DESCRIPCION- LONGITUD - OCURRENCIA
+    // ID - DESCRIPCION- LONGITUD - OCURRENCIA
     public REve $REve; // GDE002 - Grupos de campos generales del evento - x - 1-1
 
     ///////////////////////////////////////////////////////////////////////
@@ -22,10 +22,11 @@ class RGesEve
 
     public function getREve(): REve
     {
-        if (isset($this->REve))
-        return $this->REve;
-        else
-        throw new ValidacionException('El campo REve no ha sido definido.');
+        if (isset($this->REve)) {
+            return $this->REve;
+        } else {
+            throw new ValidacionException('El campo REve no ha sido definido.');
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -52,7 +53,7 @@ class RGesEve
 
     // ///////////////////////////////////////////////////////////////////////
     // ///XML ELEMENT
-    // ///////////////////////////////////////////////////////////////////////  
+    // ///////////////////////////////////////////////////////////////////////
 
     // /**
     //  * fromDOMElement
@@ -76,23 +77,22 @@ class RGesEve
     //     }
     // }
 
-    
+
     /**
      * FromSimpleXMLElement
      *
-     * @param  mixed $node
+     * @param SimpleXMLElement $node
      * @return self
      */
-    public static function FromSimpleXMLElement(SimpleXMLElement $node):self
+    public static function FromSimpleXMLElement(SimpleXMLElement $node): self
     {
-        if(strcmp($node->getName(),'rGesEve') != 0) {
+        if (strcmp($node->getName(), 'rGesEve') != 0) {
             throw new ValidacionException("Invalid XML Element: " . $node->getName());
         }
 
         $res = new self();
 
-        if(isset($node->rEve))
-        {
+        if (isset($node->rEve)) {
             $res->setREve(REve::FromSimpleXMLElement($node->rEve));
         }
 

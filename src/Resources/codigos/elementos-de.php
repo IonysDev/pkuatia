@@ -1,7 +1,7 @@
 <?php
 
 // ekuat-ia 00-fuentes/xsd/DE_v150.xsd (copia fiel, líneas citables) + 03-estructura-xml/campos-obligatorios.md (ID del MT)
-// ekuat-ia @ 3f277a7
+// ekuat-ia @ dad0ee3
 // Generado por tools/generar-catalogos.php. NO EDITAR A MANO.
 
 return [
@@ -443,13 +443,13 @@ return [
       ['nombre' => 'dDesCondAnt', 'nombreOriginal' => 'dDesCondAnt', 'tipo' => 'tdDesCondAnt', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgOpeCom', 'contenedor' => 'sequence', 'linea' => 216, 'campoMT' => 'D020', 'esGrupo' => false],
     ],
     'gOblAfe' => [
-      ['nombre' => 'gOblAfe', 'nombreOriginal' => 'gOblAfe', 'tipo' => 'tgOblAfe', 'minOccurs' => 0, 'maxOccurs' => 12, 'padre' => 'tgOpeCom', 'contenedor' => 'sequence', 'linea' => 218, 'campoMT' => NULL, 'esGrupo' => true],
+      ['nombre' => 'gOblAfe', 'nombreOriginal' => 'gOblAfe', 'tipo' => 'tgOblAfe', 'minOccurs' => 0, 'maxOccurs' => 12, 'padre' => 'tgOpeCom', 'contenedor' => 'sequence', 'linea' => 218, 'campoMT' => 'D030', 'esGrupo' => true],
     ],
     'cOblAfe' => [
-      ['nombre' => 'cOblAfe', 'nombreOriginal' => 'cOblAfe', 'tipo' => 'tcOblAfe', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgOblAfe', 'contenedor' => 'sequence', 'linea' => 229, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'cOblAfe', 'nombreOriginal' => 'cOblAfe', 'tipo' => 'tcOblAfe', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgOblAfe', 'contenedor' => 'sequence', 'linea' => 229, 'campoMT' => 'D031', 'esGrupo' => false],
     ],
     'dDesOblAfe' => [
-      ['nombre' => 'dDesOblAfe', 'nombreOriginal' => 'dDesOblAfe', 'tipo' => 'tdDesOblAfe', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgOblAfe', 'contenedor' => 'sequence', 'linea' => 230, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dDesOblAfe', 'nombreOriginal' => 'dDesOblAfe', 'tipo' => 'tdDesOblAfe', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgOblAfe', 'contenedor' => 'sequence', 'linea' => 230, 'campoMT' => 'D032', 'esGrupo' => false],
     ],
     'iDenTarj' => [
       ['nombre' => 'iDenTarj', 'nombreOriginal' => 'iDenTarj', 'tipo' => 'tiDenTarj', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgPagTarCD', 'contenedor' => 'sequence', 'linea' => 243, 'campoMT' => 'E621', 'esGrupo' => false],
@@ -575,7 +575,7 @@ return [
       ['nombre' => 'dLiqIVAItem', 'nombreOriginal' => 'dLiqIVAItem', 'tipo' => 'tMontoBase', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgCamIVA', 'contenedor' => 'sequence', 'linea' => 408, 'campoMT' => 'E736', 'esGrupo' => false],
     ],
     'dBasExe' => [
-      ['nombre' => 'dBasExe', 'nombreOriginal' => 'dBasExe', 'tipo' => 'tMontoBase', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgCamIVA', 'contenedor' => 'sequence', 'linea' => 409, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dBasExe', 'nombreOriginal' => 'dBasExe', 'tipo' => 'tMontoBase', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgCamIVA', 'contenedor' => 'sequence', 'linea' => 409, 'campoMT' => 'E737', 'esGrupo' => false],
     ],
     'cCatISC' => [
       ['nombre' => 'cCatISC', 'nombreOriginal' => 'cCatISC', 'tipo' => 'tcCatISC', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgCamISC', 'contenedor' => 'sequence', 'linea' => 421, 'campoMT' => NULL, 'esGrupo' => false],
@@ -593,76 +593,76 @@ return [
       ['nombre' => 'dLiqISCItem', 'nombreOriginal' => 'dLiqISCItem', 'tipo' => 'tMontoBase', 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgCamISC', 'contenedor' => 'sequence', 'linea' => 425, 'campoMT' => NULL, 'esGrupo' => false],
     ],
     'dNumLote' => [
-      ['nombre' => 'dNumLote', 'nombreOriginal' => 'dNumLote', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 437, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNumLote', 'nombreOriginal' => 'dNumLote', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 437, 'campoMT' => 'E751', 'esGrupo' => false],
     ],
     'dVencMerc' => [
-      ['nombre' => 'dVencMerc', 'nombreOriginal' => 'dVencMerc', 'tipo' => 'tFecAAAAMMDDguion', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 446, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dVencMerc', 'nombreOriginal' => 'dVencMerc', 'tipo' => 'tFecAAAAMMDDguion', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 446, 'campoMT' => 'E752', 'esGrupo' => false],
     ],
     'dNSerie' => [
-      ['nombre' => 'dNSerie', 'nombreOriginal' => 'dNSerie', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 447, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNSerie', 'nombreOriginal' => 'dNSerie', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 447, 'campoMT' => 'E753', 'esGrupo' => false],
     ],
     'dNumPedi' => [
-      ['nombre' => 'dNumPedi', 'nombreOriginal' => 'dNumPedi', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 460, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNumPedi', 'nombreOriginal' => 'dNumPedi', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 460, 'campoMT' => 'E754', 'esGrupo' => false],
     ],
     'dNumSegui' => [
-      ['nombre' => 'dNumSegui', 'nombreOriginal' => 'dNumSegui', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 473, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNumSegui', 'nombreOriginal' => 'dNumSegui', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 473, 'campoMT' => 'E755', 'esGrupo' => false],
     ],
     'dNumReg' => [
-      ['nombre' => 'dNumReg', 'nombreOriginal' => 'dNumReg', 'tipo' => 'tdCadenaBase20', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 487, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNumReg', 'nombreOriginal' => 'dNumReg', 'tipo' => 'tdCadenaBase20', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 487, 'campoMT' => 'E759', 'esGrupo' => false],
     ],
     'dNumRegEntCom' => [
-      ['nombre' => 'dNumRegEntCom', 'nombreOriginal' => 'dNumRegEntCom', 'tipo' => 'tdCadenaBase20', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 489, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNumRegEntCom', 'nombreOriginal' => 'dNumRegEntCom', 'tipo' => 'tdCadenaBase20', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 489, 'campoMT' => 'E760', 'esGrupo' => false],
     ],
     'dNomPro' => [
-      ['nombre' => 'dNomPro', 'nombreOriginal' => 'dNomPro', 'tipo' => 'tdNomPro', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 491, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNomPro', 'nombreOriginal' => 'dNomPro', 'tipo' => 'tdNomPro', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgRasMerc', 'contenedor' => 'sequence', 'linea' => 491, 'campoMT' => 'E761', 'esGrupo' => false],
     ],
     'iTipOpVN' => [
-      ['nombre' => 'iTipOpVN', 'nombreOriginal' => 'iTipOpVN', 'tipo' => 'tiTipOpVN', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 509, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'iTipOpVN', 'nombreOriginal' => 'iTipOpVN', 'tipo' => 'tiTipOpVN', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 509, 'campoMT' => 'E771', 'esGrupo' => false],
     ],
     'dDesTipOpVN' => [
-      ['nombre' => 'dDesTipOpVN', 'nombreOriginal' => 'dDesTipOpVN', 'tipo' => 'tdDesTipOpVN', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 511, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dDesTipOpVN', 'nombreOriginal' => 'dDesTipOpVN', 'tipo' => 'tdDesTipOpVN', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 511, 'campoMT' => 'E772', 'esGrupo' => false],
     ],
     'dChasis' => [
-      ['nombre' => 'dChasis', 'nombreOriginal' => 'dChasis', 'tipo' => 'tdChasis', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 512, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dChasis', 'nombreOriginal' => 'dChasis', 'tipo' => 'tdChasis', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 512, 'campoMT' => 'E773', 'esGrupo' => false],
     ],
     'dColor' => [
-      ['nombre' => 'dColor', 'nombreOriginal' => 'dColor', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 513, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dColor', 'nombreOriginal' => 'dColor', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 513, 'campoMT' => 'E774', 'esGrupo' => false],
     ],
     'dPotencia' => [
-      ['nombre' => 'dPotencia', 'nombreOriginal' => 'dPotencia', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 521, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dPotencia', 'nombreOriginal' => 'dPotencia', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 521, 'campoMT' => 'E775', 'esGrupo' => false],
     ],
     'dCapMot' => [
-      ['nombre' => 'dCapMot', 'nombreOriginal' => 'dCapMot', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 533, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dCapMot', 'nombreOriginal' => 'dCapMot', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 533, 'campoMT' => 'E776', 'esGrupo' => false],
     ],
     'dPNet' => [
-      ['nombre' => 'dPNet', 'nombreOriginal' => 'dPNet', 'tipo' => 'tMontoBase6', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 545, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dPNet', 'nombreOriginal' => 'dPNet', 'tipo' => 'tMontoBase6', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 545, 'campoMT' => 'E777', 'esGrupo' => false],
     ],
     'dPBruto' => [
-      ['nombre' => 'dPBruto', 'nombreOriginal' => 'dPBruto', 'tipo' => 'tMontoBase6', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 547, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dPBruto', 'nombreOriginal' => 'dPBruto', 'tipo' => 'tMontoBase6', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 547, 'campoMT' => 'E778', 'esGrupo' => false],
     ],
     'iTipCom' => [
-      ['nombre' => 'iTipCom', 'nombreOriginal' => 'iTipCom', 'tipo' => 'tiTipCom', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 548, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'iTipCom', 'nombreOriginal' => 'iTipCom', 'tipo' => 'tiTipCom', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 548, 'campoMT' => 'E779', 'esGrupo' => false],
     ],
     'dDesTipCom' => [
-      ['nombre' => 'dDesTipCom', 'nombreOriginal' => 'dDesTipCom', 'tipo' => 'tdDesTipCom', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 550, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dDesTipCom', 'nombreOriginal' => 'dDesTipCom', 'tipo' => 'tdDesTipCom', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 550, 'campoMT' => 'E780', 'esGrupo' => false],
     ],
     'dNroMotor' => [
-      ['nombre' => 'dNroMotor', 'nombreOriginal' => 'dNroMotor', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 551, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dNroMotor', 'nombreOriginal' => 'dNroMotor', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 551, 'campoMT' => 'E781', 'esGrupo' => false],
     ],
     'dCapTracc' => [
-      ['nombre' => 'dCapTracc', 'nombreOriginal' => 'dCapTracc', 'tipo' => 'tMontoBase6', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 565, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dCapTracc', 'nombreOriginal' => 'dCapTracc', 'tipo' => 'tMontoBase6', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 565, 'campoMT' => 'E782', 'esGrupo' => false],
     ],
     'dAnoFab' => [
-      ['nombre' => 'dAnoFab', 'nombreOriginal' => 'dAnoFab', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 566, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dAnoFab', 'nombreOriginal' => 'dAnoFab', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 566, 'campoMT' => 'E783', 'esGrupo' => false],
     ],
     'cTipVeh' => [
-      ['nombre' => 'cTipVeh', 'nombreOriginal' => 'cTipVeh', 'tipo' => 'tcTipVeh', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 580, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'cTipVeh', 'nombreOriginal' => 'cTipVeh', 'tipo' => 'tcTipVeh', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 580, 'campoMT' => 'E784', 'esGrupo' => false],
     ],
     'dCapac' => [
-      ['nombre' => 'dCapac', 'nombreOriginal' => 'dCapac', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 583, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dCapac', 'nombreOriginal' => 'dCapac', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 583, 'campoMT' => 'E785', 'esGrupo' => false],
     ],
     'dCilin' => [
-      ['nombre' => 'dCilin', 'nombreOriginal' => 'dCilin', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 595, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dCilin', 'nombreOriginal' => 'dCilin', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgVehNuevo', 'contenedor' => 'sequence', 'linea' => 595, 'campoMT' => 'E786', 'esGrupo' => false],
     ],
     'dNroMed' => [
       ['nombre' => 'dNroMed', 'nombreOriginal' => 'dNroMed', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgGrupEner', 'contenedor' => 'sequence', 'linea' => 618, 'campoMT' => NULL, 'esGrupo' => false],
@@ -819,10 +819,10 @@ return [
       ['nombre' => 'gCamIVA', 'nombreOriginal' => 'gCamIVA', 'tipo' => 'tgCamIVA', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgCamItem', 'contenedor' => 'sequence', 'linea' => 919, 'campoMT' => 'E730', 'esGrupo' => true],
     ],
     'gRasMerc' => [
-      ['nombre' => 'gRasMerc', 'nombreOriginal' => 'gRasMerc', 'tipo' => 'tgRasMerc', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgCamItem', 'contenedor' => 'sequence', 'linea' => 921, 'campoMT' => NULL, 'esGrupo' => true],
+      ['nombre' => 'gRasMerc', 'nombreOriginal' => 'gRasMerc', 'tipo' => 'tgRasMerc', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgCamItem', 'contenedor' => 'sequence', 'linea' => 921, 'campoMT' => 'E750', 'esGrupo' => true],
     ],
     'gVehNuevo' => [
-      ['nombre' => 'gVehNuevo', 'nombreOriginal' => 'gVehNuevo', 'tipo' => 'tgVehNuevo', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgCamItem', 'contenedor' => 'sequence', 'linea' => 923, 'campoMT' => NULL, 'esGrupo' => true],
+      ['nombre' => 'gVehNuevo', 'nombreOriginal' => 'gVehNuevo', 'tipo' => 'tgVehNuevo', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgCamItem', 'contenedor' => 'sequence', 'linea' => 923, 'campoMT' => 'E770', 'esGrupo' => true],
     ],
     'gCamFE' => [
       ['nombre' => 'gCamFE', 'nombreOriginal' => 'gCamFE', 'tipo' => 'tgCamFE', 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgDtipDE', 'contenedor' => 'sequence', 'linea' => 934, 'campoMT' => 'E010', 'esGrupo' => true],
@@ -1449,7 +1449,7 @@ return [
       ['nombre' => 'dCarQR', 'nombreOriginal' => 'dCarQR', 'tipo' => NULL, 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'tgCamFuFD', 'contenedor' => 'sequence', 'linea' => 1908, 'campoMT' => 'J002', 'esGrupo' => false],
     ],
     'dInfAdic' => [
-      ['nombre' => 'dInfAdic', 'nombreOriginal' => 'dInfAdic', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgCamFuFD', 'contenedor' => 'sequence', 'linea' => 1922, 'campoMT' => NULL, 'esGrupo' => false],
+      ['nombre' => 'dInfAdic', 'nombreOriginal' => 'dInfAdic', 'tipo' => NULL, 'minOccurs' => 0, 'maxOccurs' => 1, 'padre' => 'tgCamFuFD', 'contenedor' => 'sequence', 'linea' => 1922, 'campoMT' => 'J003', 'esGrupo' => false],
     ],
     'dVerFor' => [
       ['nombre' => 'dVerFor', 'nombreOriginal' => 'dVerFor', 'tipo' => NULL, 'minOccurs' => 1, 'maxOccurs' => 1, 'padre' => 'rDE', 'contenedor' => 'sequence', 'linea' => 1942, 'campoMT' => 'AA002', 'esGrupo' => false],

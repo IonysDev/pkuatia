@@ -12,18 +12,18 @@ use Throwable;
  */
 class CertificadoException extends ConfiguracionException
 {
-  private ?MotivoCertificado $motivo = null;
+    private ?MotivoCertificado $motivo = null;
 
-  public static function porMotivo(MotivoCertificado $motivo, string $mensaje, ?Throwable $causa = null): self
-  {
-    $e = new self($mensaje, 0, $causa);
-    $e->motivo = $motivo;
-    $e->contexto['motivo'] = $motivo->value;
-    return $e;
-  }
+    public static function porMotivo(MotivoCertificado $motivo, string $mensaje, ?Throwable $causa = null): self
+    {
+        $e = new self($mensaje, 0, $causa);
+        $e->motivo = $motivo;
+        $e->contexto['motivo'] = $motivo->value;
+        return $e;
+    }
 
-  public function getMotivo(): ?MotivoCertificado
-  {
-    return $this->motivo;
-  }
+    public function getMotivo(): ?MotivoCertificado
+    {
+        return $this->motivo;
+    }
 }

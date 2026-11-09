@@ -2,18 +2,18 @@
 
 namespace IonysDev\Pkuatia\Utils;
 
-class NumberStringFormatter {
-
+class NumberStringFormatter
+{
     /**
      * Formatea un número decimal expresado como String (BCMath) a una cadena con separador de miles y decimales.
-     * 
-     * @param int $min
-     * @param int $max
-     * @param int $digits
-     * 
-     * @return int
+     *
+     * @param string $number Número decimal (BCMath) a formatear.
+     * @param string $decsep Separador decimal.
+     * @param string $thsep Separador de miles.
+     *
+     * @return string
      */
-    public static function FormatBCMAthNumber(String $number, String $decsep, String $thsep) : String
+    public static function FormatBCMathNumber(string $number, string $decsep, string $thsep): string
     {
         $parts = explode(".", $number);
         $parts[0] = strrev(implode($thsep, str_split(strrev($parts[0]), 3)));
